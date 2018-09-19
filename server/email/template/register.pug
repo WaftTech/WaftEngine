@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  table(width='624' style='max-width:624px' cellpadding='0' cellspacing='0' border='0')
+  tbody
+    tr
+      td
+        u
+        div(style='margin:0px;padding:0px;font-family:Lato,sans-serif')
+          table(width='624' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse')
+            tbody
+              tr(style='background:#f5f5f5')
+                td(colspan='2' style='padding-left:15px;padding-right:15px;padding-top:25px;padding-bottom:25px;font-size:14px;line-height:24px;color:#4d4d4d')
+                  | Dear #{name},
+                  br
+                  br
+                  |         Welcome to Our platform to share API in easy way.
+                  br
+                  br
+                  |     Your Username is 
+                  a(style='color:#a50c13;text-decoration:none') &quot;#{email}&quot;
+                  br
+                  br
+                  |     Use Code To verify your email 
+                  a(style='color:#a50c13;text-decoration:none') &quot;#{code}&quot;
+                  br
+                  |     Your 
+                  span.il new
+                  span.il Registration
+                  |  credentials are effective immediately. If you face any difficulty during the sign-up, do get in touch with our Support team at 
+                  a(style='color:#a50c13;text-decoration:none' href='mailto:support@mkmpvtltd.tk' target='_blank') support@mkmpvtltd.tk
+                  br
+                  br
+                  | Regards,
+                  br
+                  | Api Share Team
+              
