@@ -4,7 +4,9 @@
   "description": "Server for API Project",
   "main": "index.js",
   "scripts": {
+    "client": "npm start --prefix ../client",
     "start": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -31,6 +33,7 @@
     "validator": "^10.4.0"
   },
   "devDependencies": {
+    "concurrently": "4.0.1",
     "nodemon": "^1.18.2"
   }
 }
