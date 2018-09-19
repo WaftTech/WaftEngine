@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "client": "npm start --prefix ../client",
-    "start": "nodemon index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon index.js",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
