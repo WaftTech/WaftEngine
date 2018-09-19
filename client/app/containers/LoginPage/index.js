@@ -27,12 +27,18 @@ import saga from './saga';
 
 class LoginPage extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
-  state = {
-    data: {
-      email: this.props.match.params.email || '',
-    },
-    errors: {},
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        email: this.props.match.params.email || '',
+      },
+      errors: {},
+      redirectToReferrer: this.props.location.state
+        ? this.props.location.state.from.pathname
+        : false,
+    };
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors !== this.props.errors) {
       const errors = nextProps.errors.toJS();
@@ -62,7 +68,8 @@ class LoginPage extends React.PureComponent {
     const errors = this.validate();
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
-      this.props.login(this.state.data);
+      const { data, redirectToReferrer } = this.state;
+      this.props.login(data, redirectToReferrer);
     }
   };
   resetPassword = () => {
@@ -130,7 +137,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: data => dispatch(loginRequest(data)),
+  login: (data, redirect) => dispatch(loginRequest(data, redirect)),
   resetPassword: data => dispatch(resetPasswordRequest(data)),
 });
 
