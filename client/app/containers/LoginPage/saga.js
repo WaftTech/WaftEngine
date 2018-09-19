@@ -6,16 +6,20 @@ import { setUser, setToken } from 'containers/App/actions';
 import * as types from './constants';
 import * as actions from './actions';
 
-function* redirectOnSuccess() {
+function* redirectOnSuccess(redirect) {
   const { payload } = yield take(types.LOGIN_SUCCESS);
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
-  yield put(push('/home'));
+  if (!!redirect) {
+    yield put(push(redirect));
+  } else {
+    yield put(push('/'));
+  }
 }
 
 function* loginFlow(action) {
-  const successWatcher = yield fork(redirectOnSuccess);
+  const successWatcher = yield fork(redirectOnSuccess, action.redirect);
   yield fork(
     Api.post(
       'user/login',

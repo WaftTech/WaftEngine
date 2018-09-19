@@ -31,6 +31,7 @@ import NotFoundPage from '../NotFoundPage';
 import StartPage from '../StartPage';
 
 const Playground = () => <div>Auth page</div>;
+const AuthenticatedPage = () => <div>This is private page</div>;
 
 import {
   makeSelectDialog,
@@ -58,9 +59,10 @@ const App = props => {
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
         <UserRoute exact path="/" component={Playground} />
+        <UserRoute exact path="/auth" component={AuthenticatedPage} />
         <GuestRoute exact path="/start" component={StartPage} />
-        <GuestRoute exact path="/login" component={LoginPage} />
-        <GuestRoute exact path="/login/:email" component={LoginPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/login/:email" component={LoginPage} />
         <GuestRoute exact path="/register" component={SignupPage} />
         <GuestRoute exact path="/register/:email" component={SignupPage} />
         <GuestRoute exact path="/resetpassword" component={ResetPasswordPage} />
