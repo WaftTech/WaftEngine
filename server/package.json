@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for API Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.3",
+    "gravatar": "^1.6.0",
+    "hpp": "^0.2.2",
+    "http-status": "^1.2.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.4",
+    "morgan": "^1.9.0",
+    "nodemailer": "^4.6.7",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-jwt": "^4.0.0",
+    "pug": "^2.0.3",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "validator": "^10.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.2"
+  }
+}
