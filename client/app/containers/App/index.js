@@ -29,6 +29,7 @@ import SignupPage from '../SignupPage';
 import HomePage from '../HomePage';
 import NotFoundPage from '../NotFoundPage';
 import StartPage from '../StartPage';
+import Dashboard from '../Dashboard';
 
 const Playground = () => <div>Auth page</div>;
 const AuthenticatedPage = () => <div>This is private page</div>;
@@ -58,7 +59,7 @@ const App = props => {
       ))}
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
-        <UserRoute exact path="/" component={Playground} />
+        <Route exact path="/" component={Dashboard} />
         {/*<UserRoute exact path="/" component={Playground} />*/}
         <UserRoute exact path="/auth" component={AuthenticatedPage} />
         <GuestRoute exact path="/start" component={StartPage} />
