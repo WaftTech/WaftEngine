@@ -36,8 +36,7 @@ import { translationMessages } from './i18n';
 
 // Import CSS reset and Global Styles
 import './global-styles';
-import 'assets/bootstrap.min.css';
-import 'assets/global.css';
+import "assets/css/material-dashboard-react.css?v=1.5.0";
 
 // Create redux store with history
 const initialState = {};
