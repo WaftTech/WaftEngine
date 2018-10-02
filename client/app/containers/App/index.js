@@ -59,6 +59,7 @@ const App = props => {
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
         <UserRoute exact path="/" component={Playground} />
+        {/*<UserRoute exact path="/" component={Playground} />*/}
         <UserRoute exact path="/auth" component={AuthenticatedPage} />
         <GuestRoute exact path="/start" component={StartPage} />
         <Route exact path="/login" component={LoginPage} />
