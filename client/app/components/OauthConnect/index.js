@@ -24,12 +24,8 @@ class OauthConnect extends React.Component {
         </header>
         <div className="container">
           <div className="box-center">
-
             <h1> Just a door back </h1>
-            <p>
-              simply login with social accounts or
-      sign up in easy steps.
-        </p>
+            <p>simply login with social accounts or sign up in easy steps.</p>
             {/* <p>
               <Link to="/login">Sign in</Link>/<Link to="/register">Sign up</Link>{' '}
               with social login
@@ -44,7 +40,6 @@ class OauthConnect extends React.Component {
           </div>
         </div>
       </div>
-
     );
   }
 }
