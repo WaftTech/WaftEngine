@@ -30,6 +30,7 @@ import HomePage from '../HomePage';
 import NotFoundPage from '../NotFoundPage';
 import StartPage from '../StartPage';
 import Dashboard from '../Dashboard';
+import WtDashboard from '../WtDashboard';
 
 const Playground = () => <div>Auth page</div>;
 const AuthenticatedPage = () => <div>This is private page</div>;
@@ -59,8 +60,8 @@ const App = props => {
       ))}
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
-        <Route exact path="/" component={Dashboard} />
-        {/*<UserRoute exact path="/" component={Playground} />*/}
+        <UserRoute exact path="/" component={Dashboard} />
+        <UserRoute path="/wt" component={WtDashboard} />
         <UserRoute exact path="/auth" component={AuthenticatedPage} />
         <GuestRoute exact path="/start" component={StartPage} />
         <Route exact path="/login" component={LoginPage} />

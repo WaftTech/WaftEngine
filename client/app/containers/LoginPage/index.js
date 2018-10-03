@@ -9,21 +9,40 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import Link from 'react-router-dom/Link';
-import {
-  Button,
-  Form,
-  FormGroup,
-  FormControl,
-  HelpBlock,
-} from 'react-bootstrap';
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import styled from 'styled-components';
 
+import registerImg from 'assets/img/register.jpg';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { loginRequest, resetPasswordRequest } from './actions';
 import { makeSelectIsRequesting, makeSelectErrors } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+
+const FlexDiv = styled.div`
+  color: #fff;
+  border: 0;
+  height: 100%;
+  margin: 0;
+  display: flex!important;
+  padding: 120px 0;
+  position: relative;
+  min-height: 100vh;
+  align-items: center;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(${registerImg});
+`;
+
+const FormWrapper = styled.div`
+  z-index: 4;
+  margin-left: auto;
+  padding-left: 15px;
+  margin-right: auto;
+  padding-right: 15px;
+`;
 
 class LoginPage extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -45,7 +64,7 @@ class LoginPage extends React.PureComponent {
       this.setState({ errors });
     }
   }
-  /* for other input fields */
+  /* for other Input fields */
   handleChange = e => {
     e.persist();
     const { name, value } = e.target;
@@ -85,36 +104,40 @@ class LoginPage extends React.PureComponent {
     const { data, errors } = this.state;
     const { isRequesting } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormGroup validationState={errors.email ? 'error' : null}>
-          <FormControl
-            type="email"
-            name="email"
-            placeholder="E-mail address"
-            onChange={this.handleChange}
-            value={data.email || ''}
-            autoComplete="username"
-          />
-          {!!errors.email && <HelpBlock>{errors.email}</HelpBlock>}
-        </FormGroup>
-        <FormGroup validationState={errors.password ? 'error' : null}>
-          <FormControl
-            name="password"
-            placeholder="Password"
-            type="password"
-            onChange={this.handleChange}
-            value={data.password || ''}
-            autoComplete="current-password"
-          />
-          {!!errors.password && <HelpBlock>{errors.password}</HelpBlock>}
-        </FormGroup>
-        <Button type="submit" bsStyle="primary" disabled={isRequesting}>
-          {isRequesting ? 'loading' : 'Login'}
-        </Button>
-        <a onClick={isRequesting ? () => null : () => this.resetPassword()}>
-          {isRequesting ? 'loading' : 'Reset Password'}
-        </a>
-      </Form>
+      <FlexDiv>
+        <FormWrapper>
+        <form onSubmit={this.handleSubmit}>
+          <div className={errors.email ? 'error' : ''}>
+            <Input
+              type="email"
+              name="email"
+              placeholder="E-mail address"
+              onChange={this.handleChange}
+              value={data.email || ''}
+              autoComplete="username"
+            />
+            {!!errors.email && <HelpBlock>{errors.email}</HelpBlock>}
+          </div>
+          <div className={errors.password ? 'error' : ''}>
+            <Input
+              name="password"
+              placeholder="Password"
+              type="password"
+              onChange={this.handleChange}
+              value={data.password || ''}
+              autoComplete="current-password"
+            />
+            {!!errors.password && <HelpBlock>{errors.password}</HelpBlock>}
+          </div>
+          <button type="submit" disabled={isRequesting}>
+            {isRequesting ? 'loading' : 'Login'}
+          </button>
+          <a onClick={isRequesting ? () => null : () => this.resetPassword()}>
+            {isRequesting ? 'loading' : 'Reset Password'}
+          </a>
+        </form>
+        </FormWrapper>
+      </FlexDiv>
     );
   }
 }
@@ -130,6 +153,16 @@ LoginPage.propTypes = {
     toJS: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  Input: {
+    margin: theme.spacing.unit,
+  },
+});
 
 const mapStateToProps = createStructuredSelector({
   isRequesting: makeSelectIsRequesting(),
@@ -148,8 +181,10 @@ const withConnect = connect(
 
 const withReducer = injectReducer({ key: 'loginPage', reducer });
 const withSaga = injectSaga({ key: 'loginPage', saga });
+const withStyle = withStyles(styles);
 
 export default compose(
+  withStyle,
   withReducer,
   withSaga,
   withConnect,
