@@ -14,7 +14,7 @@ function* redirectOnSuccess(redirect) {
   if (!!redirect) {
     yield put(push(redirect));
   } else {
-    yield put(push('/'));
+    yield put(push('/wt'));
   }
 }
 

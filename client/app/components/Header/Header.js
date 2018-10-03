@@ -28,7 +28,7 @@ function Header({ ...props }) {
   }
   const { classes, color } = props;
   const appBarClasses = classNames({
-    [` ${  classes[color]}`]: color,
+    [` ${classes[color]}`]: color,
   });
   return (
     <AppBar className={classes.appBar + appBarClasses}>
