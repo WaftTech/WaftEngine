@@ -13,6 +13,7 @@ import ArticleListPage from '../ArticleListPage';
 import CategoryManagePage from '../CategoryManagePage';
 import NewsListPage from '../NewsListPage';
 import OrganizationInfoPage from '../OrganizationInfoPage';
+import OrganizationInfoAddEditPage from '../OrganizationInfoPage/AddEditPage';
 import RashifalListPage from '../RashifalListPage';
 import RoleManagePage from '../RoleManagePage';
 import UserManagePage from '../UserManagePage';
@@ -26,6 +27,22 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage,
     exact: true,
+  },
+  {
+    path: '/wt/organization-info/add',
+    sidebarName: 'Organization Info',
+    navbarName: 'Organization Info',
+    icon: Dashboard,
+    component: OrganizationInfoAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/organization-info/edit/:id',
+    sidebarName: 'Organization Info',
+    navbarName: 'Organization Info',
+    icon: Dashboard,
+    component: OrganizationInfoAddEditPage,
+    hide: true,
   },
   {
     path: '/wt/organization-info',

@@ -21,6 +21,11 @@ function Header({ ...props }) {
     props.routes.map((prop, key) => {
       if (prop.path === props.location.pathname) {
         name = prop.navbarName;
+      } else {
+        const splits = props.location.pathname.split('/');
+        if (splits.length > 2 && splits[splits.length - 2]) {
+          name = 'Edit';
+        }
       }
       return null;
     });
