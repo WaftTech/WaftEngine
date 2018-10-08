@@ -13,8 +13,8 @@ export const DEFAULT_LOCALE = 'en';
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://localhost:3333/api/'
-    : 'http://localhost:3333/api/';
+    ? 'http://localhost:5000/api/'
+    : 'http://localhost:5000/api/';
 
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
