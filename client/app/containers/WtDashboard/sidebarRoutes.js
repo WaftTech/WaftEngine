@@ -8,15 +8,23 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views
 import DashboardPage from '../Dashboard';
-import ModuleCreatePage from '../ModuleCreatePage';
+import OrganizationInfoPage from '../OrganizationInfoPage';
 
 const dashboardRoutes = [
   {
     path: "/wt",
-    sidebarName: "Create Module",
-    navbarName: "Create Module",
+    sidebarName: "Dashboard",
+    navbarName: "Dashboard",
     icon: Dashboard,
-    component: ModuleCreatePage,
+    component: DashboardPage,
+    exact: true,
+  },
+  {
+    path: "/wt/organization-info",
+    sidebarName: "Organization Info",
+    navbarName: "Organization Info",
+    icon: Dashboard,
+    component: OrganizationInfoPage,
     exact: true,
   },
   // {
