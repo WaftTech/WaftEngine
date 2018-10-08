@@ -170,6 +170,7 @@
     "react": "16.4.1",
     "react-bootstrap": "0.32.4",
     "react-chartist": "0.13.1",
+    "react-ckeditor-component": "1.1.0",
     "react-dom": "16.4.1",
     "react-google-maps": "9.4.5",
     "react-helmet": "5.2.0",
