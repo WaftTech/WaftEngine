@@ -11,10 +11,19 @@ orgController.GetOrganization = async (req, res, next) => {
 orgController.SaveOrganization = async (req, res, next) => {
   try {
     const org = req.body;
+    console.log(req.files);
     if (org._id) {
+      if (req.files && req.files[0]) {
+        org.ProfileImage = req.files[0];
+      }
+      if (req.files && req.files[1]) {
+        org.ProfileImage1 = req.files[1];
+      }
       const update = await OrgSch.findByIdAndUpdate(org._id, { $set: org });
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Organization Saved Success !!', null);
     } else {
+      org.ProfileImage = req.files[0];
+      org.ProfileImage1 = req.files[1];
       const newOrg = new OrgSch(org);
       newOrg.slug = newOrg.Organization;
       const orgSave = await newOrg.save();
