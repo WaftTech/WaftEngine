@@ -15,13 +15,14 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectOrganizationInfoPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+// import CustomInput from '../../components/CustomInput/CustomInput';
 
 /* eslint-disable react/prefer-stateless-function */
 export class OrganizationInfoPage extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" />
+        <input />
         <button>Search</button>
         <button>Add New</button>
       </div>
