@@ -8,3 +8,17 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+
+export const DEFAULT_LOCALE = 'en';
+
+export const API_BASE =
+  process.env.NODE_ENV === 'production'
+    ? 'http://localhost:3333/api/'
+    : 'http://localhost:3333/api/';
+
+export const SET_USER = 'app/App/SET_USER';
+export const SET_TOKEN = 'app/App/SET_TOKEN';
+export const SET_DIALOG = 'app/App/SET_DIALOG';
+export const ADD_MESSAGE = 'app/App/ADD_MESSAGE';
+export const DELETE_MESSAGE = 'app/App/DELETE_MESSAGE';
+export const LOGOUT = 'app/App/LOGOUT';
