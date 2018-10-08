@@ -4,9 +4,6 @@ const router = express.Router();
 // All route of User
 const userRoutes = require('./api/users');
 router.use('/user', userRoutes);
-// All route of Team
-const teamRoutes = require('./api/teams');
-router.use('/team', teamRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
