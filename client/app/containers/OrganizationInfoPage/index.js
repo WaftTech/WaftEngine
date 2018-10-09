@@ -149,6 +149,7 @@ export class OrganizationInfoPage extends React.Component {
                         <IconButton
                           aria-label="Edit"
                           className={classes.tableActionButton}
+                          onClick={() => this.handleEdit(1)}
                         >
                           <Edit
                             className={
