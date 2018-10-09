@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import CKEditor from 'react-ckeditor-component';
+import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import Dropzone from 'react-dropzone';
+
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -15,7 +26,24 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import { DAYS } from 'containers/App/constants';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
+
 const styles = {
+  formControl: {
+    minWidth: 120,
+    maxWidth: 300,
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {},
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
     margin: '0',
@@ -34,16 +62,84 @@ const styles = {
   },
 };
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 class AddEdit extends Component {
-  state = { services: '', about: '', features: '' };
+  state = {
+    data: {
+      FeatureofOrganization: '',
+      AboutOrganization: '',
+      OrganizationEmail: '',
+      IsFeature: false,
+      District: '',
+      PhoneNo: '',
+      IsActive: false,
+      VDCMunicipality: '',
+      State: '',
+      StreetAddress: '',
+      Latitude: '',
+      Longitude: '',
+      Website: '',
+      Links: '',
+      ProfileImage: null,
+      IsVerified: false,
+      Added_at: '',
+      Organization: '',
+      OpenningDays: [],
+      OpenningTime: '',
+      Services: '',
+      Category: '',
+      ProfileImage1: null,
+    },
+  };
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.oneOrganization !== nextProps.oneOrganization) {
+      this.setState(state => ({
+        data: { ...state.data, ...nextProps.oneOrganization.toJS() },
+      }));
+    }
+  }
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
+    this.setState(state => ({ data: { ...state.data, [name]: newContent } }));
   };
   handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+    event.persist();
+    this.setState(state => ({
+      data: { ...state.data, [name]: event.target.value },
+    }));
+  };
+  handleCheckedChange = name => event => {
+    this.setState(state => ({
+      data: { ...state.data, [name]: event.target.checked },
+    }));
+  };
+  handleSave = () => {
+    this.props.addEdit(this.state.data);
+  };
+  handleGoBack = () => {
+    this.props.history.push('/wt/organization-info');
+  };
+  onDrop = (files, name) => {
+    const file = files[0];
+    this.setState(state => ({ data: { ...state.data, [name]: file } }));
   };
   render() {
+    const { data } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -60,6 +156,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Organization"
                       id="organization-name"
+                      inputProps={{
+                        onChange: this.handleChange('Organization'),
+                        value: data.Organization,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -69,6 +169,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Category"
                       id="organization-category"
+                      inputProps={{
+                        onChange: this.handleChange('Category'),
+                        value: data.Category,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -80,6 +184,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Phone No."
                       id="organization-phone"
+                      inputProps={{
+                        onChange: this.handleChange('PhoneNo'),
+                        value: data.PhoneNo,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -89,6 +197,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Organization Email"
                       id="organization-email"
+                      inputProps={{
+                        onChange: this.handleChange('OrganizationEmail'),
+                        value: data.OrganizationEmail,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -97,18 +209,44 @@ class AddEdit extends Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Opening Days"
-                      id="organization-opendays"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor="select-multiple-days">
+                        Opening Days
+                      </InputLabel>
+                      <Select
+                        multiple
+                        value={data.OpenningDays}
+                        onChange={this.handleChange('OpenningDays')}
+                        input={<Input id="select-multiple-days" />}
+                        renderValue={selected => (
+                          <div className={classes.chips}>
+                            {selected.map(value => (
+                              <Chip
+                                key={value}
+                                label={value}
+                                className={classes.chip}
+                              />
+                            ))}
+                          </div>
+                        )}
+                        MenuProps={MenuProps}
+                      >
+                        {DAYS.map(name => (
+                          <MenuItem key={name} value={name}>
+                            {name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Organization Time"
                       id="organization-opentime"
+                      inputProps={{
+                        onChange: this.handleChange('OpenningTime'),
+                        value: data.OpenningTime,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -120,6 +258,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="State"
                       id="state"
+                      inputProps={{
+                        onChange: this.handleChange('State'),
+                        value: data.State,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -129,6 +271,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="District"
                       id="district"
+                      inputProps={{
+                        onChange: this.handleChange('District'),
+                        value: data.District,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -138,6 +284,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="VDC/Municipality"
                       id="vdc-municipality"
+                      inputProps={{
+                        onChange: this.handleChange('VDCMunicipality'),
+                        value: data.VDCMunicipality,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -149,6 +299,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Street Address"
                       id="street-address"
+                      inputProps={{
+                        onChange: this.handleChange('StreetAddress'),
+                        value: data.StreetAddress,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -158,6 +312,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Latitude"
                       id="latitude"
+                      inputProps={{
+                        onChange: this.handleChange('Latitude'),
+                        value: data.Latitude,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -167,6 +325,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Longitude"
                       id="longitude"
+                      inputProps={{
+                        onChange: this.handleChange('Longitude'),
+                        value: data.Longitude,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -180,9 +342,9 @@ class AddEdit extends Component {
                     </InputLabel>
                     <CKEditor
                       name="services"
-                      content={this.state.services}
+                      content={data.Services}
                       events={{
-                        change: e => this.handleEditorChange(e, 'services'),
+                        change: e => this.handleEditorChange(e, 'Services'),
                       }}
                     />
                   </GridItem>
@@ -194,9 +356,10 @@ class AddEdit extends Component {
                     </InputLabel>
                     <CKEditor
                       name="about"
-                      content={this.state.about}
+                      content={data.AboutOrganization}
                       events={{
-                        change: e => this.handleEditorChange(e, 'about'),
+                        change: e =>
+                          this.handleEditorChange(e, 'AboutOrganization'),
                       }}
                     />
                   </GridItem>
@@ -208,9 +371,10 @@ class AddEdit extends Component {
                     </InputLabel>
                     <CKEditor
                       name="features"
-                      content={this.state.features}
+                      content={data.FeatureofOrganization}
                       events={{
-                        change: e => this.handleEditorChange(e, 'features'),
+                        change: e =>
+                          this.handleEditorChange(e, 'FeatureofOrganization'),
                       }}
                     />
                   </GridItem>
@@ -220,6 +384,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Website"
                       id="organization-website"
+                      inputProps={{
+                        onChange: this.handleChange('Website'),
+                        value: data.Website,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -229,6 +397,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Links"
                       id="organization-links"
+                      inputProps={{
+                        onChange: this.handleChange('Links'),
+                        value: data.Links,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -243,10 +415,10 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isVerified || false}
+                          checked={data.IsVerified || false}
                           tabIndex={-1}
-                          onClick={this.handleChange('isVerified')}
-                          value="isVerified"
+                          onClick={this.handleChange('IsVerified')}
+                          value="IsVerified"
                           color="primary"
                         />
                       }
@@ -255,10 +427,10 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isActive || false}
+                          checked={data.IsActive || false}
                           tabIndex={-1}
-                          onClick={this.handleChange('isActive')}
-                          value="isActive"
+                          onClick={this.handleChange('IsActive')}
+                          value="IsActive"
                           color="primary"
                         />
                       }
@@ -267,9 +439,9 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isFeatured || false}
-                          onClick={this.handleChange('isFeatured')}
-                          value="isFeatured"
+                          checked={data.IsFeatured || false}
+                          onClick={this.handleChange('IsFeatured')}
+                          value="IsFeatured"
                           color="primary"
                         />
                       }
@@ -277,10 +449,32 @@ class AddEdit extends Component {
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <Dropzone
+                      onDrop={files => this.onDrop(files, 'ProfileImage')}
+                      multiple={false}
+                    >
+                      <p>Drop your profile image</p>
+                    </Dropzone>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <Dropzone
+                      onDrop={files => this.onDrop(files, 'ProfileImage1')}
+                      multiple={false}
+                    >
+                      <p>Drop your profile image</p>
+                    </Dropzone>
+                  </GridItem>
+                </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Save</Button>
-                <Button color="primary">Back</Button>
+                <Button color="primary" onClick={this.handleSave}>
+                  Save
+                </Button>
+                <Button color="primary" onClick={this.handleGoBack}>
+                  Back
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -290,4 +484,28 @@ class AddEdit extends Component {
   }
 }
 
-export default withStyles(styles)(AddEdit);
+const withStyle = withStyles(styles);
+
+const withReducer = injectReducer({ key: 'organizationInfoPage', reducer });
+const withSaga = injectSaga({ key: 'organizationInfoPage', saga });
+
+const mapStateToProps = createStructuredSelector({
+  oneOrganization: makeSelectOne(),
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadOne: payload => dispatch(loadOneRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withRouter,
+  withStyle,
+  withReducer,
+  withSaga,
+  withConnect,
+)(AddEdit);
