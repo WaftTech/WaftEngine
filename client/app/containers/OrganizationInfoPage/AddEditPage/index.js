@@ -3,6 +3,8 @@ import CKEditor from 'react-ckeditor-component';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -10,7 +12,6 @@ import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
-import CardAvatar from 'components/Card/CardAvatar';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
@@ -39,6 +40,9 @@ class AddEdit extends Component {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
   };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -52,7 +56,7 @@ class AddEdit extends Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={5}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Organization"
                       id="organization-name"
@@ -61,7 +65,7 @@ class AddEdit extends Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Category"
                       id="organization-category"
@@ -211,9 +215,72 @@ class AddEdit extends Component {
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Website"
+                      id="organization-website"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Links"
+                      id="organization-links"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <InputLabel style={{ color: '#AAAAAA' }}>
+                      Activity Type
+                    </InputLabel>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.isVerified || false}
+                          tabIndex={-1}
+                          onClick={this.handleChange('isVerified')}
+                          value="isVerified"
+                          color="primary"
+                        />
+                      }
+                      label="Is Verified"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.isActive || false}
+                          tabIndex={-1}
+                          onClick={this.handleChange('isActive')}
+                          value="isActive"
+                          color="primary"
+                        />
+                      }
+                      label="Is Active"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.isFeatured || false}
+                          onClick={this.handleChange('isFeatured')}
+                          value="isFeatured"
+                          color="primary"
+                        />
+                      }
+                      label="Is Featured"
+                    />
+                  </GridItem>
+                </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Update Profile</Button>
+                <Button color="primary">Save</Button>
+                <Button color="primary">Back</Button>
               </CardFooter>
             </Card>
           </GridItem>

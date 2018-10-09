@@ -23,7 +23,7 @@ function Header({ ...props }) {
         name = prop.navbarName;
       } else {
         const splits = props.location.pathname.split('/');
-        if (splits.length > 2 && splits[splits.length - 2]) {
+        if (splits.length > 2 && splits[splits.length - 2] === 'edit') {
           name = 'Edit';
         }
       }

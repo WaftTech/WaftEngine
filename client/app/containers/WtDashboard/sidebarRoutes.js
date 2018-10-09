@@ -1,15 +1,17 @@
 // @material-ui/icons
 import Dashboard from '@material-ui/icons/Dashboard';
-import Person from '@material-ui/icons/Person';
-import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import BubbleChart from '@material-ui/icons/BubbleChart';
-import LocationOn from '@material-ui/icons/LocationOn';
-import Notifications from '@material-ui/icons/Notifications';
-import Unarchive from '@material-ui/icons/Unarchive';
+// import Person from '@material-ui/icons/Person';
+// import LibraryBooks from '@material-ui/icons/LibraryBooks';
+// import BubbleChart from '@material-ui/icons/BubbleChart';
+// import LocationOn from '@material-ui/icons/LocationOn';
+// import Notifications from '@material-ui/icons/Notifications';
+// import Unarchive from '@material-ui/icons/Unarchive';
 // core components/views
 import DashboardPage from '../Dashboard';
 import AdsListingPage from '../AdsListingPage';
+import AdsListingAddEditPage from '../AdsListingPage/AddEditPage';
 import ArticleListPage from '../ArticleListPage';
+import ArticleListAddEditPage from '../ArticleListPage/AddEditPage';
 import CategoryManagePage from '../CategoryManagePage';
 import NewsListPage from '../NewsListPage';
 import OrganizationInfoPage from '../OrganizationInfoPage';
@@ -18,6 +20,7 @@ import RashifalListPage from '../RashifalListPage';
 import RoleManagePage from '../RoleManagePage';
 import UserManagePage from '../UserManagePage';
 import VideoLinkPage from '../VideoLinkPage';
+import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
 
 const dashboardRoutes = [
   {
@@ -31,7 +34,7 @@ const dashboardRoutes = [
   {
     path: '/wt/organization-info/add',
     sidebarName: 'Organization Info',
-    navbarName: 'Organization Info',
+    navbarName: 'Add Organization Info',
     icon: Dashboard,
     component: OrganizationInfoAddEditPage,
     hide: true,
@@ -52,6 +55,22 @@ const dashboardRoutes = [
     component: OrganizationInfoPage,
   },
   {
+    path: '/wt/link-manage/add',
+    sidebarName: 'Video Link Manage',
+    navbarName: 'Add Video Link',
+    icon: Dashboard,
+    component: VideoLinkAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/link-manage/edit/:id',
+    sidebarName: 'Video Link Manage',
+    navbarName: 'Video Link Manage',
+    icon: Dashboard,
+    component: VideoLinkAddEditPage,
+    hide: true,
+  },
+  {
     path: '/wt/link-manage',
     sidebarName: 'Video Link Manage',
     navbarName: 'Video Link Manage',
@@ -59,11 +78,43 @@ const dashboardRoutes = [
     component: VideoLinkPage,
   },
   {
+    path: '/wt/ads-manage/add',
+    sidebarName: 'Ads Manage',
+    navbarName: 'Add Ads Manage',
+    icon: Dashboard,
+    component: AdsListingAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/ads-manage/edit/:id',
+    sidebarName: 'Ads Manage',
+    navbarName: 'Ads Manage',
+    icon: Dashboard,
+    component: AdsListingAddEditPage,
+    hide: true,
+  },
+  {
     path: '/wt/ads-manage',
     sidebarName: 'Ads Manage',
     navbarName: 'Ads Manage',
     icon: Dashboard,
     component: AdsListingPage,
+  },
+  {
+    path: '/wt/articles-manage/add',
+    sidebarName: 'Articles Manage',
+    navbarName: 'Add Article',
+    icon: Dashboard,
+    component: ArticleListAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/articles-manage/edit/:id',
+    sidebarName: 'Articles Manage',
+    navbarName: 'Articles Manage',
+    icon: Dashboard,
+    component: ArticleListAddEditPage,
+    hide: true,
   },
   {
     path: '/wt/articles-manage',
