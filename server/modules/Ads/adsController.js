@@ -21,7 +21,6 @@ adsController.SaveAds = async (req, res, next) => {
     } else {
       ads.AdsImage = req.files[0];
       const newCat = new AdsSch(ads);
-      newCat.slug = newCat.Ads;
       const adsSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, adsSave, null, 'Ads Saved Success !!', null);
     }

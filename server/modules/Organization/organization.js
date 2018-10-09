@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { slugify } = require('../../helper/others.helper');
 
 const OrganizationSchema = new Schema({
   Organization: { type: String, required: true },
@@ -27,6 +28,12 @@ const OrganizationSchema = new Schema({
   IsFeature: { type: Boolean, required: true, default: false },
   Added_by: { type: Schema.Types.ObjectId },
   Added_at: { type: Date, default: Date.now },
+});
+// on every save, add the date
+OrganizationSchema.pre('save', function(next) {
+  // change the updated_at field to current date
+  this.slug = slugify(this.Organization);
+  next();
 });
 
 module.exports = Organization = mongoose.model('organization', OrganizationSchema);

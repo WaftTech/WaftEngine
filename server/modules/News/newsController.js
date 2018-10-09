@@ -21,7 +21,6 @@ newsController.SaveNews = async (req, res, next) => {
     } else {
       news.NewsImage = req.files[0];
       const newCat = new NewsSch(news);
-      newCat.slug = newCat.News;
       const newsSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, newsSave, null, 'News Saved Success !!', null);
     }
