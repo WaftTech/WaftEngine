@@ -39,7 +39,6 @@ function* addEdit(action) {
   );
 }
 
-// Individual exports for testing
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
