@@ -7,7 +7,7 @@ import * as actions from './actions';
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
   yield call(
-    Api.get('link', actions.loadAllSuccess, actions.loadAllFailure, token),
+    Api.get('news', actions.loadAllSuccess, actions.loadAllFailure, token),
   );
 }
 
@@ -15,7 +15,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `link/${action.payload}`,
+      `news/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token,
@@ -26,10 +26,10 @@ function* loadOne(action) {
 function* addEdit(action) {
   const token = yield select(makeSelectToken());
   const { ProfileImage, ProfileImage1, ...data } = action.payload;
-  const files = {ProfileImage, ProfileImage1};
+  const files = { ProfileImage, ProfileImage1 };
   yield call(
     Api.multipartPost(
-      'link',
+      'news',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
