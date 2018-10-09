@@ -16,6 +16,7 @@ rashifalController.SaveRashifal = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Rashifal Saved Success !!', null);
     } else {
       const newCat = new RashifalSch(rashifal);
+      newCat.Added_by = req.user.id;
       const rashifalSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, rashifalSave, null, 'Rashifal Saved Success !!', null);
     }

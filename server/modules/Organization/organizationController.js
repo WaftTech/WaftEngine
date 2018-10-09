@@ -11,7 +11,6 @@ orgController.GetOrganization = async (req, res, next) => {
 orgController.SaveOrganization = async (req, res, next) => {
   try {
     const org = req.body;
-    console.log(req.files);
     if (org._id) {
       if (req.files && req.files[0]) {
         org.ProfileImage = req.files[0];
