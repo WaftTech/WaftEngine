@@ -11,7 +11,6 @@ adsController.GetAds = async (req, res, next) => {
 adsController.SaveAds = async (req, res, next) => {
   try {
     const ads = req.body;
-    console.log(req.files);
     if (ads._id) {
       if (req.files && req.files[0]) {
         ads.AdsImage = req.files[0];
@@ -20,8 +19,8 @@ adsController.SaveAds = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Ads Saved Success !!', null);
     } else {
       ads.AdsImage = req.files[0];
+      ads.Added_by = req.user.id;
       const newCat = new AdsSch(ads);
-      newCat.slug = newCat.Ads;
       const adsSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, adsSave, null, 'Ads Saved Success !!', null);
     }

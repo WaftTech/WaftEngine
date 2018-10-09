@@ -11,13 +11,12 @@ linkController.GetLink = async (req, res, next) => {
 linkController.SaveLink = async (req, res, next) => {
   try {
     const link = req.body;
-    console.log(req.files);
     if (link._id) {
       const update = await CatSch.findByIdAndUpdate(link._id, { $set: link });
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Link Saved Success !!', null);
     } else {
+      link.Added_by = req.user.id;
       const newCat = new CatSch(link);
-      newCat.slug = newCat.Link;
       const linkSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, linkSave, null, 'Link Saved Success !!', null);
     }
