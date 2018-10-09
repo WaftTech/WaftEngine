@@ -1,21 +1,24 @@
-/*
- *
- * NewsListPage reducer
- *
- */
-
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION } from './constants';
+import * as types from './constants';
 
-export const initialState = fromJS({});
+export const initialState = fromJS({
+  all: [],
+  one: {},
+});
 
-function newsListPageReducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case types.LOAD_ALL_SUCCESS:
+      return state.merge({
+        all: fromJS(action.payload.data),
+      });
+    case types.LOAD_ONE_SUCCESS:
+      return state.merge({
+        one: fromJS(action.payload.data),
+      });
     default:
       return state;
   }
 }
 
-export default newsListPageReducer;
+export default reducer;

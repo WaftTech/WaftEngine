@@ -5,19 +5,9 @@ import { initialState } from './reducer';
  * Direct selector to the userManagePage state domain
  */
 
-const selectUserManagePageDomain = state =>
-  state.get('userManagePage', initialState);
+const selectDomain = state => state.get('userManagePage', initialState);
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by UserManagePage
- */
-
-const makeSelectUserManagePage = () =>
-  createSelector(selectUserManagePageDomain, substate => substate.toJS());
-
-export default makeSelectUserManagePage;
-export { selectUserManagePageDomain };
+export const makeSelectAll = () =>
+  createSelector(selectDomain, state => state.get('all'));
+export const makeSelectOne = () =>
+  createSelector(selectDomain, state => state.get('one'));
