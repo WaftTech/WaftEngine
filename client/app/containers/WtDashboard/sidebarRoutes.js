@@ -17,6 +17,7 @@ import NewsListPage from '../NewsListPage';
 import OrganizationInfoPage from '../OrganizationInfoPage';
 import OrganizationInfoAddEditPage from '../OrganizationInfoPage/AddEditPage';
 import RashifalListPage from '../RashifalListPage';
+import RashifalListAddEditPage from '../RashifalListPage/AddEditPage';
 import RoleManagePage from '../RoleManagePage';
 import UserManagePage from '../UserManagePage';
 import VideoLinkPage from '../VideoLinkPage';
@@ -122,6 +123,22 @@ const dashboardRoutes = [
     navbarName: 'Articles Manage',
     icon: Dashboard,
     component: ArticleListPage,
+  },
+  {
+    path: '/wt/rashifal-manage/add',
+    sidebarName: 'Rashifal Manage',
+    navbarName: 'Add Rashifal',
+    icon: Dashboard,
+    component: RashifalListAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/rashifal-manage/edit/:id',
+    sidebarName: 'Rashifal Manage',
+    navbarName: 'Rashifal Manage',
+    icon: Dashboard,
+    component: RashifalListAddEditPage,
+    hide: true,
   },
   {
     path: '/wt/rashifal-manage',
