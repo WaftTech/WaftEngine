@@ -1,9 +1,3 @@
-/**
- *
- * OrganizationInfoPage
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -31,10 +25,10 @@ import CardFooter from '../../components/Card/CardFooter';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import { makeSelectAll } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { loadAllRequest } from './actions';
+import { makeSelectAll } from './selectors';
 
 const styles = theme => ({
   button: {

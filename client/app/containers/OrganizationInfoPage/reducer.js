@@ -1,9 +1,3 @@
-/*
- *
- * OrganizationInfoPage reducer
- *
- */
-
 import { fromJS } from 'immutable';
 import * as types from './constants';
 
@@ -12,7 +6,7 @@ export const initialState = fromJS({
   one: {},
 });
 
-function organizationInfoPageReducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case types.DEFAULT_ACTION:
       return state;
@@ -29,4 +23,4 @@ function organizationInfoPageReducer(state = initialState, action) {
   }
 }
 
-export default organizationInfoPageReducer;
+export default reducer;
