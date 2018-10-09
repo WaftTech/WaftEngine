@@ -60,7 +60,8 @@ const App = props => {
       ))}
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
-        <UserRoute exact path="/" component={Dashboard} />
+        <UserRoute exact path="/" component={HomePage} />
+        <UserRoute exact path="/dashboard" component={Dashboard} />
         <UserRoute path="/wt" component={WtDashboard} />
         <UserRoute exact path="/auth" component={AuthenticatedPage} />
         <GuestRoute exact path="/start" component={StartPage} />
