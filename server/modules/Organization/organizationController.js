@@ -25,7 +25,6 @@ orgController.SaveOrganization = async (req, res, next) => {
       org.ProfileImage = req.files[0];
       org.ProfileImage1 = req.files[1];
       const newOrg = new OrgSch(org);
-      newOrg.slug = newOrg.Organization;
       newOrg.Added_by = req.user.id;
       const orgSave = await newOrg.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, orgSave, null, 'Organization Saved Success !!', null);

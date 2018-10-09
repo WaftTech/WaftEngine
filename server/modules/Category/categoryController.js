@@ -21,7 +21,6 @@ categotyController.SaveCategory = async (req, res, next) => {
     } else {
       categoty.CategoryImage = req.files[0];
       const newCat = new CatSch(categoty);
-      newCat.slug = newCat.Category;
       const categotySave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, categotySave, null, 'Category Saved Success !!', null);
     }

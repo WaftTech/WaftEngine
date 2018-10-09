@@ -17,7 +17,6 @@ linkController.SaveLink = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Link Saved Success !!', null);
     } else {
       const newCat = new CatSch(link);
-      newCat.slug = newCat.Link;
       const linkSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, linkSave, null, 'Link Saved Success !!', null);
     }

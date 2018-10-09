@@ -21,7 +21,6 @@ articleController.SaveArticle = async (req, res, next) => {
     } else {
       article.ArticleImage = req.files[0];
       const newCat = new ArticleSch(article);
-      newCat.slug = newCat.Article;
       const articleSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, articleSave, null, 'Article Saved Success !!', null);
     }
