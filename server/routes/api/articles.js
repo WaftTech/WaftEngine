@@ -7,7 +7,7 @@ const dModule = require('../../modules/Articles/articlesController');
 const authenticationMiddleware = require('../../middleware/authentication.middleware');
 
 router.get('/', dModule.GetArticle);
-router.post('/', upload.array('file', 1), dModule.SaveArticle);
+router.post('/', authenticationMiddleware.authorization, upload.array('file', 1), dModule.SaveArticle);
 router.get('/:slug', dModule.GetArticleDetail);
 // router
 //   .get('/:name',  dModule.getModuleData)

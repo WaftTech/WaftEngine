@@ -7,8 +7,10 @@ const dModule = require('../../modules/Organization/organizationController');
 const authenticationMiddleware = require('../../middleware/authentication.middleware');
 
 router.get('/', dModule.GetOrganization);
-router.post('/', upload.array('file', 2), dModule.SaveOrganization);
+router.post('/', authenticationMiddleware.authorization, upload.array('file', 2), dModule.SaveOrganization);
 router.get('/:slug', dModule.GetOrganizationDetail);
+router.get('/id/:slug', dModule.GetOrganizationDetailByID);
+router.delete('/:id', authenticationMiddleware.authorization, dModule.DeleteOrganization);
 // router
 //   .get('/:name',  dModule.getModuleData)
 //   .post('/:name', dModule.saveModuleData);
