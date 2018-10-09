@@ -26,8 +26,8 @@ router.use('/news', newsRoutes);
 const linkRoutes = require('./api/links');
 router.use('/link', linkRoutes);
 // All route of Static Data from DB Module
-const linkRoutes = require('./api/static');
-router.use('/static', linkRoutes);
+const staticRoutes = require('./api/static');
+router.use('/static', staticRoutes);
 
 // Edit update
 // router.post('/delete/:id', user.delete);

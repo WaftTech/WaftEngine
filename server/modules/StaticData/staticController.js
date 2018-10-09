@@ -10,12 +10,12 @@ staticController.GetStates = async (req, res, next) => {
 };
 staticController.GetDisctrict = async (req, res, next) => {
   const StateID = req.params.StateID;
-  const static = await CatSch.find({ StateID: StateID });
+  const static = await Disctrict.find({ StateID: StateID });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'Distrct of Sate Get Success !!', null);
 };
 staticController.GetVdcMunicipality = async (req, res, next) => {
   const DistrictID = req.params.DistrictID;
-  const static = await CatSch.find({ DistrictID: DistrictID });
+  const static = await VdcMunicipality.find({ DistrictID: DistrictID });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'Distrct of Sate Get Success !!', null);
 };
 
