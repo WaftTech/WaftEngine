@@ -4,7 +4,7 @@ const { slugify } = require('../../helper/others.helper');
 
 const OrganizationSchema = new Schema({
   Organization: { type: String, required: true },
-  slug: { type: String, required: true, unique: true },
+  slug: { type: String, unique: true },
   Category: { type: String, required: true },
   PhoneNo: { type: String, required: true },
   OrganizationEmail: { type: String, required: true },
@@ -26,8 +26,11 @@ const OrganizationSchema = new Schema({
   IsVerified: { type: Boolean, required: true, default: false },
   IsActive: { type: Boolean, required: true, default: false },
   IsFeature: { type: Boolean, required: true, default: false },
+  IsDeleted: { type: Boolean, required: true, default: false },
   Added_by: { type: Schema.Types.ObjectId },
   Added_at: { type: Date, default: Date.now },
+  Deleted_by: { type: Schema.Types.ObjectId },
+  Deleted_at: { type: Date },
 });
 // on every save, add the date
 OrganizationSchema.pre('save', function(next) {
