@@ -31,9 +31,10 @@ import CardFooter from '../../components/Card/CardFooter';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import makeSelectOrganizationInfoPage from './selectors';
+import { makeSelectAll } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { loadAllRequest } from './actions';
 
 const styles = theme => ({
   button: {
@@ -70,18 +71,76 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class OrganizationInfoPage extends React.Component {
+  componentDidMount() {
+    this.props.loadAll();
+  }
+
   handleAdd = () => {
     this.props.history.push('/wt/organization-info/add');
   };
-  handleEdit = id => {
-    this.props.history.push(`/wt/organization-info/edit/${id}`);
+  handleEdit = slug => {
+    this.props.history.push(`/wt/organization-info/edit/${slug}`);
   };
   handleDelete = id => {
     // shoe modal && api call
     // this.props.history.push(`/wt/organization-info/edit/${id}`);
   };
   render() {
-    const { classes } = this.props;
+    const { classes, allOrganizations } = this.props;
+    const allOrganizationsObj = allOrganizations.toJS();
+    console.log(allOrganizationsObj);
+    const tableData = allOrganizationsObj.map(
+      ({
+        Category,
+        Organization,
+        PhoneNo,
+        OrganizationEmail,
+        IsActive,
+        IsFeature,
+        slug,
+      }) => [
+        Category,
+        Organization,
+        PhoneNo,
+        OrganizationEmail,
+        '' + IsActive,
+        '' + IsFeature,
+        <React.Fragment>
+          <Tooltip
+            id="tooltip-top"
+            title="Edit Task"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="Edit"
+              className={classes.tableActionButton}
+              onClick={() => this.handleEdit(slug)}
+            >
+              <Edit
+                className={classes.tableActionButtonIcon + ' ' + classes.edit}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            id="tooltip-top-start"
+            title="Remove"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="Close"
+              className={classes.tableActionButton}
+              onClick={() => this.handleDelete(_id)}
+            >
+              <Close
+                className={classes.tableActionButtonIcon + ' ' + classes.close}
+              />
+            </IconButton>
+          </Tooltip>
+        </React.Fragment>,
+      ],
+    );
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
@@ -131,103 +190,7 @@ export class OrganizationInfoPage extends React.Component {
                   'IsFeatured',
                   'Operations',
                 ]}
-                tableData={[
-                  [
-                    'rice brand',
-                    'Shrestha Rice',
-                    '9841231298',
-                    'devkota@gmail.com',
-                    '1',
-                    '1',
-                    <React.Fragment>
-                      <Tooltip
-                        id="tooltip-top"
-                        title="Edit Task"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Edit"
-                          className={classes.tableActionButton}
-                          onClick={() => this.handleEdit(1)}
-                        >
-                          <Edit
-                            className={
-                              classes.tableActionButtonIcon + ' ' + classes.edit
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        id="tooltip-top-start"
-                        title="Remove"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Close"
-                          className={classes.tableActionButton}
-                        >
-                          <Close
-                            className={
-                              classes.tableActionButtonIcon +
-                              ' ' +
-                              classes.close
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </React.Fragment>,
-                  ],
-                  [
-                    'rice brand',
-                    'Devkota Rice',
-                    '9841231299',
-                    'devkot@gmail.com',
-                    '1',
-                    '0',
-                    <React.Fragment>
-                      <Tooltip
-                        id="tooltip-top"
-                        title="Edit Task"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Edit"
-                          className={classes.tableActionButton}
-                          onClick={() => this.handleEdit(1)}
-                        >
-                          <Edit
-                            className={
-                              classes.tableActionButtonIcon + ' ' + classes.edit
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        id="tooltip-top-start"
-                        title="Remove"
-                        placement="top"
-                        classes={{ tooltip: classes.tooltip }}
-                      >
-                        <IconButton
-                          aria-label="Close"
-                          className={classes.tableActionButton}
-                          onClick={() => this.handleDelete(1)}
-                        >
-                          <Close
-                            className={
-                              classes.tableActionButtonIcon +
-                              ' ' +
-                              classes.close
-                            }
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </React.Fragment>,
-                  ],
-                ]}
+                tableData={tableData}
               />
               <Button
                 variant="fab"
@@ -248,18 +211,16 @@ export class OrganizationInfoPage extends React.Component {
 }
 
 OrganizationInfoPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  loadAll: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  organizationinfopage: makeSelectOrganizationInfoPage(),
+  allOrganizations: makeSelectAll(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  loadAll: () => dispatch(loadAllRequest()),
+});
 
 const withConnect = connect(
   mapStateToProps,

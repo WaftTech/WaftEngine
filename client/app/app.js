@@ -16,6 +16,10 @@ import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import jwtDecode from 'jwt-decode';
 
+// material-ui-picker utils
+import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+
 // Import root app
 import App from 'containers/App';
 import { setUser, setToken } from 'containers/App/actions';
@@ -36,7 +40,7 @@ import { translationMessages } from './i18n';
 
 // Import CSS reset and Global Styles
 import './global-styles';
-import "assets/css/material-dashboard-react.css?v=1.5.0";
+import 'assets/css/material-dashboard-react.css?v=1.5.0';
 
 // Create redux store with history
 const initialState = {};
@@ -77,7 +81,9 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <MuiPickersUtilsProvider utils={LuxonUtils}>
+            <App />
+          </MuiPickersUtilsProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
