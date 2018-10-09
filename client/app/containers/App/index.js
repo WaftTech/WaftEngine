@@ -47,7 +47,7 @@ const App = props => {
       </Helmet>
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
-        <UserRoute exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage} />
         <UserRoute exact path="/dashboard" component={Dashboard} />
         <UserRoute path="/wt" component={WtDashboard} />
         <GuestRoute exact path="/start" component={StartPage} />
