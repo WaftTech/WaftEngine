@@ -10,6 +10,21 @@ router.use('/module', dmodule);
 // All route of Organization Module
 const organizationRoutes = require('./api/organization');
 router.use('/org', organizationRoutes);
+// All route of Category Module
+const categoryRoutes = require('./api/category');
+router.use('/category', categoryRoutes);
+// All route of Ads Module
+const adsRoutes = require('./api/ads');
+router.use('/ads', adsRoutes);
+// All route of Articles Module
+const articlesRoutes = require('./api/articles');
+router.use('/articles', articlesRoutes);
+// All route of News Module
+const newsRoutes = require('./api/news');
+router.use('/news', newsRoutes);
+// All route of News Module
+const linkRoutes = require('./api/links');
+router.use('/link', linkRoutes);
 
 // Edit update
 // router.post('/delete/:id', user.delete);
