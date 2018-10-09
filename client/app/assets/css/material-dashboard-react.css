@@ -10851,7 +10851,9 @@ html {
 body {
   font: 14px/1.4 'Maven Pro',sans-serif;
   min-width: 320px;
-  background:#f5f7fa;
+  background:#fff url(/assets/img/background.jpg);
+  background-size: cover;
+
 }
 
 .logo img { max-height:80px;}
