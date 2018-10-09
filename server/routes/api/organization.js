@@ -7,7 +7,7 @@ const dModule = require('../../modules/Organization/organizationController');
 const authenticationMiddleware = require('../../middleware/authentication.middleware');
 
 router.get('/', dModule.GetOrganization);
-router.post('/', upload.array('file', 2), dModule.SaveOrganization);
+router.post('/', authenticationMiddleware.authorization, upload.array('file', 2), dModule.SaveOrganization);
 router.get('/:slug', dModule.GetOrganizationDetail);
 // router
 //   .get('/:name',  dModule.getModuleData)

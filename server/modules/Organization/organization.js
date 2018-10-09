@@ -25,6 +25,7 @@ const OrganizationSchema = new Schema({
   IsVerified: { type: Boolean, required: true, default: false },
   IsActive: { type: Boolean, required: true, default: false },
   IsFeature: { type: Boolean, required: true, default: false },
+  Added_by: { type: Schema.Types.ObjectId },
   Added_at: { type: Date, default: Date.now },
 });
 
