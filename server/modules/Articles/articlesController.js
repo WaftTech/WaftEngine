@@ -11,7 +11,6 @@ articleController.GetArticle = async (req, res, next) => {
 articleController.SaveArticle = async (req, res, next) => {
   try {
     const article = req.body;
-    console.log(req.files);
     if (article._id) {
       if (req.files && req.files[0]) {
         article.ArticleImage = req.files[0];
@@ -20,6 +19,7 @@ articleController.SaveArticle = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Article Saved Success !!', null);
     } else {
       article.ArticleImage = req.files[0];
+      article.Added_by = req.user.id;
       const newCat = new ArticleSch(article);
       const articleSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, articleSave, null, 'Article Saved Success !!', null);

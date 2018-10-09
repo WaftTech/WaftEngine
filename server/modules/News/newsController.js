@@ -11,7 +11,6 @@ newsController.GetNews = async (req, res, next) => {
 newsController.SaveNews = async (req, res, next) => {
   try {
     const news = req.body;
-    console.log(req.files);
     if (news._id) {
       if (req.files && req.files[0]) {
         news.NewsImage = req.files[0];
@@ -20,6 +19,7 @@ newsController.SaveNews = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'News Saved Success !!', null);
     } else {
       news.NewsImage = req.files[0];
+      news.Added_by = req.user.id;
       const newCat = new NewsSch(news);
       const newsSave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, newsSave, null, 'News Saved Success !!', null);
