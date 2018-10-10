@@ -11,7 +11,7 @@ const UserSchema = new Schema({
   password_reset_code: { type: String },
   password_reset_request_date: { type: Date },
   updated_at: { type: Date, default: Date.now },
-  roles: [{ type: String, require: true, enum: ['User', 'Admin'] }],
+  roles: [{ type: [String], require: true }],
 });
 
 module.exports = User = mongoose.model('users', UserSchema);
