@@ -1,4 +1,5 @@
 const HttpStatus = require('http-status');
+var ObjectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const CatSch = require('./category');
 const categotyController = {};
@@ -11,15 +12,19 @@ categotyController.GetCategory = async (req, res, next) => {
 categotyController.SaveCategory = async (req, res, next) => {
   try {
     const categoty = req.body;
+    console.log(categoty);
+    console.log(req.files);
     if (categoty._id) {
       if (req.files && req.files[0]) {
         categoty.CategoryImage = req.files[0];
       }
-      const update = await CatSch.findByIdAndUpdate(categoty._id, { $set: categoty });
+      console.log(categoty);
+      const update = await CatSch.findByIdAndUpdate(ObjectId(categoty._id), { $set: categoty });
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Category Saved Success !!', null);
     } else {
       categoty.CategoryImage = req.files[0];
       categoty.Added_by = req.user.id;
+      categoty.slug = 'req.user.id';
       const newCat = new CatSch(categoty);
       const categotySave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, categotySave, null, 'Category Saved Success !!', null);
