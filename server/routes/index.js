@@ -25,6 +25,9 @@ router.use('/news', newsRoutes);
 // All route of News Module
 const linkRoutes = require('./api/links');
 router.use('/link', linkRoutes);
+// All route of News Module
+const rashiRoutes = require('./api/rashifal');
+router.use('/rashifal', rashiRoutes);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
