@@ -5,7 +5,7 @@ const { slugify } = require('../../helper/others.helper');
 const CategorySchema = new Schema({
   CategoryName: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
-  CategoryImage: { type: String, required: true },
+  CategoryImage: { type: Schema.Types.Mixed, required: true },
   IsActive: { type: Boolean, required: true, default: false },
   Added_at: { type: Date, default: Date.now },
 });

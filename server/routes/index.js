@@ -31,6 +31,9 @@ router.use('/rashifal', rashiRoutes);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
+// All route of Static Data from DB Module
+const homeRoutes = require('./api/home');
+router.use('/home', staticRoutes);
 
 // Edit update
 // router.post('/delete/:id', user.delete);
