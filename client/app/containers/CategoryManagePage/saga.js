@@ -1,4 +1,13 @@
-import { takeLatest, take, call, put, select } from 'redux-saga/effects';
+import {
+  takeLatest,
+  take,
+  call,
+  fork,
+  put,
+  select,
+  cancel,
+} from 'redux-saga/effects';
+import { push, LOCATION_CHANGE } from 'react-router-redux';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
@@ -23,12 +32,18 @@ function* loadOne(action) {
   );
 }
 
+function* redirectOnSuccess() {
+  yield take(types.ADD_EDIT_SUCCESS);
+  yield put(push('/wt/category-manage'));
+}
+
 function* addEdit(action) {
+  const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const { CategoryImage, ...data } = action.payload;
   // const files = {ProfileImage, ProfileImage1};
   const files = [CategoryImage];
-  yield call(
+  yield fork(
     Api.multipartPost(
       'category',
       actions.addEditSuccess,
@@ -38,6 +53,8 @@ function* addEdit(action) {
       token,
     ),
   );
+  yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
+  yield cancel(successWatcher);
 }
 
 export default function* defaultSaga() {
