@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import Dropzone from 'react-dropzone';
 import CKEditor from 'react-ckeditor-component';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -14,6 +19,15 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import { IMAGE_BASE } from 'containers/App/constants';
+import noImage from 'assets/img/logo.png';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
@@ -35,15 +49,69 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { services: '', about: '', features: '' };
+  state = {
+    data: {
+      ArticleName: '',
+      Description: '',
+      PublishFrom: '',
+      IsActive: false,
+      IsFeature: false,
+      ArticleImage: null,
+    },
+    images: {
+      ArticleImage: noImage,
+    },
+  };
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.oneOrganization !== nextProps.oneOrganization) {
+      const oneOrganizationObj = nextProps.oneOrganization.toJS();
+      const ArticleImage =
+        (oneOrganizationObj.ArticleImage &&
+          oneOrganizationObj.ArticleImage.path &&
+          `${IMAGE_BASE}${oneOrganizationObj.ArticleImage.path}`) ||
+        noImage;
+      this.setState(state => ({
+        data: { ...state.data, ...oneOrganizationObj },
+        images: { ArticleImage },
+      }));
+    }
+  }
+  handleChange = name => event => {
+    event.persist();
+    this.setState(state => ({
+      data: { ...state.data, [name]: event.target.value },
+    }));
+  };
+  handleCheckedChange = name => event => {
+    event.persist();
+    this.setState(state => ({
+      data: { ...state.data, [name]: event.target.checked },
+    }));
+  };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
+    this.setState(state => ({ data: { ...state.data, [name]: newContent } }));
   };
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+  handleSave = () => {
+    this.props.addEdit(this.state.data);
+  };
+  handleGoBack = () => {
+    this.props.history.push('/wt/articles-manage');
+  };
+  onDrop = (files, name) => {
+    const file = files[0];
+    this.setState(state => ({
+      data: { ...state.data, [name]: file },
+      images: { ...state.images, [name]: file.preview },
+    }));
   };
   render() {
+    const { data, images } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -60,6 +128,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Article Name"
                       id="ads-name"
+                      inputProps={{
+                        onChange: this.handleChange('ArticleName'),
+                        value: data.ArticleName,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -73,9 +145,9 @@ class AddEdit extends Component {
                     </InputLabel>
                     <CKEditor
                       name="about"
-                      content={this.state.about}
+                      content={data.Description}
                       events={{
-                        change: e => this.handleEditorChange(e, 'about'),
+                        change: e => this.handleEditorChange(e, 'Description'),
                       }}
                     />
                   </GridItem>
@@ -85,6 +157,10 @@ class AddEdit extends Component {
                     <CustomInput
                       labelText="Published From"
                       id="ads-from-date"
+                      inputProps={{
+                        onChange: this.handleChange('PublishFrom'),
+                        value: data.PublishFrom,
+                      }}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -99,10 +175,9 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChange('isActive')}
-                          value="isActive"
+                          checked={data.IsActive || false}
+                          onClick={this.handleCheckedChange('IsActive')}
+                          value="IsActive"
                           color="primary"
                         />
                       }
@@ -111,9 +186,9 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isFeatured || false}
-                          onClick={this.handleChange('isFeatured')}
-                          value="isFeatured"
+                          checked={data.IsFeature || false}
+                          onClick={this.handleCheckedChange('IsFeature')}
+                          value="IsFeature"
                           color="primary"
                         />
                       }
@@ -121,10 +196,30 @@ class AddEdit extends Component {
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <Dropzone
+                      onDrop={files => this.onDrop(files, 'ArticleImage')}
+                      multiple={false}
+                    >
+                      <img
+                        className=""
+                        width="200px"
+                        height="200px"
+                        src={images.ArticleImage}
+                        alt="ArticleImage"
+                      />
+                    </Dropzone>
+                  </GridItem>
+                </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Save</Button>
-                <Button color="primary">Back</Button>
+                <Button color="primary" onClick={this.handleSave}>
+                  Save
+                </Button>
+                <Button color="primary" onClick={this.handleGoBack}>
+                  Back
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -134,4 +229,28 @@ class AddEdit extends Component {
   }
 }
 
-export default withStyles(styles)(AddEdit);
+const withStyle = withStyles(styles);
+
+const withReducer = injectReducer({ key: 'articleListPage', reducer });
+const withSaga = injectSaga({ key: 'articleListPage', saga });
+
+const mapStateToProps = createStructuredSelector({
+  oneOrganization: makeSelectOne(),
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadOne: payload => dispatch(loadOneRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withRouter,
+  withStyle,
+  withReducer,
+  withSaga,
+  withConnect,
+)(AddEdit);

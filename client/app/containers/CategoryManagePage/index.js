@@ -151,9 +151,9 @@ export class CategoryManagePage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Ads Listing</h4>
+              <h4 className={classes.cardTitleWhite}>Category Listing</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of Ads
+                Here are the list of Category
               </p>
             </CardHeader>
             <CardBody>

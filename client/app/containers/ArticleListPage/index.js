@@ -30,7 +30,6 @@ import saga from './saga';
 import { loadAllRequest } from './actions';
 import { makeSelectAll } from './selectors';
 
-
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -84,18 +83,18 @@ export class ArticleListPage extends React.Component {
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
       ({
-        Category,
-        Organization,
-        PhoneNo,
-        OrganizationEmail,
+        ArticleName,
+        Description,
+        PublishFrom,
+        Added_by,
         IsActive,
         IsFeature,
         slug,
       }) => [
-        Category,
-        Organization,
-        PhoneNo,
-        OrganizationEmail,
+        ArticleName,
+        Description,
+        PublishFrom,
+        Added_by,
         '' + IsActive,
         '' + IsFeature,
         <React.Fragment>
