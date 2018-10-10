@@ -1,19 +1,17 @@
 const HttpStatus = require('http-status');
-var ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const CatSch = require('./category');
 const categotyController = {};
 const internal = {};
 
 categotyController.GetCategory = async (req, res, next) => {
-  const categotys = await CatSch.find();
+  const categotys = await CatSch.find({ IsDeleted: false });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, categotys, null, 'Category Get Success !!', null);
 };
 categotyController.SaveCategory = async (req, res, next) => {
   try {
     const categoty = req.body;
-    console.log(categoty);
-    console.log(req.files);
     if (categoty._id) {
       if (req.files && req.files[0]) {
         categoty.CategoryImage = req.files[0];
@@ -35,8 +33,20 @@ categotyController.SaveCategory = async (req, res, next) => {
 };
 categotyController.GetCategoryDetail = async (req, res, next) => {
   const slug = req.params.slug;
-  const categoty = await CatSch.findOne({ slug: slug });
+  const categoty = await CatSch.findOne({ slug: slug, IsDeleted: false });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, categoty, null, 'Category Get Success !!', null);
+};
+categotyController.GetCategoryDetailByID = async (req, res, next) => {
+  const id = req.params.id;
+  const categoty = await CatSch.findOne({ _id: ObjectId(id) });
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, categoty, null, 'Category Get Success !!', null);
+};
+
+categotyController.DeleteCategory = async (req, res, next) => {
+  const id = req.params.id;
+  const result = await CatSch.findByIdAndUpdate(id, { $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() } });
+
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, result, null, 'Organization Deleted !!', null);
 };
 
 module.exports = categotyController;

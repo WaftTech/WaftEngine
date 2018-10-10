@@ -9,8 +9,7 @@ const authenticationMiddleware = require('../../middleware/authentication.middle
 router.get('/', dModule.GetCategory);
 router.post('/', authenticationMiddleware.authorization, upload.array('file', 1), dModule.SaveCategory);
 router.get('/:slug', dModule.GetCategoryDetail);
-// router
-//   .get('/:name',  dModule.getModuleData)
-//   .post('/:name', dModule.saveModuleData);
+router.get('/id/:id', dModule.GetCategoryDetailByID);
+router.delete('/:id', authenticationMiddleware.authorization, dModule.DeleteCategory);
 
 module.exports = router;
