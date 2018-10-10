@@ -8,6 +8,6 @@ const authenticationMiddleware = require('../../middleware/authentication.middle
 
 router.get('/', dModule.GetAds);
 router.post('/', authenticationMiddleware.authorization, upload.array('file', 1), dModule.SaveAds);
-router.get('/:slug', dModule.GetAdsDetail);
+router.get('/:id', dModule.GetAdsDetail);
 
 module.exports = router;
