@@ -16,6 +16,11 @@ export const API_BASE =
     ? 'http://localhost:5000/api/'
     : 'http://localhost:5000/api/';
 
+export const IMAGE_BASE =
+  process.env.NODE_ENV === 'production'
+    ? 'http://localhost:5000/'
+    : 'http://localhost:5000/';
+
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
 export const SET_DIALOG = 'app/App/SET_DIALOG';
