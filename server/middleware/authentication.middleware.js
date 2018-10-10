@@ -8,9 +8,10 @@ const authMiddleware = {};
 
 authMiddleware.authorization = async (req, res, next) => {
   try {
-    const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     console.log(token);
     if (token) {
+      token = token.replace('Bearer ', '');
       const d = await jwt.verify(token, secretOrKey);
       console.log('+++++++++++++++++++++++++++++++++');
       console.log(d);

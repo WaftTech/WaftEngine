@@ -1,4 +1,5 @@
 const HttpStatus = require('http-status');
+var ObjectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const AdsSch = require('./ads');
 const adsController = {};
@@ -29,8 +30,8 @@ adsController.SaveAds = async (req, res, next) => {
   }
 };
 adsController.GetAdsDetail = async (req, res, next) => {
-  const slug = req.params.slug;
-  const ads = await AdsSch.findOne({ slug: slug });
+  const id = req.params.id;
+  const ads = await AdsSch.findOne({ _id: ObjectId(id), IsDeleted: false });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, ads, null, 'Ads Get Success !!', null);
 };
 
