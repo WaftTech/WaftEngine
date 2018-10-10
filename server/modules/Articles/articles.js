@@ -9,7 +9,7 @@ const ArticleSchema = new Schema({
   PublishFrom: { type: Date, required: true },
   IsActive: { type: Boolean, required: true, default: false },
   IsFeature: { type: Boolean, required: true, default: false },
-  ArticleImage: { type: String, required: true },
+  ArticleImage: { type: Schema.Types.Mixed, required: true },
   IsDeleted: { type: Boolean, required: true, default: false },
   Added_by: { type: Schema.Types.ObjectId },
   Added_at: { type: Date, default: Date.now },
