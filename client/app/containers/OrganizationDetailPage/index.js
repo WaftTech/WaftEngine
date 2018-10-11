@@ -1,6 +1,6 @@
 /**
  *
- * CategoryDetailPage
+ * OrganizationDetailPage
  *
  */
 
@@ -11,22 +11,22 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import { makeSelectCategory } from './selectors';
+import injectReducer from 'utils/injectReducer';
+import makeSelectOrganizationDetailPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
-export class CategoryDetailPage extends React.Component {
+export class OrganizationDetailPage extends React.Component {
   render() {
     return (
       <div>
         <Helmet>
-          <title>CategoryDetailPage</title>
+          <title>OrganizationDetailPage</title>
           <meta
             name="description"
-            content="Description of CategoryDetailPage"
+            content="Description of OrganizationDetailPage"
           />
         </Helmet>
       </div>
@@ -34,27 +34,30 @@ export class CategoryDetailPage extends React.Component {
   }
 }
 
-CategoryDetailPage.propTypes = {
-  loadCategory: PropTypes.func.isRequired,
+OrganizationDetailPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
 };
 
-const withReducer = injectReducer({ key: 'categoryDetailPage', reducer });
-const withSaga = injectSaga({ key: 'categoryDetailPage', saga });
-
 const mapStateToProps = createStructuredSelector({
-  category: makeSelectCategory(),
+  organizationdetailpage: makeSelectOrganizationDetailPage(),
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadCategory: id => dispatch(loadCategoryRequest(id)),
-});
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
+
+const withReducer = injectReducer({ key: 'organizationDetailPage', reducer });
+const withSaga = injectSaga({ key: 'organizationDetailPage', saga });
+
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(CategoryDetailPage);
+)(OrganizationDetailPage);
