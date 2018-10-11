@@ -25,8 +25,8 @@ rashifalController.SaveRashifal = async (req, res, next) => {
   }
 };
 rashifalController.GetRashifalDetail = async (req, res, next) => {
-  const _id = req.params._id;
-  const rashifal = await RashifalSch.findOne({ _id: _id });
+  const id = req.params.id;
+  const rashifal = await RashifalSch.findOne({ _id: id });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, rashifal, null, 'Rashifal Get Success !!', null);
 };
 

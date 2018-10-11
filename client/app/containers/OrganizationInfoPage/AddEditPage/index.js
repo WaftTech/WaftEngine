@@ -28,7 +28,8 @@ import CardFooter from 'components/Card/CardFooter';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { DAYS } from 'containers/App/constants';
+import { DAYS, IMAGE_BASE } from 'containers/App/constants';
+import noImage from 'assets/img/logo.png';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
@@ -86,7 +87,7 @@ class AddEdit extends Component {
       VDCMunicipality: '',
       State: '',
       StreetAddress: '',
-      Latitude: '',
+      Lattitude: '',
       Longitude: '',
       Website: '',
       Links: '',
@@ -100,6 +101,7 @@ class AddEdit extends Component {
       Category: '',
       ProfileImage1: null,
     },
+    images: { ProfileImage: noImage, ProfileImage1: noImage },
   };
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
@@ -108,8 +110,20 @@ class AddEdit extends Component {
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.oneOrganization !== nextProps.oneOrganization) {
+      const oneOrganizationObj = nextProps.oneOrganization.toJS();
+      const ProfileImage =
+        (oneOrganizationObj.ProfileImage &&
+          oneOrganizationObj.ProfileImage.path &&
+          `${IMAGE_BASE}${oneOrganizationObj.ProfileImage.path}`) ||
+        noImage;
+      const ProfileImage1 =
+        (oneOrganizationObj.ProfileImage1 &&
+          oneOrganizationObj.ProfileImage1.path &&
+          `${IMAGE_BASE}${oneOrganizationObj.ProfileImage1.path}`) ||
+        noImage;
       this.setState(state => ({
-        data: { ...state.data, ...nextProps.oneOrganization.toJS() },
+        data: { ...state.data, ...oneOrganizationObj },
+        images: { ProfileImage, ProfileImage1 },
       }));
     }
   }
@@ -124,6 +138,7 @@ class AddEdit extends Component {
     }));
   };
   handleCheckedChange = name => event => {
+    event.persist();
     this.setState(state => ({
       data: { ...state.data, [name]: event.target.checked },
     }));
@@ -136,10 +151,13 @@ class AddEdit extends Component {
   };
   onDrop = (files, name) => {
     const file = files[0];
-    this.setState(state => ({ data: { ...state.data, [name]: file } }));
+    this.setState(state => ({
+      data: { ...state.data, [name]: file },
+      images: { ...state.images, [name]: file.preview },
+    }));
   };
   render() {
-    const { data } = this.state;
+    const { data, images } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -310,11 +328,11 @@ class AddEdit extends Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Latitude"
-                      id="latitude"
+                      labelText="Lattitude"
+                      id="lattitude"
                       inputProps={{
-                        onChange: this.handleChange('Latitude'),
-                        value: data.Latitude,
+                        onChange: this.handleChange('Lattitude'),
+                        value: data.Lattitude,
                       }}
                       formControlProps={{
                         fullWidth: true,
@@ -416,8 +434,7 @@ class AddEdit extends Component {
                       control={
                         <Checkbox
                           checked={data.IsVerified || false}
-                          tabIndex={-1}
-                          onClick={this.handleChange('IsVerified')}
+                          onClick={this.handleCheckedChange('IsVerified')}
                           value="IsVerified"
                           color="primary"
                         />
@@ -428,8 +445,7 @@ class AddEdit extends Component {
                       control={
                         <Checkbox
                           checked={data.IsActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChange('IsActive')}
+                          onClick={this.handleCheckedChange('IsActive')}
                           value="IsActive"
                           color="primary"
                         />
@@ -439,9 +455,9 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={data.IsFeatured || false}
-                          onClick={this.handleChange('IsFeatured')}
-                          value="IsFeatured"
+                          checked={data.IsFeature || false}
+                          onClick={this.handleCheckedChange('IsFeature')}
+                          value="IsFeature"
                           color="primary"
                         />
                       }
@@ -455,7 +471,13 @@ class AddEdit extends Component {
                       onDrop={files => this.onDrop(files, 'ProfileImage')}
                       multiple={false}
                     >
-                      <p>Drop your profile image</p>
+                      <img
+                        className=""
+                        width="200px"
+                        height="200px"
+                        src={images.ProfileImage}
+                        alt="ProfileImage"
+                      />
                     </Dropzone>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
@@ -463,7 +485,13 @@ class AddEdit extends Component {
                       onDrop={files => this.onDrop(files, 'ProfileImage1')}
                       multiple={false}
                     >
-                      <p>Drop your profile image</p>
+                      <img
+                        className=""
+                        width="200px"
+                        height="200px"
+                        src={images.ProfileImage1}
+                        alt="ProfileImage1"
+                      />
                     </Dropzone>
                   </GridItem>
                 </GridContainer>

@@ -13,13 +13,17 @@ import AdsListingAddEditPage from '../AdsListingPage/AddEditPage';
 import ArticleListPage from '../ArticleListPage';
 import ArticleListAddEditPage from '../ArticleListPage/AddEditPage';
 import CategoryManagePage from '../CategoryManagePage';
+import CategoryManageAddEditPage from '../CategoryManagePage/AddEditPage';
 import NewsListPage from '../NewsListPage';
+import NewsListAddEditPage from '../NewsListPage/AddEditPage';
 import OrganizationInfoPage from '../OrganizationInfoPage';
 import OrganizationInfoAddEditPage from '../OrganizationInfoPage/AddEditPage';
 import RashifalListPage from '../RashifalListPage';
 import RashifalListAddEditPage from '../RashifalListPage/AddEditPage';
 import RoleManagePage from '../RoleManagePage';
+import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
 import UserManagePage from '../UserManagePage';
+import UserManageAddEditPage from '../UserManagePage/AddEditPage';
 import VideoLinkPage from '../VideoLinkPage';
 import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
 
@@ -148,11 +152,43 @@ const dashboardRoutes = [
     component: RashifalListPage,
   },
   {
+    path: '/wt/user-manage/add',
+    sidebarName: 'User Manage',
+    navbarName: 'Add user',
+    icon: Dashboard,
+    component: UserManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/user-manage/edit/:id',
+    sidebarName: 'User Manage',
+    navbarName: 'User Manage',
+    icon: Dashboard,
+    component: UserManageAddEditPage,
+    hide: true,
+  },
+  {
     path: '/wt/user-manage',
     sidebarName: 'User Manage',
     navbarName: 'User Manage',
     icon: Dashboard,
     component: UserManagePage,
+  },
+  {
+    path: '/wt/category-manage/add',
+    sidebarName: 'Category Manage',
+    navbarName: 'Add Category',
+    icon: Dashboard,
+    component: CategoryManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/category-manage/edit/:id',
+    sidebarName: 'Category Manage',
+    navbarName: 'Category Manage',
+    icon: Dashboard,
+    component: CategoryManageAddEditPage,
+    hide: true,
   },
   {
     path: '/wt/category-manage',
@@ -162,11 +198,43 @@ const dashboardRoutes = [
     component: CategoryManagePage,
   },
   {
+    path: '/wt/role-manage/add',
+    sidebarName: 'role Manage',
+    navbarName: 'Add role',
+    icon: Dashboard,
+    component: RoleManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/role-manage/edit/:id',
+    sidebarName: 'role Manage',
+    navbarName: 'role Manage',
+    icon: Dashboard,
+    component: RoleManageAddEditPage,
+    hide: true,
+  },
+  {
     path: '/wt/role-manage',
     sidebarName: 'Role Manage',
     navbarName: 'Role Manage',
     icon: Dashboard,
     component: RoleManagePage,
+  },
+  {
+    path: '/wt/news-manage/add',
+    sidebarName: 'News Manage',
+    navbarName: 'Add News',
+    icon: Dashboard,
+    component: NewsListAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/news-manage/edit/:id',
+    sidebarName: 'News Manage',
+    navbarName: 'News Manage',
+    icon: Dashboard,
+    component: NewsListAddEditPage,
+    hide: true,
   },
   {
     path: '/wt/news-manage',
