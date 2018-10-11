@@ -14,7 +14,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Icon, Button, TextField } from '@material-ui/core';
+import { Icon, Button, TextField, Tabs, Tab } from '@material-ui/core';
 import logo from 'assets/img/logo.png';
 import background from 'assets/img/background.jpg';
 import rest1 from 'assets/img/rest1.jpg';
@@ -25,12 +25,12 @@ const Masthead = styled.div`
   height: 350px;
   padding-top: 20px;
   color: #fff;
+  margin-bottom:50px;
 `;
 
 
 const CategoryItem = styled.div`
 box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-border-radius: 200px;
 padding: 30px 50px;
 `;
 
@@ -55,23 +55,27 @@ export default class HomePage extends React.PureComponent {
                 </header>
 
                 <Masthead>
-                    <div className="search-container text-center">
+                    <div className="text-center">
+                        <br />
+                        <br />
                         <h2>Ask To Marina</h2>
                         <strong className="content-title">
                             BE A PART OF THE LOCAL SEARCH REVOLUTION
             </strong>
                         <br />
-                        <div className="row">
-                            <TextField className="col-4"
-                                id="standard-select-category"
-                                select
-                                label="Select"
-                            />
+                        <div className="search-container">
+                            <div className="row">
+                                <TextField className="col-4"
+                                    id="standard-select-category"
+                                    select
+                                    label="Select"
+                                />
 
-                            <TextField className="col-6" fullWidth />
-                            <Button className="col-2" variant="contained" color="primary">
-                                Search
+                                <TextField className="col-6" fullWidth label="Please Input" />
+                                <Button size="small" className="col-2" variant="contained" color="primary">
+                                    Search
                             </Button>
+                            </div>
                             <div className="clearfix" />
                         </div>
                     </div>
@@ -79,9 +83,8 @@ export default class HomePage extends React.PureComponent {
 
                 <div className="container">
 
-                    <h2>Categories</h2>
-
                     <CategoryItem>
+                        <h2>Categories</h2>
                         <div className="media-info">
                             <div className="img">
                                 <img src={categoryIcon} /></div>
@@ -91,13 +94,40 @@ export default class HomePage extends React.PureComponent {
 
                     </CategoryItem>
 
-                </div>
+                    <br />
+                    <br />
+                    <br />
+                    <Tabs
+                    >
+                        <Tab
+                            disableRipple
+                            label="Video"
+                        />
+                        <Tab
+                            disableRipple
+                            label="About Us"
+                        />
+                        <Tab
+                            disableRipple
+                            label="Rashifal"
+                        />
+                    </Tabs>
 
 
-                <div className="card">
-                    <img src={rest1} />
-                    <h3>Thakali Restaurant</h3>
-                    Opening Days:SUN, MON, TUE, WED, THU, FRI
+
+                    <div className="cta-block">
+                        <div className="container">
+                            <h2>Require something special?</h2>
+                            <p>We might help you to build it better way!</p>
+                            <Button variant="secondary" size="large">
+                                <span>Send us some words</span></Button></div></div>
+
+
+
+                    <div className="card">
+                        <img src={rest1} />
+                        <h3>Thakali Restaurant</h3>
+                        Opening Days:SUN, MON, TUE, WED, THU, FRI
           <Icon>Star</Icon> 1234456
           <Icon>Star</Icon> State 3 Bhaktapur Thimi,hanumante Bridge
           <Icon>Star</Icon> Pincode: 123
@@ -106,6 +136,8 @@ export default class HomePage extends React.PureComponent {
           <Icon>Star</Icon> info@email.com
           <Icon>Star</Icon> website.com
         </div>
+                </div>
+
             </section>
         );
     }
