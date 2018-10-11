@@ -1,5 +1,6 @@
 const HttpStatus = require('http-status');
-var ObjectId = require('mongoose').Types.ObjectId;
+const fuzzy = require('fuzzy');
+const ObjectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const OrgSch = require('../Organization/organization');
 const CatSch = require('../Category/category');
@@ -34,6 +35,20 @@ homeController.GetLatestFourOrganization = async (req, res, next) => {
     .sort({ Added_at: -1 })
     .limit(4);
   return otherHelper.sendResponse(res, HttpStatus.OK, true, organization, null, 'Latst Organization for home Page Get Success !!', null);
+};
+homeController.GetDataforSearch = async (req, res, next) => {
+  const catid = req.params.catid;
+  const text = req.params.text;
+  const organization = await OrgSch.find({ IsDeleted: false, IsActive: true, IsVerified: true }, 'Organization slug').sort({ Added_at: -1 });
+  const options = {
+    pre: '<b>',
+    post: '<b>',
+    extract: function(el) {
+      return el.Organization;
+    },
+  };
+  const results = await fuzzy.filter(text, organization, options);
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, results, null, 'Latst Organization for home Page Get Success !!', null);
 };
 
 module.exports = homeController;
