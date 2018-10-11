@@ -17,3 +17,5 @@ export const makeSelectDistrict = () =>
   createSelector(selectDomain, state => state.get('district'));
 export const makeSelectVdc = () =>
   createSelector(selectDomain, state => state.get('vdc'));
+  export const makeSelectCategories = () =>
+    createSelector(selectDomain, state => state.get('categories'));

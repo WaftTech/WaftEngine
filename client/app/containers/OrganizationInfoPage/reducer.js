@@ -4,7 +4,12 @@ import state from './staticStates';
 import district from './staticDistricts';
 import vdc from './staticVdcs';
 import * as types from './constants';
-import { stateSchema, districtSchema, vdcSchema } from './schemas';
+import {
+  stateSchema,
+  districtSchema,
+  vdcSchema,
+  categoriesSchema,
+} from './schemas';
 
 export const initialState = fromJS({
   all: [],
@@ -12,12 +17,20 @@ export const initialState = fromJS({
   state,
   district,
   vdc,
+  categories: {},
 });
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case types.DEFAULT_ACTION:
       return state;
+    case types.LOAD_CATEGORIES_SUCCESS:
+      return state.merge({
+        categories: fromJS(
+          normalize(action.payload.data || [], [categoriesSchema]).entities
+            .categories || {},
+        ),
+      });
     case types.LOAD_ALL_SUCCESS:
       return state.merge({
         all: fromJS(action.payload.data),
