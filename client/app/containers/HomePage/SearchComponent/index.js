@@ -58,7 +58,39 @@ class SearchComponent extends React.Component {
     }
   }
   render() {
-    return <div>Search Component</div>;
+    return (
+      <div className="text-center">
+        <br />
+        <br />
+        <h2>Ask To Marina</h2>
+
+        <strong className="content-title">
+          BE A PART OF THE LOCAL SEARCH REVOLUTION
+        </strong>
+        <br />
+        <div className="search-container">
+          <div className="row">
+            <TextField
+              className="col-4"
+              id="standard-select-category"
+              select
+              label="Select"
+            />
+
+            <TextField className="col-6" fullWidth label="Please Input" />
+            <Button
+              size="small"
+              className="col-2"
+              variant="contained"
+              color="primary"
+            >
+              Search
+            </Button>
+          </div>
+          <div className="clearfix" />
+        </div>
+      </div>
+    );
   }
 }
 
