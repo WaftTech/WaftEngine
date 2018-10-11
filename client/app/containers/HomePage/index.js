@@ -176,17 +176,68 @@ export default class HomePage extends React.Component {
                 </div>
                 <div className="cta-block">
                     <div className="container">
-                        <h2>Require something special?</h2>
-                        <p>We might help you to build it better way!</p>
-                        <Button variant="secondary" size="large">
-                            <span>Send us some words</span></Button></div></div>
+                        <h2>Want to list here?</h2>
+                        <p>We can help you to promote your organization online</p>
+                        <Button variant="outlined" size="large">
+                            Contact Us</Button></div></div>
+                <div className="container">
+                    <h3 className="text-center">Articles</h3>
+                    <br />
+                    <br />
+                    <div className="row">
+                        <div className="col-4">
+                            <div className="card box-card">
+                                <h5>Nepal is very developed country</h5>
+                                <p>Nepal is very developed country Nepal is very developed country</p>
+                                <Call /> 977-9849242008<br />
+                                <Email /> info@email.com<br /><br />
+                                <Button size="small" variant="outlined">View Details</Button>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="card box-card">
+                                <h5>Nepal is very developed country</h5>
+                                <p>Nepal is very developed country Nepal is very developed country</p>
+                                <Call /> 977-9849242008<br />
+                                <Email /> info@email.com<br /><br />
+                                <Button size="small" variant="outlined">View Details</Button>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="card box-card">
+                                <h5>Nepal is very developed country</h5>
+                                <p>Nepal is very developed country Nepal is very developed country</p>
+                                <Call /> 977-9849242008<br />
+                                <Email /> info@email.com<br /><br />
+                                <Button size="small" variant="outlined">View Details</Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-3">
+                                <h3 className="title">About us</h3>
+                                <p>The industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                                                              galley of type and scrambled it to make a type specimen book.
+                          </p>
+                            </div>
+                            <div className="col-3">
 
+                                <div class="widget-ft style1 widget-services"><h3 class="title">Quicklink</h3> <ul class="one-half first"><li><a href="#" title="">Home</a></li> <li><a href="#" title="">About us</a></li> <li><a href="#" title="">Services</a></li> <li><a href="#" title="">Cases</a></li></ul> <ul class="one-half"><li><a href="#" title="">Contact us</a></li> <li><a href="#" title="">Clients</a></li> <li><a href="#" title="">Testimonial</a></li> <li><a href="#" title="">News</a></li></ul></div>
+                            </div>
+                            <div class="col-3"><div class="widget-ft style1 widget-lastest">
+                                <h3 class="title">Latest Twitter</h3> <ul><li><a href="#" title=""><i class="fa fa-twitter"></i>@Stats</a> Lorem Ipsum has been
+                                              the industry's standard dummy text ever since the 1500s.
+                              </li> <li><a href="#" title=""><i class="fa fa-twitter"></i>@Stats.D</a> Lorem Ipsum is
+                      simply dummy text of the printing and typesetting.Lorem Ipsum is simply dummy.
+                              </li></ul></div></div>
+                        </div>
+                    </div>
+                </footer>
+            </section >
 
-
-
-
-
-            </section>
         );
     }
 }
