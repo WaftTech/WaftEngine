@@ -49,7 +49,7 @@ class Api {
     onSuccess,
     onError,
     data,
-    document,
+    document = {},
     token,
     metaData,
   ) {
@@ -57,11 +57,16 @@ class Api {
       const requestURL = `${API_BASE}${apiUri}`;
       let multipartData = new FormData();
       multipartData = objectToFormData(data, multipartData);
-      if (Object.prototype.toString.call(document) === '[object Array]') {
-        document.map(file => multipartData.append('file', file));
-      } else {
-        multipartData.append('file', document);
-      }
+      // case for multiple files on same key
+      Object.keys(document).map(each => {
+        if (
+          Object.prototype.toString.call(document[each]) === '[object Array]'
+        ) {
+          document[each].map(file => multipartData.append([each], file));
+        } else {
+          multipartData.append([each], document[each]);
+        }
+      });
       try {
         const options = {
           method: metaData === 'put' ? 'PUT' : 'POST',
@@ -92,8 +97,8 @@ class Api {
   /*
    * Shorthand GET function
    */
-  static get(apiUri, onSuccess, onError) {
-    return this.dataLoader(apiUri, onSuccess, onError);
+  static get(apiUri, onSuccess, onError, token) {
+    return this.dataLoader(apiUri, onSuccess, onError, undefined, token);
   }
   /*
    * Shorthand POST function

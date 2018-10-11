@@ -7,7 +7,7 @@ const dModule = require('../../modules/Category/categoryController');
 const authenticationMiddleware = require('../../middleware/authentication.middleware');
 
 router.get('/', dModule.GetCategory);
-router.post('/', upload.array('file', 1), dModule.SaveCategory);
+router.post('/', authenticationMiddleware.authorization, upload.array('file', 1), dModule.SaveCategory);
 router.get('/:slug', dModule.GetCategoryDetail);
 // router
 //   .get('/:name',  dModule.getModuleData)

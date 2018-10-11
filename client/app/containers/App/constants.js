@@ -22,3 +22,13 @@ export const SET_DIALOG = 'app/App/SET_DIALOG';
 export const ADD_MESSAGE = 'app/App/ADD_MESSAGE';
 export const DELETE_MESSAGE = 'app/App/DELETE_MESSAGE';
 export const LOGOUT = 'app/App/LOGOUT';
+
+export const DAYS = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+];

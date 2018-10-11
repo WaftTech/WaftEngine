@@ -5,19 +5,9 @@ import { initialState } from './reducer';
  * Direct selector to the organizationInfoPage state domain
  */
 
-const selectOrganizationInfoPageDomain = state =>
-  state.get('organizationInfoPage', initialState);
+const selectDomain = state => state.get('organizationInfoPage', initialState);
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by OrganizationInfoPage
- */
-
-const makeSelectOrganizationInfoPage = () =>
-  createSelector(selectOrganizationInfoPageDomain, substate => substate.toJS());
-
-export default makeSelectOrganizationInfoPage;
-export { selectOrganizationInfoPageDomain };
+export const makeSelectAll = () =>
+  createSelector(selectDomain, state => state.get('all'));
+export const makeSelectOne = () =>
+  createSelector(selectDomain, state => state.get('one'));

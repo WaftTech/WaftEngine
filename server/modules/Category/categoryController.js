@@ -11,7 +11,6 @@ categotyController.GetCategory = async (req, res, next) => {
 categotyController.SaveCategory = async (req, res, next) => {
   try {
     const categoty = req.body;
-    console.log(req.files);
     if (categoty._id) {
       if (req.files && req.files[0]) {
         categoty.CategoryImage = req.files[0];
@@ -20,8 +19,8 @@ categotyController.SaveCategory = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Category Saved Success !!', null);
     } else {
       categoty.CategoryImage = req.files[0];
+      categoty.Added_by = req.user.id;
       const newCat = new CatSch(categoty);
-      newCat.slug = newCat.Category;
       const categotySave = await newCat.save();
       return otherHelper.sendResponse(res, HttpStatus.OK, true, categotySave, null, 'Category Saved Success !!', null);
     }
