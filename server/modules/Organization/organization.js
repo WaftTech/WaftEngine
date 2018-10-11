@@ -19,6 +19,7 @@ const OrganizationSchema = new Schema({
   Services: { type: String, required: true },
   AboutOrganization: { type: String, required: true },
   FeatureofOrganization: { type: String, required: true },
+  Requirements: { type: String, required: false },
   Website: { type: String },
   Links: { type: String },
   ProfileImage: { type: Schema.Types.Mixed, required: true },
