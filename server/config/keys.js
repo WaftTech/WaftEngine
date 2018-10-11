@@ -1,7 +1,7 @@
 module.exports = {
   mongoURI: 'mongodb://asktomarina:asktomarina1@ds125453.mlab.com:25453/asktomarina',
   secretOrKey: 'jwtsecret',
-  tokenExpireTime: 3600,
+  tokenExpireTime: 360000,
 
   oauthConfig: {
     googleAuth: {
