@@ -57,16 +57,23 @@ class Api {
       const requestURL = `${API_BASE}${apiUri}`;
       let multipartData = new FormData();
       multipartData = objectToFormData(data, multipartData);
-      // case for multiple files on same key
-      Object.keys(document).map(each => {
-        if (
-          Object.prototype.toString.call(document[each]) === '[object Array]'
-        ) {
-          document[each].map(file => multipartData.append([each], file));
-        } else {
-          multipartData.append([each], document[each]);
+      if (Object.prototype.toString.call(document) === "[object Array]") {
+        for (let i = 0; i < document.length; i++) {
+          multipartData.append("file", document[i]);
         }
-      });
+      } else {
+        multipartData.append("file", document);
+      }
+      // case for multiple files on same key
+      // Object.keys(document).map(each => {
+      //   if (
+      //     Object.prototype.toString.call(document[each]) === '[object Array]'
+      //   ) {
+      //     document[each].map(file => multipartData.append([each], file));
+      //   } else {
+      //     multipartData.append([each], document[each]);
+      //   }
+      // });
       try {
         const options = {
           method: metaData === 'put' ? 'PUT' : 'POST',

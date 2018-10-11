@@ -20,7 +20,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import isEmpty from 'utils/isEmpty';
-import Toaster from 'components/Toaster';
 import GuestRoute from 'components/Routes/GuestRoute';
 import UserRoute from 'components/Routes/UserRoute';
 import ResetPasswordPage from '../ResetPasswordPage';
@@ -31,10 +30,6 @@ import NotFoundPage from '../NotFoundPage';
 import StartPage from '../StartPage';
 import Dashboard from '../Dashboard';
 import WtDashboard from '../WtDashboard';
-
-const Playground = () => <div>Auth page</div>;
-const AuthenticatedPage = () => <div>This is private page</div>;
-
 import {
   makeSelectDialog,
   makeSelectLocation,
@@ -44,26 +39,17 @@ import { deleteMessage } from './actions';
 
 const App = props => {
   const { location, dialog, messages, deleteMsg } = props;
-  const messagesArr = messages.toJS();
+  // const messagesArr = messages.toJS();
   return (
     <div>
       <Helmet titleTemplate="%s - App" defaultTitle="App">
         <meta name="description" content="application" />
       </Helmet>
-      {messagesArr.map((each, index) => (
-        <Toaster
-          key={`toast-msg-${index}`}
-          message={'hello'}
-          success={true}
-          deleteMessage={() => deleteMsg(index)}
-        />
-      ))}
       {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
-        <UserRoute exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage} />
         <UserRoute exact path="/dashboard" component={Dashboard} />
         <UserRoute path="/wt" component={WtDashboard} />
-        <UserRoute exact path="/auth" component={AuthenticatedPage} />
         <GuestRoute exact path="/start" component={StartPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/login/:email" component={LoginPage} />

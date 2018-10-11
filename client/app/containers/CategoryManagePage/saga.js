@@ -1,6 +1,64 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import {
+  takeLatest,
+  take,
+  call,
+  fork,
+  put,
+  select,
+  cancel,
+} from 'redux-saga/effects';
+import { push, LOCATION_CHANGE } from 'react-router-redux';
+import Api from 'utils/Api';
+import { makeSelectToken } from '../App/selectors';
+import * as types from './constants';
+import * as actions from './actions';
 
-// Individual exports for testing
+function* loadAll(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get('category', actions.loadAllSuccess, actions.loadAllFailure, token),
+  );
+}
+
+function* loadOne(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `category/${action.payload}`,
+      actions.loadOneSuccess,
+      actions.loadOneFailure,
+      token,
+    ),
+  );
+}
+
+function* redirectOnSuccess() {
+  yield take(types.ADD_EDIT_SUCCESS);
+  yield put(push('/wt/category-manage'));
+}
+
+function* addEdit(action) {
+  const successWatcher = yield fork(redirectOnSuccess);
+  const token = yield select(makeSelectToken());
+  const { CategoryImage, ...data } = action.payload;
+  // const files = {ProfileImage, ProfileImage1};
+  const files = [CategoryImage];
+  yield fork(
+    Api.multipartPost(
+      'category',
+      actions.addEditSuccess,
+      actions.addEditFailure,
+      data,
+      files,
+      token,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
+  yield cancel(successWatcher);
+}
+
 export default function* defaultSaga() {
-  // See example in containers/HomePage/saga.js
+  yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
+  yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
+  yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
 }

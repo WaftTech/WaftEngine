@@ -4,12 +4,12 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import CKEditor from 'react-ckeditor-component';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -51,15 +51,12 @@ const styles = {
 class AddEdit extends Component {
   state = {
     data: {
-      ArticleName: '',
-      Description: '',
-      PublishFrom: '',
+      CategoryName: '',
       IsActive: false,
-      IsFeature: false,
-      ArticleImage: null,
+      CategoryImage: null,
     },
     images: {
-      ArticleImage: noImage,
+      CategoryImage: noImage,
     },
   };
   componentDidMount() {
@@ -70,14 +67,14 @@ class AddEdit extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.oneOrganization !== nextProps.oneOrganization) {
       const oneOrganizationObj = nextProps.oneOrganization.toJS();
-      const ArticleImage =
-        (oneOrganizationObj.ArticleImage &&
-          oneOrganizationObj.ArticleImage.path &&
-          `${IMAGE_BASE}${oneOrganizationObj.ArticleImage.path}`) ||
+      const CategoryImage =
+        (oneOrganizationObj.CategoryImage &&
+          oneOrganizationObj.CategoryImage.path &&
+          `${IMAGE_BASE}${oneOrganizationObj.CategoryImage.path}`) ||
         noImage;
       this.setState(state => ({
         data: { ...state.data, ...oneOrganizationObj },
-        images: { ArticleImage },
+        images: { CategoryImage },
       }));
     }
   }
@@ -93,15 +90,11 @@ class AddEdit extends Component {
       data: { ...state.data, [name]: event.target.checked },
     }));
   };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState(state => ({ data: { ...state.data, [name]: newContent } }));
-  };
   handleSave = () => {
     this.props.addEdit(this.state.data);
   };
   handleGoBack = () => {
-    this.props.history.push('/wt/articles-manage');
+    this.props.history.push('/wt/category-manage');
   };
   onDrop = (files, name) => {
     const file = files[0];
@@ -119,18 +112,18 @@ class AddEdit extends Component {
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Article</h4>
-                <p className={classes.cardCategoryWhite}>Article info</p>
+                <h4 className={classes.cardTitleWhite}>Category</h4>
+                <p className={classes.cardCategoryWhite}>Category info</p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Article Name"
-                      id="ads-name"
+                      labelText="Category Name"
+                      id="category-name"
                       inputProps={{
-                        onChange: this.handleChange('ArticleName'),
-                        value: data.ArticleName,
+                        onChange: this.handleChange('CategoryName'),
+                        value: data.CategoryName,
                       }}
                       formControlProps={{
                         fullWidth: true,
@@ -140,31 +133,18 @@ class AddEdit extends Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Article Description
-                    </InputLabel>
-                    <CKEditor
-                      name="about"
-                      content={data.Description}
-                      events={{
-                        change: e => this.handleEditorChange(e, 'Description'),
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Published From"
-                      id="ads-from-date"
-                      inputProps={{
-                        onChange: this.handleChange('PublishFrom'),
-                        value: data.PublishFrom,
-                      }}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
+                    <Dropzone
+                      onDrop={files => this.onDrop(files, 'CategoryImage')}
+                      multiple={false}
+                    >
+                      <img
+                        className=""
+                        width="200px"
+                        height="200px"
+                        src={images.CategoryImage}
+                        alt="CategoryImage"
+                      />
+                    </Dropzone>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -176,6 +156,7 @@ class AddEdit extends Component {
                       control={
                         <Checkbox
                           checked={data.IsActive || false}
+                          tabIndex={-1}
                           onClick={this.handleCheckedChange('IsActive')}
                           value="IsActive"
                           color="primary"
@@ -183,33 +164,6 @@ class AddEdit extends Component {
                       }
                       label="Is Active"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={data.IsFeature || false}
-                          onClick={this.handleCheckedChange('IsFeature')}
-                          value="IsFeature"
-                          color="primary"
-                        />
-                      }
-                      label="Is Featured"
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <Dropzone
-                      onDrop={files => this.onDrop(files, 'ArticleImage')}
-                      multiple={false}
-                    >
-                      <img
-                        className=""
-                        width="200px"
-                        height="200px"
-                        src={images.ArticleImage}
-                        alt="ArticleImage"
-                      />
-                    </Dropzone>
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -231,8 +185,8 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: 'articleListPage', reducer });
-const withSaga = injectSaga({ key: 'articleListPage', saga });
+const withReducer = injectReducer({ key: 'categoryManagePage', reducer });
+const withSaga = injectSaga({ key: 'categoryManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
   oneOrganization: makeSelectOne(),

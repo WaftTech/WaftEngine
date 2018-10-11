@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -19,9 +19,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
 
 import Sidebar from 'components/Sidebar/Sidebar';
-import Header from "components/Header/Header";
+import Header from 'components/Header/Header';
 
-import logo from 'assets/img/logo.svg';
+import logo from 'assets/img/logo.png';
 import image from 'assets/img/sidebar-1.jpg';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -36,7 +36,14 @@ const switchRoutes = (
     {sidebarRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} exact={prop.exact || false} key={key} />;
+      return (
+        <Route
+          path={prop.path}
+          component={prop.component}
+          exact={prop.exact || false}
+          key={key}
+        />
+      );
     })}
   </Switch>
 );
@@ -44,12 +51,12 @@ const switchRoutes = (
 /* eslint-disable react/prefer-stateless-function */
 export class WtDashboard extends React.Component {
   state = {
-    mobileOpen: false
+    mobileOpen: false,
   };
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
-  resizeFunction =() => {
+  resizeFunction = () => {
     if (window.innerWidth >= 960) {
       this.setState({ mobileOpen: false });
     }
@@ -58,37 +65,39 @@ export class WtDashboard extends React.Component {
     if (navigator.platform.indexOf('Win') > -1) {
       const ps = new PerfectScrollbar(this.mainPanel);
     }
-    window.addEventListener("resize", this.resizeFunction);
+    window.addEventListener('resize', this.resizeFunction);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.resizeFunction);
+    window.removeEventListener('resize', this.resizeFunction);
   }
   render() {
     const { mobileOpen } = this.state;
     const { location, classes } = this.props;
-    return <div className={classes.wrapper}>
-      <Sidebar
-        routes={sidebarRoutes}
-        logoText={"Wt-Dashboard"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={this.handleDrawerToggle}
-        open={mobileOpen}
-        color="blue"
-        location={location}
-      />
-      <div className={classes.mainPanel} ref={el => this.mainPanel = el}>
-        <Header
+    return (
+      <div className={classes.wrapper}>
+        <Sidebar
           routes={sidebarRoutes}
+          logoText={'Dashboard'}
+          logo={logo}
+          image={image}
           handleDrawerToggle={this.handleDrawerToggle}
+          open={mobileOpen}
+          color="blue"
           location={location}
         />
-        <div className={classes.content}>
-          <div className={classes.container}>{switchRoutes}</div>
+        <div className={classes.mainPanel} ref={el => (this.mainPanel = el)}>
+          <Header
+            routes={sidebarRoutes}
+            handleDrawerToggle={this.handleDrawerToggle}
+            location={location}
+          />
+          <div className={classes.content}>
+            <div className={classes.container}>{switchRoutes}</div>
+          </div>
         </div>
       </div>
-    </div>;
+    );
   }
 }
 
