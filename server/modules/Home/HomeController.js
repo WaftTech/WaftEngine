@@ -35,5 +35,12 @@ homeController.GetLatestFourOrganization = async (req, res, next) => {
     .limit(4);
   return otherHelper.sendResponse(res, HttpStatus.OK, true, organization, null, 'Latst Organization for home Page Get Success !!', null);
 };
+homeController.GetDataforSearch = async (req, res, next) => {
+  const catid = req.params.catid;
+  const organization = await OrgSch.find({ IsDeleted: false, IsActive: true, IsVerified: true })
+    .sort({ Added_at: -1 })
+    .limit(4);
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, organization, null, 'Latst Organization for home Page Get Success !!', null);
+};
 
 module.exports = homeController;
