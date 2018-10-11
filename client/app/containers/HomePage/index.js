@@ -113,17 +113,9 @@ export default class HomePage extends React.PureComponent {
                         />
                     </Tabs>
 
-
-
-                    <div className="cta-block">
-                        <div className="container">
-                            <h2>Require something special?</h2>
-                            <p>We might help you to build it better way!</p>
-                            <Button variant="secondary" size="large">
-                                <span>Send us some words</span></Button></div></div>
-
-
-
+                    <br />
+                    <br />
+                    <h2>Some of Organizations</h2>
                     <div className="card">
                         <img src={rest1} />
                         <h3>Thakali Restaurant</h3>
@@ -136,6 +128,18 @@ export default class HomePage extends React.PureComponent {
           <Icon>Star</Icon> info@email.com
           <Icon>Star</Icon> website.com
         </div>
+
+
+                    <div className="cta-block">
+                        <div className="container">
+                            <h2>Require something special?</h2>
+                            <p>We might help you to build it better way!</p>
+                            <Button variant="secondary" size="large">
+                                <span>Send us some words</span></Button></div></div>
+
+
+
+
                 </div>
 
             </section>
