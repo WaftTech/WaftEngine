@@ -42,7 +42,7 @@ homeController.GetDataforSearch = async (req, res, next) => {
   const organization = await OrgSch.find({ IsDeleted: false, IsActive: true, IsVerified: true }, 'Organization slug').sort({ Added_at: -1 });
   const options = {
     pre: '<b>',
-    post: '<b>',
+    post: '</b>',
     extract: function(el) {
       return el.Organization;
     },
