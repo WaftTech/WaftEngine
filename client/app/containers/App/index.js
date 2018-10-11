@@ -30,6 +30,9 @@ import NotFoundPage from '../NotFoundPage';
 import StartPage from '../StartPage';
 import Dashboard from '../Dashboard';
 import WtDashboard from '../WtDashboard';
+import CategoryDetailPage from '../CategoryDetailPage';
+
+
 import {
   makeSelectDialog,
   makeSelectLocation,
@@ -57,6 +60,7 @@ const App = props => {
         <GuestRoute exact path="/register/:email" component={SignupPage} />
         <GuestRoute exact path="/resetpassword" component={ResetPasswordPage} />
         <Route exact path="/home" component={HomePage} />
+        <Route exact path="/category/:id" component={CategoryDetailPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </div>
