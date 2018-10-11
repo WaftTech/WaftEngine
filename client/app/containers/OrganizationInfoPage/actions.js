@@ -63,3 +63,42 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
+
+export const loadStateRequest = payload => ({
+  type: types.LOAD_STATE_REQUEST,
+  payload,
+});
+export const loadStateSuccess = payload => ({
+  type: types.LOAD_STATE_SUCCESS,
+  payload,
+});
+export const loadStateFailure = payload => ({
+  type: types.LOAD_STATE_FAILURE,
+  payload,
+});
+
+export const loadDistrictRequest = payload => ({
+  type: types.LOAD_DISTRICT_REQUEST,
+  payload,
+});
+export const loadDistrictSuccess = payload => ({
+  type: types.LOAD_DISTRICT_SUCCESS,
+  payload,
+});
+export const loadDistrictFailure = payload => ({
+  type: types.LOAD_DISTRICT_FAILURE,
+  payload,
+});
+
+export const loadVdcRequest = payload => ({
+  type: types.LOAD_VDC_REQUEST,
+  payload,
+});
+export const loadVdcSuccess = payload => ({
+  type: types.LOAD_VDC_SUCCESS,
+  payload,
+});
+export const loadVdcFailure = payload => ({
+  type: types.LOAD_VDC_FAILURE,
+  payload,
+});

@@ -29,5 +29,11 @@ homeController.GetOrganizationDetailByslug = async (req, res, next) => {
   const category = await CatSch.findById(ObjectId(organization.Category));
   return otherHelper.sendResponse(res, HttpStatus.OK, true, { organization, category }, null, 'Organization Detail Get Success !!', null);
 };
+homeController.GetLatestFourOrganization = async (req, res, next) => {
+  const organization = await OrgSch.find({ IsDeleted: false, IsActive: true, IsVerified: true })
+    .sort({ Added_at: -1 })
+    .limit(4);
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, organization, null, 'Latst Organization for home Page Get Success !!', null);
+};
 
 module.exports = homeController;
