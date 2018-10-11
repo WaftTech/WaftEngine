@@ -17,3 +17,9 @@ export const vdcSchema = new schema.Entity(
   {},
   { idAttribute: 'VdcMunicipalityID' },
 );
+
+export const categoriesSchema = new schema.Entity(
+  'categories',
+  {},
+  { idAttribute: '_id' },
+);
