@@ -32,8 +32,19 @@ import { DAYS, IMAGE_BASE } from 'containers/App/constants';
 import noImage from 'assets/img/logo.png';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne } from '../selectors';
-import { loadOneRequest, addEditRequest } from '../actions';
+import {
+  makeSelectOne,
+  makeSelectState,
+  makeSelectDistrict,
+  makeSelectVdc,
+} from '../selectors';
+import {
+  loadOneRequest,
+  addEditRequest,
+  loadStateRequest,
+  loadDistrictRequest,
+  loadVdcRequest,
+} from '../actions';
 
 const styles = {
   formControl: {
@@ -107,6 +118,15 @@ class AddEdit extends Component {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOne(this.props.match.params.id);
     }
+    if (this.props.states.size === 0) {
+      this.props.loadState();
+    }
+    if (this.props.districts.size === 0) {
+      this.props.loadDistrict();
+    }
+    if (this.props.vdcs.size === 0) {
+      this.props.loadVdc();
+    }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.oneOrganization !== nextProps.oneOrganization) {
@@ -158,7 +178,10 @@ class AddEdit extends Component {
   };
   render() {
     const { data, images } = this.state;
-    const { classes } = this.props;
+    const { classes, states, districts, vdcs } = this.props;
+    const statesObj = states.toJS();
+    const districtsObj = districts.toJS();
+    const vdcsObj = vdcs.toJS();
     return (
       <div>
         <GridContainer>
@@ -273,43 +296,91 @@ class AddEdit extends Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="State"
-                      id="state"
-                      inputProps={{
-                        onChange: this.handleChange('State'),
-                        value: data.State,
-                      }}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor="address-state">State</InputLabel>
+                      <Select
+                        value={data.State}
+                        onChange={this.handleChange('State')}
+                        inputProps={{
+                          name: 'state',
+                          id: 'address-state',
+                        }}
+                      >
+                        {Object.keys(statesObj).map(each => (
+                          <MenuItem
+                            key={statesObj[each]._id}
+                            value={statesObj[each].StateName}
+                          >
+                            {statesObj[each].StateName}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="District"
-                      id="district"
-                      inputProps={{
-                        onChange: this.handleChange('District'),
-                        value: data.District,
-                      }}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor="address-district">
+                        District
+                      </InputLabel>
+                      <Select
+                        value={data.District}
+                        onChange={this.handleChange('District')}
+                        inputProps={{
+                          name: 'district',
+                          id: 'address-district',
+                        }}
+                      >
+                        {data.State &&
+                          Object.keys(districtsObj).map(each => {
+                            if (
+                              statesObj[districtsObj[each].StateID]
+                                .StateName === data.State
+                            ) {
+                              return (
+                                <MenuItem
+                                  key={districtsObj[each]._id}
+                                  value={districtsObj[each].DistrictName}
+                                >
+                                  {districtsObj[each].DistrictName}
+                                </MenuItem>
+                              );
+                            }
+                            return null;
+                          })}
+                      </Select>
+                    </FormControl>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="VDC/Municipality"
-                      id="vdc-municipality"
-                      inputProps={{
-                        onChange: this.handleChange('VDCMunicipality'),
-                        value: data.VDCMunicipality,
-                      }}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor="address-vdc">
+                        VDC/Municipality
+                      </InputLabel>
+                      <Select
+                        value={data.VDCMunicipality}
+                        onChange={this.handleChange('VDCMunicipality')}
+                        inputProps={{
+                          name: 'vdc',
+                          id: 'address-vdc',
+                        }}
+                      >
+                        {data.District &&
+                          Object.keys(vdcsObj).map(each => {
+                            if (
+                              districtsObj[vdcsObj[each].DistrictID]
+                                .DistrictName === data.District
+                            ) {
+                              return (
+                                <MenuItem
+                                  key={vdcsObj[each]._id}
+                                  value={vdcsObj[each].Name}
+                                >
+                                  {vdcsObj[each].Name}
+                                </MenuItem>
+                              );
+                            }
+                          })}
+                      </Select>
+                    </FormControl>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -519,10 +590,16 @@ const withSaga = injectSaga({ key: 'organizationInfoPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   oneOrganization: makeSelectOne(),
+  states: makeSelectState(),
+  districts: makeSelectDistrict(),
+  vdcs: makeSelectVdc(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
+  loadState: () => dispatch(loadStateRequest()),
+  loadDistrict: () => dispatch(loadDistrictRequest()),
+  loadVdc: () => dispatch(loadVdcRequest()),
   addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
