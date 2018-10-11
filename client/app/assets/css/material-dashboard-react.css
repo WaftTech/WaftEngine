@@ -10851,10 +10851,47 @@ html {
 body {
   font: 14px/1.4 'Maven Pro',sans-serif;
   min-width: 320px;
-  background:#f5f7fa;
+  background:#fff url(/assets/img/background.jpg);
+  background-size: cover;
 }
 
-.logo img { max-height:80px;}
-.card img { max-width:200px;}
-.search-container { max-width:650px;}
 
+.logo img { max-height:60px; margin:10px 0;}
+.card img { max-width:200px;}
+.search-container { max-width:650px; margin:20px auto;     background: #fff;
+  padding: 10px 25px;
+  border-radius: 4px; }
+
+.search-container .col-4 { background:#fff;}
+
+.width100 { width:100px; float: left;}
+
+.clearfix { clear:both;}
+
+
+
+
+.cta-block {
+  padding: 50px 0;
+  background: #18ba60;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cta-block p {
+  margin-bottom: 30px;
+}
+
+.cta-block .el-button {
+  background: #333 !important;
+  color: #fff !important;
+}
+
+.cta-block h2 {
+  color: #fff;
+  margin: 0 0 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
