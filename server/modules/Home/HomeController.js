@@ -37,9 +37,16 @@ homeController.GetLatestFourOrganization = async (req, res, next) => {
 };
 homeController.GetDataforSearch = async (req, res, next) => {
   const catid = req.params.catid;
-  const organization = await OrgSch.find({ IsDeleted: false, IsActive: true, IsVerified: true })
-    .sort({ Added_at: -1 })
-    .limit(4);
+  const text = req.params.text;
+  const organization = await OrgSch.find({ IsDeleted: false, IsActive: true, IsVerified: true }, 'Organization slug').sort({ Added_at: -1 });
+  var options = {
+    pre: '<b>',
+    post: '<b>',
+    extract: function(el) {
+      return el.Organization;
+    },
+  };
+  var results = fuzzy.filter(text, list, options);
   return otherHelper.sendResponse(res, HttpStatus.OK, true, organization, null, 'Latst Organization for home Page Get Success !!', null);
 };
 
