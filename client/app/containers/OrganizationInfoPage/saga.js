@@ -49,6 +49,18 @@ function* loadVdc() {
   );
 }
 
+function* loadCategories(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      'category',
+      actions.loadCategoriesSuccess,
+      actions.loadCategoriesFailure,
+      token,
+    ),
+  );
+}
+
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
   yield call(
@@ -97,6 +109,7 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_STATE_REQUEST, loadState);
   yield takeLatest(types.LOAD_DISTRICT_REQUEST, loadDistrict);
   yield takeLatest(types.LOAD_VDC_REQUEST, loadVdc);
+  yield takeLatest(types.LOAD_CATEGORIES_REQUEST, loadCategories);
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
