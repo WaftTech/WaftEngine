@@ -12,8 +12,8 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
@@ -31,35 +31,8 @@ import {
   loadCategoriesRequest,
   setSearchCategory,
   setSearchText,
+  searchRequest,
 } from './actions';
-
-const styles = {
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {},
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-};
 
 /* eslint-disable react/prefer-stateless-function */
 class SearchComponent extends React.Component {
@@ -69,13 +42,11 @@ class SearchComponent extends React.Component {
       this.props.loadCategories();
     }
   }
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.categories !== this.props.categories) {
       this.setState({ categories: nextProps.categories.toJS() });
     }
   }
-
   handleChange = name => event => {
     event.persist();
     const { value } = event.target;
@@ -88,9 +59,13 @@ class SearchComponent extends React.Component {
         break;
     }
   };
-
+  handleFormSubmit = e => {
+    e.preventDefault();
+    this.props.doSearch();
+    this.props.search();
+  };
   render() {
-    const { classes, searchCategoryId, searchText } = this.props;
+    const { searchCategoryId, searchText } = this.props;
     const { categories } = this.state;
     return (
       <div className="text-center">
@@ -104,46 +79,40 @@ class SearchComponent extends React.Component {
         <br />
         <div className="search-container">
           <div className="row">
-            <Select
-              value={searchCategoryId}
-              onChange={this.handleChange('category')}
-              inputProps={{
-                name: 'category',
-                id: 'search-category',
-              }}
-            >
-              {Object.keys(categories).map(each => (
-                <MenuItem
-                  key={categories[each]._id}
-                  value={categories[each]._id}
-                >
-                  {categories[each].CategoryName}
-                </MenuItem>
-              ))}
-            </Select>
-            <TextField
-              value={searchText}
-              onChange={this.handleChange('text')}
-              className="col-6"
-              fullWidth
-              label="Please Input"
-            />
-            {/* <TextField
-              className="col-4"
-              id="standard-select-category"
-              select
-              label="Select"
-            />
-
-
-            <Button
-              size="small"
-              className="col-2"
-              variant="contained"
-              color="primary"
-            >
-              Search
-            </Button> */}
+            <form onSubmit={this.handleFormSubmit}>
+              <Select
+                value={searchCategoryId}
+                onChange={this.handleChange('category')}
+                inputProps={{
+                  name: 'category',
+                  id: 'search-category',
+                }}
+              >
+                {Object.keys(categories).map(each => (
+                  <MenuItem
+                    key={categories[each]._id}
+                    value={categories[each]._id}
+                  >
+                    {categories[each].CategoryName}
+                  </MenuItem>
+                ))}
+              </Select>
+              <TextField
+                value={searchText}
+                onChange={this.handleChange('text')}
+                className="col-6"
+                fullWidth
+                label="Please Input"
+              />
+              <Button
+                size="small"
+                className="col-2"
+                color="primary"
+                onClick={this.handleFormSubmit}
+              >
+                Search
+              </Button>
+            </form>
           </div>
           <div className="clearfix" />
         </div>
@@ -153,8 +122,6 @@ class SearchComponent extends React.Component {
 }
 
 SearchComponent.propTypes = {};
-
-const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'homePageSearchComponent', reducer });
 const withSaga = injectSaga({ key: 'homePageSearchComponent', saga });
@@ -169,6 +136,7 @@ const mapDispatchToProps = dispatch => ({
   loadCategories: () => dispatch(loadCategoriesRequest()),
   setSearchCategory: payload => dispatch(setSearchCategory(payload)),
   setSearchText: payload => dispatch(setSearchText(payload)),
+  doSearch: () => dispatch(searchRequest()),
 });
 
 const withConnect = connect(
@@ -176,7 +144,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,
