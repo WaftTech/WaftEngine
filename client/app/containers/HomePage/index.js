@@ -29,6 +29,7 @@ import {
   Wifi,
 } from '@material-ui/icons';
 import aries from 'assets/img/aries.png';
+import SearchComponent from './SearchComponent';
 
 function TabContainer(props) {
   return (
@@ -76,7 +77,9 @@ export default class HomePage extends React.Component {
           </div>
         </header>
 
-        <Masthead />
+        <Masthead>
+          <SearchComponent />
+        </Masthead>
 
         <div className="container">
           <CategoryItem>
