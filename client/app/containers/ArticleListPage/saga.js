@@ -34,7 +34,7 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/wt/organization-info'));
+  yield put(push('/wt/articles-manage'));
 }
 
 function* addEdit(action) {

@@ -1,13 +1,14 @@
-/*
- *
- * CategoryDetailPage actions
- *
- */
+import * as types from './constants';
 
-import { DEFAULT_ACTION } from './constants';
-
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+export const loadCategoryRequest = payload => ({
+  type: types.LOAD_CATEGORY_REQUEST,
+  payload,
+});
+export const loadCategorySuccess = payload => ({
+  type: types.LOAD_CATEGORY_SUCCESS,
+  payload,
+});
+export const loadCategoryFailure = payload => ({
+  type: types.LOAD_CATEGORY_FAILURE,
+  payload,
+});
