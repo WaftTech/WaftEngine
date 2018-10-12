@@ -1,4 +1,6 @@
 import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -19,6 +21,7 @@ import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 
 import headerLinksStyle from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
+import { logout } from '../../containers/App/actions';
 
 class HeaderLinks extends React.Component {
   state = {
@@ -154,10 +157,11 @@ class HeaderLinks extends React.Component {
           simple={!(window.innerWidth > 959)}
           aria-label="Person"
           className={classes.buttonLink}
+          onClick={this.props.logout}
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>Logout</p>
           </Hidden>
         </Button>
       </div>
@@ -165,4 +169,17 @@ class HeaderLinks extends React.Component {
   }
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout()),
+});
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+const withStyle = withStyles(headerLinksStyle);
+export default compose(
+  withConnect,
+  withStyle,
+)(HeaderLinks);
