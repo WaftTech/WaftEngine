@@ -31,7 +31,7 @@ import StartPage from '../StartPage';
 import Dashboard from '../Dashboard';
 import WtDashboard from '../WtDashboard';
 import CategoryDetailPage from '../CategoryDetailPage';
-
+import UserLayout from './layouts/UserLayout';
 
 import {
   makeSelectDialog,
@@ -48,9 +48,16 @@ const App = props => {
       <Helmet titleTemplate="%s - App" defaultTitle="App">
         <meta name="description" content="application" />
       </Helmet>
-      {!isEmpty(dialog) && dialog.toJS()}
       <Switch location={location}>
-        <Route exact path="/" component={HomePage} />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <UserLayout>
+              <HomePage />
+            </UserLayout>
+          )}
+        />
         <UserRoute exact path="/dashboard" component={Dashboard} />
         <UserRoute path="/wt" component={WtDashboard} />
         <GuestRoute exact path="/start" component={StartPage} />

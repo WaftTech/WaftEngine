@@ -25,3 +25,12 @@ export const searchFailure = payload => ({
   type: types.SEARCH_FAILURE,
   payload,
 });
+
+export const setSearchCategory = payload => ({
+  type: types.SET_SEARCH_CATEGORY,
+  payload,
+});
+export const setSearchText = payload => ({
+  type: types.SET_SEARCH_TEXT,
+  payload,
+});

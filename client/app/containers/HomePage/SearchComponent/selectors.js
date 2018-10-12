@@ -6,3 +6,9 @@ const selectDomain = state =>
 
 export const makeSelectCategories = () =>
   createSelector(selectDomain, state => state.get('categories'));
+
+export const makeSelectSearchCategory = () =>
+  createSelector(selectDomain, state => state.get('searchCategory'));
+
+export const makeSelectSearchText = () =>
+  createSelector(selectDomain, state => state.get('searchText'));

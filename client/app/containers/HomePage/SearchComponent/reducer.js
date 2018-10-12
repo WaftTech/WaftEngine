@@ -18,6 +18,14 @@ function reducer(state = initialState, action) {
             .categories || {},
         ),
       });
+    case types.SET_SEARCH_CATEGORY:
+      return state.merge({
+        searchCategory: action.payload,
+      });
+    case types.SET_SEARCH_TEXT:
+      return state.merge({
+        searchText: action.payload,
+      });
     default:
       return state;
   }
