@@ -7,6 +7,7 @@ export const initialState = fromJS({
   searchCategory: '',
   searchText: '',
   categories: {},
+  searchResults: [],
 });
 
 function reducer(state = initialState, action) {
@@ -17,6 +18,10 @@ function reducer(state = initialState, action) {
           normalize(action.payload.data || [], [categoriesSchema]).entities
             .categories || {},
         ),
+      });
+    case types.SEARCH_SUCCESS:
+      return state.merge({
+        searchResults: fromJS(action.payload.data),
       });
     case types.SET_SEARCH_CATEGORY:
       return state.merge({
