@@ -88,7 +88,7 @@ const Footer = () => (
           <div className="widget-ft style1 widget-lastest">
             <h3 className="title">Subscribe Newsletter</h3>{' '}
             <form>
-              <input type="text" className="form-control" />
+              <input type="text" className="form-control" placeholder="Enter Your Email" />
               <br />
               <Button variant="contained" color="secondary">Submit</Button>
             </form>

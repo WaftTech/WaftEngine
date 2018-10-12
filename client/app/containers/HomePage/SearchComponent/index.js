@@ -13,6 +13,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 // @material-ui/core components
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -79,34 +81,39 @@ class SearchComponent extends React.Component {
         <br />
         <div className="search-container">
           <div className="row">
-            <form onSubmit={this.handleFormSubmit}>
-              <Select
-                value={searchCategoryId}
-                onChange={this.handleChange('category')}
-                inputProps={{
-                  name: 'category',
-                  id: 'search-category',
-                }}
-              >
-                {Object.keys(categories).map(each => (
-                  <MenuItem
-                    key={categories[each]._id}
-                    value={categories[each]._id}
-                  >
-                    {categories[each].CategoryName}
-                  </MenuItem>
-                ))}
-              </Select>
+            <form onSubmit={this.handleFormSubmit} style={{ display: 'flex', width: '100%' }}>
+
+              <FormControl className="selectbox">
+                <InputLabel htmlFor="age-required">Category</InputLabel>
+
+                <Select placeholder="Select Category"
+                  value={searchCategoryId}
+                  onChange={this.handleChange('category')}
+                  inputProps={{
+                    name: 'category',
+                    id: 'search-category',
+                  }}
+                >
+
+                  {Object.keys(categories).map(each => (
+                    <MenuItem
+                      key={categories[each]._id}
+                      value={categories[each]._id}
+                    >
+                      {categories[each].CategoryName}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <TextField
                 value={searchText}
                 onChange={this.handleChange('text')}
-                className="col-6"
-                fullWidth
-                label="Please Input"
+                className="col-6 inputbox"
+                label="Searcy by name"
               />
               <Button
-                size="small"
-                className="col-2"
+                variant="contained"
+                className="col-2 searchbtn"
                 color="primary"
                 onClick={this.handleFormSubmit}
               >
@@ -116,7 +123,7 @@ class SearchComponent extends React.Component {
           </div>
           <div className="clearfix" />
         </div>
-      </div>
+      </div >
     );
   }
 }
