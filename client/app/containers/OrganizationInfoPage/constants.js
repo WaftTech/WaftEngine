@@ -33,3 +33,7 @@ export const LOAD_DISTRICT_FAILURE = 'app/OrganizationInfoPage/LOAD_DISTRICT_FAI
 export const LOAD_VDC_REQUEST = 'app/OrganizationInfoPage/LOAD_VDC_REQUEST';
 export const LOAD_VDC_SUCCESS = 'app/OrganizationInfoPage/LOAD_VDC_SUCCESS';
 export const LOAD_VDC_FAILURE = 'app/OrganizationInfoPage/LOAD_VDC_FAILURE';
+
+export const LOAD_CATEGORIES_REQUEST = 'app/OrganizationInfoPage/LOAD_CATEGORIES_REQUEST';
+export const LOAD_CATEGORIES_SUCCESS = 'app/OrganizationInfoPage/LOAD_CATEGORIES_SUCCESS';
+export const LOAD_CATEGORIES_FAILURE = 'app/OrganizationInfoPage/LOAD_CATEGORIES_FAILURE';

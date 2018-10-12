@@ -27,8 +27,8 @@ import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
-import { loadAllRequest } from './actions';
-import { makeSelectAll } from './selectors';
+import { loadAllRequest, loadCategoriesRequest } from './actions';
+import { makeSelectAll, makeSelectCategories } from './selectors';
 
 const styles = theme => ({
   button: {
@@ -67,6 +67,9 @@ const styles = theme => ({
 export class OrganizationInfoPage extends React.Component {
   componentDidMount() {
     this.props.loadAll();
+    if (this.props.categories.size === 0) {
+      this.props.loadCategories();
+    }
   }
 
   handleAdd = () => {
@@ -80,9 +83,9 @@ export class OrganizationInfoPage extends React.Component {
     // this.props.history.push(`/wt/organization-info/edit/${id}`);
   };
   render() {
-    const { classes, allOrganizations } = this.props;
+    const { classes, allOrganizations, categories } = this.props;
     const allOrganizationsObj = allOrganizations.toJS();
-    console.log(allOrganizationsObj);
+    const categoriesObj = categories.toJS();
     const tableData = allOrganizationsObj.map(
       ({
         Category,
@@ -93,7 +96,7 @@ export class OrganizationInfoPage extends React.Component {
         IsFeature,
         slug,
       }) => [
-        Category,
+        (categoriesObj[Category] || {}).CategoryName,
         Organization,
         PhoneNo,
         OrganizationEmail,
@@ -210,10 +213,12 @@ OrganizationInfoPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   allOrganizations: makeSelectAll(),
+  categories: makeSelectCategories(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadAll: () => dispatch(loadAllRequest()),
+  loadCategories: () => dispatch(loadCategoriesRequest()),
 });
 
 const withConnect = connect(
