@@ -1,3 +1,5 @@
+import * as types from './constants';
+
 export const loadCategoriesRequest = payload => ({
   type: types.LOAD_CATEGORIES_REQUEST,
   payload,
