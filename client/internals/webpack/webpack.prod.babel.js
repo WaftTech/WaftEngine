@@ -52,7 +52,7 @@ module.exports = require('./webpack.base.babel')({
       publicPath: '/',
       appShell: '/',
       autoUpdate: true,
-      
+
       // No need to cache .htaccess. See http://mxs.is/googmp,
       // this is applied before any match in `caches` section
       excludes: ['.htaccess'],
@@ -71,11 +71,11 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'React Boilerplate',
-      short_name: 'React BP',
-      description: 'My React Boilerplate-based project!',
-      background_color: '#fafafa',
-      theme_color: '#b1624d',
+      name: 'Ask To Marina',
+      short_name: 'AskToMarina',
+      description: 'Easy search solution!',
+      background_color: '#fff',
+      theme_color: '#5D524C',
       icons: [
         {
           src: path.resolve('app/images/icon-512x512.png'),
