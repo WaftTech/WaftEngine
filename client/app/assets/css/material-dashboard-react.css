@@ -10904,3 +10904,9 @@ color: #fff; }
 .ad-top-right { margin-top: 5px; margin-bottom: 5px; max-width:100%; }
 
 .ad-section img { max-width:100%;border:1px solid #5d524c; margin-bottom: 10px; padding:2px; }
+
+button:focus, button:active { outline: none;}
+
+.card-item a { margin-top:20px; white-space: nowrap; display: inline-block; padding:5px 10px; margin-left:20px;}
+.card-item img { margin-top:20px;}
+
