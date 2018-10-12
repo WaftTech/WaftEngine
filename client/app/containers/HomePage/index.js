@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon, Button, TextField, Paper } from '@material-ui/core';
 import logo from 'assets/img/logo.png';
-import background from 'assets/img/background.jpg';
+import background from 'assets/img/ptn.png';
 import rest1 from 'assets/img/rest1.jpg';
 import categoryIcon from 'assets/img/rest_thumb.png';
 import AppBar from '@material-ui/core/AppBar';
@@ -73,7 +73,7 @@ export default class HomePage extends React.Component {
             <section className="is-vertical">
                 <header className="header header-main">
                     <div className="container">
-                        <div className="logo">
+                        <div className="logo text-center">
                             <Link to="/">
                                 <img src={logo} />
                             </Link>
@@ -231,7 +231,7 @@ export default class HomePage extends React.Component {
                                 <h3 class="title">Latest Twitter</h3> <ul><li><a href="#" title=""><i class="fa fa-twitter"></i>@Stats</a> Lorem Ipsum has been
                                               the industry's standard dummy text ever since the 1500s.
                               </li> <li><a href="#" title=""><i class="fa fa-twitter"></i>@Stats.D</a> Lorem Ipsum is
-                      simply dummy text of the printing and typesetting.Lorem Ipsum is simply dummy.
+                                  simply dummy text of the printing and typesetting.Lorem Ipsum is simply dummy.
                               </li></ul></div></div>
                         </div>
                     </div>
