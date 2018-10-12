@@ -12,6 +12,7 @@ const Header = () => (
             <Link to="/">
               <img src={logo} />
             </Link>
+            <Link style={{ marginLeft: '20px' }} to="/login">Login</Link>
           </div>
         </div>
         <div className="col-xs-12 col-lg-6">

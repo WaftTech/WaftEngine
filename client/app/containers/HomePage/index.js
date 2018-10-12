@@ -133,8 +133,8 @@ export class HomePage extends React.Component {
             <div className="col-xs-12 col-lg-10">
               <h2>Categories</h2>
               <br />
-              <Grid container spacing={16}>
-                <Grid item xs={6} lg={3}>
+              <Grid container spacing={8}>
+                <Grid item xs={6} md={3}>
                   <CategoryItem>
                     <div className="img">
                       <img src={education} />
@@ -145,7 +145,7 @@ export class HomePage extends React.Component {
                     </div>
                   </CategoryItem>
                 </Grid>
-                <Grid item xs={6} lg={3}>
+                <Grid item xs={6} md={3}>
                   <CategoryItem>
                     <div className="img">
                       <img src={automobile} />
@@ -156,7 +156,7 @@ export class HomePage extends React.Component {
                     </div>
                   </CategoryItem>
                 </Grid>
-                <Grid item xs={6} lg={3}>
+                <Grid item xs={6} md={3}>
                   <CategoryItem>
                     <div className="img">
                       <img src={health} />
@@ -167,7 +167,7 @@ export class HomePage extends React.Component {
                     </div>
                   </CategoryItem>
                 </Grid>
-                <Grid item xs={6} lg={3}>
+                <Grid item xs={6} md={3}>
                   <CategoryItem>
                     <div className="img">
                       <img src={garments} />
@@ -245,7 +245,7 @@ export class HomePage extends React.Component {
 
 
               <div className="container">
-                <h2 className="text-center">Some of Organizations</h2>
+                <br /><h2 className="text-center">Some of Organizations</h2>
                 <br />
                 <br />
                 <div className="row">
