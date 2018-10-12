@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextField, Button } from '@material-ui/core';
 
 const Footer = () => (
   <footer>
@@ -82,6 +83,22 @@ const Footer = () => (
             </ul>
           </div>
         </div>
+
+        <div className="col-3">
+          <div className="widget-ft style1 widget-lastest">
+            <h3 className="title">Subscribe Newsletter</h3>{' '}
+            <form>
+              <input type="text" className="form-control" />
+              <br />
+              <Button variant="contained" color="secondary">Submit</Button>
+            </form>
+
+          </div>
+        </div>
+
+
+
+
       </div>
     </div>
   </footer>
