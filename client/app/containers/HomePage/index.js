@@ -179,280 +179,180 @@ export class HomePage extends React.Component {
                   </CategoryItem>
                 </Grid>
               </Grid>
-              <div className="container">
-                <Paper>
-                  <Tabs
-                    value={value}
-                    onChange={this.handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered
-                  >
-                    <Tab label="Recent Videos" />
-                    <Tab label="About Us" />
-                    <Tab label="Rashifal" />
-                  </Tabs>
-                </Paper>
-                {value === 0 && (
-                  <TabContainer>
-                    <div className="text-center">
-                      <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/a_wuykzfFzE"
-                        frameBorder="0"
-                        allowFullScreen
-                      />
-                    </div>
-                  </TabContainer>
-                )}
-                {value === 1 && (
-                  <TabContainer>
-                    <div className="text-center">
-                      <div className="maxWidth500">
-                        A maggot wound is easily identifiable - A hole of any
-                        sort, a characteristic smell. You can actually see the
-                        maggots moving in the wound. But do not worry the
-                        treatment is simple. The vet cleans the area with
-                        antiseptic. They then applies Lorex­ene, or Maggocide,
-                        ointments specifically meant to kill maggots.
+              <Paper>
+                <Tabs
+                  value={value}
+                  onChange={this.handleChange}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  centered
+                >
+                  <Tab label="Recent Videos" />
+                  <Tab label="About Us" />
+                  <Tab label="Rashifal" />
+                </Tabs>
+              </Paper>
+              {value === 0 && (
+                <TabContainer>
+                  <div className="text-center">
+                    <iframe
+                      width="560"
+                      height="315"
+                      src="https://www.youtube.com/embed/a_wuykzfFzE"
+                      frameBorder="0"
+                      allowFullScreen
+                    />
+                  </div>
+                </TabContainer>
+              )}
+              {value === 1 && (
+                <TabContainer>
+                  <div className="text-center">
+                    <div className="maxWidth500">
+                      A maggot wound is easily identifiable - A hole of any
+                      sort, a characteristic smell. You can actually see the
+                      maggots moving in the wound. But do not worry the
+                      treatment is simple. The vet cleans the area with
+                      antiseptic. They then applies Lorex­ene, or Maggocide,
+                      ointments specifically meant to kill maggots.
                       </div>
-                    </div>{' '}
-                  </TabContainer>
-                )}
-                {value === 2 && (
-                  <TabContainer>
-                    <div className="row">
-                      <div className="col-xs-12 col-lg-10">
-                        <h3>Categories</h3>
-                        <br />
-                        <Grid container spacing={16}>
-                          <Grid item xs={6} lg={3}>
-                            <CategoryItem>
-                              <div className="img">
-                                <img src={education} />
-                              </div>
-                              <div className="info">
-                                <h5>Education</h5>
-                                <small>2100</small>
-                              </div>
-                            </CategoryItem>
-                          </Grid>
-                          <Grid item xs={6} lg={3}>
-                            <CategoryItem>
-                              <div className="img">
-                                <img src={automobile} />
-                              </div>
-                              <div className="info">
-                                <h5>Automobile</h5>
-                                <small>2100</small>
-                              </div>
-                            </CategoryItem>
-                          </Grid>
-                          <Grid item xs={6} lg={3}>
-                            <CategoryItem>
-                              <div className="img">
-                                <img src={health} />
-                              </div>
-                              <div className="info">
-                                <h5>Health</h5>
-                                <small>2100</small>
-                              </div>
-                            </CategoryItem>
-                          </Grid>
-                          <Grid item xs={6} lg={3}>
-                            <CategoryItem>
-                              <div className="img">
-                                <img src={garments} />
-                              </div>
-                              <div className="info">
-                                <h5>Garments</h5>
-                                <small>2100</small>
-                              </div>
-                            </CategoryItem>
-                          </Grid>
-                        </Grid>
-                        <div className="container">
-                          <br />
-                          <br />
-                          <Tabs
-                            value={value}
-                            onChange={this.handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            centered
-                          >
-                            <Tab label="Recent Videos" />
-                            <Tab label="About Us" />
-                            <Tab label="Rashifal" />
-                          </Tabs>
-                          {value === 0 && (
-                            <TabContainer>
-                              <div className="text-center">
-                                <iframe
-                                  width="560"
-                                  height="315"
-                                  src="https://www.youtube.com/embed/a_wuykzfFzE"
-                                  frameBorder="0"
-                                  allowFullScreen
-                                />
-                              </div>
-                            </TabContainer>
-                          )}
-                          {value === 1 && (
-                            <TabContainer>
-                              <div className="text-center">
-                                <div className="maxWidth500">
-                                  A maggot wound is easily identifiable - A hole
-                                  of any sort, a characteristic smell. You can
-                                  actually see the maggots moving in the wound.
-                                  But do not worry the treatment is simple. The
-                                  vet cleans the area with antiseptic. They then
-                                  applies Lorex­ene, or Maggocide, ointments
-                                  specifically meant to kill maggots.
-                                </div>
-                              </div>{' '}
-                            </TabContainer>
-                          )}
-                          {value === 2 && (
-                            <TabContainer>
-                              <div className="row">
-                                <div className="col-4">
-                                  <div className="card box-card">
-                                    <img src={aries} height="60" width="60" />
-                                    <div className="card__header">
-                                      मेष - चु, चे, चो, ला, लि, लु, ले, लो, अ
-                                      (Aries)
+                  </div>{' '}
+                </TabContainer>
+              )}
+              {value === 2 && (
+                <TabContainer>
+                  <div className="row">
+                    <div className="col-4">
+                      <div className="card box-card">
+                        <img src={aries} height="60" width="60" />
+                        <div className="card__header">
+                          मेष - चु, चे, चो, ला, लि, लु, ले, लो, अ
+                          (Aries)
                                     </div>
-                                    <div className="card__body">
-                                      <div className="info">
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipisicing elit. Proin nibh augue
-                                        conseqaut nibbhi ellit ipsum
-                                        consectetur.
+                        <div className="card__body">
+                          <div className="info">
+                            Lorem ipsum dolor sit amet, consectetur
+                            adipisicing elit. Proin nibh augue
+                            conseqaut nibbhi ellit ipsum
+                            consectetur.
                                       </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </TabContainer>
-                          )}
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabContainer>
+              )}
 
-                        <br />
-                        <div className="container">
-                          <h2 className="text-center">Some of Organizations</h2>
+
+              <div className="container">
+                <h2 className="text-center">Some of Organizations</h2>
+                <br />
+                <br />
+                <div className="row">
+                  <div className="col-xs-12 col-lg-6">
+                    <div className="card card-item">
+                      <div className="row">
+                        <div className="col-5">
+                          <img src={rest1} />
+                        </div>
+                        <div className="col-7">
                           <br />
+                          <h5>Thakali Restaurant</h5>
+                          <LocationOn />
+                          <small>State 3 Bhaktapur Thimi</small>
                           <br />
-                          <div className="row">
-                            <div className="col-xs-12 col-lg-6">
-                              <div className="card card-item">
-                                <div className="row">
-                                  <div className="col-5">
-                                    <img src={rest1} />
-                                  </div>
-                                  <div className="col-7">
-                                    <br />
-                                    <h5>Thakali Restaurant</h5>
-                                    <LocationOn />
-                                    <small>State 3 Bhaktapur Thimi</small>
-                                    <br />
-                                    <CalendarToday />
-                                    <small>sun, mon, tue, wed, thu, fri</small>
-                                    <br />
-                                    <Timelapse />
-                                    <small>10AM-7PM</small> <br />
-                                  </div>
-                                  <div className="row">
-                                    <div className="col-4">
-                                      <a href="tel:977-9849242008">
-                                        <Call />Call
+                          <CalendarToday />
+                          <small>sun, mon, tue, wed, thu, fri</small>
+                          <br />
+                          <Timelapse />
+                          <small>10AM-7PM</small> <br />
+                        </div>
+                        <div className="row">
+                          <div className="col-4">
+                            <a href="tel:977-9849242008">
+                              <Call />Call
                                       </a>
-                                    </div>
-                                    <div className="col-4">
-                                      <a href="mailto:info@email.com">
-                                        <Email />Email
+                          </div>
+                          <div className="col-4">
+                            <a href="mailto:info@email.com">
+                              <Email />Email
                                       </a>{' '}
-                                    </div>
-                                    <div className="col-4">
-                                      {' '}
-                                      <a
-                                        href="http://website.com"
-                                        target="_blank"
-                                      >
-                                        <OpenInNew />Visit Site
+                          </div>
+                          <div className="col-4">
+                            {' '}
+                            <a
+                              href="http://website.com"
+                              target="_blank"
+                            >
+                              <OpenInNew />Visit Site
                                       </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xs-12 col-lg-6">
-                              <div className="card card-item">
-                                <div className="row">
-                                  <div className="col-5">
-                                    <img src={rest1} />
-                                  </div>
-                                  <div className="col-7">
-                                    <br />
-                                    <h5>Thakali Restaurant</h5>
-                                    <LocationOn />
-                                    <small>State 3 Bhaktapur Thimi</small>
-                                    <br />
-                                    <CalendarToday />
-                                    <small>sun, mon, tue, wed, thu, fri</small>
-                                    <br />
-                                    <Timelapse />
-                                    <small>10AM-7PM</small> <br />
-                                  </div>
-                                  <div className="row">
-                                    <div className="col-4">
-                                      <a href="tel:977-9849242008">
-                                        <Call />Call
-                                      </a>
-                                    </div>
-                                    <div className="col-4">
-                                      <a href="mailto:info@email.com">
-                                        <Email />Email
-                                      </a>{' '}
-                                    </div>
-                                    <div className="col-4">
-                                      {' '}
-                                      <a
-                                        href="http://website.com"
-                                        target="_blank"
-                                      >
-                                        <OpenInNew />Visit Site
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </TabContainer>
-                )}
+                  </div>
+                  <div className="col-xs-12 col-lg-6">
+                    <div className="card card-item">
+                      <div className="row">
+                        <div className="col-5">
+                          <img src={rest1} />
+                        </div>
+                        <div className="col-7">
+                          <br />
+                          <h5>Thakali Restaurant</h5>
+                          <LocationOn />
+                          <small>State 3 Bhaktapur Thimi</small>
+                          <br />
+                          <CalendarToday />
+                          <small>sun, mon, tue, wed, thu, fri</small>
+                          <br />
+                          <Timelapse />
+                          <small>10AM-7PM</small> <br />
+                        </div>
+                        <div className="row">
+                          <div className="col-4">
+                            <a href="tel:977-9849242008">
+                              <Call />Call
+                                      </a>
+                          </div>
+                          <div className="col-4">
+                            <a href="mailto:info@email.com">
+                              <Email />Email
+                                      </a>{' '}
+                          </div>
+                          <div className="col-4">
+                            {' '}
+                            <a
+                              href="http://website.com"
+                              target="_blank"
+                            >
+                              <OpenInNew />Visit Site
+                                      </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="col-xs-12 col-lg-2 ad-section">
-                <img src={ad1} />
-                <img src={ad3} />
-                <img src={ad4} />
-                <img src={ad5} />
-                <img src={ad6} />
-                <img src={ad2} />
-                <img src={ad7} />
-                <img src={ad8} />
-                <img src={ad9} />
-                <img src={ad10} />
-                <img src={ad11} />
-              </div>
             </div>
-          </div>
-        </div>
+
+            <div className="col-xs-12 col-lg-2 ad-section">
+              <img src={ad1} />
+              <img src={ad3} />
+              <img src={ad4} />
+              <img src={ad5} />
+              <img src={ad6} />
+              <img src={ad2} />
+              <img src={ad7} />
+              <img src={ad8} />
+              <img src={ad9} />
+              <img src={ad10} />
+              <img src={ad11} />
+            </div>
+          </div >
+        </div >
 
         <div className="cta-block">
           <div className="container">
@@ -464,26 +364,6 @@ export class HomePage extends React.Component {
           </div>
         </div>
 
-        <div className="col-xs-12 col-lg-2 ad-section">
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-          <img src={telecome} />
-        </div>
-        <div className="cta-block">
-          <div className="container">
-            <h2>Want to list here?</h2>
-            <p>We can help you to promote your organization online</p>
-            <Button variant="primary" size="large">
-              Contact Us
-            </Button>
-          </div>
-        </div>
         <div className="container">
           <h3 className="text-center">Articles</h3>
           <br />
@@ -536,7 +416,7 @@ export class HomePage extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
