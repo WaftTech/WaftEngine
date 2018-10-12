@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat:400,600,700);@import url(https://fonts.googleapis.com/icon?family=Material+Icons);@import url(https://fonts.googleapis.com/css?family=Maven+Pro:400,500);@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);.main-feature-wrap {
+.main-feature-wrap {
   padding: 50px 0;
   text-align: center;
 }
@@ -421,7 +421,6 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
 }
 
 [tabindex="-1"]:focus {
@@ -10849,10 +10848,8 @@ html {
 }
 
 body {
-  font: 14px/1.4 'Maven Pro',sans-serif;
   min-width: 320px;
-  background:#fff url(/assets/img/background.jpg);
-  background-size: cover;
+  background: #f7f7f7;
 }
 
 
@@ -10874,7 +10871,7 @@ body {
 
 .cta-block {
   padding: 50px 0;
-  background: #18ba60;
+  background: #5d524c;
   color: #fff;
   font-size: 14px;
   text-align: center;
@@ -10903,3 +10900,7 @@ body {
 footer { background-color: #29282e;
 padding: 97px 0 62px; color:#fff; margin-top:40px;
 color: #fff; }
+
+.ad-top-right { margin-top: 5px; margin-bottom: 5px; max-width:100%; }
+
+.ad-section img { max-width:100%;border:1px solid #5d524c; margin-bottom: 10px; padding:2px; }
