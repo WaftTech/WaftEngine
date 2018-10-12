@@ -10857,8 +10857,8 @@ body {
 .card img { max-width:100%;}
 .card svg { font-size:14px; margin-right: 10px;}
 .search-container { max-width:650px; margin:20px auto;     background: #fff;
-  padding: 10px 25px;
-  border-radius: 4px; }
+  padding: 10px 25px; box-shadow: 0 5px 0 0 rgba(0,0,0,0.13);
+  border-radius: 6px; }
 
 .search-container .col-4 { background:#fff;}
 
@@ -10871,7 +10871,7 @@ body {
 
 .cta-block {
   padding: 50px 0;
-  background: #5d524c;
+  background: #167ac6;
   color: #fff;
   font-size: 14px;
   text-align: center;
@@ -10881,12 +10881,6 @@ body {
 .cta-block p {
   margin-bottom: 30px;
 }
-
-.cta-block .el-button {
-  background: #333 !important;
-  color: #fff !important;
-}
-
 .cta-block h2 {
   color: #fff;
   margin: 0 0 20px;
@@ -10910,3 +10904,7 @@ button:focus, button:active { outline: none;}
 .card-item a { margin-top:20px; white-space: nowrap; display: inline-block; padding:5px 10px; margin-left:20px;}
 .card-item img { margin-top:20px;}
 
+
+.selectbox { width: 300px;
+  margin-right: 30px !important; }
+.inputbox { margin-right: 20px !important; }
