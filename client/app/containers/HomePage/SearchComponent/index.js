@@ -31,6 +31,7 @@ import {
   loadCategoriesRequest,
   setSearchCategory,
   setSearchText,
+  searchRequest,
 } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -60,7 +61,7 @@ class SearchComponent extends React.Component {
   };
   handleFormSubmit = e => {
     e.preventDefault();
-    console.log('handle submit');
+    this.props.doSearch();
     this.props.search();
   };
   render() {
@@ -135,6 +136,7 @@ const mapDispatchToProps = dispatch => ({
   loadCategories: () => dispatch(loadCategoriesRequest()),
   setSearchCategory: payload => dispatch(setSearchCategory(payload)),
   setSearchText: payload => dispatch(setSearchText(payload)),
+  doSearch: () => dispatch(searchRequest()),
 });
 
 const withConnect = connect(
