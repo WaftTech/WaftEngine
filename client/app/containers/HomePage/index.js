@@ -30,6 +30,7 @@ import {
     Wifi,
 } from '@material-ui/icons';
 import aries from 'assets/img/aries.png';
+import SearchComponent from './SearchComponent';
 
 function TabContainer(props) {
     return (
@@ -83,132 +84,132 @@ export default class HomePage extends React.Component {
                         </div>
                     </div>
                 </header>
-                <Masthead />
 
-                <div className="container">
+                <Masthead>
+                    <SearchComponent />
+                </Masthead>
 
-                    <h2 className="text-center">Categories</h2>
-                    <div className="row">
-                        <CategoryItem>
-                            <div className="media-info">
-                                <div className="img">
-                                    <img src={categoryIcon} />
-                                </div>
-                                <div className="info">
-                                    <strong>
-                                        <a href="#">Restaurant</a>{' '}
-                                    </strong>
-                                    <span className="designation">4606</span>
-                                </div>
+                <h2 className="text-center">Categories</h2>
+                <div className="row">
+                    <CategoryItem>
+                        <div className="media-info">
+                            <div className="img">
+                                <img src={categoryIcon} />
                             </div>
-                        </CategoryItem>
-                        <CategoryItem>
-                            <div className="media-info">
-                                <div className="img">
-                                    <img src={categoryIcon} />
-                                </div>
-                                <div className="info">
-                                    <strong>
-                                        <a href="#">Restaurant</a>{' '}
-                                    </strong>
-                                    <span className="designation">4606</span>
-                                </div>
+                            <div className="info">
+                                <strong>
+                                    <a href="#">Restaurant</a>{' '}
+                                </strong>
+                                <span className="designation">4606</span>
                             </div>
-                        </CategoryItem>
-                    </div>
-                    <div>
-                        <Paper>
-                            <Tabs
-                                value={value}
-                                onChange={this.handleChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                centered
-                            >
-                                <Tab label="Recent Videos" />
-                                <Tab label="About Us" />
-                                <Tab label="Rashifal" />
-                            </Tabs>
-                        </Paper>
-                        {value === 0 && (
-                            <TabContainer>
-                                <div className="text-center">
-                                    <iframe
-                                        width="560"
-                                        height="315"
-                                        src="https://www.youtube.com/embed/a_wuykzfFzE"
-                                        frameBorder="0"
-                                        allowFullScreen
-                                    />
-                                </div>
-                            </TabContainer>
-                        )}
-                        {value === 1 && (
-                            <TabContainer>
-                                <div className="text-center">
-                                    <div className="maxWidth500">
-                                        A maggot wound is easily identifiable - A hole of any sort,
-                                        a characteristic smell. You can actually see the maggots
-                                        moving in the wound. But do not worry the treatment is
-                                        simple. The vet cleans the area with antiseptic. They then
-                                        applies Lorex­ene, or Maggocide, ointments specifically
-                                        meant to kill maggots.
+                        </div>
+                    </CategoryItem>
+                    <CategoryItem>
+                        <div className="media-info">
+                            <div className="img">
+                                <img src={categoryIcon} />
+                            </div>
+                            <div className="info">
+                                <strong>
+                                    <a href="#">Restaurant</a>{' '}
+                                </strong>
+                                <span className="designation">4606</span>
+                            </div>
+                        </div>
+                    </CategoryItem>
+                </div>
+                <div>
+                    <Paper>
+                        <Tabs
+                            value={value}
+                            onChange={this.handleChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            centered
+                        >
+                            <Tab label="Recent Videos" />
+                            <Tab label="About Us" />
+                            <Tab label="Rashifal" />
+                        </Tabs>
+                    </Paper>
+                    {value === 0 && (
+                        <TabContainer>
+                            <div className="text-center">
+                                <iframe
+                                    width="560"
+                                    height="315"
+                                    src="https://www.youtube.com/embed/a_wuykzfFzE"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                />
+                            </div>
+                        </TabContainer>
+                    )}
+                    {value === 1 && (
+                        <TabContainer>
+                            <div className="text-center">
+                                <div className="maxWidth500">
+                                    A maggot wound is easily identifiable - A hole of any sort,
+                                    a characteristic smell. You can actually see the maggots
+                                    moving in the wound. But do not worry the treatment is
+                                    simple. The vet cleans the area with antiseptic. They then
+                                    applies Lorex­ene, or Maggocide, ointments specifically
+                                    meant to kill maggots.
                   </div>
-                                </div>{' '}
-                            </TabContainer>
-                        )}
-                        {value === 2 && (
-                            <TabContainer>
-                                <div className="row">
-                                    <div className="col-4">
-                                        <div className="card box-card is-always-shadow">
-                                            <div className="card__header">
-                                                <div className="clearfix">
-                                                    <span className="designation">
-                                                        मेष - चु, चे, चो, ला, लि, लु, ले, लो, अ (Aries)
+                            </div>{' '}
+                        </TabContainer>
+                    )}
+                    {value === 2 && (
+                        <TabContainer>
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="card box-card is-always-shadow">
+                                        <div className="card__header">
+                                            <div className="clearfix">
+                                                <span className="designation">
+                                                    मेष - चु, चे, चो, ला, लि, लु, ले, लो, अ (Aries)
                           </span>
-                                                </div>
                                             </div>
-                                            <div className="card__body">
-                                                <div className="text item media-info">
-                                                    <div className="img">
-                                                        <img src={aries} height="60" width="60" />
-                                                    </div>{' '}
-                                                    <div className="info">
-                                                        <span className="designation">
-                                                            Lorem ipsum dolor sit amet, consectetur
-                                                            adipisicing elit. Proin nibh augue conseqaut
-                                                            nibbhi ellit ipsum consectetur.
+                                        </div>
+                                        <div className="card__body">
+                                            <div className="text item media-info">
+                                                <div className="img">
+                                                    <img src={aries} height="60" width="60" />
+                                                </div>{' '}
+                                                <div className="info">
+                                                    <span className="designation">
+                                                        Lorem ipsum dolor sit amet, consectetur
+                                                        adipisicing elit. Proin nibh augue conseqaut
+                                                        nibbhi ellit ipsum consectetur.
                             </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </TabContainer>
-                        )}
-                    </div>
-
-                    <br />
-                    <h2 className="text-center">Some of Organizations</h2>
-                    <div className="card">
-                        <div className="row">
-                            <div className="col-3">
-                                <img src={rest1} />
                             </div>
-                            <div className="col-9">
-                                <br />
-                                <h5>Thakali Restaurant</h5>
-                                <CalendarToday />Opening Days:SUN, MON, TUE, WED, THU, FRI{' '}
-                                <br />
-                                <LocationOn /> State 3 Bhaktapur Thimi,hanumante Bridge<br />
-                                <Timelapse /> Opening Time:10AM-7PM<br />
-                                <Call /> 977-9849242008<br />
-                                <Email /> info@email.com<br />
-                                <Wifi />http://website.com
-              </div>
+                        </TabContainer>
+                    )}
+                </div>
+
+                <br />
+                <h2 className="text-center">Some of Organizations</h2>
+                <div className="card">
+                    <div className="row">
+                        <div className="col-3">
+                            <img src={rest1} />
                         </div>
+                        <div className="col-9">
+                            <br />
+                            <h5>Thakali Restaurant</h5>
+                            <CalendarToday />Opening Days:SUN, MON, TUE, WED, THU, FRI{' '}
+                            <br />
+                            <LocationOn /> State 3 Bhaktapur Thimi,hanumante Bridge<br />
+                            <Timelapse /> Opening Time:10AM-7PM<br />
+                            <Call /> 977-9849242008<br />
+                            <Email /> info@email.com<br />
+                            <Wifi />http://website.com
+              </div>
                     </div>
                 </div>
                 <div className="cta-block">

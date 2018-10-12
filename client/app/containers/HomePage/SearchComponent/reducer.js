@@ -4,6 +4,8 @@ import * as types from './constants';
 import { categoriesSchema } from './schemas';
 
 export const initialState = fromJS({
+  searchCategory: '',
+  searchText: '',
   categories: {},
 });
 
