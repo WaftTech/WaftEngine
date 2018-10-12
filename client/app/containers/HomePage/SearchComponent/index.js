@@ -106,7 +106,6 @@ class SearchComponent extends React.Component {
               <Button
                 size="small"
                 className="col-2"
-                variant="contained"
                 color="primary"
                 onClick={this.handleFormSubmit}
               >
