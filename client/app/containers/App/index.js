@@ -13,13 +13,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import isEmpty from 'utils/isEmpty';
 import GuestRoute from 'components/Routes/GuestRoute';
 import UserRoute from 'components/Routes/UserRoute';
 import ResetPasswordPage from '../ResetPasswordPage';
@@ -32,7 +30,7 @@ import Dashboard from '../Dashboard';
 import WtDashboard from '../WtDashboard';
 import CategoryDetailPage from '../CategoryDetailPage';
 import SearchResultsPage from '../SearchResultsPage';
-
+import OrganizationDetailPage from '../OrganizationDetailPage';
 import UserLayout from './layouts/UserLayout';
 
 import {
@@ -43,13 +41,9 @@ import {
 import { deleteMessage } from './actions';
 
 const App = props => {
-  const { location, dialog, messages, deleteMsg } = props;
-  // const messagesArr = messages.toJS();
+  const { location } = props;
   return (
     <div>
-      <Helmet titleTemplate="%s - App" defaultTitle="App">
-        <meta name="description" content="application" />
-      </Helmet>
       <Switch location={location}>
         <Route
           exact
@@ -66,6 +60,15 @@ const App = props => {
           render={() => (
             <UserLayout>
               <SearchResultsPage />
+            </UserLayout>
+          )}
+        />
+        <Route
+          exact
+          path="/organization/:slug"
+          render={() => (
+            <UserLayout>
+              <OrganizationDetailPage />
             </UserLayout>
           )}
         />

@@ -1,3 +1,5 @@
+import * as types from './constants';
+
 export const loadFourorgRequest = payload => ({
   type: types.LOAD_FOURORG_REQUEST,
   payload,

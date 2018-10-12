@@ -81,12 +81,15 @@ class SearchComponent extends React.Component {
         <br />
         <div className="search-container">
           <div className="row">
-            <form onSubmit={this.handleFormSubmit} style={{ display: 'flex', width: '100%' }}>
-
+            <form
+              onSubmit={this.handleFormSubmit}
+              style={{ display: 'flex', width: '100%' }}
+            >
               <FormControl className="selectbox">
                 <InputLabel htmlFor="age-required">Category</InputLabel>
 
-                <Select placeholder="Select Category"
+                <Select
+                  placeholder="Select Category"
                   value={searchCategoryId}
                   onChange={this.handleChange('category')}
                   inputProps={{
@@ -94,7 +97,6 @@ class SearchComponent extends React.Component {
                     id: 'search-category',
                   }}
                 >
-
                   {Object.keys(categories).map(each => (
                     <MenuItem
                       key={categories[each]._id}
@@ -123,7 +125,7 @@ class SearchComponent extends React.Component {
           </div>
           <div className="clearfix" />
         </div>
-      </div >
+      </div>
     );
   }
 }

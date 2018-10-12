@@ -10,7 +10,10 @@
  */
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Paper, Grid } from '@material-ui/core';
 import education from 'assets/img/education.jpg';
@@ -18,7 +21,6 @@ import health from 'assets/img/health.jpg';
 import automobile from 'assets/img/automobile.jpg';
 import garments from 'assets/img/garments.jpg';
 import background from 'assets/img/ptn.png';
-import telecome from 'assets/img/telecom.jpg';
 import rest1 from 'assets/img/rest1.jpg';
 import ad1 from 'assets/img/ad1.gif';
 import ad2 from 'assets/img/ad2.gif';
@@ -42,7 +44,16 @@ import {
   Email,
   OpenInNew,
 } from '@material-ui/icons';
+import { IMAGE_BASE } from 'containers/App/constants';
+import noImage from 'assets/img/logo.png';
 import aries from 'assets/img/aries.png';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import { loadFourorgRequest } from './actions';
+import { makeSelectFourorg } from './selectors';
+import { makeSelectCategories } from './SearchComponent/selectors';
+import reducer from './reducer';
+import saga from './saga';
 import SearchComponent from './SearchComponent';
 
 function TabContainer(props) {
@@ -104,7 +115,7 @@ const CategoryItem = styled.div`
     cursor: pointer;
   }
   &:hover .img {
-    transform: scale(1.1);
+    transform: scale(1.1);makeSelectFourorg
   }
 `;
 
@@ -113,6 +124,10 @@ export class HomePage extends React.Component {
   state = {
     value: 0,
   };
+
+  componentDidMount() {
+    this.props.loadFourorg();
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -123,6 +138,10 @@ export class HomePage extends React.Component {
   };
   render() {
     const { value } = this.state;
+    const { categories, fourorg } = this.props;
+    const categoriesObj = categories.toJS();
+    const fourorgObj = fourorg.toJS();
+    console.log(fourorgObj);
     return (
       <React.Fragment>
         <Masthead>
@@ -134,50 +153,27 @@ export class HomePage extends React.Component {
               <h2>Categories</h2>
               <br />
               <Grid container spacing={8}>
-                <Grid item xs={6} md={3}>
-                  <CategoryItem>
-                    <div className="img">
-                      <img src={education} />
-                    </div>
-                    <div className="info">
-                      <h5>Education</h5>
-                      <small>2100</small>
-                    </div>
-                  </CategoryItem>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <CategoryItem>
-                    <div className="img">
-                      <img src={automobile} />
-                    </div>
-                    <div className="info">
-                      <h5>Automobile</h5>
-                      <small>2100</small>
-                    </div>
-                  </CategoryItem>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <CategoryItem>
-                    <div className="img">
-                      <img src={health} />
-                    </div>
-                    <div className="info">
-                      <h5>Health</h5>
-                      <small>2100</small>
-                    </div>
-                  </CategoryItem>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <CategoryItem>
-                    <div className="img">
-                      <img src={garments} />
-                    </div>
-                    <div className="info">
-                      <h5>Garments</h5>
-                      <small>2100</small>
-                    </div>
-                  </CategoryItem>
-                </Grid>
+                {Object.keys(categoriesObj).map(each => {
+                  const { CategoryImage, CategoryName } = categoriesObj[each];
+                  const categoryImage =
+                    (CategoryImage &&
+                      CategoryImage.path &&
+                      `${IMAGE_BASE}${CategoryImage.path}`) ||
+                    noImage;
+
+                  return (
+                    <Grid key={`category-homepage-${each}`} item xs={6} md={3}>
+                      <CategoryItem>
+                        <div className="img">
+                          <img src={categoryImage} />
+                        </div>
+                        <div className="info">
+                          <h5>{CategoryName}</h5>
+                        </div>
+                      </CategoryItem>
+                    </Grid>
+                  );
+                })}
               </Grid>
               <Paper>
                 <Tabs
@@ -215,7 +211,7 @@ export class HomePage extends React.Component {
                       treatment is simple. The vet cleans the area with
                       antiseptic. They then applies Lorex­ene, or Maggocide,
                       ointments specifically meant to kill maggots.
-                      </div>
+                    </div>
                   </div>{' '}
                 </TabContainer>
               )}
@@ -226,16 +222,14 @@ export class HomePage extends React.Component {
                       <div className="card box-card">
                         <img src={aries} height="60" width="60" />
                         <div className="card__header">
-                          मेष - चु, चे, चो, ला, लि, लु, ले, लो, अ
-                          (Aries)
-                                    </div>
+                          मेष - चु, चे, चो, ला, लि, लु, ले, लो, अ (Aries)
+                        </div>
                         <div className="card__body">
                           <div className="info">
-                            Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Proin nibh augue
-                            conseqaut nibbhi ellit ipsum
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Proin nibh augue conseqaut nibbhi ellit ipsum
                             consectetur.
-                                      </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -243,99 +237,70 @@ export class HomePage extends React.Component {
                 </TabContainer>
               )}
 
-
               <div className="container">
-                <br /><h2 className="text-center">Some of Organizations</h2>
+                <br />
+                <h2 className="text-center">Some of Organizations</h2>
                 <br />
                 <br />
                 <div className="row">
-                  <div className="col-xs-12 col-lg-6">
-                    <div className="card card-item">
-                      <div className="row">
-                        <div className="col-5">
-                          <img src={rest1} />
-                        </div>
-                        <div className="col-7">
-                          <br />
-                          <h5>Thakali Restaurant</h5>
-                          <LocationOn />
-                          <small>State 3 Bhaktapur Thimi</small>
-                          <br />
-                          <CalendarToday />
-                          <small>sun, mon, tue, wed, thu, fri</small>
-                          <br />
-                          <Timelapse />
-                          <small>10AM-7PM</small> <br />
-                        </div>
-                        <div className="row">
-                          <div className="col-4">
-                            <a href="tel:977-9849242008">
-                              <Call />Call
-                                      </a>
-                          </div>
-                          <div className="col-4">
-                            <a href="mailto:info@email.com">
-                              <Email />Email
-                                      </a>{' '}
-                          </div>
-                          <div className="col-4">
-                            {' '}
-                            <a
-                              href="http://website.com"
-                              target="_blank"
-                            >
-                              <OpenInNew />Visit Site
-                                      </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-xs-12 col-lg-6">
-                    <div className="card card-item">
-                      <div className="row">
-                        <div className="col-5">
-                          <img src={rest1} />
-                        </div>
-                        <div className="col-7">
-                          <br />
-                          <h5>Thakali Restaurant</h5>
-                          <LocationOn />
-                          <small>State 3 Bhaktapur Thimi</small>
-                          <br />
-                          <CalendarToday />
-                          <small>sun, mon, tue, wed, thu, fri</small>
-                          <br />
-                          <Timelapse />
-                          <small>10AM-7PM</small> <br />
-                        </div>
-                        <div className="row">
-                          <div className="col-4">
-                            <a href="tel:977-9849242008">
-                              <Call />Call
-                                      </a>
-                          </div>
-                          <div className="col-4">
-                            <a href="mailto:info@email.com">
-                              <Email />Email
-                                      </a>{' '}
-                          </div>
-                          <div className="col-4">
-                            {' '}
-                            <a
-                              href="http://website.com"
-                              target="_blank"
-                            >
-                              <OpenInNew />Visit Site
-                                      </a>
+                  {fourorgObj.map(each => {
+                    const orgImage =
+                      (each.ProfileImage1 &&
+                        each.ProfileImage1.path &&
+                        `${IMAGE_BASE}${each.ProfileImage1.path}`) ||
+                      noImage;
+                    return (
+                      <div
+                        className="col-xs-12 col-lg-6"
+                        key={`homepage-org-${each._id}`}
+                      >
+                        <div className="card card-item">
+                          <div className="row">
+                            <div className="col-5">
+                              <Link to={`/organization/${each.slug}`}>
+                                <img src={orgImage} />
+                              </Link>
+                            </div>
+                            <div className="col-7">
+                              <br />
+                              <h5>{each.Organization}</h5>
+                              <LocationOn />
+                              <small>
+                                {each.State} {each.District}{' '}
+                                {each.VDCMunicipality}
+                              </small>
+                              <br />
+                              <CalendarToday />
+                              <small>{each.OpenningDays.join(', ')}</small>
+                              <br />
+                              <Timelapse />
+                              <small>{each.OpenningTime}</small> <br />
+                            </div>
+                            <div className="row">
+                              <div className="col-4">
+                                <a href={`tel:${each.PhoneNo}`}>
+                                  <Call />Call
+                                </a>
+                              </div>
+                              <div className="col-4">
+                                <a href={`mailto:${each.OrganizationEmail}`}>
+                                  <Email />Email
+                                </a>{' '}
+                              </div>
+                              <div className="col-4">
+                                {' '}
+                                <a href={each.Website} target="_blank">
+                                  <OpenInNew />Visit Site
+                                </a>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
-
             </div>
 
             <div className="col-xs-12 col-lg-2 ad-section">
@@ -351,8 +316,8 @@ export class HomePage extends React.Component {
               <img src={ad10} />
               <img src={ad11} />
             </div>
-          </div >
-        </div >
+          </div>
+        </div>
 
         <div className="cta-block">
           <div className="container">
@@ -376,8 +341,8 @@ export class HomePage extends React.Component {
                   Nepal is very developed country Nepal is very developed
                   country
                 </p>
-                <Call /> 977-9849242008<br />
-                <Email /> info@email.com<br />
+                {/* <Call /> 977-9849242008<br />
+                <Email /> info@email.com<br /> */}
                 <br />
                 <Button size="small" variant="outlined">
                   View Details
@@ -391,8 +356,8 @@ export class HomePage extends React.Component {
                   Nepal is very developed country Nepal is very developed
                   country
                 </p>
-                <Call /> 977-9849242008<br />
-                <Email /> info@email.com<br />
+                {/* <Call /> 977-9849242008<br />
+                <Email /> info@email.com<br /> */}
                 <br />
                 <Button size="small" variant="outlined">
                   View Details
@@ -406,8 +371,8 @@ export class HomePage extends React.Component {
                   Nepal is very developed country Nepal is very developed
                   country
                 </p>
-                <Call /> 977-9849242008<br />
-                <Email /> info@email.com<br />
+                {/* <Call /> 977-9849242008<br />
+                <Email /> info@email.com<br /> */}
                 <br />
                 <Button size="small" variant="outlined">
                   View Details
@@ -416,9 +381,30 @@ export class HomePage extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment >
+      </React.Fragment>
     );
   }
 }
 
-export default withRouter(HomePage);
+const withReducer = injectReducer({ key: 'homePage', reducer });
+const withSaga = injectSaga({ key: 'homePage', saga });
+
+const mapStateToProps = createStructuredSelector({
+  categories: makeSelectCategories(),
+  fourorg: makeSelectFourorg(),
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadFourorg: () => dispatch(loadFourorgRequest()),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withRouter,
+  withReducer,
+  withSaga,
+  withConnect,
+)(HomePage);

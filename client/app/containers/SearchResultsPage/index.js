@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import Link from 'react-router-dom/Link';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -24,15 +25,21 @@ export class SearchResultsPage extends React.Component {
     this.handleSearch();
   }
   handleSearch = () => {
-    console.log('searching');
+    // console.log('searching');
   };
   render() {
     const { searchResults } = this.props;
     const searchResultsObj = searchResults.toJS();
-    console.log(searchResultsObj);
     return (
       <div>
         <SearchComponent search={this.handleSearch} />
+        {searchResultsObj.map(each => (
+          <div key={each.original._id}>
+            <Link to={`/organization/${each.original.slug}`}>
+              <div dangerouslySetInnerHTML={{ __html: each.string }} />
+            </Link>
+          </div>
+        ))}
       </div>
     );
   }
@@ -46,16 +53,7 @@ const mapStateToProps = createStructuredSelector({
   searchResults: makeSelectSearchResults(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps);
 
 const withReducer = injectReducer({ key: 'searchResultsPage', reducer });
 const withSaga = injectSaga({ key: 'searchResultsPage', saga });
