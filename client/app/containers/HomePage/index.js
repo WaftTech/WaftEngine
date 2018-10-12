@@ -16,6 +16,9 @@ import { Button, TextField, Paper, Grid } from '@material-ui/core';
 import logo from 'assets/img/logo.png';
 import ad from 'assets/img/ad.jpg';
 import education from 'assets/img/education.jpg';
+import health from 'assets/img/health.jpg';
+import automobile from 'assets/img/automobile.jpg';
+import garments from 'assets/img/garments.jpg';
 import background from 'assets/img/ptn.png';
 import telecome from 'assets/img/telecom.jpg';
 import rest1 from 'assets/img/rest1.jpg';
@@ -92,25 +95,25 @@ export default class HomePage extends React.Component {
                                 <Grid item xs={6} lg={3}>
                                     <CategoryItem>
                                         <div className="img"><img src={education} /></div>
-                                        <div className="info"><h5>Education</h5><small>4606</small></div>
+                                        <div className="info"><h5>Education</h5><small>2100</small></div>
                                     </CategoryItem>
                                 </Grid>
                                 <Grid item xs={6} lg={3}>
                                     <CategoryItem>
-                                        <div className="img"><img src={education} /></div>
-                                        <div className="info"><h5>Education</h5><small>4606</small></div>
+                                        <div className="img"><img src={automobile} /></div>
+                                        <div className="info"><h5>Automobile</h5><small>2100</small></div>
                                     </CategoryItem>
                                 </Grid>
                                 <Grid item xs={6} lg={3}>
                                     <CategoryItem>
-                                        <div className="img"><img src={education} /></div>
-                                        <div className="info"><h5>Education</h5><small>4606</small></div>
+                                        <div className="img"><img src={health} /></div>
+                                        <div className="info"><h5>Health</h5><small>2100</small></div>
                                     </CategoryItem>
                                 </Grid>
                                 <Grid item xs={6} lg={3}>
                                     <CategoryItem>
-                                        <div className="img"><img src={education} /></div>
-                                        <div className="info"><h5>Education</h5><small>4606</small></div>
+                                        <div className="img"><img src={garments} /></div>
+                                        <div className="info"><h5>Garments</h5><small>2100</small></div>
                                     </CategoryItem>
                                 </Grid >
                             </Grid>
