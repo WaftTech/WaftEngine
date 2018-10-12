@@ -71,8 +71,11 @@ app.set('view engine', 'pug');
 
 // CORS setup for dev
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5001');
-  res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Authorization, Origin, X-Requested-With, Content-Type, Accept',
+  );
   next();
 });
 
@@ -88,7 +91,15 @@ app.use((req, res, next) => {
 // error handler
 // no stacktraces leaked to user unless in development environment
 app.use((err, req, res, next) => {
-  return otherHelper.sendResponse(res, HttpStatus.INTERNAL_SERVER_ERROR, false, null, err, null, null);
+  return otherHelper.sendResponse(
+    res,
+    HttpStatus.INTERNAL_SERVER_ERROR,
+    false,
+    null,
+    err,
+    null,
+    null,
+  );
   // res.status(err.status || 500);
   // res.render('error', {
   //   message: err.message,
