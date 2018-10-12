@@ -70,7 +70,7 @@ class SearchComponent extends React.Component {
         <br />
         <div className="search-container">
           <div className="row">
-            <TextField
+            {/* <TextField
               className="col-4"
               id="standard-select-category"
               select
@@ -85,7 +85,7 @@ class SearchComponent extends React.Component {
               color="primary"
             >
               Search
-            </Button>
+            </Button> */}
           </div>
           <div className="clearfix" />
         </div>
