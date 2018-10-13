@@ -37,7 +37,7 @@ export class SearchResultsPage extends React.Component {
         <div className="searchResultContainer">
           <br />
           <br />
-          <h2>2 Results Found.</h2>
+          <h2>{searchResultsObj.length} Results Found.</h2>
           <div className="row">
             {searchResultsObj.map(each => (
               <div className="col-xs-12 col-lg-4">
