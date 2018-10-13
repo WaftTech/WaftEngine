@@ -64,6 +64,16 @@ function TabContainer(props) {
   );
 }
 
+const dayMapper = {
+  sunday: 'sun',
+  monday: 'mon',
+  tuesday: 'tue',
+  wednesday: 'wed',
+  thursday: 'thur',
+  friday: 'fri',
+  saturday: 'sat',
+};
+
 const Masthead = styled.div`
   background: #333 url(${background}) no-repeat center center;
   height: 350px;
@@ -271,7 +281,11 @@ export class HomePage extends React.Component {
                               </small>
                               <br />
                               <CalendarToday />
-                              <small>{each.OpenningDays.join(', ')}</small>
+                              <small>
+                                {each.OpenningDays.map(
+                                  day => dayMapper[day],
+                                ).join(', ')}
+                              </small>
                               <br />
                               <Timelapse />
                               <small>{each.OpenningTime}</small> <br />
