@@ -10908,3 +10908,6 @@ button:focus, button:active { outline: none;}
 .selectbox { width: 300px;
   margin-right: 30px !important; }
 .inputbox { margin-right: 20px !important; }
+
+
+.searchResultContainer .card { padding:20px;}

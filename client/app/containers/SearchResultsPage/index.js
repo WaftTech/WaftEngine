@@ -31,15 +31,25 @@ export class SearchResultsPage extends React.Component {
     const { searchResults } = this.props;
     const searchResultsObj = searchResults.toJS();
     return (
-      <div>
+      <div className="container searchResult">
         <SearchComponent search={this.handleSearch} />
-        {searchResultsObj.map(each => (
-          <div key={each.original._id}>
-            <Link to={`/organization/${each.original.slug}`}>
-              <div dangerouslySetInnerHTML={{ __html: each.string }} />
-            </Link>
+
+        <div className="searchResultContainer">
+          <br />
+          <br />
+          <h2>2 Results Found.</h2>
+          <div className="row">
+            {searchResultsObj.map(each => (
+              <div className="col-xs-12 col-lg-4">
+                <div className="card" key={each.original._id}>
+                  <Link to={`/organization/${each.original.slug}`}>
+                    <div dangerouslySetInnerHTML={{ __html: each.string }} />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     );
   }
