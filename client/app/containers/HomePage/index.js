@@ -92,6 +92,7 @@ const CategoryItem = styled.div`
   text-align: center;
   position: relative;
 
+
   .info {
     position: absolute;
     width: 100%;
@@ -105,6 +106,7 @@ const CategoryItem = styled.div`
     position: relative;
     transform: scale(1);
     transition: all 0.2s ease-in-out;
+    height:150px;
   }
   img {
     max-width: 100%;
@@ -114,6 +116,7 @@ const CategoryItem = styled.div`
     content: '';
     width: 100%;
     height: 100%;
+    left:0; right:0; top:0; bottom:0;
     background-image: linear-gradient(
       -180deg,
       rgba(0, 0, 0, 0) 0%,

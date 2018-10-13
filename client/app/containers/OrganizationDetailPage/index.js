@@ -31,7 +31,10 @@ export class OrganizationDetailPage extends React.Component {
     const organizationObj = this.props.organization.toJS();
     const { category, organization } = organizationObj;
     return (
-      <div>
+      <div className="container">
+        <br />
+        <br />
+        <br />
         <h2>{organization.Organization}</h2>
         <div>Category: {category.CategoryName}</div>
         <div
