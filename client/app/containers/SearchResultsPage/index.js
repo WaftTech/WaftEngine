@@ -40,8 +40,8 @@ export class SearchResultsPage extends React.Component {
           <h2>{searchResultsObj.length} Results Found.</h2>
           <div className="row">
             {searchResultsObj.map(each => (
-              <div className="col-xs-12 col-lg-4">
-                <div className="card" key={each.original._id}>
+              <div className="col-xs-12 col-lg-4" key={each.original._id}>
+                <div className="card">
                   <Link to={`/organization/${each.original.slug}`}>
                     <div dangerouslySetInnerHTML={{ __html: each.string }} />
                   </Link>
