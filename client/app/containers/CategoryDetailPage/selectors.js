@@ -5,3 +5,6 @@ const selectDomain = state => state.get('categoryDetailPage', initialState);
 
 export const makeSelectCategory = () =>
   createSelector(selectDomain, state => state.get('category'));
+
+export const makeSelectOrganization = () =>
+  createSelector(selectDomain, state => state.get('organization'));
