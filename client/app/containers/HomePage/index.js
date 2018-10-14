@@ -176,14 +176,16 @@ export class HomePage extends React.Component {
 
                   return (
                     <Grid key={`category-homepage-${each}`} item xs={6} md={3}>
-                      <CategoryItem>
-                        <div className="img">
-                          <img src={categoryImage} />
-                        </div>
-                        <div className="info">
-                          <h5>{CategoryName}</h5>
-                        </div>
-                      </CategoryItem>
+                      <Link to={`/category/${each}`}>
+                        <CategoryItem>
+                          <div className="img">
+                            <img src={categoryImage} />
+                          </div>
+                          <div className="info">
+                            <h5>{CategoryName}</h5>
+                          </div>
+                        </CategoryItem>
+                      </Link>
                     </Grid>
                   );
                 })}

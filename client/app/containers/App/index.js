@@ -72,6 +72,15 @@ const App = props => {
             </UserLayout>
           )}
         />
+        <Route
+          exact
+          path="/category/:slug"
+          render={() => (
+            <UserLayout>
+              <CategoryDetailPage />
+            </UserLayout>
+          )}
+        />
         <UserRoute exact path="/dashboard" component={Dashboard} />
         <UserRoute path="/wt" component={WtDashboard} />
         <GuestRoute exact path="/start" component={StartPage} />
@@ -81,7 +90,6 @@ const App = props => {
         <GuestRoute exact path="/register/:email" component={SignupPage} />
         <GuestRoute exact path="/resetpassword" component={ResetPasswordPage} />
         <Route exact path="/home" component={HomePage} />
-        <Route exact path="/category/:id" component={CategoryDetailPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </div>
