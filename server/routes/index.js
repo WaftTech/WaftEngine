@@ -4,9 +4,12 @@ const router = express.Router();
 // All route of User
 const userRoutes = require('./api/users');
 router.use('/user', userRoutes);
-// All route of User
+// All route of Roles
 const roleRoutes = require('./api/roles');
 router.use('/role', roleRoutes);
+// All route of Media
+const mediaRoutes = require('./api/media');
+router.use('/media', mediaRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
