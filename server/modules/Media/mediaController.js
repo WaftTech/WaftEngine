@@ -6,7 +6,7 @@ const mediaController = {};
 const internal = {};
 
 mediaController.GetMedia = async (req, res, next) => {
-  const medias = await MediaSch.find({ IsDeleted: false });
+  const medias = await MediaSch.find({ IsDeleted: false }).sort({ _id: -1 });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, medias, null, 'Media Get Success !!', null);
 };
 mediaController.SaveMedia = async (req, res, next) => {
