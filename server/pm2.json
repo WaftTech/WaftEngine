@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "ASKTOMARINA",
+      "name": "ASK4TRIP",
       "script": "index.js",
       "merge_logs": true,
       "watch": true,
