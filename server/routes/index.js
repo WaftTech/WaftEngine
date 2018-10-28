@@ -7,9 +7,6 @@ router.use('/user', userRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
-// All route of Organization Module
-const organizationRoutes = require('./api/organization');
-router.use('/org', organizationRoutes);
 // All route of Category Module
 const categoryRoutes = require('./api/category');
 router.use('/category', categoryRoutes);
@@ -25,9 +22,6 @@ router.use('/news', newsRoutes);
 // All route of News Module
 const linkRoutes = require('./api/links');
 router.use('/link', linkRoutes);
-// All route of News Module
-const rashiRoutes = require('./api/rashifal');
-router.use('/rashifal', rashiRoutes);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
