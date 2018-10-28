@@ -1,5 +1,6 @@
 module.exports = {
-  mongoURI: 'mongodb://asktomarina:asktomarina1@ds125453.mlab.com:25453/asktomarina',
+  //mongoURI: 'mongodb://asktomarina:asktomarina1@ds125453.mlab.com:25453/asktomarina',
+  mongoURI: 'mongodb://askfourtrip:askfourtrip@localhost:27017/askfourtrip',
   secretOrKey: 'jwtsecret',
   tokenExpireTime: 360000,
 

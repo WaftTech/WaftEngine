@@ -10,7 +10,7 @@
       "instances": 1,
       "exec_mode": "cluster",
       "env": {
-        "PORT": 5000,
+        "PORT": 5002,
         "NODE_ENV": "development"
       },
       "env_production": {
