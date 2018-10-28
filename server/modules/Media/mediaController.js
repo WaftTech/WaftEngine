@@ -6,7 +6,12 @@ const mediaController = {};
 const internal = {};
 
 mediaController.GetMedia = async (req, res, next) => {
-  const medias = await MediaSch.find({ IsDeleted: false }).sort({ _id: -1 });
+  const page = parseInt(req.params.page);
+  const medias = await MediaSch.find({ IsDeleted: false })
+    .limit(12)
+    .skip(12 * page)
+    .sort({ _id: -1 })
+    .select('_id path fieldname originalname mimetype');
   return otherHelper.sendResponse(res, HttpStatus.OK, true, medias, null, 'Media Get Success !!', null);
 };
 mediaController.SaveMedia = async (req, res, next) => {
