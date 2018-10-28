@@ -26,7 +26,7 @@ const FlexDiv = styled.div`
   border: 0;
   height: 100%;
   margin: 0;
-  display: flex!important;
+  display: flex !important;
   position: relative;
   min-height: 100vh;
   align-items: center;
@@ -36,16 +36,21 @@ const FlexDiv = styled.div`
 `;
 
 const FormWrapper = styled.div`
-width:350px;
+  width: 350px;
   z-index: 4;
   margin-left: auto;
   padding: 15px;
   margin-right: auto;
   padding-right: 15px;
-  background:#fff; border-radius:10px;
-background: #FFFFFF;
-box-shadow: 0 10px 40px 0 rgba(0,0,0,0.5);
-border-radius: 8px;
+  background: #fff;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+`;
+
+const HelpBlock = styled.div`
+  color: #000;
 `;
 
 class LoginPage extends React.PureComponent {
@@ -112,7 +117,9 @@ class LoginPage extends React.PureComponent {
         <FormWrapper>
           <form onSubmit={this.handleSubmit}>
             <div className={errors.email ? 'error' : ''}>
-              <Input fullWidth label="Email ID"
+              <Input
+                fullWidth
+                label="Email ID"
                 type="email"
                 name="email"
                 placeholder="E-mail address"
@@ -123,7 +130,9 @@ class LoginPage extends React.PureComponent {
               {!!errors.email && <HelpBlock>{errors.email}</HelpBlock>}
             </div>
             <div className={errors.password ? 'error' : ''}>
-              <Input fullWidth label="Password"
+              <Input
+                fullWidth
+                label="Password"
                 name="password"
                 type="password"
                 placeholder="Password"
@@ -134,7 +143,12 @@ class LoginPage extends React.PureComponent {
               {!!errors.password && <HelpBlock>{errors.password}</HelpBlock>}
             </div>
             <br />
-            <Button variant="contained" color="primary" type="submit" disabled={isRequesting}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              disabled={isRequesting}
+            >
               {isRequesting ? 'loading' : 'Login'}
             </Button>
             <br />
