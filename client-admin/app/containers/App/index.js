@@ -13,7 +13,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -45,15 +45,7 @@ const App = props => {
   return (
     <div>
       <Switch location={location}>
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <UserLayout>
-              <HomePage />
-            </UserLayout>
-          )}
-        />
+        <Route exact path="/" render={() => <Redirect to="/wt" />} />
         <Route
           exact
           path="/search-results"

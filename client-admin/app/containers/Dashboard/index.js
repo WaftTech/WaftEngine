@@ -54,12 +54,24 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import Modal from '../../components/Modal/Modal';
+
+const ModalContent = props => (
+  <React.Fragment>
+    <h1>???????</h1>
+    <div className="buttons">
+      <button onClick={props.toggleModal}>Yes</button>
+      <button onClick={props.toggleModal}>No</button>
+    </div>
+  </React.Fragment>
+);
 
 /* eslint-disable react/prefer-stateless-function */
 
 export class Dashboard extends React.Component {
   state = {
     value: 0,
+    showModal: false,
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -68,9 +80,28 @@ export class Dashboard extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
+  toggleModal = () => this.setState(state => ({ showModal: !state.showModal }));
+
   render() {
+    const { showModal } = this.state;
     const { classes } = this.props;
-    return <div>TODO: show metrics</div>;
+    let modal = null;
+    if (showModal) {
+      modal = (
+        <Modal>
+          <ModalContent toggleModal={this.toggleModal} />
+        </Modal>
+      );
+    } else {
+      modal = null;
+    }
+    return (
+      <div>
+        <span onClick={this.toggleModal}>TODO: show metrics</span>
+        {modal}
+      </div>
+    );
     // return (
     //   <div>
     //     <GridContainer>
