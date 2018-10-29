@@ -71,9 +71,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'Ask To Marina',
-      short_name: 'AskToMarina',
-      description: 'Easy search solution!',
+      name: 'ASK4TRIP',
+      short_name: 'ASK4TRIP',
+      description: 'Easy trip solution!',
       background_color: '#fff',
       theme_color: '#5D524C',
       icons: [

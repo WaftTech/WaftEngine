@@ -60,6 +60,7 @@ const dashboardRoutes = [
     component: OrganizationInfoPage,
   },
   {
+    group: 'Link',
     path: '/wt/link-manage/add',
     sidebarName: 'Video Link Manage',
     navbarName: 'Add Video Link',
@@ -68,6 +69,7 @@ const dashboardRoutes = [
     hide: true,
   },
   {
+    group: 'Link',
     path: '/wt/link-manage/edit/:id',
     sidebarName: 'Video Link Manage',
     navbarName: 'Video Link Manage',
@@ -76,6 +78,7 @@ const dashboardRoutes = [
     hide: true,
   },
   {
+    group: 'Link',
     path: '/wt/link-manage',
     sidebarName: 'Video Link Manage',
     navbarName: 'Video Link Manage',
