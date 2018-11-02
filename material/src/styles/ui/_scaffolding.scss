@@ -1,0 +1,41 @@
+
+// Hero
+// ------------------------------------
+.hero {
+  padding: 70px 0 75px;
+  text-align: center;
+}
+.hero-title{
+  -webkit-font-smoothing: antialiased;
+}
+.hero-title {
+  color: $body-color;
+  font-size: 45px;
+  font-weight: $font-weight-light;
+  line-height: 50px;
+  margin-bottom: 10px;
+}
+.hero-tagline {
+  margin: 10px auto 30px;
+  max-width: 700px;
+  color: $body-color;
+  font-weight: $font-weight-light;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+// Dark theme
+// ------------------------------------
+.theme-gray,
+.theme-dark {
+  .hero-title,
+  .hero-tagline {
+    color: $theme_dark_text_color;
+  }
+
+  .article-title {
+    &.color-dark {
+      color: $theme_dark_text_color;
+    }
+  }
+}

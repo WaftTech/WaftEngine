@@ -1,0 +1,12 @@
+// global variables
+@import "bootstrap/functions";
+@import "global/variables-bootstrap";
+@import "global/variables-extra";
+@import "layout/variables-layout";
+@import "themes/variables-theme";
+@import "bootstrap/mixins";
+
+@import "vendors/material-components/typography/variables";
+@import "vendors/material-components/typography/mixins";
+@import "vendors/material-components/elevation/variables";
+@import "vendors/material-components/elevation/mixins";

@@ -1,0 +1,81 @@
+// rgba(#000, .035) // #eee
+
+$image_path:            "../assets/images/" !default;
+
+
+$dark:                  #333C44 !default; // darken Blue 100 > #343E46
+$dark-light:            lighten($dark, 5%) !default;
+$grayscale-dark-light: 	#484848;
+$bright:                #fafafa !default;
+$gray-light:            #636c72 !default;
+$gray-light2:           #999 !default;
+
+$body-color-reverse:    rgba(255, 255, 255, 0.87) !default; // Text color for dark bg
+$page-bg:               #f5f5f5 !default; // background color of .app-page-container
+
+// Fonts
+$body-color2:                 rgba(0, 0, 0, 0.65) !default; // antd text
+$text-secondary:              .8 !default; // opacity
+$text-inactive:               .6 !default; // opacity
+
+
+$state-default-bg:              rgba(0,0,0, .1) !default; // also: pagination bg
+$state-default-border:          darken(adjust-hue($state-default-bg, -10), 5%) !default; 
+
+//== Typography
+$font-family-condensed:       "Roboto Condensed", "Roboto", "Helvetica Neue", Arial, sans-serif !default
+
+$font-weight-200:             300 !default; // no 200 for Roboto 
+$font-weight-300:             300 !default;
+$font-weight-500:             500 !default;
+$font-weight-600:             500 !default; // no 600 for Roboto 
+$font-weight-semibold:        500 !default;
+
+// UI
+// 
+$container_fluid_maxwidth:    1400px;
+
+$border-radius-xxl:           1.5rem !default;
+
+$divider-color:               rgba(0,0,0, .1) !default;
+
+// Box
+$box_border_width:            0;
+$box_border_color:            rgba(0,0,0,.1);
+
+
+// Cards 
+$card-padding:                20px !default;
+$border-radius-card:          2px !default;
+
+// Hero
+$hero-title-h1:               2.8125rem;
+$hero-title-h2:               2.0625rem;
+$hero-title-font-weight:      $font-weight-300;
+
+
+// Grid Variables
+$element-top-margin:        ($grid-gutter-width/3) !default;
+$element-bottom-margin:     ($grid-gutter-width*2)/3 !default;
+
+
+
+// box shadow
+@mixin z-depth-1 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+@mixin z-depth-1-half {
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+@mixin z-depth-2 {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+@mixin z-depth-3 {
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+@mixin z-depth-4 {
+  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
+@mixin z-depth-5 {
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+}

@@ -1,0 +1,46 @@
+// problme with v3.7.3
+.customizer-tooltip {
+  .ant-tooltip-inner {
+    word-break: inherit;
+  }
+}
+
+
+.quickview-wrapper {
+
+  .layout-options {
+    .layout-option {
+      padding: 10px 0;
+
+      span {
+        font-size: $font-size-base;
+        line-height: 24px;
+      }
+    }
+  }
+
+  .layout-setting-item-slider {
+    font-size: $font-size-base;
+    line-height: 32px;
+  }
+
+  // with tooltip, popover
+  .ant-radio-button-wrapper {
+    padding: 0;
+    .layout-opition {
+      display: inline-block;
+      padding: 0 .9375rem;
+    }
+  }
+}
+
+
+.quickview-wrapper {
+  .link-animated-hover {
+    color: $dark;
+
+    &:after {
+      background: $dark;
+    }
+  }
+}

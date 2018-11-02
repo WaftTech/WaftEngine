@@ -1,0 +1,164 @@
+.pricing-table {
+  position: relative;
+  margin-bottom: 20px;
+  background-color: #fcfcfc;
+  color: #999;
+  border-radius: $border-radius-lg;
+  box-shadow: none;
+  text-align: center;
+  @include transition(.25s ease-out);
+
+  &:hover {
+    @include z-depth-1-half;
+  }
+
+  header {
+    background-color: darken($gray-light2, 5%);
+    text-align: center;
+    padding: $card-spacer-x $card-spacer-y;
+    h2 {
+      margin: 0;
+      font-size: $font-size-lg;
+      line-height: 1;
+      font-weight: normal;
+      text-transform: uppercase;
+      color: $white;
+    }
+  }
+
+  .pricing-price {
+    padding: 45px 15px;
+    background-color: $gray-light2;
+    font-size: 56px;
+    line-height: 1;
+    color: #fff;
+    font-weight: $font-weight-light;
+    .pricing-sign {
+      margin-right: 5px;
+      font-size: 24px;
+      font-weight: normal;
+    }
+    .pricing-sub {
+      margin-left: 5px;
+      font-size: 22px;
+      line-height: 1;
+    }
+  }
+
+  .pricing-lead {
+    margin-bottom: 1.5em;
+    font-size: 18px;
+    text-transform: uppercase;
+    &:after {
+      margin: 0 auto;
+      content: "";
+      height: 0px;
+      width: 80px;
+      padding-top: .6em;
+      border-bottom: solid 3px #eff0f3;
+      display: block;
+    }
+  }
+
+  .pricing-plan-details {
+    padding: 1em;
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: $font-size-base;
+      line-height: 2em;
+    }
+  }
+
+  > footer {
+    padding: 2em;
+    text-align: center;
+    > a {
+      display: block;
+      margin: 0 auto;
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1;
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+
+  // color
+  &.pricing-table-primary {
+    header {
+      background-color: darken(theme-color("primary"), 5%);
+    }
+    .pricing-price {
+      background-color: theme-color("primary");
+    }
+    &:after {
+      border-top: 6px solid theme-color("primary");
+      border-left: 6px solid theme-color("primary");
+    }
+  }
+   &.pricing-table-secondary,
+  &.pricing-table-info {
+    header {
+      background-color: darken(theme-color("info"), 5%);
+    }
+    .pricing-price {
+      background-color: theme-color("info");
+    }
+    &:after {
+      border-top: 6px solid theme-color("info");
+      border-left: 6px solid theme-color("info");
+    }
+  }
+  &.pricing-table-success {
+    header {
+      background-color: darken(theme-color("success"), 5%);
+    }
+    .pricing-price {
+      background-color: theme-color("success");
+    }
+    &:after {
+      border-top: 6px solid theme-color("success");
+      border-left: 6px solid theme-color("success");
+    }
+  }
+  &.pricing-table-warning {
+    header {
+      background-color: darken(theme-color("warning"), 5%);
+    }
+    .pricing-price {
+      background-color: theme-color("warning");
+    }
+    &:after {
+      border-top: 6px solid theme-color("warning");
+      border-left: 6px solid theme-color("warning");
+    }
+  }
+  &.pricing-table-danger {
+    header {
+      background-color: darken(theme-color("danger"), 5%);
+    }
+    .pricing-price {
+      background-color: theme-color("danger");
+    }
+    &:after {
+      border-top: 6px solid theme-color("danger");
+      border-left: 6px solid theme-color("danger");
+    }
+  }
+
+}
+
+// Dark theme
+// --------------------------------------------------
+.theme-gray {
+  .pricing-table {
+    background-color: $theme_gray_box_bg;
+  }
+}
+.theme-dark {
+  .pricing-table {
+    background-color: $theme_dark_box_bg;
+  }
+}

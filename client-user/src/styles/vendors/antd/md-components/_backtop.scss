@@ -1,0 +1,8 @@
+
+html {
+  .ant-back-top-content,
+  .ant-back-top-v1 .ant-back-top-inner {
+    @include mdc-elevation(6)
+  }
+}
+

@@ -1,0 +1,11 @@
+// Add to Bootstrap reboot
+
+button:focus {
+  outline: 0;
+}
+
+a {
+  @include hover-focus {
+    text-decoration: none;
+  }
+}

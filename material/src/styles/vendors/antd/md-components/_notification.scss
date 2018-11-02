@@ -1,0 +1,15 @@
+
+
+html {
+  .ant-notification-notice {
+    @include mdc-elevation(16);
+
+    .material-icons {
+      font-size: 28px;
+    }
+  }
+
+  .ant-notification-notice-message {
+    font-weight: $font-weight-500;
+  }
+}

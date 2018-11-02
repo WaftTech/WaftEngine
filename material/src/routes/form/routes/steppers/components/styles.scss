@@ -1,0 +1,14 @@
+.demo-stepper {
+  .stepper-header {
+    padding: 24px 0;
+  }
+  .stepper-content {
+    margin: 16px 0;
+    border: 1px dashed rgba(0,0,0, .1);
+    border-radius: 6px;
+    background-color: rgba(0,0,0, .015);
+    min-height: 200px;
+    text-align: center;
+    padding-top: 80px;
+  }
+}

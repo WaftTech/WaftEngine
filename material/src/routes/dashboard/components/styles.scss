@@ -1,0 +1,18 @@
+@import "../../../styles/variables";
+
+.page-dashboard {
+
+  .table-chip {
+    color: $white;
+    height: 26px;
+    font-size: 10px;
+    -webkit-backface-visibility: hidden;
+    span {
+      padding: .6rem;
+    }
+
+    &.bg-warning {
+      color: $body-color;
+    }
+  }
+}
