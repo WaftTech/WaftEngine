@@ -1,0 +1,46 @@
+{
+  "_from": "@material/animation@^0.34.0",
+  "_id": "@material/animation@0.34.0",
+  "_inBundle": false,
+  "_integrity": "sha512-HKWU+pHda+xSIV0lwrTMOb/N005NIAV7+tvEEjTiLrQx74eO6J9nIjfCpZ0W4D8Kb9K90lgHFo0ZRC6yDTjizQ==",
+  "_location": "/@material/animation",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@material/animation@^0.34.0",
+    "name": "@material/animation",
+    "escapedName": "@material%2fanimation",
+    "scope": "@material",
+    "rawSpec": "^0.34.0",
+    "saveSpec": null,
+    "fetchSpec": "^0.34.0"
+  },
+  "_requiredBy": [
+    "/@material/elevation"
+  ],
+  "_resolved": "https://registry.npmjs.org/@material/animation/-/animation-0.34.0.tgz",
+  "_shasum": "a99cc9dabf7d0179b4da9a0aaa1575c4d1513823",
+  "_spec": "@material/animation@^0.34.0",
+  "_where": "/Users/gu/Documents/bitbucket - iarouse/2018-07-tf-ngtemplates-react-material/node_modules/@material/elevation",
+  "bugs": {
+    "url": "https://github.com/material-components/material-components-web/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Animation Variables and Mixins used by Material Components for the web",
+  "homepage": "https://github.com/material-components/material-components-web#readme",
+  "keywords": [
+    "material components",
+    "material design",
+    "animation"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "name": "@material/animation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/material-components/material-components-web.git"
+  },
+  "version": "0.34.0"
+}

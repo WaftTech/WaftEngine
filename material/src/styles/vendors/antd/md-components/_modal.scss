@@ -1,0 +1,31 @@
+
+html {
+  .ant-modal-content {
+    @include mdc-elevation(24);
+  }
+
+  .ant-modal-header {
+    border: 0;
+    padding: 1.5rem;
+
+    & + .ant-modal-body {
+      padding-top: 0;
+    }
+  }
+  .ant-modal-title {
+    font-size: 21px;
+  }
+
+  .ant-modal-body {
+    font-size: 1rem;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .ant-modal-footer {
+    border: 0;
+    padding: 8px 16px;
+  }
+}

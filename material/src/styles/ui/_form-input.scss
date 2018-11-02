@@ -1,0 +1,42 @@
+// Remove forced yellow input background in Chrome 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active { 
+  -webkit-transition-delay: 9999s; transition-delay: 9999s; 
+}
+
+.input-round {
+  border-radius: 2em;
+}
+
+input.input-primary {
+  border-color: $primary;
+  &:focus {
+    border-color: $primary;
+  }
+}
+input.input-info {
+  border-color: theme-color("info");
+  &:focus {
+    border-color: theme-color("info");
+  }
+}
+input.input-success {
+  border-color: theme-color("success");
+  &:focus {
+    border-color: theme-color("success");
+  }
+}
+input.input-warning {
+  border-color: theme-color("warning");
+  &:focus {
+    border-color: theme-color("warning");
+  }
+}
+input.input-danger {
+  border-color: theme-color("danger");
+  &:focus {
+    border-color: theme-color("danger");
+  }
+}

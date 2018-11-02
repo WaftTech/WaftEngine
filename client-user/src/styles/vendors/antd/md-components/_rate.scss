@@ -1,0 +1,9 @@
+.#{$css_prefix}-rate {
+  .ant-rate-star {
+    margin-right: 3.5px;
+  }
+  .material-icons {
+    // position: relative; // no, it breaks allowhalf
+    font-size: 1.5rem;
+  }
+}
