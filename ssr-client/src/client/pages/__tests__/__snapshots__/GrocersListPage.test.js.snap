@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot 1`] = `
+<div
+  className="container-fluid"
+  style={
+    Object {
+      "padding": "20px 0",
+    }
+  }
+>
+  <main
+    className="row"
+  >
+    <div
+      className="col s12 l6"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="input-field col s3"
+          >
+            <label
+              htmlFor="latitudeSearch"
+            >
+              Latitude
+              <input
+                id="latitudeSearch"
+                name="latitude"
+                onChange={[Function]}
+                placeholder="latitude"
+                value=""
+              />
+              <span
+                className="helper-text"
+              />
+            </label>
+          </div>
+          <div
+            className="input-field col s3"
+          >
+            <label
+              htmlFor="longitudeSearch"
+            >
+              Longitude
+              <input
+                id="longitudeSearch"
+                name="longitude"
+                onChange={[Function]}
+                placeholder="longitude"
+                value=""
+              />
+              <span
+                className="helper-text"
+              />
+            </label>
+          </div>
+          <div
+            className="input-field col s3"
+          >
+            <label
+              htmlFor="distanceSearch"
+            >
+              Distance in Meter
+              <input
+                id="distanceSearch"
+                name="distance"
+                onChange={[Function]}
+                placeholder="distance"
+                value=""
+              />
+              <span
+                className="helper-text"
+              />
+            </label>
+          </div>
+          <div
+            className="col s3"
+          >
+            <label
+              htmlFor="searchBtn"
+            >
+               
+              <button
+                className="btn"
+                id="searchBtn"
+              >
+                Submit
+              </button>
+            </label>
+          </div>
+        </div>
+      </form>
+      <table
+        className="responsive-table"
+      >
+        <thead>
+          <tr>
+            <th>
+              Store Brand
+            </th>
+            <th>
+              Address
+            </th>
+            <th>
+              City
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+    <div
+      className="col s12 l6"
+      style={
+        Object {
+          "overflow": "hidden",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": "calc(100vh - 125px)",
+            "width": "100%",
+          }
+        }
+      >
+        <div
+          onClick={[Function]}
+          onMouseDownCapture={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "height": "100%",
+              "margin": 0,
+              "padding": 0,
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "height": "100%",
+                "left": 0,
+                "margin": 0,
+                "padding": 0,
+                "position": "absolute",
+                "top": 0,
+                "width": "100%",
+              }
+            }
+          />
+          <div
+            style={
+              Object {
+                "height": "50%",
+                "left": "50%",
+                "margin": 0,
+                "padding": 0,
+                "position": "absolute",
+                "top": "50%",
+                "width": "50%",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "height": "100%",
+                  "left": 0,
+                  "margin": 0,
+                  "padding": 0,
+                  "position": "absolute",
+                  "top": 0,
+                  "width": "100%",
+                }
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+`;
