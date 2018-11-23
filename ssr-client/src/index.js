@@ -27,6 +27,7 @@ app.use(
 );
 app.use(express.static('public'));
 app.get('*', (req, res) => {
+  res.set('Cache-Control', 'public, max-age=60');
   const store = createStore(req);
   if (req.ipInfo.ll && req.ipInfo.ll.length === 2) {
     store.dispatch({ type: 'SET_LATITUDE', payload: req.ipInfo.ll[0] });
