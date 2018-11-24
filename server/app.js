@@ -88,8 +88,8 @@ app.use((req, res, next) => {
 // error handler
 // no stacktraces leaked to user unless in development environment
 app.use((err, req, res, next) => {
-  console.log(err);
-  return otherHelper.sendResponse(res, HttpStatus.INTERNAL_SERVER_ERROR, false, null, err, null, null);
+  if (err.status != 404) console.log(err);
+  return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, err, null, null);
   // res.status(err.status || 500);
   // res.render('error', {
   //   message: err.message,
