@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+build
+package-lock.json
+yarn.lock
+bundle.js
+public/sw.js
+public/icon_152x152.png
+public/icon_512x512.png
