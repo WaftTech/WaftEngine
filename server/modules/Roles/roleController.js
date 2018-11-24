@@ -2,6 +2,7 @@ const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const RoleSch = require('./role');
 const ModuleSch = require('./module');
+const AccessSch = require('./access');
 const roleController = {};
 
 roleController.GetRoles = async (req, res, next) => {
@@ -45,7 +46,13 @@ roleController.AddModulList = async (req, res, next) => {
     next(err);
   }
 };
-roleController.getRoteList = async (req, res, next) => {
+roleController.getAccessList = async (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
+roleController.SaveAccessList = async (req, res, next) => {
   try {
   } catch (err) {
     next(err);
