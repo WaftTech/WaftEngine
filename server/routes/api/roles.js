@@ -9,8 +9,8 @@ router.post('/', authenticationMiddleware.authorization, dModule.AddRoles);
 router.get('/module', authenticationMiddleware.authorization, dModule.GetModule);
 router.post('/module', authenticationMiddleware.authorization, dModule.AddModulList);
 
-router.get('/routes', authenticationMiddleware.authorizatio, dModule.getAccessList);
-router.post('/routes', authenticationMiddleware.authorizatio, dModule.SaveAccessList);
+router.get('/routes', authenticationMiddleware.authorization, dModule.getAccessList);
+router.post('/routes', authenticationMiddleware.authorization, dModule.SaveAccessList);
 // router
 //   .get('/:name',  dModule.getModuleData)
 //   .post('/:name', dModule.saveModuleData);
