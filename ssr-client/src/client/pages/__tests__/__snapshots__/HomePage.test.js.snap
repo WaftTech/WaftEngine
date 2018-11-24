@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot 1`] = `
+<div
+  className="center-align"
+  style={
+    Object {
+      "marginTop": "200px",
+    }
+  }
+>
+  <h3>
+    Welcome
+  </h3>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="input-field col s3"
+      >
+        <label
+          htmlFor="latitudeSearch"
+        >
+          Latitude
+          <input
+            id="latitudeSearch"
+            name="latitude"
+            onChange={[Function]}
+            placeholder="latitude"
+            value=""
+          />
+          <span
+            className="helper-text"
+          />
+        </label>
+      </div>
+      <div
+        className="input-field col s3"
+      >
+        <label
+          htmlFor="longitudeSearch"
+        >
+          Longitude
+          <input
+            id="longitudeSearch"
+            name="longitude"
+            onChange={[Function]}
+            placeholder="longitude"
+            value=""
+          />
+          <span
+            className="helper-text"
+          />
+        </label>
+      </div>
+      <div
+        className="input-field col s3"
+      >
+        <label
+          htmlFor="distanceSearch"
+        >
+          Distance in Meter
+          <input
+            id="distanceSearch"
+            name="distance"
+            onChange={[Function]}
+            placeholder="distance"
+            value=""
+          />
+          <span
+            className="helper-text"
+          />
+        </label>
+      </div>
+      <div
+        className="col s3"
+      >
+        <label
+          htmlFor="searchBtn"
+        >
+           
+          <button
+            className="btn"
+            id="searchBtn"
+          >
+            Submit
+          </button>
+        </label>
+      </div>
+    </div>
+  </form>
+</div>
+`;

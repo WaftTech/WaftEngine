@@ -1,0 +1,40 @@
+{
+  "apps": [
+    {
+      "name": "cullen-sff-demo",
+      "script": "build/bundle.js",
+      "merge_logs": true,
+      "watch": false,
+      "ignore_watch": [
+        ".certs",
+        ".docker",
+        "node_modules",
+        ".idea",
+        "npm-debug.log",
+        ".git",
+        "server_app/node_modules",
+        "client_app/node_modules",
+        "design",
+        "public",
+        "server_app/private-uploads",
+        "server_app/lib/db-backups",
+        "server_app/public",
+        "server_app/npm-debug.log"
+      ],
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "instances": 1,
+      "exec_mode": "cluster",
+      "env": {
+        "PORT": 3000,
+        "NODE_ENV": "production"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      },
+      "env_staging": {
+        "NODE_ENV": "staging"
+      },
+      "help": "http://pm2.keymetrics.io/docs/usage/application-declaration"
+    }
+  ]
+}
