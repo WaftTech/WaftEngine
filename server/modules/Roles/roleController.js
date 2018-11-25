@@ -48,12 +48,24 @@ roleController.AddModulList = async (req, res, next) => {
 };
 roleController.getAccessList = async (req, res, next) => {
   try {
+    const access = await AccessSch.find({}, { _id: 1, IsActive: 1, AccessType: 1, ModuleId: 1, RoleId: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, access, null, 'Access Get Success !!', null, 'Access Not Found');
   } catch (err) {
     next(err);
   }
 };
 roleController.SaveAccessList = async (req, res, next) => {
   try {
+    const access = req.body;
+    if (access._id) {
+      const update = await AccessSch.findByIdAndUpdate(access._id, { $set: access });
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Access Saved Success !!', null);
+    } else {
+      access.Added_by = req.user.id;
+      const newModules = new AccessSch(access);
+      await newModules.save();
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, newModules, null, 'Access Saved Success !!', null);
+    }
   } catch (err) {
     next(err);
   }
