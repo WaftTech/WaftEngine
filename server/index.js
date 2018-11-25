@@ -9,7 +9,6 @@ app.set('PORT_NUMBER', port);
 
 //  Start the app on the specific interface (and port).
 server.listen(port, () => {
-  console.log(app._router.stack);
   console.log(`API Docs Server application started on port ${port} at Date ${new Date()}`);
 });
 
