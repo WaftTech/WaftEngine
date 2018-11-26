@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import CKEditor from 'react-ckeditor-component';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 // core components
@@ -35,7 +33,7 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { services: '', about: '', features: '' };
+  state = { RoleTitle: '', Description: '', IsActive: false };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -51,82 +49,46 @@ class AddEdit extends Component {
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Adverisement</h4>
-                <p className={classes.cardCategoryWhite}>Adverisement info</p>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Advertisement Name"
-                      id="ads-name"
+                      labelText="Role Title"
+                      id="role-title"
                       formControlProps={{
                         fullWidth: true,
                       }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Advertisement Description
-                    </InputLabel>
-                    <CKEditor
-                      name="about"
-                      content={this.state.about}
-                      events={{
-                        change: e => this.handleEditorChange(e, 'about'),
-                      }}
+                      onChange={this.handleChange('RoleTitle')}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Published From"
-                      id="ads-from-date"
+                      labelText="Description"
+                      id="role-description"
                       formControlProps={{
                         fullWidth: true,
                       }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Published To"
-                      id="ads-to-date"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
+                      onChange={this.handleChange('Description')}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Activity Type
-                    </InputLabel>
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isActive || false}
+                          checked={this.state.IsActive || false}
                           tabIndex={-1}
-                          onClick={this.handleChange('isActive')}
-                          value="isActive"
+                          onClick={this.handleChange('IsActive')}
+                          value="IsActive"
                           color="primary"
                         />
                       }
                       label="Is Active"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.isFeatured || false}
-                          onClick={this.handleChange('isFeatured')}
-                          value="isFeatured"
-                          color="primary"
-                        />
-                      }
-                      label="Is Featured"
                     />
                   </GridItem>
                 </GridContainer>
