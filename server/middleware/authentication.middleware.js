@@ -27,16 +27,24 @@ authMiddleware.authentication = async (req, res, next) => {
   try {
     const user = req.user;
     const role = await rolesSch.find({ RolesTitle: { $in: user.roles } }, { _id: 1 });
-    const path = req.baseUrl;
+    const path = req.baseUrl + req.route.path;
     const method = req.method;
     const modules = await modulesSch.findOne(
       {
         'Path.ServerRoutes.method': method,
         'Path.ServerRoutes.route': path,
       },
-      { 'Path.$': 1 },
+      { Path: 1 },
     );
-    const moduleAccessType = modules && modules.Path && modules.Path[0] && modules.Path[0].AccessType;
+    let moduleAccessType = null;
+    for (let i = 0; i < modules.Path.length; i++) {
+      const routes = modules.Path[i].ServerRoutes;
+      for (let j = 0; j < routes.length; j++) {
+        if (routes[j].method === method && routes[j].route === path) {
+          moduleAccessType = modules.Path[i].AccessType;
+        }
+      }
+    }
     const moduleId = modules && modules._id;
     if (role && role.length && moduleId && moduleAccessType) {
       for (let i = 0; i < role.length; i++) {
