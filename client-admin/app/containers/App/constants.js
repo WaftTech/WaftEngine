@@ -13,13 +13,13 @@ export const DEFAULT_LOCALE = 'en';
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://asktomarina.com/api/'
-    : 'http://localhost:5002/api/';
+    ? 'http://ask4trip.in/api/'
+    : 'http://localhost:5010/api/';
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://asktomarina.com/'
-    : 'http://localhost:5002/';
+    ? 'http://ask4trip.in/'
+    : 'http://localhost:5010/';
 
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';

@@ -1,0 +1,24 @@
+{
+    "authors": "Deividas Bakanas <https://github.com/DeividasBakanas>, Giedrius Grabauskas <https://github.com/GiedriusGrabauskas>",
+    "libraryDependencies": [
+        "googlemaps"
+    ],
+    "moduleDependencies": [],
+    "libraryMajorVersion": 3,
+    "libraryMinorVersion": 2,
+    "libraryName": "google-maps",
+    "typingsPackageName": "google-maps",
+    "projectName": "https://www.npmjs.com/package/google-maps",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "UMD",
+    "globals": [
+        "GoogleMapsLoader"
+    ],
+    "declaredModules": [],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "66e6cc29e3e1646ddb087799e8c8cddcefc7f67c0928281d18e1385fdcab57f7"
+}
