@@ -27,12 +27,19 @@ authMiddleware.authentication = async (req, res, next) => {
   try {
     const user = req.user;
     const role = await rolesSch.find({ RolesTitle: { $in: user.roles } }, { _id: 1 });
-    if (role && role.length) {
+    const path = req.baseUrl;
+    const method = req.method;
+    const modules = await modulesSch.findOne({
+      'Path.ServerRoutes.method': method,
+      'Path.ServerRoutes.route': path,
+    });
+    const moduleId = modules && modules._id;
+    if (role && role.length && moduleId) {
       for (let i = 0; i < role.length; i++) {
         const activeRole = role[i];
         const accessFilter = { RoleId: activeRole._id, IsActive: true }; //, AccessType: { $in: req.method }
         const access = await accessSch.find(accessFilter);
-        console.log(activeRole._id, accessFilter, access);
+        console.log(activeRole._id, accessFilter, access.AccessType);
         return next();
       }
       return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed', null);
