@@ -21,7 +21,7 @@ import { makeSelectIsRequesting, makeSelectErrors } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-const FlexDiv = styled.div`
+const FlexSection = styled.section`
   color: #fff;
   border: 0;
   height: 100%;
@@ -30,6 +30,9 @@ const FlexDiv = styled.div`
   position: relative;
   min-height: 100vh;
   align-items: center;
+`;
+
+const ImageWrapper = styled.div`
   background-size: cover;
   background-position: center center;
   background-image: url(${registerImg});
@@ -113,8 +116,9 @@ class LoginPage extends React.PureComponent {
     const { data, errors } = this.state;
     const { isRequesting } = this.props;
     return (
-      <FlexDiv>
-        <FormWrapper>
+      <FlexSection>
+        <ImageWrapper />
+        <FormWrapper className="col-12 col-md-8 col-lg-6 col-xl-4">
           <form onSubmit={this.handleSubmit}>
             <div className={errors.email ? 'error' : ''}>
               <Input
@@ -143,12 +147,7 @@ class LoginPage extends React.PureComponent {
               {!!errors.password && <HelpBlock>{errors.password}</HelpBlock>}
             </div>
             <br />
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disabled={isRequesting}
-            >
+            <Button variant="contained" color="primary" type="submit" disabled={isRequesting}>
               {isRequesting ? 'loading' : 'Login'}
             </Button>
             <br />
@@ -158,7 +157,7 @@ class LoginPage extends React.PureComponent {
             </a>
           </form>
         </FormWrapper>
-      </FlexDiv>
+      </FlexSection>
     );
   }
 }
