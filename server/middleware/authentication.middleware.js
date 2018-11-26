@@ -36,9 +36,9 @@ authMiddleware.authentication = async (req, res, next) => {
       },
       { 'Path.$': 1 },
     );
-    const moduleAccessType = modules.Path[0].AccessType;
+    const moduleAccessType = modules && modules.Path && modules.Path[0] && modules.Path[0].AccessType;
     const moduleId = modules && modules._id;
-    if (role && role.length && moduleId) {
+    if (role && role.length && moduleId && moduleAccessType) {
       for (let i = 0; i < role.length; i++) {
         const activeRole = role[i];
         const accessFilter = { RoleId: activeRole._id, IsActive: true, ModuleId: moduleId };
@@ -50,9 +50,9 @@ authMiddleware.authentication = async (req, res, next) => {
           }
         }
       }
-      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed', null);
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 1', null);
     } else {
-      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed', null);
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 2', null);
     }
   } catch (err) {
     next(err);
