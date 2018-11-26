@@ -10,7 +10,7 @@ import createStore from './helpers/createStore';
 
 const app = express();
 
-const port = process.env.PORT || 5004;
+const port = process.env.PORT || 5013;
 
 export const API_URL = 'https://demo3.wafttech.com';
 
@@ -20,7 +20,7 @@ app.use(
   '/api',
   proxy(API_URL, {
     proxyReqOptDecorator(opts) {
-      opts.headers['x-forwarded-host'] = 'localhost:3000'; // eslint-disable-line no-param-reassign
+      opts.headers['x-forwarded-host'] = 'localhost:5010'; // eslint-disable-line no-param-reassign
       return opts;
     },
   }),
