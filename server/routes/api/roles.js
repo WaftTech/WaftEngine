@@ -4,8 +4,8 @@ const router = express.Router();
 const dModule = require('../../modules/Roles/roleController');
 const { authentication, authorization } = require('../../middleware/authentication.middleware');
 
-router.get('/role', authorization, dModule.GetRoles);
-router.get('/role/:id', authorization, dModule.GetRoleDetail);
+router.get('/role', authorization, authentication, dModule.GetRoles);
+router.get('/role/:id', authorization, authentication, dModule.GetRoleDetail);
 router.post('/role', authorization, dModule.AddRoles);
 router.get('/module', authorization, dModule.GetModule);
 router.get('/module/:id', authorization, dModule.GetModuleDetail);
