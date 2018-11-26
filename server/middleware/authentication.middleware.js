@@ -29,18 +29,26 @@ authMiddleware.authentication = async (req, res, next) => {
     const role = await rolesSch.find({ RolesTitle: { $in: user.roles } }, { _id: 1 });
     const path = req.baseUrl;
     const method = req.method;
-    const modules = await modulesSch.findOne({
-      'Path.ServerRoutes.method': method,
-      'Path.ServerRoutes.route': path,
-    });
+    const modules = await modulesSch.findOne(
+      {
+        'Path.ServerRoutes.method': method,
+        'Path.ServerRoutes.route': path,
+      },
+      { 'Path.$': 1 },
+    );
+    const moduleAccessType = modules.Path[0].AccessType;
     const moduleId = modules && modules._id;
     if (role && role.length && moduleId) {
       for (let i = 0; i < role.length; i++) {
         const activeRole = role[i];
-        const accessFilter = { RoleId: activeRole._id, IsActive: true }; //, AccessType: { $in: req.method }
-        const access = await accessSch.find(accessFilter);
-        console.log(activeRole._id, accessFilter, access.AccessType);
-        return next();
+        const accessFilter = { RoleId: activeRole._id, IsActive: true, ModuleId: moduleId };
+        const access = await accessSch.findOne(accessFilter);
+        if (access && access.AccessType) {
+          const isExist = access.AccessType.filter(s => s.includes(moduleAccessType));
+          if (isExist.length > 0) {
+            return next();
+          }
+        }
       }
       return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed', null);
     } else {
