@@ -1,5 +1,7 @@
-**Client Port :- 5003**
+**SERVER Port :- 5010**
 
-**Server Port :- 5010**
+**CLIENT-ADMIN Port :- 5011**
 
-**SSR-Client Port :- 5004**
+**CLIENT-USER Port :- 5012**
+
+**SSR-Client Port :- 5013**
