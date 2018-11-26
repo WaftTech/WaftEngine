@@ -9,6 +9,10 @@ roleController.GetRoles = async (req, res, next) => {
   const roles = await RoleSch.find({}, { _id: 1, IsActive: 1, RolesTitle: 1, Description: 1 });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, roles, null, 'Role Get Success !!', null, 'Role Not Found');
 };
+roleController.GetRoleDetail = async (req, res, next) => {
+  const roles = await RoleSch.findById(req.params.id, { _id: 1, IsActive: 1, RolesTitle: 1, Description: 1 });
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, roles, null, 'Role Get Success !!', null, 'Role Not Found');
+};
 roleController.AddRoles = async (req, res, next) => {
   try {
     const role = req.body;
@@ -28,6 +32,10 @@ roleController.AddRoles = async (req, res, next) => {
 
 roleController.GetModule = async (req, res, next) => {
   const modules = await ModuleSch.find();
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, modules, null, 'Modules Get Success !!', null, 'Module Not Found');
+};
+roleController.GetModuleDetail = async (req, res, next) => {
+  const modules = await ModuleSch.findById(req.params.id);
   return otherHelper.sendResponse(res, HttpStatus.OK, true, modules, null, 'Modules Get Success !!', null, 'Module Not Found');
 };
 roleController.AddModulList = async (req, res, next) => {
