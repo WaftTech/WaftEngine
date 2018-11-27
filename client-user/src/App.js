@@ -4,7 +4,7 @@ import "./App.css";
 
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
-import TripDetailPage from "./pages/TripDetail";
+import TripDetailPage from "./pages/TripDetailPage";
 
 class App extends Component {
   render() {
