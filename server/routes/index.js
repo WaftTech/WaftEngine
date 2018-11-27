@@ -7,6 +7,9 @@ router.use('/user', userRoutes);
 // All route of Roles
 const roleRoutes = require('./api/roles');
 router.use('/role', roleRoutes);
+// All route of Content
+const contentRoutes = require('./api/content');
+router.use('/contents', contentRoutes);
 // All route of Media
 const mediaRoutes = require('./api/media');
 router.use('/media', mediaRoutes);
