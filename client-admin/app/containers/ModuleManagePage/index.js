@@ -77,12 +77,10 @@ export class RoleManagePage extends React.Component {
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
   };
   render() {
-    const { classes, allLinks } = this.props;
-    const allLinksObj = allLinks.toJS();
-    const tableData = allLinksObj.map(({ _id, RolesTitle, Description, IsActive }) => [
-      RolesTitle,
-      Description,
-      '' + IsActive,
+    const { classes, all } = this.props;
+    const allObj = all.toJS();
+    const tableData = allObj.map(({ _id, ModuleName, Path }) => [
+      ModuleName,
       <React.Fragment>
         <Tooltip
           id="tooltip-top"
@@ -125,7 +123,7 @@ export class RoleManagePage extends React.Component {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', 'Description', 'Is Active']}
+                tableHead={['Module Name', 'Action']}
                 tableData={tableData}
               />
               <Button
@@ -151,7 +149,7 @@ RoleManagePage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll(),
+  all: makeSelectAll(),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -163,8 +161,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'roleManagePage', reducer });
-const withSaga = injectSaga({ key: 'roleManagePage', saga });
+const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
+const withSaga = injectSaga({ key: 'moduleManagePage', saga });
 
 const withStyle = withStyles(styles);
 
