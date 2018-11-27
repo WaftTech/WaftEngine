@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import CKEditor from 'react-ckeditor-component';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -14,6 +18,10 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
@@ -35,7 +43,7 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { services: '', about: '', features: '' };
+  state = { RolesTitle: '', Description: '', IsActive: false };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -43,97 +51,70 @@ class AddEdit extends Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
+  handleGoBack = () => {
+    this.props.history.push('/wt/role-manage');
+  };
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.oneOrganization !== nextProps.oneOrganization) {
+      const oneOrganizationObj = nextProps.oneOrganization.toJS();
+      this.setState(state => ({
+        ...oneOrganizationObj,
+      }));
+    }
+  }
   render() {
     const { classes } = this.props;
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={8}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Adverisement</h4>
-                <p className={classes.cardCategoryWhite}>Adverisement info</p>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Advertisement Name"
-                      id="ads-name"
+                      labelText="Role Title"
+                      id="role-title"
                       formControlProps={{
                         fullWidth: true,
                       }}
+                      inputProps={{ value: this.state.RolesTitle }}
+                      onChange={this.handleChange('RolesTitle')}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Advertisement Description
-                    </InputLabel>
-                    <CKEditor
-                      name="about"
-                      content={this.state.about}
-                      events={{
-                        change: e => this.handleEditorChange(e, 'about'),
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Published From"
-                      id="ads-from-date"
+                      labelText="Description"
+                      id="role-description"
                       formControlProps={{
                         fullWidth: true,
                       }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Published To"
-                      id="ads-to-date"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
+                      inputProps={{ value: this.state.Description }}
+                      onChange={this.handleChange('Description')}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Activity Type
-                    </InputLabel>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.isActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChange('isActive')}
-                          value="isActive"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.isFeatured || false}
-                          onClick={this.handleChange('isFeatured')}
-                          value="isFeatured"
-                          color="primary"
-                        />
-                      }
-                      label="Is Featured"
-                    />
+                    <FormControlLabel control={<Checkbox checked={this.state.IsActive || false} tabIndex={-1} onClick={this.handleChange('IsActive')} value="IsActive" color="primary" />} label="Is Active" />
                   </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
                 <Button color="primary">Save</Button>
-                <Button color="primary">Back</Button>
+                <Button color="primary" onClick={this.handleGoBack}>
+                  Back
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -143,4 +124,28 @@ class AddEdit extends Component {
   }
 }
 
-export default withStyles(styles)(AddEdit);
+const withStyle = withStyles(styles);
+
+const withReducer = injectReducer({ key: 'roleManagePage', reducer });
+const withSaga = injectSaga({ key: 'roleManagePage', saga });
+
+const mapStateToProps = createStructuredSelector({
+  oneOrganization: makeSelectOne(),
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadOne: payload => dispatch(loadOneRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withRouter,
+  withStyle,
+  withReducer,
+  withSaga,
+  withConnect,
+)(AddEdit);

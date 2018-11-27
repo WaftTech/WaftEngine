@@ -16,6 +16,12 @@ router.get('/test', (req, res) =>
 );
 
 /**
+ * @route GET api/user
+ * @description Check user is returning user or new
+ * @access Public
+ */
+router.get('/', authenticationMiddleware.authorization, authenticationMiddleware.authentication, user.getAllUser);
+/**
  * @route POST api/user
  * @description Check user is returning user or new
  * @access Public
@@ -69,11 +75,7 @@ router.post('/login/github/:access_token', user.githubLogin);
  * @description Login user using Github
  * @access Public
  */
-router.post(
-  '/login/google/:access_token',
-  user.oauthCodeToToken,
-  user.googleLogin,
-);
+router.post('/login/google/:access_token', user.oauthCodeToToken, user.googleLogin);
 
 /**
  *
