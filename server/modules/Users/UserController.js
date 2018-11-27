@@ -40,6 +40,14 @@ userController.getAllUser = async (req, res, next) => {
     next(err);
   }
 };
+userController.getUserDetail = async (req, res, next) => {
+  try {
+    const users = await User.findById(req.params.id, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Get Success', null);
+  } catch (err) {
+    next(err);
+  }
+};
 
 userController.register = async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
