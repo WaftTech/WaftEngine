@@ -1,3 +1,8 @@
+/*
+ *
+ * RoleManagePage reducer
+ *
+ */
 import { fromJS } from 'immutable';
 import * as types from './constants';
 

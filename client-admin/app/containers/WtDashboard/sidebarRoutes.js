@@ -22,10 +22,12 @@ import RashifalListPage from '../RashifalListPage';
 import RashifalListAddEditPage from '../RashifalListPage/AddEditPage';
 import RoleManagePage from '../RoleManagePage';
 import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
+import ModuleManagePage from '../ModuleManagePage';
+import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
 import UserManagePage from '../UserManagePage';
 import UserManageAddEditPage from '../UserManagePage/AddEditPage';
-import VideoLinkPage from '../VideoLinkPage';
-import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
+// import VideoLinkPage from '../VideoLinkPage';
+// import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
 
 const dashboardRoutes = [
   {
@@ -58,6 +60,29 @@ const dashboardRoutes = [
     navbarName: 'Role Manage',
     icon: Dashboard,
     component: RoleManagePage,
+  },
+  {
+    path: '/wt/module-manage/add',
+    sidebarName: 'Module Manage',
+    navbarName: 'Add Module',
+    icon: Dashboard,
+    component: ModuleManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/module-manage/edit/:id',
+    sidebarName: 'Module Manage',
+    navbarName: 'Module Manage',
+    icon: Dashboard,
+    component: ModuleManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/module-manage',
+    sidebarName: 'Module Manage',
+    navbarName: 'Module Manage',
+    icon: Dashboard,
+    component: ModuleManagePage,
   },
   // {
   //   path: '/wt/organization-info/add',
@@ -177,29 +202,29 @@ const dashboardRoutes = [
   //   icon: Dashboard,
   //   component: RashifalListPage,
   // },
-  // {
-  //   path: '/wt/user-manage/add',
-  //   sidebarName: 'User Manage',
-  //   navbarName: 'Add user',
-  //   icon: Dashboard,
-  //   component: UserManageAddEditPage,
-  //   hide: true,
-  // },
-  // {
-  //   path: '/wt/user-manage/edit/:id',
-  //   sidebarName: 'User Manage',
-  //   navbarName: 'User Manage',
-  //   icon: Dashboard,
-  //   component: UserManageAddEditPage,
-  //   hide: true,
-  // },
-  // {
-  //   path: '/wt/user-manage',
-  //   sidebarName: 'User Manage',
-  //   navbarName: 'User Manage',
-  //   icon: Dashboard,
-  //   component: UserManagePage,
-  // },
+  {
+    path: '/wt/user-manage/add',
+    sidebarName: 'User Manage',
+    navbarName: 'Add user',
+    icon: Dashboard,
+    component: UserManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/user-manage/edit/:id',
+    sidebarName: 'User Manage',
+    navbarName: 'User Manage',
+    icon: Dashboard,
+    component: UserManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/user-manage',
+    sidebarName: 'User Manage',
+    navbarName: 'User Manage',
+    icon: Dashboard,
+    component: UserManagePage,
+  },
   // {
   //   path: '/wt/category-manage/add',
   //   sidebarName: 'Category Manage',

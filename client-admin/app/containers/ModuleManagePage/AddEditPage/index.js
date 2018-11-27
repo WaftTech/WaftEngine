@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -13,6 +18,10 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
@@ -34,67 +43,76 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = {};
+  state = { RolesTitle: '', Description: '', IsActive: false };
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.setState({ [name]: newContent });
+  };
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
+  handleGoBack = () => {
+    this.props.history.push('/wt/role-manage');
+  };
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.oneOrganization !== nextProps.oneOrganization) {
+      const oneOrganizationObj = nextProps.oneOrganization.toJS();
+      this.setState(state => ({
+        ...oneOrganizationObj,
+      }));
+    }
+  }
   render() {
     const { classes } = this.props;
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={8}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Video</h4>
-                <p className={classes.cardCategoryWhite}>Video info</p>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Video title"
-                      id="video-title"
+                      labelText="Role Title"
+                      id="role-title"
                       formControlProps={{
                         fullWidth: true,
                       }}
+                      inputProps={{ value: this.state.RolesTitle }}
+                      onChange={this.handleChange('RolesTitle')}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Video Link"
-                      id="video-link"
+                      labelText="Description"
+                      id="role-description"
                       formControlProps={{
                         fullWidth: true,
                       }}
+                      inputProps={{ value: this.state.Description }}
+                      onChange={this.handleChange('Description')}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Link Description"
-                      id="video-description"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Activity Type
-                    </InputLabel>
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.isActive || false}
+                          checked={this.state.IsActive || false}
                           tabIndex={-1}
-                          onClick={this.handleChange('isActive')}
-                          value="isActive"
+                          onClick={this.handleChange('IsActive')}
+                          value="IsActive"
                           color="primary"
                         />
                       }
@@ -105,7 +123,9 @@ class AddEdit extends Component {
               </CardBody>
               <CardFooter>
                 <Button color="primary">Save</Button>
-                <Button color="primary">Back</Button>
+                <Button color="primary" onClick={this.handleGoBack}>
+                  Back
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -115,4 +135,28 @@ class AddEdit extends Component {
   }
 }
 
-export default withStyles(styles)(AddEdit);
+const withStyle = withStyles(styles);
+
+const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
+const withSaga = injectSaga({ key: 'moduleManagePage', saga });
+
+const mapStateToProps = createStructuredSelector({
+  oneOrganization: makeSelectOne(),
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadOne: payload => dispatch(loadOneRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withRouter,
+  withStyle,
+  withReducer,
+  withSaga,
+  withConnect,
+)(AddEdit);
