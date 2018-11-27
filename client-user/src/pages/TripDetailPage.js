@@ -51,47 +51,50 @@ export default class TripDetailPage extends Component {
             <div className="text-sm">
               <span>Est. Cost: USD 460</span> | <span>Days:5</span>
             </div>
-          <div className="card-img">
-            <img alt="pics" className="responsive-img" src={postImg2} />
-          </div>
+            <div className="card-img">
+              <img alt="pics" className="responsive-img" src={postImg2} />
+            </div>
 
-          <div className="p-2">
-            <div className="row">
-              <div className="col-md-6">
-                <span className="text-sm pr-2">Share</span>
-                <Link to="/" className="p-2">
-                  <img alt="pics" src={fb} />
-                </Link>
-                <Link to="/" className="p-2">
-                  <img alt="pics" src={tw} />
-                </Link>
-              </div>
-              <div className="col-md-6 text-right">
-                <Link to="/" className="btn btn-link btn-sm">
-                  View Trip Details
-                </Link>
-                <Link to="/" className="btn btn-primary btn-sm">
-                  Ask4Trip
-                </Link>
+            <div className="p-2">
+              <div className="row">
+                <div className="col-md-6">
+                  <span className="text-sm pr-2">Share</span>
+                  <Link to="/" className="p-2">
+                    <img alt="pics" src={fb} />
+                  </Link>
+                  <Link to="/" className="p-2">
+                    <img alt="pics" src={tw} />
+                  </Link>
+                </div>
+                <div className="col-md-6 text-right">
+                  <Link to="/" className="btn btn-link btn-sm">
+                    View Trip Details
+                  </Link>
+                  <Link to="/" className="btn btn-primary btn-sm">
+                    Ask4Trip
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-md-3 pt-3">
-          <h2>Offer By:</h2>
-          <div className="card-box">
-            <div className="image-container">
-              <img alt="pics" className="responsive-img" src={offer1} />
-              <div className="overShadow">
-                <h4>Everest Base Camp Trek via Gokyo Lakes and Cho La Pass</h4>
+          <div className="col-md-3 pt-3">
+            <h2>Offer By:</h2>
+            <div className="card-box">
+              <div className="image-container">
+                <img alt="pics" className="responsive-img" src={offer1} />
+                <div className="overShadow">
+                  <h4>
+                    Everest Base Camp Trek via Gokyo Lakes and Cho La Pass
+                  </h4>
+                </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-6">
-                <div className="text-sm pl-2">
-                  Est. Cost
-                  <br />
-                  USD2990
+              <div className="row">
+                <div className="col-6">
+                  <div className="text-sm pl-2">
+                    Est. Cost
+                    <br />
+                    USD2990
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../img/logo.svg';
-import profilepic from '../img/profilepic.png';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Logo from "../img/logo.svg";
+import profilepic from "../img/profilepic.png";
 
 export default class Header extends Component {
   render() {
@@ -18,10 +18,14 @@ export default class Header extends Component {
               <div className="input-group input-group-sm input-search">
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="basic-addon1">
-                    <ion-icon className="color-white" name="search" />
+                    <ion-icon color="inveted" name="search" />
                   </span>
                 </div>
-                <input type="text" className="form-control" placeholder="Search Trips" />
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Trips"
+                />
               </div>
             </div>
             <div className="col-md-3">
