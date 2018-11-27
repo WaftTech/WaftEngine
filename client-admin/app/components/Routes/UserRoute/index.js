@@ -14,7 +14,7 @@ const UserRoute = ({ isAuthenticated, ...rest }) => {
       render={props => (
         <Redirect
           to={{
-            pathname: '/auth/login',
+            pathname: '/login',
             state: { from: props.location },
           }}
         />
