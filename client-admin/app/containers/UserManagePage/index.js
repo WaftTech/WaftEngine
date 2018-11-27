@@ -81,65 +81,32 @@ export class UserManagePage extends React.Component {
   render() {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
-    const tableData = allLinksObj.map(
-      ({
-        Category,
-        Organization,
-        PhoneNo,
-        OrganizationEmail,
-        IsActive,
-        IsFeature,
-        slug,
-      }) => [
-        Category,
-        Organization,
-        PhoneNo,
-        OrganizationEmail,
-        '' + IsActive,
-        '' + IsFeature,
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(slug)}
-            >
-              <Edit
-                className={classes.tableActionButtonIcon + ' ' + classes.edit}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close
-                className={classes.tableActionButtonIcon + ' ' + classes.close}
-              />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>,
-      ],
-    );
+    const tableData = allLinksObj.map(({ email, name, email_verified, roles, avatar, _id }) => [
+      email,
+      name,
+      '' + email_verified,
+      roles,
+      <img src={avatar} style={{ height: 40 }} />,
+      <React.Fragment>
+        <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
+            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
+            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+          </IconButton>
+        </Tooltip>
+      </React.Fragment>,
+    ]);
     return (
       <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={3}>
+                <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     id="ads-name"
                     formControlProps={{
@@ -147,50 +114,25 @@ export class UserManagePage extends React.Component {
                     }}
                   />
                 </GridItem>
+                <GridItem xs={12} sm={12} md={3}>
+                  <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
+                    Search
+                  </Button>
+                </GridItem>
               </GridContainer>
             </CardBody>
-            <CardFooter>
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-              >
-                Search
-              </Button>
-            </CardFooter>
+            <CardFooter />
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Ads Listing</h4>
-              <p className={classes.cardCategoryWhite}>
-                Here are the list of Ads
-              </p>
+              <h4 className={classes.cardTitleWhite}>Web User Listing</h4>
+              <p className={classes.cardCategoryWhite}>Here are the list of Users for managemnt</p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor="primary"
-                tableHead={[
-                  'Title',
-                  'Description',
-                  'Published from',
-                  'Published to',
-                  'Image',
-                  'IsFeatured',
-                  'Operations',
-                ]}
-                tableData={tableData}
-              />
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-                round={true}
-                onClick={this.handleAdd}
-              >
+              <Table tableHeaderColor="primary" tableHead={['Email', 'Name', 'Email Verified', 'Roles', 'Avtar', 'Operations']} tableData={tableData} />
+              <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
             </CardBody>
