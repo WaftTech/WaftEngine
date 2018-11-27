@@ -23,6 +23,8 @@ import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import { loadOneRequest, addEditRequest } from '../actions';
 
+const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+
 const styles = {
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
