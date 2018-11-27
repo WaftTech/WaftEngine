@@ -26,6 +26,8 @@ import ModuleManagePage from '../ModuleManagePage';
 import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
 import UserManagePage from '../UserManagePage';
 import UserManageAddEditPage from '../UserManagePage/AddEditPage';
+import ContentsListingPage from '../ContentListingPage';
+import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
 // import VideoLinkPage from '../VideoLinkPage';
 // import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
 
@@ -271,6 +273,29 @@ const dashboardRoutes = [
   //   icon: Dashboard,
   //   component: NewsListPage,
   // },
+  {
+    path: '/wt/content-manage/add',
+    sidebarName: 'Content Manage',
+    navbarName: 'Add Contents Manage',
+    icon: Dashboard,
+    component: ContentsListingAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/content-manage/edit/:id',
+    sidebarName: 'Content Manage',
+    navbarName: 'Content Manage',
+    icon: Dashboard,
+    component: ContentsListingAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/content-manage',
+    sidebarName: 'Content Manage',
+    navbarName: 'Content Manage',
+    icon: Dashboard,
+    component: ContentsListingPage,
+  },
   { redirect: true, path: '/wt', to: '/wt/dashboard', navbarName: 'Redirect' },
 ];
 
