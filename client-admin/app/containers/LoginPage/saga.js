@@ -20,14 +20,7 @@ function* redirectOnSuccess(redirect) {
 
 function* loginFlow(action) {
   const successWatcher = yield fork(redirectOnSuccess, action.redirect);
-  yield fork(
-    Api.post(
-      'user/login',
-      actions.loginSuccess,
-      actions.loginFailure,
-      action.payload,
-    ),
-  );
+  yield fork(Api.post('user/login', actions.loginSuccess, actions.loginFailure, action.payload));
   yield take([LOCATION_CHANGE, types.LOGIN_FAILURE]);
   yield cancel(successWatcher);
 }
