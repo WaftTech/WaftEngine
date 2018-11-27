@@ -1,6 +1,6 @@
 /*
  *
- * VideoLinkPage actions
+ * RoleManagePage actions
  *
  */
 

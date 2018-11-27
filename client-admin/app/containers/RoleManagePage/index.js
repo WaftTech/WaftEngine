@@ -105,7 +105,7 @@ export class RoleManagePage extends React.Component {
               <p className={classes.cardCategoryWhite}>Here are the list of roles</p>
             </CardHeader>
             <CardBody>
-              <Table tableHeaderColor="primary" tableHead={['Title', 'Description', 'Is Active']} tableData={tableData} />
+              <Table tableHeaderColor="primary" tableHead={['Title', 'Description', 'Is Active','Action']} tableData={tableData} />
               <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>

@@ -37,6 +37,7 @@ authMiddleware.authentication = async (req, res, next) => {
       { Path: 1 },
     );
     let moduleAccessType = null;
+    return next();
     for (let i = 0; i < modules.Path.length; i++) {
       const routes = modules.Path[i].ServerRoutes;
       for (let j = 0; j < routes.length; j++) {
@@ -45,7 +46,6 @@ authMiddleware.authentication = async (req, res, next) => {
         }
       }
     }
-    return next();
     const moduleId = modules && modules._id;
     if (role && role.length && moduleId && moduleAccessType) {
       for (let i = 0; i < role.length; i++) {

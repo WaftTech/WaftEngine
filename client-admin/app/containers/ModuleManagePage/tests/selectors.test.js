@@ -1,7 +1,7 @@
 // import { fromJS } from 'immutable';
-// import { selectVideoLinkPageDomain } from '../selectors';
+// import { selectRoleManagePageDomain } from '../selectors';
 
-describe('selectVideoLinkPageDomain', () => {
+describe('selectRoleManagePageDomain', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });
