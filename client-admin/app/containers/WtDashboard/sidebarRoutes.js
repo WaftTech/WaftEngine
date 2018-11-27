@@ -26,8 +26,8 @@ import ModuleManagePage from '../ModuleManagePage';
 import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
 import UserManagePage from '../UserManagePage';
 import UserManageAddEditPage from '../UserManagePage/AddEditPage';
-import VideoLinkPage from '../VideoLinkPage';
-import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
+// import VideoLinkPage from '../VideoLinkPage';
+// import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
 
 const dashboardRoutes = [
   {
