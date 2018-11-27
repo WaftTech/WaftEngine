@@ -66,10 +66,10 @@ class AddEdit extends Component {
     }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.oneOrganization !== nextProps.oneOrganization) {
-      const oneOrganizationObj = nextProps.oneOrganization.toJS();
+    if (this.props.one !== nextProps.one) {
+      const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneOrganizationObj,
+        ...oneObj,
       }));
     }
   }
@@ -136,7 +136,7 @@ const withReducer = injectReducer({ key: 'roleManagePage', reducer });
 const withSaga = injectSaga({ key: 'roleManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
-  oneOrganization: makeSelectOne(),
+  one: makeSelectOne(),
 });
 
 const mapDispatchToProps = dispatch => ({
