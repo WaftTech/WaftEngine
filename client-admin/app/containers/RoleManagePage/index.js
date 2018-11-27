@@ -79,88 +79,34 @@ export class RoleManagePage extends React.Component {
   render() {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
-    const tableData = allLinksObj.map(
-      ({
-        Category,
-        Organization,
-        PhoneNo,
-        OrganizationEmail,
-        IsActive,
-        IsFeature,
-        slug,
-      }) => [
-        Category,
-        Organization,
-        PhoneNo,
-        OrganizationEmail,
-        '' + IsActive,
-        '' + IsFeature,
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(slug)}
-            >
-              <Edit
-                className={classes.tableActionButtonIcon + ' ' + classes.edit}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close
-                className={classes.tableActionButtonIcon + ' ' + classes.close}
-              />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>,
-      ],
-    );
+    const tableData = allLinksObj.map(({ _id, RolesTitle, Description, IsActive }) => [
+      RolesTitle,
+      Description,
+      '' + IsActive,
+      <React.Fragment>
+        <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
+            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
+            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+          </IconButton>
+        </Tooltip>
+      </React.Fragment>,
+    ]);
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Videos Listing</h4>
-              <p className={classes.cardCategoryWhite}>
-                Here are the list of vidoes
-              </p>
+              <h4 className={classes.cardTitleWhite}>Role Management</h4>
+              <p className={classes.cardCategoryWhite}>Here are the list of roles</p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor="primary"
-                tableHead={[
-                  'Title',
-                  'Link',
-                  'Description',
-                  'Is Active',
-                  'Operations',
-                ]}
-                tableData={tableData}
-              />
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-                round={true}
-                onClick={this.handleAdd}
-              >
+              <Table tableHeaderColor="primary" tableHead={['Title', 'Description', 'Is Active']} tableData={tableData} />
+              <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
             </CardBody>
