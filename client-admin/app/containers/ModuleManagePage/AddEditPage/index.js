@@ -141,7 +141,6 @@ class AddEdit extends Component {
   render() {
     const { classes } = this.props;
     const { ModuleName, Path } = this.state;
-    console.log(Path);
     return (
       <div>
         <GridContainer>
