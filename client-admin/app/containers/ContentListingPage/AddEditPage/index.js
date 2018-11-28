@@ -48,17 +48,17 @@ class AddEdit extends Component {
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={8}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Adverisement</h4>
-                <p className={classes.cardCategoryWhite}>Adverisement info</p>
+                <h4 className={classes.cardTitleWhite}>Content </h4>
+                <p className={classes.cardCategoryWhite}>Content info</p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Advertisement Name"
+                      labelText="Content Name"
                       id="contents-name"
                       formControlProps={{
                         fullWidth: true,
@@ -68,9 +68,7 @@ class AddEdit extends Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Advertisement Description
-                    </InputLabel>
+                    <InputLabel style={{ color: '#AAAAAA' }}>Content Description</InputLabel>
                     <CKEditor
                       name="about"
                       content={this.state.about}
@@ -102,32 +100,9 @@ class AddEdit extends Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
-                      Activity Type
-                    </InputLabel>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.isActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChange('isActive')}
-                          value="isActive"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.isFeatured || false}
-                          onClick={this.handleChange('isFeatured')}
-                          value="isFeatured"
-                          color="primary"
-                        />
-                      }
-                      label="Is Featured"
-                    />
+                    <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
+                    <FormControlLabel control={<Checkbox checked={this.state.isActive || false} tabIndex={-1} onClick={this.handleChange('isActive')} value="isActive" color="primary" />} label="Is Active" />
+                    <FormControlLabel control={<Checkbox checked={this.state.isFeatured || false} onClick={this.handleChange('isFeatured')} value="isFeatured" color="primary" />} label="Is Featured" />
                   </GridItem>
                 </GridContainer>
               </CardBody>
