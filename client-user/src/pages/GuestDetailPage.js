@@ -12,7 +12,80 @@ export default class GuestDetailPage extends Component {
     return (
       <div className="col-md-9">
         <div className="row">
-          <div className="col-md-8">Guest Detail</div>
+          <div className="col-md-8 pt-4">
+            <h1 className="text-lg">Jumla Rara Trek</h1>
+
+            <div className="card p-3 pb-0 mb-4">
+              <div className="row">
+                <div className="col-6">
+                  <p>
+                    <span className="color-blue pr-2">
+                      <ion-icon name="pricetag" />
+                    </span>{" "}
+                    Total Estimated Cost: $2070
+                  </p>
+                  <p>
+                    <span className="color-blue pr-2">
+                      <ion-icon name="home" />{" "}
+                    </span>
+                    Offer From: Company{" "}
+                  </p>
+                  <p>
+                    <span className="color-blue pr-2">
+                      <ion-icon name="contact" />
+                    </span>{" "}
+                    No. of Person: 2 mininum
+                  </p>
+                </div>
+                <div className="col-6 text-right">
+                  <p className="text-sm">
+                    Start From{" "}
+                    <span className="text-lg lh-1 d-block">Oct 25</span>
+                  </p>
+                  <p className="text-sm">
+                    Return Back{" "}
+                    <span className="text-lg lh-1 d-block">Nov 6</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <form className="mb-5">
+              <div className="form-group">
+                <label for="location">Current Location</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="location"
+                  placeholder="Current Location"
+                />
+              </div>
+              <div className="form-group">
+                <label for="contact">Contact</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="contact"
+                  placeholder="Mobile/Email"
+                />
+              </div>
+
+              <div className="form-group">
+                <label for="numberTraveler">Number of Traveler</label>
+                <select class="form-control" id="numberTraveler">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+
+              <Link to="/" className="btn btn-primary btn-lg btn-block">
+                <img src={logo} />
+              </Link>
+            </form>
+          </div>
           <div className="col-md-4 pt-3">
             <h2>Offer By:</h2>
 
