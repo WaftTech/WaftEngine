@@ -121,14 +121,14 @@ export default class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-6">
+                <div className="col-6 pt-1 pb-1">
                   <div className="text-sm pl-2">
                     Est. Cost
                     <br />
                     USD2990
                   </div>
                 </div>
-                <div className="text-sm col-6 text-right">
+                <div className="text-sm col-6 pt-1 pb-1 text-right">
                   <div className="pr-2">
                     {" "}
                     Days
@@ -146,14 +146,14 @@ export default class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-6">
+                <div className="col-6 pt-1 pb-1">
                   <div className="text-sm pl-2">
                     Est. Cost
                     <br />
                     USD2990
                   </div>
                 </div>
-                <div className="text-sm col-6 text-right">
+                <div className="text-sm col-6 pt-1 pb-1 text-right">
                   <div className="pr-2">
                     {" "}
                     Days
@@ -171,14 +171,14 @@ export default class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-6">
+                <div className="col-6 pt-1 pb-1">
                   <div className="text-sm pl-2">
                     Est. Cost
                     <br />
                     USD2990
                   </div>
                 </div>
-                <div className="text-sm col-6 text-right">
+                <div className="text-sm col-6 pt-1 pb-1 text-right">
                   <div className="pr-2">
                     {" "}
                     Days

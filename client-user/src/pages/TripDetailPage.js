@@ -16,15 +16,14 @@ export default class TripDetailPage extends Component {
             <div className="slider-container">
               <img alt="pics" className="img-fluid mt-4 mb-4" src={postImg2} />
             </div>
-            <div className="flex alignItemCenter mb-3">
-              <span>Share</span>
-              <a href="#" className="p-1">
-                <ion-icon name="logo-facebook" />{" "}
-              </a>
-              <a href="#" className="p-1">
-                {" "}
-                <ion-icon name="logo-twitter" />
-              </a>
+            <div className="p-1 mb-4">
+              <span className="text-sm pr-2">Share</span>
+              <Link to="/" className="p-2">
+                <img alt="pics" src={fb} />
+              </Link>
+              <Link to="/" className="p-2">
+                <img alt="pics" src={tw} />
+              </Link>
             </div>
             <h1>Jumla Rara Trek</h1>
             <div className="card p-2 mb-2">
@@ -46,19 +45,16 @@ export default class TripDetailPage extends Component {
             <div className="card p-2 mb-4">
               <div className="row">
                 <div className="col-4">
-                  {" "}
-                  Start From <br />
-                  <span className="color-blue text-lg"> Oct 23</span>{" "}
+                  <span className="text-muted d-block">Start From </span>
+                  <span className="lh-1 text-lg"> Oct 23</span>
                 </div>
-                <div className="col-4">
-                  {" "}
-                  Duration <br />
-                  <span className="color-blue text-lg">9 Days</span>{" "}
+                <div className="col-4 text-center">
+                  <span className="text-muted d-block"> Duration</span>
+                  <span className="lh-1 text-lg">9 Days</span>
                 </div>
-                <div className="col-4">
-                  {" "}
-                  End Date <br />
-                  <span className="color-blue text-lg">Nov 10</span>{" "}
+                <div className="col-4 text-right">
+                  <span className="text-muted d-block"> End Date </span>
+                  <span className="lh-1 text-lg">Nov 10</span>
                 </div>
               </div>
             </div>
@@ -99,7 +95,10 @@ export default class TripDetailPage extends Component {
               Day 12 Final departure
             </p>
 
-            <Link to="/" className="btn btn-primary btn-lg btn-block">
+            <Link
+              to="/guest-detail"
+              className="btn btn-primary btn-lg btn-block"
+            >
               <img src={logo} />
             </Link>
 
@@ -142,7 +141,10 @@ export default class TripDetailPage extends Component {
               </div>
             </div>
 
-            <Link to="/" className="btn btn-primary btn-sm btn-block">
+            <Link
+              to="/guest-detail"
+              className="btn btn-primary btn-sm btn-block"
+            >
               <img className="height20" src={logo} />
             </Link>
           </div>
