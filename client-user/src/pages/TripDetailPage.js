@@ -2,45 +2,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import fb from "../img/fb.svg";
 import tw from "../img/tw.svg";
+import logo from "../img/logo.svg";
+import company from "../img/company_logo.png";
 import profilepic from "../img/profilepic.png";
-import user1 from "../img/user1.png";
-import user2 from "../img/user2.png";
-import postImg1 from "../img/postImg1.png";
 import postImg2 from "../img/postImg2.png";
-import offer1 from "../img/offer1.jpg";
-import offer2 from "../img/offer2.jpg";
-import offer3 from "../img/offer3.jpg";
 
 export default class TripDetailPage extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="col-md-9">
         <div className="row">
-          <div className="col-md-3">
-            <div className="media pt-4 mb-4">
-              <img alt="pics" className="maxWidth40" src={profilepic} />
-              <div className="media-body pt-2 pl-2">Celina Jose</div>
-            </div>
-
-            <ul className="navList">
-              <li>
-                <Link to="/">Trip Feed</Link>
-              </li>
-              <li>
-                <Link to="/">Upcoming Trips</Link>
-              </li>
-              <li>
-                <Link to="/">Recent Trips</Link>
-              </li>
-            </ul>
-            <ul className="nav nav-horz">
-              <li>About us </li>
-              <li> | </li>
-              <li>Terms of Use</li>
-            </ul>
-          </div>
-
-          <div className="col-md-6">
+          <div className="col-md-8">
             <div className="slider-container">
               <img alt="pics" className="" src={postImg2} />
             </div>
@@ -77,27 +49,47 @@ export default class TripDetailPage extends Component {
               </div>
             </div>
           </div>
-          <div className="col-md-3 pt-3">
+          <div className="col-md-4 pt-3">
             <h2>Offer By:</h2>
-            <div className="card-box">
-              <div className="image-container">
-                <img alt="pics" className="responsive-img" src={offer1} />
-                <div className="overShadow">
-                  <h4>
-                    Everest Base Camp Trek via Gokyo Lakes and Cho La Pass
-                  </h4>
-                </div>
+
+            <div className="media">
+              <img src={company} />
+              <div className="media-body">
+                <h5> Mela Tours & Travels Pvt. Ltd.</h5>
+                <p className="text-muted"> Thamel, Bhagwan Bahal, Kathmandu</p>
               </div>
-              <div className="row">
-                <div className="col-6">
-                  <div className="text-sm pl-2">
-                    Est. Cost
-                    <br />
-                    USD2990
-                  </div>
+            </div>
+
+            <div className="card">
+              <div className="media">
+                <ion-icon name="mail" />
+                <div className="media-body">
+                  <span>Call Us</span>
+                  <br />
+                  <span>540-498-8629</span>
                 </div>
               </div>
             </div>
+
+            <div className="card">
+              <div className="media">
+                <ion-icon name="call" />
+                <div className="media-body">
+                  <span>Email Us</span>
+                  <br />
+                  <span>tour@happytravelandtours.com</span>
+                </div>
+              </div>
+            </div>
+
+            <a href="/guest-info">
+              <img src={logo} />
+            </a>
+
+            <p className="text-center text-sm">
+              {" "}
+              6 peoples asked for this trip
+            </p>
           </div>
         </div>
       </div>
