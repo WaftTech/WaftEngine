@@ -18,9 +18,24 @@ export default class GuestDetailPage extends Component {
             <div className="card p-3 pb-0 mb-4">
               <div className="row">
                 <div className="col-6">
-                  <p className="text-sm">Total Estimated Cost: $2070</p>
-                  <p className="text-sm">Offer From: Company </p>
-                  <p className="text-sm">No. of Person: 2 mininum</p>
+                  <p>
+                    <span className="color-blue pr-2">
+                      <ion-icon name="pricetag" />
+                    </span>{" "}
+                    Total Estimated Cost: $2070
+                  </p>
+                  <p>
+                    <span className="color-blue pr-2">
+                      <ion-icon name="home" />{" "}
+                    </span>
+                    Offer From: Company{" "}
+                  </p>
+                  <p>
+                    <span className="color-blue pr-2">
+                      <ion-icon name="contact" />
+                    </span>{" "}
+                    No. of Person: 2 mininum
+                  </p>
                 </div>
                 <div className="col-6 text-right">
                   <p className="text-sm">
