@@ -54,38 +54,65 @@ class AddEdit extends Component {
     this.setState({ [name]: event.target.value });
   };
   handleAccessTypeChange = id => event => {
+    event.persist();
+
     this.setState(state => ({
-      ...state,
       Path: [
-        ...state.Path,
-        { ...state.Path.filter(each => each._id === id)[0], AccessType: event.target.value },
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            const newPath = { ...eachPath, AccessType: event.target.value };
+            return newPath;
+          }
+          return eachPath;
+        }),
       ],
     }));
   };
   handleAdminRoutesChange = (id, index) => event => {
+    event.persist();
     this.setState(state => ({
-      ...state,
       Path: [
-        ...state.Path,
-        { ...state.Path.filter(each => each._id === id)[0], AccessType: event.target.value },
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            let { AdminRoutes } = eachPath;
+            AdminRoutes[index] = event.target.value;
+            const newPath = { ...eachPath, AdminRoutes };
+            return newPath;
+          }
+          return eachPath;
+        }),
       ],
     }));
   };
   handleServerRoutesMethodChange = (id, index) => event => {
+    event.persist();
     this.setState(state => ({
-      ...state,
       Path: [
-        ...state.Path,
-        { ...state.Path.filter(each => each._id === id)[0], AccessType: event.target.value },
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            let { ServerRoutes } = eachPath;
+            ServerRoutes[index].method = event.target.value;
+            const newPath = { ...eachPath, ServerRoutes };
+            return newPath;
+          }
+          return eachPath;
+        }),
       ],
     }));
   };
   handleServerRoutesRouteChange = (id, index) => event => {
+    event.persist();
     this.setState(state => ({
-      ...state,
       Path: [
-        ...state.Path,
-        { ...state.Path.filter(each => each._id === id)[0], AccessType: event.target.value },
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            let { ServerRoutes } = eachPath;
+            ServerRoutes[index].route = event.target.value;
+            const newPath = { ...eachPath, ServerRoutes };
+            return newPath;
+          }
+          return eachPath;
+        }),
       ],
     }));
   };
