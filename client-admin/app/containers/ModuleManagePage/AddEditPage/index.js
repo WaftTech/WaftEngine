@@ -119,6 +119,9 @@ class AddEdit extends Component {
       ],
     }));
   };
+  handleSave = () => {
+    this.props.addEdit(this.state);
+  };
   handleGoBack = () => {
     this.props.history.push('/wt/module-manage');
   };
@@ -268,7 +271,9 @@ class AddEdit extends Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Save</Button>
+                <Button color="primary" onClick={this.handleSave}>
+                  Save
+                </Button>
                 <Button color="primary" onClick={this.handleGoBack}>
                   Back
                 </Button>
