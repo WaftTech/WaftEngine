@@ -112,80 +112,86 @@ export default class HomePage extends Component {
             <h2>Latest Offers</h2>
 
             <div className="card-box">
-              <div className="image-container">
-                <img alt="pics" className="responsive-img" src={offer1} />
-                <div className="overShadow">
-                  <h4>
-                    Everest Base Camp Trek via Gokyo Lakes and Cho La Pass
-                  </h4>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <div className="text-sm pl-2">
-                    Est. Cost
-                    <br />
-                    USD2990
+              <Link to="/" className="containsDiv">
+                <div className="image-container">
+                  <img alt="pics" className="responsive-img" src={offer1} />
+                  <div className="overShadow">
+                    <h4>
+                      Everest Base Camp Trek via Gokyo Lakes and Cho La Pass
+                    </h4>
                   </div>
                 </div>
-                <div className="text-sm col-6 text-right">
-                  <div className="pr-2">
-                    {" "}
-                    Days
-                    <br /> 18
+                <div className="row">
+                  <div className="col-6 pt-1 pb-1">
+                    <div className="text-sm pl-2">
+                      Est. Cost
+                      <br />
+                      USD2990
+                    </div>
+                  </div>
+                  <div className="text-sm col-6 pt-1 pb-1 text-right">
+                    <div className="pr-2">
+                      {" "}
+                      Days
+                      <br /> 18
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
 
             <div className="card-box">
-              <div className="image-container">
-                <img alt="pics" className="responsive-img" src={offer2} />
-                <div className="overShadow">
-                  <h4>Mardi Trek</h4>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <div className="text-sm pl-2">
-                    Est. Cost
-                    <br />
-                    USD2990
+              <Link to="/" className="containsDiv">
+                <div className="image-container">
+                  <img alt="pics" className="responsive-img" src={offer2} />
+                  <div className="overShadow">
+                    <h4>Mardi Trek</h4>
                   </div>
                 </div>
-                <div className="text-sm col-6 text-right">
-                  <div className="pr-2">
-                    {" "}
-                    Days
-                    <br /> 18
+                <div className="row">
+                  <div className="col-6 pt-1 pb-1">
+                    <div className="text-sm pl-2">
+                      Est. Cost
+                      <br />
+                      USD2990
+                    </div>
+                  </div>
+                  <div className="text-sm col-6 pt-1 pb-1 text-right">
+                    <div className="pr-2">
+                      {" "}
+                      Days
+                      <br /> 18
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
 
             <div className="card-box">
-              <div className="image-container">
-                <img alt="pics" className="responsive-img" src={offer3} />
-                <div className="overShadow">
-                  <h4>Upper Mustang Trek</h4>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
-                  <div className="text-sm pl-2">
-                    Est. Cost
-                    <br />
-                    USD2990
+              <Link to="/" className="containsDiv">
+                <div className="image-container">
+                  <img alt="pics" className="responsive-img" src={offer3} />
+                  <div className="overShadow">
+                    <h4>Upper Mustang Trek</h4>
                   </div>
                 </div>
-                <div className="text-sm col-6 text-right">
-                  <div className="pr-2">
-                    {" "}
-                    Days
-                    <br /> 18
+                <div className="row">
+                  <div className="col-6 pt-1 pb-1">
+                    <div className="text-sm pl-2">
+                      Est. Cost
+                      <br />
+                      USD2990
+                    </div>
+                  </div>
+                  <div className="text-sm col-6 pt-1 pb-1 text-right">
+                    <div className="pr-2">
+                      {" "}
+                      Days
+                      <br /> 18
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
