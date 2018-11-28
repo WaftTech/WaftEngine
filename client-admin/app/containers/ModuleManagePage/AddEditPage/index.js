@@ -4,9 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel'; // import Checkbox from
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+('@material-ui/core/Checkbox');
 import { connect } from 'react-redux';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -206,22 +209,41 @@ class AddEdit extends Component {
                                     eachServerRoute._id
                                   }-each-server-route-${index}`}
                                 >
-                                  <CustomInput
-                                    labelText="Method"
-                                    id={`${each._id}-${
-                                      eachServerRoute._id
-                                    }-each-admin-server-route-method-access-type-${index}`}
-                                    formControlProps={{
-                                      fullWidth: false,
-                                    }}
-                                    inputProps={{
-                                      value: eachServerRoute.method,
-                                      onChange: this.handleServerRoutesMethodChange(
+                                  <FormControl className="selectbox">
+                                    <InputLabel
+                                      htmlFor={`${each._id}-${
+                                        eachServerRoute._id
+                                      }-each-server-route-${index}-method`}
+                                    >
+                                      Method
+                                    </InputLabel>
+
+                                    <Select
+                                      placeholder="Method"
+                                      value={eachServerRoute.method}
+                                      onChange={this.handleServerRoutesMethodChange(
                                         each._id,
                                         index,
-                                      ),
-                                    }}
-                                  />
+                                      )}
+                                      inputProps={{
+                                        name: 'Method',
+                                        id: `${each._id}-${
+                                          eachServerRoute._id
+                                        }-each-server-route-${index}-method`,
+                                      }}
+                                    >
+                                      {methods.map(each => (
+                                        <MenuItem
+                                          key={`${each._id}-${
+                                            eachServerRoute._id
+                                          }-each-server-route-method-${each}`}
+                                          value={each}
+                                        >
+                                          {each}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
                                   <CustomInput
                                     labelText="Route"
                                     id={`${each._id}-${
