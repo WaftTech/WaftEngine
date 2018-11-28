@@ -19,10 +19,10 @@ export default class NavLeft extends Component {
             </Link>
           </li>
           <li>
-            <Link to="/">Upcoming Trips</Link>
+            <Link to="/upcoming-trips">Upcoming Trips</Link>
           </li>
           <li>
-            <Link to="/">Recent Trips</Link>
+            <Link to="/past-trips">Past Trips</Link>
           </li>
         </ul>
         <ul className="nav nav-horz">

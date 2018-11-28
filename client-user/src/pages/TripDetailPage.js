@@ -15,6 +15,10 @@ export default class TripDetailPage extends Component {
           <div className="col-md-8">
             <div className="slider-container">
               <img alt="pics" className="img-fluid mt-4 mb-4" src={postImg2} />
+              <span className="img-pagination">
+                <ion-icon name="images" />
+                <span className="pl-2"> 1/16</span>
+              </span>
             </div>
             <div className="p-1 mb-4">
               <span className="text-sm pr-2">Share</span>
@@ -29,13 +33,15 @@ export default class TripDetailPage extends Component {
             <div className="card p-2 mb-2">
               <div className="row">
                 <div className="col-6 text-center">
-                  {" "}
+                  <ion-icon name="pricetag" size="large" />
+                  <br />
                   <span className="text-lg">$2090</span>
                   <br />
                   <span className="text-muted">Total Estimated Cost</span>{" "}
                 </div>
                 <div className="col-6 text-center">
-                  {" "}
+                  <ion-icon name="contacts" size="large" />
+                  <br />
                   <span className="text-lg">12</span>
                   <br />
                   <span className="text-muted">Total Persons</span>{" "}
