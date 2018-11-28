@@ -42,7 +42,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/', express.static(path.join(__dirname, '../client-user/build')));
+// app.use('/', express.static(path.join(__dirname, '../client-user/build')));
 
 // DB Config
 mongoose.Promise = global.Promise;
