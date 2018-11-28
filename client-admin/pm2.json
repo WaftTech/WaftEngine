@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "ASK4TRIP-CLIENT-USER-DESIGN",
+      "name": "ASK4TRIP-CLIENT-ADMIN",
       "script": "index.js",
       "merge_logs": true,
       "watch": true,
@@ -10,7 +10,7 @@
       "instances": 1,
       "exec_mode": "cluster",
       "env": {
-        "PORT": 5012,
+        "PORT": 5011,
         "NODE_ENV": "development"
       },
       "env_production": {
