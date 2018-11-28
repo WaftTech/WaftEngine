@@ -21,6 +21,13 @@ router.get('/test', (req, res) =>
  * @access Public
  */
 router.get('/', authenticationMiddleware.authorization, authenticationMiddleware.authentication, user.getAllUser);
+
+/**
+ * @route GET api/user
+ * @description Check user is returning user or new
+ * @access Public
+ */
+router.get('/detail/:id', authenticationMiddleware.authorization, authenticationMiddleware.authentication, user.getUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new
