@@ -5,10 +5,14 @@ import { compose } from 'redux';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel'; // import Checkbox from
+import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-('@material-ui/core/Checkbox');
+import TrashIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -80,6 +84,40 @@ class AddEdit extends Component {
             let { AdminRoutes } = eachPath;
             AdminRoutes[index] = event.target.value;
             const newPath = { ...eachPath, AdminRoutes };
+            return newPath;
+          }
+          return eachPath;
+        }),
+      ],
+    }));
+  };
+  handleRemoveAdminRoute = (id, index) => event => {
+    event.persist();
+    this.setState(state => ({
+      Path: [
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            let { AdminRoutes } = eachPath;
+            const newPath = {
+              ...eachPath,
+              AdminRoutes: [...AdminRoutes.slice(0, index), ...AdminRoutes.slice(index + 1)],
+            };
+            return newPath;
+          }
+          return eachPath;
+        }),
+      ],
+    }));
+  };
+
+  handleAddAdminRoute = id => event => {
+    event.persist();
+    this.setState(state => ({
+      Path: [
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            let { AdminRoutes } = eachPath;
+            const newPath = { ...eachPath, AdminRoutes: [...AdminRoutes, ''] };
             return newPath;
           }
           return eachPath;
@@ -196,10 +234,28 @@ class AddEdit extends Component {
                                     inputProps={{
                                       value: eachAdminRoute,
                                       onChange: this.handleAdminRoutesChange(each._id, index),
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          <IconButton
+                                            aria-label="Toggle password visibility"
+                                            onClick={this.handleRemoveAdminRoute(each._id, index)}
+                                          >
+                                            <TrashIcon />
+                                          </IconButton>
+                                        </InputAdornment>
+                                      ),
                                     }}
                                   />
                                 </li>
                               ))}
+
+                              <IconButton
+                                color="primary"
+                                aria-label="Add"
+                                onClick={this.handleAddAdminRoute(each._id)}
+                              >
+                                <AddIcon />
+                              </IconButton>
                             </ul>
                           </GridItem>
                           <GridItem xs={6} sm={6} md={6}>
