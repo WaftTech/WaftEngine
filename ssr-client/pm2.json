@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "cullen-sff-demo",
+      "name": "ASK4TRIP-SSR-CLIENT",
       "script": "build/bundle.js",
       "merge_logs": true,
       "watch": false,
@@ -25,7 +25,7 @@
       "instances": 1,
       "exec_mode": "cluster",
       "env": {
-        "PORT": 3000,
+        "PORT": 3013,
         "NODE_ENV": "production"
       },
       "env_production": {
