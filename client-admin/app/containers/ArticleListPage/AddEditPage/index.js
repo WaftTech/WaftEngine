@@ -1,66 +1,66 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import Dropzone from 'react-dropzone';
-import CKEditor from 'react-ckeditor-component';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import Dropzone from "react-dropzone";
+import CKEditor from "react-ckeditor-component";
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import withStyles from "@material-ui/core/styles/withStyles";
+import InputLabel from "@material-ui/core/InputLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 // core components
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import CustomInput from 'components/CustomInput/CustomInput';
-import Button from 'components/CustomButtons/Button';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
-import CardFooter from 'components/Card/CardFooter';
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
+import CustomInput from "components/CustomInput/CustomInput";
+import Button from "components/CustomButtons/Button";
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
+import CardBody from "components/Card/CardBody";
+import CardFooter from "components/Card/CardFooter";
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import { IMAGE_BASE } from 'containers/App/constants';
-import noImage from 'assets/img/logo.png';
-import reducer from '../reducer';
-import saga from '../saga';
-import { makeSelectOne } from '../selectors';
-import { loadOneRequest, addEditRequest } from '../actions';
+import injectSaga from "utils/injectSaga";
+import injectReducer from "utils/injectReducer";
+import { IMAGE_BASE } from "containers/App/constants";
+import noImage from "assets/img/logo.svg";
+import reducer from "../reducer";
+import saga from "../saga";
+import { makeSelectOne } from "../selectors";
+import { loadOneRequest, addEditRequest } from "../actions";
 
 const styles = {
   cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0"
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
+    marginBottom: "3px",
+    textDecoration: "none"
+  }
 };
 
 class AddEdit extends Component {
   state = {
     data: {
-      ArticleName: '',
-      Description: '',
-      PublishFrom: '',
+      ArticleName: "",
+      Description: "",
+      PublishFrom: "",
       IsActive: false,
       IsFeature: false,
-      ArticleImage: null,
+      ArticleImage: null
     },
     images: {
-      ArticleImage: noImage,
-    },
+      ArticleImage: noImage
+    }
   };
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
@@ -77,20 +77,20 @@ class AddEdit extends Component {
         noImage;
       this.setState(state => ({
         data: { ...state.data, ...oneOrganizationObj },
-        images: { ArticleImage },
+        images: { ArticleImage }
       }));
     }
   }
   handleChange = name => event => {
     event.persist();
     this.setState(state => ({
-      data: { ...state.data, [name]: event.target.value },
+      data: { ...state.data, [name]: event.target.value }
     }));
   };
   handleCheckedChange = name => event => {
     event.persist();
     this.setState(state => ({
-      data: { ...state.data, [name]: event.target.checked },
+      data: { ...state.data, [name]: event.target.checked }
     }));
   };
   handleEditorChange = (e, name) => {
@@ -101,13 +101,13 @@ class AddEdit extends Component {
     this.props.addEdit(this.state.data);
   };
   handleGoBack = () => {
-    this.props.history.push('/wt/articles-manage');
+    this.props.history.push("/wt/articles-manage");
   };
   onDrop = (files, name) => {
     const file = files[0];
     this.setState(state => ({
       data: { ...state.data, [name]: file },
-      images: { ...state.images, [name]: file.preview },
+      images: { ...state.images, [name]: file.preview }
     }));
   };
   render() {
@@ -129,25 +129,25 @@ class AddEdit extends Component {
                       labelText="Article Name"
                       id="ads-name"
                       inputProps={{
-                        onChange: this.handleChange('ArticleName'),
-                        value: data.ArticleName,
+                        onChange: this.handleChange("ArticleName"),
+                        value: data.ArticleName
                       }}
                       formControlProps={{
-                        fullWidth: true,
+                        fullWidth: true
                       }}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
+                    <InputLabel style={{ color: "#AAAAAA" }}>
                       Article Description
                     </InputLabel>
                     <CKEditor
                       name="about"
                       content={data.Description}
                       events={{
-                        change: e => this.handleEditorChange(e, 'Description'),
+                        change: e => this.handleEditorChange(e, "Description")
                       }}
                     />
                   </GridItem>
@@ -158,25 +158,25 @@ class AddEdit extends Component {
                       labelText="Published From"
                       id="ads-from-date"
                       inputProps={{
-                        onChange: this.handleChange('PublishFrom'),
-                        value: data.PublishFrom,
+                        onChange: this.handleChange("PublishFrom"),
+                        value: data.PublishFrom
                       }}
                       formControlProps={{
-                        fullWidth: true,
+                        fullWidth: true
                       }}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>
+                    <InputLabel style={{ color: "#AAAAAA" }}>
                       Activity Type
                     </InputLabel>
                     <FormControlLabel
                       control={
                         <Checkbox
                           checked={data.IsActive || false}
-                          onClick={this.handleCheckedChange('IsActive')}
+                          onClick={this.handleCheckedChange("IsActive")}
                           value="IsActive"
                           color="primary"
                         />
@@ -187,7 +187,7 @@ class AddEdit extends Component {
                       control={
                         <Checkbox
                           checked={data.IsFeature || false}
-                          onClick={this.handleCheckedChange('IsFeature')}
+                          onClick={this.handleCheckedChange("IsFeature")}
                           value="IsFeature"
                           color="primary"
                         />
@@ -199,7 +199,7 @@ class AddEdit extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <Dropzone
-                      onDrop={files => this.onDrop(files, 'ArticleImage')}
+                      onDrop={files => this.onDrop(files, "ArticleImage")}
                       multiple={false}
                     >
                       <img
@@ -231,26 +231,26 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: 'articleListPage', reducer });
-const withSaga = injectSaga({ key: 'articleListPage', saga });
+const withReducer = injectReducer({ key: "articleListPage", reducer });
+const withSaga = injectSaga({ key: "articleListPage", saga });
 
 const mapStateToProps = createStructuredSelector({
-  oneOrganization: makeSelectOne(),
+  oneOrganization: makeSelectOne()
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload))
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(AddEdit);

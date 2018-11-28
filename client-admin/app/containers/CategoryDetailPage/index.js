@@ -4,27 +4,27 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { compose } from "redux";
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import { IMAGE_BASE } from 'containers/App/constants';
-import noImage from 'assets/img/logo.png';
-import { loadCategoryRequest } from './actions';
-import { makeSelectCategory, makeSelectOrganization } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+import injectReducer from "utils/injectReducer";
+import injectSaga from "utils/injectSaga";
+import { IMAGE_BASE } from "containers/App/constants";
+import noImage from "assets/img/logo.svg";
+import { loadCategoryRequest } from "./actions";
+import { makeSelectCategory, makeSelectOrganization } from "./selectors";
+import reducer from "./reducer";
+import saga from "./saga";
 
 /* eslint-disable react/prefer-stateless-function */
 export class CategoryDetailPage extends React.Component {
   componentDidMount() {
     const {
-      params: { slug },
+      params: { slug }
     } = this.props.match;
     this.props.loadCategory(slug);
   }
@@ -67,28 +67,28 @@ export class CategoryDetailPage extends React.Component {
 }
 
 CategoryDetailPage.propTypes = {
-  loadCategory: PropTypes.func.isRequired,
+  loadCategory: PropTypes.func.isRequired
 };
 
-const withReducer = injectReducer({ key: 'categoryDetailPage', reducer });
-const withSaga = injectSaga({ key: 'categoryDetailPage', saga });
+const withReducer = injectReducer({ key: "categoryDetailPage", reducer });
+const withSaga = injectSaga({ key: "categoryDetailPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   category: makeSelectCategory(),
-  organization: makeSelectOrganization(),
+  organization: makeSelectOrganization()
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadCategory: id => dispatch(loadCategoryRequest(id)),
+  loadCategory: id => dispatch(loadCategoryRequest(id))
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 export default compose(
   withRouter,
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(CategoryDetailPage);
