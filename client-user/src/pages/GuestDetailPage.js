@@ -18,30 +18,33 @@ export default class GuestDetailPage extends Component {
 
             <div className="media">
               <img className="maxWidth40" src={company} />
-              <div className="media-body">
-                <h6> Mela Tours & Travels Pvt. Ltd.</h6>
-                <p className="text-muted"> Thamel, Bhagwan Bahal, Kathmandu</p>
+              <div className="media-body pl-3">
+                <p className="mb-0"> Mela Tours & Travels Pvt. Ltd.</p>
+                <p className="text-muted text-sm">
+                  {" "}
+                  Thamel, Bhagwan Bahal, Kathmandu
+                </p>
               </div>
             </div>
 
-            <div className="card p-1">
-              <div className="media">
-                <ion-icon name="mail" className="mr-2" />
-                <div className="media-body">
+            <div className="card p-1 mb-2">
+              <div className="media alignItemCenter">
+                <ion-icon name="call" />
+                <div className="media-body pl-2">
                   <span>Call Us</span>
                   <br />
-                  <span>540-498-8629</span>
+                  <span className="bold">540-498-8629</span>
                 </div>
               </div>
             </div>
 
-            <div className="card p-1">
-              <div className="media">
-                <ion-icon name="call" className="mr-2" />
-                <div className="media-body">
+            <div className="card p-1  mb-2">
+              <div className="media alignItemCenter">
+                <ion-icon name="mail" />
+                <div className="media-body pl-2">
                   <span>Email Us</span>
                   <br />
-                  <span>tour@happytravelandtours.com</span>
+                  <span className="bold">tour@happytravelandtours.com</span>
                 </div>
               </div>
             </div>
