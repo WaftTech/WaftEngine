@@ -29,7 +29,7 @@ import CardFooter from 'components/Card/CardFooter';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { DAYS, IMAGE_BASE } from 'containers/App/constants';
-import noImage from 'assets/img/logo.png';
+import noImage from 'assets/img/logo.svg';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
