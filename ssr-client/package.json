@@ -14,7 +14,7 @@
     "prestart": "npm-run-all --parallel prod:*",
     "prod:build-server": "export NODE_ENV=production && webpack --config webpack.server.prod.js",
     "prod:build-client": "export NODE_ENV=production && webpack --config webpack.client.prod.js",
-    "start": "export NODE_ENV=production && export PORT=503 && node build/bundle.js",
+    "start": "export NODE_ENV=production && export PORT=5013 && node build/bundle.js",
     "test": "jest --silent",
     "test:update": "jest --silent -u"
   },

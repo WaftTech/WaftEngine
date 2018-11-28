@@ -76,7 +76,7 @@ export class UserManagePage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
-    // this.props.history.push(`/wt/ads-manage/edit/${id}`);
+    // this.props.history.push(`/wt/user-manage/edit/${id}`);
   };
   render() {
     const { classes, allLinks } = this.props;
