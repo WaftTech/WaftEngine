@@ -58,6 +58,9 @@ body {
 .maxWidth20 {
   max-width: 20px;
 }
+.height20 {
+  height: 20px;
+}
 h2 {
   font-size: 20px;
 }
@@ -146,4 +149,7 @@ ul.navList li a.active {
 .nav-horz li {
   padding: 0 5px;
   font-size: 12px;
+}
+.alignItemCenter {
+  align-items: center;
 }
