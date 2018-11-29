@@ -157,6 +157,24 @@ class AddEdit extends Component {
       ],
     }));
   };
+  handleAddServerRoute = id => event => {
+    event.persist();
+    this.setState(state => ({
+      Path: [
+        ...state.Path.map(eachPath => {
+          if (eachPath._id === id) {
+            let { ServerRoutes } = eachPath;
+            const newPath = {
+              ...eachPath,
+              ServerRoutes: [...ServerRoutes, { route: '', method: '' }],
+            };
+            return newPath;
+          }
+          return eachPath;
+        }),
+      ],
+    }));
+  };
   handleSave = () => {
     this.props.addEdit(this.state);
   };
@@ -248,15 +266,14 @@ class AddEdit extends Component {
                                   />
                                 </li>
                               ))}
-
-                              <IconButton
-                                color="primary"
-                                aria-label="Add"
-                                onClick={this.handleAddAdminRoute(each._id)}
-                              >
-                                <AddIcon />
-                              </IconButton>
                             </ul>
+                            <IconButton
+                              color="primary"
+                              aria-label="Add"
+                              onClick={this.handleAddAdminRoute(each._id)}
+                            >
+                              <AddIcon />
+                            </IconButton>
                           </GridItem>
                           <GridItem xs={6} sm={6} md={6}>
                             <div>Server Routes:</div>
@@ -318,6 +335,13 @@ class AddEdit extends Component {
                                 </li>
                               ))}
                             </ul>
+                            <IconButton
+                              color="primary"
+                              aria-label="Add"
+                              onClick={this.handleAddServerRoute(each._id)}
+                            >
+                              <AddIcon />
+                            </IconButton>
                           </GridItem>
                         </GridContainer>
                       </Card>
