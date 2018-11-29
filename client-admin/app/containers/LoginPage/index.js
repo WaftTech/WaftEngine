@@ -100,7 +100,7 @@ class LoginPage extends React.PureComponent {
               Login to Continue
             </Typography>
             <p>Welcome back, sign in with your ask4trip account</p>
-
+            <br />
             <form
               className="hasinput400"
               onSubmit={this.handleSubmit}
@@ -147,7 +147,6 @@ class LoginPage extends React.PureComponent {
                 </Grid>
                 {!!errors.password && <span>{errors.password}</span>}
               </div>
-              <br />
               <br />
               <div className="text-right">
                 <Button
