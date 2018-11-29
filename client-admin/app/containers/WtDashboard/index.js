@@ -78,7 +78,7 @@ export class WtDashboard extends React.Component {
       <div className={classes.wrapper}>
         <Sidebar
           routes={sidebarRoutes}
-          logoText={"Dashboard"}
+          // logoText={'ASK4TRIP'}
           logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}

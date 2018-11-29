@@ -25,6 +25,7 @@ authMiddleware.authorization = async (req, res, next) => {
 };
 authMiddleware.authentication = async (req, res, next) => {
   try {
+    // return next();
     const user = req.user;
     const role = await rolesSch.find({ RolesTitle: { $in: user.roles } }, { _id: 1 });
     const path = req.baseUrl + req.route.path;
@@ -37,7 +38,6 @@ authMiddleware.authentication = async (req, res, next) => {
       { Path: 1 },
     );
     let moduleAccessType = null;
-    return next();
     for (let i = 0; i < modules.Path.length; i++) {
       const routes = modules.Path[i].ServerRoutes;
       for (let j = 0; j < routes.length; j++) {
