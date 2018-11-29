@@ -6,7 +6,7 @@ const { authentication, authorization } = require('../../middleware/authenticati
 
 router.get('/role', authorization, authentication, dModule.GetRoles);
 router.get('/role/:id', authorization, authentication, dModule.GetRoleDetail);
-router.post('/role', authorization, dModule.AddRoles);
+router.post('/role', authorization, authentication, dModule.AddRoles);
 router.get('/module', authorization, dModule.GetModule);
 router.get('/module/:id', authorization, dModule.GetModuleDetail);
 router.post('/module', authorization, dModule.AddModulList);
