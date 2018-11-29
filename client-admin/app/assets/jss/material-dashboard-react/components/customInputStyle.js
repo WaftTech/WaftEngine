@@ -2,66 +2,66 @@ import {
   primaryColor,
   dangerColor,
   successColor,
-  defaultFont,
-} from 'assets/jss/material-dashboard-react';
+  defaultFont
+} from "assets/jss/material-dashboard-react";
 
 const customInputStyle = {
   disabled: {
-    '&:before': {
-      backgroundColor: 'transparent !important',
-    },
+    "&:before": {
+      backgroundColor: "transparent !important"
+    }
   },
   underline: {
-    '&:hover:not($disabled):before,&:before': {
-      borderColor: '#D2D2D2 !important',
-      borderWidth: '1px !important',
+    "&:hover:not($disabled):before,&:before": {
+      borderColor: "#D2D2D2 !important",
+      borderWidth: "1px !important"
     },
-    '&:after': {
-      borderColor: primaryColor,
-    },
+    "&:after": {
+      borderColor: primaryColor
+    }
   },
   underlineError: {
-    '&:after': {
-      borderColor: dangerColor,
-    },
+    "&:after": {
+      borderColor: dangerColor
+    }
   },
   underlineSuccess: {
-    '&:after': {
-      borderColor: successColor,
-    },
+    "&:after": {
+      borderColor: successColor
+    }
   },
   labelRoot: {
     ...defaultFont,
-    color: '#AAAAAA !important',
-    fontWeight: '400',
-    fontSize: '14px',
-    lineHeight: '1.42857',
+    color: "#AAAAAA !important",
+    fontWeight: "400",
+    fontSize: "14px",
+    lineHeight: "1.42857"
   },
   labelRootError: {
-    color: dangerColor,
+    color: dangerColor
   },
   labelRootSuccess: {
-    color: successColor,
+    color: successColor
   },
   feedback: {
-    position: 'absolute',
-    top: '18px',
-    right: '0',
-    zIndex: '2',
-    display: 'block',
-    width: '24px',
-    height: '24px',
-    textAlign: 'center',
-    pointerEvents: 'none',
+    position: "absolute",
+    top: "18px",
+    right: "0",
+    zIndex: "2",
+    display: "block",
+    width: "24px",
+    height: "24px",
+    textAlign: "center",
+    pointerEvents: "none"
   },
   marginTop: {
-    marginTop: '16px',
+    marginTop: "16px"
   },
   formControl: {
-    paddingBottom: '10px',
-    margin: '27px 0 0 0',
-    position: 'relative',
-  },
+    paddingBottom: "10px",
+    // margin: '27px 0 0 0',
+    position: "relative"
+  }
 };
 
 export default customInputStyle;
