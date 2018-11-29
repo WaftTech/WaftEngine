@@ -62,15 +62,15 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class ModuleManagePage extends React.Component {
+export class AccessManagePage extends React.Component {
   componentDidMount() {
     this.props.loadAll();
   }
   handleAdd = () => {
-    this.props.history.push('/wt/module-manage/add');
+    this.props.history.push('/wt/access-manage/add');
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/module-manage/edit/${id}`);
+    this.props.history.push(`/wt/access-manage/edit/${id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -79,8 +79,12 @@ export class ModuleManagePage extends React.Component {
   render() {
     const { classes, all } = this.props;
     const allObj = all.toJS();
-    const tableData = allObj.map(({ _id, ModuleName, Path }) => [
-      ModuleName,
+    console.log(allObj);
+    const tableData = allObj.map(({ _id, AccessType, IsActive, ModuleId, RoleId }) => [
+      ModuleId,
+      AccessType.join(),
+      RoleId,
+      '' + IsActive,
       <React.Fragment>
         <Tooltip
           id="tooltip-top"
@@ -117,13 +121,13 @@ export class ModuleManagePage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Module Management</h4>
-              <p className={classes.cardCategoryWhite}>Here are the list of modules</p>
+              <h4 className={classes.cardTitleWhite}>Access Management</h4>
+              <p className={classes.cardCategoryWhite}>Here are the list of access</p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Module Name', 'Action']}
+                tableHead={['Module ID', 'Access IDs', 'Role ID', 'Active', 'Action']}
                 tableData={tableData}
               />
               <Button
@@ -144,7 +148,7 @@ export class ModuleManagePage extends React.Component {
   }
 }
 
-ModuleManagePage.propTypes = {
+AccessManagePage.propTypes = {
   loadAll: PropTypes.func.isRequired,
 };
 
@@ -161,8 +165,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
-const withSaga = injectSaga({ key: 'moduleManagePage', saga });
+const withReducer = injectReducer({ key: 'accessManagePage', reducer });
+const withSaga = injectSaga({ key: 'accessManagePage', saga });
 
 const withStyle = withStyles(styles);
 
@@ -172,4 +176,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(ModuleManagePage);
+)(AccessManagePage);
