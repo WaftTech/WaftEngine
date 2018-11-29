@@ -24,6 +24,8 @@ import RoleManagePage from '../RoleManagePage';
 import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
 import ModuleManagePage from '../ModuleManagePage';
 import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
+import AccessManagePage from '../AccessManagePage';
+import AccessManageAddEditPage from '../AccessManagePage/AddEditPage';
 import UserManagePage from '../UserManagePage';
 import UserManageAddEditPage from '../UserManagePage/AddEditPage';
 import ContentsListingPage from '../ContentListingPage';
@@ -85,6 +87,29 @@ const dashboardRoutes = [
     navbarName: 'Module Manage',
     icon: Dashboard,
     component: ModuleManagePage,
+  },
+  {
+    path: '/wt/access-manage/add',
+    sidebarName: 'Access Manage',
+    navbarName: 'Add Access',
+    icon: Dashboard,
+    component: AccessManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/access-manage/edit/:id',
+    sidebarName: 'Access Manage',
+    navbarName: 'Access Manage',
+    icon: Dashboard,
+    component: AccessManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/access-manage',
+    sidebarName: 'Access Manage',
+    navbarName: 'Access Manage',
+    icon: Dashboard,
+    component: AccessManagePage,
   },
   // {
   //   path: '/wt/organization-info/add',
