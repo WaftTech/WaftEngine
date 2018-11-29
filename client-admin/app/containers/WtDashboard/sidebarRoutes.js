@@ -1,115 +1,115 @@
 // @material-ui/icons
-import Dashboard from '@material-ui/icons/Dashboard';
-// import Person from '@material-ui/icons/Person';
-// import LibraryBooks from '@material-ui/icons/LibraryBooks';
-// import BubbleChart from '@material-ui/icons/BubbleChart';
-// import LocationOn from '@material-ui/icons/LocationOn';
-// import Notifications from '@material-ui/icons/Notifications';
-// import Unarchive from '@material-ui/icons/Unarchive';
+import Dashboard from "@material-ui/icons/Dashboard";
+import People from "@material-ui/icons/People";
+import InsertChart from "@material-ui/icons/InsertChart";
+import Widgets from "@material-ui/icons/Widgets";
+import PermContactCalendar from "@material-ui/icons/PermContactCalendar";
+import VPNKEY from "@material-ui/icons/VpnKey";
+import TextFormat from "@material-ui/icons/TextFormat";
 // core components/views
-import DashboardPage from '../Dashboard';
-import AdsListingPage from '../AdsListingPage';
-import AdsListingAddEditPage from '../AdsListingPage/AddEditPage';
-import ArticleListPage from '../ArticleListPage';
-import ArticleListAddEditPage from '../ArticleListPage/AddEditPage';
-import CategoryManagePage from '../CategoryManagePage';
-import CategoryManageAddEditPage from '../CategoryManagePage/AddEditPage';
-import NewsListPage from '../NewsListPage';
-import NewsListAddEditPage from '../NewsListPage/AddEditPage';
-import OrganizationInfoPage from '../OrganizationInfoPage';
-import OrganizationInfoAddEditPage from '../OrganizationInfoPage/AddEditPage';
-import RashifalListPage from '../RashifalListPage';
-import RashifalListAddEditPage from '../RashifalListPage/AddEditPage';
-import RoleManagePage from '../RoleManagePage';
-import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
-import ModuleManagePage from '../ModuleManagePage';
-import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
-import AccessManagePage from '../AccessManagePage';
-import AccessManageAddEditPage from '../AccessManagePage/AddEditPage';
-import UserManagePage from '../UserManagePage';
-import UserManageAddEditPage from '../UserManagePage/AddEditPage';
-import ContentsListingPage from '../ContentListingPage';
-import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
+import DashboardPage from "../Dashboard";
+import AdsListingPage from "../AdsListingPage";
+import AdsListingAddEditPage from "../AdsListingPage/AddEditPage";
+import ArticleListPage from "../ArticleListPage";
+import ArticleListAddEditPage from "../ArticleListPage/AddEditPage";
+import CategoryManagePage from "../CategoryManagePage";
+import CategoryManageAddEditPage from "../CategoryManagePage/AddEditPage";
+import NewsListPage from "../NewsListPage";
+import NewsListAddEditPage from "../NewsListPage/AddEditPage";
+import OrganizationInfoPage from "../OrganizationInfoPage";
+import OrganizationInfoAddEditPage from "../OrganizationInfoPage/AddEditPage";
+import RashifalListPage from "../RashifalListPage";
+import RashifalListAddEditPage from "../RashifalListPage/AddEditPage";
+import RoleManagePage from "../RoleManagePage";
+import RoleManageAddEditPage from "../RoleManagePage/AddEditPage";
+import ModuleManagePage from "../ModuleManagePage";
+import ModuleManageAddEditPage from "../ModuleManagePage/AddEditPage";
+import AccessManagePage from "../AccessManagePage";
+import AccessManageAddEditPage from "../AccessManagePage/AddEditPage";
+import UserManagePage from "../UserManagePage";
+import UserManageAddEditPage from "../UserManagePage/AddEditPage";
+import ContentsListingPage from "../ContentListingPage";
+import ContentsListingAddEditPage from "../ContentListingPage/AddEditPage";
 // import VideoLinkPage from '../VideoLinkPage';
 // import VideoLinkAddEditPage from '../VideoLinkPage/AddEditPage';
 
 const dashboardRoutes = [
   {
-    path: '/wt/dashboard',
-    sidebarName: 'Dashboard',
-    navbarName: 'Dashboard',
-    icon: Dashboard,
+    path: "/wt/dashboard",
+    sidebarName: "Dashboard",
+    navbarName: "Dashboard",
+    icon: InsertChart,
     component: DashboardPage,
-    exact: true,
+    exact: true
   },
   {
-    path: '/wt/role-manage/add',
-    sidebarName: 'role Manage',
-    navbarName: 'Add role',
-    icon: Dashboard,
+    path: "/wt/role-manage/add",
+    sidebarName: "role Manage",
+    navbarName: "Add role",
+    icon: PermContactCalendar,
     component: RoleManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/role-manage/edit/:id',
-    sidebarName: 'role Manage',
-    navbarName: 'role Manage',
-    icon: Dashboard,
+    path: "/wt/role-manage/edit/:id",
+    sidebarName: "role Manage",
+    navbarName: "role Manage",
+    icon: PermContactCalendar,
     component: RoleManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/role-manage',
-    sidebarName: 'Role Manage',
-    navbarName: 'Role Manage',
-    icon: Dashboard,
-    component: RoleManagePage,
+    path: "/wt/role-manage",
+    sidebarName: "Role Manage",
+    navbarName: "Role Manage",
+    icon: PermContactCalendar,
+    component: RoleManagePage
   },
   {
-    path: '/wt/module-manage/add',
-    sidebarName: 'Module Manage',
-    navbarName: 'Add Module',
-    icon: Dashboard,
+    path: "/wt/module-manage/add",
+    sidebarName: "Module Manage",
+    navbarName: "Add Module",
+    icon: Widgets,
     component: ModuleManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/module-manage/edit/:id',
-    sidebarName: 'Module Manage',
-    navbarName: 'Module Manage',
-    icon: Dashboard,
+    path: "/wt/module-manage/edit/:id",
+    sidebarName: "Module Manage",
+    navbarName: "Module Manage",
+    icon: Widgets,
     component: ModuleManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/module-manage',
-    sidebarName: 'Module Manage',
-    navbarName: 'Module Manage',
-    icon: Dashboard,
-    component: ModuleManagePage,
+    path: "/wt/module-manage",
+    sidebarName: "Module Manage",
+    navbarName: "Module Manage",
+    icon: Widgets,
+    component: ModuleManagePage
   },
   {
-    path: '/wt/access-manage/add',
-    sidebarName: 'Access Manage',
-    navbarName: 'Add Access',
-    icon: Dashboard,
+    path: "/wt/access-manage/add",
+    sidebarName: "Access Manage",
+    navbarName: "Add Access",
+    icon: VPNKEY,
     component: AccessManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/access-manage/edit/:id',
-    sidebarName: 'Access Manage',
-    navbarName: 'Access Manage',
-    icon: Dashboard,
+    path: "/wt/access-manage/edit/:id",
+    sidebarName: "Access Manage",
+    navbarName: "Access Manage",
+    icon: VPNKEY,
     component: AccessManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/access-manage',
-    sidebarName: 'Access Manage',
-    navbarName: 'Access Manage',
-    icon: Dashboard,
-    component: AccessManagePage,
+    path: "/wt/access-manage",
+    sidebarName: "Access Manage",
+    navbarName: "Access Manage",
+    icon: VPNKEY,
+    component: AccessManagePage
   },
   // {
   //   path: '/wt/organization-info/add',
@@ -230,27 +230,27 @@ const dashboardRoutes = [
   //   component: RashifalListPage,
   // },
   {
-    path: '/wt/user-manage/add',
-    sidebarName: 'User Manage',
-    navbarName: 'Add user',
-    icon: Dashboard,
+    path: "/wt/user-manage/add",
+    sidebarName: "User Manage",
+    navbarName: "Add user",
+    icon: People,
     component: UserManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/user-manage/edit/:id',
-    sidebarName: 'User Manage',
-    navbarName: 'User Manage',
-    icon: Dashboard,
+    path: "/wt/user-manage/edit/:id",
+    sidebarName: "User Manage",
+    navbarName: "User Manage",
+    icon: People,
     component: UserManageAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/user-manage',
-    sidebarName: 'User Manage',
-    navbarName: 'User Manage',
-    icon: Dashboard,
-    component: UserManagePage,
+    path: "/wt/user-manage",
+    sidebarName: "User Manage",
+    navbarName: "User Manage",
+    icon: People,
+    component: UserManagePage
   },
   // {
   //   path: '/wt/category-manage/add',
@@ -299,29 +299,29 @@ const dashboardRoutes = [
   //   component: NewsListPage,
   // },
   {
-    path: '/wt/content-manage/add',
-    sidebarName: 'Content Manage',
-    navbarName: 'Add Contents Manage',
-    icon: Dashboard,
+    path: "/wt/content-manage/add",
+    sidebarName: "Content Manage",
+    navbarName: "Add Contents Manage",
+    icon: TextFormat,
     component: ContentsListingAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/content-manage/edit/:id',
-    sidebarName: 'Content Manage',
-    navbarName: 'Content Manage',
-    icon: Dashboard,
+    path: "/wt/content-manage/edit/:id",
+    sidebarName: "Content Manage",
+    navbarName: "Content Manage",
+    icon: TextFormat,
     component: ContentsListingAddEditPage,
-    hide: true,
+    hide: true
   },
   {
-    path: '/wt/content-manage',
-    sidebarName: 'Content Manage',
-    navbarName: 'Content Manage',
-    icon: Dashboard,
-    component: ContentsListingPage,
+    path: "/wt/content-manage",
+    sidebarName: "Content Manage",
+    navbarName: "Content Manage",
+    icon: TextFormat,
+    component: ContentsListingPage
   },
-  { redirect: true, path: '/wt', to: '/wt/dashboard', navbarName: 'Redirect' },
+  { redirect: true, path: "/wt", to: "/wt/dashboard", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

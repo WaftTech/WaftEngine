@@ -9,50 +9,21 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
-import { withStyles } from "@material-ui/core/styles";
-import { Input, Button } from "@material-ui/core";
-import styled from "styled-components";
-
-import registerImg from "assets/img/register.jpg";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { Input, Grid, TextField } from "@material-ui/core";
+import Button from "../../components/CustomButtons/Button";
 import logo from "assets/img/logo.svg";
+import Typography from "@material-ui/core/Typography";
+
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
 import { loginRequest, resetPasswordRequest } from "./actions";
 import { makeSelectIsRequesting, makeSelectErrors } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
-
-const FlexSection = styled.section`
-  color: #fff;
-  border: 0;
-  height: 100%;
-  margin: 0;
-  position: relative;
-  min-height: 100vh;
-  align-items: center;
-  background-size: cover;
-  background-position: center center;
-  background-image: url(${registerImg});
-  display: flex;
-`;
-
-const FormWrapper = styled.div`
-  width: 350px;
-  z-index: 4;
-  margin-left: auto;
-  padding: 15px;
-  margin-right: auto;
-  padding-right: 15px;
-  background: #fff;
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-`;
-
-const HelpBlock = styled.div`
-  color: #000;
-`;
+import EmailOutlined from "@material-ui/icons/EmailOutlined";
+import LockOutlined from "@material-ui/icons/LockOutlined";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
 class LoginPage extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -114,44 +85,72 @@ class LoginPage extends React.PureComponent {
     const { data, errors } = this.state;
     const { isRequesting } = this.props;
     return (
-      <FlexSection>
-        <div style={{ flex: "1" }}>
-          <div className="text-center pt-5 pb-4">
-            <img src={logo} />
-          </div>
-          <FormWrapper className="col-12 col-md-8 col-lg-6 col-xl-4">
-            <form onSubmit={this.handleSubmit}>
+      <div className="bgLogin">
+        <div
+          className="flex-center"
+          style={{ maxWidth: "50%", height: "100vh" }}
+        >
+          <img style={{ width: "200px" }} src={logo} />
+        </div>
+
+        <div className="formWrapper flex-center">
+          <div className="flex1 text-center">
+            <AccountCircle fontSize="large" />
+            <Typography component="h2" variant="display1" gutterBottom>
+              Login to Continue
+            </Typography>
+            <p>Welcome back, sign in with your ask4trip account</p>
+            <br />
+            <form
+              className="hasinput400"
+              onSubmit={this.handleSubmit}
+              style={{ display: "inline-block" }}
+            >
               <div className={errors.email ? "error" : ""}>
-                <Input
-                  fullWidth
-                  label="Email ID"
-                  type="email"
-                  name="email"
-                  placeholder="E-mail address"
-                  onChange={this.handleChange}
-                  value={data.email || ""}
-                  autoComplete="username"
-                />
-                {!!errors.email && <HelpBlock>{errors.email}</HelpBlock>}
+                <Grid container spacing={16} alignItems="flex-end">
+                  <Grid item>
+                    <EmailOutlined />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      fullWidth
+                      label="Email ID"
+                      type="email"
+                      name="email"
+                      placeholder="E-mail address"
+                      onChange={this.handleChange}
+                      value={data.email || ""}
+                      autoComplete="username"
+                    />
+                  </Grid>
+                </Grid>
+
+                {!!errors.email && <span>{errors.email}</span>}
               </div>
               <div className={errors.password ? "error" : ""}>
-                <Input
-                  fullWidth
-                  label="Password"
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                  value={data.password || ""}
-                  autoComplete="current-password"
-                />
-                {!!errors.password && <HelpBlock>{errors.password}</HelpBlock>}
+                <Grid container spacing={16} alignItems="flex-end">
+                  <Grid item>
+                    <LockOutlined />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      fullWidth
+                      label="Password"
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      onChange={this.handleChange}
+                      value={data.password || ""}
+                      autoComplete="current-password"
+                    />
+                  </Grid>
+                </Grid>
+                {!!errors.password && <span>{errors.password}</span>}
               </div>
               <br />
-
               <div className="text-right">
                 <Button
-                  variant="contained"
+                  className="btn-block"
                   color="primary"
                   type="submit"
                   disabled={isRequesting}
@@ -166,9 +165,9 @@ class LoginPage extends React.PureComponent {
                 {isRequesting ? "loading" : "Reset Password"}
               </a>
             </form>
-          </FormWrapper>
+          </div>
         </div>
-      </FlexSection>
+      </div>
     );
   }
 }

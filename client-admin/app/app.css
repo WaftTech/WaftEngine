@@ -1,0 +1,75 @@
+html,
+body {
+  font-family: "Roboto";
+}
+
+.text-center {
+  text-align: center !important;
+}
+.flex1 {
+  flex: 1;
+}
+
+.bgLogin {
+  background-size: cover;
+  background-position: center center;
+  background-image: url(assets/img/register.jpg);
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formWrapper {
+  width: 50%;
+  background: #fff;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  padding: 5vh 5vw;
+  box-sizing: border-box;
+}
+
+.hasinput400 input {
+  width: 400px;
+}
+.btn-block {
+  width: 100%;
+}
+.customUL {
+  padding-left: 0;
+  margin-top: 0;
+}
+.customUL li {
+  list-style: none;
+}
+.mt-0 {
+  margin-top: 0;
+}
+
+.btn-circle {
+  border-radius: 50%;
+  position: absolute !important;
+  right: 40px;
+  bottom: 20px;
+  background: #f44336 !important;
+}
+.btn-circle-add {
+  border-radius: 50%;
+  background: #1aacc0 !important;
+}
+.btn-circle-add svg,
+.btn-circle svg {
+  fill: white !important;
+}
+
+.text-sm {
+  width: 120px;
+}
+.text-sm label {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
+}
