@@ -1,59 +1,59 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 // @material-ui/core components
 
-import withStyles from "@material-ui/core/styles/withStyles";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import TrashIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import withStyles from '@material-ui/core/styles/withStyles';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import TrashIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
-import { connect } from "react-redux";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
+import { connect } from 'react-redux';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
-import { makeSelectOne } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
-const methods = ["GET", "POST", "PUT", "PATCH", "DELETE"];
+const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
 };
 
 class AddEdit extends Component {
-  state = { ModuleName: "", Path: [] };
+  state = { ModuleName: '', Path: [] };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -65,17 +65,14 @@ class AddEdit extends Component {
     event.persist();
 
     this.setState(state => ({
-      Path: [
-        ...state.Path,
-        { AccessType: "", AdminRoutes: [], ServerRoutes: [] }
-      ]
+      Path: [...state.Path, { AccessType: '', AdminRoutes: [], ServerRoutes: [] }],
     }));
   };
   handleRemovePath = index => event => {
     event.persist();
 
     this.setState(state => ({
-      Path: [...state.Path.slice(0, index), ...state.Path.slice(index + 1)]
+      Path: [...state.Path.slice(0, index), ...state.Path.slice(index + 1)],
     }));
   };
   handleAccessTypeChange = id => event => {
@@ -89,8 +86,8 @@ class AddEdit extends Component {
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleAdminRoutesChange = (id, index) => event => {
@@ -105,8 +102,8 @@ class AddEdit extends Component {
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleRemoveAdminRoute = (id, index) => event => {
@@ -118,16 +115,13 @@ class AddEdit extends Component {
             let { AdminRoutes } = eachPath;
             const newPath = {
               ...eachPath,
-              AdminRoutes: [
-                ...AdminRoutes.slice(0, index),
-                ...AdminRoutes.slice(index + 1)
-              ]
+              AdminRoutes: [...AdminRoutes.slice(0, index), ...AdminRoutes.slice(index + 1)],
             };
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
 
@@ -138,12 +132,12 @@ class AddEdit extends Component {
         ...state.Path.map(eachPath => {
           if (eachPath._id === id) {
             let { AdminRoutes } = eachPath;
-            const newPath = { ...eachPath, AdminRoutes: [...AdminRoutes, ""] };
+            const newPath = { ...eachPath, AdminRoutes: [...AdminRoutes, ''] };
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleServerRoutesMethodChange = (id, index) => event => {
@@ -158,8 +152,8 @@ class AddEdit extends Component {
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleServerRoutesRouteChange = (id, index) => event => {
@@ -174,8 +168,8 @@ class AddEdit extends Component {
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleAddServerRoute = id => event => {
@@ -187,13 +181,13 @@ class AddEdit extends Component {
             let { ServerRoutes } = eachPath;
             const newPath = {
               ...eachPath,
-              ServerRoutes: [...ServerRoutes, { route: "", method: "" }]
+              ServerRoutes: [...ServerRoutes, { route: '', method: '' }],
             };
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleRemoveServerRoute = (id, index) => event => {
@@ -205,23 +199,20 @@ class AddEdit extends Component {
             let { ServerRoutes } = eachPath;
             const newPath = {
               ...eachPath,
-              ServerRoutes: [
-                ...ServerRoutes.slice(0, index),
-                ...ServerRoutes.slice(index + 1)
-              ]
+              ServerRoutes: [...ServerRoutes.slice(0, index), ...ServerRoutes.slice(index + 1)],
             };
             return newPath;
           }
           return eachPath;
-        })
-      ]
+        }),
+      ],
     }));
   };
   handleSave = () => {
     this.props.addEdit(this.state);
   };
   handleGoBack = () => {
-    this.props.history.push("/wt/module-manage");
+    this.props.history.push('/wt/module-manage');
   };
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
@@ -232,7 +223,7 @@ class AddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
   }
@@ -254,11 +245,11 @@ class AddEdit extends Component {
                       labelText="Module Name"
                       id="module-name"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: ModuleName,
-                        onChange: this.handleChange("ModuleName")
+                        onChange: this.handleChange('ModuleName'),
                       }}
                     />
                   </GridItem>
@@ -277,100 +268,61 @@ class AddEdit extends Component {
                             labelText="Access Type"
                             id={`${each._id}-access-type`}
                             formControlProps={{
-                              fullWidth: false
+                              fullWidth: false,
                             }}
                             inputProps={{
                               value: each.AccessType,
-                              onChange: this.handleAccessTypeChange(each._id)
+                              onChange: this.handleAccessTypeChange(each._id),
                             }}
                           />
                         </GridItem>
                         <GridItem md={3}>
                           <ul className="customUL">
                             {each.AdminRoutes.map((eachAdminRoute, index) => (
-                              <li
-                                key={`${
-                                  each._id
-                                }-${pathIndex}-each-admin-route-${index}`}
-                              >
+                              <li key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
                                 <CustomInput
                                   labelText="Client Route"
-                                  id={`${
-                                    each._id
-                                  }-each-admin-route-access-type-${index}`}
+                                  id={`${each._id}-each-admin-route-access-type-${index}`}
                                   formControlProps={{
-                                    fullWidth: false
+                                    fullWidth: false,
                                   }}
                                   inputProps={{
                                     value: eachAdminRoute,
-                                    onChange: this.handleAdminRoutesChange(
-                                      each._id,
-                                      index
-                                    ),
+                                    onChange: this.handleAdminRoutesChange(each._id, index),
                                     endAdornment: (
                                       <InputAdornment position="end">
-                                        <IconButton
-                                          aria-label="Delete client route"
-                                          onClick={this.handleRemoveAdminRoute(
-                                            each._id,
-                                            index
-                                          )}
-                                        >
+                                        <IconButton aria-label="Delete client route" onClick={this.handleRemoveAdminRoute(each._id, index)}>
                                           <TrashIcon fontSize="small" />
                                         </IconButton>
                                       </InputAdornment>
-                                    )
+                                    ),
                                   }}
                                 />
                               </li>
                             ))}
                           </ul>
-                          <Button
-                            size="small"
-                            aria-label="Add Client Route"
-                            onClick={this.handleAddAdminRoute(each._id)}
-                          >
+                          <Button size="small" aria-label="Add Client Route" onClick={this.handleAddAdminRoute(each._id)}>
                             Add Client Route
                           </Button>
                         </GridItem>
                         <GridItem md={6}>
                           <ul className="customUL">
                             {each.ServerRoutes.map((eachServerRoute, index) => (
-                              <li
-                                key={`${each._id}-${pathIndex}-${
-                                  eachServerRoute._id
-                                }-each-server-route-${index}`}
-                              >
+                              <li key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}>
                                 <FormControl className="selectbox text-sm">
-                                  <InputLabel
-                                    htmlFor={`${each._id}-${
-                                      eachServerRoute._id
-                                    }-each-server-route-${index}-method`}
-                                  >
-                                    Method
-                                  </InputLabel>
+                                  <InputLabel htmlFor={`${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`}>Method</InputLabel>
 
                                   <Select
                                     placeholder="Method"
                                     value={eachServerRoute.method}
-                                    onChange={this.handleServerRoutesMethodChange(
-                                      each._id,
-                                      index
-                                    )}
+                                    onChange={this.handleServerRoutesMethodChange(each._id, index)}
                                     inputProps={{
-                                      name: "Method",
-                                      id: `${each._id}-${
-                                        eachServerRoute._id
-                                      }-each-server-route-${index}-method`
+                                      name: 'Method',
+                                      id: `${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`,
                                     }}
                                   >
                                     {methods.map(each => (
-                                      <MenuItem
-                                        key={`${each._id}-${pathIndex}-${
-                                          eachServerRoute._id
-                                        }-each-server-route-method-${each}`}
-                                        value={each}
-                                      >
+                                      <MenuItem key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-method-${each}`} value={each}>
                                         {each}
                                       </MenuItem>
                                     ))}
@@ -378,49 +330,29 @@ class AddEdit extends Component {
                                 </FormControl>
                                 <CustomInput
                                   labelText="Server Route"
-                                  id={`${each._id}-${
-                                    eachServerRoute._id
-                                  }-each-admin-server-route-route-access-type-${index}`}
+                                  id={`${each._id}-${eachServerRoute._id}-each-admin-server-route-route-access-type-${index}`}
                                   formControlProps={{
-                                    fullWidth: false
+                                    fullWidth: false,
                                   }}
                                   inputProps={{
                                     value: eachServerRoute.route,
-                                    onChange: this.handleServerRoutesRouteChange(
-                                      each._id,
-                                      index
-                                    )
+                                    onChange: this.handleServerRoutesRouteChange(each._id, index),
                                   }}
                                 />
-                                <IconButton
-                                  aria-label="Delete Server Route"
-                                  onClick={this.handleRemoveServerRoute(
-                                    each._id,
-                                    index
-                                  )}
-                                >
+                                <IconButton aria-label="Delete Server Route" onClick={this.handleRemoveServerRoute(each._id, index)}>
                                   <TrashIcon fontSize="small" />
                                 </IconButton>
                               </li>
                             ))}
                           </ul>
-                          <Button
-                            size="small"
-                            aria-label="Add Server Route"
-                            onClick={this.handleAddServerRoute(each._id)}
-                          >
+                          <Button size="small" aria-label="Add Server Route" onClick={this.handleAddServerRoute(each._id)}>
                             Add Server Route
                           </Button>
                         </GridItem>
                       </GridContainer>
                     </CardBody>
                     <CardFooter>
-                      <IconButton
-                        className="btn-circle"
-                        color="danger"
-                        aria-label="Delete"
-                        onClick={this.handleRemovePath(pathIndex)}
-                      >
+                      <IconButton className="btn-circle" color="danger" aria-label="Delete" onClick={this.handleRemovePath(pathIndex)}>
                         <TrashIcon size="small" />
                       </IconButton>
                     </CardFooter>
@@ -428,12 +360,7 @@ class AddEdit extends Component {
                 ))}
                 <Card>
                   <CardBody className="text-center">
-                    <IconButton
-                      className="btn-circle-add"
-                      color="primary"
-                      aria-label="Add"
-                      onClick={this.handleAddPath()}
-                    >
+                    <IconButton className="btn-circle-add" color="primary" aria-label="Add" onClick={this.handleAddPath()}>
                       <AddIcon fontSize="large" />
                     </IconButton>
                   </CardBody>
@@ -458,26 +385,26 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "moduleManagePage", reducer });
-const withSaga = injectSaga({ key: "moduleManagePage", saga });
+const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
+const withSaga = injectSaga({ key: 'moduleManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(AddEdit);
