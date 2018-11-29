@@ -12,15 +12,10 @@ const buttonStyle = {
   button: {
     minHeight: "auto",
     minWidth: "auto",
-    backgroundColor: grayColor,
-    color: "#FFFFFF",
-    boxShadow:
-      "0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12)",
     border: "none",
     position: "relative",
     margin: ".3125rem 1px",
     fontWeight: "600",
-    textTransform: "uppercase",
     letterSpacing: "0",
     willChange: "box-shadow, transform",
     transition:
@@ -87,6 +82,7 @@ const buttonStyle = {
     }
   },
   primary: {
+    color: "white",
     backgroundColor: primaryColor,
     boxShadow:
       "0 2px 2px 0 rgba(30, 188, 210, 0.14), 0 3px 1px -2px rgba(30, 188, 210, 0.2), 0 1px 5px 0 rgba(30, 188, 210, 0.12)",
