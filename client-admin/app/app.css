@@ -1,0 +1,40 @@
+html,
+body {
+  font-family: "Roboto";
+}
+
+.text-center {
+  text-align: center !important;
+}
+.flex1 {
+  flex: 1;
+}
+
+.bgLogin {
+  background-size: cover;
+  background-position: center center;
+  background-image: url(assets/img/register.jpg);
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formWrapper {
+  width: 50%;
+  background: #fff;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  padding: 5vh 5vw;
+  box-sizing: border-box;
+}
+
+.hasinput400 input {
+  width: 400px;
+}
+.btn-block {
+  width: 100%;
+}
