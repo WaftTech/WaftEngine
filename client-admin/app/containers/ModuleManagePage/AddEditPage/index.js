@@ -3,6 +3,7 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 // @material-ui/core components
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -246,134 +247,135 @@ class AddEdit extends Component {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      inputProps={{ value: ModuleName, onChange: this.handleChange('ModuleName') }}
+                      inputProps={{
+                        value: ModuleName,
+                        onChange: this.handleChange('ModuleName'),
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    {Path.map((each, pathIndex) => (
-                      <Card key={`${each._id}-${pathIndex}`}>
-                        <CardBody>
-                          <GridContainer>
-                            <GridItem xs={3} sm={3} md={3}>
-                              <h6>
+              </CardBody>
+            </Card>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={12}>
+                {Path.map((each, pathIndex) => (
+                  <Card key={`${each._id}-${pathIndex}`}>
+                    <CardBody>
+                      <GridContainer>
+                        <GridItem md={3}>
+                          <CustomInput
+                            className="mt-0"
+                            labelText="Access Type"
+                            id={`${each._id}-access-type`}
+                            formControlProps={{
+                              fullWidth: false,
+                            }}
+                            inputProps={{
+                              value: each.AccessType,
+                              onChange: this.handleAccessTypeChange(each._id),
+                            }}
+                          />
+                        </GridItem>
+                        <GridItem md={3}>
+                          <ul className="customUL">
+                            {each.AdminRoutes.map((eachAdminRoute, index) => (
+                              <li key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
                                 <CustomInput
-                                  labelText="Access Type"
-                                  id={`${each._id}-access-type`}
+                                  labelText="Client Route"
+                                  id={`${each._id}-each-admin-route-access-type-${index}`}
                                   formControlProps={{
                                     fullWidth: false,
                                   }}
                                   inputProps={{
-                                    value: each.AccessType,
-                                    onChange: this.handleAccessTypeChange(each._id),
+                                    value: eachAdminRoute,
+                                    onChange: this.handleAdminRoutesChange(each._id, index),
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <IconButton aria-label="Delete client route" onClick={this.handleRemoveAdminRoute(each._id, index)}>
+                                          <TrashIcon fontSize="small" />
+                                        </IconButton>
+                                      </InputAdornment>
+                                    ),
                                   }}
                                 />
-                              </h6>
-                            </GridItem>
-                            <GridItem xs={3} sm={3} md={3}>
-                              <div>Client Routes:</div>
-                              <ul>
-                                {each.AdminRoutes.map((eachAdminRoute, index) => (
-                                  <li key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
-                                    <CustomInput
-                                      labelText="Client Routes"
-                                      id={`${each._id}-each-admin-route-access-type-${index}`}
-                                      formControlProps={{
-                                        fullWidth: false,
-                                      }}
-                                      inputProps={{
-                                        value: eachAdminRoute,
-                                        onChange: this.handleAdminRoutesChange(each._id, index),
-                                        endAdornment: (
-                                          <InputAdornment position="end">
-                                            <IconButton aria-label="Delete client route" onClick={this.handleRemoveAdminRoute(each._id, index)}>
-                                              <TrashIcon />
-                                            </IconButton>
-                                          </InputAdornment>
-                                        ),
-                                      }}
-                                    />
-                                  </li>
-                                ))}
-                              </ul>
-                              <IconButton color="primary" aria-label="Add" onClick={this.handleAddAdminRoute(each._id)}>
-                                <AddIcon />
-                              </IconButton>
-                            </GridItem>
-                            <GridItem xs={6} sm={6} md={6}>
-                              <div>Server Routes:</div>
-                              <ul>
-                                {each.ServerRoutes.map((eachServerRoute, index) => (
-                                  <li key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}>
-                                    <FormControl className="selectbox">
-                                      <InputLabel htmlFor={`${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`}>Method</InputLabel>
+                              </li>
+                            ))}
+                          </ul>
+                          <Button size="small" aria-label="Add Client Route" onClick={this.handleAddAdminRoute(each._id)}>
+                            Add Client Route
+                          </Button>
+                        </GridItem>
+                        <GridItem md={6}>
+                          <ul className="customUL">
+                            {each.ServerRoutes.map((eachServerRoute, index) => (
+                              <li key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}>
+                                <FormControl className="selectbox text-sm">
+                                  <InputLabel htmlFor={`${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`}>Method</InputLabel>
 
-                                      <Select
-                                        autoWidth={true}
-                                        placeholder="Method"
-                                        value={eachServerRoute.method}
-                                        onChange={this.handleServerRoutesMethodChange(each._id, index)}
-                                        style={{ width: 100 }}
-                                        inputProps={{
-                                          name: 'Method',
-                                          id: `${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`,
-                                        }}
-                                      >
-                                        {methods.map(each => (
-                                          <MenuItem key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-method-${each}`} value={each}>
-                                            {each}
-                                          </MenuItem>
-                                        ))}
-                                      </Select>
-                                    </FormControl>
-                                    <CustomInput
-                                      labelText="Route"
-                                      id={`${each._id}-${eachServerRoute._id}-each-admin-server-route-route-access-type-${index}`}
-                                      formControlProps={{
-                                        fullWidth: false,
-                                      }}
-                                      inputProps={{
-                                        value: eachServerRoute.route,
-                                        style: { width: 300 },
-                                        onChange: this.handleServerRoutesRouteChange(each._id, index),
-                                      }}
-                                    />
-                                    <IconButton aria-label="Delete Server Route" onClick={this.handleRemoveServerRoute(each._id, index)}>
-                                      <TrashIcon />
-                                    </IconButton>
-                                  </li>
-                                ))}
-                              </ul>
-                              <IconButton color="primary" aria-label="Add" onClick={this.handleAddServerRoute(each._id)}>
-                                <AddIcon />
-                              </IconButton>
-                            </GridItem>
-                          </GridContainer>
-                        </CardBody>
-                        <CardFooter>
-                          <IconButton aria-label="Delete Path" onClick={this.handleRemovePath(pathIndex)}>
-                            <TrashIcon />
-                          </IconButton>
-                        </CardFooter>
-                      </Card>
-                    ))}
-
-                    <IconButton color="primary" aria-label="Add" onClick={this.handleAddPath()}>
-                      <AddIcon />
+                                  <Select
+                                    placeholder="Method"
+                                    value={eachServerRoute.method}
+                                    onChange={this.handleServerRoutesMethodChange(each._id, index)}
+                                    inputProps={{
+                                      name: 'Method',
+                                      id: `${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`,
+                                    }}
+                                  >
+                                    {methods.map(each => (
+                                      <MenuItem key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-method-${each}`} value={each}>
+                                        {each}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </FormControl>
+                                <CustomInput
+                                  labelText="Server Route"
+                                  id={`${each._id}-${eachServerRoute._id}-each-admin-server-route-route-access-type-${index}`}
+                                  formControlProps={{
+                                    fullWidth: false,
+                                  }}
+                                  inputProps={{
+                                    value: eachServerRoute.route,
+                                    onChange: this.handleServerRoutesRouteChange(each._id, index),
+                                  }}
+                                />
+                                <IconButton aria-label="Delete Server Route" onClick={this.handleRemoveServerRoute(each._id, index)}>
+                                  <TrashIcon fontSize="small" />
+                                </IconButton>
+                              </li>
+                            ))}
+                          </ul>
+                          <Button size="small" aria-label="Add Server Route" onClick={this.handleAddServerRoute(each._id)}>
+                            Add Server Route
+                          </Button>
+                        </GridItem>
+                      </GridContainer>
+                    </CardBody>
+                    <CardFooter>
+                      <IconButton className="btn-circle" color="danger" aria-label="Delete" onClick={this.handleRemovePath(pathIndex)}>
+                        <TrashIcon size="small" />
+                      </IconButton>
+                    </CardFooter>
+                  </Card>
+                ))}
+                <Card>
+                  <CardBody className="text-center">
+                    <IconButton className="btn-circle-add" color="primary" aria-label="Add" onClick={this.handleAddPath()}>
+                      <AddIcon fontSize="large" />
                     </IconButton>
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <CardFooter>
-                <Button color="primary" onClick={this.handleSave}>
-                  Save
-                </Button>
-                <Button color="primary" onClick={this.handleGoBack}>
-                  Back
-                </Button>
-              </CardFooter>
-            </Card>
+                  </CardBody>
+                </Card>
+              </GridItem>
+            </GridContainer>
+            <CardFooter>
+              <Button size="large" onClick={this.handleGoBack}>
+                Back
+              </Button>
+
+              <Button size="large" color="primary" onClick={this.handleSave}>
+                Save Changes
+              </Button>
+            </CardFooter>
           </GridItem>
         </GridContainer>
       </div>

@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const user = require('../../modules/Users/UserController.js');
-const authenticationMiddleware = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 /**
  * @route GET api/user/test
  * @description Tests users route
@@ -20,14 +20,14 @@ router.get('/test', (req, res) =>
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/', authenticationMiddleware.authorization, authenticationMiddleware.authentication, user.getAllUser);
+router.get('/', authorization, authentication, user.getAllUser);
 
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/detail/:id', authenticationMiddleware.authorization, authenticationMiddleware.authentication, user.getUserDetail);
+router.get('/detail/:id', authorization, authentication, user.getUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new
@@ -89,6 +89,6 @@ router.post('/login/google/:access_token', user.oauthCodeToToken, user.googleLog
  *
  *
  */
-router.get('/info', authenticationMiddleware.authorization, user.info);
+router.get('/info', authorization, user.info);
 
 module.exports = router;
