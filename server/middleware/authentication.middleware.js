@@ -47,13 +47,11 @@ authMiddleware.authentication = async (req, res, next) => {
       }
     }
     const moduleId = modules && modules._id;
-    console.log(moduleAccessTypeId, moduleId, role);
     if (role && role.length && moduleId && moduleAccessTypeId) {
       for (let i = 0; i < role.length; i++) {
         const activeRole = role[i];
         const accessFilter = { RoleId: activeRole._id, IsActive: true, ModuleId: moduleId, AccessType: moduleAccessTypeId };
         const access = await accessSch.findOne(accessFilter);
-        console.log(accessFilter);
         if (access && access.AccessType) {
           return next();
         }
