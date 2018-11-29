@@ -37,26 +37,25 @@ authMiddleware.authentication = async (req, res, next) => {
       },
       { Path: 1 },
     );
-    let moduleAccessType = null;
+    let moduleAccessTypeId = null;
     for (let i = 0; i < modules.Path.length; i++) {
       const routes = modules.Path[i].ServerRoutes;
       for (let j = 0; j < routes.length; j++) {
         if (routes[j].method === method && routes[j].route === path) {
-          moduleAccessType = modules.Path[i].AccessType;
+          moduleAccessTypeId = modules.Path[i]._id;
         }
       }
     }
     const moduleId = modules && modules._id;
-    if (role && role.length && moduleId && moduleAccessType) {
+    console.log(moduleAccessTypeId, moduleId, role);
+    if (role && role.length && moduleId && moduleAccessTypeId) {
       for (let i = 0; i < role.length; i++) {
         const activeRole = role[i];
-        const accessFilter = { RoleId: activeRole._id, IsActive: true, ModuleId: moduleId };
+        const accessFilter = { RoleId: activeRole._id, IsActive: true, ModuleId: moduleId, AccessType: moduleAccessTypeId };
         const access = await accessSch.findOne(accessFilter);
+        console.log(accessFilter);
         if (access && access.AccessType) {
-          const isExist = access.AccessType.filter(s => s.includes(moduleAccessType));
-          if (isExist.length > 0) {
-            return next();
-          }
+          return next();
         }
       }
       return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 1', null);
