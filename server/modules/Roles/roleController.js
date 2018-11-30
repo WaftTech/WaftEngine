@@ -79,4 +79,28 @@ roleController.SaveAccessList = async (req, res, next) => {
   }
 };
 
+roleController.getAccessListForRole = async (req, res, next) => {
+  try {
+    const roleid = req.params.roleid;
+    const AccessForRole = await AccessSch.find({ RoleId: roleid }, { _id: 1, AccessType: 1, IsActive: 1, ModuleId: 1, RoleId: 1 });
+    const ModulesForRole = await ModuleSch.find({}, { _id: 1, ModuleName: 1, 'Path.AccessType': 1, 'Path._id': 1 });
+    const Roles = await RoleSch.find({}, { _id: 1, RolesTitle: 1, IsActive: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, { Access: AccessForRole, Module: ModulesForRole, Roles: Roles }, null, 'Access Get Success !!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+roleController.getAccessListForModule = async (req, res, next) => {
+  try {
+    const moduleid = req.params.moduleid;
+    console.log(moduleid);
+    const AccessForModule = await AccessSch.find({ ModuleId: moduleid }, { _id: 1, AccessType: 1, IsActive: 1, ModuleId: 1, RoleId: 1 });
+    const ModulesForRole = await ModuleSch.findOne({ _id: moduleid }, { _id: 1, ModuleName: 1, 'Path.AccessType': 1, 'Path._id': 1 });
+    const Roles = await RoleSch.find({}, { _id: 1, RolesTitle: 1, IsActive: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, { Access: AccessForModule, Module: ModulesForRole, Roles: Roles }, null, 'Access Get Success !!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = roleController;
