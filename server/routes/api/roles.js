@@ -7,14 +7,24 @@ const { authentication, authorization } = require('../../middleware/authenticati
 router.get('/role', authorization, authentication, dModule.GetRoles);
 router.get('/role/:id', authorization, authentication, dModule.GetRoleDetail);
 router.post('/role', authorization, authentication, dModule.AddRoles);
-router.get('/module', authorization, dModule.GetModule);
-router.get('/module/:id', authorization, dModule.GetModuleDetail);
-router.post('/module', authorization, dModule.AddModulList);
+router.get('/module', authorization, authentication, dModule.GetModule);
+router.get('/module/:id', authorization, authentication, dModule.GetModuleDetail);
+router.post('/module', authorization, authentication, dModule.AddModulList);
 
-router.get('/access', authorization, dModule.getAccessList);
-router.post('/access', authorization, dModule.SaveAccessList);
-// router
-//   .get('/:name',  dModule.getModuleData)
-//   .post('/:name', dModule.saveModuleData);
+router.get('/access', authorization, authentication, dModule.getAccessList);
+router.post('/access', authorization, authentication, dModule.SaveAccessList);
+
+/**
+ * Access Management of Role to all Module
+ */
+
+router.get('/access/role/:roleid', authorization, dModule.getAccessListForRole);
+router.post('/access/role/:roleid', authorization, authentication, dModule.SaveAccessList);
+/**
+ *Access Management of Module to all roles
+ */
+
+router.get('/access/module/:moduleid', authorization, dModule.getAccessListForModule);
+router.post('/access/module/:moduleid', authorization, authentication, dModule.SaveAccessList);
 
 module.exports = router;
