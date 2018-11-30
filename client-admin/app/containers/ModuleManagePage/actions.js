@@ -57,3 +57,19 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
+
+export const AccessTypeChange = payload => ({ type: types.ACCESS_TYPE_CHANGE, payload });
+export const AdminRoutesChange = payload => ({ type: types.ADMIN_ROUTE_CHANGE, payload });
+export const RemoveAdminRoute = payload => ({ type: types.REMOVE_ADMIN_ROUTE, payload });
+export const AddAdminRoute = payload => ({ type: types.ADD_ADMIN_ROUTE, payload });
+export const ServerRoutesMethodChange = payload => ({
+  type: types.SERVER_ROUTES_METHOD_CHANGE,
+  payload,
+});
+export const ServerRoutesRouteChange = payload => ({
+  type: types.SERVER_ROUTES_ROUTE_CHANGE,
+  payload,
+});
+export const RemoveServerRoute = payload => ({ type: types.REMOVE_SERVER_ROUTE, payload });
+export const AddServerRoute = payload => ({ type: types.ADD_SERVER_ROUTE, payload });
+export const RemovePath = payload => ({ type: types.REMOVE_PATH, payload });
