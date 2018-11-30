@@ -291,7 +291,10 @@ class AddEdit extends Component {
                                     onChange: this.handleAdminRoutesChange(each._id, index),
                                     endAdornment: (
                                       <InputAdornment position="end">
-                                        <IconButton aria-label="Delete client route" onClick={this.handleRemoveAdminRoute(each._id, index)}>
+                                        <IconButton
+                                          aria-label="Delete client route"
+                                          onClick={this.handleRemoveAdminRoute(each._id, index)}
+                                        >
                                           <TrashIcon fontSize="small" />
                                         </IconButton>
                                       </InputAdornment>
@@ -301,16 +304,30 @@ class AddEdit extends Component {
                               </li>
                             ))}
                           </ul>
-                          <Button size="small" aria-label="Add Client Route" onClick={this.handleAddAdminRoute(each._id)}>
+                          <Button
+                            size="sm"
+                            aria-label="Add Client Route"
+                            onClick={this.handleAddAdminRoute(each._id)}
+                          >
                             Add Client Route
                           </Button>
                         </GridItem>
                         <GridItem md={6}>
                           <ul className="customUL">
                             {each.ServerRoutes.map((eachServerRoute, index) => (
-                              <li key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}>
+                              <li
+                                key={`${each._id}-${pathIndex}-${
+                                  eachServerRoute._id
+                                }-each-server-route-${index}`}
+                              >
                                 <FormControl className="selectbox text-sm">
-                                  <InputLabel htmlFor={`${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`}>Method</InputLabel>
+                                  <InputLabel
+                                    htmlFor={`${each._id}-${
+                                      eachServerRoute._id
+                                    }-each-server-route-${index}-method`}
+                                  >
+                                    Method
+                                  </InputLabel>
 
                                   <Select
                                     placeholder="Method"
@@ -318,11 +335,18 @@ class AddEdit extends Component {
                                     onChange={this.handleServerRoutesMethodChange(each._id, index)}
                                     inputProps={{
                                       name: 'Method',
-                                      id: `${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`,
+                                      id: `${each._id}-${
+                                        eachServerRoute._id
+                                      }-each-server-route-${index}-method`,
                                     }}
                                   >
                                     {methods.map(each => (
-                                      <MenuItem key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-method-${each}`} value={each}>
+                                      <MenuItem
+                                        key={`${each._id}-${pathIndex}-${
+                                          eachServerRoute._id
+                                        }-each-server-route-method-${each}`}
+                                        value={each}
+                                      >
                                         {each}
                                       </MenuItem>
                                     ))}
@@ -330,7 +354,9 @@ class AddEdit extends Component {
                                 </FormControl>
                                 <CustomInput
                                   labelText="Server Route"
-                                  id={`${each._id}-${eachServerRoute._id}-each-admin-server-route-route-access-type-${index}`}
+                                  id={`${each._id}-${
+                                    eachServerRoute._id
+                                  }-each-admin-server-route-route-access-type-${index}`}
                                   formControlProps={{
                                     fullWidth: false,
                                   }}
@@ -339,20 +365,32 @@ class AddEdit extends Component {
                                     onChange: this.handleServerRoutesRouteChange(each._id, index),
                                   }}
                                 />
-                                <IconButton aria-label="Delete Server Route" onClick={this.handleRemoveServerRoute(each._id, index)}>
+                                <IconButton
+                                  aria-label="Delete Server Route"
+                                  onClick={this.handleRemoveServerRoute(each._id, index)}
+                                >
                                   <TrashIcon fontSize="small" />
                                 </IconButton>
                               </li>
                             ))}
                           </ul>
-                          <Button size="small" aria-label="Add Server Route" onClick={this.handleAddServerRoute(each._id)}>
+                          <Button
+                            size="sm"
+                            aria-label="Add Server Route"
+                            onClick={this.handleAddServerRoute(each._id)}
+                          >
                             Add Server Route
                           </Button>
                         </GridItem>
                       </GridContainer>
                     </CardBody>
                     <CardFooter>
-                      <IconButton className="btn-circle" color="danger" aria-label="Delete" onClick={this.handleRemovePath(pathIndex)}>
+                      <IconButton
+                        className="btn-circle"
+                        color="secondary"
+                        aria-label="Delete"
+                        onClick={this.handleRemovePath(pathIndex)}
+                      >
                         <TrashIcon size="small" />
                       </IconButton>
                     </CardFooter>
@@ -360,7 +398,12 @@ class AddEdit extends Component {
                 ))}
                 <Card>
                   <CardBody className="text-center">
-                    <IconButton className="btn-circle-add" color="primary" aria-label="Add" onClick={this.handleAddPath()}>
+                    <IconButton
+                      className="btn-circle-add"
+                      color="primary"
+                      aria-label="Add"
+                      onClick={this.handleAddPath()}
+                    >
                       <AddIcon fontSize="large" />
                     </IconButton>
                   </CardBody>
@@ -368,11 +411,11 @@ class AddEdit extends Component {
               </GridItem>
             </GridContainer>
             <CardFooter>
-              <Button size="large" onClick={this.handleGoBack}>
+              <Button size="lg" onClick={this.handleGoBack}>
                 Back
               </Button>
 
-              <Button size="large" color="primary" onClick={this.handleSave}>
+              <Button size="lg" color="primary" onClick={this.handleSave}>
                 Save Changes
               </Button>
             </CardFooter>
