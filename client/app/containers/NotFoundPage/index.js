@@ -11,6 +11,7 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import LanguageSwitcher from 'components/LanguageSwitcher';
 
 import messages from './messages';
 
@@ -20,6 +21,7 @@ export default class NotFound extends React.PureComponent {
     return (
       <h1>
         <FormattedMessage {...messages.header} />
+        <LanguageSwitcher />
       </h1>
     );
   }
