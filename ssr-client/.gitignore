@@ -1,7 +1,0 @@
-node_modules
-.DS_Store
-build
-package-lock.json
-yarn.lock
-bundle.js
-public/sw.js
