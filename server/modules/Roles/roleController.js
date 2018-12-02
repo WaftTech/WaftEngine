@@ -78,5 +78,77 @@ roleController.SaveAccessList = async (req, res, next) => {
     next(err);
   }
 };
+roleController.SaveAccessListFromRole = async (req, res, next) => {
+  try {
+    const roleid = req.params.roleid;
+    const access = req.body.access;
+    if (access.length) {
+      for (let i = 0; i < access.length; i++) {
+        if (access[i]._id) {
+          access[i].RoleId = roleid;
+          await AccessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] });
+        } else {
+          access[i].RoleId = roleid;
+          access[i].Added_by = req.user.id;
+          const newAccess = new AccessSch(access[i]);
+          await newAccess.save();
+        }
+      }
+      return otherHelper.sendResponse(res, HttpStatus.NOT_MODIFIED, false, access, null, 'Save Sucess!!', null);
+    } else {
+      return otherHelper.sendResponse(res, HttpStatus.NOT_MODIFIED, false, null, 'Nothing to save!!', 'Nothing to save!!', null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+roleController.SaveAccessListForModule = async (req, res, next) => {
+  try {
+    const moduleid = req.params.moduleid;
+    const access = req.body.access;
+    if (access.length) {
+      for (let i = 0; i < access.length; i++) {
+        if (access[i]._id) {
+          access[i].ModuleId = moduleid;
+          await AccessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] });
+        } else {
+          access[i].ModuleId = moduleid;
+          access[i].Added_by = req.user.id;
+          const newAccess = new AccessSch(access[i]);
+          await newAccess.save();
+        }
+      }
+      return otherHelper.sendResponse(res, HttpStatus.NOT_MODIFIED, false, access, null, 'Save Sucess!!', null);
+    } else {
+      return otherHelper.sendResponse(res, HttpStatus.NOT_MODIFIED, false, null, 'Nothing to save!!', 'Nothing to save!!', null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+roleController.getAccessListForRole = async (req, res, next) => {
+  try {
+    const roleid = req.params.roleid;
+    const AccessForRole = await AccessSch.find({ RoleId: roleid }, { _id: 1, AccessType: 1, IsActive: 1, ModuleId: 1, RoleId: 1 });
+    const ModulesForRole = await ModuleSch.find({}, { _id: 1, ModuleName: 1, 'Path.AccessType': 1, 'Path._id': 1 });
+    const Roles = await RoleSch.find({}, { _id: 1, RolesTitle: 1, IsActive: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, { Access: AccessForRole, Module: ModulesForRole, Roles: Roles }, null, 'Access Get Success !!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+roleController.getAccessListForModule = async (req, res, next) => {
+  try {
+    const moduleid = req.params.moduleid;
+    console.log(moduleid);
+    const AccessForModule = await AccessSch.find({ ModuleId: moduleid }, { _id: 1, AccessType: 1, IsActive: 1, ModuleId: 1, RoleId: 1 });
+    const ModulesForRole = await ModuleSch.findOne({ _id: moduleid }, { _id: 1, ModuleName: 1, 'Path.AccessType': 1, 'Path._id': 1 });
+    const Roles = await RoleSch.find({}, { _id: 1, RolesTitle: 1, IsActive: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, { Access: AccessForModule, Module: ModulesForRole, Roles: Roles }, null, 'Access Get Success !!', null);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = roleController;
