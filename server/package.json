@@ -4,7 +4,7 @@
   "description": "Server for API Project",
   "main": "index.js",
   "scripts": {
-    "client": "npm start --prefix ../client-admin",
+    "client": "npm start --prefix ../client",
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
