@@ -71,9 +71,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'ASK4TRIP',
-      short_name: 'ASK4TRIP',
-      description: 'Easy trip solution!',
+      name: 'HR-APP',
+      short_name: 'HR-APP',
+      description: 'HR solution!',
       background_color: '#fff',
       theme_color: '#5D524C',
       icons: [
@@ -92,7 +92,6 @@ module.exports = require('./webpack.base.babel')({
   ],
 
   performance: {
-    assetFilter: assetFilename =>
-      !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
+    assetFilter: assetFilename => !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
 });
