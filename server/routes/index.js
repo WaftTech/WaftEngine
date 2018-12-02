@@ -20,5 +20,4 @@ router.use('/module', dmodule);
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
 
-
 module.exports = router;
