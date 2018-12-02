@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
+import VpnKey from '@material-ui/icons/VpnKey';
 import Close from '@material-ui/icons/Close';
 
 // core components
@@ -72,6 +73,9 @@ export class ModuleManagePage extends React.Component {
   handleEdit = id => {
     this.props.history.push(`/wt/module-manage/edit/${id}`);
   };
+  handleAccessEdit = id => {
+    this.props.history.push(`/wt/module-manage/access/${id}`);
+  };
   handleDelete = id => {
     // shoe modal && api call
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
@@ -84,7 +88,7 @@ export class ModuleManagePage extends React.Component {
       <React.Fragment>
         <Tooltip
           id="tooltip-top"
-          title="Edit Task"
+          title="Edit"
           placement="top"
           classes={{ tooltip: classes.tooltip }}
         >
@@ -94,6 +98,20 @@ export class ModuleManagePage extends React.Component {
             onClick={() => this.handleEdit(_id)}
           >
             <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          id="tooltip-top-1"
+          title="Access Manage"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            onClick={() => this.handleAccessEdit(_id)}
+          >
+            <VpnKey className={classes.tableActionButtonIcon + ' ' + classes.edit} />
           </IconButton>
         </Tooltip>
         <Tooltip
