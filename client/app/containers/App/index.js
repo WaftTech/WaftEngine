@@ -25,13 +25,7 @@ import LoginPage from "../LoginPage";
 import SignupPage from "../SignupPage";
 import HomePage from "../HomePage";
 import NotFoundPage from "../NotFoundPage";
-import StartPage from "../StartPage";
-import Dashboard from "../Dashboard";
 import WtDashboard from "../WtDashboard";
-import CategoryDetailPage from "../CategoryDetailPage";
-import SearchResultsPage from "../SearchResultsPage";
-import OrganizationDetailPage from "../OrganizationDetailPage";
-import UserLayout from "./layouts/UserLayout";
 import ErrorBoundary from '../../ErrorBoundary';
 import {
   makeSelectDialog,
@@ -46,40 +40,9 @@ const App = props => {
     <ErrorBoundary>
       <Switch location={location}>
         <Route exact path="/" render={() => <Redirect to="/wt" />} />
-        <Route
-          exact
-          path="/search-results"
-          render={() => (
-            <UserLayout>
-              <SearchResultsPage />
-            </UserLayout>
-          )}
-        />
-        <Route
-          exact
-          path="/organization/:slug"
-          render={() => (
-            <UserLayout>
-              <OrganizationDetailPage />
-            </UserLayout>
-          )}
-        />
-        <Route
-          exact
-          path="/category/:slug"
-          render={() => (
-            <UserLayout>
-              <CategoryDetailPage />
-            </UserLayout>
-          )}
-        />
-        <UserRoute exact path="/dashboard" component={Dashboard} />
         <UserRoute path="/wt" component={WtDashboard} />
-        <GuestRoute exact path="/start" component={StartPage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/login/:email" component={LoginPage} />
         <GuestRoute exact path="/register" component={SignupPage} />
-        <GuestRoute exact path="/register/:email" component={SignupPage} />
         <GuestRoute exact path="/resetpassword" component={ResetPasswordPage} />
         <Route exact path="/home" component={HomePage} />
         <Route path="*" component={NotFoundPage} />

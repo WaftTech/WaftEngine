@@ -101,24 +101,14 @@ export class WtDashboard extends React.Component {
   }
 }
 
-WtDashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
+WtDashboard.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   wtdashboard: makeSelectWtDashboard()
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  };
-}
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps);
 
 const withReducer = injectReducer({ key: "wtDashboard", reducer });
 const withSaga = injectSaga({ key: "wtDashboard", saga });

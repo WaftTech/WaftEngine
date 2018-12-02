@@ -44,11 +44,7 @@ import CardFooter from 'components/Card/CardFooter';
 
 import { bugs, website, server } from 'variables/general';
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart,
-} from 'variables/charts';
+import { dailySalesChart, emailsSubscriptionChart, completedTasksChart } from 'variables/charts';
 
 import dashboardStyle from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
@@ -113,7 +109,7 @@ export class Dashboard extends React.Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              this is a basic modal
             </Typography>
           </div>
         </Modal>
