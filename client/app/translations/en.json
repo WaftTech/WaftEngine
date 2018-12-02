@@ -5,5 +5,7 @@
   "app.containers.LoginPage.emailId": "Email ID",
   "app.containers.LoginPage.password": "Password",
   "app.containers.LoginPage.signIn": "SIGN IN",
-  "app.containers.LoginPage.loading": "LOADING"
+  "app.containers.LoginPage.loading": "LOADING",
+
+  "app.containers.WtDashboard.dashboard": "Dashboard"
 }

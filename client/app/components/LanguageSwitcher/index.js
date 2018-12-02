@@ -11,7 +11,10 @@ import { connect } from 'react-redux';
 import { changeLocale } from 'containers/LanguageProvider/actions';
 
 function LanguageSwitcher(props) {
-  const { changeLocale } = props;
+  const { changeLocale, render } = props;
+  if (render) {
+    return <React.Fragment>{render(changeLocale)}</React.Fragment>;
+  }
   return (
     <div>
       <span onClick={() => changeLocale('en')}>English</span>|
