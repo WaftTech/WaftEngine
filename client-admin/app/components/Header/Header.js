@@ -23,7 +23,10 @@ function Header({ ...props }) {
         name = prop.navbarName;
       } else {
         const splits = props.location.pathname.split('/');
-        if (splits.length > 2 && splits[splits.length - 2] === 'edit') {
+        if (
+          splits.length > 2 &&
+          (splits[splits.length - 2] === 'edit' || splits[splits.length - 2] === 'access')
+        ) {
           name = 'Edit';
         }
       }
@@ -48,11 +51,7 @@ function Header({ ...props }) {
           <HeaderLinks />
         </Hidden>
         <Hidden mdUp implementation="css">
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={props.handleDrawerToggle}
-          >
+          <IconButton color="inherit" aria-label="open drawer" onClick={props.handleDrawerToggle}>
             <Menu />
           </IconButton>
         </Hidden>
