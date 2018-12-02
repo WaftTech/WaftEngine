@@ -1,4 +1,4 @@
 {
-  "app.components.NotFoundPage.header": "",
-  "app.containers.LoginPage.header": ""
+  "app.components.NotFoundPage.header": "फेला परेन",
+  "app.containers.LoginPage.header": "साइन इन"
 }
