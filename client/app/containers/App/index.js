@@ -32,7 +32,7 @@ import CategoryDetailPage from "../CategoryDetailPage";
 import SearchResultsPage from "../SearchResultsPage";
 import OrganizationDetailPage from "../OrganizationDetailPage";
 import UserLayout from "./layouts/UserLayout";
-
+import ErrorBoundary from '../../ErrorBoundary';
 import {
   makeSelectDialog,
   makeSelectLocation,
@@ -43,7 +43,7 @@ import { deleteMessage } from "./actions";
 const App = props => {
   const { location } = props;
   return (
-    <div>
+    <ErrorBoundary>
       <Switch location={location}>
         <Route exact path="/" render={() => <Redirect to="/wt" />} />
         <Route
@@ -84,7 +84,7 @@ const App = props => {
         <Route exact path="/home" component={HomePage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
-    </div>
+    </ErrorBoundary>
   );
 };
 
