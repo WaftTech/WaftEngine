@@ -1,5 +1,5 @@
 module.exports = {
-  mongoURI: 'mongodb://askfourtrip:ask4trip@ds219832.mlab.com:19832/askfourtrip',
+  mongoURI: 'mongodb://hrapp:hrapp123@ds123619.mlab.com:23619/hr-app',
   //mongoURI: 'mongodb://askfourtrip:askfourtrip@localhost:27017/askfourtrip',
   secretOrKey: 'jwtsecret',
   tokenExpireTime: 360000,
