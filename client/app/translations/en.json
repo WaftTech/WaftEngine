@@ -1,4 +1,9 @@
 {
   "app.components.NotFoundPage.header": "This is NotFoundPage component!",
-  "app.containers.LoginPage.header": "Log-in"
+  "app.containers.LoginPage.header": "Login to Continue",
+  "app.containers.LoginPage.welcomeMessage": "Welcome back, sign in with your HR account",
+  "app.containers.LoginPage.emailId": "Email ID",
+  "app.containers.LoginPage.password": "Password",
+  "app.containers.LoginPage.signIn": "SIGN IN",
+  "app.containers.LoginPage.loading": "LOADING"
 }

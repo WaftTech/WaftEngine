@@ -8,6 +8,26 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.LoginPage.header',
-    defaultMessage: 'Log-in',
+    defaultMessage: 'Sign to Continue',
+  },
+  welcomeMessage: {
+    id: 'app.containers.LoginPage.welcomeMessage',
+    defaultMessage: 'Welcome back, sign in with your HR account',
+  },
+  emailId: {
+    id: 'app.containers.LoginPage.emailId',
+    defaultMessage: 'Email ID',
+  },
+  password: {
+    id: 'app.containers.LoginPage.password',
+    defaultMessage: 'Password',
+  },
+  signIn: {
+    id: 'app.containers.LoginPage.signIn',
+    defaultMessage: 'SIGN IN',
+  },
+  loading: {
+    id: 'app.containers.LoginPage.loading',
+    defaultMessage: 'LOADING',
   },
 });
