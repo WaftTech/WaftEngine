@@ -16,8 +16,17 @@ import UserManagePage from '../UserManagePage';
 import UserManageAddEditPage from '../UserManagePage/AddEditPage';
 import ContentsListingPage from '../ContentListingPage';
 import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
+import Uchiha from '../Uchiha';
 
 const dashboardRoutes = [
+  {
+    path: '/wt/uch',
+    sidebarName: 'Uchiha',
+    navbarName: 'Dashboard',
+    icon: InsertChart,
+    component: Uchiha,
+    exact: true,
+  },
   {
     path: '/wt/dashboard',
     sidebarName: 'Dashboard',

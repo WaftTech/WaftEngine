@@ -99,7 +99,7 @@ class LoginPage extends React.PureComponent {
             <Typography component="h2" variant="display1" gutterBottom>
               Login to Continue
             </Typography>
-            <p>Welcome back, sign in with your ask4trip account</p>
+            <p>Welcome back, sign in with your hr app account</p>
             <br />
             <form
               className="hasinput400"
