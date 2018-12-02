@@ -1,3 +1,9 @@
-**SERVER Port :- 5020**
+**To Start Server PORT:- 5020**
+* cd server
+* npm install
+* npm start
 
-**CLIENT-ADMIN Port :- 5021**
+**To Start Client PORT:- 5021**
+* cd client
+* npm install
+* npm start
