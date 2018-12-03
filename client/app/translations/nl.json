@@ -1,4 +1,12 @@
 {
   "app.components.NotFoundPage.header": "फेला परेन",
-  "app.containers.LoginPage.header": "साइन इन"
+  "app.containers.LoginPage.header": "साइन इन",
+  "app.containers.LoginPage.welcomeMessage": "स्वागत छ, तपाईंको मानव खातासँग साइन इन गर्नुहोस्",
+  "app.containers.LoginPage.emailId": "इमेल",
+  "app.containers.LoginPage.password": "पासवर्ड",
+  "app.containers.LoginPage.signIn": "साइन इन",
+  "app.containers.LoginPage.loading": "लोड हुँदैछ",
+
+  "app.containers.WtDashboard.dashboard": "ड्याशबोर्ड",
+  "app.containers.WtDashboard.roleManage": "भूमिका व्यवस्थापन"
 }
