@@ -14,7 +14,6 @@ import Poppers from '@material-ui/core/Popper';
 // @material-ui/icons
 import Person from '@material-ui/icons/Person';
 import Notifications from '@material-ui/icons/Notifications';
-import Dashboard from '@material-ui/icons/Dashboard';
 import Search from '@material-ui/icons/Search';
 // core components
 import CustomInput from 'components/CustomInput/CustomInput';
@@ -22,6 +21,7 @@ import Button from 'components/CustomButtons/Button';
 
 import headerLinksStyle from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
 import { logout } from '../../containers/App/actions';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 class HeaderLinks extends React.Component {
   state = {
@@ -67,9 +67,17 @@ class HeaderLinks extends React.Component {
           aria-label="Dashboard"
           className={classes.buttonLink}
         >
-          <Dashboard className={classes.icons} />
+          <LanguageSwitcher
+            render={changeLocale => (
+              <React.Fragment>
+                <span onClick={() => changeLocale('en')}>En</span>|
+                <span onClick={() => changeLocale('nl')}>ने</span>
+              </React.Fragment>
+            )}
+          />
+
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Dashboard</p>
+            <LanguageSwitcher />
           </Hidden>
         </Button>
         <div className={classes.manager}>
@@ -98,50 +106,32 @@ class HeaderLinks extends React.Component {
             anchorEl={this.anchorEl}
             transition
             disablePortal
-            className={`${classNames({ [classes.popperClose]: !open })} ${
-              classes.pooperNav
-            }`}
+            className={`${classNames({ [classes.popperClose]: !open })} ${classes.pooperNav}`}
           >
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
                 id="menu-list-grow"
                 style={{
-                  transformOrigin:
-                    placement === 'bottom' ? 'center top' : 'center bottom',
+                  transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
                 }}
               >
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
                         Mike John responded to your email
                       </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
                         You have 5 new tasks
                       </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
                         You're now friend with Andrew
                       </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
                         Another Notification
                       </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
                         Another One
                       </MenuItem>
                     </MenuList>
