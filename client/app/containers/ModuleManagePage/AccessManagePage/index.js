@@ -23,7 +23,7 @@ import CardFooter from 'components/Card/CardFooter';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
-import { loadOneRequest, addEditRequest } from '../actions';
+import { loadAccessRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
@@ -44,171 +44,17 @@ const styles = {
   },
 };
 
-class AddEdit extends Component {
-  state = { ModuleName: '', Path: [] };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
-  };
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
-  handleAddPath = () => event => {
-    event.persist();
-
-    this.setState(state => ({
-      Path: [...state.Path, { AccessType: '', AdminRoutes: [], ServerRoutes: [] }],
-    }));
-  };
-  handleRemovePath = index => event => {
-    event.persist();
-
-    this.setState(state => ({
-      Path: [...state.Path.slice(0, index), ...state.Path.slice(index + 1)],
-    }));
-  };
-  handleAccessTypeChange = id => event => {
-    event.persist();
-
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            const newPath = { ...eachPath, AccessType: event.target.value };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-  handleAdminRoutesChange = (id, index) => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { AdminRoutes } = eachPath;
-            AdminRoutes[index] = event.target.value;
-            const newPath = { ...eachPath, AdminRoutes };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-  handleRemoveAdminRoute = (id, index) => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { AdminRoutes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              AdminRoutes: [...AdminRoutes.slice(0, index), ...AdminRoutes.slice(index + 1)],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-
-  handleAddAdminRoute = id => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { AdminRoutes } = eachPath;
-            const newPath = { ...eachPath, AdminRoutes: [...AdminRoutes, ''] };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-  handleServerRoutesMethodChange = (id, index) => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            ServerRoutes[index].method = event.target.value;
-            const newPath = { ...eachPath, ServerRoutes };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-  handleServerRoutesRouteChange = (id, index) => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            ServerRoutes[index].route = event.target.value;
-            const newPath = { ...eachPath, ServerRoutes };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-  handleAddServerRoute = id => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              ServerRoutes: [...ServerRoutes, { route: '', method: '' }],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
-  handleRemoveServerRoute = (id, index) => event => {
-    event.persist();
-    this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              ServerRoutes: [...ServerRoutes.slice(0, index), ...ServerRoutes.slice(index + 1)],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
-  };
+class AccessManagePage extends Component {
+  state = { Access: [], Module: [], Roles: [] };
   handleSave = () => {
-    this.props.addEdit(this.state);
+    // this.props.addEdit(this.state);
   };
   handleGoBack = () => {
     this.props.history.push('/wt/module-manage');
   };
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOne(this.props.match.params.id);
+      this.props.loadAccess(this.props.match.params.id);
     }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -221,7 +67,7 @@ class AddEdit extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { ModuleName, Path } = this.state;
+    const { ModuleName } = this.state;
     return (
       <div>
         <GridContainer>
@@ -290,8 +136,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload)),
+  loadAccess: payload => dispatch(loadAccessRequest(payload)),
+  addEditAccess: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
@@ -305,4 +151,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(AddEdit);
+)(AccessManagePage);
