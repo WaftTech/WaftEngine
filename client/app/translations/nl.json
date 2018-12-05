@@ -1,7 +1,8 @@
 {
   "app.components.NotFoundPage.header": "फेला परेन",
   "app.containers.LoginPage.header": "साइन इन",
-  "app.containers.LoginPage.welcomeMessage": "स्वागत छ, तपाईंको मानव खातासँग साइन इन गर्नुहोस्",
+  "app.containers.LoginPage.welcomeMessage":
+    "स्वागत छ, तपाईंको मानव खातासँग साइन इन गर्नुहोस्",
   "app.containers.LoginPage.emailId": "इमेल",
   "app.containers.LoginPage.password": "पासवर्ड",
   "app.containers.LoginPage.signIn": "साइन इन",
@@ -14,5 +15,12 @@
   "app.containers.WtDashboard.contentManage": "सामग्री व्यवस्थापन",
 
   "app.containers.ModuleManagePage.moduleManage": "मोड्युल व्यवस्थापन",
-  "app.containers.ModuleManagePage.moduleAction": "कार्य"
+  "app.containers.ModuleManagePage.moduleAction": "कार्य",
+
+  "app.containers.UserManagePage.email": "इमेल",
+  "app.containers.UserManagePage.name": "नाम",
+  "app.containers.UserManagePage.emailVerified": "ईमेल प्रमाणित",
+  "app.containers.UserManagePage.roles": "भूमिकाहरू",
+  "app.containers.UserManagePage.avtar": "अवतार",
+  "app.containers.UserManagePage.operations": "सञ्चालन"
 }
