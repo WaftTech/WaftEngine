@@ -7,5 +7,9 @@
   "app.containers.LoginPage.signIn": "SIGN IN",
   "app.containers.LoginPage.loading": "LOADING",
 
-  "app.containers.WtDashboard.dashboard": "Dashboard"
+  "app.containers.WtDashboard.dashboard": "Dashboard",
+  "app.containers.WtDashboard.roleManage": "Role Manage",
+  "app.containers.WtDashboard.moduleManage": "Module Manage",
+  "app.containers.WtDashboard.userManage": "User Manage",
+  "app.containers.WtDashboard.contentManage": "Content Manage"
 }
