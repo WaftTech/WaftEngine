@@ -11,5 +11,8 @@
   "app.containers.WtDashboard.roleManage": "Role Manage",
   "app.containers.WtDashboard.moduleManage": "Module Manage",
   "app.containers.WtDashboard.userManage": "User Manage",
-  "app.containers.WtDashboard.contentManage": "Content Manage"
+  "app.containers.WtDashboard.contentManage": "Content Manage",
+
+  "app.containers.ModuleManagePage.moduleManage": "Module Manage",
+  "app.containers.ModuleManagePage.moduleAction": "Action"
 }

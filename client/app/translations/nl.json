@@ -11,5 +11,8 @@
   "app.containers.WtDashboard.roleManage": "भूमिका व्यवस्थापन",
   "app.containers.WtDashboard.moduleManage": "मोड्युल व्यवस्थापन",
   "app.containers.WtDashboard.userManage": "प्रयोगकर्ता व्यवस्थापन",
-  "app.containers.WtDashboard.contentManage": "सामग्री व्यवस्थापन"
+  "app.containers.WtDashboard.contentManage": "सामग्री व्यवस्थापन",
+
+  "app.containers.ModuleManagePage.moduleManage": "मोड्युल व्यवस्थापन",
+  "app.containers.ModuleManagePage.moduleAction": "कार्य"
 }

@@ -141,7 +141,7 @@ export class ModuleManagePage extends React.Component {
             </CardHeader> */}
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Module Name', 'Action']}
+                tableHead={[<div>Module Manage</div>, 'Action']}
                 tableData={tableData}
               />
               <Button
