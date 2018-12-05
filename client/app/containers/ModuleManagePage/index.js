@@ -28,6 +28,8 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadAllRequest } from './actions';
 import { makeSelectAll } from './selectors';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const styles = theme => ({
   button: {
@@ -141,7 +143,7 @@ export class ModuleManagePage extends React.Component {
             </CardHeader> */}
               <Table
                 tableHeaderColor="primary"
-                tableHead={[<div>Module Manage</div>, 'Action']}
+                tableHead={[<FormattedMessage {...messages.moduleManage} />, <FormattedMessage {...messages.moduleAction} />,]}
                 tableData={tableData}
               />
               <Button
