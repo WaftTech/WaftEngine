@@ -27,6 +27,8 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadAllRequest } from './actions';
 import { makeSelectAll } from './selectors';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const styles = theme => ({
   button: {
@@ -105,7 +107,7 @@ export class RoleManagePage extends React.Component {
               <p className={classes.cardCategoryWhite}>Here are the list of roles</p>
             </CardHeader>
             <CardBody>
-              <Table tableHeaderColor="primary" tableHead={['Title', 'Description', 'Is Active','Action']} tableData={tableData} />
+              <Table tableHeaderColor="primary" tableHead={[<FormattedMessage {...messages.roleTitle} />, <FormattedMessage {...messages.roleDescription} />,<FormattedMessage {...messages.roleIsActive} />, <FormattedMessage {...messages.roleAction} />]} tableData={tableData} />
               <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>

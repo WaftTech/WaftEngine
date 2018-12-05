@@ -14,5 +14,10 @@
   "app.containers.WtDashboard.contentManage": "Content Manage",
 
   "app.containers.ModuleManagePage.moduleManage": "Module Manage",
-  "app.containers.ModuleManagePage.moduleAction": "Action"
+  "app.containers.ModuleManagePage.moduleAction": "Action",
+
+  "app.containers.RoleManagePage.roleTitle": "Title",
+  "app.containers.RoleManagePage.roleDescription": "Description",
+  "app.containers.RoleManagePage.roleIsActive": "Is Active",
+  "app.containers.RoleManagePage.roleAction": "Action"
 }
