@@ -16,7 +16,7 @@ export default defineMessages({
   },
   emailVerified: {
     id: "app.containers.UserManagePage.emailVerfied",
-    defaultMessage: "emailVerfied"
+    defaultMessage: "emailVerified"
   },
   roles: {
     id: "app.containers.UserManagePage.roles",

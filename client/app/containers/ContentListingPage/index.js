@@ -29,6 +29,8 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadAllRequest } from './actions';
 import { makeSelectAll } from './selectors';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const styles = theme => ({
   button: {
@@ -177,15 +179,15 @@ export class ContentsListingPage extends React.Component {
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  'Content Name',
-                  'Description',
-                  'Published from',
-                  'Published to',
-                  'Is Active',
-                  'Is Featured',
-                  'ContentImage',
-                  'Added at',
-                  'Operations',
+                  <FormattedMessage {...messages.contentName} />,
+                  <FormattedMessage {...messages.description} />,
+                  <FormattedMessage {...messages.publishedFrom} />,
+                  <FormattedMessage {...messages.publishedTo} />,
+                  <FormattedMessage {...messages.isActive} />,
+                  <FormattedMessage {...messages.isFeatured} />,
+                  <FormattedMessage {...messages.contentImage} />,
+                  <FormattedMessage {...messages.addedTo} />,
+                  <FormattedMessage {...messages.operations} />
                 ]}
                 tableData={tableData}
               />

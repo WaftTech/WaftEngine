@@ -143,7 +143,7 @@ export class ModuleManagePage extends React.Component {
             </CardHeader> */}
               <Table
                 tableHeaderColor="primary"
-                tableHead={[<FormattedMessage {...messages.moduleManage} />, <FormattedMessage {...messages.moduleAction} />,]}
+                tableHead={[<FormattedMessage {...messages.moduleManage} />, <FormattedMessage {...messages.moduleAction} />]}
                 tableData={tableData}
               />
               <Button
