@@ -57,3 +57,16 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
+
+export const loadAccessRequest = payload => ({
+  type: types.LOAD_ACCESS_REQUEST,
+  payload,
+});
+export const loadAccessSuccess = payload => ({
+  type: types.LOAD_ACCESS_SUCCESS,
+  payload,
+});
+export const loadAccessFailure = payload => ({
+  type: types.LOAD_ACCESS_FAILURE,
+  payload,
+});

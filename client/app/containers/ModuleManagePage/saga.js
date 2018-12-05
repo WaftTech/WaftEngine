@@ -17,6 +17,18 @@ function* loadOne(action) {
   );
 }
 
+function* loadAccess(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `role/access/role/${action.payload}`,
+      actions.loadAccessSuccess,
+      actions.loadAccessFailure,
+      token,
+    ),
+  );
+}
+
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
   yield put(push('/wt/module-manage'));
@@ -34,5 +46,6 @@ function* addEdit(action) {
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
+  yield takeLatest(types.LOAD_ACCESS_REQUEST, loadAccess);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
 }
