@@ -9,6 +9,11 @@ import * as types from './constants';
 export const initialState = fromJS({
   all: [],
   one: {},
+  access: {
+    Access: [],
+    Module: [],
+    Roles: [],
+  },
 });
 
 function reducer(state = initialState, action) {
@@ -20,6 +25,10 @@ function reducer(state = initialState, action) {
     case types.LOAD_ONE_SUCCESS:
       return state.merge({
         one: fromJS(action.payload.data),
+      });
+    case types.LOAD_ACCESS_SUCCESS:
+      return state.merge({
+        access: fromJS(action.payload.data),
       });
     default:
       return state;
