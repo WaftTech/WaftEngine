@@ -20,5 +20,13 @@ router.use('/module', dmodule);
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
 
+// For word press
+const wordpressRoutes = require('./api/wordpress_schema');
+router.use('/wordpress', wordpressRoutes);
+
+// For Designations
+const DesignationRoutes = require('./api/Designation');
+router.use('/Designation', DesignationRoutes);
+
 
 module.exports = router;
