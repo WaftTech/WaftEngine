@@ -16,7 +16,14 @@ const otherHelper = require('./helper/others.helper');
 
 const auth = require('./helper/auth.helper');
 
+const validator = require('express-validator');
+
+
+
 const app = express();
+
+app.use(validator());
+
 auth(passport);
 // Logger middleware
 app.use(logger('dev'));
