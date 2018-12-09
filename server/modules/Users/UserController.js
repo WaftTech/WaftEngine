@@ -1,4 +1,5 @@
 const User = require('./User');
+const Roles = require('../Roles/role');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -34,7 +35,7 @@ userController.checkMail = async (req, res) => {
 };
 userController.getAllUser = async (req, res, next) => {
   try {
-    const users = await User.find({}, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 });
+    const users = await User.find({}, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 }).populate({ path: 'roles', select: '_id RolesTitle' });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Get Success', null);
   } catch (err) {
     next(err);
@@ -43,26 +44,20 @@ userController.getAllUser = async (req, res, next) => {
 userController.getUserDetail = async (req, res, next) => {
   try {
     const users = await User.findById(req.params.id, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Get Success', null);
+    const roles = await Roles.find({}, { RolesTitle: 1, _id: 1 });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, { user: users, roles: roles }, null, 'User Detail Get Success', null);
   } catch (err) {
     next(err);
   }
 };
 
 userController.register = async (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
-  if (!isValid) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
-  }
-  const user = await User.findOne({ email: req.body.email });
   if (user) {
     errors.email = 'Email already exists';
     const data = { email: req.body.email };
     return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, data, errors, errors.email, null);
   } else {
-    const {
-      body: { name, email, password },
-    } = req;
+    const { name, email, password } = req.body;
     const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
     const newUser = new User({ name, email, avatar, password });
     bcrypt.genSalt(10, async (err, salt) => {
@@ -71,7 +66,7 @@ userController.register = async (req, res) => {
         newUser.password = hash;
         newUser.email_verification_code = otherHelper.generateRandomHexString(6);
         newUser.email_verified = false;
-        newUser.roles = ['User'];
+        newUser.roles = ['5bf7ae90736db01f8fa21a24'];
         let mailOptions = {
           from: '"API Share Team" <test@mkmpvtltd.tk>', // sender address
           to: newUser.email, // list of receivers
@@ -103,6 +98,58 @@ userController.register = async (req, res) => {
         });
       });
     });
+  }
+};
+userController.registerFromAdmin = async (req, res, next) => {
+  try {
+    const { errors, isValid } = validateRegisterInput(req.body);
+    if (!isValid) {
+      return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+    }
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      errors.email = 'Email already exists';
+      const data = { email: req.body.email };
+      return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, data, errors, errors.email, null);
+    } else {
+      const { name, email, password, roles } = req.body;
+      const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
+      const newUser = new User({ name, email, avatar, password, roles });
+      bcrypt.genSalt(10, async (err, salt) => {
+        bcrypt.hash(newUser.password, salt, async (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser.email_verified = false;
+          newUser.roles = roles;
+          newUser.added_by = req.user._id;
+          newUser.is_added_by_admin = true;
+          const user = await newUser.save();
+          const payload = {
+            id: user._id,
+            name: user.name,
+            avatar: user.avatar,
+            email: user.email,
+            email_verified: user.email_verified,
+            roles: user.roles,
+          };
+          const msg = 'User Register Successfully.';
+          return otherHelper.sendResponse(res, HttpStatus.OK, true, payload, null, msg, null);
+        });
+      });
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
+userController.updateUserDetail = async (req, res, next) => {
+  try {
+    const user = req.body;
+    const id = req.params.id;
+    const updateUser = await User.findByIdAndUpdate(id, { $set: user });
+    const msg = 'User Update Success';
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, updateUser, null, msg, null);
+  } catch (err) {
+    return next(err);
   }
 };
 
