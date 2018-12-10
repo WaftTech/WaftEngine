@@ -13,6 +13,8 @@ import { FormattedMessage } from 'react-intl';
 import DashboardPage from '../Dashboard';
 import RoleManagePage from '../RoleManagePage';
 import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
+import BlogPage from '../BlogPage';
+import BlogAddEditPage from '../BlogPage/AddEditPage';
 import ModuleManagePage from '../ModuleManagePage';
 import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
 import ModuleManageAccessManagePage from '../ModuleManagePage/AccessManagePage';
@@ -54,6 +56,31 @@ const dashboardRoutes = [
     icon: PermContactCalendar,
     component: RoleManagePage,
   },
+
+  {
+    path: '/wt/blog-manage/add',
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: PermContactCalendar,
+    component: BlogAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/blog-manage/edit/:id',
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: PermContactCalendar,
+    component:BlogAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/blog-manage',
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: PermContactCalendar,
+    component: BlogPage,
+  },
+
   {
     path: '/wt/module-manage/add',
     sidebarName: <FormattedMessage {...messages.moduleManage} />,
