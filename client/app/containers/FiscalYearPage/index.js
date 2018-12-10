@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
+import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import AddIcon from "@material-ui/icons/Add";
@@ -64,15 +65,15 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class RoleManagePage extends React.Component {
+export class FiscalYearPage extends React.Component {
   componentDidMount() {
     this.props.loadAll();
   }
   handleAdd = () => {
-    this.props.history.push("/wt/role-manage/add");
+    this.props.history.push("/wt/fiscal-manage/add");
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/role-manage/edit/${id}`);
+    this.props.history.push(`/wt/fiscal-manage/edit/${id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -82,10 +83,13 @@ export class RoleManagePage extends React.Component {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
-      ({ _id, RolesTitle, Description, IsActive }) => [
-        RolesTitle,
-        Description,
+      ({ _id, FiscalYear, From, To, IsCurrent, IsActive }) => [
+        FiscalYear,
+        moment(From).format("MMMM Do YYYY, h:mm:ss a"),
+        moment(To).format("MMMM Do YYYY, h:mm:ss a"),
+        "" + IsCurrent,
         "" + IsActive,
+
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -127,19 +131,20 @@ export class RoleManagePage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Role Management</h4>
+              <h4 className={classes.cardTitleWhite}>Fiscal Management</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of roles
+                Here are the list of fiscal
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.roleTitle} />,
-                  <FormattedMessage {...messages.roleDescription} />,
-                  <FormattedMessage {...messages.roleIsActive} />,
-                  <FormattedMessage {...messages.roleAction} />
+                  <FormattedMessage {...messages.fiscalYear} />,
+                  <FormattedMessage {...messages.rangeFrom} />,
+                  <FormattedMessage {...messages.rangeTo} />,
+                  <FormattedMessage {...messages.isCurrent} />,
+                  <FormattedMessage {...messages.isActive} />
                 ]}
                 tableData={tableData}
               />
@@ -161,7 +166,7 @@ export class RoleManagePage extends React.Component {
   }
 }
 
-RoleManagePage.propTypes = {
+FiscalYearPage.propTypes = {
   loadAll: PropTypes.func.isRequired
 };
 
@@ -178,8 +183,8 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: "roleManagePage", reducer });
-const withSaga = injectSaga({ key: "roleManagePage", saga });
+const withReducer = injectReducer({ key: "fiscalYearPage", reducer });
+const withSaga = injectSaga({ key: "fiscalYearPage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -189,4 +194,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(RoleManagePage);
+)(FiscalYearPage);
