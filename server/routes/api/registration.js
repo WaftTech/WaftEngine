@@ -15,7 +15,7 @@ const registrationValidation = require('./../../modules/registration/registratio
 
 router.get('/', authorization,registrationModule.getData);
 router.get('/:id',authorization, registrationModule.getDataByID);
-router.post('/', authorization, upload.array('file',1), registrationValidation.validate, registrationModule.saveData);
+router.post('/', authorization, upload.array('file',1), registrationValidation.validate, registrationValidation.duplicateValidation, registrationModule.saveData);
 router.delete('/:id', authorization,  registrationModule.deleteById);
 
 
