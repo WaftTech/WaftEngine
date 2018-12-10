@@ -9,6 +9,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
+const validator = require('express-validator');
 const HttpStatus = require('http-status');
 const { mongoURI } = require('./config/keys');
 const routes = require('./routes');
@@ -22,16 +23,17 @@ auth(passport);
 app.use(logger('dev'));
 
 // Body parser middleware
-// create application/x-www-form-urlencoded parser
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  }),
-);
+
 // create application/json parser
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+// create application/x-www-form-urlencoded parser
+app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 // protect against HTTP Parameter Pollution attacks
 app.use(hpp());
+//validate the post requests
+app.use(validator());
+//manage the object, array etc
+// app.use(lodash());
 
 app.use(
   cookieSession({
