@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
@@ -82,11 +83,11 @@ export class RegistrationPage extends React.Component {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(({
-      _id, RolesTitle, Description, IsActive
+      RegistrationNo, SenderName, ReceiverName, RegisterDate
     }) => [
-      RolesTitle,
-      Description,
-      '' + IsActive,
+      RegistrationNo,
+      SenderName,
+      ReceiverName, moment(RegisterDate).format("MMM Do YY"),
       <React.Fragment>
         <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
           <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
@@ -109,7 +110,13 @@ export class RegistrationPage extends React.Component {
               <p className={classes.cardCategoryWhite}>Here are the list of roles</p>
             </CardHeader>
             <CardBody>
-              <Table tableHeaderColor="primary" tableHead={[<FormattedMessage {...messages.roleTitle} />, <FormattedMessage {...messages.roleDescription} />,<FormattedMessage {...messages.roleIsActive} />, <FormattedMessage {...messages.roleAction} />]} tableData={tableData} />
+              <Table tableHeaderColor="primary" tableHead={[
+                  <FormattedMessage {...messages.registrationNo} />,
+                  <FormattedMessage {...messages.senderName} />,
+                  <FormattedMessage {...messages.receiverName} />,
+                  <FormattedMessage {...messages.registerDate} />
+                ]}
+                tableData={tableData} />
               <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
