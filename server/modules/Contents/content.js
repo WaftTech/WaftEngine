@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { slugify } = require('../../helper/others.helper');
 
 const ContentSchema = new Schema({
   ContentName: { type: String, required: true },
