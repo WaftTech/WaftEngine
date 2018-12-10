@@ -43,7 +43,7 @@ function* addEdit(action) {
   const { ...data } = action.payload;
   yield fork(
     Api.post(
-      "role/role",
+      "blog/",
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
