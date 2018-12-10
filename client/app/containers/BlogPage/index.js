@@ -85,11 +85,11 @@ export class BlogPage extends React.Component {
     console.log(allLinksObj);
 
     const tableData = allLinksObj.map(
-      ({ _id, title, content, publisher, date }) => [
-        title,
-        content,
-        publisher,
-        moment(date).format("MMMM Do YYYY"),
+      ({ _id, BlogTitle, Description, Added_by, Added_at }) => [
+        BlogTitle,
+        Description,
+        Added_by,
+        moment(Added_at).format("MMMM Do YYYY"),
 
         <React.Fragment>
           <Tooltip
