@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
+import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import AddIcon from "@material-ui/icons/Add";
@@ -64,15 +65,15 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class RoleManagePage extends React.Component {
+export class BlogPage extends React.Component {
   componentDidMount() {
     this.props.loadAll();
   }
   handleAdd = () => {
-    this.props.history.push("/wt/role-manage/add");
+    this.props.history.push("/wt/blog-manage/add");
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/role-manage/edit/${id}`);
+    this.props.history.push(`/wt/blog-manage/edit/${id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -81,11 +82,15 @@ export class RoleManagePage extends React.Component {
   render() {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
+    console.log(allLinksObj);
+
     const tableData = allLinksObj.map(
-      ({ _id, RolesTitle, Description, IsActive }) => [
-        RolesTitle,
-        Description,
-        "" + IsActive,
+      ({ _id, title, content, publisher, date }) => [
+        title,
+        content,
+        publisher,
+        moment(date).format("MMMM Do YYYY"),
+
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -127,19 +132,19 @@ export class RoleManagePage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Role Management</h4>
+              <h4 className={classes.cardTitleWhite}>Blog Management</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of roles
+                Here are the list of blogs
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.roleTitle} />,
-                  <FormattedMessage {...messages.roleDescription} />,
-                  <FormattedMessage {...messages.roleIsActive} />,
-                  <FormattedMessage {...messages.roleAction} />
+                  <FormattedMessage {...messages.blogTitle} />,
+                  <FormattedMessage {...messages.blogContent} />,
+                  <FormattedMessage {...messages.blogPublisher} />,
+                  <FormattedMessage {...messages.blogDate} />
                 ]}
                 tableData={tableData}
               />
@@ -161,7 +166,7 @@ export class RoleManagePage extends React.Component {
   }
 }
 
-RoleManagePage.propTypes = {
+BlogPage.propTypes = {
   loadAll: PropTypes.func.isRequired
 };
 
@@ -178,8 +183,8 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: "roleManagePage", reducer });
-const withSaga = injectSaga({ key: "roleManagePage", saga });
+const withReducer = injectReducer({ key: "blogPage", reducer });
+const withSaga = injectSaga({ key: "blogPage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -189,4 +194,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(RoleManagePage);
+)(BlogPage);
