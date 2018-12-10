@@ -38,7 +38,7 @@
   "app.containers.ContentListingPage.isFeatured":"विशेष छ",
   "app.containers.ContentListingPage.contentImage":"सामग्री छवि",
   "app.containers.ContentListingPage.addedTo":"यसमा थपियो",
-  "app.containers.ContentListingPage.operations":"सञ्चालनहरू"
+  "app.containers.ContentListingPage.operations":"सञ्चालनहरू",
 
   "app.containers.RoleManagePage.roleTitle": "शीर्षक",
   "app.containers.RoleManagePage.roleDescription": "विवरण",
