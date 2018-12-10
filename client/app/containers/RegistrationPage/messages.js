@@ -1,25 +1,25 @@
 /*
- * ModuleManagePage Messages
+ * RegistrationPage Messages
  *
- * This contains all the text for the ModuleManagePage component.
+ * This contains all the text for the RegistrationPage component.
  */
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  roleTitle: {
-    id: 'app.containers.RoleManagePage.roleTitle',
-    defaultMessage: 'Title',
+  registrationNo: {
+    id: 'app.containers.RegistrationPage.registrationNo',
+    defaultMessage: 'Registration No',
   },
-  roleDescription: {
-    id: 'app.containers.RoleManagePage.roleDescription',
-    defaultMessage: 'Description',
+  senderName: {
+    id: 'app.containers.RegistrationPage.senderName',
+    defaultMessage: 'Sender Name',
   },
-  roleIsActive: {
-    id: 'app.containers.RoleManagePage.roleIsActive',
-    defaultMessage: 'Is Active',
+  receiverName: {
+    id: 'app.containers.RegistrationPage.receiverName',
+    defaultMessage: 'Receiver Name',
   },
-  roleAction: {
-    id: 'app.containers.RoleManagePage.roleAction',
-    defaultMessage: 'Action',
+  registerDate: {
+    id: 'app.containers.RegistrationPage.registerDate',
+    defaultMessage: 'Register Date',
   }
 });

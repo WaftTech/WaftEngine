@@ -18,6 +18,11 @@ export default defineMessages({
     id: 'app.containers.WtDashboard.blogManage',
     defaultMessage: 'Blog Manage',
   },
+
+  registrationManage: {
+    id: 'app.containers.WtDashboard.registrationManage',
+    defaultMessage: 'Registration Manage',
+  },
   moduleManage: {
     id: 'app.containers.WtDashboard.moduleManage',
     defaultMessage: 'Module Manage',
