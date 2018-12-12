@@ -101,7 +101,11 @@ class LoginPage extends React.PureComponent {
             <Typography component="h2" variant="display1" gutterBottom>
               <FormattedMessage {...messages.header} />
             </Typography>
+<<<<<<< HEAD
             <FormattedMessage {...messages.welcomeMessage}>{txt => <p>{txt}</p>}</FormattedMessage>
+=======
+            <p>Welcome back, sign in with your hr app account</p>
+>>>>>>> af04cdec056e76818be67646ed3b80e9c6bb5125
             <br />
             <form
               className="hasinput400"
