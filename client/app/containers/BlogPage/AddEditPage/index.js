@@ -42,7 +42,7 @@ const styles = {
   }
 };
 
-class BlogAddEdit extends Component {
+class BlogAddEditPage extends Component {
   state = { BlogTitle: "", Description: "", IsActive: false };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
@@ -81,7 +81,7 @@ class BlogAddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Blogs</h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Blog</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
@@ -93,7 +93,7 @@ class BlogAddEdit extends Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.RolesTitle,
+                        value: this.state.BlogTitle,
                         onChange: this.handleChange("BlogTitle")
                       }}
                     />
@@ -149,8 +149,8 @@ class BlogAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "blogPage", reducer });
-const withSaga = injectSaga({ key: "blogPage", saga });
+const withReducer = injectReducer({ key: "blogManagePage", reducer });
+const withSaga = injectSaga({ key: "blogManagePage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
@@ -171,4 +171,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(BlogAddEdit);
+)(BlogAddEditPage);

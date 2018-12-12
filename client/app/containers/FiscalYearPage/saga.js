@@ -24,7 +24,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `role/role/${action.payload}`,
+      `fiscal/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token
@@ -43,7 +43,7 @@ function* addEdit(action) {
   const { ...data } = action.payload;
   yield fork(
     Api.post(
-      "role/role",
+      "fiscal/",
       actions.addEditSuccess,
       actions.addEditFailure,
       data,

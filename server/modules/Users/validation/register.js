@@ -25,7 +25,7 @@ const validateRegisterInput = (req, res, next) => {
     next();
   }
   // return { errors, isValid: isEmpty(errors) };
-  next(errors);
+  //next(errors);
 };
 
 module.exports = validateRegisterInput;
