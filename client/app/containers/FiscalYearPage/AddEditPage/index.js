@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
-import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
+import React, { Component } from "react";
+import { createStructuredSelector } from "reselect";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import { connect } from 'react-redux';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
+import withStyles from "@material-ui/core/styles/withStyles";
+import Checkbox from "@material-ui/core/Checkbox";
+import { connect } from "react-redux";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import injectSaga from "utils/injectSaga";
+import injectReducer from "utils/injectReducer";
 // core components
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import CustomInput from 'components/CustomInput/CustomInput';
-import Button from 'components/CustomButtons/Button';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
-import CardFooter from 'components/Card/CardFooter';
-import reducer from '../reducer';
-import saga from '../saga';
-import { makeSelectOne } from '../selectors';
-import { loadOneRequest, addEditRequest } from '../actions';
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
+import CustomInput from "components/CustomInput/CustomInput";
+import Button from "components/CustomButtons/Button";
+import Card from "components/Card/Card";
+import CardHeader from "components/Card/CardHeader";
+import CardBody from "components/Card/CardBody";
+import CardFooter from "components/Card/CardFooter";
+import reducer from "../reducer";
+import saga from "../saga";
+import { makeSelectOne } from "../selectors";
+import { loadOneRequest, addEditRequest } from "../actions";
 
 const styles = {
   cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0"
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
+    marginBottom: "3px",
+    textDecoration: "none"
+  }
 };
 
-class AddEdit extends Component {
-  state = { RolesTitle: '', Description: '', IsActive: false };
+class FiscalAddEdit extends Component {
+  state = { FiscalYear: "" };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -55,7 +55,7 @@ class AddEdit extends Component {
     this.setState({ [name]: event.target.checked });
   };
   handleGoBack = () => {
-    this.props.history.push('/wt/role-manage');
+    this.props.history.push("/wt/fiscal-manage");
   };
   handleSave = () => {
     this.props.addEdit(this.state);
@@ -69,7 +69,7 @@ class AddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj,
+        ...oneObj
       }));
     }
   }
@@ -81,38 +81,55 @@ class AddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Fiscal</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Role Title"
-                      id="role-title"
+                      labelText="Fiscal Year"
+                      id="fiscal-year"
                       formControlProps={{
-                        fullWidth: true,
+                        fullWidth: true
                       }}
-                      inputProps={{ value: this.state.RolesTitle, onChange: this.handleChange('RolesTitle') }}
+                      inputProps={{
+                        value: this.state.FiscalYear,
+                        onChange: this.handleChange("FiscalYear")
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
-                <GridContainer>
+                {/* <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText="Description"
                       id="role-description"
                       formControlProps={{
-                        fullWidth: true,
+                        fullWidth: true
                       }}
-                      inputProps={{ value: this.state.Description, onChange: this.handleChange('Description') }}
+                      inputProps={{
+                        value: this.state.Description,
+                        onChange: this.handleChange("Description")
+                      }}
                     />
                   </GridItem>
-                </GridContainer>
-                <GridContainer>
+                </GridContainer> */}
+                {/* <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel control={<Checkbox checked={this.state.IsActive || false} tabIndex={-1} onClick={this.handleChecked('IsActive')} value="IsActive" color="primary" />} label="Is Active" />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.IsActive || false}
+                          tabIndex={-1}
+                          onClick={this.handleChecked("IsActive")}
+                          value="IsActive"
+                          color="primary"
+                        />
+                      }
+                      label="Is Active"
+                    />
                   </GridItem>
-                </GridContainer>
+                </GridContainer> */}
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSave}>
@@ -132,26 +149,26 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: 'roleManagePage', reducer });
-const withSaga = injectSaga({ key: 'roleManagePage', saga });
+const withReducer = injectReducer({ key: "fiscalManagePage", reducer });
+const withSaga = injectSaga({ key: "fiscalManagePage", saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne(),
+  one: makeSelectOne()
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload))
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect,
-)(AddEdit);
+  withConnect
+)(FiscalAddEdit);
