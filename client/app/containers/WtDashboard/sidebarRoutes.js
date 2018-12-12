@@ -10,7 +10,6 @@ import TextFormat from "@material-ui/icons/TextFormat";
 import { FormattedMessage } from "react-intl";
 
 // core components/views
-<<<<<<< HEAD
 import DashboardPage from "../Dashboard";
 import RoleManagePage from "../RoleManagePage";
 import RoleManageAddEditPage from "../RoleManagePage/AddEditPage";
@@ -32,33 +31,6 @@ const dashboardRoutes = [
     path: "/wt/dashboard",
     sidebarName: <FormattedMessage {...messages.dashboard} />,
     navbarName: <FormattedMessage {...messages.dashboard} />,
-=======
-import DashboardPage from '../Dashboard';
-import RoleManagePage from '../RoleManagePage';
-import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
-import ModuleManagePage from '../ModuleManagePage';
-import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
-import ModuleManageAccessManagePage from '../ModuleManagePage/AccessManagePage';
-import UserManagePage from '../UserManagePage';
-import UserManageAddEditPage from '../UserManagePage/AddEditPage';
-import ContentsListingPage from '../ContentListingPage';
-import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
-import Uchiha from '../Uchiha';
-
-const dashboardRoutes = [
-  {
-    path: '/wt/uch',
-    sidebarName: 'Uchiha',
-    navbarName: 'Dashboard',
-    icon: InsertChart,
-    component: Uchiha,
-    exact: true,
-  },
-  {
-    path: '/wt/dashboard',
-    sidebarName: 'Dashboard',
-    navbarName: 'Dashboard',
->>>>>>> af04cdec056e76818be67646ed3b80e9c6bb5125
     icon: InsertChart,
     component: DashboardPage,
     exact: true

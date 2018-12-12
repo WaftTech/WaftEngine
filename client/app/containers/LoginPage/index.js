@@ -4,31 +4,31 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { FormattedMessage } from 'react-intl';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Grid, TextField } from '@material-ui/core';
-import EmailOutlined from '@material-ui/icons/EmailOutlined';
-import LockOutlined from '@material-ui/icons/LockOutlined';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { compose } from "redux";
+import { FormattedMessage } from "react-intl";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { Grid, TextField } from "@material-ui/core";
+import EmailOutlined from "@material-ui/icons/EmailOutlined";
+import LockOutlined from "@material-ui/icons/LockOutlined";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Typography from "@material-ui/core/Typography";
 
-import logo from 'assets/img/logo.svg';
+import logo from "assets/img/logo.svg";
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
+import injectSaga from "utils/injectSaga";
+import injectReducer from "utils/injectReducer";
 
-import messages from './messages';
-import { loginRequest, resetPasswordRequest } from './actions';
-import { makeSelectIsRequesting, makeSelectErrors } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import Button from '../../components/CustomButtons/Button';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
+import messages from "./messages";
+import { loginRequest, resetPasswordRequest } from "./actions";
+import { makeSelectIsRequesting, makeSelectErrors } from "./selectors";
+import reducer from "./reducer";
+import saga from "./saga";
+import Button from "../../components/CustomButtons/Button";
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 class LoginPage extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -36,12 +36,12 @@ class LoginPage extends React.PureComponent {
     super(props);
     this.state = {
       data: {
-        email: this.props.match.params.email || '',
+        email: this.props.match.params.email || ""
       },
       errors: {},
       redirectToReferrer: this.props.location.state
         ? this.props.location.state.from.pathname
-        : false,
+        : false
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -57,8 +57,8 @@ class LoginPage extends React.PureComponent {
     this.setState(state => ({
       data: {
         ...state.data,
-        [name]: value,
-      },
+        [name]: value
+      }
     }));
   };
   validate = () => {
@@ -91,8 +91,11 @@ class LoginPage extends React.PureComponent {
     const { isRequesting } = this.props;
     return (
       <div className="bgLogin">
-        <div className="flex-center" style={{ maxWidth: '50%', height: '100vh' }}>
-          <img style={{ width: '200px' }} src={logo} />
+        <div
+          className="flex-center"
+          style={{ maxWidth: "50%", height: "100vh" }}
+        >
+          <img style={{ width: "200px" }} src={logo} />
         </div>
 
         <div className="formWrapper flex-center">
@@ -101,18 +104,16 @@ class LoginPage extends React.PureComponent {
             <Typography component="h2" variant="display1" gutterBottom>
               <FormattedMessage {...messages.header} />
             </Typography>
-<<<<<<< HEAD
-            <FormattedMessage {...messages.welcomeMessage}>{txt => <p>{txt}</p>}</FormattedMessage>
-=======
-            <p>Welcome back, sign in with your hr app account</p>
->>>>>>> af04cdec056e76818be67646ed3b80e9c6bb5125
+            <FormattedMessage {...messages.welcomeMessage}>
+              {txt => <p>{txt}</p>}
+            </FormattedMessage>
             <br />
             <form
               className="hasinput400"
               onSubmit={this.handleSubmit}
-              style={{ display: 'inline-block' }}
+              style={{ display: "inline-block" }}
             >
-              <div className={errors.email ? 'error' : ''}>
+              <div className={errors.email ? "error" : ""}>
                 <Grid container spacing={16} alignItems="flex-end">
                   <Grid item>
                     <EmailOutlined />
@@ -125,7 +126,7 @@ class LoginPage extends React.PureComponent {
                       name="email"
                       placeholder="E-mail address"
                       onChange={this.handleChange}
-                      value={data.email || ''}
+                      value={data.email || ""}
                       autoComplete="username"
                     />
                   </Grid>
@@ -133,7 +134,7 @@ class LoginPage extends React.PureComponent {
 
                 {!!errors.email && <span>{errors.email}</span>}
               </div>
-              <div className={errors.password ? 'error' : ''}>
+              <div className={errors.password ? "error" : ""}>
                 <Grid container spacing={16} alignItems="flex-end">
                   <Grid item>
                     <LockOutlined />
@@ -146,7 +147,7 @@ class LoginPage extends React.PureComponent {
                       type="password"
                       placeholder="Password"
                       onChange={this.handleChange}
-                      value={data.password || ''}
+                      value={data.password || ""}
                       autoComplete="current-password"
                     />
                   </Grid>
@@ -155,7 +156,12 @@ class LoginPage extends React.PureComponent {
               </div>
               <br />
               <div className="text-right">
-                <Button className="btn-block" color="primary" type="submit" disabled={isRequesting}>
+                <Button
+                  className="btn-block"
+                  color="primary"
+                  type="submit"
+                  disabled={isRequesting}
+                >
                   {isRequesting ? (
                     <FormattedMessage {...messages.loading} />
                   ) : (
@@ -167,7 +173,11 @@ class LoginPage extends React.PureComponent {
                 className="color-link"
                 onClick={isRequesting ? () => null : () => this.resetPassword()}
               >
-                {isRequesting ? <FormattedMessage {...messages.loading} /> : 'Reset Password'}
+                {isRequesting ? (
+                  <FormattedMessage {...messages.loading} />
+                ) : (
+                  "Reset Password"
+                )}
               </a>
             </form>
           </div>
@@ -182,46 +192,46 @@ LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
   resetPassword: PropTypes.func.isRequired,
   match: PropTypes.shape({
-    params: PropTypes.object,
+    params: PropTypes.object
   }).isRequired,
   isRequesting: PropTypes.bool.isRequired,
   errors: PropTypes.shape({
-    toJS: PropTypes.func.isRequired,
-  }).isRequired,
+    toJS: PropTypes.func.isRequired
+  }).isRequired
 };
 
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   Input: {
-    margin: theme.spacing.unit,
-  },
+    margin: theme.spacing.unit
+  }
 });
 
 const mapStateToProps = createStructuredSelector({
   isRequesting: makeSelectIsRequesting(),
-  errors: makeSelectErrors(),
+  errors: makeSelectErrors()
 });
 
 const mapDispatchToProps = dispatch => ({
   login: (data, redirect) => dispatch(loginRequest(data, redirect)),
-  resetPassword: data => dispatch(resetPasswordRequest(data)),
+  resetPassword: data => dispatch(resetPasswordRequest(data))
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'loginPage', reducer });
-const withSaga = injectSaga({ key: 'loginPage', saga });
+const withReducer = injectReducer({ key: "loginPage", reducer });
+const withSaga = injectSaga({ key: "loginPage", saga });
 const withStyle = withStyles(styles);
 
 export default compose(
   withStyle,
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(LoginPage);
