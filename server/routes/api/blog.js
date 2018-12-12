@@ -10,4 +10,6 @@ const validateInput = require('../../modules/blog/validation/post');
 router.get('/', dmodule.GetBlog);
 router.post('/', upload.array('BlogImage', 1), validateInput, dmodule.SaveBlog);
 router.get('/:id', dmodule.GetBlogDetail);
+router.delete('/:id', dmodule.DeleteBlog);
+
 module.exports = router;

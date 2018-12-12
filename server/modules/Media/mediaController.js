@@ -43,7 +43,7 @@ mediaController.GetMediaDetail = async (req, res, next) => {
 mediaController.DeleteMedia = async (req, res, next) => {
   const id = req.params.id;
   const media = await MediaSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() } });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, media, null, 'Media Get Success !!', null);
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, media, null, 'Media Delete Success !!', null);
 };
 
 module.exports = mediaController;

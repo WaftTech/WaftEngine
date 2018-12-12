@@ -6,7 +6,7 @@ const blogcontroller = {};
 const internal = {};
 
 blogcontroller.GetBlog = async (req, res, next) => {
-    const blogs = await BlogSch.find();
+    const blogs = await BlogSch.find({ IsDeleted: false });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, blogs, null, "blogs got successfully.", null);
 };
 
@@ -35,8 +35,19 @@ blogcontroller.SaveBlog = async (req, res, next) => {
 
 blogcontroller.GetBlogDetail = async (req, res, next) => {
     const id = req.params.id;
-    const blog = await BlogSch.findOne({ _id: ObjectId(id)});
+    const blog = await BlogSch.findOne({ _id: id, IsDeleted: false});
     console.log(blog);
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, "blog successfully obtained.", null);
+    if(blog && blog._id){
+        return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, "blog successfully obtained.", null);
+    }else{
+        return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, null, "blog not found", null);       
+    }
+};
+
+blogcontroller.DeleteBlog = async (req, res, next) => {
+    const id = req.params.id;
+    const blog = await BlogSch.findByIdAndUpdate(ObjectId(id), { $set: {IsDeleted: true, Deleted_at: new Date() } });
+    console.log(blog);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, 'Blog deleted successfully!!', null);
 };
 module.exports = blogcontroller;
