@@ -47,12 +47,11 @@ const validationHelper = {};
 //   }
 //   return errors;
 // };
-
-validationHelper.validate = (data, val) => {
+validationHelper.Designation = (data, val) => {
   const errors = {};
 
   for (i = 0; i < val.length; i++) {
-    console.log('validation length: ', val.length);
+    // console.log('validation length: ', val.length);
     let field = val[i].field;
     let validate = val[i].validate;
     data[field] = !isEmpty(data[field]) ? data[field] : '';
@@ -61,6 +60,33 @@ validationHelper.validate = (data, val) => {
     for (j = 0; j < validate.length; j++) {
       console.log('validate length: ', validate.length);
       console.log('validate condition: ', validate[j].condition);
+      if (validate[j].condition == 'IsEmpty') {
+        Validator.isEmpty(data[field]) ? (errors[field] = validate[j].msg) : null;
+      } /*else if (validate[j].condition == 'IsDate') {
+      !Validator.isISO8601(data[field]) ? (errors[field] = validate[j].msg) : null;
+    } */ else if (validate[j].condition == 'MinMaxCheck') {
+        let option = validate[j].options;
+        console.log('option: ', option);
+        !Validator.isLength(data[field], option) ? (errors[field] = validate[j].msg) : null;
+      }
+    }
+  }
+  return errors;
+};
+
+validationHelper.validate = (data, val) => {
+  const errors = {};
+
+  for (i = 0; i < val.length; i++) {
+    // console.log('validation length: ', val.length);
+    let field = val[i].field;
+    let validate = val[i].validate;
+    data[field] = !isEmpty(data[field]) ? data[field] : '';
+    console.log('data is(from validate.helper):', data[field]);
+
+    for (j = 0; j < validate.length; j++) {
+      //console.log('validate length: ', validate.length);
+      //console.log('validate condition: ', validate[j].condition);
       if (validate[j].condition == 'IsEmpty') {
         Validator.isEmpty(data[field]) ? (errors[field] = validate[j].msg) : null;
       } else if (validate[j].condition == 'IsDate') {
