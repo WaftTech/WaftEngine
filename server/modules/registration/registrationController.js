@@ -32,9 +32,29 @@ registrationController.saveData = async (req, res, next) => {
 };
 
 registrationController.getData = async (req, res, next) => {
+  let page;
+  let size;
+  const size_default = 10;
+  if (req.query.page) {
+    page = Math.abs(req.query.page);
+  } else {
+    page = 1;
+  }
+  if (req.query.size) {
+    size = Math.abs(req.query.size);
+  } else {
+    size = size_default;
+  }
+  console.log('page no:', page);
+  console.log('page size:', size);
+
   try {
-    let data = await registrationModel.find({ IsDeleted: false }, { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Registration data delivered successfully!!', null);
+    let data = await registrationModel
+      .find({ IsDeleted: false }, { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 })
+      .skip((page - 1) * size)
+      .limit(size * 1);
+    let totaldata = await registrationModel.countDocuments({ IsDeleted: false });
+    return otherHelper.paginationSendResponse(res, HttpStatus.OK, data, 'Registration data delivered successfully!!', page, size, totaldata);
   } catch (err) {
     next(err);
   }
