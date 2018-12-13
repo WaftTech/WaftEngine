@@ -6,6 +6,7 @@
   "app.containers.LoginPage.password": "Password",
   "app.containers.LoginPage.signIn": "SIGN IN",
   "app.containers.LoginPage.loading": "LOADING",
+  "app.containers.LoginPage.resetPassword": "Reset Password",
 
   "app.containers.WtDashboard.dashboard": "Dashboard",
   "app.containers.WtDashboard.roleManage": "Role Manage",
