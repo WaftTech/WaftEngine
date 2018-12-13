@@ -17,6 +17,8 @@ import FiscalYearPage from "../FiscalYearPage";
 import FiscalYearAddEditPage from "../FiscalYearPage/AddEditPage";
 import BlogPage from "../BlogPage";
 import BlogAddEditPage from "../BlogPage/AddEditPage";
+import RegistrationPage from "../RegistrationPage";
+import RegistrationAddEditPage from "../RegistrationPage/AddEditPage";
 import ModuleManagePage from "../ModuleManagePage";
 import ModuleManageAddEditPage from "../ModuleManagePage/AddEditPage";
 import ModuleManageAccessManagePage from "../ModuleManagePage/AccessManagePage";
@@ -58,6 +60,55 @@ const dashboardRoutes = [
     icon: PermContactCalendar,
     component: RoleManagePage
   },
+
+  {
+    path: "/wt/blog-manage/add",
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: PermContactCalendar,
+    component: BlogAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/blog-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: PermContactCalendar,
+    component: BlogAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/blog-manage",
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: PermContactCalendar,
+    component: BlogPage
+  },
+
+  {
+    path: "/wt/registration-manage/add",
+    sidebarName: <FormattedMessage {...messages.registrationManage} />,
+    navbarName: <FormattedMessage {...messages.registrationManage} />,
+    icon: PermContactCalendar,
+    component: RegistrationAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/registration-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.registrationManage} />,
+    navbarName: <FormattedMessage {...messages.registrationManage} />,
+    icon: PermContactCalendar,
+    component: RegistrationAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/registration-manage",
+    sidebarName: <FormattedMessage {...messages.registrationManage} />,
+    navbarName: <FormattedMessage {...messages.registrationManage} />,
+    icon: PermContactCalendar,
+    component: RegistrationPage
+  },
+
   {
     path: "/wt/fiscal-manage/add",
     sidebarName: <FormattedMessage {...messages.fiscalManage} />,
