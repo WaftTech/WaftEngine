@@ -16,7 +16,6 @@ import globalReducer from './containers/App/reducer';
  * The change is necessitated by moving to react-router-redux@4
  *
  */
-
 // Initial routing state
 const routeInitialState = fromJS({
   location: null,
