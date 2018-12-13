@@ -1,66 +1,68 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { compose } from "redux";
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import Close from '@material-ui/icons/Close';
+import withStyles from "@material-ui/core/styles/withStyles";
+import AddIcon from "@material-ui/icons/Add";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Edit from "@material-ui/icons/Edit";
+import Close from "@material-ui/icons/Close";
 
 // core components
-import GridItem from '../../components/Grid/GridItem';
-import GridContainer from '../../components/Grid/GridContainer';
-import CustomInput from '../../components/CustomInput/CustomInput';
-import Button from '../../components/CustomButtons/Button';
-import Table from '../../components/Table/Table';
-import Card from '../../components/Card/Card';
-import CardHeader from '../../components/Card/CardHeader';
-import CardBody from '../../components/Card/CardBody';
-import CardFooter from '../../components/Card/CardFooter';
+import GridItem from "../../components/Grid/GridItem";
+import GridContainer from "../../components/Grid/GridContainer";
+import CustomInput from "../../components/CustomInput/CustomInput";
+import Button from "../../components/CustomButtons/Button";
+import Table from "../../components/Table/Table";
+import Card from "../../components/Card/Card";
+import CardHeader from "../../components/Card/CardHeader";
+import CardBody from "../../components/Card/CardBody";
+import CardFooter from "../../components/Card/CardFooter";
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import { loadAllRequest } from './actions';
-import { makeSelectAll } from './selectors';
+import injectSaga from "../../utils/injectSaga";
+import injectReducer from "../../utils/injectReducer";
+import reducer from "./reducer";
+import saga from "./saga";
+import { loadAllRequest } from "./actions";
+import { makeSelectAll } from "./selectors";
+import { FormattedMessage } from "react-intl";
+import messages from "./messages";
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
+    "&,& a,& a:hover,& a:focus": {
+      color: "rgba(255,255,255,.62)",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      marginBottom: "0"
     },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
+    "& a,& a:hover,& a:focus": {
+      color: "#FFFFFF"
+    }
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
+    marginBottom: "3px",
+    textDecoration: "none",
+    "& small": {
+      color: "#777",
+      fontSize: "65%",
+      fontWeight: "400",
+      lineHeight: "1"
+    }
+  }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -69,7 +71,7 @@ export class ContentsListingPage extends React.Component {
     this.props.loadAll();
   }
   handleAdd = () => {
-    this.props.history.push('/wt/content-manage/add');
+    this.props.history.push("/wt/content-manage/add");
   };
   handleEdit = id => {
     this.props.history.push(`/wt/content-manage/edit/${id}`);
@@ -90,14 +92,14 @@ export class ContentsListingPage extends React.Component {
         IsActive,
         IsFeature,
         ContentImage,
-        Added_at,
+        Added_at
       }) => [
         ContentName,
-        Description && Description.substring(0, 20) + ' ...',
+        Description && Description.substring(0, 20) + " ...",
         PublishFrom,
         PublishTo,
-        '' + IsActive,
-        '' + IsFeature,
+        "" + IsActive,
+        "" + IsFeature,
         ContentImage,
         Added_at,
         <React.Fragment>
@@ -113,7 +115,7 @@ export class ContentsListingPage extends React.Component {
               onClick={() => this.handleEdit(slug)}
             >
               <Edit
-                className={classes.tableActionButtonIcon + ' ' + classes.edit}
+                className={classes.tableActionButtonIcon + " " + classes.edit}
               />
             </IconButton>
           </Tooltip>
@@ -129,12 +131,12 @@ export class ContentsListingPage extends React.Component {
               onClick={() => this.handleDelete(_id)}
             >
               <Close
-                className={classes.tableActionButtonIcon + ' ' + classes.close}
+                className={classes.tableActionButtonIcon + " " + classes.close}
               />
             </IconButton>
           </Tooltip>
-        </React.Fragment>,
-      ],
+        </React.Fragment>
+      ]
     );
     return (
       <GridContainer>
@@ -146,7 +148,7 @@ export class ContentsListingPage extends React.Component {
                   <CustomInput
                     id="contents-name"
                     formControlProps={{
-                      fullWidth: true,
+                      fullWidth: true
                     }}
                   />
                 </GridItem>
@@ -177,15 +179,15 @@ export class ContentsListingPage extends React.Component {
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  'Content Name',
-                  'Description',
-                  'Published from',
-                  'Published to',
-                  'Is Active',
-                  'Is Featured',
-                  'ContentImage',
-                  'Added at',
-                  'Operations',
+                  <FormattedMessage {...messages.contentName} />,
+                  <FormattedMessage {...messages.description} />,
+                  <FormattedMessage {...messages.publishedFrom} />,
+                  <FormattedMessage {...messages.publishedTo} />,
+                  <FormattedMessage {...messages.isActive} />,
+                  <FormattedMessage {...messages.isFeatured} />,
+                  <FormattedMessage {...messages.contentImage} />,
+                  <FormattedMessage {...messages.addedTo} />,
+                  <FormattedMessage {...messages.operations} />
                 ]}
                 tableData={tableData}
               />
@@ -208,24 +210,24 @@ export class ContentsListingPage extends React.Component {
 }
 
 ContentsListingPage.propTypes = {
-  loadAll: PropTypes.func.isRequired,
+  loadAll: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll(),
+  allLinks: makeSelectAll()
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest()),
+  loadAll: () => dispatch(loadAllRequest())
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
-const withSaga = injectSaga({ key: 'contentsListingPage', saga });
+const withReducer = injectReducer({ key: "contentsListingPage", reducer });
+const withSaga = injectSaga({ key: "contentsListingPage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -234,5 +236,5 @@ export default compose(
   withStyle,
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(ContentsListingPage);

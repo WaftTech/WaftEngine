@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const MediaSchema = new Schema({
@@ -17,7 +17,7 @@ const MediaSchema = new Schema({
   Deleted_at: { type: Date, required: false },
   Deleted_by: { type: Schema.Types.ObjectId, required: false },
   Added_at: { type: Date, default: Date.now },
-  Added_by: { type: Schema.Types.ObjectId, required: true },
+  Added_by: { type: Schema.Types.ObjectId, required: true }
 });
 
-module.exports = Media = mongoose.model('media', MediaSchema);
+module.exports = Media = mongoose.model("media", MediaSchema);
