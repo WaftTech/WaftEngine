@@ -7,12 +7,16 @@
   "app.containers.LoginPage.password": "Password",
   "app.containers.LoginPage.signIn": "SIGN IN",
   "app.containers.LoginPage.loading": "LOADING",
+  "app.containers.LoginPage.resetPassword": "Reset Password",
 
   "app.containers.WtDashboard.dashboard": "Dashboard",
   "app.containers.WtDashboard.roleManage": "Role Manage",
   "app.containers.WtDashboard.moduleManage": "Module Manage",
   "app.containers.WtDashboard.userManage": "User Manage",
   "app.containers.WtDashboard.contentManage": "Content Manage",
+  "app.containers.WtDashboard.designationManage": "Designation Manage",
+  "app.containers.WtDashboard.registrationManage": "Registration Manage",
+  "app.containers.WtDashboard.fiscalManage": "Fiscal Manage",
 
   "app.containers.ModuleManagePage.moduleManage": "Module Manage",
   "app.containers.ModuleManagePage.moduleAction": "Action",
@@ -21,6 +25,8 @@
   "app.containers.RoleManagePage.roleDescription": "Description",
   "app.containers.RoleManagePage.roleIsActive": "Is Active",
   "app.containers.RoleManagePage.roleAction": "Action",
+  "app.containers.RoleManagePage.roleManagement": "Role Management",
+  "app.containers.RoleManagePage.listOfRoles": "Here are the list of roles",
 
   "app.containers.ContentListingPage.contentName": "Content Name",
   "app.containers.ContentListingPage.description": "Description",
@@ -32,9 +38,18 @@
   "app.containers.ContentListingPage.addedTo": "Added To",
   "app.containers.ContentListingPage.operations": "Operations",
 
+  "app.containers.DesignationPage.designation": "Designation",
+  "app.containers.DesignationPage.updateDate": "Update Date",
+  "app.containers.DesignationPage.isActive": "Is Active",
+
+  "app.containers.RegistrationPage.registrationNo": "Registration No",
+  "app.containers.RegistrationPage.senderName": "Sender Name",
+  "app.containers.RegistrationPage.receiverName": "Receiver Name",
+  "app.containers.RegistrationPage.registerDate": "Register Date",
+
   "app.containers.FiscalYearPage.roleTitle": "Fiscal Year",
-  "app.containers.FiscalYearPage.rangeFrom": "Range From",
-  "app.containers.FiscalYearPage.rangeTo": "Range To",
+  "app.containers.FiscalYearPage.rangeFrom": "From",
+  "app.containers.FiscalYearPage.rangeTo": "To",
   "app.containers.FiscalYearPage.isCurrent": "Is Current",
   "app.containers.FiscalYearPage.isActive": "Is Active"
 }

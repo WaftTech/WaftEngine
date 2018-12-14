@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { initialState } from "./reducer";
 
 /**
- * Direct selector to the roleManagePage state domain
+ * Direct selector to the registrationPage state domain
  */
 
 const selectDomain = state => state.get("registrationPage", initialState);

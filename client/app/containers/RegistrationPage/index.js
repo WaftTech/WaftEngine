@@ -129,9 +129,9 @@ export class RegistrationPage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Role Management</h4>
+              <h4 className={classes.cardTitleWhite}>Registration Management</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of roles
+                Here are the list of registrations
               </p>
             </CardHeader>
             <CardBody>

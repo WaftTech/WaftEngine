@@ -16,7 +16,12 @@ import * as actions from "./actions";
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
   yield call(
-    Api.get("blog", actions.loadAllSuccess, actions.loadAllFailure, token)
+    Api.get(
+      "designation",
+      actions.loadAllSuccess,
+      actions.loadAllFailure,
+      token
+    )
   );
 }
 
@@ -24,7 +29,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `blog/${action.payload}`,
+      `designation/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token
@@ -34,7 +39,7 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push("/wt/blog-manage"));
+  yield put(push("/wt/designation-manage"));
 }
 
 function* addEdit(action) {
@@ -43,7 +48,7 @@ function* addEdit(action) {
   const { ...data } = action.payload;
   yield fork(
     Api.post(
-      "blog/",
+      "designation",
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
