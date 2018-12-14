@@ -21,5 +21,14 @@ export default defineMessages({
   roleAction: {
     id: 'app.containers.RoleManagePage.roleAction',
     defaultMessage: 'Action',
+  },
+  roleManagement: {
+    id: 'app.containers.RoleManagePage.roleManagement',
+    defaultMessage: 'Role Management',
+  },
+  listOfRoles: {
+    id: 'app.containers.RoleManagePage.listOfRoles',
+    defaultMessage: 'Here are the list of roles'
   }
+
 });

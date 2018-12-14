@@ -32,6 +32,9 @@
   "app.containers.RoleManagePage.roleDescription": "विवरण",
   "app.containers.RoleManagePage.roleIsActive": "सक्रिय छ",
   "app.containers.RoleManagePage.roleAction": "कार्य",
+  "app.containers.RoleManagePage.roleManagement":"भूमिका व्यवस्थापन",
+  "app.containers.RoleManagePage.listOfRoles":"यहाँ भूमिकाहरूको सूची हो",
+
 
   "app.containers.ContentListingPage.contentName": "सामाग्री नाम",
   "app.containers.ContentListingPage.description": "विवरण",
