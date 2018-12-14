@@ -66,6 +66,7 @@ otherHelper.validation = (data, validationArray) => {
   let errors = {};
   validationArray.forEach(validationObj => {
     let value = data[validationObj.field];
+    value = !isEmpty(value) ? value : '';
     const validation = validationObj.validate;
     for (let i = 0; i < validation.length; i++) {
       const val = validation[i];
