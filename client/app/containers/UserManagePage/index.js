@@ -85,11 +85,12 @@ export class UserManagePage extends React.Component {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
-      ({ email, name, email_verified, roles, avatar, _id }) => [
+      ({ email, name, email_verified, avatar, roles, _id }) => [
         email,
         name,
         "" + email_verified,
-        roles,
+        <ul>{roles.map(each => <li key={each._id}>{each.RolesTitle}</li>)}</ul>,
+
         <img src={avatar} style={{ height: 40 }} />,
         <React.Fragment>
           <Tooltip
