@@ -11,6 +11,7 @@ Validatedata.sanitize = (req, res, next) => {
       sanitize: {
         rtrim: true,
         ltrim: true,
+        trim: true,
       },
     },
   ];
