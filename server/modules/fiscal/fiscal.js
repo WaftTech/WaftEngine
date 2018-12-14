@@ -4,12 +4,12 @@ const { slugify } = require("../../helper/others.helper");
 
 const FiscalSchema = new Schema({
   FiscalYear: { type: String, required: true },
-  From: { type: Date, required: true },
-  To: { type: Date, required: true },
-  IsCurrent: { type: Boolean, required: true, default: false },
-  IsActive: { type: Boolean, required: true, default: false },
+  From: { type: Date, required: false },
+  To: { type: Date, required: false },
+  IsCurrent: { type: Boolean, required: false, default: false },
+  IsActive: { type: Boolean, required: false, default: false },
   Created_by: { type: Schema.Types.ObjectId, required: false },
-  CreatedDate: { type: Date, default: Date.now }
+  CreatedDate: { type: Date, default: Date.now },
 });
 
-module.exports = Fiscal = mongoose.model("fiscal", FiscalSchema);
+module.exports = Fiscal = mongoose.model('fiscal', FiscalSchema);
