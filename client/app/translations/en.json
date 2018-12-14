@@ -24,6 +24,8 @@
   "app.containers.RoleManagePage.roleDescription": "Description",
   "app.containers.RoleManagePage.roleIsActive": "Is Active",
   "app.containers.RoleManagePage.roleAction": "Action",
+  "app.containers.RoleManagePage.roleManagement":"Role Management",
+  "app.containers.RoleManagePage.listOfRoles":"Here are the list of roles",
 
   "app.containers.ContentListingPage.contentName":"Content Name",
   "app.containers.ContentListingPage.description":"Description",
