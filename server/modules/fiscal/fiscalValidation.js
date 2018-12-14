@@ -13,13 +13,6 @@ Validatedata.sanitize = (req, res, next) => {
         ltrim: true,
       },
     },
-    {
-      field: 'IsActive',
-      sanitize: {
-        rtrim: true,
-        toBoolean: true,
-      },
-    },
   ];
   OtherHelper.sanitize(req, sanitizeArray);
   next();
@@ -85,44 +78,44 @@ Validatedata.validateInput = (req, res, next) => {
         },
       ],
     },
-    {
-      field: 'Email',
-      validate: [
-        {
-          condition: 'IsEmail',
-          msg: fiscalConfig.validateFiscal.IsEmail,
-        },
-      ],
-    },
-    {
-      field: 'Link',
-      validate: [
-        {
-          condition: 'IsURL',
-          msg: fiscalConfig.validateFiscal.IsURL,
-          option: { protocols: ['http', 'https', 'ftp'] },
-        },
-      ],
-    },
-    {
-      field: 'IsActive',
-      validate: [
-        {
-          condition: 'IsBoolean',
-          msg: fiscalConfig.validateFiscal.IsBoolean,
-        },
-      ],
-    },
-    {
-      field: 'PhoneNumber',
-      validate: [
-        {
-          condition: 'IsPhone',
-          msg: fiscalConfig.validateFiscal.IsPhone,
-          option: { isMobile: true, isLandLine: false },
-        },
-      ],
-    },
+    // {
+    //   field: 'Email',
+    //   validate: [
+    //     {
+    //       condition: 'IsEmail',
+    //       msg: fiscalConfig.validateFiscal.IsEmail,
+    //     },
+    //   ],
+    // },
+    // {
+    //   field: 'Link',
+    //   validate: [
+    //     {
+    //       condition: 'IsURL',
+    //       msg: fiscalConfig.validateFiscal.IsURL,
+    //       option: { protocols: ['http', 'https', 'ftp'] },
+    //     },
+    //   ],
+    // },
+    // {
+    //   field: 'IsActive',
+    //   validate: [
+    //     {
+    //       condition: 'IsBoolean',
+    //       msg: fiscalConfig.validateFiscal.IsBoolean,
+    //     },
+    //   ],
+    // },
+    // {
+    //   field: 'PhoneNumber',
+    //   validate: [
+    //     {
+    //       condition: 'IsPhone',
+    //       msg: fiscalConfig.validateFiscal.IsPhone,
+    //       option: { isMobile: true, isLandLine: false },
+    //     },
+    //   ],
+    // },
   ];
   const errors = OtherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
