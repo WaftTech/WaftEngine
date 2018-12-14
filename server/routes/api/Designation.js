@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const dModule = require('../../modules/Designation/DesignationController');
+const dModule = require("../../modules/Designation/DesignationController");
 
 const validator = require('validator');
 const isEmpty = require('../../validation/isEmpty');

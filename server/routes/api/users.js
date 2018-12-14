@@ -21,20 +21,20 @@ router.get('/test', (req, res) =>
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/', authorization, user.getAllUser);
+router.get('/', authorization, authentication, user.getAllUser);
 
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/detail/:id', authorization, user.getUserDetail);
+router.get('/detail/:id', authorization, authentication, user.getUserDetail);
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.post('/detail/:id', authorization, user.updateUserDetail);
+router.post('/detail/:id', authorization, authentication, user.updateUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new

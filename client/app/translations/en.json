@@ -11,5 +11,23 @@
   "app.containers.WtDashboard.roleManage": "Role Manage",
   "app.containers.WtDashboard.moduleManage": "Module Manage",
   "app.containers.WtDashboard.userManage": "User Manage",
-  "app.containers.WtDashboard.contentManage": "Content Manage"
+  "app.containers.WtDashboard.contentManage": "Content Manage",
+
+  "app.containers.ModuleManagePage.moduleManage": "Module Manage",
+  "app.containers.ModuleManagePage.moduleAction": "Action",
+
+  "app.containers.RoleManagePage.roleTitle": "Title",
+  "app.containers.RoleManagePage.roleDescription": "Description",
+  "app.containers.RoleManagePage.roleIsActive": "Is Active",
+  "app.containers.RoleManagePage.roleAction": "Action",
+
+  "app.containers.ContentListingPage.contentName":"Content Name",
+  "app.containers.ContentListingPage.description":"Description",
+  "app.containers.ContentListingPage.publishedFrom":"Published From",
+  "app.containers.ContentListingPage.publishedTo":"Published To",
+  "app.containers.ContentListingPage.isActive":"Is Active",
+  "app.containers.ContentListingPage.isFeatured":"Is Featured",
+  "app.containers.ContentListingPage.contentImage":"Content Image",
+  "app.containers.ContentListingPage.addedTo":"Added To",
+  "app.containers.ContentListingPage.operations":"Operations"
 }
