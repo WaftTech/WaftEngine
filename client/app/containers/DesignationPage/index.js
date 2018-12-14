@@ -83,7 +83,7 @@ export class DesignationPage extends React.Component {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
-      ({ Designation, update_date, IsActive }) => [
+      ({ Designation, update_date, IsActive, _id }) => [
         Designation,
         moment(update_date).format("MMM Do YY"),
         IsActive,
