@@ -42,5 +42,11 @@
   "app.containers.RoleManagePage.roleTitle": "शीर्षक",
   "app.containers.RoleManagePage.roleDescription": "विवरण",
   "app.containers.RoleManagePage.roleIsActive": "सक्रिय छ",
-  "app.containers.RoleManagePage.roleAction": "कार्य"
+  "app.containers.RoleManagePage.roleAction": "कार्य",
+
+  "app.containers.FiscalYearPage.roleTitle": "वित्तीय वर्ष",
+  "app.containers.FiscalYearPage.rangeFrom": "दायरा बाट",
+  "app.containers.FiscalYearPage.rangeTo": "दायरा",
+  "app.containers.FiscalYearPage.isCurrent": "वर्तमान हो",
+  "app.containers.FiscalYearPage.isActive": "सक्रिय छ"
 }
