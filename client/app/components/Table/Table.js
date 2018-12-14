@@ -60,7 +60,7 @@ CustomTable.propTypes = {
     'rose',
     'gray',
   ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string),
+  tableHead: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node])),
   tableData: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node])),
   ),
