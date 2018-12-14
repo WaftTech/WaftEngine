@@ -21,6 +21,16 @@ otherHelper.sendResponse = (res, status, success, data, errors, msg, token, noda
   if (token) response.token = token;
   return res.status(status).json(response);
 };
+otherHelper.paginationSendResponse = (res, status, data, msg, pageno, pagesize, totaldata) => {
+  const response = {};
+  if (data) response.data = data;
+  if (msg) response.msg = msg;
+  if (pageno) response.pageno = pageno;
+  if (pagesize) response.pagesize = pagesize;
+  if (totaldata) response.totaldata = totaldata;
+  return res.status(status).json(response);
+};
+
 otherHelper.sanitize = (req, sanitizeArray) => {
   sanitizeArray.forEach(sanitizeObj => {
     const sanitization = sanitizeObj.sanitize;
