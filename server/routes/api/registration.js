@@ -9,20 +9,9 @@ const { authorization } = require('../../middleware/authentication.middleware');
 
 const registrationValidation = require('./../../modules/registration/registrationValidation');
 
-
-
-
-
-router.get('/', authorization,registrationModule.getData);
-router.get('/:id',authorization, registrationModule.getDataByID);
-router.post('/', authorization, upload.array('file',1), registrationValidation.validate, registrationValidation.duplicateValidation, registrationModule.saveData);
-router.delete('/:id', authorization,  registrationModule.deleteById);
-
-
-
-
- 
-  
-
+router.get('/', authorization, registrationModule.getData);
+router.get('/:id', authorization, registrationModule.getDataByID);
+router.post('/', authorization, upload.array('file', 1), registrationValidation.sanitize, registrationValidation.validate, registrationValidation.duplicateValidation, registrationModule.saveData);
+router.delete('/:id', authorization, registrationModule.deleteById);
 
 module.exports = router;
