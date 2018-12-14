@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";

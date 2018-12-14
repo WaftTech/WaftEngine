@@ -65,15 +65,15 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class BlogPage extends React.Component {
+export class DesignationPage extends React.Component {
   componentDidMount() {
     this.props.loadAll();
   }
   handleAdd = () => {
-    this.props.history.push("/wt/blog-manage/add");
+    this.props.history.push("/wt/designation-manage/add");
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/blog-manage/edit/${id}`);
+    this.props.history.push(`/wt/designation-manage/edit/${id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -82,15 +82,11 @@ export class BlogPage extends React.Component {
   render() {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
-    console.log(allLinksObj);
-
     const tableData = allLinksObj.map(
-      ({ _id, BlogTitle, Description, Added_by, Added_at }) => [
-        BlogTitle,
-        Description,
-        Added_by,
-        moment(Added_at).format("MMMM Do YYYY"),
-
+      ({ Designation, update_date, IsActive }) => [
+        Designation,
+        moment(update_date).format("MMM Do YY"),
+        IsActive,
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -132,19 +128,18 @@ export class BlogPage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Blog Management</h4>
+              <h4 className={classes.cardTitleWhite}>Designation Management</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of blogs
+                Here are the list of Designation
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.blogTitle} />,
-                  <FormattedMessage {...messages.blogContent} />,
-                  <FormattedMessage {...messages.blogPublisher} />,
-                  <FormattedMessage {...messages.blogDate} />
+                  <FormattedMessage {...messages.designation} />,
+                  <FormattedMessage {...messages.updateDate} />,
+                  <FormattedMessage {...messages.isActive} />
                 ]}
                 tableData={tableData}
               />
@@ -166,7 +161,7 @@ export class BlogPage extends React.Component {
   }
 }
 
-BlogPage.propTypes = {
+DesignationPage.propTypes = {
   loadAll: PropTypes.func.isRequired
 };
 
@@ -183,8 +178,8 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: "blogPage", reducer });
-const withSaga = injectSaga({ key: "blogPage", saga });
+const withReducer = injectReducer({ key: "designationPage", reducer });
+const withSaga = injectSaga({ key: "designationPage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -194,4 +189,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(BlogPage);
+)(DesignationPage);
