@@ -13,13 +13,6 @@ Validatedata.sanitize = (req, res, next) => {
         ltrim: true
       }
     }
-    // {
-    //   field: "IsActive",
-    //   sanitize: {
-    //     rtrim: true,
-    //     toBoolean: true
-    //   }
-    // }
   ];
   OtherHelper.sanitize(req, sanitizeArray);
   next();
@@ -83,46 +76,46 @@ Validatedata.validateInput = (req, res, next) => {
     //       condition: "IsDate",
     //       msg: fiscalConfig.validateFiscal.InvalidTo
     //     }
-    //   ]
+    // ]
     // }
     // {
-    //   field: "Email",
+    //   field: 'Email',
     //   validate: [
     //     {
-    //       condition: "IsEmail",
-    //       msg: fiscalConfig.validateFiscal.IsEmail
-    //     }
-    //   ]
+    //       condition: 'IsEmail',
+    //       msg: fiscalConfig.validateFiscal.IsEmail,
+    //     },
+    //   ],
     // },
     // {
-    //   field: "Link",
+    //   field: 'Link',
     //   validate: [
     //     {
-    //       condition: "IsURL",
+    //       condition: 'IsURL',
     //       msg: fiscalConfig.validateFiscal.IsURL,
-    //       option: { protocols: ["http", "https", "ftp"] }
-    //     }
-    //   ]
+    //       option: { protocols: ['http', 'https', 'ftp'] },
+    //     },
+    //   ],
     // },
     // {
-    //   field: "IsActive",
+    //   field: 'IsActive',
     //   validate: [
     //     {
-    //       condition: "IsBoolean",
-    //       msg: fiscalConfig.validateFiscal.IsBoolean
-    //     }
-    //   ]
+    //       condition: 'IsBoolean',
+    //       msg: fiscalConfig.validateFiscal.IsBoolean,
+    //     },
+    //   ],
     // },
     // {
-    //   field: "PhoneNumber",
+    //   field: 'PhoneNumber',
     //   validate: [
     //     {
-    //       condition: "IsPhone",
+    //       condition: 'IsPhone',
     //       msg: fiscalConfig.validateFiscal.IsPhone,
-    //       option: { isMobile: true, isLandLine: false }
-    //     }
-    //   ]
-    // }
+    //       option: { isMobile: true, isLandLine: false },
+    //     },
+    //   ],
+    // },
   ];
   const errors = OtherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
