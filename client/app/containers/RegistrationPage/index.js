@@ -83,7 +83,7 @@ export class RegistrationPage extends React.Component {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
-      ({ RegistrationNo, SenderName, ReceiverName, RegisterDate }) => [
+      ({ RegistrationNo, SenderName, ReceiverName, RegisterDate, _id }) => [
         RegistrationNo,
         SenderName,
         ReceiverName,
