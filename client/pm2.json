@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "ASK4TRIP-CLIENT-ADMIN",
+      "name": "HR-APP-CLIENT",
       "script": "index.js",
       "merge_logs": true,
       "watch": true,
