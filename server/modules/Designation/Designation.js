@@ -14,8 +14,6 @@ const designationschema = new Schema({
   IsDeleted: { type: Boolean, required: true, default: false },
   Deleted_by: { type: Schema.Types.ObjectId },
   Deleted_at: { Date },
-
-  Phone: { type: number, required: true },
 });
 
 module.exports = Designation = mongoose.model('Designation', designationschema);

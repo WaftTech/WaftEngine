@@ -5,7 +5,16 @@ const DesignationSch = require('./Designation');
 const DesignationController = {};
 
 DesignationController.GetDesignation = async (req, res, next) => {
-  let designation = await DesignationSch.find({ IsDeleted: false });
+  if (req.query.search) {
+    let searchvars = req.query.search.split('_');
+    searchfield = searchvars[0];
+    searchkey = searchvars[1];
+    searchquery = { [searchfield]: { $regex: searchkey, $options: 'i' } };
+  } else {
+    searchquery = {};
+  }
+
+  let designation = await DesignationSch.find({ ...searchquery, IsDeleted: false });
   return otherHelper.sendResponse(res, HttpStatus.OK, true, designation, null, 'Designation Get Success !!', null, 'Designation Not Found');
 };
 

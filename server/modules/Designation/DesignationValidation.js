@@ -13,7 +13,7 @@ const validationhelper = require('./../../helper/validate.helper');
 const DesignationValidation = {};
 
 DesignationValidation.Designation = async (req, res, next) => {
-  let errors = await validationhelper.Designation (req.body, [
+  let errors = await validationhelper.validate(req.body, [
     {
       field: 'Designation',
       validate: [
@@ -30,19 +30,14 @@ DesignationValidation.Designation = async (req, res, next) => {
           },
         },
       ],
-    }])
-  
-  if(errors){
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+    },
+  ]);
 
-  }
-  else{
+  if (!isEmpty(errors)) {
+    //console.log(errors);
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+  } else {
     next();
   }
-  
-  
-  
-  
-  
-  };
-  module.exports = DesignationValidation ;
+};
+module.exports = DesignationValidation;
