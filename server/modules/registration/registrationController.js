@@ -45,8 +45,8 @@ registrationController.getData = async (req, res, next) => {
   } else {
     size = size_default;
   }
-  console.log('page no:', page);
-  console.log('page size:', size);
+  //console.log('page no:', page);
+  //console.log('page size:', size);
 
   try {
     let data = await registrationModel
