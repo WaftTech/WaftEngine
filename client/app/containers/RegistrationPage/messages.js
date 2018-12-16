@@ -25,5 +25,9 @@ export default defineMessages({
   registerDate: {
     id: "app.containers.RegistrationPage.registerDate",
     defaultMessage: "Register Date"
+  },
+  remarks: {
+    id: "app.containers.RegistrationPage.remarks",
+    defaultMessage: "Remarks"
   }
 });

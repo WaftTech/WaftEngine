@@ -26,7 +26,7 @@ import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest } from "./actions";
+import { loadAllRequest, deleteOneRequest } from "./actions";
 import { makeSelectAll } from "./selectors";
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
@@ -77,6 +77,7 @@ export class RegistrationPage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
+    this.props.deleteOne(id);
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
   };
   render() {
@@ -89,6 +90,7 @@ export class RegistrationPage extends React.Component {
         ReceiverName,
         Subject,
         RegisterDate,
+        Remarks,
         _id
       }) => [
         RegistrationNo,
@@ -96,6 +98,7 @@ export class RegistrationPage extends React.Component {
         ReceiverName,
         Subject,
         moment(RegisterDate).format("MMM Do YY"),
+        Remarks,
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -152,7 +155,8 @@ export class RegistrationPage extends React.Component {
                   <FormattedMessage {...messages.senderName} />,
                   <FormattedMessage {...messages.receiverName} />,
                   <FormattedMessage {...messages.subject} />,
-                  <FormattedMessage {...messages.registerDate} />
+                  <FormattedMessage {...messages.registerDate} />,
+                  <FormattedMessage {...messages.remarks} />
                 ]}
                 tableData={tableData}
               />
@@ -183,7 +187,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest())
+  loadAll: () => dispatch(loadAllRequest()),
+  deleteOne: (id) => dispatch(deleteOneRequest(id))
 });
 
 const withConnect = connect(

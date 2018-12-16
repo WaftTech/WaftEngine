@@ -5,6 +5,7 @@ import { compose } from "redux";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
+import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
@@ -102,18 +103,92 @@ class AddEdit extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
+                      labelText="Subject"
+                      id="subject"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.Subject,
+                        onChange: this.handleChange("Subject")
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Sender Name"
+                      id="sender-name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.SenderName,
+                        onChange: this.handleChange("SenderName")
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Receiver Name"
+                      id="receiver-name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.ReceiverName,
+                        onChange: this.handleChange("ReceiverName")
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Remarks"
+                      id="remarks"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.Remarks,
+                        onChange: this.handleChange("Remarks")
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                {/* <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                  <TextField
+                        id="date"
+                        label="RegistrationDate"
+                        type="date"
+                        value={this.state.RegistrationDate}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        onChange={this.handleChange("RegistrationDate")}
+                      />
+                    <CustomInput
                       labelText="RegistrationDate"
                       id="registration-date"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
+                        type: 'date',
                         value: this.state.RegistrationDate,
-                        onChange: this.handleChange("RegistrationDate")
+                        onChange: this.handleChange("RegistrationDate"),
+                        InputLabelProps:{
+                          shrink: true,
+                        }
                       }}
                     />
                   </GridItem>
-                </GridContainer>
+                </GridContainer> */}
 
               </CardBody>
               <CardFooter>
@@ -134,8 +209,8 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "roleManagePage", reducer });
-const withSaga = injectSaga({ key: "roleManagePage", saga });
+const withReducer = injectReducer({ key: "registrationPage", reducer });
+const withSaga = injectSaga({ key: "registrationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
