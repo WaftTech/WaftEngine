@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "ASK4TRIP-SERVER-API",
+      "name": "HR-APP-SERVER",
       "script": "index.js",
       "merge_logs": true,
       "watch": true,
