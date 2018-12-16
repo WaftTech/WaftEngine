@@ -8,26 +8,26 @@ import { defineMessages } from "react-intl";
 export default defineMessages({
   email: {
     id: "app.containers.UserManagePage.email",
-    defaultMessage: "email"
+    defaultMessage: "Email"
   },
   name: {
     id: "app.containers.UserManagePage.name",
-    defaultMessage: "name"
+    defaultMessage: "Name"
   },
   emailVerified: {
     id: "app.containers.UserManagePage.emailVerified",
-    defaultMessage: "emailVerified"
+    defaultMessage: "Email Verified"
   },
   roles: {
     id: "app.containers.UserManagePage.roles",
-    defaultMessage: "roles"
+    defaultMessage: "Roles"
   },
   avtar: {
     id: "app.containers.UserManagePage.avtar",
-    defaultMessage: "avtar"
+    defaultMessage: "Avatar"
   },
   operations: {
     id: "app.containers.UserManagePage.operations",
-    defaultMessage: "operations"
+    defaultMessage: "Operations"
   }
 });
