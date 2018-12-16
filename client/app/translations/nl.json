@@ -45,10 +45,6 @@
   "app.containers.ContentListingPage.addedTo": "यसमा थपियो",
   "app.containers.ContentListingPage.operations": "सञ्चालनहरू",
 
-  "app.containers.RoleManagePage.roleTitle": "शीर्षक",
-  "app.containers.RoleManagePage.roleDescription": "विवरण",
-  "app.containers.RoleManagePage.roleIsActive": "सक्रिय छ",
-  "app.containers.RoleManagePage.roleAction": "कार्य",
 
   "app.containers.DesignationPage.designation": "पद",
   "app.containers.DesignationPage.updateDate": "अद्यावधिक मिति",

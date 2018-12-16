@@ -21,6 +21,13 @@
   "app.containers.ModuleManagePage.moduleManage": "Module Manage",
   "app.containers.ModuleManagePage.moduleAction": "Action",
 
+  "app.containers.UserManagePage.email": "Email",
+  "app.containers.UserManagePage.name": "Name",
+  "app.containers.UserManagePage.emailVerified": "Email Verified",
+  "app.containers.UserManagePage.roles": "Roles",
+  "app.containers.UserManagePage.avtar": "Avatar",
+  "app.containers.UserManagePage.operations": "Operations",
+
   "app.containers.RoleManagePage.roleTitle": "Title",
   "app.containers.RoleManagePage.roleDescription": "Description",
   "app.containers.RoleManagePage.roleIsActive": "Is Active",
