@@ -34,23 +34,57 @@ registrationController.saveData = async (req, res, next) => {
 registrationController.getData = async (req, res, next) => {
   let page;
   let size;
+  // let sortfield;
+  // let sortby;
+  let sortquery;
+  // let searchfield;
+  // let searchkey;
+  let searchquery;
   const size_default = 10;
-  if (req.query.page) {
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
     page = Math.abs(req.query.page);
   } else {
     page = 1;
   }
-  if (req.query.size) {
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
     size = Math.abs(req.query.size);
   } else {
     size = size_default;
   }
-  console.log('page no:', page);
-  console.log('page size:', size);
-
+  // console.log('page no:', page);
+  // console.log('page size:', size);
+  if (req.query.sort) {
+    let sortfield = req.query.sort.slice(1);
+    let sortby = req.query.sort.charAt(0);
+    // console.log('sortfield: ', sortfield);
+    // console.log('sortby: ', sortby);
+    if (sortby == 1 && !isNaN(sortby)) {
+      //one is ascending
+      sortquery = sortfield;
+    } else if (sortby == 0 && !isNaN(sortby)) {
+      //zero is descending
+      sortquery = '-' + sortfield;
+    } else {
+      sortquery = '';
+    }
+  }
+  if (req.query.search) {
+    let searchvars = req.query.search.split('_');
+    let searchfield = searchvars[0];
+    let searchkey = searchvars[1];
+    // console.log('searchField: ', searchfield);
+    // console.log('searchKey: ', searchkey);
+    //searchquery = { $regex: searchkey, $options: 'i x' };
+    searchquery = { [searchfield]: { $regex: searchkey, $options: 'i x' } };
+    console.log(searchquery);
+  } else {
+    searchquery = {};
+    console.log(searchquery);
+  }
   try {
     let data = await registrationModel
-      .find({ IsDeleted: false }, { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 })
+      .find({ IsDeleted: false, ...searchquery }, { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 })
+      .sort(sortquery)
       .skip((page - 1) * size)
       .limit(size * 1);
     let totaldata = await registrationModel.countDocuments({ IsDeleted: false });
