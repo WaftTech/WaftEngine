@@ -18,6 +18,10 @@ export default defineMessages({
     id: "app.containers.RegistrationPage.receiverName",
     defaultMessage: "Receiver Name"
   },
+  subject: {
+    id: "app.containers.RegistrationPage.subject",
+    defaultMessage: "Subject"
+  },
   registerDate: {
     id: "app.containers.RegistrationPage.registerDate",
     defaultMessage: "Register Date"
