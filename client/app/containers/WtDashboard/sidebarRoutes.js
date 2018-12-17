@@ -15,8 +15,8 @@ import RoleManagePage from "../RoleManagePage";
 import RoleManageAddEditPage from "../RoleManagePage/AddEditPage";
 import FiscalYearPage from "../FiscalYearPage";
 import FiscalYearAddEditPage from "../FiscalYearPage/AddEditPage";
-import BlogPage from "../BlogPage";
-import BlogAddEditPage from "../BlogPage/AddEditPage";
+import DesignationPage from "../DesignationPage";
+import DesignationAddEditPage from "../DesignationPage/AddEditPage";
 import RegistrationPage from "../RegistrationPage";
 import RegistrationAddEditPage from "../RegistrationPage/AddEditPage";
 import ModuleManagePage from "../ModuleManagePage";
@@ -60,29 +60,28 @@ const dashboardRoutes = [
     icon: PermContactCalendar,
     component: RoleManagePage
   },
-
   {
-    path: "/wt/blog-manage/add",
-    sidebarName: <FormattedMessage {...messages.blogManage} />,
-    navbarName: <FormattedMessage {...messages.blogManage} />,
+    path: "/wt/designation-manage/add",
+    sidebarName: <FormattedMessage {...messages.designationManage} />,
+    navbarName: <FormattedMessage {...messages.designationManage} />,
     icon: PermContactCalendar,
-    component: BlogAddEditPage,
+    component: DesignationAddEditPage,
     hide: true
   },
   {
-    path: "/wt/blog-manage/edit/:id",
-    sidebarName: <FormattedMessage {...messages.blogManage} />,
-    navbarName: <FormattedMessage {...messages.blogManage} />,
+    path: "/wt/designation-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.designationManage} />,
+    navbarName: <FormattedMessage {...messages.designationManage} />,
     icon: PermContactCalendar,
-    component: BlogAddEditPage,
+    component: DesignationAddEditPage,
     hide: true
   },
   {
-    path: "/wt/blog-manage",
-    sidebarName: <FormattedMessage {...messages.blogManage} />,
-    navbarName: <FormattedMessage {...messages.blogManage} />,
+    path: "/wt/designation-manage",
+    sidebarName: <FormattedMessage {...messages.designationManage} />,
+    navbarName: <FormattedMessage {...messages.designationManage} />,
     icon: PermContactCalendar,
-    component: BlogPage
+    component: DesignationPage
   },
 
   {
@@ -133,29 +132,6 @@ const dashboardRoutes = [
     component: FiscalYearPage
   },
 
-  {
-    path: "/wt/blog-manage/add",
-    sidebarName: <FormattedMessage {...messages.blogManage} />,
-    navbarName: <FormattedMessage {...messages.blogManage} />,
-    icon: PermContactCalendar,
-    component: BlogAddEditPage,
-    hide: true
-  },
-  {
-    path: "/wt/blog-manage/edit/:id",
-    sidebarName: <FormattedMessage {...messages.blogManage} />,
-    navbarName: <FormattedMessage {...messages.blogManage} />,
-    icon: PermContactCalendar,
-    component: BlogAddEditPage,
-    hide: true
-  },
-  {
-    path: "/wt/blog-manage",
-    sidebarName: <FormattedMessage {...messages.blogManage} />,
-    navbarName: <FormattedMessage {...messages.blogManage} />,
-    icon: PermContactCalendar,
-    component: BlogPage
-  },
 
   {
     path: "/wt/module-manage/add",
