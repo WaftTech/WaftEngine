@@ -19,8 +19,8 @@ import GridContainer from '../../components/Grid/GridContainer';
 import Button from '../../components/CustomButtons/Button';
 import Table from '../../components/Table/Table';
 import Card from '../../components/Card/Card';
-import CardHeader from '../../components/Card/CardHeader';
-import CardBody from '../../components/Card/CardBody';
+// import CardHeader from "../../components/Card/CardHeader";
+// import CardBody from "../../components/Card/CardBody";
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -28,6 +28,8 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadAllRequest } from './actions';
 import { makeSelectAll } from './selectors';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const styles = theme => ({
   button: {
@@ -133,29 +135,29 @@ export class ModuleManagePage extends React.Component {
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="primary">
+          <div className="pb-5 mb-5">
+            <Card>
+              {/* <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Module Management</h4>
               <p className={classes.cardCategoryWhite}>Here are the list of modules</p>
-            </CardHeader>
-            <CardBody>
+            </CardHeader> */}
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Module Name', 'Action']}
+                tableHead={[<FormattedMessage {...messages.moduleManage} />, <FormattedMessage {...messages.moduleAction} />]}
                 tableData={tableData}
               />
               <Button
                 variant="fab"
                 color="primary"
                 aria-label="Add"
-                className={classes.button}
+                className="customFabButton"
                 round={true}
                 onClick={this.handleAdd}
               >
                 <AddIcon />
               </Button>
-            </CardBody>
-          </Card>
+            </Card>
+          </div>
         </GridItem>
       </GridContainer>
     );

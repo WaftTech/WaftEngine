@@ -228,9 +228,9 @@ class AddEdit extends Component {
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
-              <CardHeader color="primary">
+              {/* <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>Add/Edit Module</h4>
-              </CardHeader>
+              </CardHeader> */}
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
@@ -267,26 +267,18 @@ class AddEdit extends Component {
                     handleRemovePath={this.handleRemovePath}
                   />
                 ))}
-                <Card>
-                  <CardBody className="text-center">
-                    <IconButton
-                      className="btn-circle-add"
-                      color="primary"
-                      aria-label="Add"
-                      onClick={this.handleAddPath()}
-                    >
-                      <AddIcon fontSize="large" />
-                    </IconButton>
-                  </CardBody>
-                </Card>
+                <div className="addCard" onClick={this.handleAddPath()}>
+                  <Button>
+                    <AddIcon />
+                    Add Access Type
+                  </Button>
+                </div>
               </GridItem>
             </GridContainer>
             <CardFooter>
-              <Button size="lg" onClick={this.handleGoBack}>
-                Back
-              </Button>
+              <Button onClick={this.handleGoBack}>Back</Button>
 
-              <Button size="lg" color="primary" onClick={this.handleSave}>
+              <Button color="primary" onClick={this.handleSave}>
                 Save Changes
               </Button>
             </CardFooter>
