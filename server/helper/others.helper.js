@@ -43,60 +43,42 @@ otherHelper.paginationSendResponse = (res, status, data, msg, pageno, pagesize, 
 
 otherHelper.sanitize = (req, sanitizeArray) => {
   sanitizeArray.forEach(sanitizeObj => {
+    let vals = req.body[sanitizeObj.field];
+    vals = !isEmpty(vals) ? vals : '';
     const sanitization = sanitizeObj.sanitize;
     // console.log('sanitize', sanitizeObj);
     if (sanitization.rtrim) {
-      req.body[sanitizeObj.field] = Validator.rtrim(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.rtrim(vals);
     }
     if (sanitization.ltrim) {
-      req.body[sanitizeObj.field] = Validator.ltrim(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.ltrim(vals);
     }
     if (sanitization.blacklist) {
-      req.body[sanitizeObj.field] = Validator.blacklist(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.blacklist(vals);
     }
     if (sanitization.whitelist) {
-      req.body[sanitizeObj.field] = Validator.whitelist(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.whitelist(vals);
     }
     if (sanitization.trim) {
-      req.body[sanitizeObj.field] = Validator.trim(req.body[sanitizeObj.field]);
+      vals = Validator.trim(vals);
     }
     if (sanitization.escape) {
-      req.body[sanitizeObj.field] = Validator.escape(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.escape(vals);
     }
     if (sanitization.unescape) {
-      req.body[sanitizeObj.field] = Validator.unescape(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.unescape(vals);
     }
     if (sanitization.toBoolean) {
-      req.body[sanitizeObj.field] = Validator.toBoolean(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.toBoolean(vals);
     }
     if (sanitization.toInt) {
-      req.body[sanitizeObj.field] = Validator.toInt(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.toInt(vals);
     }
     if (sanitization.toFloat) {
-      req.body[sanitizeObj.field] = Validator.toFloat(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.toFloat(vals);
     }
     if (sanitization.toDate) {
-      req.body[sanitizeObj.field] = Validator.toDate(
-        req.body[sanitizeObj.field]
-      );
+      vals = Validator.toDate(vals);
     }
   });
   return;
