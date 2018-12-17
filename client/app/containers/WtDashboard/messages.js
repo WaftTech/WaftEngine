@@ -14,17 +14,14 @@ export default defineMessages({
     id: "app.containers.WtDashboard.roleManage",
     defaultMessage: "Role Manage"
   },
+  designationManage: {
+    id: "app.containers.WtDashboard.designationManage",
+    defaultMessage: "Designation Manage"
+  },
+
   fiscalManage: {
     id: "app.containers.WtDashboard.fiscalManage",
     defaultMessage: "Fiscal Manage"
-  },
-  blogManage: {
-    id: "app.containers.WtDashboard.blogManage",
-    defaultMessage: "Blog Manage"
-  },
-  blogManage: {
-    id: 'app.containers.WtDashboard.blogManage',
-    defaultMessage: 'Blog Manage',
   },
 
   registrationManage: {

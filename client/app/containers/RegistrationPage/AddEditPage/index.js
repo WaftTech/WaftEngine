@@ -5,6 +5,7 @@ import { compose } from "redux";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
+import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
@@ -43,7 +44,7 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { RolesTitle: "", Description: "", IsActive: false };
+  state = { RegistrationNo: "", RegistrationDate: "" };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -55,7 +56,7 @@ class AddEdit extends Component {
     this.setState({ [name]: event.target.checked });
   };
   handleGoBack = () => {
-    this.props.history.push("/wt/role-manage");
+    this.props.history.push("/wt/registration-manage");
   };
   handleSave = () => {
     this.props.addEdit(this.state);
@@ -81,20 +82,20 @@ class AddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Registration</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Role Title"
-                      id="role-title"
+                      labelText="Registration No"
+                      id="registration-no"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.RolesTitle,
-                        onChange: this.handleChange("RolesTitle")
+                        value: this.state.RegistrationNo,
+                        onChange: this.handleChange("RegistrationNo")
                       }}
                     />
                   </GridItem>
@@ -102,34 +103,93 @@ class AddEdit extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Description"
-                      id="role-description"
+                      labelText="Subject"
+                      id="subject"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.Description,
-                        onChange: this.handleChange("Description")
+                        value: this.state.Subject,
+                        onChange: this.handleChange("Subject")
                       }}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.IsActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChecked("IsActive")}
-                          value="IsActive"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
+                    <CustomInput
+                      labelText="Sender Name"
+                      id="sender-name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.SenderName,
+                        onChange: this.handleChange("SenderName")
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Receiver Name"
+                      id="receiver-name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.ReceiverName,
+                        onChange: this.handleChange("ReceiverName")
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Remarks"
+                      id="remarks"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.Remarks,
+                        onChange: this.handleChange("Remarks")
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                {/* <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                  <TextField
+                        id="date"
+                        label="RegistrationDate"
+                        type="date"
+                        value={this.state.RegistrationDate}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        onChange={this.handleChange("RegistrationDate")}
+                      />
+                    <CustomInput
+                      labelText="RegistrationDate"
+                      id="registration-date"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: 'date',
+                        value: this.state.RegistrationDate,
+                        onChange: this.handleChange("RegistrationDate"),
+                        InputLabelProps:{
+                          shrink: true,
+                        }
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer> */}
+
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSave}>
@@ -149,8 +209,8 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "roleManagePage", reducer });
-const withSaga = injectSaga({ key: "roleManagePage", saga });
+const withReducer = injectReducer({ key: "registrationPage", reducer });
+const withSaga = injectSaga({ key: "registrationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
