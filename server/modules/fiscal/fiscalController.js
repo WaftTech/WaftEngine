@@ -41,14 +41,15 @@ FiscalController.GetFiscal = async (req, res, next) => {
     console.log('keys:', data.find_FiscalYear);
     let values = Object.keys(data);
     console.log('values:', values);
-    let result = values.forEach(value => {
-      let data = value.split('_');
+    let results = values.forEach(value => {
+      let result = value.split('_');
       let fields = {};
-      if (data[0] == 'find') {
-        fields = data[1];
+      if (result[0] == 'find') {
+        fields = result[1];
         let searchfields = fields;
-        let searchkeys;
+        let searchkeys = data[value];
         let searchq = { [searchfields]: { $regex: searchkeys, $options: 'i x' }, IsDeleted: false };
+        console.log('searchq:', searchq);
         console.log('fields:', searchfields);
         console.log('keys:', searchkeys);
       }
