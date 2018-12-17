@@ -32,6 +32,21 @@ otherHelper.paginationSendResponse = (res, status, data, msg, pageno, pagesize, 
   return res.status(status).json(response);
 };
 
+otherHelper.getquerySendResponse = async (DesignationSch, page, size, sortq, findquery, selectquery, next) => {
+  let datas = {};
+  try {
+    datas.data = await DesignationSch.find(findquery)
+      .select(selectquery)
+      .sort(sortq)
+      .skip((page - 1) * size)
+      .limit(size * 1);
+    datas.totaldata = await DesignationSch.countDocuments(selectquery);
+  } catch (err) {
+    next(err);
+  }
+  return datas;
+};
+
 otherHelper.getquerySendResponse = async (registrationModel, page, size, sortq, findquery, selectquery, next) => {
   let datas = {};
   try {

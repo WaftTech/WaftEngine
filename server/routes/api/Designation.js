@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const dModule = require("../../modules/Designation/DesignationController");
+const DesignationModule = require('../../modules/Designation/DesignationController');
 
 const validator = require('validator');
 const isEmpty = require('../../validation/isEmpty');
@@ -11,12 +11,12 @@ const OtherHelper = require('../../helper/others.helper');
 
 const DesignationValidation = require('./../../modules/Designation/DesignationValidation');
 
-router.get('/', dModule.GetDesignation);
+router.get('/', DesignationModule.GetDesignation);
 
-router.get('/:id', dModule.GetDesignationDetail);
+router.get('/:id', DesignationModule.getDataByID);
 
-router.post('/', DesignationValidation.Designation, dModule.AddDesignation);
+router.post('/', DesignationValidation.Designation, DesignationModule.AddDesignation);
 
-router.delete('/:id', dModule.DeleteDesignation);
+router.delete('/:id', DesignationModule.deletebyID);
 
 module.exports = router;
