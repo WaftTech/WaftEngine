@@ -26,7 +26,7 @@ import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest } from "./actions";
+import { loadAllRequest, deleteOneRequest } from "./actions";
 import { makeSelectAll } from "./selectors";
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
@@ -66,9 +66,19 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class RegistrationPage extends React.Component {
+  state = { query: {} };
   componentDidMount() {
     this.props.loadAll();
   }
+  handleQueryChange = e => {
+    e.persist();
+    this.setState(state => ({
+      query: {
+        ...state.query,
+        [e.target.name]: e.target.value
+      }
+    }));
+  };
   handleAdd = () => {
     this.props.history.push("/wt/registration-manage/add");
   };
@@ -77,17 +87,32 @@ export class RegistrationPage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
+    this.props.deleteOne(id);
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
+  };
+  handleSearch = () => {
+    this.props.loadAll(this.state.query);
+    this.setState({ query: {} });
   };
   render() {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
-      ({ RegistrationNo, SenderName, ReceiverName, RegisterDate, _id }) => [
+      ({
         RegistrationNo,
         SenderName,
         ReceiverName,
+        Subject,
+        RegisterDate,
+        Remarks,
+        _id
+      }) => [
+        RegistrationNo,
+        SenderName,
+        ReceiverName,
+        Subject,
         moment(RegisterDate).format("MMM Do YY"),
+        Remarks,
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -129,7 +154,27 @@ export class RegistrationPage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Registration Management</h4>
+              <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
+              <input
+                name="Subject"
+                value={this.state.query.Subject || ""}
+                onChange={this.handleQueryChange}
+              />
+              <input
+                name="ReceiverName"
+                value={this.state.query.ReceiverName || ""}
+                onChange={this.handleQueryChange}
+              />
+              <button onClick={this.handleSearch}>Search</button>
+            </CardHeader>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                Registration Management
+              </h4>
               <p className={classes.cardCategoryWhite}>
                 Here are the list of registrations
               </p>
@@ -141,7 +186,9 @@ export class RegistrationPage extends React.Component {
                   <FormattedMessage {...messages.registrationNo} />,
                   <FormattedMessage {...messages.senderName} />,
                   <FormattedMessage {...messages.receiverName} />,
-                  <FormattedMessage {...messages.registerDate} />
+                  <FormattedMessage {...messages.subject} />,
+                  <FormattedMessage {...messages.registerDate} />,
+                  <FormattedMessage {...messages.remarks} />
                 ]}
                 tableData={tableData}
               />
@@ -172,7 +219,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest())
+  loadAll: () => dispatch(loadAllRequest()),
+  deleteOne: (id) => dispatch(deleteOneRequest(id))
 });
 
 const withConnect = connect(
