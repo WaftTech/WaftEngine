@@ -1,19 +1,19 @@
-const HttpStatus = require("http-status");
-const isEmpty = require("../../validation/isEmpty");
-const fiscalConfig = require("./fiscalConfig");
-const OtherHelper = require("../../helper/others.helper");
+const HttpStatus = require('http-status');
+const isEmpty = require('../../validation/isEmpty');
+const fiscalConfig = require('./fiscalConfig');
+const OtherHelper = require('../../helper/others.helper');
 const Validatedata = {};
 
 Validatedata.sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: "FiscalYear",
+      field: 'FiscalYear',
       sanitize: {
         rtrim: true,
         ltrim: true,
-        trim: true
-      }
-    }
+        trim: true,
+      },
+    },
   ];
   OtherHelper.sanitize(req, sanitizeArray);
   next();
@@ -22,88 +22,56 @@ Validatedata.validateInput = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: "FiscalYear",
+      field: 'FiscalYear',
       validate: [
         {
-          condition: "IsEmpty",
-          msg: fiscalConfig.validateFiscal.EmptyFiscalYear
+          condition: 'IsEmpty',
+          msg: fiscalConfig.validateFiscal.EmptyFiscalYear,
         },
         {
-          condition: "IsLength",
+          condition: 'IsLength',
           msg: fiscalConfig.validateFiscal.FiscalLength,
-          option: { min: 4, max: 10 }
+          option: { min: 4, max: 15 },
+        },
+      ],
+    },
+    {
+      field: 'From',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: fiscalConfig.validateFiscal.EmptyFrom,
         },
         {
-          condition: "IsUppercase",
-          msg: fiscalConfig.validateFiscal.Uppercase
-        }
-      ]
-    }
-    // {
-    //   field: 'From',
-    //   validate: [
-    //     {
-    //       condition: 'IsEmpty',
-    //       msg: fiscalConfig.validateFiscal.EmptyFrom,
-    //     },
-    //     {
-    //       condition: 'IsLength',
-    //       msg: fiscalConfig.validateFiscal.FromLength,
-    //       option: { min: 3, max: 4 },
-    //     },
-    //     {
-    //       condition: 'IsAfter',
-    //       msg: fiscalConfig.validateFiscal.IsAfter,
-    //       option: { date: '1971' },
-    //     },
-    //   ],
-    // },
-    // {
-    //   field: 'To',
-    //   validate: [
-    //     {
-    //       condition: 'IsEmpty',
-    //       msg: fiscalConfig.validateFiscal.EmptyTo,
-    //     },
-    //     {
-    //       condition: 'IsLength',
-    //       msg: fiscalConfig.validateFiscal.ToLength,
-    //       option: { min: 3, max: 4 },
-    //     },
-    //     {
-    //       condition: 'IsDate',
-    //       msg: fiscalConfig.validateFiscal.InvalidTo,
-    //     },
-    //   ],
-    // },
-    // {
-    //   field: 'Email',
-    //   validate: [
-    //     {
-    //       condition: 'IsEmail',
-    //       msg: fiscalConfig.validateFiscal.IsEmail,
-    //     },
-    //   ],
-    // },
-    // {
-    //   field: 'Link',
-    //   validate: [
-    //     {
-    //       condition: 'IsURL',
-    //       msg: fiscalConfig.validateFiscal.IsURL,
-    //       option: { protocols: ['http', 'https', 'ftp'] },
-    //     },
-    //   ],
-    // },
-    // {
-    //   field: 'IsActive',
-    //   validate: [
-    //     {
-    //       condition: 'IsBoolean',
-    //       msg: fiscalConfig.validateFiscal.IsBoolean,
-    //     },
-    //   ],
-    // },
+          condition: 'IsLength',
+          msg: fiscalConfig.validateFiscal.FromLength,
+          option: { min: 3, max: 10 },
+        },
+        {
+          condition: 'IsAfter',
+          msg: fiscalConfig.validateFiscal.IsAfter,
+          option: { date: '1971' },
+        },
+      ],
+    },
+    {
+      field: 'To',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: fiscalConfig.validateFiscal.EmptyTo,
+        },
+        {
+          condition: 'IsLength',
+          msg: fiscalConfig.validateFiscal.ToLength,
+          option: { min: 3, max: 10 },
+        },
+        {
+          condition: 'IsDate',
+          msg: fiscalConfig.validateFiscal.InvalidTo,
+        },
+      ],
+    },
     // {
     //   field: 'PhoneNumber',
     //   validate: [
@@ -117,15 +85,8 @@ Validatedata.validateInput = (req, res, next) => {
   ];
   const errors = OtherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return OtherHelper.sendResponse(
-      res,
-      HttpStatus.BAD_REQUEST,
-      false,
-      null,
-      errors,
-      "input error",
-      null
-    );
+    console.log(errors);
+    return OtherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'input error', null);
   } else {
     next();
   }

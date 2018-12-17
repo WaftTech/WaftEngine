@@ -5,24 +5,52 @@ const DesignationSch = require('./Designation');
 const DesignationController = {};
 
 DesignationController.GetDesignation = async (req, res, next) => {
-  if (req.query.search) {
-    let searchvars = req.query.search.split('_');
-    searchfield = searchvars[0];
-    searchkey = searchvars[1];
-    searchquery = { [searchfield]: { $regex: searchkey, $options: 'i' } };
+  let page;
+  let size;
+  let searchquery;
+  let selectquery;
+  let sortquery;
+  const size_default = 5;
+
+  if (req.query.page && !NaN(req.query.page) && req.query.page != 0) {
+    page = Math.abs(req.query.page);
   } else {
-    searchquery = {};
+    page = 1;
   }
-
-  let designation = await DesignationSch.find({ ...searchquery, IsDeleted: false });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, designation, null, 'Designation Get Success !!', null, 'Designation Not Found');
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
+  } else {
+    size = size_default;
+  }
 };
+if (req.query.sort) {
+  let sortfield = req.query.sort.slice(1);
+  let sortby = req.query.sort.charAt(0);
 
-DesignationController.GetDesignationDetail = async (req, res, next) => {
-  //let id = req.params.id;
-  let designation = await DesignationSch.findById(req.params.id);
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, designation, null, 'Designation Get Success !!', null, 'Designation Not Found');
-};
+  if (sortby == 1 && !isNaN(sortby)) {
+    // 1 is for ascending
+    sortquery = sortfield;
+  } else if (sortby == 0 && !isNaN(sortby)) {
+    // 0 is for descending
+    sortquery = '_' + sortfield;
+  } else {
+    sortquery = '';
+  }
+}
+if (req.query.search) {
+  let searchvars = req.query.search.split('_');
+  searchfield = searchvars[0];
+  searchkey = searchvars[1];
+  searchquery = { [searchfield]: { $regex: searchkey, $options: 'i' }, IsDeleted: false };
+} else {
+  searchquery = {};
+}
+
+selectquery = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
+
+let datas = otherHelper.getquerySendResponse(DesignationSch, page, size, sortquery, searchquery, selectquery, next);
+
+return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Designation Data delivered successfully', page, size, datas.totaldata);
 
 DesignationController.AddDesignation = async (req, res, next) => {
   try {
