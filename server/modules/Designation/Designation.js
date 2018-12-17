@@ -12,7 +12,7 @@ const designationschema = new Schema({
     update_date: { type: Date, required: true, default: Date.now },
     IsDeleted: { type: Boolean, required: true, default: false },
     Deleted_by: { type: Schema.Types.ObjectId },
-    Deleted_at: { Date }
+    Deleted_at: { type: Date, required: true, default: Date.now }
 });
 
 module.exports = Designation = mongoose.model('Designation', designationschema )
