@@ -18,4 +18,5 @@ module.exports = {
   saveFiscal: 'Fiscals data saved successfully',
   getFiscals: 'Fiscals data obtained successfully',
   getFiscal: 'Fiscal data obtained successfully',
+  deleteFiscal: 'Fiscal data deleted successfully',
 };
