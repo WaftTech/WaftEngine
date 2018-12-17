@@ -41,7 +41,7 @@ otherHelper.getquerySendResponse = async (registrationModel, page, size, sortq, 
       .sort(sortq)
       .skip((page - 1) * size)
       .limit(size * 1);
-    datas.totaldata = await registrationModel.countDocuments({ IsDeleted: false });
+    datas.totaldata = await registrationModel.countDocuments(selectquery);
   } catch (err) {
     next(err);
   }
