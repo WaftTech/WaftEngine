@@ -43,7 +43,7 @@ registrationController.getData = async (req, res, next) => {
   } else {
     page = 1;
   }
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
     size = Math.abs(req.query.page);
   } else {
     size = size_default;
