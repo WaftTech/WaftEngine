@@ -1,6 +1,6 @@
 /*
  *
- * Blog actions
+ * DesignationPage actions
  *
  */
 

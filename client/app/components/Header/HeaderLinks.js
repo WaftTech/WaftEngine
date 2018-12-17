@@ -1,31 +1,31 @@
-import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
+import React from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import classNames from "classnames";
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Hidden from '@material-ui/core/Hidden';
-import Poppers from '@material-ui/core/Popper';
+import withStyles from "@material-ui/core/styles/withStyles";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Hidden from "@material-ui/core/Hidden";
+import Poppers from "@material-ui/core/Popper";
 // @material-ui/icons
-import Person from '@material-ui/icons/Person';
-import Notifications from '@material-ui/icons/Notifications';
-import Search from '@material-ui/icons/Search';
+import Person from "@material-ui/icons/Person";
+import Notifications from "@material-ui/icons/Notifications";
+import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from 'components/CustomInput/CustomInput';
-import Button from 'components/CustomButtons/Button';
+import CustomInput from "components/CustomInput/CustomInput";
+import Button from "components/CustomButtons/Button";
 
-import headerLinksStyle from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
-import { logout } from '../../containers/App/actions';
-import LanguageSwitcher from '../LanguageSwitcher';
+import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle";
+import { logout } from "../../containers/App/actions";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 class HeaderLinks extends React.Component {
   state = {
-    open: false,
+    open: false
   };
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
@@ -39,6 +39,11 @@ class HeaderLinks extends React.Component {
     this.setState({ open: false });
   };
 
+  searchClicked = e => {
+    e.preventDefault();
+    console.log("hello");
+  };
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
@@ -47,21 +52,27 @@ class HeaderLinks extends React.Component {
         <div className={classes.searchWrapper}>
           <CustomInput
             formControlProps={{
-              className: `${classes.margin} ${classes.search}`,
+              className: `${classes.margin} ${classes.search}`
             }}
             inputProps={{
-              placeholder: 'Search',
+              placeholder: "Search",
               inputProps: {
-                'aria-label': 'Search',
-              },
+                "aria-label": "Search"
+              }
             }}
           />
-          <Button color="white" aria-label="edit" justIcon round>
+          <Button
+            color="Black"
+            aria-label="edit"
+            justIcon
+            round
+            onClick={this.searchClicked}
+          >
             <Search />
           </Button>
         </div>
         <Button
-          color={window.innerWidth > 959 ? 'transparent' : 'white'}
+          color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
           aria-label="Dashboard"
@@ -70,8 +81,8 @@ class HeaderLinks extends React.Component {
           <LanguageSwitcher
             render={changeLocale => (
               <React.Fragment>
-                <span onClick={() => changeLocale('en')}>En</span>|
-                <span onClick={() => changeLocale('nl')}>ने</span>
+                <span onClick={() => changeLocale("en")}>En</span>|
+                <span onClick={() => changeLocale("nl")}>ने</span>
               </React.Fragment>
             )}
           />
@@ -85,10 +96,10 @@ class HeaderLinks extends React.Component {
             buttonRef={node => {
               this.anchorEl = node;
             }}
-            color={window.innerWidth > 959 ? 'transparent' : 'white'}
+            color={window.innerWidth > 959 ? "transparent" : "white"}
             justIcon={window.innerWidth > 959}
             simple={!(window.innerWidth > 959)}
-            aria-owns={open ? 'menu-list-grow' : null}
+            aria-owns={open ? "menu-list-grow" : null}
             aria-haspopup="true"
             onClick={this.handleToggle}
             className={classes.buttonLink}
@@ -106,32 +117,50 @@ class HeaderLinks extends React.Component {
             anchorEl={this.anchorEl}
             transition
             disablePortal
-            className={`${classNames({ [classes.popperClose]: !open })} ${classes.pooperNav}`}
+            className={`${classNames({ [classes.popperClose]: !open })} ${
+              classes.pooperNav
+            }`}
           >
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
                 id="menu-list-grow"
                 style={{
-                  transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom"
                 }}
               >
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                      <MenuItem
+                        onClick={this.handleClose}
+                        className={classes.dropdownItem}
+                      >
                         Mike John responded to your email
                       </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                      <MenuItem
+                        onClick={this.handleClose}
+                        className={classes.dropdownItem}
+                      >
                         You have 5 new tasks
                       </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                      <MenuItem
+                        onClick={this.handleClose}
+                        className={classes.dropdownItem}
+                      >
                         You're now friend with Andrew
                       </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                      <MenuItem
+                        onClick={this.handleClose}
+                        className={classes.dropdownItem}
+                      >
                         Another Notification
                       </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                      <MenuItem
+                        onClick={this.handleClose}
+                        className={classes.dropdownItem}
+                      >
                         Another One
                       </MenuItem>
                     </MenuList>
@@ -142,7 +171,7 @@ class HeaderLinks extends React.Component {
           </Poppers>
         </div>
         <Button
-          color={window.innerWidth > 959 ? 'transparent' : 'white'}
+          color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
           aria-label="Person"
@@ -160,16 +189,16 @@ class HeaderLinks extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout()),
+  logout: () => dispatch(logout())
 });
 
 const withConnect = connect(
   null,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withStyle = withStyles(headerLinksStyle);
 export default compose(
   withConnect,
-  withStyle,
+  withStyle
 )(HeaderLinks);
