@@ -15,6 +15,17 @@ function* loadOne(action) {
   yield call(Api.get(`role/role/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token));
 }
 
+function* deleteOne(action){
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(`role/role/${action.payload}`,
+    actions.deleteOneSuccess,
+    actions.deleteOneFailure,
+    token
+    )
+  );
+}
+
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
   yield put(push('/wt/role-manage'));
@@ -33,4 +44,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
+  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
 }
