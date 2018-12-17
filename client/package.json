@@ -24,8 +24,8 @@
     "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
-    "start": "cross-env NODE_ENV=development node server",
-    "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
+    "client": "cross-env NODE_ENV=development node server",
+    "start:tunnel": "cross-env NODE_ENV=development PORT=5025 ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
     "start:prod": "cross-env NODE_ENV=production node server",
     "presetup": "npm i chalk shelljs",
@@ -45,7 +45,9 @@
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write",
+    "server": "npm start --prefix ../server",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "lint-staged": {
     "*.js": [
@@ -213,6 +215,7 @@
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
     "circular-dependency-plugin": "5.0.2",
+    "concurrently": "^4.1.0",
     "coveralls": "3.0.1",
     "css-loader": "0.28.11",
     "enzyme": "3.3.0",
