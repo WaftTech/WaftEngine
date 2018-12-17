@@ -15,7 +15,8 @@ module.exports = {
     IsURL: "This field should be of url type",
     IsBoolean: "This field requires boolean type data"
   },
-  saveFiscal: "Fiscals data saved successfully",
-  getFiscals: "Fiscals data obtained successfully",
-  getFiscal: "Fiscal data obtained successfully"
+  saveFiscal: 'Fiscals data saved successfully',
+  getFiscals: 'Fiscals data obtained successfully',
+  getFiscal: 'Fiscal data obtained successfully',
+  deleteFiscal: 'Fiscal data deleted successfully',
 };
