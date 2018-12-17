@@ -22,9 +22,10 @@ otherHelper.sendResponse = (res, status, success, data, errors, msg, token, noda
   if (token) response.token = token;
   return res.status(status).json(response);
 };
-otherHelper.paginationSendResponse = (res, status, data, msg, pageno, pagesize, totaldata) => {
+otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, pagesize, totaldata) => {
   const response = {};
   if (data) response.data = data;
+  if (success) response.success = success;
   if (msg) response.msg = msg;
   if (pageno) response.page = pageno;
   if (pagesize) response.size = pagesize;
@@ -32,16 +33,15 @@ otherHelper.paginationSendResponse = (res, status, data, msg, pageno, pagesize, 
   return res.status(status).json(response);
 };
 
-otherHelper.getquerySendResponse = async (registrationModel, page, size, sortq, findquery, selectquery, next) => {
+otherHelper.getquerySendResponse = async (Model, page, size, sortq, findquery, selectquery, next) => {
   let datas = {};
   try {
-    datas.data = await registrationModel
-      .find(findquery)
+    datas.data = await Model.find(findquery)
       .select(selectquery)
       .sort(sortq)
       .skip((page - 1) * size)
       .limit(size * 1);
-    datas.totaldata = await registrationModel.countDocuments(selectquery);
+    datas.totaldata = await Model.countDocuments(findquery);
   } catch (err) {
     next(err);
   }
