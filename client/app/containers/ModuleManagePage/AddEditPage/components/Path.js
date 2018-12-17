@@ -113,7 +113,7 @@ const Path = props => {
                 <li
                   key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}
                 >
-                  <FormControl className="selectbox text-sm">
+                  <FormControl className="selectbox methodInput">
                     <InputLabel
                       htmlFor={`${each._id}-${
                         eachServerRoute._id
