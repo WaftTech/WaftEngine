@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { slugify } = require('../../helper/others.helper');
 
 const ContentSchema = new Schema({
   ContentName: { type: String, required: true },
-  Description: { type: String, required: false },
+  Key: { type: String, required: true, unique: true },
+  Description: { type: String, required: true },
+  ContentHistory: [{ Description: String, Time: Date }],
   PublishFrom: { type: Date, required: false },
   PublishTo: { type: Date, required: false },
   IsActive: { type: Boolean, required: true, default: false },
   IsFeature: { type: Boolean, required: true, default: false },
-  ContentImage: { type: String, required: false },
+  IsDeleted: { type: Boolean, required: true, default: false },
   Added_at: { type: Date, default: Date.now },
 });
 

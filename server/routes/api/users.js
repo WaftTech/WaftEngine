@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const validateRegisterInput = require('../../modules/Users/validation/register');
 
 const user = require('../../modules/Users/UserController.js');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
@@ -29,6 +30,12 @@ router.get('/', authorization, authentication, user.getAllUser);
  */
 router.get('/detail/:id', authorization, authentication, user.getUserDetail);
 /**
+ * @route GET api/user
+ * @description Check user is returning user or new
+ * @access Public
+ */
+router.post('/detail/:id', authorization, authentication, user.updateUserDetail);
+/**
  * @route POST api/user
  * @description Check user is returning user or new
  * @access Public
@@ -40,7 +47,13 @@ router.post('/', user.checkMail);
  * @description Register user route
  * @access Public
  */
-router.post('/register', user.register);
+router.post('/register', validateRegisterInput, user.register);
+/**
+ * @route POST api/user/register
+ * @description Register user route
+ * @access Public
+ */
+router.post('/register/admin', authorization, user.registerFromAdmin);
 
 /**
  * @route POST api/user/register

@@ -1,12 +1,63 @@
 {
   "app.components.NotFoundPage.header": "फेला परेन",
   "app.containers.LoginPage.header": "साइन इन",
-  "app.containers.LoginPage.welcomeMessage": "स्वागत छ, तपाईंको मानव खातासँग साइन इन गर्नुहोस्",
+  "app.containers.LoginPage.welcomeMessage":
+    "स्वागत छ, तपाईंको मानव खातासँग साइन इन गर्नुहोस्",
   "app.containers.LoginPage.emailId": "इमेल",
   "app.containers.LoginPage.password": "पासवर्ड",
   "app.containers.LoginPage.signIn": "साइन इन",
   "app.containers.LoginPage.loading": "लोड हुँदैछ",
+  "app.containers.LoginPage.resetPassword": "पासवर्ड रिसेट",
 
   "app.containers.WtDashboard.dashboard": "ड्याशबोर्ड",
-  "app.containers.WtDashboard.roleManage": "भूमिका व्यवस्थापन"
+  "app.containers.WtDashboard.roleManage": "भूमिका व्यवस्थापन",
+  "app.containers.WtDashboard.moduleManage": "मोड्युल व्यवस्थापन",
+  "app.containers.WtDashboard.userManage": "प्रयोगकर्ता व्यवस्थापन",
+  "app.containers.WtDashboard.contentManage": "सामग्री व्यवस्थापन",
+  "app.containers.WtDashboard.designationManage": "पद व्यवस्थापन",
+  "app.containers.WtDashboard.registrationManage": "दर्ता व्यवस्थापन",
+  "app.containers.WtDashboard.fiscalManage": "वित्तीय व्यवस्थापन",
+
+  "app.containers.ModuleManagePage.moduleManage": "मोड्युल व्यवस्थापन",
+  "app.containers.ModuleManagePage.moduleAction": "कार्य",
+
+  "app.containers.UserManagePage.email": "इमेल",
+  "app.containers.UserManagePage.name": "नाम",
+  "app.containers.UserManagePage.emailVerified": "ईमेल प्रमाणित",
+  "app.containers.UserManagePage.roles": "भूमिकाहरू",
+  "app.containers.UserManagePage.avtar": "अवतार",
+  "app.containers.UserManagePage.operations": "सञ्चालन",
+
+  "app.containers.RoleManagePage.roleTitle": "शीर्षक",
+  "app.containers.RoleManagePage.roleDescription": "विवरण",
+  "app.containers.RoleManagePage.roleIsActive": "सक्रिय छ",
+  "app.containers.RoleManagePage.roleAction": "कार्य",
+  "app.containers.RoleManagePage.roleManagement": "भूमिका व्यवस्थापन",
+  "app.containers.RoleManagePage.listOfRoles": "यहाँ भूमिकाहरूको सूची हो",
+
+  "app.containers.ContentListingPage.contentName": "सामाग्री नाम",
+  "app.containers.ContentListingPage.description": "विवरण",
+  "app.containers.ContentListingPage.publishedFrom": "बाट प्रकाशित",
+  "app.containers.ContentListingPage.publishedTo": "प्रकाशित",
+  "app.containers.ContentListingPage.isActive": "सक्रिय छ",
+  "app.containers.ContentListingPage.isFeatured": "विशेष छ",
+  "app.containers.ContentListingPage.contentImage": "सामग्री छवि",
+  "app.containers.ContentListingPage.addedTo": "यसमा थपियो",
+  "app.containers.ContentListingPage.operations": "सञ्चालनहरू",
+
+
+  "app.containers.DesignationPage.designation": "पद",
+  "app.containers.DesignationPage.updateDate": "अद्यावधिक मिति",
+  "app.containers.DesignationPage.isActive": "सक्रिय छ",
+
+  "app.containers.RegistrationPage.registrationNo": "दर्ता नम्बर",
+  "app.containers.RegistrationPage.senderName": "प्रेषक नाम",
+  "app.containers.RegistrationPage.receiverName": "प्राप्तकर्ता नाम",
+  "app.containers.RegistrationPage.registerDate": "दर्ता मिति",
+
+  "app.containers.FiscalYearPage.roleTitle": "वित्तीय वर्ष",
+  "app.containers.FiscalYearPage.rangeFrom": "बाट",
+  "app.containers.FiscalYearPage.rangeTo": "लाई",
+  "app.containers.FiscalYearPage.isCurrent": "वर्तमान छ",
+  "app.containers.FiscalYearPage.isActive": "सक्रिय छ"
 }

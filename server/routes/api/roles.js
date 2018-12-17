@@ -17,14 +17,13 @@ router.post('/access', authorization, authentication, dModule.SaveAccessList);
 /**
  * Access Management of Role to all Module
  */
-
-router.get('/access/role/:roleid', authorization, dModule.getAccessListForRole);
+router.get('/access/role/:roleid', authorization, authentication, dModule.getAccessListForRole);
 router.post('/access/role/:roleid', authorization, authentication, dModule.SaveAccessListFromRole);
+
 /**
  *Access Management of Module to all roles
  */
-
-router.get('/access/module/:moduleid', authorization, dModule.getAccessListForModule);
+router.get('/access/module/:moduleid', authorization, authentication, dModule.getAccessListForModule);
 router.post('/access/module/:moduleid', authorization, authentication, dModule.SaveAccessListForModule);
 
 module.exports = router;
