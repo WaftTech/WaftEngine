@@ -53,6 +53,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import Chart from './components/Chart';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -93,13 +94,14 @@ export class Dashboard extends React.Component {
   };
 
   toggleModal = () => this.setState(state => ({ showModal: !state.showModal }));
-
+  someFxn = () => {}
   render() {
     const { showModal } = this.state;
     const { classes } = this.props;
     return (
       <div>
         <span>TODO: show metrics</span>
+        <Chart render={() => <div onClick={this.someFxn}>New Chart</div>} />
         <Button onClick={this.toggleModal}>Add Media</Button>
         <Modal
           aria-labelledby="simple-modal-title"
