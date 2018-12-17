@@ -56,12 +56,12 @@
       "type": "image/png"
     }
   ],
-  "name": "ASK4TRIP",
-  "short_name": "ASK4TRIP",
+  "name": "HR-APP",
+  "short_name": "HR-APP",
   "orientation": "portrait",
   "display": "standalone",
   "start_url": ".",
-  "description": "Easy trip solution!",
+  "description": "HR solution!",
   "background_color": "#fff",
   "theme_color": "#5D524C"
 }

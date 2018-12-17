@@ -1,19 +1,19 @@
-const HttpStatus = require("http-status");
-const isEmpty = require("../../validation/isEmpty");
-const fiscalConfig = require("./fiscalConfig");
-const OtherHelper = require("../../helper/others.helper");
+const HttpStatus = require('http-status');
+const isEmpty = require('../../validation/isEmpty');
+const fiscalConfig = require('./fiscalConfig');
+const OtherHelper = require('../../helper/others.helper');
 const Validatedata = {};
 
 Validatedata.sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: "FiscalYear",
+      field: 'FiscalYear',
       sanitize: {
         rtrim: true,
         ltrim: true,
-        trim: true
-      }
-    }
+        trim: true,
+      },
+    },
   ];
   OtherHelper.sanitize(req, sanitizeArray);
   next();
@@ -22,14 +22,14 @@ Validatedata.validateInput = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: "FiscalYear",
+      field: 'FiscalYear',
       validate: [
         {
-          condition: "IsEmpty",
-          msg: fiscalConfig.validateFiscal.EmptyFiscalYear
+          condition: 'IsEmpty',
+          msg: fiscalConfig.validateFiscal.EmptyFiscalYear,
         },
         {
-          condition: "IsLength",
+          condition: 'IsLength',
           msg: fiscalConfig.validateFiscal.FiscalLength,
           option: { min: 4, max: 15 },
         },
