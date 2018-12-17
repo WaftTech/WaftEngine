@@ -22,6 +22,10 @@ function reducer(state = initialState, action) {
       return state.merge({
         one: fromJS(action.payload.data),
       });
+      case types.DELETE_ONE_SUCCESS:
+      return state.merge({
+        all: state.get('all').filter(each => each.get('_id')!== action.payload.data._id)
+      });
     default:
       return state;
   }
