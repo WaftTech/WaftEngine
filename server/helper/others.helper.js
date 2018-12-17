@@ -22,42 +22,55 @@ otherHelper.sendResponse = (res, status, success, data, errors, msg, token, noda
   if (token) response.token = token;
   return res.status(status).json(response);
 };
+otherHelper.paginationSendResponse = (res, status, success, data, errors, msg, pageno, pagesize, totaldata) => {
+  const response = {};
+  if (success) response.success = success;
+  if (data) response.data = data;
+  if (errors) response.errors = errors;
+  if (msg) response.msg = msg;
+  if (pageno) response.pageno = pageno;
+  if (pagesize) response.pagesize = pagesize;
+  if (totaldata) response.totaldata = totaldata;
+  return res.status(status).json(response);
+};
 otherHelper.sanitize = (req, sanitizeArray) => {
   sanitizeArray.forEach(sanitizeObj => {
+    let vals = req.body[sanitizeObj.field];
+    vals = !isEmpty(vals) ? vals : '';
     const sanitization = sanitizeObj.sanitize;
     // console.log('sanitize', sanitizeObj);
     if (sanitization.rtrim) {
-      req.body[sanitizeObj.field] = Validator.rtrim(req.body[sanitizeObj.field]);
+      vals = Validator.rtrim(vals);
     }
     if (sanitization.ltrim) {
-      req.body[sanitizeObj.field] = Validator.ltrim(req.body[sanitizeObj.field]);
+      vals = Validator.ltrim(vals);
     }
     if (sanitization.blacklist) {
-      req.body[sanitizeObj.field] = Validator.blacklist(req.body[sanitizeObj.field]);
+      vals = Validator.blacklist(vals);
     }
     if (sanitization.whitelist) {
-      req.body[sanitizeObj.field] = Validator.whitelist(req.body[sanitizeObj.field]);
+      vals = Validator.whitelist(vals);
     }
     if (sanitization.trim) {
-      req.body[sanitizeObj.field] = Validator.trim(req.body[sanitizeObj.field]);
+      vals = Validator.trim(vals);
     }
     if (sanitization.escape) {
-      req.body[sanitizeObj.field] = Validator.escape(req.body[sanitizeObj.field]);
+      vals = Validator.escape(vals);
     }
     if (sanitization.unescape) {
-      req.body[sanitizeObj.field] = Validator.unescape(req.body[sanitizeObj.field]);
+      vals = Validator.unescape(vals);
     }
     if (sanitization.toBoolean) {
-      req.body[sanitizeObj.field] = Validator.toBoolean(req.body[sanitizeObj.field]);
+      vals = Validator.toBoolean(vals);
     }
     if (sanitization.toInt) {
-      req.body[sanitizeObj.field] = Validator.toInt(req.body[sanitizeObj.field]);
+      vals = Validator.toInt(vals);
     }
     if (sanitization.toFloat) {
-      req.body[sanitizeObj.field] = Validator.toFloat(req.body[sanitizeObj.field]);
+      vals = Validator.toFloat(vals);
     }
     if (sanitization.toDate) {
-      req.body[sanitizeObj.field] = Validator.toDate(req.body[sanitizeObj.field]);
+      vals = Validator.toDate(vals);
     }
   });
   return;
