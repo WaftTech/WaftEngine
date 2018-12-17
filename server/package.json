@@ -22,6 +22,7 @@
     "gravatar": "^1.6.0",
     "hpp": "^0.2.2",
     "http-status": "^1.2.0",
+    "joi": "^14.3.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
     "mongoose": "^5.2.4",
