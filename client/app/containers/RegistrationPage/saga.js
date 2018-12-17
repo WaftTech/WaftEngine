@@ -15,9 +15,16 @@ import * as actions from "./actions";
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
+  let search = "";
+  if (action.payload) {
+    // {name: 'sailesh', }
+    Object.keys(action.payload).map(each => {
+      search = `${each}_${action.payload[each]}${search}`;
+    });
+  }
   yield call(
     Api.get(
-      "registration",
+      `registration?search=${search}&page=1&perpage=10`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token
