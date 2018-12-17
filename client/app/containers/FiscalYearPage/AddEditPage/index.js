@@ -149,8 +149,8 @@ class FiscalAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "fiscalManagePage", reducer });
-const withSaga = injectSaga({ key: "fiscalManagePage", saga });
+const withReducer = injectReducer({ key: "fiscalYearPage", reducer });
+const withSaga = injectSaga({ key: "fiscalYearPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
