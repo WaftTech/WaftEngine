@@ -1,8 +1,8 @@
-const HttpStatus = require("http-status");
-var OblectId = require("mongoose").Types.ObjectId;
-const OtherHelper = require("../../helper/others.helper");
-const fiscalConfig = require("./fiscalConfig");
-const FiscalSch = require("./fiscal");
+const HttpStatus = require('http-status');
+var OblectId = require('mongoose').Types.ObjectId;
+const OtherHelper = require('../../helper/others.helper');
+const fiscalConfig = require('./fiscalConfig');
+const FiscalSch = require('./fiscal');
 const FiscalController = {};
 const internal = {};
 
@@ -36,27 +36,27 @@ FiscalController.GetFiscal = async (req, res, next) => {
       sortquery = '';
     }
   }
-  if (req.query) {
-    let data = req.query;
-    console.log('keys:', data.find_FiscalYear);
-    let values = Object.keys(data);
-    console.log('values:', values);
-    let results = values.forEach(value => {
-      let result = value.split('_');
-      let fields = {};
-      if (result[0] == 'find') {
-        fields = result[1];
-        let searchfields = fields;
-        let searchkeys = data[value];
-        let searchq = { [searchfields]: { $regex: searchkeys, $options: 'i x' }, IsDeleted: false };
-        console.log('searchq:', searchq);
-        console.log('fields:', searchfields);
-        console.log('keys:', searchkeys);
-      }
-    });
-  }
-  console.log('page no:', page);
-  console.log('size:', size);
+  // if (req.query) {
+  //   let data = req.query;
+  //   console.log('keys:', data.find_FiscalYear);
+  //   let values = Object.keys(data);
+  //   console.log('values:', values);
+  //   let results = values.forEach(value => {
+  //     let result = value.split('_');
+  //     let fields = {};
+  //     if (result[0] == 'find') {
+  //       fields = result[1];
+  //       let searchfields = fields;
+  //       let searchkeys = data[value];
+  //       let searchq = { [searchfields]: { $regex: searchkeys, $options: 'i x' }, IsDeleted: false };
+  //       console.log('searchq:', searchq);
+  //       console.log('fields:', searchfields);
+  //       console.log('keys:', searchkeys);
+  //     }
+  //   });
+  // }
+  // console.log('page no:', page);
+  // console.log('size:', size);
 
   try {
     const fiscaldata = await FiscalSch.find({ IsDeleted: false }, { IsDeleted: 0, Deleted_at: 0, Deleted_by: 0, CreatedDate: 0, __v: 0 })
@@ -74,32 +74,16 @@ FiscalController.GetFiscal = async (req, res, next) => {
 FiscalController.SaveFiscal = async (req, res, next) => {
   try {
     let fiscals = req.body;
-    console.log("fiscals", fiscals);
+    console.log('fiscals', fiscals);
     if (fiscals && fiscals._id) {
       const update = await FiscalSch.findByIdAndUpdate(fiscals._id, {
-        $set: fiscals
+        $set: fiscals,
       });
-      return OtherHelper.sendResponse(
-        res,
-        HttpStatus.OK,
-        true,
-        update,
-        null,
-        fiscalConfig.saveFiscal,
-        null
-      );
+      return OtherHelper.sendResponse(res, HttpStatus.OK, true, update, null, fiscalConfig.saveFiscal, null);
     } else {
       const newFiscals = new FiscalSch(fiscals);
       const FiscalSave = await newFiscals.save();
-      return OtherHelper.sendResponse(
-        res,
-        HttpStatus.OK,
-        true,
-        FiscalSave,
-        null,
-        fiscalConfig.saveFiscal,
-        null
-      );
+      return OtherHelper.sendResponse(res, HttpStatus.OK, true, FiscalSave, null, fiscalConfig.saveFiscal, null);
     }
   } catch (err) {
     next(err);
@@ -108,20 +92,9 @@ FiscalController.SaveFiscal = async (req, res, next) => {
 
 FiscalController.GetFiscalById = async (req, res, next) => {
   const id = req.params.id;
-  const fiscal = await FiscalSch.findOne(
-    { _id: OblectId(id) },
-    { CreatedDate: 0, __v: 0 }
-  );
+  const fiscal = await FiscalSch.findOne({ _id: OblectId(id) }, { CreatedDate: 0, __v: 0 });
   console.log(fiscal);
-  return OtherHelper.sendResponse(
-    res,
-    HttpStatus.OK,
-    true,
-    fiscal,
-    null,
-    fiscalConfig.getFiscal,
-    null
-  );
+  return OtherHelper.sendResponse(res, HttpStatus.OK, true, fiscal, null, fiscalConfig.getFiscal, null);
 };
 
 FiscalController.DeleteById = async (req, res, next) => {
