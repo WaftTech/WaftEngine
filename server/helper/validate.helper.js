@@ -6,11 +6,14 @@ const validationHelper = {};
 
 validationHelper.validate = (data, val) => {
   const errors = {};
+  //console.log(data);
   for (i = 0; i < val.length; i++) {
     let field = val[i].field;
+   // console.log(field);
     let validate = val[i].validate;
 
     data[field] = !isEmpty(data[field]) ? data[field] : '';
+   // console.log(data[field]);
 
     for (j = 0; j < validate.length; j++) {
       switch (validate[j].condition) {

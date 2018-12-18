@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const designationschema = new Schema({
+const DesignationSchema = new Schema({
   // id : { type: number, required: true },
   //Id: { type: Schema.Types.ObjectId, required: true, ref: 'post' },
   Designation: { type: String, required: true },
@@ -16,4 +16,4 @@ const designationschema = new Schema({
   Deleted_at: { Date },
 });
 
-module.exports = Designation = mongoose.model('Designation', designationschema);
+module.exports = Designation = mongoose.model('Designation', DesignationSchema);
