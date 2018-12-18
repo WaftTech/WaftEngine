@@ -13,6 +13,7 @@ const validationhelper = require('./../../helper/validate.helper');
 const DesignationValidation = {};
 
 DesignationValidation.Designation = async (req, res, next) => {
+  console.log(req.body);
   let errors = await validationhelper.validate(req.body, [
     {
       field: 'Designation',
@@ -22,7 +23,7 @@ DesignationValidation.Designation = async (req, res, next) => {
           msg: 'Designation must be entered',
         },
         {
-          condition: 'MinMaxCheck',
+          condition: 'String',
           msg: 'Designation must be atleast 5 characters, maximum limit is 10',
           options: {
             min: 5,

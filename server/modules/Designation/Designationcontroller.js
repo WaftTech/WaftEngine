@@ -5,6 +5,23 @@ const DesignationSch = require('./Designation');
 const DesignationController = {};
 
 DesignationController.GetDesignation = async (req, res, next) => {
+  let page;
+  const size_default = 10;
+  let size;
+  let searchquery;
+  let sortquery;
+  let selectquery;
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+    page = Math.abs(req.query.page);
+  } else {
+    page = 1;
+  }
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+    size = Math.abs(req.query.page);
+  } else {
+    size = size_default;
+  }
+
   if (req.query.sort) {
     let sortfield = req.query.sort.slice(1);
     let sortby = req.query.sort.charAt(0);
@@ -30,12 +47,13 @@ DesignationController.GetDesignation = async (req, res, next) => {
 
   selectquery = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
 
-  let datas = otherHelper.getquerySendResponse(DesignationSch, page, size, sortquery, searchquery, selectquery, next);
+  let datas = await otherHelper.getquerySendResponse(DesignationSch, page, size, sortquery, searchquery, selectquery, next);
+  console.log(datas);
 
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Designation Data delivered successfully', page, size, datas.totaldata);
 };
 
-DesignationController.getDataByID = async (req, res, next) => {
+DesignationController.GetDesignationDetail = async (req, res, next) => {
   try {
     let data = await DesignationSch.findById(req.params.id);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Designation data in detail delivered successfully!!', null);
