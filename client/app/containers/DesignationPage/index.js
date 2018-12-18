@@ -66,9 +66,19 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class DesignationPage extends React.Component {
+  state = { query: {} };
   componentDidMount() {
     this.props.loadAll();
   }
+  handleQueryChange = e => {
+    e.persist();
+    this.setState(state => ({
+      query: {
+        ...state.query,
+        [e.target.name]: e.target.value
+      }
+    }));
+  };
   handleAdd = () => {
     this.props.history.push("/wt/designation-manage/add");
   };
@@ -79,6 +89,10 @@ export class DesignationPage extends React.Component {
     // shoe modal && api call
     this.props.deleteOne(id);
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
+  };
+  handleSearch = () => {
+    this.props.loadAll(this.state.query);
+    this.setState({ query: {} });
   };
   render() {
     const { classes, allLinks } = this.props;
@@ -126,6 +140,21 @@ export class DesignationPage extends React.Component {
     );
     return (
       <GridContainer>
+      <GridItem xs={12} sm={12} md={12}>
+        <Card>
+          <CardHeader color="primary">
+            <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
+            <input
+              name="designation"
+              value={this.state.query.designation || ""}
+              onChange={this.handleQueryChange}
+              placeholder="Search By Designation"
+            />
+
+            <button onClick={this.handleSearch}>Search</button>
+          </CardHeader>
+        </Card>
+      </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
@@ -171,7 +200,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest()),
+  loadAll: query => dispatch(loadAllRequest(query)),
   deleteOne: (id) => dispatch(deleteOneRequest(id))
 });
 

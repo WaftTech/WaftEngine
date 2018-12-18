@@ -17,14 +17,13 @@ function* loadAll(action) {
   const token = yield select(makeSelectToken());
   let search = "";
   if (action.payload) {
-    // {name: 'sailesh', }
     Object.keys(action.payload).map(each => {
       search = `${each}=${action.payload[each]}${search}`;
     });
   }
   yield call(
     Api.get(
-      `registration?find_${search}&page=1&perpage=10`,
+      `registration?find_${search}&page=1&size=10`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token
