@@ -85,8 +85,8 @@ export class FiscalYearPage extends React.Component {
     const tableData = allLinksObj.map(
       ({ _id, FiscalYear, From, To, IsCurrent, IsActive }) => [
         FiscalYear,
-        moment(From).format("MMMM Do YYYY, h:mm:ss a"),
-        moment(To).format("MMMM Do YYYY, h:mm:ss a"),
+        moment(From).format("MMMM Do YYYY"),
+        moment(To).format("MMMM Do YYYY"),
         "" + IsCurrent,
         "" + IsActive,
 
