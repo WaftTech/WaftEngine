@@ -26,6 +26,7 @@ otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, p
   const response = {};
   if (success) response.success = success;
   if (data) response.data = data;
+  if (success) response.success = success;
   if (msg) response.msg = msg;
   if (pageno) response.page = pageno;
   if (pagesize) response.size = pagesize;
