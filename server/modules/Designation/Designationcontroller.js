@@ -31,18 +31,15 @@ DesignationController.GetDesignation = async (req, res, next) => {
       sortquery = sortfield;
     } else if (sortby == 0 && !isNaN(sortby)) {
       // 0 is for descending
-      sortquery = '_' + sortfield;
+      sortquery = '-' + sortfield;
     } else {
       sortquery = '';
     }
   }
-  if (req.query.search) {
-    let searchvars = req.query.search.split('_');
-    searchfield = searchvars[0];
-    searchkey = searchvars[1];
-    searchquery = { [searchfield]: { $regex: searchkey, $options: 'i' }, IsDeleted: false };
-  } else {
-    searchquery = {};
+
+  searchquery = { IsDeleted: false };
+  if (req.query.find_Designation) {
+    searchquery = { Designation: { $regex: req.query.find_Designation, $options: 'i x' }, ...searchquery };
   }
 
   selectquery = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
@@ -50,7 +47,7 @@ DesignationController.GetDesignation = async (req, res, next) => {
   let datas = await otherHelper.getquerySendResponse(DesignationSch, page, size, sortquery, searchquery, selectquery, next);
   console.log(datas);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Designation Data delivered successfully', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Designation Data delivered successfully', page, size, datas.totaldata);
 };
 
 DesignationController.GetDesignationDetail = async (req, res, next) => {
@@ -82,7 +79,7 @@ DesignationController.AddDesignation = async (req, res, next) => {
 DesignationController.deletebyID = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const Designation = await DesignationSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() } });
+    const Designation = await DesignationSch.findByIdAndUpdate(id, { $set: { IsDeleted: true, Deleted_at: new Date() } });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, Designation, null, 'Designation Get Success !!', null);
   } catch (err) {
     next(err);
