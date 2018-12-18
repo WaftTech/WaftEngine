@@ -86,7 +86,7 @@ registrationController.getData = async (req, res, next) => {
 
   let datas = await otherHelper.getquerySendResponse(registrationModel, page, size, sortq, searchq, selectq, next);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK,true, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
 };
 
 registrationController.getDataByID = async (req, res, next) => {

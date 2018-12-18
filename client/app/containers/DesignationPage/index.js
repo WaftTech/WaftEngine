@@ -145,8 +145,8 @@ export class DesignationPage extends React.Component {
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
             <input
-              name="designation"
-              value={this.state.query.designation || ""}
+              name="Designation"
+              value={this.state.query.Designation || ""}
               onChange={this.handleQueryChange}
               placeholder="Search By Designation"
             />
