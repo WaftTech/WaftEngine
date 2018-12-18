@@ -15,11 +15,11 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case types.LOAD_ALL_SUCCESS:
       return state.merge({
-        all: fromJS(action.payload.data)
+        all: fromJS(action.payload.success)
       });
     case types.LOAD_ONE_SUCCESS:
       return state.merge({
-        one: fromJS(action.payload.data)
+        one: fromJS(action.payload.success)
       });
     case types.DELETE_ONE_SUCCESS:
       return state.merge({
