@@ -82,14 +82,11 @@ registrationController.getData = async (req, res, next) => {
 
     searchq = { RegisterDate: { $gte: datea, $lte: dateb }, ...searchq };
   }
-
-  selectq = 'Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by';
-  console.log(searchq);
-  console.log(selectq);
+  selectq = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
 
   let datas = await otherHelper.getquerySendResponse(registrationModel, page, size, sortq, searchq, selectq, next);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
 };
 
 registrationController.getDataByID = async (req, res, next) => {
