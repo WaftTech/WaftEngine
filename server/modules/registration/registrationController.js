@@ -43,7 +43,7 @@ registrationController.getData = async (req, res, next) => {
   } else {
     page = 1;
   }
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
     size = Math.abs(req.query.page);
   } else {
     size = size_default;
@@ -61,19 +61,37 @@ registrationController.getData = async (req, res, next) => {
       sortq = '';
     }
   }
-  if (req.query.search) {
-    let searchvars = req.query.search.split('_');
-    let searchfield = searchvars[0];
-    let searchkey = searchvars[1];
-    searchq = { [searchfield]: { $regex: searchkey, $options: 'i x' }, IsDeleted: false };
-  } else {
-    searchq = {};
+
+  searchq = { IsDeleted: false };
+
+  if (req.query.find_Subject) {
+    searchq = { Subject: { $regex: req.query.find_Subject, $options: 'i x' }, ...searchq };
   }
-  selectq = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
+  if (req.query.find_SenderName) {
+    searchq = { SenderName: { $regex: req.query.find_SenderName, $options: 'i x' }, ...searchq };
+  }
+  if (req.query.find_ReceiverName) {
+    searchq = { ReceiverName: { $regex: req.query.find_ReceiverName, $options: 'i x' }, ...searchq };
+  }
+  if (req.query.find_RegistrationNo) {
+    searchq = { RegistrationNo: req.query.find_RegistrationNo, ...searchq };
+  }
+  if (req.query.find_RegisterDate) {
+    const datea = new Date(req.query.find_RegisterDate);
+    const dateb = new Date();
+    new Date(dateb.setDate(datea.getDate() + 1));
+
+    //console.log(datea);
+    searchq = { RegisterDate: { $gte: datea, $lte: dateb }, ...searchq };
+  }
+
+  selectq = 'Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by';
+  console.log(searchq);
+  console.log(selectq);
 
   let datas = await otherHelper.getquerySendResponse(registrationModel, page, size, sortq, searchq, selectq, next);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
 };
 
 registrationController.getDataByID = async (req, res, next) => {
