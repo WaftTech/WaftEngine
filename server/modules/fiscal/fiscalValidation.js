@@ -9,8 +9,6 @@ Validatedata.sanitize = (req, res, next) => {
     {
       field: 'FiscalYear',
       sanitize: {
-        rtrim: true,
-        ltrim: true,
         trim: true,
       },
     },
@@ -45,12 +43,12 @@ Validatedata.validateInput = (req, res, next) => {
         {
           condition: 'IsLength',
           msg: fiscalConfig.validateFiscal.FromLength,
-          option: { min: 3, max: 10 },
+          option: { min: 3, max: 15 },
         },
         {
           condition: 'IsAfter',
           msg: fiscalConfig.validateFiscal.IsAfter,
-          option: { date: '1971' },
+          date: '1971',
         },
       ],
     },
@@ -64,7 +62,7 @@ Validatedata.validateInput = (req, res, next) => {
         {
           condition: 'IsLength',
           msg: fiscalConfig.validateFiscal.ToLength,
-          option: { min: 3, max: 10 },
+          option: { min: 3, max: 15 },
         },
         {
           condition: 'IsDate',
