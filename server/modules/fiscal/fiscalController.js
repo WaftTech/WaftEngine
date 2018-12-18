@@ -1,5 +1,5 @@
 const HttpStatus = require('http-status');
-var OblectId = require('mongoose').Types.ObjectId;
+var ObjectId = require('mongoose').Types.ObjectId;
 const OtherHelper = require('../../helper/others.helper');
 const fiscalConfig = require('./fiscalConfig');
 const FiscalSch = require('./fiscal');
@@ -94,14 +94,14 @@ FiscalController.SaveFiscal = async (req, res, next) => {
 
 FiscalController.GetFiscalById = async (req, res, next) => {
   const id = req.params.id;
-  const fiscal = await FiscalSch.findOne({ _id: OblectId(id) }, { CreatedDate: 0, __v: 0 });
+  const fiscal = await FiscalSch.findOne({ _id: ObjectId(id) }, { CreatedDate: 0, __v: 0 });
   console.log(fiscal);
   return OtherHelper.sendResponse(res, HttpStatus.OK, true, fiscal, null, fiscalConfig.getFiscal, null);
 };
 
 FiscalController.DeleteById = async (req, res, next) => {
   const id = req.params.id;
-  const data = await FiscalSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() } });
+  const data = await FiscalSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date() } });
   return OtherHelper.sendResponse(res, HttpStatus.OK, true, data, null, fiscalConfig.deleteFiscal, null);
 };
 module.exports = FiscalController;
