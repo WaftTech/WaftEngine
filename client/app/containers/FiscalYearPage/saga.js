@@ -15,8 +15,19 @@ import * as actions from "./actions";
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
+  let search = "";
+  if (action.payload) {
+
+    Object.keys(action.payload).map(each => {
+      search = `${each}=${action.payload[each]}${search}`;
+    });
+  }
   yield call(
-    Api.get("fiscal", actions.loadAllSuccess, actions.loadAllFailure, token)
+    Api.get(
+      `fiscal?find_${search}&page=1&size=10`,
+      actions.loadAllSuccess,
+      actions.loadAllFailure,
+      token)
   );
 }
 

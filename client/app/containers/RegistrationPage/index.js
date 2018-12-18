@@ -12,7 +12,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
-
+import TextField from '@material-ui/core/TextField';
 // core components
 import GridItem from "../../components/Grid/GridItem";
 import GridContainer from "../../components/Grid/GridContainer";
@@ -66,7 +66,7 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class RegistrationPage extends React.Component {
-  state = { query: {}, name: "" };
+  state = { query: {} };
   componentDidMount() {
     this.props.loadAll();
   }
@@ -185,11 +185,23 @@ export class RegistrationPage extends React.Component {
                 onChange={this.handleQueryChange}
                 placeholder="Search By ReceiverName"
               />
-              <input
+              {/* <input
                 name="RegisterDate"
                 value={this.state.query.RegisterDate || ""}
                 onChange={this.handleQueryChange}
                 placeholder="Search By RegisterDate"
+
+              /> */}
+              <TextField
+                id="date"
+                name="RegisterDate"
+                label="RegistrationDate"
+                type="date"
+                value={this.state.query.RegisterDate || ""}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={this.handleQueryChange}
               />
 
               <button onClick={this.handleSearch}>Search</button>
@@ -268,8 +280,4 @@ export default compose(
   withConnect
 )(RegistrationPage);
 
-//registration no
-//subject\
-//sendername
-//receivername
-//register date
+
