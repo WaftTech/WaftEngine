@@ -23,7 +23,7 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `designation?find_${search}&page=1&size=10`,
+      `designation?find_${search}`,//&page=1&size=10
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token
