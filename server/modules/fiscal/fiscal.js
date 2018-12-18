@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { slugify } = require("../../helper/others.helper");
+const { slugify } = require('../../helper/others.helper');
 
 const FiscalSchema = new Schema({
   FiscalYear: { type: String, required: true },
@@ -12,7 +12,7 @@ const FiscalSchema = new Schema({
   IsCurrent: { type: Boolean, required: false, default: false },
   IsActive: { type: Boolean, required: false, default: false },
   Created_by: { type: Schema.Types.ObjectId, required: false },
-  CreatedDate: { type: Date, default: Date.now }
+  CreatedDate: { type: Date, default: Date.now },
 });
 
-module.exports = Fiscal = mongoose.model("fiscal", FiscalSchema);
+module.exports = Fiscal = mongoose.model('fiscal', FiscalSchema);
