@@ -4,28 +4,30 @@ const PhoneNumber = require('awesome-phonenumber');
 
 const validationHelper = {};
 
-validationHelper.validate = (data, val) => {
+validationHelper.validate = (data1, val) => {
   const errors = {};
   let fdata;
   for (i = 0; i < val.length; i++) {
     let field = val[i].field;
     let validate = val[i].validate;
+    const data = data1;
 
     //data[field] = !isEmpty(data[field]) ? data[field] : '';
-    console.log(field);
-    console.log(field.split('.').length);
+    // console.log(field);
+    // console.log(field.split('.').length);
+    console.log(`loop ${i}: `, data);
     if (field && field.split('.').length > 1) {
       for (let k = 0; k < field.split('.').length; k++) {
-        console.log(data);
-        // data = data[field.split('.')[k]];
-        data = !isEmpty(data[field.split('.')[k]]) ? data[field.split('.')[k]] : '';
+        // console.log(data);
+         data = data[field.split('.')[k]];
+        //data = !isEmpty(data[field.split('.')[k]]) ? data[field.split('.')[k]] : '';
       }
       fdata = data;
     } else {
       fdata = !isEmpty(data[field]) ? data[field] : '';
     }
 
-    if (i == 0) console.log(field, validate, fdata);
+    //console.log(field, validate, fdata);
 
     // if (typeof data[field] == 'object') {
     //   data = data[field];
@@ -81,6 +83,7 @@ validationHelper.validate = (data, val) => {
           }
           break;
         case 'IsMONGOID':
+          console.log('for mongoid: ', fdata);
           !Validator.isMongoId(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsNumeric':
@@ -93,7 +96,7 @@ validationHelper.validate = (data, val) => {
           !Validator.isIn(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsInt':
-          !Validator.isIn(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isInt(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           break;
         default:
           break;

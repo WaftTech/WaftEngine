@@ -102,41 +102,41 @@ userController.register = async (req, res) => {
 };
 userController.registerFromAdmin = async (req, res, next) => {
   try {
-    const { errors, isValid } = validateRegisterInput(req.body);
-    if (!isValid) {
-      return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
-    }
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      errors.email = 'Email already exists';
-      const data = { email: req.body.email };
-      return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, data, errors, errors.email, null);
-    } else {
-      const { name, email, password, roles } = req.body;
-      const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-      const newUser = new User({ name, email, avatar, password, roles });
-      bcrypt.genSalt(10, async (err, salt) => {
-        bcrypt.hash(newUser.password, salt, async (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser.email_verified = false;
-          newUser.roles = roles;
-          newUser.added_by = req.user._id;
-          newUser.is_added_by_admin = true;
-          const user = await newUser.save();
-          const payload = {
-            id: user._id,
-            name: user.name,
-            avatar: user.avatar,
-            email: user.email,
-            email_verified: user.email_verified,
-            roles: user.roles,
-          };
-          const msg = 'User Register Successfully.';
-          return otherHelper.sendResponse(res, HttpStatus.OK, true, payload, null, msg, null);
-        });
+    // const { errors, isValid } = validateRegisterInput(req.body);
+    // if (!isValid) {
+    //   return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+    // }
+    // const user = await User.findOne({ email: req.body.email });
+    // if (user) {
+    //   errors.email = 'Email already exists';
+    //   const data = { email: req.body.email };
+    //   return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, data, errors, errors.email, null);
+    // } else {}
+    /////const { name, password, roles,  } = req.body;
+    //const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
+    req.body.avatar = req.files;
+    const newUser = new User(req.body);
+    bcrypt.genSalt(10, async (err, salt) => {
+      bcrypt.hash(newUser.password, salt, async (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser.email_verified = false;
+        newUser.roles = roles;
+        newUser.added_by = req.user._id;
+        newUser.is_added_by_admin = true;
+        const user = await newUser.save();
+        const payload = {
+          id: user._id,
+          name: user.name,
+          avatar: user.avatar,
+          email: user.email,
+          email_verified: user.email_verified,
+          roles: user.roles,
+        };
+        const msg = 'User Register Successfully.';
+        return otherHelper.sendResponse(res, HttpStatus.OK, true, payload, null, msg, null);
       });
-    }
+    });
   } catch (err) {
     return next(err);
   }
