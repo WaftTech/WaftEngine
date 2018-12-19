@@ -93,7 +93,7 @@ validationHelper.validate = (data, val) => {
           !Validator.isIn(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsInt':
-          !Validator.isIn(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isInt(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           break;
         default:
           break;
