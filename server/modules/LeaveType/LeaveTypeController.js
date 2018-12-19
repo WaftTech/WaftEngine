@@ -35,7 +35,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     }
   }
 
-  searchquery = { IsDeleted: false };
+  searchquery = {};
   if (req.query.find_LeaveName) {
     searchquery = { LeaveName: { $regex: req.query.find_LeaveName, $options: 'i x' }, ...searchquery };
   }
@@ -55,7 +55,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     searchquery = { IsReplacementLeave: { $regex: req.query.find_IsReplacementLeave, $options: 'i x' }, ...searchquery };
   }
 
-  selectquery = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
+  selectquery = 'LeaveName IsTransferrable IsPaidLeave ApplicableGender NoOfDays';
 
   let datas = await otherHelper.getquerySendResponse(LeaveTypeModel, page, size, sortquery, searchquery, selectquery, next);
 
@@ -64,8 +64,8 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
 
 LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
-    let data = await LeaveTypeModel.find({ _id: req.params.id, IsDeleted: false }).select('Leave_Name IsTransferrable IsActive IsPaidLeave ApplicableGender No_Of_Days IsReplacementLeave Added_By');
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Type data in ');
+    let data = await LeaveTypeModel.find({ _id: req.params.id }).select('LeaveName IsTransferrable IsActive IsPaidLeave ApplicableGender NoOfDays IsReplacementLeave Added_By');
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Type data delivered successfully', null);
   } catch (err) {
     next(err);
   }

@@ -44,7 +44,7 @@ LeaveTypeValidation.validate = async (req, res, next) => {
       field: 'NoOfDays',
       validate: [
         {
-          condition: 'IsInt',
+          condition: 'IsNumeric',
           msg: LeaveTypeConfig.ValidationMessage.NoOfDaysRequired,
         },
         {
