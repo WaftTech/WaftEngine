@@ -6,67 +6,95 @@ const validationHelper = {};
 
 validationHelper.validate = (data, val) => {
   const errors = {};
+  let fdata;
   for (i = 0; i < val.length; i++) {
     let field = val[i].field;
     let validate = val[i].validate;
 
-    data[field] = !isEmpty(data[field]) ? data[field] : '';
+    //data[field] = !isEmpty(data[field]) ? data[field] : '';
+    console.log(field);
+    console.log(field.split('.').length);
+    if (field && field.split('.').length > 1) {
+      for (let k = 0; k < field.split('.').length; k++) {
+        console.log(data);
+        // data = data[field.split('.')[k]];
+        data = !isEmpty(data[field.split('.')[k]]) ? data[field.split('.')[k]] : '';
+      }
+      fdata = data;
+    } else {
+      fdata = !isEmpty(data[field]) ? data[field] : '';
+    }
+
+    if (i == 0) console.log(field, validate, fdata);
+
+    // if (typeof data[field] == 'object') {
+    //   data = data[field];
+    // }
 
     for (j = 0; j < validate.length; j++) {
+      // console.log(validate[j]);
       switch (validate[j].condition) {
         case 'IsEmpty':
-          Validator.isEmpty(data[field]) ? (errors[field] = validate[j].msg) : null;
+          Validator.isEmpty(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsDate':
-          !Validator.isISO8601(data[field]) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isISO8601(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'String':
           if (validate[j].options) {
-            !Validator.isLength(data[field], validate[j].options) ? (errors[field] = validate[j].msg) : null;
+            !Validator.isLength(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           }
           break;
         case 'IsAfter':
           if (validate[j].date) {
-            !Validator.isAfter(data[field], validate[j].date) ? (errors[field] = validate[j].msg) : null;
+            !Validator.isAfter(fdata, validate[j].date) ? (errors[field] = validate[j].msg) : null;
           } else {
-            !Validator.isAfter(data[field]) ? (errors[field] = validate[j].msg) : null;
+            !Validator.isAfter(fdata) ? (errors[field] = validate[j].msg) : null;
           }
           break;
         case 'IsBefore':
           if (validate[j].date) {
-            !Validator.isBefore(data[field], validate[j].date) ? (errors[field] = validate[j].msg) : null;
+            !Validator.isBefore(fdata, validate[j].date) ? (errors[field] = validate[j].msg) : null;
           } else {
-            !Validator.isBefore(data[field], validate[j].date) ? (errors[field] = validate[j].msg) : null;
+            !Validator.isBefore(fdata, validate[j].date) ? (errors[field] = validate[j].msg) : null;
           }
           break;
         case 'IsJSON':
-          !Validator.isJSON(data[field]) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isJSON(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsJWT':
-          !Validator.isJWT(data[field]) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isJWT(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsPhoneNumber':
           if (validate[j].options) {
             let pn;
             if (validate[j].options.region) {
-              pn = new PhoneNumber(data[field], validate[j].options.region);
+              pn = new PhoneNumber(fdata, validate[j].options.region);
             } else {
-              pn = new PhoneNumber(data[field]);
+              pn = new PhoneNumber(fdata);
             }
             if (validate[j].options.isMobile) pn.isValid() && pn.isMobile() ? null : (errors[field] = validate[j].msg);
             if (validate[j].options.isFixedLine) pn.isValid() && pn.isFixedLine() ? null : (errors[field] = validate[j].msg);
           } else {
-            let pn = new PhoneNumber(data[field]);
+            let pn = new PhoneNumber(fdata);
             !pn.isValid() ? (errors[field] = validate[j].msg) : null;
           }
           break;
         case 'IsMONGOID':
-          !Validator.isMongoId(data[field]) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isMongoId(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
         case 'IsNumeric':
-          !Validator.isNumeric(data[field]) ? (errors[field] = validate[j].msg) : null;
+          !Validator.isNumeric(fdata) ? (errors[field] = validate[j].msg) : null;
           break;
-
+        case 'IsEmail':
+          !Validator.isEmail(fdata) ? (errors[field] = validate[j].msg) : null;
+          break;
+        case 'Contains':
+          !Validator.isIn(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
+          break;
+        case 'IsInt':
+          !Validator.isIn(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
+          break;
         default:
           break;
       }
