@@ -1,6 +1,6 @@
 module.exports = {
   validationMessage: {
-    subjectInvalidLength: 'Subject must be atleast 5 characters, max limit 30 characters',
+    subjectInvalidLength: 'Subject must be atleast 5 characters',
     registrationInvalidLength: 'Registration No must be atleast 5 characters',
     subjectRequired: 'Subject field is required',
     registrationNoRequired: 'Registration number is required',
