@@ -24,9 +24,14 @@ export default defineMessages({
     defaultMessage: "Fiscal Manage"
   },
 
+  leaveTypeManage: {
+    id: "app.containers.WtDashboard.leaveTypeManage",
+    defaultMessage: "LeaveType Manage"
+  },
+
   registrationManage: {
-    id: 'app.containers.WtDashboard.registrationManage',
-    defaultMessage: 'Registration Manage',
+    id: "app.containers.WtDashboard.registrationManage",
+    defaultMessage: "Registration Manage"
   },
   moduleManage: {
     id: "app.containers.WtDashboard.moduleManage",
