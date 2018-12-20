@@ -11,6 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
+import Search from "@material-ui/icons/Search";
 
 // core components
 import GridItem from "../../components/Grid/GridItem";
@@ -27,7 +28,7 @@ import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest } from "./actions";
+import { loadAllRequest, deleteOneRequest } from "./actions";
 import { makeSelectAll } from "./selectors";
 
 import { FormattedMessage } from "react-intl";
@@ -79,6 +80,7 @@ export class UserManagePage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
+    this.props.deleteOne(id);
     // this.props.history.push(`/wt/user-manage/edit/${id}`);
   };
   render() {
@@ -204,7 +206,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest())
+  loadAll: () => dispatch(loadAllRequest()),
+  deleteOne: id => dispatch(deleteOneRequest(id))
 });
 
 const withConnect = connect(
