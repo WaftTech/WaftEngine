@@ -1,4 +1,4 @@
-mmodule.exports = {
+module.exports = {
   ValidationMessage: {
     NoOfDaysRequired: 'Must enter Numeric Value',
     NoOfDaysInvalid: 'Must be 1 or greater than 1',
@@ -8,5 +8,7 @@ mmodule.exports = {
     SubmittedByInvalid: 'Submitted by must be string',
     Added_byRequired: 'you can`t skip Added by',
     Added_byInvalid: 'Please try to spell in string',
+    ToRequired:'Please enter "To Date"',
+    FromR
   },
 };
