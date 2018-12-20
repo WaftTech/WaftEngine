@@ -18,7 +18,6 @@ function* loadAll(action) {
   let search = "";
   let sort = `${action.payload}`;
   if (action.payload) {
-    // {name: 'sailesh', }
     Object.keys(action.payload).map(each => {
       search = `${each}=${action.payload[each]}${search}`;
     });
