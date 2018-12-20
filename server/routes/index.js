@@ -34,4 +34,8 @@ router.use("/wordpress", wordpressRoutes);
 const DesignationRoutes = require("./api/Designation");
 router.use("/Designation", DesignationRoutes);
 
+// For Designations
+const holidayRoutes = require("./api/holiday");
+router.use("/holiday", holidayRoutes);
+
 module.exports = router;
