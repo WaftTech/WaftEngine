@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const LeavApplicationModule = require('../../modules/LeaveApplication/LeaveApplicationController');
+const LeaveApplicationModule = require('../../modules/LeaveApplication/LeaveApplicationController');
 
 const LeaveApplicationValidation = require('./../../modules/LeaveApplication/LeaveApplicationValidation');
 
