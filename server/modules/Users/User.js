@@ -29,6 +29,17 @@ const UserSchema = new Schema({
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },
   is_added_by_admin: { type: Boolean, require: true, default: false },
   roles: [{ type: [Schema.Types.ObjectId], require: true, ref: 'roles' }],
+  IsDeleted: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+  Deleted_by: {
+    type: Schema.Types.ObjectId,
+  },
+  Deleted_at: {
+    type: Date,
+  },
 });
 
 module.exports = User = mongoose.model('users', UserSchema);
