@@ -63,7 +63,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Leave Application Data Delivered Successfully', page, size, datas.totaldata);
 };
 
-LeaveApplicationController.GetLeaveApllicationByID = async (req, res, next) => {
+LeaveApplicationController.GetLeaveApplicationByID = async (req, res, next) => {
   try {
     let data = await LeaveApplicationModel.find({ _id: req.params.id }).select('IsHalfDay NoOfDays SubmittedTo SubmittedBy Added_By');
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Application data delivered successfully', null);

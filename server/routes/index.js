@@ -38,8 +38,8 @@ router.use('/Designation', DesignationRoutes);
 const LeaveTypeRoutes = require('./api/LeaveType');
 router.use('/leavetype', LeaveTypeRoutes);
 
-// // For Leave Application
-// const LeaveApplicationRoutes = require('./api/LeaveApplication');
-// router.use('/leaveapplication', LeaveApplicationRoutes);
+// For Leave Application
+//const LeaveApplicationRoutes = require('./api/LeaveApplication');
+//router.use('/leaveapplication', LeaveApplicationRoutes);
 
 module.exports = router;
