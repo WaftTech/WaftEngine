@@ -14,11 +14,11 @@ LeaveTypeValidation.validate = async (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: LeaveTypeConfig.ValidationMessage.LeaveTypeRequired,
+          msg: LeaveTypeConfig.ValidationMessage.LeaveNameRequired,
         },
         {
           condition: 'String',
-          msg: LeaveTypeConfig.ValidationMessage.LeaveTypeInvalidLength,
+          msg: LeaveTypeConfig.ValidationMessage.LeaveNameInvalidLength,
           options: {
             min: 5,
             max: 50,
