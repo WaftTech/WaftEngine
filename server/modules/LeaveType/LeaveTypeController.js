@@ -15,8 +15,8 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
   } else {
     page = 1;
   }
-  if (req.query.page && !NaN(req.query.page) && req.query.page != 0) {
-    size = Math.abs(req.query.page);
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
   } else {
     size = size_default;
   }
@@ -39,20 +39,39 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
   if (req.query.find_LeaveName) {
     searchquery = { LeaveName: { $regex: req.query.find_LeaveName, $options: 'i x' }, ...searchquery };
   }
+
   if (req.query.find_IsTranferrable) {
-    searchquery = { IsTranferrable: { $regex: req.query.find_IsTranferrable, $options: 'i x' }, ...searchquery };
+    if (req.query.find_IsTranferrable == 0) {
+      // 0 for true
+      searchquery = { IsTransferrable: true, ...searchquery };
+    } else {
+      searchquery = { IsTransferrable: false, ...searchquery };
+    }
   }
+
   if (req.query.find_IsPaidLeave) {
-    searchquery = { IsPaidLeave: { $regex: req.query.find_IsPaidLeave, $options: 'i x' }, ...searchquery };
+    if (req.query.find_IsPaidLeave == 0) {
+      // 0 for true
+      searchquery = { IsPaidLeave: true, ...searchquery };
+    } else {
+      searchquery = { IsPaidLeave: false, ...searchquery };
+    }
   }
+
   if (req.query.find_ApplicableGender) {
-    searchquery = { ApplicableGender: { $regex: req.query.find_ApplicableGender, $options: 'i x' }, ...searchquery };
+    searchquery = { ApplicableGender: req.query.find_ApplicableGender, ...searchquery };
   }
+
   if (req.query.find_NoOfDays) {
-    searchquery = { NoOfDays: { $regex: req.query.find_NoOfDays, $options: 'i x' }, ...searchquery };
+    searchquery = { NoOfDays: req.query.find_NoOfDays, ...searchquery };
   }
   if (req.query.find_IsReplacementLeave) {
-    searchquery = { IsReplacementLeave: { $regex: req.query.find_IsReplacementLeave, $options: 'i x' }, ...searchquery };
+    if (req.query.find_IsReplacementLeave == 0) {
+      // 0 for true
+      searchquery = { IsReplacementLeave: true, ...searchquery };
+    } else {
+      searchquery = { IsReplacementLeave: false, ...searchquery };
+    }
   }
 
   selectquery = 'LeaveName IsTransferrable IsPaidLeave ApplicableGender NoOfDays';
