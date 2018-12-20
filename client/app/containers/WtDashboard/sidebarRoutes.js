@@ -15,6 +15,8 @@ import RoleManagePage from "../RoleManagePage";
 import RoleManageAddEditPage from "../RoleManagePage/AddEditPage";
 import FiscalYearPage from "../FiscalYearPage";
 import FiscalYearAddEditPage from "../FiscalYearPage/AddEditPage";
+import LeaveTypePage from "../LeaveTypePage";
+import LeaveTypeAddEditPage from "../LeaveTypePage/AddEditPage";
 import DesignationPage from "../DesignationPage";
 import DesignationAddEditPage from "../DesignationPage/AddEditPage";
 import RegistrationPage from "../RegistrationPage";
@@ -132,6 +134,29 @@ const dashboardRoutes = [
     component: FiscalYearPage
   },
 
+  {
+    path: "/wt/leaveType-manage/add",
+    sidebarName: <FormattedMessage {...messages.leaveTypeManage} />,
+    navbarName: <FormattedMessage {...messages.leaveTypeManage} />,
+    icon: PermContactCalendar,
+    component: LeaveTypeAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/leaveType-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.leaveTypeManage} />,
+    navbarName: <FormattedMessage {...messages.leaveTypeManage} />,
+    icon: PermContactCalendar,
+    component: LeaveTypeAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/leaveType-manage",
+    sidebarName: <FormattedMessage {...messages.leaveTypeManage} />,
+    navbarName: <FormattedMessage {...messages.leaveTypeManage} />,
+    icon: PermContactCalendar,
+    component: LeaveTypePage
+  },
 
   {
     path: "/wt/module-manage/add",
