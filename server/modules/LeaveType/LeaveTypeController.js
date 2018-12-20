@@ -74,7 +74,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     }
   }
 
-  selectquery = 'LeaveName IsTransferrable IsPaidLeave ApplicableGender NoOfDays';
+  selectquery = 'LeaveName IsTransferrable IsPaidLeave ApplicableGender NoOfDays IsReplacementLeave Added_by';
 
   let datas = await otherHelper.getquerySendResponse(LeaveTypeModel, page, size, sortquery, searchquery, selectquery, next);
 
@@ -93,6 +93,7 @@ LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
 LeaveTypeController.AddLeaveType = async (req, res, next) => {
   try {
     let LeaveType = req.body;
+    LeaveType.Add_by = req.user.id;
     if (LeaveType._id) {
       let update = await LeaveTypeModel.findByIdAndUpdate(LeaveType._id, { $set: LeaveType });
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Leave Type Saved Success !!', null);
