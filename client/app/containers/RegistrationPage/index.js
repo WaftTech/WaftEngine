@@ -12,6 +12,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
+import TextField from "@material-ui/core/TextField";
+import Search from "@material-ui/icons/Search";
 
 // core components
 import GridItem from "../../components/Grid/GridItem";
@@ -168,39 +170,67 @@ export class RegistrationPage extends React.Component {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
-              <input
+
+              <TextField
                 name="RegistrationNo"
                 value={this.state.query.RegistrationNo || ""}
                 onChange={this.handleQueryChange}
+                margin="normal"
                 placeholder="Search By Registration No"
               />
-              <input
+
+              <TextField
                 name="Subject"
                 value={this.state.query.Subject || ""}
                 onChange={this.handleQueryChange}
+                margin="normal"
                 placeholder="Search By Subject"
               />
-              <input
+
+              <TextField
                 name="SenderName"
                 value={this.state.query.SenderName || ""}
                 onChange={this.handleQueryChange}
+                margin="normal"
                 placeholder="Search By SenderName"
               />
 
-              <input
+              <TextField
                 name="ReceiverName"
                 value={this.state.query.ReceiverName || ""}
                 onChange={this.handleQueryChange}
+                margin="normal"
                 placeholder="Search By ReceiverName"
               />
-              <input
+
+              {/* <input
                 name="RegisterDate"
                 value={this.state.query.RegisterDate || ""}
                 onChange={this.handleQueryChange}
                 placeholder="Search By RegisterDate"
+
+              /> */}
+              <TextField
+                id="date"
+                name="RegisterDate"
+                label="RegistrationDate"
+                type="date"
+                value={this.state.query.RegisterDate || ""}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={this.handleQueryChange}
               />
 
-              <button onClick={this.handleSearch}>Search</button>
+              <Button
+                color="Black"
+                aria-label="edit"
+                justIcon
+                round
+                onClick={this.handleSearch}
+              >
+                <Search />
+              </Button>
             </CardHeader>
           </Card>
         </GridItem>

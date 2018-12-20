@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
+import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -9,6 +10,8 @@ import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
+import TextField from "@material-ui/core/TextField";
+
 // core components
 import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
@@ -43,7 +46,7 @@ const styles = {
 };
 
 class FiscalAddEdit extends Component {
-  state = { FiscalYear: "" };
+  state = { FiscalYear: "", From: null, To: null };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -73,6 +76,13 @@ class FiscalAddEdit extends Component {
       }));
     }
   }
+  handleFromChange = event => {
+    event.persist();
+    const {
+      target: { value, name }
+    } = event;
+    this.setState({ [name]: value });
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -95,6 +105,35 @@ class FiscalAddEdit extends Component {
                       inputProps={{
                         value: this.state.FiscalYear,
                         onChange: this.handleChange("FiscalYear")
+                      }}
+                    />
+
+                    <TextField
+                      id="date"
+                      name="from"
+                      label="From"
+                      type="date"
+                      inputProps={{
+                        value: moment(this.state.From).format("YYYY-MM-DD"),
+                        name: "From",
+                        onChange: this.handleChange("From")
+                      }}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      //this.handleQueryChange
+                    />
+                    <TextField
+                      id="date"
+                      name="to"
+                      label="To"
+                      type="date"
+                      inputProps={{
+                        value: moment(this.state.To).format("YYYY-MM-DD"),
+                        onChange: this.handleChange("To")
+                      }}
+                      InputLabelProps={{
+                        shrink: true
                       }}
                     />
                   </GridItem>
@@ -172,3 +211,8 @@ export default compose(
   withSaga,
   withConnect
 )(FiscalAddEdit);
+
+{
+  /* <input onChange={this.handleChange} />
+<input onChange={event => this.handleChange(event)} /> */
+}
