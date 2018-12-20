@@ -5,16 +5,18 @@ const validateRegisterInput = require('../../modules/Users/validation/register')
 const userValidation = require('./../../modules/Users/uservalidation');
 
 const multer = require('multer');
-const upload = multer({ dest: 'public/user/', fileFilter: function(req,file, cb){
-  var filetypes = /jpeg|jpg|png/;
+const upload = multer({
+  dest: 'public/user/',
+  fileFilter: function(req, file, cb) {
+    var filetypes = /jpeg|jpg|png/;
     var mimetype = filetypes.test(file.mimetype);
     var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb("Error: File upload only supports the following filetypes - " + filetypes)
-} 
+    cb('Error: File upload only supports the following filetypes - ' + filetypes);
+  },
 });
 
 const user = require('../../modules/Users/UserController.js');
@@ -48,7 +50,7 @@ router.get('/detail/:id', authorization, authentication, user.getUserDetail);
  * @description Check user is returning user or new
  * @access Public
  */
-router.post('/detail/:id', authorization, authentication, user.updateUserDetail);
+router.post('/detail/:id', authorization, authentication, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword, userValidation.duplicateValidation, user.updateUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new
@@ -67,7 +69,7 @@ router.post('/register', validateRegisterInput, user.register);
  * @description Register user route
  * @access Public
  */
-router.post('/register/admin', authorization, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword ,user.registerFromAdmin);
+router.post('/register/admin', authorization, authentication, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword, userValidation.duplicateValidation, user.registerFromAdmin);
 
 /**
  * @route POST api/user/register

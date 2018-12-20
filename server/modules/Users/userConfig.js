@@ -8,10 +8,12 @@ module.exports = {
     passwordInvalidLength: 'Sorry, Password must be minimun 6 characters and maximum 30 characters!!!',
     passwordRequired: 'Sorry, Password is required!!!',
     password2Required: 'Please, reenter the Password',
-    passwordMismatch: 'Sorry, your passwords doesnot match!!',
+    passwordMismatch: 'Sorry, your passwords do not match!!',
     stateInvalid: 'Sorry, State is invalid!!',
     districtInvalid: 'Sorry, District is invalid!!',
     vdcInvalid: 'Sorry, VDC/Municipality is invalid!!',
     emailExists: 'I am sure, that Email already exists!!!',
+    rolesInvalid: 'Sorry, the Role you selected is invalid!!!',
+    rolesRequired: 'Sorry, you missed the roles field!!'
   },
 };

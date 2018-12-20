@@ -76,18 +76,15 @@ uservalidation.validate = async (req, res, next) => {
       ],
     },
     {
-      field: 'password',
+      field: 'roles',
       validate: [
         {
           condition: 'IsEmpty',
-          msg: userConfig.validationMessage.passwordRequired,
+          msg: userConfig.validationMessage.rolesRequired,
         },
         {
-          condition: 'String',
-          msg: userConfig.validationMessage.passwordInvalidLength,
-          options: {
-            min: 6,
-          },
+          condition: 'IsMONGOID',
+          msg: userConfig.validationMessage.rolesInvalid,
         },
       ],
     },
@@ -188,7 +185,7 @@ uservalidation.duplicateValidation = async (req, res, next) => {
 };
 
 uservalidation.checkPassword = (req, res, next) => {
-  if (!Validator.equals(req.body.password, req.body.password2)) {
+  if (!(req.body.password === req.body.password2)) {
     let errors = { password: userConfig.validationMessage.passwordMismatch };
     return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error', null);
   } else {
