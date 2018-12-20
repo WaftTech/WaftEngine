@@ -12,6 +12,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
+import TextField from "@material-ui/core/TextField";
+import Search from "@material-ui/icons/Search";
 
 // core components
 import GridItem from "../../components/Grid/GridItem";
@@ -26,7 +28,7 @@ import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest } from "./actions";
+import { loadAllRequest, deleteOneRequest } from "./actions";
 import { makeSelectAll } from "./selectors";
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
@@ -66,9 +68,20 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class FiscalYearPage extends React.Component {
+  state = { query: {}, name: "", sortToggle: 0, sortSymbol: "D" };
   componentDidMount() {
-    this.props.loadAll();
+    this.props.loadAll({ query: {} });
   }
+
+  handleQueryChange = e => {
+    e.persist();
+    this.setState(state => ({
+      query: {
+        ...state.query,
+        [e.target.name]: e.target.value
+      }
+    }));
+  };
   handleAdd = () => {
     this.props.history.push("/wt/fiscal-manage/add");
   };
@@ -77,7 +90,21 @@ export class FiscalYearPage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
+    this.props.deleteOne(id);
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
+  };
+  handleSearch = () => {
+    this.props.loadAll({ query: this.state.query });
+    this.setState({ query: {} });
+  };
+
+  fiscalCall = title => {
+    if (!!this.state.sortToggle) {
+      this.setState({ sortToggle: 0, sortSymbol: "D" });
+    } else if (!this.state.sortToggle) {
+      this.setState({ sortToggle: 1, sortSymbol: "A" });
+    }
+    this.props.loadAll({ sort: `${this.state.sortToggle}${title}` });
   };
   render() {
     const { classes, allLinks } = this.props;
@@ -85,8 +112,8 @@ export class FiscalYearPage extends React.Component {
     const tableData = allLinksObj.map(
       ({ _id, FiscalYear, From, To, IsCurrent, IsActive }) => [
         FiscalYear,
-        moment(From).format("MMMM Do YYYY, h:mm:ss a"),
-        moment(To).format("MMMM Do YYYY, h:mm:ss a"),
+        moment(From).format("MMMM Do YYYY"),
+        moment(To).format("MMMM Do YYYY"),
         "" + IsCurrent,
         "" + IsActive,
 
@@ -131,6 +158,53 @@ export class FiscalYearPage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
+              <TextField
+                name="fiscalyear"
+                value={this.state.query.fiscalyear || ""}
+                onChange={this.handleQueryChange}
+                margin="normal"
+                placeholder="Search By Fiscal Year"
+              />
+
+              <TextField
+                id="date"
+                name="from"
+                label="From"
+                type="date"
+                value={this.state.query.from || ""}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={this.handleQueryChange}
+              />
+              <TextField
+                id="date"
+                name="to"
+                label="To"
+                type="date"
+                value={this.state.query.to || ""}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={this.handleQueryChange}
+              />
+
+              <Button
+                color="Black"
+                aria-label="edit"
+                justIcon
+                round
+                onClick={this.handleSearch}
+              >
+                <Search />
+              </Button>
+            </CardHeader>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Fiscal Management</h4>
               <p className={classes.cardCategoryWhite}>
                 Here are the list of fiscal
@@ -140,11 +214,37 @@ export class FiscalYearPage extends React.Component {
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.fiscalYear} />,
-                  <FormattedMessage {...messages.rangeFrom} />,
-                  <FormattedMessage {...messages.rangeTo} />,
-                  <FormattedMessage {...messages.isCurrent} />,
-                  <FormattedMessage {...messages.isActive} />
+                  <FormattedMessage {...messages.fiscalYear}>
+                    {txt => (
+                      <span onClick={() => this.fiscalCall("FiscalYear")}>
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.rangeFrom}>
+                    {txt => (
+                      <span onClick={() => this.fiscalCall("From")}>{txt}</span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.rangeTo}>
+                    {txt => (
+                      <span onClick={() => this.fiscalCall("To")}>{txt}</span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.isCurrent}>
+                    {txt => (
+                      <span onClick={() => this.fiscalCall("IsCurrent")}>
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.isActive}>
+                    {txt => (
+                      <span onClick={() => this.fiscalCall("IsActive")}>
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>
                 ]}
                 tableData={tableData}
               />
@@ -175,7 +275,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest())
+  loadAll: payload => dispatch(loadAllRequest(payload)),
+  deleteOne: id => dispatch(deleteOneRequest(id))
 });
 
 const withConnect = connect(

@@ -5,7 +5,7 @@ import { compose } from "redux";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
@@ -21,7 +21,7 @@ import CardBody from "components/Card/CardBody";
 import CardFooter from "components/Card/CardFooter";
 import reducer from "../reducer";
 import saga from "../saga";
-import { makeSelectOne } from "../selectors";
+import { makeSelectOne, makeSelectError } from "../selectors";
 import { loadOneRequest, addEditRequest } from "../actions";
 
 const styles = {
@@ -44,7 +44,32 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { RegistrationNo: "", RegistrationDate: "" };
+  constructor(props) {
+    super(props);
+    const one = props.one.toJS();
+    this.state = {
+      RegistrationNo: "",
+      RegistrationDate: "",
+      Subject: "",
+      ReceiverName: "",
+      SenderName: "",
+      ...one
+    };
+  }
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.one !== nextProps.one) {
+      const oneObj = nextProps.one.toJS();
+      this.setState(state => ({
+        ...oneObj
+      }));
+    }
+    console.log(this.props.errors.toJS());
+  }
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -61,19 +86,6 @@ class AddEdit extends Component {
   handleSave = () => {
     this.props.addEdit(this.state);
   };
-  componentDidMount() {
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOne(this.props.match.params.id);
-    }
-  }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.one !== nextProps.one) {
-      const oneObj = nextProps.one.toJS();
-      this.setState(state => ({
-        ...oneObj
-      }));
-    }
-  }
   render() {
     const { classes } = this.props;
     return (
@@ -82,7 +94,9 @@ class AddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Registration</h4>
+                <h4 className={classes.cardTitleWhite}>
+                  Add/Edit Registration
+                </h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
@@ -189,8 +203,9 @@ class AddEdit extends Component {
                     />
                   </GridItem>
                 </GridContainer> */}
-
               </CardBody>
+              <div>{this.props.errors.toJS().RegistrationNo}</div>
+
               <CardFooter>
                 <Button color="primary" onClick={this.handleSave}>
                   Save
@@ -213,7 +228,8 @@ const withReducer = injectReducer({ key: "registrationPage", reducer });
 const withSaga = injectSaga({ key: "registrationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
+  errors: makeSelectError()
 });
 
 const mapDispatchToProps = dispatch => ({
