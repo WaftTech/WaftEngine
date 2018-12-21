@@ -99,7 +99,7 @@ class AddEdit extends Component {
                     />
                   </GridItem>
                 </GridContainer>
-                <GridContainer>
+                {/* <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText="UpdateDate"
@@ -129,7 +129,7 @@ class AddEdit extends Component {
                       label="Is Active"
                     />
                   </GridItem>
-                </GridContainer>
+                </GridContainer> */}
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSave}>
