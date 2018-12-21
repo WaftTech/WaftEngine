@@ -56,33 +56,29 @@ holidayController.getData = async (req, res, next) => {
     } else {
       sortq = '';
     }
-
-    searchq = { IsDeleted: false };
-
-    if (req.query.find_title) {
-      searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
-    }
-    if (req.query.find_addedBy) {
-      searchq = { addedBy: { $regex: req.query.find_addedBy, $options: 'i x' }, ...searchq };
-    }
-    if (req.query.find_applicableTo) {
-      searchq = { applicableTo: req.query.find_applicableTo, ...searchq };
-    }
-    if (req.query.find_isHalfDay) {
-      searchq = { isHalfDay: req.query.find_isHalfDay, ...searchq };
-    }
-    if (req.query.find_date) {
-      const datea = new Date(req.query.find_date);
-      const dateb = new Date(`${datea.getFullYear()}-${datea.getMonth() + 1}-${datea.getDate() + 1}`);
-
-      searchq = { date: { $gte: datea, $lte: dateb }, ...searchq };
-    }
-    selectq = 'title date isActive applicableTo isHalfDay addedBy addedDate';
-
-    let datas = await otherHelper.getquerySendResponse(holidaymodel, page, size, sortq, searchq, selectq, next);
-
-    return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Holidays delivered successfully!!', page, size, datas.totaldata);
   }
+
+  searchq = { IsDeleted: false };
+
+  if (req.query.find_title) {
+    searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
+  }
+  if (req.query.find_addedBy) {
+    searchq = { addedBy: { $regex: req.query.find_addedBy, $options: 'i x' }, ...searchq };
+  }
+  if (req.query.find_applicableTo) {
+    searchq = { applicableTo: req.query.find_applicableTo, ...searchq };
+  }
+  if (req.query.find_isHalfDay) {
+    searchq = { isHalfDay: req.query.find_isHalfDay, ...searchq };
+  }
+  if (req.query.find_date) {
+    searchq = { date: req.query.find_date, ...searchq };
+  }
+  selectq = 'title date isActive applicableTo isHalfDay addedBy addedDate';
+
+  let datas = await otherHelper.getquerySendResponse(holidaymodel, page, size, sortq, searchq, selectq, next, null);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Holidays delivered successfully!!', page, size, datas.totaldata);
 };
 
 holidayController.getDataByID = async (req, res, next) => {
