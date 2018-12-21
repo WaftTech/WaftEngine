@@ -11,13 +11,8 @@ validationHelper.validate = (data, val) => {
     let field = val[i].field;
     let validate = val[i].validate;
 
-    //data[field] = !isEmpty(data[field]) ? data[field] : '';
-    console.log(field);
-    console.log(field.split('.').length);
     if (field && field.split('.').length > 1) {
       for (let k = 0; k < field.split('.').length; k++) {
-        console.log(data);
-        // data = data[field.split('.')[k]];
         data = !isEmpty(data[field.split('.')[k]]) ? data[field.split('.')[k]] : '';
       }
       fdata = data;
@@ -25,14 +20,7 @@ validationHelper.validate = (data, val) => {
       fdata = !isEmpty(data[field]) ? data[field] : '';
     }
 
-    if (i == 2) console.log(field, validate, fdata);
-
-    // if (typeof data[field] == 'object') {
-    //   data = data[field];
-    // }
-
     for (j = 0; j < validate.length; j++) {
-      // console.log(validate[j]);
       switch (validate[j].condition) {
         case 'IsEmpty':
           Validator.isEmpty(fdata) ? (errors[field] = validate[j].msg) : null;
