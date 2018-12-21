@@ -29,7 +29,7 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `LeaveType?page=1&size=10${search}&sort=${sort}`,
+      `LeaveType?${search}&sort=${sort}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token

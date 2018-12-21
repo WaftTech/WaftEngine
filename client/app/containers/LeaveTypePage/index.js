@@ -169,11 +169,11 @@ export class LeaveType extends React.Component {
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
               <TextField
-                name="fiscalyear"
+                name="leaveType"
                 value={this.state.query.fiscalyear || ""}
                 onChange={this.handleQueryChange}
                 margin="normal"
-                placeholder="Search By Fiscal Year"
+                placeholder="Search By LeaveType"
               />
 
               <TextField
@@ -216,7 +216,7 @@ export class LeaveType extends React.Component {
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Fiscal Management</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of fiscal
+                Here are the list of LeaveType
               </p>
             </CardHeader>
             <CardBody>

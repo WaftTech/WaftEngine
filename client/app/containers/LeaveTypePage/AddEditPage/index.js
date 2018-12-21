@@ -57,8 +57,7 @@ class LeaveTypeAddEdit extends Component {
     IsTransferrable: null,
     IsPaidLeave: true,
     IsReplacementLeave: "true",
-    NoOfDays: null,
-    Added_by: ""
+    NoOfDays: null
   };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
@@ -252,21 +251,7 @@ class LeaveTypeAddEdit extends Component {
                       />
                     </GridItem>
                   </GridItem>
-                  <GridItem>
-                    <GridItem xs={6} sm={6} md={6}>
-                      <CustomInput
-                        labelText="Created By"
-                        id="Added_by"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          value: this.state.Added_by,
-                          onChange: this.handleChange("Added_by")
-                        }}
-                      />
-                    </GridItem>
-                  </GridItem>
+                  <GridItem />
                 </GridContainer>
               </CardBody>
               <CardFooter>
