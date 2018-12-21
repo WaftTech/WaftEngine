@@ -8,7 +8,7 @@ module.exports = {
     SubmittedByInvalid: 'Submitted by must be string',
     Added_byRequired: 'you can`t skip Added by',
     Added_byInvalid: 'Please try to spell in string',
-    ToRequired:'Please enter "To Date"',
-    FromR
+    ToRequired: 'Please enter "To Date"',
+    FromRequired: 'Please enter "From Date"',
   },
 };
