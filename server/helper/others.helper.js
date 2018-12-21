@@ -37,7 +37,6 @@ otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, s
   if (isEmpty(populate)) {
     populate = '';
   }
-
   let datas = {};
   try {
     datas.data = await model
