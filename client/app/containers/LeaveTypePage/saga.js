@@ -72,7 +72,7 @@ function* addEdit(action) {
   const { ...data } = action.payload;
   yield fork(
     Api.post(
-      "LeaveType/",
+      "LeaveType",
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
