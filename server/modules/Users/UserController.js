@@ -34,18 +34,63 @@ userController.checkMail = async (req, res) => {
   return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Mail found', null);
 };
 userController.getAllUser = async (req, res, next) => {
-  try {
-    const users = await User.find({}, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 }).populate({ path: 'roles', select: '_id RolesTitle' });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Get Success', null);
-  } catch (err) {
-    next(err);
+  const size_default = 10;
+  let page;
+  let size;
+  let searchq;
+  let sortq;
+  let selectq;
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+    page = Math.abs(req.query.page);
+  } else {
+    page = 1;
   }
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
+  } else {
+    size = size_default;
+  }
+  if (req.query.sort) {
+    let sortfield = req.query.sort.slice(1);
+    let sortby = req.query.sort.charAt(0);
+    console.log(sortfield);
+    if (sortby == 1 && !isNaN(sortby) && sortfield) {
+      //one is ascending
+      sortq = sortfield;
+    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+      //zero is descending
+      sortq = '-' + sortfield;
+    } else {
+      sortq = '';
+    }
+  }
+  searchq = { IsDeleted: false };
+
+  if (req.query.find_name) {
+    searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
+  }
+  if (req.query.find_email) {
+    searchq = { email: { $regex: req.query.find_email, $options: 'i x' }, ...searchq };
+  }
+  selectq = 'name name_nepali email permanentaddress tempaddress is_active avatar updated_at added_at added_by roles';
+
+  populate = { path: 'roles', select: '_id RolesTitle' };
+
+  let datas = await otherHelper.getquerySendResponse(User, page, size, sortq, searchq, selectq, next, populate);
+
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
+
+  // try {
+  //   const users = await User.find({}, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 }).populate({ path: 'roles', select: '_id RolesTitle' });
+  //   return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Get Success', null);
+  // } catch (err) {
+  //   next(err);
+  // }
 };
 userController.getUserDetail = async (req, res, next) => {
   try {
-    const users = await User.findById(req.params.id, { email_verified: 1, roles: 1, name: 1, email: 1, avatar: 1, updated_at: 1 });
-    const roles = await Roles.find({}, { RolesTitle: 1, _id: 1 });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, { user: users, roles: roles }, null, 'User Detail Get Success', null);
+    const users = await User.findById({ _id: req.params.id, IsDeleted: false }, 'name name_nepali email permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Detail Get Success', null);
   } catch (err) {
     next(err);
   }
@@ -102,47 +147,50 @@ userController.register = async (req, res) => {
 };
 userController.registerFromAdmin = async (req, res, next) => {
   try {
-    const { errors, isValid } = validateRegisterInput(req.body);
-    if (!isValid) {
-      return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
-    }
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      errors.email = 'Email already exists';
-      const data = { email: req.body.email };
-      return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, data, errors, errors.email, null);
-    } else {
-      const { name, email, password, roles } = req.body;
-      const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-      const newUser = new User({ name, email, avatar, password, roles });
-      bcrypt.genSalt(10, async (err, salt) => {
-        bcrypt.hash(newUser.password, salt, async (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser.email_verified = false;
-          newUser.roles = roles;
-          newUser.added_by = req.user._id;
-          newUser.is_added_by_admin = true;
-          const user = await newUser.save();
-          const payload = {
-            id: user._id,
-            name: user.name,
-            avatar: user.avatar,
-            email: user.email,
-            email_verified: user.email_verified,
-            roles: user.roles,
-          };
-          const msg = 'User Register Successfully.';
-          return otherHelper.sendResponse(res, HttpStatus.OK, true, payload, null, msg, null);
-        });
+    // const { errors, isValid } = validateRegisterInput(req.body);
+    // if (!isValid) {
+    //   return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+    // }
+    // const user = await User.findOne({ email: req.body.email });
+    // if (user) {
+    //   errors.email = 'Email already exists';
+    //   const data = { email: req.body.email };
+    //   return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, data, errors, errors.email, null);
+    // } else {}
+    /////const { name, password, roles,  } = req.body;
+    //const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
+    req.body.avatar = req.files;
+    const newUser = new User(req.body);
+    bcrypt.genSalt(10, async (err, salt) => {
+      bcrypt.hash(newUser.password, salt, async (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser.email_verified = false;
+        newUser.added_by = req.user._id;
+        newUser.is_added_by_admin = true;
+        newUser.added_at = Date.now();
+        const user = await newUser.save();
+        const payload = {
+          id: user._id,
+          name: user.name,
+          avatar: user.avatar,
+          email: user.email,
+          email_verified: user.email_verified,
+          roles: user.roles,
+        };
+        const msg = 'User Register Successfully.';
+        return otherHelper.sendResponse(res, HttpStatus.OK, true, payload, null, msg, null);
       });
-    }
+    });
   } catch (err) {
     return next(err);
   }
 };
 userController.updateUserDetail = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.avatar = req.files;
+    }
     const user = req.body;
     const id = req.params.id;
     const updateUser = await User.findByIdAndUpdate(id, { $set: user });

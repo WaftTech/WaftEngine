@@ -42,4 +42,8 @@ router.use('/leavetype', LeaveTypeRoutes);
 const LeaveApplicationRoutes = require('./api/LeaveApplication');
 router.use('/leaveapplication', LeaveApplicationRoutes);
 
+// For Designations
+const holidayRoutes = require("./api/holiday");
+router.use("/holiday", holidayRoutes);
+
 module.exports = router;
