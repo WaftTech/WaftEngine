@@ -25,5 +25,9 @@ export default defineMessages({
   isPaidLeave: {
     id: "app.containers.LeaveTypePage.isPaidLeave",
     defaultMessage: "Is PaidLeave"
+  },
+  isReplacementLeave: {
+    id: "app.containers.LeaveTypePage.IsReplacementLeave",
+    defaultMessage: "Is ReplacementLeave"
   }
 });

@@ -116,13 +116,15 @@ export class LeaveType extends React.Component {
         NoOfDays,
         ApplicableGender,
         IsTransferrable,
-        IsPaidLeave
+        IsPaidLeave,
+        IsReplacementLeave
       }) => [
         LeaveName,
         NoOfDays,
         ApplicableGender,
         "" + IsTransferrable,
         "" + IsPaidLeave,
+        "" + IsReplacementLeave,
 
         <React.Fragment>
           <Tooltip
@@ -248,6 +250,15 @@ export class LeaveType extends React.Component {
                   <FormattedMessage {...messages.isPaidLeave}>
                     {txt => (
                       <span onClick={() => this.fiscalCall("IsActive")}>
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.isReplacementLeave}>
+                    {txt => (
+                      <span
+                        onClick={() => this.fiscalCall("IsReplacementLeave")}
+                      >
                         {txt}
                       </span>
                     )}
