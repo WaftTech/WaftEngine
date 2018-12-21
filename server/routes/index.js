@@ -42,4 +42,8 @@ router.use('/leavetype', LeaveTypeRoutes);
 const LeaveApplicationRoutes = require('./api/LeaveApplication');
 router.use('/leaveapplication', LeaveApplicationRoutes);
 
+//For Registration List
+//const RegistrationListRoutes = require('./api/RegistrationList');
+//router.use('/registrationlist', RegistrationListRoutes);
+
 module.exports = router;
