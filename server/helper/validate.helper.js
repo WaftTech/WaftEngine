@@ -16,9 +16,9 @@ validationHelper.validate = (data1, val) => {
       for (let k = 0; k < field.split('.').length; k++) {
         data = !isEmpty(data[field.split('.')[k]]) ? data[field.split('.')[k]] : '';
       }
-      fdata = data;
+      fdata = '' + data;
     } else {
-      fdata = !isEmpty(data[field]) ? data[field] : '';
+      fdata = !isEmpty(data[field]) ? '' + data[field] : '';
     }
 
     for (j = 0; j < validate.length; j++) {
@@ -85,6 +85,9 @@ validationHelper.validate = (data1, val) => {
           break;
         case 'IsInt':
           !Validator.isInt(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
+          break;
+        case 'isBoolean':
+          !Validator.isBoolean(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           break;
         default:
           break;
