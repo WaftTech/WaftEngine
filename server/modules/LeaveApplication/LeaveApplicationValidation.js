@@ -66,10 +66,19 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
     },
     {
       field: 'To',
-      Validate: [
+      validate: [
         {
           condition: 'IsEmpty',
-          msg: LeaveApplicationConfig.ValidationMessage.SubmittedToRequired,
+          msg: LeaveApplicationConfig.ValidationMessage.ToRequired,
+        },
+      ],
+    },
+    {
+      field: 'From',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.FromRequired,
         },
       ],
     },
