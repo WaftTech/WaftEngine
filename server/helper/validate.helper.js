@@ -4,12 +4,13 @@ const PhoneNumber = require('awesome-phonenumber');
 
 const validationHelper = {};
 
-validationHelper.validate = (data, val) => {
+validationHelper.validate = (data1, val) => {
   const errors = {};
   let fdata;
   for (i = 0; i < val.length; i++) {
     let field = val[i].field;
     let validate = val[i].validate;
+    let data = data1;
 
     if (field && field.split('.').length > 1) {
       for (let k = 0; k < field.split('.').length; k++) {
@@ -69,7 +70,9 @@ validationHelper.validate = (data, val) => {
           }
           break;
         case 'IsMONGOID':
-          !Validator.isMongoId(fdata) ? (errors[field] = validate[j].msg) : null;
+          if (!isEmpty(fdata)) {
+            !Validator.isMongoId(fdata) ? (errors[field] = validate[j].msg) : null;
+          }
           break;
         case 'IsNumeric':
           !Validator.isNumeric(fdata) ? (errors[field] = validate[j].msg) : null;
