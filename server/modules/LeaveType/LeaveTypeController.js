@@ -84,7 +84,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
 LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
     let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName IsTransferrable IsActive IsPaidLeave ApplicableGender NoOfDays IsReplacementLeave Added_By');
-    console.log('data:', data);
+    //console.log('data:', data);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Type data delivered successfully', null);
   } catch (err) {
     next(err);
