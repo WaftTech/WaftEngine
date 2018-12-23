@@ -6,28 +6,24 @@
 import { defineMessages } from "react-intl";
 
 export default defineMessages({
-  leaveName: {
-    id: "app.containers.LeaveTypePage.leaveName",
-    defaultMessage: "Leave Name"
+  added_by: {
+    id: "app.containers.LeaveTypePage.added_by",
+    defaultMessage: "Added By"
   },
   noOfDays: {
     id: "app.containers.LeaveTypePage.noOfDays",
     defaultMessage: "Number of Days"
   },
-  applicableGender: {
-    id: "app.containers.LeaveTypePage.applicableGender",
-    defaultMessage: "Applicable Gender"
+  submittedTo: {
+    id: "app.containers.LeaveTypePage.submittedTo",
+    defaultMessage: "Submitted To"
   },
-  isTransferrable: {
-    id: "app.containers.LeaveTypePage.isTransferrable",
-    defaultMessage: "Is Transferrable"
+  submittedBy: {
+    id: "app.containers.LeaveTypePage.submittedBy",
+    defaultMessage: "Submitted By"
   },
-  isPaidLeave: {
-    id: "app.containers.LeaveTypePage.isPaidLeave",
-    defaultMessage: "Is PaidLeave"
-  },
-  isReplacementLeave: {
-    id: "app.containers.LeaveTypePage.IsReplacementLeave",
-    defaultMessage: "Is ReplacementLeave"
+  isHalfDay: {
+    id: "app.containers.LeaveTypePage.isHalfDay",
+    defaultMessage: "Is HalfDay"
   }
 });

@@ -67,7 +67,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class LeaveType extends React.Component {
+export class LeaveApplication extends React.Component {
   state = { query: {}, name: "", sortToggle: 0, sortSymbol: "D" };
   componentDidMount() {
     this.props.loadAll({ query: {} });
@@ -83,10 +83,10 @@ export class LeaveType extends React.Component {
     }));
   };
   handleAdd = () => {
-    this.props.history.push("/wt/leaveType-manage/add");
+    this.props.history.push("/wt/LeaveApplication-manage/add");
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/leaveType-manage/edit/${id}`);
+    this.props.history.push(`/wt/LeaveApplication-manage/edit/${id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -98,7 +98,7 @@ export class LeaveType extends React.Component {
     this.setState({ query: {} });
   };
 
-  leaveTypeSort = title => {
+  LeaveApplicationSort = title => {
     if (!!this.state.sortToggle) {
       this.setState({ sortToggle: 0, sortSymbol: "D" });
     } else if (!this.state.sortToggle) {
@@ -110,21 +110,12 @@ export class LeaveType extends React.Component {
     const { classes, allLinks } = this.props;
     const allLinksObj = allLinks.toJS();
     const tableData = allLinksObj.map(
-      ({
-        _id,
-        LeaveName,
+      ({ _id, Added_by, NoOfDays, SubmittedTo, SubmittedBy, IsHalfDay }) => [
+        Added_by,
         NoOfDays,
-        ApplicableGender,
-        IsTransferrable,
-        IsPaidLeave,
-        IsReplacementLeave
-      }) => [
-        LeaveName,
-        NoOfDays,
-        ApplicableGender,
-        "" + IsTransferrable,
-        "" + IsPaidLeave,
-        "" + IsReplacementLeave,
+        SubmittedTo,
+        SubmittedBy,
+        "" + IsHalfDay,
 
         <React.Fragment>
           <Tooltip
@@ -171,11 +162,11 @@ export class LeaveType extends React.Component {
               <GridContainer>
                 <GridItem xs={4} sm={4} md={4}>
                   <TextField
-                    name="LeaveName"
-                    value={this.state.query.LeaveName || ""}
+                    name="Added_by"
+                    value={this.state.query.Added_by || ""}
                     onChange={this.handleQueryChange}
                     margin="normal"
-                    placeholder="Search By LeaveType"
+                    placeholder="Search By Added By"
                   />
                 </GridItem>
                 <GridItem xs={4} sm={4} md={4}>
@@ -189,38 +180,29 @@ export class LeaveType extends React.Component {
                 </GridItem>
                 <GridItem xs={4} sm={4} md={4}>
                   <TextField
-                    name="ApplicableGender"
-                    value={this.state.query.ApplicableGender || ""}
+                    name="SubmittedTo"
+                    value={this.state.query.SubmittedTo || ""}
                     onChange={this.handleQueryChange}
                     margin="normal"
-                    placeholder="Search By Applicable Gender"
+                    placeholder="Search By Submitted To"
                   />
                 </GridItem>
                 <GridItem xs={4} sm={4} md={4}>
                   <TextField
-                    name="IsTransferrable"
-                    value={this.state.query.IsTransferrable || ""}
+                    name="SubmittedBy"
+                    value={this.state.query.SubmittedBy || ""}
                     onChange={this.handleQueryChange}
                     margin="normal"
-                    placeholder="Search By Is Transferrable"
+                    placeholder="Search By Submitted By"
                   />
                 </GridItem>
                 <GridItem xs={4} sm={4} md={4}>
                   <TextField
-                    name="IsPaidLeave"
-                    value={this.state.query.IsPaidLeave || ""}
+                    name="IsHalfDay"
+                    value={this.state.query.IsHalfDay || ""}
                     onChange={this.handleQueryChange}
                     margin="normal"
-                    placeholder="Search By Is Paid Leave"
-                  />
-                </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="IsReplacementLeave"
-                    value={this.state.query.IsReplacementLeave || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By Is Replacement Leave"
+                    placeholder="Search By Is HalfDay"
                   />
                 </GridItem>
               </GridContainer>
@@ -240,54 +222,57 @@ export class LeaveType extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>LeaveType Management</h4>
+              <h4 className={classes.cardTitleWhite}>
+                LeaveApplication Management
+              </h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of LeaveType
+                Here are the list of LeaveApplication
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.leaveName}>
+                  <FormattedMessage {...messages.added_by}>
                     {txt => (
-                      <span onClick={() => this.leaveTypeSort("LeaveName")}>
+                      <span
+                        onClick={() => this.LeaveApplicationSort("Added_by")}
+                      >
                         {txt}
                       </span>
                     )}
                   </FormattedMessage>,
                   <FormattedMessage {...messages.noOfDays}>
                     {txt => (
-                      <span onClick={() => this.leaveTypeSort("NoOfDays")}>
+                      <span
+                        onClick={() => this.LeaveApplicationSort("NoOfDays")}
+                      >
                         {txt}
                       </span>
                     )}
                   </FormattedMessage>,
-                  <FormattedMessage {...messages.applicableGender}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("To")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isTransferrable}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("IsCurrent")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isPaidLeave}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("IsActive")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isReplacementLeave}>
+                  <FormattedMessage {...messages.submittedTo}>
                     {txt => (
                       <span
-                        onClick={() => this.leaveTypeSort("IsReplacementLeave")}
+                        onClick={() => this.LeaveApplicationSort("SubmittedTo")}
+                      >
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.submittedBy}>
+                    {txt => (
+                      <span
+                        onClick={() => this.LeaveApplicationSort("SubmittedBy")}
+                      >
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.isHalfDay}>
+                    {txt => (
+                      <span
+                        onClick={() => this.LeaveApplicationSort("IsHalfDay")}
                       >
                         {txt}
                       </span>
@@ -314,7 +299,7 @@ export class LeaveType extends React.Component {
   }
 }
 
-LeaveType.propTypes = {
+LeaveApplication.propTypes = {
   loadAll: PropTypes.func.isRequired
 };
 
@@ -332,8 +317,8 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: "leaveTypePage", reducer });
-const withSaga = injectSaga({ key: "leaveTypePage", saga });
+const withReducer = injectReducer({ key: "leaveApplicationPage", reducer });
+const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -343,4 +328,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(LeaveType);
+)(LeaveApplication);
