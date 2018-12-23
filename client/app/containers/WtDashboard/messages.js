@@ -28,6 +28,10 @@ export default defineMessages({
     id: "app.containers.WtDashboard.leaveTypeManage",
     defaultMessage: "LeaveType Manage"
   },
+  leaveApplicationManage: {
+    id: "app.containers.WtDashboard.leaveApplicationManage",
+    defaultMessage: "LeaveApplication Manage"
+  },
 
   registrationManage: {
     id: "app.containers.WtDashboard.registrationManage",
