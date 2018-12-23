@@ -47,13 +47,6 @@ departmentValidation.sanitize = async (req, res, next) => {
         escape: true,
       },
     },
-    {
-      field: 'departmentNameNepali',
-      sanitize: {
-        trim: true,
-        escape: true,
-      },
-    },
   ]);
   next();
 };
