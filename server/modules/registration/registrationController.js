@@ -15,7 +15,9 @@ registrationController.saveData = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, 'Registration updated!!!', null);
     } else {
       //checking if registration no exists
-      let status = await registrationModel.findOne({ RegistrationNo: data.RegistrationNo });
+      let status = await registrationModel.findOne({
+        RegistrationNo: data.RegistrationNo,
+      });
       if (status != null) {
         return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, null, 'duplicate registration number', null);
       } else {
@@ -65,13 +67,22 @@ registrationController.getData = async (req, res, next) => {
   searchq = { IsDeleted: false };
 
   if (req.query.find_Subject) {
-    searchq = { Subject: { $regex: req.query.find_Subject, $options: 'i x' }, ...searchq };
+    searchq = {
+      Subject: { $regex: req.query.find_Subject, $options: 'i x' },
+      ...searchq,
+    };
   }
   if (req.query.find_SenderName) {
-    searchq = { SenderName: { $regex: req.query.find_SenderName, $options: 'i x' }, ...searchq };
+    searchq = {
+      SenderName: { $regex: req.query.find_SenderName, $options: 'i x' },
+      ...searchq,
+    };
   }
   if (req.query.find_ReceiverName) {
-    searchq = { ReceiverName: { $regex: req.query.find_ReceiverName, $options: 'i x' }, ...searchq };
+    searchq = {
+      ReceiverName: { $regex: req.query.find_ReceiverName, $options: 'i x' },
+      ...searchq,
+    };
   }
   if (req.query.find_RegistrationNo) {
     searchq = { RegistrationNo: req.query.find_RegistrationNo, ...searchq };
@@ -82,16 +93,17 @@ registrationController.getData = async (req, res, next) => {
 
     searchq = { RegisterDate: { $gte: datea, $lte: dateb }, ...searchq };
   }
-  selectq = { IsDeleted: 0, Deleted_by: 0, Deleted_at: 0 };
+
+  selectq = 'Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by';
 
   let datas = await otherHelper.getquerySendResponse(registrationModel, page, size, sortq, searchq, selectq, next);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
 };
 
 registrationController.getDataByID = async (req, res, next) => {
   try {
-    let data = await registrationModel.find({ _id: req.params.id, IsDeleted: false }).select('Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by');
+    let data = await registrationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by');
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Registration data in detail delivered successfully!!', null);
   } catch (err) {
     next(err);
@@ -101,7 +113,9 @@ registrationController.getDataByID = async (req, res, next) => {
 registrationController.deleteById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const data = await registrationModel.findByIdAndUpdate(id, { $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() } });
+    const data = await registrationModel.findByIdAndUpdate(id, {
+      $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
+    });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Registration delete Success !!', null);
   } catch (err) {
     next(err);
