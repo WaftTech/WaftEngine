@@ -1,5 +1,5 @@
 'use strict';
-var crypto = require('crypto');
+const crypto = require('crypto');
 const Validator = require('validator');
 const isEmpty = require('../validation/isEmpty');
 const PhoneNumber = require('awesome-phonenumber');
@@ -13,16 +13,37 @@ otherHelper.generateRandomHexString = len => {
     .slice(0, len)
     .toUpperCase(); // return required number of characters
 };
-otherHelper.sendResponse = (res, status, success, data, errors, msg, token, nodataMsg) => {
+otherHelper.generateRandomNumberString = len => {
+  return Math.floor(Math.random() * 8999 + 1000);
+};
+otherHelper.parsePhoneNo = (phone, RegionCode) => {
+  try {
+    var pn = new PhoneNumber(phone, RegionCode);
+    console.log(pn);
+    if (!pn.isValid()) {
+      return { status: false, data: 'Provided no is invalid mobile no.' };
+    } else if (!pn.isMobile()) {
+      return { status: false, data: 'Provided no should be mobile no.' };
+    } else if (pn.isValid()) {
+      return { status: true, data: pn.getNumber('e164') };
+    } else {
+      return { status: true, data: pn.getNumber('e164') };
+    }
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+otherHelper.sendResponse = (res, status, success, data, errors, msg, token) => {
   const response = {};
-  if (success) response.success = success;
-  if (data) response.data = data;
-  if (errors) response.errors = errors;
-  if (msg) response.msg = msg;
-  if (token) response.token = token;
+  if (success !== null) response.success = success;
+  if (data !== null) response.data = data;
+  if (errors !== null) response.errors = errors;
+  if (msg !== null) response.msg = msg;
+  if (token !== null) response.token = token;
   return res.status(status).json(response);
 };
-otherHelper.paginationSendResponse = (res, status, success,data, msg, pageno, pagesize, totaldata) => {
+otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, pagesize, totaldata) => {
   const response = {};
   if (success) response.success = success;
   if (data) response.data = data;
