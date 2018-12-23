@@ -35,7 +35,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     }
   }
 
-  searchquery = {};
+  searchquery = { IsDeleted: false };
   if (req.query.find_LeaveName) {
     searchquery = { LeaveName: { $regex: req.query.find_LeaveName, $options: 'i x' }, ...searchquery };
   }
@@ -84,6 +84,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
 LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
     let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName IsTransferrable IsActive IsPaidLeave ApplicableGender NoOfDays IsReplacementLeave Added_By');
+    console.log('data:', data);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Type data delivered successfully', null);
   } catch (err) {
     next(err);
