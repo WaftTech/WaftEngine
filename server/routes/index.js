@@ -46,9 +46,13 @@ router.use('/leaveapplication', LeaveApplicationRoutes);
 const holidayRoutes = require('./api/holiday');
 router.use('/holiday', holidayRoutes);
 
-// For comapnyInfo
+// For companyInfo
 const companyroutes = require('./api/company');
 router.use('/company', companyroutes);
+
+// For companydepartments
+const departmentroutes = require('./api/department');
+router.use('/department', departmentroutes);
 
 // For Branch
 const BranchRoutes = require('./api/Branch');
