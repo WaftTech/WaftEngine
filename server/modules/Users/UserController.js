@@ -89,7 +89,7 @@ userController.getAllUser = async (req, res, next) => {
 };
 userController.getUserDetail = async (req, res, next) => {
   try {
-    const users = await User.findById({ _id: req.params.id, IsDeleted: false }, 'name name_nepali email permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
+    const users = await User.findOne({ _id: req.params.id, IsDeleted: false }, 'name name_nepali email permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Detail Get Success', null);
   } catch (err) {
     next(err);
