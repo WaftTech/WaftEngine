@@ -52,7 +52,7 @@ DesignationController.GetDesignation = async (req, res, next) => {
 
 DesignationController.GetDesignationDetail = async (req, res, next) => {
   try {
-    let data = await DesignationSch.findById(req.params.id);
+    let data = await DesignationSch.findOne({ _id: req.params.id,IsDeleted: false  });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Designation data in detail delivered successfully!!', null);
   } catch (err) {
     next(err);
