@@ -39,7 +39,7 @@ registrationValidation.validate = async (req, res, next) => {
         },
         {
           condition: 'String',
-          msg: registrationConfig.validationMessage.receiverInvalidLength,
+          msg: registrationConfig.validationMessage.registrationInvalidLength,
           options: {
             min: 5,
           },
@@ -76,18 +76,6 @@ registrationValidation.validate = async (req, res, next) => {
           options: {
             min: 5,
             max: 30,
-          },
-        },
-      ],
-    },
-    {
-      field: 'Remarks',
-      validate: [
-        {
-          condition: 'String',
-          msg: registrationConfig.validationMessage.remarksInvalidLength,
-          options: {
-            min: 5,
           },
         },
       ],
@@ -142,7 +130,7 @@ registrationValidation.duplicateValidation = async (req, res, next) => {
   }
   let dstatus = await registrationModel.findOne(filter);
   if (dstatus != null) {
-    let errors = { RegistrationNo: registrationConfig.validationMessage.registrationNoexists };
+    let errors = { RegistrationNo: registrationConfig.validationMessage.emailNoexists };
     return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, errors, 'Validation Error.', null);
   } else {
     return next();
