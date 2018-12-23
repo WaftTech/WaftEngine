@@ -6,7 +6,7 @@ const BranchSchema = new Schema({
   BranchNameNepali: { type: String },
   Address: { type: String, required: true },
   AddressNepali: { type: String },
-  ContactNo: { type: Number, required: true },
+  ContactNo: { type: String, required: true },
   Email: { type: String, required: true },
 });
 module.exports = Branch = mongoose.model('Branch', BranchSchema);
