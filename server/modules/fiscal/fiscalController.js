@@ -94,7 +94,7 @@ FiscalController.SaveFiscal = async (req, res, next) => {
 
 FiscalController.GetFiscalById = async (req, res, next) => {
   const id = req.params.id;
-  const fiscal = await FiscalSch.findOne({ _id: ObjectId(id) }, { CreatedDate: 0, __v: 0 });
+  const fiscal = await FiscalSch.findOne({ _id: ObjectId(id), IsDeleted: false }, { CreatedDate: 0, __v: 0 });
   console.log(fiscal);
   return OtherHelper.sendResponse(res, HttpStatus.OK, true, fiscal, null, fiscalConfig.getFiscal, null);
 };
