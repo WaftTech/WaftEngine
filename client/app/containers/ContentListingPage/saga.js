@@ -32,6 +32,18 @@ function* loadOne(action) {
   );
 }
 
+function* deleteOne(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(
+      `contents/${action.payload}`,
+      actions.deleteOneSuccess,
+      actions.deleteOneFailure,
+      token
+    )
+  );
+}
+
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
   yield put(push('/wt/contents-manage'));
@@ -60,4 +72,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
+  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
 }

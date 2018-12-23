@@ -16,8 +16,8 @@ DesignationController.GetDesignation = async (req, res, next) => {
   } else {
     page = 1;
   }
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    size = Math.abs(req.query.page);
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
   } else {
     size = size_default;
   }
@@ -52,7 +52,7 @@ DesignationController.GetDesignation = async (req, res, next) => {
 
 DesignationController.GetDesignationDetail = async (req, res, next) => {
   try {
-    let data = await DesignationSch.findById(req.params.id);
+    let data = await DesignationSch.findOne({ _id: req.params.id,IsDeleted: false  });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Designation data in detail delivered successfully!!', null);
   } catch (err) {
     next(err);
