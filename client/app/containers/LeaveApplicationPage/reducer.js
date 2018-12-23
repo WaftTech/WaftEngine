@@ -19,7 +19,7 @@ function reducer(state = initialState, action) {
       });
     case types.LOAD_ONE_SUCCESS:
       return state.merge({
-        one: fromJS(action.payload.data[0])
+        one: fromJS(action.payload.data)
       });
     case types.DELETE_ONE_SUCCESS:
       return state.merge({

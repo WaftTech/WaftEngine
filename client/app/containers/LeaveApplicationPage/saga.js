@@ -29,7 +29,7 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `LeaveType?${search}&sort=${sort}`,
+      `leaveapplication?${search}&sort=${sort}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token
@@ -41,7 +41,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `LeaveType/${action.payload}`,
+      `leaveapplication/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token
@@ -53,7 +53,7 @@ function* deleteOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.delete(
-      `LeaveType/${action.payload}`,
+      `leaveapplication/${action.payload}`,
       actions.deleteOneSuccess,
       actions.deleteOneFailure,
       token
@@ -63,7 +63,7 @@ function* deleteOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push("/wt/leaveType-manage"));
+  yield put(push("/wt/leaveApplication-manage"));
 }
 
 function* addEdit(action) {
@@ -72,7 +72,7 @@ function* addEdit(action) {
   const { ...data } = action.payload;
   yield fork(
     Api.post(
-      "LeaveType",
+      "leaveapplication",
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
