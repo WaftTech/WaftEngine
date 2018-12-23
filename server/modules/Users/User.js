@@ -10,7 +10,7 @@ const addressdetail = new Schema({
 
 const UserSchema = new Schema({
   name: { type: String, required: true },
-  name_nepali: { type: String },
+  nameNepali: { type: String },
   designation: { type: Schema.Types.ObjectId, ref: 'Designation' },
   citrollno: { type: String },
   permanentaddress: addressdetail,
