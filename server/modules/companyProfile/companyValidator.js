@@ -78,20 +78,7 @@ companyValidation.sanitize = async (req, res, next) => {
       },
     },
     {
-      field: 'companyNameNepali',
-      sanitize: {
-        trim: true,
-        escape: true,
-      },
-    },
-    {
       field: 'address',
-      sanitize: {
-        toBoolean: true,
-      },
-    },
-    {
-      field: 'addressNepali',
       sanitize: {
         toBoolean: true,
       },
