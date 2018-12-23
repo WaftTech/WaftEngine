@@ -13,5 +13,8 @@ const LeaveApplicationSchema = new Schema({
   SubmittedBy: { type: String, required: true },
   Added_by: { type: String, required: true },
   Added_at: { type: Date, default: Date.now, required: true },
+  IsDeleted: { type: Boolean, required: true, default: false },
+  Deleted_By: { type: Schema.Types.ObjectId },
+  Deleted_At: { Date },
 });
 module.exports = LeaveApplication = mongoose.model('LeaveApplicationModel', LeaveApplicationSchema);
