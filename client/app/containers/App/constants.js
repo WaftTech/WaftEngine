@@ -11,9 +11,9 @@
 
 export const DEFAULT_LOCALE = 'en';
 
-export const API_BASE = process.env.NODE_ENV === 'production' ? 'http://hrapp.wafttech.com.np/api/' : 'http://localhost:5020/api/';
+export const API_BASE = process.env.NODE_ENV === 'production' ? 'http://hrapp.wafttech.com.np/api/' : 'http://hrapp.wafttech.com.np/api/';
 
-export const IMAGE_BASE = process.env.NODE_ENV === 'production' ? 'http://hrapp.wafttech.com.np/' : 'http://localhost:5020/';
+export const IMAGE_BASE = process.env.NODE_ENV === 'production' ? 'http://hrapp.wafttech.com.np/' : 'http://hrapp.wafttech.com.np/';
 
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
