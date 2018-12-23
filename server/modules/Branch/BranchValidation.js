@@ -1,7 +1,7 @@
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
 const HttpStatus = require('http-status');
-
+const validationhelper = require('./../../helper/validate.helper');
 const BranchModel = require('./Branch');
 
 const BranchConfig = require('./BranchConfig');
@@ -9,7 +9,7 @@ const BranchConfig = require('./BranchConfig');
 const BranchValidation = {};
 
 BranchValidation.validate = async (req, res, next) => {
-  let errors = await validate(req.body, [
+  let errors = await validationhelper.validate(req.body, [
     {
       field: 'BranchName',
       validate: [
