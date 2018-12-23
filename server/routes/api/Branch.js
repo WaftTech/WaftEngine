@@ -5,12 +5,14 @@ const BranchModule = require('../../modules/Branch/BranchController');
 
 const BranchValidation = require('./../../modules/Branch/BranchValidation');
 
-router.get('/', BranchModule.GetBranch);
+const { authorization } = require('../../middleware/authentication.middleware');
 
-router.get('/:id', BranchModule.GetBranchDetail);
+router.get('/', authorization, BranchModule.GetBranch);
 
-router.post('/', BranchValidation.Branch, BranchModule.AddBranch);
+router.get('/:id', authorization, BranchModule.GetBranchDetail);
 
-router.delete('/:id', BranchModule.DeletebyID);
+router.post('/', authorization, BranchValidation.validate, BranchModule.AddBranch);
+
+router.delete('/:id', authorization, BranchModule.DeleteByID);
 
 module.exports = router;

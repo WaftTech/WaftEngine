@@ -54,4 +54,8 @@ router.use('/company', companyroutes);
 const departmentroutes = require('./api/department');
 router.use('/department', departmentroutes);
 
+// For Branch
+const BranchRoutes = require('./api/Branch');
+router.use('/Branch', BranchRoutes);
+
 module.exports = router;
