@@ -32,6 +32,22 @@ export default defineMessages({
     id: "app.containers.WtDashboard.leaveApplicationManage",
     defaultMessage: "LeaveApplication Manage"
   },
+  branchManage: {
+    id: "app.containers.WtDashboard.branchManage",
+    defaultMessage: "Branch Manage"
+  },
+  holidayManage: {
+    id: "app.containers.WtDashboard.holidayManage",
+    defaultMessage: "Holiday Manage"
+  },
+  departmentManage: {
+    id: "app.containers.WtDashboard.departmentManage",
+    defaultMessage: "Department Manage"
+  },
+  companyManage: {
+    id: "app.containers.WtDashboard.companyManage",
+    defaultMessage: "Company Manage"
+  },
 
   registrationManage: {
     id: "app.containers.WtDashboard.registrationManage",

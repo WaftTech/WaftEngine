@@ -19,6 +19,16 @@ import LeaveTypePage from "../LeaveTypePage";
 import LeaveTypeAddEditPage from "../LeaveTypePage/AddEditPage";
 import LeaveApplicationPage from "../LeaveApplicationPage";
 import LeaveApplicationAddEditPage from "../LeaveApplicationPage/AddEditPage";
+
+import BranchAddEditPage from "../BranchPage/AddEditPage";
+import BranchPage from "../BranchPage";
+import HolidayAddEditPage from "../HolidayPage/AddEditPage";
+import HolidayPage from "../HolidayPage";
+import DepartmentAddEditPage from "../DepartmentPage/AddEditPage";
+import DepartmentPage from "../DepartmentPage";
+import CompanyAddEditPage from "../CompanyPage/AddEditPage";
+import CompanyPage from "../CompanyPage";
+
 import DesignationPage from "../DesignationPage";
 import DesignationAddEditPage from "../DesignationPage/AddEditPage";
 import RegistrationPage from "../RegistrationPage";
@@ -181,6 +191,98 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.leaveApplicationManage} />,
     icon: PermContactCalendar,
     component: LeaveApplicationPage
+  },
+  {
+    path: "/wt/branch-manage/add",
+    sidebarName: <FormattedMessage {...messages.branchManage} />,
+    navbarName: <FormattedMessage {...messages.branchManage} />,
+    icon: PermContactCalendar,
+    component: BranchAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/branch-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.branchManage} />,
+    navbarName: <FormattedMessage {...messages.branchManage} />,
+    icon: PermContactCalendar,
+    component: BranchAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/branch-manage",
+    sidebarName: <FormattedMessage {...messages.branchManage} />,
+    navbarName: <FormattedMessage {...messages.branchManage} />,
+    icon: PermContactCalendar,
+    component: BranchPage
+  },
+  {
+    path: "/wt/holiday-manage/add",
+    sidebarName: <FormattedMessage {...messages.holidayManage} />,
+    navbarName: <FormattedMessage {...messages.holidayManage} />,
+    icon: PermContactCalendar,
+    component: HolidayAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/holiday-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.holidayManage} />,
+    navbarName: <FormattedMessage {...messages.holidayManage} />,
+    icon: PermContactCalendar,
+    component: HolidayAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/holiday-manage",
+    sidebarName: <FormattedMessage {...messages.holidayManage} />,
+    navbarName: <FormattedMessage {...messages.holidayManage} />,
+    icon: PermContactCalendar,
+    component: HolidayPage
+  },
+  {
+    path: "/wt/department-manage/add",
+    sidebarName: <FormattedMessage {...messages.departmentManage} />,
+    navbarName: <FormattedMessage {...messages.departmentManage} />,
+    icon: PermContactCalendar,
+    component: DepartmentAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/department-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.departmentManage} />,
+    navbarName: <FormattedMessage {...messages.departmentManage} />,
+    icon: PermContactCalendar,
+    component: DepartmentAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/department-manage",
+    sidebarName: <FormattedMessage {...messages.departmentManage} />,
+    navbarName: <FormattedMessage {...messages.departmentManage} />,
+    icon: PermContactCalendar,
+    component: DepartmentPage
+  },
+  {
+    path: "/wt/company-manage/add",
+    sidebarName: <FormattedMessage {...messages.companyManage} />,
+    navbarName: <FormattedMessage {...messages.companyManage} />,
+    icon: PermContactCalendar,
+    component: CompanyAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/company-manage/edit/:id",
+    sidebarName: <FormattedMessage {...messages.comapanyManage} />,
+    navbarName: <FormattedMessage {...messages.companyManage} />,
+    icon: PermContactCalendar,
+    component: CompanyAddEditPage,
+    hide: true
+  },
+  {
+    path: "/wt/company-manage",
+    sidebarName: <FormattedMessage {...messages.companyManage} />,
+    navbarName: <FormattedMessage {...messages.companyManage} />,
+    icon: PermContactCalendar,
+    component: CompanyPage
   },
 
   {
