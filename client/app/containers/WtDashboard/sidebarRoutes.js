@@ -26,7 +26,6 @@ import HolidayAddEditPage from "../HolidayPage/AddEditPage";
 import HolidayPage from "../HolidayPage";
 import DepartmentAddEditPage from "../DepartmentPage/AddEditPage";
 import DepartmentPage from "../DepartmentPage";
-import CompanyAddEditPage from "../CompanyPage/AddEditPage";
 import CompanyPage from "../CompanyPage";
 
 import DesignationPage from "../DesignationPage";
@@ -260,22 +259,6 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.departmentManage} />,
     icon: PermContactCalendar,
     component: DepartmentPage
-  },
-  {
-    path: "/wt/company-manage/add",
-    sidebarName: <FormattedMessage {...messages.companyManage} />,
-    navbarName: <FormattedMessage {...messages.companyManage} />,
-    icon: PermContactCalendar,
-    component: CompanyAddEditPage,
-    hide: true
-  },
-  {
-    path: "/wt/company-manage/edit/:id",
-    sidebarName: <FormattedMessage {...messages.comapanyManage} />,
-    navbarName: <FormattedMessage {...messages.companyManage} />,
-    icon: PermContactCalendar,
-    component: CompanyAddEditPage,
-    hide: true
   },
   {
     path: "/wt/company-manage",
