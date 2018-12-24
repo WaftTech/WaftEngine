@@ -125,7 +125,7 @@ export class Holiday extends React.Component {
         applicableTo,
         "" + isActive,
         "" + isHalfDay,
-        addedBy,
+        addedBy.name,
         moment(addedDate).format("MMMM Do YYYY"),
 
         <React.Fragment>

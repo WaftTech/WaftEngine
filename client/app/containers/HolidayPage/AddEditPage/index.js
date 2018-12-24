@@ -67,6 +67,7 @@ class HolidayAddEdit extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
+      console.log(oneObj);
       this.setState(state => ({
         ...oneObj
       }));
@@ -84,7 +85,7 @@ class HolidayAddEdit extends Component {
   };
 
   handleGoBack = () => {
-    this.props.history.push("/wt/leaveType-manage");
+    this.props.history.push("/wt/holiday-manage");
   };
   handleSave = () => {
     this.props.addEdit(this.state);

@@ -1,33 +1,21 @@
 /*
- * ModuleManagePage Messages
+ * DepartmentPage Messages
  *
- * This contains all the text for the ModuleManagePage component.
+ * This contains all the text for the DepartmentPage component.
  */
 import { defineMessages } from "react-intl";
 
 export default defineMessages({
-  leaveName: {
-    id: "app.containers.LeaveTypePage.leaveName",
-    defaultMessage: "Leave Name"
+  departmentName: {
+    id: "app.containers.DepartmentPage.departmentName",
+    defaultMessage: "Department Name"
   },
-  noOfDays: {
-    id: "app.containers.LeaveTypePage.noOfDays",
-    defaultMessage: "Number of Days"
+  numberofStaff: {
+    id: "app.containers.DepartmentPage.numberofStaff",
+    defaultMessage: "Number of Staff"
   },
-  applicableGender: {
-    id: "app.containers.LeaveTypePage.applicableGender",
-    defaultMessage: "Applicable Gender"
-  },
-  isTransferrable: {
-    id: "app.containers.LeaveTypePage.isTransferrable",
-    defaultMessage: "Is Transferrable"
-  },
-  isPaidLeave: {
-    id: "app.containers.LeaveTypePage.isPaidLeave",
-    defaultMessage: "Is PaidLeave"
-  },
-  isReplacementLeave: {
-    id: "app.containers.LeaveTypePage.IsReplacementLeave",
-    defaultMessage: "Is ReplacementLeave"
+  departmentNameNepali: {
+    id: "app.containers.DepartmentPage.departmentNameNepali",
+    defaultMessage: "Department Name in Nepali"
   }
 });
