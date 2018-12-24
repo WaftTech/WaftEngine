@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the roleManagePage state domain
  */
 
-const selectDomain = state => state.get("leaveTypePage", initialState);
+const selectDomain = state => state.get("departmentPage", initialState);
 
 export const makeSelectAll = () =>
   createSelector(selectDomain, state => state.get("all"));

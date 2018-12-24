@@ -3,17 +3,12 @@ import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import moment from "moment";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 
 // core components
 import GridItem from "components/Grid/GridItem";
@@ -48,14 +43,11 @@ const styles = {
   }
 };
 
-class LeaveTypeAddEdit extends Component {
+class DepartmentAddEdit extends Component {
   state = {
-    LeaveName: "",
-    ApplicableGender: "Female",
-    IsTransferrable: true,
-    IsPaidLeave: true,
-    IsReplacementLeave: true,
-    NoOfDays: null
+    departmentName: "",
+    numberofStaff: null,
+    departmentNameNepali: ""
   };
 
   componentDidMount() {
@@ -84,14 +76,10 @@ class LeaveTypeAddEdit extends Component {
   };
 
   handleGoBack = () => {
-    this.props.history.push("/wt/leaveType-manage");
+    this.props.history.push("/wt/department-manage");
   };
   handleSave = () => {
     this.props.addEdit(this.state);
-  };
-
-  handleBooleanChange = name => event => {
-    this.setState({ [name]: event.target.value === "true" });
   };
   render() {
     const { classes } = this.props;
@@ -101,153 +89,50 @@ class LeaveTypeAddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit LeaveType</h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Department</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Leave Name"
-                      id="leaveName"
+                      labelText="Department Name"
+                      id="departmentName"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.LeaveName,
-                        onChange: this.handleChange("LeaveName")
+                        value: this.state.departmentName,
+                        onChange: this.handleChange("departmentName")
                       }}
                     />
                   </GridItem>
 
-                  <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
-                      <FormLabel component="legend">Is Transferrable</FormLabel>
-                      <RadioGroup
-                        aria-label="isTransferrable"
-                        name="isTransferrable"
-                        className={classes.group}
-                        value={this.state.IsTransferrable}
-                        onChange={this.handleBooleanChange("IsTransferrable")}
-                      >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
-                      <FormLabel component="legend">Is Paid</FormLabel>
-                      <RadioGroup
-                        aria-label="isPaid"
-                        name="isPaid"
-                        className={classes.group}
-                        value={this.state.IsPaidLeave}
-                        onChange={this.handleBooleanChange("IsPaidLeave")}
-                      >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </GridItem>
-
-                  <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
-                      <FormLabel component="legend">
-                        Applicable Gender
-                      </FormLabel>
-                      <RadioGroup
-                        aria-label="applicableGender"
-                        name="ApplicableGender"
-                        className={classes.group}
-                        value={this.state.ApplicableGender}
-                        onChange={this.handleChange("ApplicableGender")}
-                      >
-                        <FormControlLabel
-                          value="Male"
-                          control={<Radio />}
-                          label="Male"
-                        />
-                        <FormControlLabel
-                          value="Female"
-                          control={<Radio />}
-                          label="Female"
-                        />
-                        <FormControlLabel
-                          value="others"
-                          control={<Radio />}
-                          label="Others"
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                  {/* Number of staff */}
+                  <GridItem xs={6} sm={6} md={6}>
+                    <CustomInput
+                      labelText="Number of Staff"
+                      id="numberofStaff"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.numberofStaff,
+                        onChange: this.handleNumberChange("numberofStaff")
+                      }}
+                    />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
-                      <FormLabel component="legend">Is Replacement</FormLabel>
-                      <RadioGroup
-                        aria-label="isReplacement"
-                        name="isReplacement1"
-                        className={classes.group}
-                        value={this.state.IsReplacementLeave}
-                        onChange={this.handleBooleanChange(
-                          "IsReplacementLeave"
-                        )}
-                      >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </GridItem>
-                  {/* Number of days */}
-                  <GridItem>
-                    <GridItem xs={6} sm={6} md={6}>
-                      <CustomInput
-                        labelText="Number of Days"
-                        id="NoOfDays"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          value: this.state.NoOfDays,
-                          onChange: this.handleNumberChange("NoOfDays")
-                        }}
-                      />
-                    </GridItem>
+                    <CustomInput
+                      labelText="Department Name Nepali"
+                      id="departmentNameNepali"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.departmentNameNepali,
+                        onChange: this.handleChange("departmentNameNepali")
+                      }}
+                    />
                   </GridItem>
                   <GridItem />
                 </GridContainer>
@@ -270,8 +155,8 @@ class LeaveTypeAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "leaveTypePage", reducer });
-const withSaga = injectSaga({ key: "leaveTypePage", saga });
+const withReducer = injectReducer({ key: "departmentPage", reducer });
+const withSaga = injectSaga({ key: "departmentPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
@@ -292,9 +177,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(LeaveTypeAddEdit);
-
-{
-  /* <input onChange={this.handleChange} />
-<input onChange={event => this.handleChange(event)} /> */
-}
+)(DepartmentAddEdit);
