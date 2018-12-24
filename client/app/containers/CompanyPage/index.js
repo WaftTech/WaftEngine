@@ -23,13 +23,13 @@ import Table from "../../components/Table/Table";
 import Card from "../../components/Card/Card";
 import CardHeader from "../../components/Card/CardHeader";
 import CardBody from "../../components/Card/CardBody";
-
 import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
+import CustomInput from "components/CustomInput/CustomInput";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest, deleteOneRequest } from "./actions";
-import { makeSelectAll } from "./selectors";
+import { loadOneRequest, addEditRequest } from "./actions";
+import { makeSelectOne } from "./selectors";
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
 
@@ -67,10 +67,31 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class LeaveType extends React.Component {
-  state = { query: {}, name: "", sortToggle: 0, sortSymbol: "D" };
+export class Company extends React.Component {
+  state = {
+    query: {},
+    isEditing: false,
+    companyName: "",
+    address: "",
+    contactNumber: "",
+    email: "",
+    web: "",
+    companyNameNepali: "",
+    addressNepali: "",
+    contactPerson: "",
+    contactPersonNepali: ""
+  };
   componentDidMount() {
-    this.props.loadAll({ query: {} });
+    this.props.loadOne();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.one !== nextProps.one) {
+      const oneObj = nextProps.one.toJS();
+      this.setState(state => ({
+        ...oneObj
+      }));
+    }
   }
 
   handleQueryChange = e => {
@@ -83,229 +104,161 @@ export class LeaveType extends React.Component {
     }));
   };
   handleAdd = () => {
-    this.props.history.push("/wt/leaveType-manage/add");
+    this.props.history.push("/wt/company-manage/add");
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/leaveType-manage/edit/${id}`);
-  };
-  handleDelete = id => {
-    // shoe modal && api call
-    this.props.deleteOne(id);
-    // this.props.history.push(`/wt/link-manage/edit/${id}`);
-  };
-  handleSearch = () => {
-    this.props.loadAll({ query: this.state.query });
-    this.setState({ query: {} });
+    this.props.history.push(`/wt/company-manage/edit/${id}`);
   };
 
-  leaveTypeSort = title => {
-    if (!!this.state.sortToggle) {
-      this.setState({ sortToggle: 0, sortSymbol: "D" });
-    } else if (!this.state.sortToggle) {
-      this.setState({ sortToggle: 1, sortSymbol: "A" });
-    }
-    this.props.loadAll({ sort: `${this.state.sortToggle}${title}` });
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+  handleSave = () => {
+    this.props.addEdit(this.state);
   };
   render() {
-    const { classes, allLinks } = this.props;
-    const allLinksObj = allLinks.toJS();
-    const tableData = allLinksObj.map(
-      ({
-        _id,
-        LeaveName,
-        NoOfDays,
-        ApplicableGender,
-        IsTransferrable,
-        IsPaidLeave,
-        IsReplacementLeave
-      }) => [
-        LeaveName,
-        NoOfDays,
-        ApplicableGender,
-        "" + IsTransferrable,
-        "" + IsPaidLeave,
-        "" + IsReplacementLeave,
-
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Edit
-                className={classes.tableActionButtonIcon + " " + classes.edit}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close
-                className={classes.tableActionButtonIcon + " " + classes.close}
-              />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>
-      ]
-    );
+    const { classes, one } = this.props;
+    const oneObj = one.toJS();
+    console.log(oneObj);
+    const {
+      _id,
+      companyName,
+      address,
+      contactNumber,
+      email,
+      web,
+      companyNameNepali,
+      addressNepali,
+      contactPerson,
+      contactPersonNepali
+    } = oneObj;
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
-              <GridContainer>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="LeaveName"
-                    value={this.state.query.LeaveName || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By LeaveType"
-                  />
-                </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="NoOfDays"
-                    value={this.state.query.NoOfDays || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By Number Of Days"
-                  />
-                </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="ApplicableGender"
-                    value={this.state.query.ApplicableGender || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By Applicable Gender"
-                  />
-                </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="IsTransferrable"
-                    value={this.state.query.IsTransferrable || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By Is Transferrable"
-                  />
-                </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="IsPaidLeave"
-                    value={this.state.query.IsPaidLeave || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By Is Paid Leave"
-                  />
-                </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
-                  <TextField
-                    name="IsReplacementLeave"
-                    value={this.state.query.IsReplacementLeave || ""}
-                    onChange={this.handleQueryChange}
-                    margin="normal"
-                    placeholder="Search By Is Replacement Leave"
-                  />
-                </GridItem>
-              </GridContainer>
-
-              <Button
-                color="primary"
-                aria-label="edit"
-                justIcon
-                round
-                onClick={this.handleSearch}
-              >
-                <Search />
-              </Button>
-            </CardHeader>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>LeaveType Management</h4>
+              <h4 className={classes.cardTitleWhite}>Company Management</h4>
               <p className={classes.cardCategoryWhite}>
-                Here are the list of LeaveType
+                Here is the detail of Company
               </p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor="primary"
-                tableHead={[
-                  <FormattedMessage {...messages.leaveName}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("LeaveName")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.noOfDays}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("NoOfDays")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.applicableGender}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("To")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isTransferrable}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("IsCurrent")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isPaidLeave}>
-                    {txt => (
-                      <span onClick={() => this.leaveTypeSort("IsActive")}>
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isReplacementLeave}>
-                    {txt => (
-                      <span
-                        onClick={() => this.leaveTypeSort("IsReplacementLeave")}
-                      >
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>
-                ]}
-                tableData={tableData}
-              />
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-                round={true}
-                onClick={this.handleAdd}
-              >
-                <AddIcon />
+              <GridItem>
+                <CustomInput
+                  labelText="Company Name"
+                  id="companyName"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.companyName,
+                    onChange: this.handleChange("companyName")
+                  }}
+                />
+                <CustomInput
+                  labelText="Address"
+                  id="address"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.address,
+                    onChange: this.handleChange("address")
+                  }}
+                />
+                <CustomInput
+                  labelText="Contact Number"
+                  id="contactNumber"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.contactNumber,
+                    onChange: this.handleChange("contactNumber")
+                  }}
+                />
+                <CustomInput
+                  labelText="Email"
+                  id="email"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.email,
+                    onChange: this.handleChange("email")
+                  }}
+                />
+                <CustomInput
+                  labelText="Web"
+                  id="web"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.web,
+                    onChange: this.handleChange("web")
+                  }}
+                />
+                <CustomInput
+                  labelText="Company Name Nepali"
+                  id="companyNameNepali"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.companyNameNepali,
+                    onChange: this.handleChange("companyNameNepali")
+                  }}
+                />
+                <CustomInput
+                  labelText="Address Nepali"
+                  id="addressNepali"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.addressNepali,
+                    onChange: this.handleChange("addressNepali")
+                  }}
+                />
+                <CustomInput
+                  labelText="Contact Person"
+                  id="contactPerson"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.contactPerson,
+                    onChange: this.handleChange("contactPerson")
+                  }}
+                />
+                <CustomInput
+                  labelText="Contact Person Nepali"
+                  id="contactPersonNepali"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    value: this.state.contactPersonNepali,
+                    onChange: this.handleChange("contactPersonNepali")
+                  }}
+                />
+              </GridItem>
+
+              <Button color="primary" onClick={this.handleSave}>
+                Save
               </Button>
+              {/* <IconButton
+                aria-label="Edit"
+                className={classes.tableActionButton}
+                onClick={() =>
+                  this.setState({ isEditing: !this.state.isEditing })
+                }
+              >
+                <Edit
+                  className={classes.tableActionButtonIcon + " " + classes.edit}
+                />
+              </IconButton> */}
             </CardBody>
           </Card>
         </GridItem>
@@ -314,17 +267,17 @@ export class LeaveType extends React.Component {
   }
 }
 
-LeaveType.propTypes = {
-  loadAll: PropTypes.func.isRequired
+Company.propTypes = {
+  loadOne: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll()
+  one: makeSelectOne()
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: payload => dispatch(loadAllRequest(payload)),
-  deleteOne: id => dispatch(deleteOneRequest(id))
+  loadOne: payload => dispatch(loadOneRequest(payload)),
+  addEdit: payload => dispatch(addEditRequest(payload))
 });
 
 const withConnect = connect(
@@ -332,8 +285,8 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: "leaveTypePage", reducer });
-const withSaga = injectSaga({ key: "leaveTypePage", saga });
+const withReducer = injectReducer({ key: "companyPage", reducer });
+const withSaga = injectSaga({ key: "companyPage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -343,4 +296,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(LeaveType);
+)(Company);

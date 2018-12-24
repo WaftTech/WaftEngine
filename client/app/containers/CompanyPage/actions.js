@@ -1,6 +1,6 @@
 /*
  *
- * LeaveType actions
+ * Company actions
  *
  */
 

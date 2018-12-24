@@ -1,33 +1,46 @@
 /*
- * ModuleManagePage Messages
+ * CompanyManagePage Messages
  *
- * This contains all the text for the ModuleManagePage component.
+ * This contains all the text for the CompanyManagePage component.
  */
 import { defineMessages } from "react-intl";
 
 export default defineMessages({
-  leaveName: {
-    id: "app.containers.LeaveTypePage.leaveName",
-    defaultMessage: "Leave Name"
+  companyName: {
+    id: "app.containers.CompanyPage.companyName",
+    defaultMessage: "Company Name"
   },
-  noOfDays: {
-    id: "app.containers.LeaveTypePage.noOfDays",
-    defaultMessage: "Number of Days"
+  address: {
+    id: "app.containers.CompanyPage.address",
+    defaultMessage: "Address"
   },
-  applicableGender: {
-    id: "app.containers.LeaveTypePage.applicableGender",
-    defaultMessage: "Applicable Gender"
+  contactNumber: {
+    id: "app.containers.CompanyPage.contactNumber",
+    defaultMessage: "Contact Number"
   },
-  isTransferrable: {
-    id: "app.containers.LeaveTypePage.isTransferrable",
-    defaultMessage: "Is Transferrable"
+  email: {
+    id: "app.containers.CompanyPage.email",
+    defaultMessage: "Email"
   },
-  isPaidLeave: {
-    id: "app.containers.LeaveTypePage.isPaidLeave",
-    defaultMessage: "Is PaidLeave"
+  web: {
+    id: "app.containers.CompanyPage.web",
+    defaultMessage: "Web"
   },
-  isReplacementLeave: {
-    id: "app.containers.LeaveTypePage.IsReplacementLeave",
-    defaultMessage: "Is ReplacementLeave"
+  companyNameNepali: {
+    id: "app.containers.CompanyPage.companyNameNepali",
+    defaultMessage: "Company Name Nepali"
+  },
+  addressNepali: {
+    id: "app.containers.CompanyPage.addressNepali",
+    defaultMessage: "Address Nepali"
+  },
+
+  contactPerson: {
+    id: "app.containers.CompanyPage.contactPerson",
+    defaultMessage: "Contact Person"
+  },
+  contactPersonNepali: {
+    id: "app.containers.CompanyPage.contactPersonNepali",
+    defaultMessage: "Contact Person Nepali"
   }
 });
