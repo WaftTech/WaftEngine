@@ -4,6 +4,7 @@ const { slugify } = require('../../helper/others.helper');
 
 const FiscalSchema = new Schema({
   FiscalYear: { type: String, required: true },
+  FiscalYearNepali: { type: String },
   From: { type: Date, required: true },
   To: { type: Date, required: true },
   IsDeleted: { type: Boolean, required: true, default: false },
