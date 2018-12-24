@@ -10,6 +10,10 @@ import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
 
 // core components
@@ -45,29 +49,23 @@ const styles = {
   }
 };
 
-class FiscalAddEdit extends Component {
-  state = { FiscalYear: "", From: null, To: null };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
+class LeaveApplication extends Component {
+  state = {
+    NoOfDays: null,
+    SubmittedTo: "",
+    SubmittedBy: "",
+    Added_by: "",
+    IsHalfDay: true,
+    From: null,
+    To: null
   };
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
-  handleChecked = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-  handleGoBack = () => {
-    this.props.history.push("/wt/fiscal-manage");
-  };
-  handleSave = () => {
-    this.props.addEdit(this.state);
-  };
+
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOne(this.props.match.params.id);
     }
   }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
@@ -76,12 +74,26 @@ class FiscalAddEdit extends Component {
       }));
     }
   }
-  handleFromChange = event => {
-    event.persist();
-    const {
-      target: { value, name }
-    } = event;
-    this.setState({ [name]: value });
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.setState({ [name]: newContent });
+  };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+  handleNumberChange = name => event => {
+    this.setState({ [name]: Number(event.target.value) });
+  };
+
+  handleGoBack = () => {
+    this.props.history.push("/wt/leaveApplication-manage");
+  };
+  handleSave = () => {
+    this.props.addEdit(this.state);
+  };
+
+  handleBooleanChange = name => event => {
+    this.setState({ [name]: event.target.value === "true" });
   };
   render() {
     const { classes } = this.props;
@@ -91,23 +103,94 @@ class FiscalAddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Fiscal</h4>
+                <h4 className={classes.cardTitleWhite}>
+                  Add/Edit Leave Application
+                </h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Fiscal Year"
-                      id="fiscal-year"
+                      labelText="Added By"
+                      id="Added_by"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.FiscalYear,
-                        onChange: this.handleChange("FiscalYear")
+                        value: this.state.Added_by,
+                        onChange: this.handleChange("Added_by")
                       }}
                     />
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Number of Days"
+                      id="NoOfDays"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.NoOfDays,
+                        onChange: this.handleNumberChange("NoOfDays")
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Submitted To"
+                      id="SubmittedTo"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.SubmittedTo,
+                        onChange: this.handleChange("SubmittedTo")
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Submitted By"
+                      id="SubmittedBy"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.SubmittedBy,
+                        onChange: this.handleChange("SubmittedBy")
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={4} sm={4} md={4}>
+                    <FormControl
+                      component="fieldset"
+                      className={classes.formControl}
+                    >
+                      <FormLabel component="legend">Is HalfDay</FormLabel>
+                      <RadioGroup
+                        aria-label="IsHalfDay"
+                        name="IsHalfDay"
+                        className={classes.group}
+                        value={this.state.IsHalfDay}
+                        onChange={this.handleBooleanChange("IsHalfDay")}
+                      >
+                        <FormControlLabel
+                          value={true}
+                          control={<Radio />}
+                          label="True"
+                        />
+                        <FormControlLabel
+                          value={false}
+                          control={<Radio />}
+                          label="False"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       id="date"
                       name="from"
@@ -123,6 +206,8 @@ class FiscalAddEdit extends Component {
                       }}
                       //this.handleQueryChange
                     />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       id="date"
                       name="to"
@@ -157,8 +242,8 @@ class FiscalAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "fiscalYearPage", reducer });
-const withSaga = injectSaga({ key: "fiscalYearPage", saga });
+const withReducer = injectReducer({ key: "leaveApplicationPage", reducer });
+const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
@@ -179,9 +264,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(FiscalAddEdit);
-
-{
-  /* <input onChange={this.handleChange} />
-<input onChange={event => this.handleChange(event)} /> */
-}
+)(LeaveApplication);

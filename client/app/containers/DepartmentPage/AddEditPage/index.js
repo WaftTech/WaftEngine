@@ -3,14 +3,12 @@ import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import moment from "moment";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
-import TextField from "@material-ui/core/TextField";
 
 // core components
 import GridItem from "components/Grid/GridItem";
@@ -45,29 +43,19 @@ const styles = {
   }
 };
 
-class FiscalAddEdit extends Component {
-  state = { FiscalYear: "", From: null, To: null };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
+class DepartmentAddEdit extends Component {
+  state = {
+    departmentName: "",
+    numberofStaff: null,
+    departmentNameNepali: ""
   };
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
-  handleChecked = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-  handleGoBack = () => {
-    this.props.history.push("/wt/fiscal-manage");
-  };
-  handleSave = () => {
-    this.props.addEdit(this.state);
-  };
+
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOne(this.props.match.params.id);
     }
   }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
@@ -76,12 +64,22 @@ class FiscalAddEdit extends Component {
       }));
     }
   }
-  handleFromChange = event => {
-    event.persist();
-    const {
-      target: { value, name }
-    } = event;
-    this.setState({ [name]: value });
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.setState({ [name]: newContent });
+  };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+  handleNumberChange = name => event => {
+    this.setState({ [name]: Number(event.target.value) });
+  };
+
+  handleGoBack = () => {
+    this.props.history.push("/wt/department-manage");
+  };
+  handleSave = () => {
+    this.props.addEdit(this.state);
   };
   render() {
     const { classes } = this.props;
@@ -91,52 +89,52 @@ class FiscalAddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Fiscal</h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Department</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Fiscal Year"
-                      id="fiscal-year"
+                      labelText="Department Name"
+                      id="departmentName"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.FiscalYear,
-                        onChange: this.handleChange("FiscalYear")
-                      }}
-                    />
-
-                    <TextField
-                      id="date"
-                      name="from"
-                      label="From"
-                      type="date"
-                      inputProps={{
-                        value: moment(this.state.From).format("YYYY-MM-DD"),
-                        name: "From",
-                        onChange: this.handleChange("From")
-                      }}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      //this.handleQueryChange
-                    />
-                    <TextField
-                      id="date"
-                      name="to"
-                      label="To"
-                      type="date"
-                      inputProps={{
-                        value: moment(this.state.To).format("YYYY-MM-DD"),
-                        onChange: this.handleChange("To")
-                      }}
-                      InputLabelProps={{
-                        shrink: true
+                        value: this.state.departmentName,
+                        onChange: this.handleChange("departmentName")
                       }}
                     />
                   </GridItem>
+
+                  {/* Number of staff */}
+                  <GridItem xs={6} sm={6} md={6}>
+                    <CustomInput
+                      labelText="Number of Staff"
+                      id="numberofStaff"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.numberofStaff,
+                        onChange: this.handleNumberChange("numberofStaff")
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Department Name Nepali"
+                      id="departmentNameNepali"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        value: this.state.departmentNameNepali,
+                        onChange: this.handleChange("departmentNameNepali")
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem />
                 </GridContainer>
               </CardBody>
               <CardFooter>
@@ -157,8 +155,8 @@ class FiscalAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "fiscalYearPage", reducer });
-const withSaga = injectSaga({ key: "fiscalYearPage", saga });
+const withReducer = injectReducer({ key: "departmentPage", reducer });
+const withSaga = injectSaga({ key: "departmentPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne()
@@ -179,9 +177,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(FiscalAddEdit);
-
-{
-  /* <input onChange={this.handleChange} />
-<input onChange={event => this.handleChange(event)} /> */
-}
+)(DepartmentAddEdit);
