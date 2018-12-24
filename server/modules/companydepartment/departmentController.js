@@ -55,15 +55,13 @@ departmentController.getData = async (req, res, next) => {
 
   if (req.query.find_departmentName) {
     searchq = {
-      Subject: { $regex: req.query.find_Subject, $options: 'i x' },
+      departmentName: { $regex: req.query.find_departmentName, $options: 'i x' },
       ...searchq,
     };
   }
   selectq = 'departmentName departmentNameNepali numberofStaff';
 
   let datas = await otherHelper.getquerySendResponse(departmentModel, page, size, sortq, searchq, selectq, next);
-
-
 
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Departments data delivered successfully!!', page, size, datas.totaldata);
 };
