@@ -58,6 +58,8 @@ holidayController.getData = async (req, res, next) => {
     }
   }
 
+  let populate = { path: 'addedBy', select: '_id name' };
+
   searchq = { IsDeleted: false };
 
   if (req.query.find_title) {
@@ -77,7 +79,7 @@ holidayController.getData = async (req, res, next) => {
   }
   selectq = 'title date isActive applicableTo isHalfDay addedBy addedDate';
 
-  let datas = await otherHelper.getquerySendResponse(holidaymodel, page, size, sortq, searchq, selectq, next, null);
+  let datas = await otherHelper.getquerySendResponse(holidaymodel, page, size, sortq, searchq, selectq, next, populate);
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Holidays delivered successfully!!', page, size, datas.totaldata);
 };
 
