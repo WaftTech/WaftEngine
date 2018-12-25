@@ -72,7 +72,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
   }
 
   if (req.query.find_ApplicableReligion) {
-    searchquery = { find_ApplicableReligion: req.query.find_ApplicableReligion, ...searchquery };
+    searchquery = { ApplicableReligion: req.query.find_ApplicableReligion, ...searchquery };
   }
 
   if (req.query.find_NoOfDays) {
@@ -87,7 +87,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     }
   }
 
-  selectquery = 'LeaveName IsTransferrable IsPaidLeave IsCarryOver ApplicableGender NoOfDays ApplicableReligion IsReplacementLeave Added_by';
+  selectquery = 'LeaveName LeaveNameNepali IsTransferrable IsPaidLeave IsCarryOver ApplicableGender NoOfDays ApplicableReligion IsReplacementLeave Added_by';
 
   let datas = await otherHelper.getquerySendResponse(LeaveTypeModel, page, size, sortquery, searchquery, selectquery, next);
 
@@ -96,7 +96,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
 
 LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
-    let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName IsTransferrable IsActive IsPaidLeave ApplicableGender IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave Added_By');
+    let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave Added_By');
     //console.log('data:', data);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Type data delivered successfully', null);
   } catch (err) {
