@@ -27,7 +27,7 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
     },
 
     {
-      field: 'Status',
+      field: 'Remarks.Status',
       validate: [
         {
           condition: 'contains',
@@ -38,14 +38,35 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
     },
 
     {
-      field: 'Remarks',
+      field: 'Remarks.Remark',
       validate: [
         {
           condition: 'IsEmpty',
-          msg: LeaveApplicationConfig.ValidationMessage.RemarksRequired,
+          msg: LeaveApplicationConfig.ValidationMessage.RemarkRequired,
         },
       ],
     },
+
+    {
+      field: 'Remarks.Date',
+      validate: [
+        {
+          condition: 'IsDate',
+          msg: LeaveApplicationConfig.ValidationMessage.DateRequired,
+        },
+      ],
+    },
+
+    {
+      field: 'Remarks.UserID',
+      validate: [
+        {
+          condition: 'IsMONGOID',
+          msg: LeaveApplicationConfig.ValidationMessage.UserIDRequired,
+        },
+      ],
+    },
+
     {
       field: 'SubmittedTo',
       validate: [

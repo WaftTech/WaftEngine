@@ -10,7 +10,9 @@ module.exports = {
     Added_byInvalid: 'Please try to spell in string',
     ToRequired: 'Please enter "To Date"',
     FromRequired: 'Please enter "From Date"',
-    RemarksRequired: 'You must enter Remarks',
+    RemarkRequired: 'You must enter Remarks',
     StatusRequired: 'You must select Status',
+    DateRequired: 'Please Enter in Standard Date format',
+    UserIDRequired: 'Please use UserID',
   },
 };
