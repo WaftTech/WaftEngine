@@ -25,6 +25,27 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
         },
       ],
     },
+
+    {
+      field: 'Status',
+      validate: [
+        {
+          condition: 'contains',
+          msg: LeaveApplicationConfig.ValidationMessage.StatusRequired,
+          options: ['', 'Pending', 'Accepted', 'Rejected'],
+        },
+      ],
+    },
+
+    {
+      field: 'Remarks',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.RemarksRequired,
+        },
+      ],
+    },
     {
       field: 'SubmittedTo',
       validate: [
