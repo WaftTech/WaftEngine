@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const RemarksDetail = new Schema({
-  Remarks: { type: String },
+const RemarkDetail = new Schema({
+  Remark: { type: String },
   Date: { type: Date },
   UserID: { type: Schema.Types.ObjectId, ref: 'users' },
   Status: { type: String, enum: ['Pending', 'Accepted', 'Rejected'] },
@@ -27,6 +27,6 @@ const LeaveApplicationSchema = new Schema({
   FromIsHalfDay: { type: Boolean, required: true, default: false },
   ToIsHalfDay: { type: Boolean, required: true, default: false },
   Status: { type: String, required: true, enum: ['Pending', 'Accepted', 'Rejected'], default: 'Pending' },
-  Remarks: RemarksDetail,
+  Remarks: [RemarkDetail],
 });
 module.exports = LeaveApplication = mongoose.model('LeaveApplicationModel', LeaveApplicationSchema);
