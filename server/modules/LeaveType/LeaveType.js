@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+
 const LeaveTypeSchema = new Schema({
   //ID: { type: number },
   LeaveName: { type: String, required: true },

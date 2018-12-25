@@ -64,7 +64,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
 
 LeaveApplicationController.GetLeaveApplicationByID = async (req, res, next) => {
   try {
-    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay NoOfDays SubmittedTo SubmittedBy Added_by To From');
+    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay NoOfDays SubmittedTo SubmittedBy Added_by To From ToIsHalfDay FromIsHalfDay Remarks');
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Application data delivered successfully', null);
   } catch (err) {
     next(err);
