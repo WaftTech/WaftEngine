@@ -73,7 +73,16 @@ export class WtDashboard extends React.Component {
   }
   render() {
     const { mobileOpen } = this.state;
-    const { location, classes } = this.props;
+    const { location, classes, user } = this.props;
+    const availablePaths = [
+      "/wt/dashboard",
+      "/wt/role-manage/add",
+      "/wt/role-manage/edit/:id",
+      "/wt/role-manage"
+    ];
+    const filteredRoutes = sidebarRoutes.filter(each =>
+      availablePaths.includes(each.path)
+    );
     return (
       <div className={classes.wrapper}>
         <Sidebar
@@ -105,8 +114,8 @@ WtDashboard.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   wtdashboard: makeSelectWtDashboard()
+  // user: makeSelectUser()
 });
-
 
 const withConnect = connect(mapStateToProps);
 
