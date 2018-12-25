@@ -113,18 +113,24 @@ export class LeaveType extends React.Component {
       ({
         _id,
         LeaveName,
+        LeaveNameNepali,
         NoOfDays,
         ApplicableGender,
         IsTransferrable,
         IsPaidLeave,
-        IsReplacementLeave
+        IsReplacementLeave,
+        ApplicableReligion,
+        IsCarryOver
       }) => [
         LeaveName,
+        LeaveNameNepali,
         NoOfDays,
         ApplicableGender,
         "" + IsTransferrable,
         "" + IsPaidLeave,
         "" + IsReplacementLeave,
+        ApplicableReligion,
+        IsCarryOver,
 
         <React.Fragment>
           <Tooltip
@@ -223,6 +229,24 @@ export class LeaveType extends React.Component {
                     placeholder="Search By Is Replacement Leave"
                   />
                 </GridItem>
+                <GridItem xs={4} sm={4} md={4}>
+                  <TextField
+                    name="ApplicableReligion"
+                    value={this.state.query.ApplicableReligion || ""}
+                    onChange={this.handleQueryChange}
+                    margin="normal"
+                    placeholder="Search By Applicable Religion"
+                  />
+                </GridItem>
+                <GridItem xs={4} sm={4} md={4}>
+                  <TextField
+                    name="IsCarryOver"
+                    value={this.state.query.IsCarryOver || ""}
+                    onChange={this.handleQueryChange}
+                    margin="normal"
+                    placeholder="Search By Carry Over"
+                  />
+                </GridItem>
               </GridContainer>
 
               <Button
@@ -256,6 +280,7 @@ export class LeaveType extends React.Component {
                       </span>
                     )}
                   </FormattedMessage>,
+                  <FormattedMessage {...messages.leaveNameNepali} />,
                   <FormattedMessage {...messages.noOfDays}>
                     {txt => (
                       <span onClick={() => this.leaveTypeSort("NoOfDays")}>
@@ -289,6 +314,22 @@ export class LeaveType extends React.Component {
                       <span
                         onClick={() => this.leaveTypeSort("IsReplacementLeave")}
                       >
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.applicableReligion}>
+                    {txt => (
+                      <span
+                        onClick={() => this.leaveTypeSort("ApplicableReligion")}
+                      >
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
+                  <FormattedMessage {...messages.isCarryOver}>
+                    {txt => (
+                      <span onClick={() => this.leaveTypeSort("IsCarryOver")}>
                         {txt}
                       </span>
                     )}
