@@ -33,7 +33,7 @@ const registrationSchema = new schema({
     },
     Added_by: {
         type: schema.Types.ObjectId,
-        required: true
+        required: true, ref: 'users'
     },
     Added_date: {
         type: Date,
