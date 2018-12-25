@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const holidaySchema = new Schema({
   title: { type: String, required: true },
+  titleNepali: { type: String },
   date: { type: Date, required: true, unique: true },
   isActive: { type: Boolean, required: true, default: true },
   applicableTo: { type: String, required: true, enum: ['All', 'Male', 'Female', 'Other'] },
