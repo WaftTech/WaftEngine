@@ -24,9 +24,34 @@ export default defineMessages({
     defaultMessage: "Fiscal Manage"
   },
 
+  leaveTypeManage: {
+    id: "app.containers.WtDashboard.leaveTypeManage",
+    defaultMessage: "LeaveType Manage"
+  },
+  leaveApplicationManage: {
+    id: "app.containers.WtDashboard.leaveApplicationManage",
+    defaultMessage: "LeaveApplication Manage"
+  },
+  branchManage: {
+    id: "app.containers.WtDashboard.branchManage",
+    defaultMessage: "Branch Manage"
+  },
+  holidayManage: {
+    id: "app.containers.WtDashboard.holidayManage",
+    defaultMessage: "Holiday Manage"
+  },
+  departmentManage: {
+    id: "app.containers.WtDashboard.departmentManage",
+    defaultMessage: "Department Manage"
+  },
+  companyManage: {
+    id: "app.containers.WtDashboard.companyManage",
+    defaultMessage: "Company Manage"
+  },
+
   registrationManage: {
-    id: 'app.containers.WtDashboard.registrationManage',
-    defaultMessage: 'Registration Manage',
+    id: "app.containers.WtDashboard.registrationManage",
+    defaultMessage: "Registration Manage"
   },
   moduleManage: {
     id: "app.containers.WtDashboard.moduleManage",

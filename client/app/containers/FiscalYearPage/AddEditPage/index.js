@@ -138,37 +138,6 @@ class FiscalAddEdit extends Component {
                     />
                   </GridItem>
                 </GridContainer>
-                {/* <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Description"
-                      id="role-description"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        value: this.state.Description,
-                        onChange: this.handleChange("Description")
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer> */}
-                {/* <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.IsActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChecked("IsActive")}
-                          value="IsActive"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
-                  </GridItem>
-                </GridContainer> */}
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSave}>
