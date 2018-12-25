@@ -41,6 +41,20 @@ LeaveTypeValidation.validate = async (req, res, next) => {
       ],
     },
     {
+      field: 'ApplicableReligion',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveTypeConfig.ValidationMessage.ApplicableReligionRequired,
+        },
+        {
+          condition: 'Contains',
+          msg: LeaveTypeConfig.ValidationMessage.ApplicableReligionInvalid,
+          options: ['All', 'Hindu', 'Muslim', 'Christian', 'Buddist', 'Other'],
+        },
+      ],
+    },
+    {
       field: 'NoOfDays',
       validate: [
         {
