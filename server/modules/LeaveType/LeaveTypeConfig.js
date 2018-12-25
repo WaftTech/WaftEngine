@@ -6,5 +6,7 @@ module.exports = {
     ApplicableGenderInvalid: 'Must enter valid Gender',
     NoOfDaysRequired: 'Must enter Numeric value',
     NoOfDaysInvalid: 'Must be 1 or greater than 1',
+    ApplicableReligionRequired: 'You must select Applicable Religion',
+    ApplicableReligionInvalid: 'Please Select Valid Applivcable Religion',
   },
 };
