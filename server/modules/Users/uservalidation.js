@@ -37,6 +37,20 @@ uservalidation.validate = async (req, res, next) => {
       ],
     },
     {
+      field: 'gender',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: userConfig.validationMessage.genderRequired,
+        },
+        {
+          condition: 'Contains',
+          msg: userConfig.validationMessage.genderInvalid,
+          options: ['Male', 'Female', 'Other'],
+        },
+      ],
+    },
+    {
       field: 'email',
       validate: [
         {

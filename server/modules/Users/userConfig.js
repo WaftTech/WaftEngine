@@ -14,6 +14,8 @@ module.exports = {
     vdcInvalid: 'Sorry, VDC/Municipality is invalid!!',
     emailExists: 'I am sure, that Email already exists!!!',
     rolesInvalid: 'Sorry, the Role you selected is invalid!!!',
-    rolesRequired: 'Sorry, you missed the roles field!!'
+    rolesRequired: 'Sorry, you missed the roles field!!',
+    genderInvalid: 'Sorry, you entered an invalid Gender',
+    genderRequired: 'Sorry, Gender is required!!!',
   },
 };
