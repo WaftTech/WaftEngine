@@ -2,9 +2,9 @@ module.exports = {
   ValidateMessage: {
     LeaveTypeRequired: 'Leave Type Required!!!',
     LeaveTypeInvalid: 'LeaveType Invalid!!!',
-    FiscalYearRequired: 'Fiscal year Reuired!!',
+    FiscalYearRequired: 'Fiscal year required!!',
     FiscalYearInvalid: 'Fiscal Year Invalid!!!',
-    EmployeeIdRequired: 'EmployeeId Reuired!!',
+    EmployeeIdRequired: 'EmployeeId required!!',
     EmployeeIdInvalid: 'EmployeeId Invalid!!!',
     NoOfDaysRequired: 'No of Days is required!!!',
     NoOfDaysInvalid: 'No of days is Invalid!!!',
