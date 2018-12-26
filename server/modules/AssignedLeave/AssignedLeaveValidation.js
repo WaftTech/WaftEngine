@@ -84,13 +84,12 @@ AssignedLeavevalidation.Validate = async (req, res, next) => {
           msg: AssignedLeaveConfig.ValidateMessage.CarryOverLeaveRequired,
         },
         {
-          condition: 'IsBoolean',
+          condition: 'IsNumeric',
           msg: AssignedLeaveConfig.ValidateMessage.CarryOverLeaveInvalid,
         },
       ],
     },
   ]);
-  console.log(errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
   } else {
@@ -110,7 +109,22 @@ AssignedLeavevalidation.Sanitize = async (req, res, next) => {
     {
       field: 'CarryOverLeave',
       sanitize: {
-        toBoolean: true,
+        trim: true,
+        escape: true,
+      },
+    },
+    {
+      field: 'AppliedLeave',
+      sanitize: {
+        trim: true,
+        escape: true,
+      },
+    },
+    {
+      field: 'LeaveTaken',
+      sanitize: {
+        trim: true,
+        escape: true,
       },
     },
   ]);
