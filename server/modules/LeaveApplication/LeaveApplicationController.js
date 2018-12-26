@@ -55,7 +55,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
     searchquery = { Added_by: { $regex: req.query.find_Added_by, $options: 'i x' }, ...searchquery };
   }
 
-  selectquery = 'IsHalfDay NoOfDays SubmittedTo SubmittedBy Added_by';
+  selectquery = 'IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From SubmittedTo SubmittedBy Added_by Status Remarks';
 
   let datas = await otherHelper.getquerySendResponse(LeaveApplicationModel, page, size, sortquery, searchquery, selectquery, next);
 
@@ -64,7 +64,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
 
 LeaveApplicationController.GetLeaveApplicationByID = async (req, res, next) => {
   try {
-    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay NoOfDays SubmittedTo SubmittedBy Added_by To From');
+    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay FromIsHalfDay ToIsHalfDay Status NoOfDays SubmittedTo SubmittedBy Added_by To From Remarks');
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Application data delivered successfully', null);
   } catch (err) {
     next(err);

@@ -66,4 +66,8 @@ router.use('/assignedleave', AssignedLeave);
 const CreateLeave = require('./api/CreateLeave');
 router.use('/createleave', CreateLeave);
 
+// For Notification
+const NotificationRoutes = require('./api/Notification');
+router.use('/notification', NotificationRoutes);
+
 module.exports = router;
