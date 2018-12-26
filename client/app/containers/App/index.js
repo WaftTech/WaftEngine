@@ -11,23 +11,27 @@
  * the linting exception.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React from "react";
+import PropTypes from "prop-types";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-import GuestRoute from 'components/Routes/GuestRoute';
-import UserRoute from 'components/Routes/UserRoute';
-import ResetPasswordPage from '../ResetPasswordPage';
-import LoginPage from '../LoginPage';
-import SignupPage from '../SignupPage';
-import NotFoundPage from '../NotFoundPage';
-import WtDashboard from '../WtDashboard';
-import ErrorBoundary from '../../ErrorBoundary';
-import { makeSelectDialog, makeSelectLocation, makeSelectMessages } from './selectors';
-import { deleteMessage } from './actions';
+import GuestRoute from "components/Routes/GuestRoute";
+import UserRoute from "components/Routes/UserRoute";
+import ResetPasswordPage from "../ResetPasswordPage";
+import LoginPage from "../LoginPage";
+import SignupPage from "../SignupPage";
+import NotFoundPage from "../NotFoundPage";
+import WtDashboard from "../WtDashboard";
+import ErrorBoundary from "../../ErrorBoundary";
+import {
+  makeSelectDialog,
+  makeSelectLocation,
+  makeSelectMessages
+} from "./selectors";
+import { deleteMessage } from "./actions";
 
 const App = props => {
   const { location } = props;
@@ -50,25 +54,25 @@ App.propTypes = {
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
     hash: PropTypes.string,
-    key: PropTypes.string,
+    key: PropTypes.string
   }).isRequired,
   dialog: PropTypes.object,
   messages: PropTypes.object,
-  deleteMsg: PropTypes.func.isRequired,
+  deleteMsg: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
   dialog: makeSelectDialog(),
   location: makeSelectLocation(),
-  messages: makeSelectMessages(),
+  messages: makeSelectMessages()
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteMsg: index => dispatch(deleteMessage(index)),
+  deleteMsg: index => dispatch(deleteMessage(index))
 });
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 export default compose(withConnect)(App);
