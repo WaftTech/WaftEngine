@@ -1,13 +1,16 @@
 module.exports = {
   validationMessage: {
-    titleRequired: 'Sorry, you missed the Title',
-    titleInvalidLength: 'Sorry, Title must be minimum 5 characters and maximum 30 characters',
-    dateRequired: 'Sorry, you missed the Date field!!!',
-    dateInvalid: 'Sorry, your mistyped in the Date field!!!',
-    isActiveRequired: 'IsActive field missed!!!',
-    applicableToRequired: 'Applicable To is Required!!!',
-    applicabletoInvalidValue: 'Sorry, invalid value detected in Applicable To!!!',
-    isHalfDayRequired: 'Sorry, HalfDay is required!!!',
-    dateAlreadyExists: 'Thank you but the date has already been mentioned by someone!!',
-  },
+    titleRequired: "Sorry, you missed the Title",
+    titleInvalidLength:
+      "Sorry, Title must be minimum 5 characters and maximum 30 characters",
+    dateRequired: "Sorry, you missed the Date field!!!",
+    dateInvalid: "Sorry, your mistyped in the Date field!!!",
+    isActiveRequired: "IsActive field missed!!!",
+    applicableToRequired: "Applicable To is Required!!!",
+    applicabletoInvalidValue:
+      "Sorry, invalid value detected in Applicable To!!!",
+    isHalfDayRequired: "Sorry, HalfDay is required!!!",
+    dateAlreadyExists:
+      "Thank you but the date has already been mentioned by someone!!"
+  }
 };
