@@ -62,4 +62,8 @@ router.use('/Branch', BranchRoutes);
 const AssignedLeave = require('./api/AssignedLeave');
 router.use('/assignedleave', AssignedLeave);
 
+// For Create Leave
+const CreateLeave = require('./api/CreateLeave');
+router.use('/createleave', CreateLeave);
+
 module.exports = router;
