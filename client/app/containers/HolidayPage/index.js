@@ -171,7 +171,7 @@ export class Holiday extends React.Component {
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
               <GridContainer>
-                <GridItem xs={4} sm={4} md={4}>
+                <GridItem xs={4} sm={4} md={2}>
                   <TextField
                     name="title"
                     value={this.state.query.title || ""}
@@ -180,7 +180,7 @@ export class Holiday extends React.Component {
                     placeholder="Search By Title"
                   />
                 </GridItem>
-                <GridItem xs={4} sm={4} md={4}>
+                <GridItem xs={4} sm={4} md={2}>
                   <TextField
                     name="applicableTo"
                     value={this.state.query.applicableTo || ""}
@@ -198,7 +198,7 @@ export class Holiday extends React.Component {
                     placeholder="Search By Is Active"
                   />
                 </GridItem> */}
-                <GridItem xs={4} sm={4} md={4}>
+                <GridItem xs={4} sm={4} md={2}>
                   <TextField
                     name="isHalfDay"
                     value={this.state.query.isHalfDay || ""}
@@ -245,6 +245,7 @@ export class Holiday extends React.Component {
               </GridContainer>
 
               <Button
+                className="search"
                 color="primary"
                 aria-label="edit"
                 justIcon
