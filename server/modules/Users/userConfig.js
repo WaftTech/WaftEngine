@@ -14,6 +14,10 @@ module.exports = {
     vdcInvalid: 'Sorry, VDC/Municipality is invalid!!',
     emailExists: 'I am sure, that Email already exists!!!',
     rolesInvalid: 'Sorry, the Role you selected is invalid!!!',
-    rolesRequired: 'Sorry, you missed the roles field!!'
+    rolesRequired: 'Sorry, you missed the roles field!!',
+    GenderRequired: 'Gender must be entered',
+    GenderInvalid: 'Enter valid Gender',
+    ReporterIDRequired: 'Must Enter Reporter ID',
+    ReporterIDInvalid: 'Enter Valid Reporter ID',
   },
 };
