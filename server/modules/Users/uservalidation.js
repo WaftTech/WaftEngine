@@ -37,7 +37,7 @@ uservalidation.validate = async (req, res, next) => {
       ],
     },
     {
-      field: 'Gender',
+      field: 'gender',
       validate: [
         {
           condition: 'IsEmpty',

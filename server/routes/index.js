@@ -58,6 +58,14 @@ router.use('/department', departmentroutes);
 const BranchRoutes = require('./api/Branch');
 router.use('/Branch', BranchRoutes);
 
+// For Assigned Leave
+const AssignedLeave = require('./api/AssignedLeave');
+router.use('/assignedleave', AssignedLeave);
+
+// For Create Leave
+const CreateLeave = require('./api/CreateLeave');
+router.use('/createleave', CreateLeave);
+
 // For Notification
 const NotificationRoutes = require('./api/Notification');
 router.use('/notification', NotificationRoutes);
