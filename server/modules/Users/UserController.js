@@ -71,10 +71,15 @@ userController.getAllUser = async (req, res, next) => {
   if (req.query.find_name) {
     searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
   }
+
+  if (req.query.find_ApplicableGender) {
+    searchquery = { ApplicableGender: req.query.find_ApplicableGender, ...searchquery };
+  }
+
   if (req.query.find_email) {
     searchq = { email: { $regex: req.query.find_email, $options: 'i x' }, ...searchq };
   }
-  selectq = 'name name_nepali email permanentaddress tempaddress is_active avatar updated_at added_at added_by roles';
+  selectq = 'name nameNepali ReporterID email Gender permanentaddress tempaddress is_active avatar updated_at added_at added_by roles';
 
   populate = { path: 'roles', select: '_id RolesTitle' };
 
@@ -91,7 +96,7 @@ userController.getAllUser = async (req, res, next) => {
 };
 userController.getUserDetail = async (req, res, next) => {
   try {
-    const users = await User.findOne({ _id: req.params.id, IsDeleted: false }, 'name name_nepali email permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
+    const users = await User.findOne({ _id: req.params.id, IsDeleted: false }, 'name nameNepali ReporterID email Gender permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Detail Get Success', null);
   } catch (err) {
     next(err);

@@ -52,7 +52,7 @@ BranchController.GetBranch = async (req, res, next) => {
     searchquery = { Email: { $regex: req.query.find_Email, $options: 'i x' }, ...searchquery };
   }
 
-  selectquery = 'BranchName Address ContactNo Email';
+  selectquery = 'BranchName BranchNameNepali Address ContactNo Email';
 
   let datas = await otherHelper.getquerySendResponse(BranchModel, page, size, sortquery, searchquery, selectquery, next);
 
@@ -61,7 +61,7 @@ BranchController.GetBranch = async (req, res, next) => {
 
 BranchController.GetBranchDetail = async (req, res, next) => {
   try {
-    let data = await BranchModel.findOne({ _id: req.params.id, IsDeleted: false }).select('BranchName Address ContactNo Email');
+    let data = await BranchModel.findOne({ _id: req.params.id, IsDeleted: false }).select('BranchName BranchNameNepali Address ContactNo Email');
     // console.log('data:', data);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Branch data delivered successfully', null);
   } catch (err) {

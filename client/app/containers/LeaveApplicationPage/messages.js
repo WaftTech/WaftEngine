@@ -25,5 +25,21 @@ export default defineMessages({
   isHalfDay: {
     id: "app.containers.LeaveTypePage.isHalfDay",
     defaultMessage: "Is HalfDay"
+  },
+  fromIsHalfDay: {
+    id: "app.containers.LeaveTypePage.fromIsHalfDay",
+    defaultMessage: "From IsHalfDay"
+  },
+  toIsHalfDay: {
+    id: "app.containers.LeaveTypePage.toIsHalfDay",
+    defaultMessage: "To IsHalfDay"
+  },
+  remark: {
+    id: "app.containers.LeaveTypePage.Remark",
+    defaultMessage: "Remark"
+  },
+  status: {
+    id: "app.containers.LeaveTypePage.status",
+    defaultMessage: "Status"
   }
 });
