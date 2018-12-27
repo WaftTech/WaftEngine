@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   name: { type: String, required: true },
   nameNepali: { type: String },
   designation: { type: Schema.Types.ObjectId, ref: 'Designation' },
-  Gender: { type: String, required: true, enum: [ 'Male', 'Female', 'Other'] },
+  gender: { type: String, required: true, enum: ['Male', 'Female', 'Other'] },
   citrollno: { type: String },
   permanentaddress: addressdetail,
   tempaddress: addressdetail,
