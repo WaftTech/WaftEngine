@@ -41,11 +41,11 @@ uservalidation.validate = async (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: LeaveTypeConfig.ValidationMessage.GenderRequired,
+          msg: userConfig.validationMessage.GenderRequired,
         },
         {
           condition: 'Contains',
-          msg: LeaveTypeConfig.ValidationMessage.GenderInvalid,
+          msg: userConfig.validationMessage.GenderInvalid,
           options: ['Male', 'Female', 'Other'],
         },
       ],
@@ -90,19 +90,19 @@ uservalidation.validate = async (req, res, next) => {
       ],
     },
 
-    {
-      field: 'ReporterID',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: userConfig.validationMessage.ReporterIDRequired,
-        },
-        {
-          condition: 'IsMONGOID',
-          msg: userConfig.validationMessage.ReporterIDInvalid,
-        },
-      ],
-    },
+    // {
+    //   field: 'ReporterID',
+    //   validate: [
+    //     {
+    //       condition: 'IsEmpty',
+    //       msg: userConfig.validationMessage.ReporterIDRequired,
+    //     },
+    //     {
+    //       condition: 'IsMONGOID',
+    //       msg: userConfig.validationMessage.ReporterIDInvalid,
+    //     },
+    //   ],
+    // },
     {
       field: 'roles',
       validate: [
@@ -175,6 +175,44 @@ uservalidation.validate = async (req, res, next) => {
     return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
   } else {
     return next();
+  }
+};
+
+uservalidation.validateReporterID = async (req, res, next) => {
+  let vdata = req.body.ReporterID;
+  let fvdata = {};
+  let errors = {};
+  console.log(vdata);
+  if (!isEmpty(vdata)) {
+    for (let i = 0; i < vdata.length; i++) {
+      fvdata.ReporterID = vdata[i];
+      errors = await validate(fvdata, [
+        {
+          field: 'ReporterID',
+          validate: [
+            {
+              condition: 'IsEmpty',
+              msg: userConfig.validationMessage.ReporterIDRequired,
+            },
+            {
+              condition: 'IsMONGOID',
+              msg: userConfig.validationMessage.ReporterIDInvalid,
+            },
+          ],
+        },
+      ]);
+
+      if (!isEmpty(errors)) {
+        break;
+      }
+    }
+  } else {
+    errors = { ReporterID: userConfig.validationMessage.ReporterIDRequired };
+  }
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+  } else {
+    next();
   }
 };
 
