@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
-
 const LeaveTypeSchema = new Schema({
-  //ID: { type: number },
   LeaveName: { type: String, required: true },
 
   LeaveNameNepali: { type: String },
@@ -16,10 +13,11 @@ const LeaveTypeSchema = new Schema({
   IsReplacementLeave: { type: Boolean, required: true },
   Added_at: { type: Date, default: Date.now, required: true },
   Added_by: { type: Schema.Types.ObjectId, ref: 'users' },
+  IsHolidayCount: { type: Boolean, required: true, default: false },
 
-  ApplicableReligion: { type: String, required: true, enum: ['All', 'Hindu', 'Muslim','Christian','Buddisht', 'Other'] },
+  ApplicableReligion: { type: String, required: true, enum: ['All', 'Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'] },
   IsCarryOver: { type: Boolean, required: false, default: true },
-  
+
   IsDeleted: { type: Boolean, required: true, default: false },
   Deleted_by: { type: Schema.Types.ObjectId },
   Deleted_at: { Date },
