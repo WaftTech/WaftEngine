@@ -3,6 +3,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 const OtherHelper = require('../../helper/others.helper');
 const fiscalConfig = require('./fiscalConfig');
 const FiscalSch = require('./fiscal');
+const moment = require('moment');
 const FiscalController = {};
 const internal = {};
 
@@ -101,7 +102,30 @@ FiscalController.GetFiscalById = async (req, res, next) => {
 
 FiscalController.DeleteById = async (req, res, next) => {
   const id = req.params.id;
-  const data = await FiscalSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date() } });
+  const data = await FiscalSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date(), Deleted_by: req.user.id } });
   return OtherHelper.sendResponse(res, HttpStatus.OK, true, data, null, fiscalConfig.deleteFiscal, null);
 };
-module.exports = FiscalController;
+
+//get fiscal year of the supplied date
+internal.FindFiscalYear = async date => {
+  let datas = await FiscalSch.find({ IsDeleted: false });
+  let id;
+  let from;
+  let to;
+  let found = false;
+  for (let i = 0; i < datas.length; i++) {
+    id = datas[i]._id;
+    from = datas[i].From;
+    to = datas[i].To;
+    if (moment(date).isBetween(from, to)) {
+      found = true;
+      break;
+    }
+  }
+  if (found) {
+    return id;
+  } else {
+    return false;
+  }
+};
+module.exports = { FiscalController, internal };
