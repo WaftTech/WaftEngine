@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const CreateLeaveValidation = require('./../../modules/CreateLeave/CreateLeaveValidation');
-const CreateLeaveModule = require('./../../modules/CreateLeave/CreateLeaveController');
+const CreateLeaveModule = require('./../../modules/CreateLeave/CreateLeaveController').CreateLeaveController;
 
 const { authorization } = require('../../middleware/authentication.middleware');
 

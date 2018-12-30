@@ -3,8 +3,10 @@ const otherHelper = require('../../helper/others.helper');
 const AssignedLeave = require('./../AssignedLeave/AssignedLeave');
 const UsersModel = require('./../Users/User');
 const LeaveTypeModel = require('./../LeaveType/LeaveType');
+const isEmpty = require('../../validation/isEmpty');
 
 const CreateLeaveController = {};
+const Internal = {};
 
 CreateLeaveController.getData = async (req, res, next) => {
   let fiscalyear = req.params.fiscalid;
@@ -46,4 +48,30 @@ CreateLeaveController.saveData = async (req, res, next) => {
   return otherHelper.sendResponse(res, HttpStatus.OK, true, returndata, null, 'Leave added for employee!!!', null);
 };
 
-module.exports = CreateLeaveController;
+Internal.LeaveRequest = async (LeaveType, FiscalYear, EmployeeId, AppliedLeave) => {
+  let status = {};
+  let data = await AssignedLeave.findOne({ LeaveType, FiscalYear, EmployeeId }, 'LeaveRemaining');
+  //console.log(data);
+  if (!isEmpty(data)) {
+    let LeaveRemaining = data.LeaveRemaining;
+    if (LeaveRemaining < AppliedLeave) {
+      status.status = false;
+      status.error = { NoOfDays: 'Sorry, you donot have enough leave remaining!!!' };
+      return status; //no leave remaining
+    } else {
+      try {
+        await AssignedLeave.findOneAndUpdate({ LeaveType, FiscalYear, EmployeeId }, { $set: { AppliedLeave: AppliedLeave } });
+      } catch (err) {
+        next(err);
+      }
+      status.status = true;
+      return status; //success
+    }
+  } else {
+    status.status = false;
+    status.error = { NoOfDays: 'Sorry, No leave has been assigned for you!!!!' };
+    return status; //no leave created
+  }
+};
+
+module.exports = { CreateLeaveController, Internal };
