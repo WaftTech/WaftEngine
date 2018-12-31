@@ -21,7 +21,7 @@ mediaController.SaveMedia = async (req, res, next) => {
       if (req.files && req.files[0]) {
         media = req.files[0];
       }
-      const update = await MediaSch.findByIdAndUpdate(media._id, { $set: media });
+      const update = await MediaSch.findByIdAndUpdate(media._id, { $set: media }, { new: true });
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Media Saved Success !!', null);
     } else {
       media = req.files[0];
@@ -42,9 +42,13 @@ mediaController.GetMediaDetail = async (req, res, next) => {
 };
 mediaController.DeleteMedia = async (req, res, next) => {
   const id = req.params.id;
-  const media = await MediaSch.findByIdAndUpdate(ObjectId(id), {
-    $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
-  });
+  const media = await MediaSch.findByIdAndUpdate(
+    ObjectId(id),
+    {
+      $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
+    },
+    { new: true },
+  );
   return otherHelper.sendResponse(res, HttpStatus.OK, true, media, null, 'Media Delete Success !!', null);
 };
 
