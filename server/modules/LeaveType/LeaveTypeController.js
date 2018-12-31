@@ -88,7 +88,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     }
   }
 
-  selectquery = 'LeaveName LeaveNameNepali IsTransferrable IsPaidLeave IsCarryOver ApplicableGender NoOfDays ApplicableReligion IsReplacementLeave Added_by';
+  selectquery = 'LeaveName LeaveNameNepali IsTransferrable IsPaidLeave IsCarryOver ApplicableGender NoOfDays IsHolidayCount ApplicableReligion IsReplacementLeave Added_by';
 
   let datas = await otherHelper.getquerySendResponse(LeaveTypeModel, page, size, sortquery, searchquery, selectquery, next);
 
@@ -97,7 +97,7 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
 
 LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
-    let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave IsHolidayCount Added_By');
+    let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender  IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave IsHolidayCount Added_By');
     //console.log('data:', data);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave Type data delivered successfully', null);
   } catch (err) {
@@ -111,7 +111,7 @@ LeaveTypeController.AddLeaveType = async (req, res, next) => {
     LeaveType.Add_by = req.user.id;
     if (LeaveType._id) {
       let update = await LeaveTypeModel.findByIdAndUpdate(LeaveType._id, { $set: LeaveType });
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Leave Type Saved Success !!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Leave Type Edit Success !!', null);
     } else {
       // LeaveType.Added_by = req.user.id;
       let newLeaveType = new LeaveTypeModel(LeaveType);
@@ -133,15 +133,13 @@ LeaveTypeController.DeleteByID = async (req, res, next) => {
   }
 };
 
-Internal.getLeaveIsHolidayStatus = async(LeaveType)=>{
-  try{
-    let info = await LeaveTypeModel.findById(LeaveType,'IsHolidayCount');
+Internal.getLeaveIsHolidayStatus = async LeaveType => {
+  try {
+    let info = await LeaveTypeModel.findById(LeaveType, 'IsHolidayCount');
     return info;
-  }catch(err){
+  } catch (err) {
     next(err);
   }
-}
+};
 
-
-
-module.exports = {LeaveTypeController, Internal};
+module.exports = { LeaveTypeController, Internal };
