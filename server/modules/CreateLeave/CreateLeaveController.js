@@ -28,9 +28,16 @@ CreateLeaveController.saveData = async (req, res, next) => {
 
   for (let i = 0; i < req.body.assignedLeave.length; i++) {
     let data = req.body.assignedLeave[i];
+    let returneddata = await AssignedLeave.findOne({ LeaveType: data.LeaveType, EmployeeId: data.EmployeeId, FiscalYear: fiscalYear });
     if (data._id) {
       try {
         returndata[i] = await AssignedLeave.findByIdAndUpdate(data._id, { LeaveType: data.LeaveType, EmployeeId: data.EmployeeId, NoOfDays: data.NoOfDays, FiscalYear: fiscalYear, CarryOverLeave: data.CarryOverLeave });
+      } catch (err) {
+        next(err);
+      }
+    } else if (returneddata) {
+      try {
+        returndata[i] = await AssignedLeave.findOneAndUpdate({ LeaveType: data.LeaveType, EmployeeId: data.EmployeeId, FiscalYear: fiscalYear }, { NoOfDays: data.NoOfDays, FiscalYear: fiscalYear, CarryOverLeave: data.CarryOverLeave });
       } catch (err) {
         next(err);
       }
