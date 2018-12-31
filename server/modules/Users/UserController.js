@@ -461,4 +461,17 @@ userController.requestSocialOAuthApiDataHelper = async (req, next, request_url, 
     return next(err);
   }
 };
+
+//to get all the users in reporterid
+userController.getUnderUserList = async (req, res, next) => {
+  let myID = req.user.id;
+  let datas;
+  try {
+    datas = await User.find({ ReporterID: { $eq: myID } }).select('name _id');
+  } catch (err) {
+    next(err);
+  }
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, datas, null, 'Employee list Successfully delivered !!', null);
+};
+
 module.exports = userController;
