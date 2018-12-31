@@ -195,7 +195,7 @@ userController.updateUserDetail = async (req, res, next) => {
     }
     const user = req.body;
     const id = req.params.id;
-    const updateUser = await User.findByIdAndUpdate(id, { $set: user });
+    const updateUser = await User.findByIdAndUpdate(id, { $set: user }, { new: true });
     const msg = 'User Update Success';
     return otherHelper.sendResponse(res, HttpStatus.OK, true, updateUser, null, msg, null);
   } catch (err) {
@@ -267,12 +267,16 @@ userController.forgotPassword = async (req, res, next) => {
     const tempalte_path = `${__dirname}/../email/template/passwordreset.pug`;
     const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
     emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
-    const update = await User.findByIdAndUpdate(user._id, {
-      $set: {
-        password_reset_code: user.password_reset_code,
-        password_reset_request_date: user.password_reset_request_date,
+    const update = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          password_reset_code: user.password_reset_code,
+          password_reset_request_date: user.password_reset_request_date,
+        },
       },
-    });
+      { new: true },
+    );
     const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, msg, null);
   } catch (err) {
@@ -359,7 +363,6 @@ userController.login = async (req, res) => {
           email: user.email,
           email_verified: user.email_verified,
           roles: user.roles,
-          // access: access,
         };
         // Sign Token
         jwt.sign(

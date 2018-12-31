@@ -14,7 +14,7 @@ contentsController.SaveContent = async (req, res, next) => {
     const contents = req.body;
     console.log('contents', contents);
     if (contents && contents._id) {
-      const update = await ContentSch.findByIdAndUpdate(contents._id, { $set: contents });
+      const update = await ContentSch.findByIdAndUpdate(contents._id, { $set: contents }, { new: true });
       return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Content Saved Success !!', null);
     } else {
       contents.Added_by = req.user.id;
