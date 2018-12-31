@@ -110,7 +110,7 @@ validationHelper.validate = (data1, val) => {
 validationHelper.sanitize = (req, san) => {
   for (i = 0; i < san.length; i++) {
     let field = san[i].field;
-    req.body[field] = !isEmpty(req.body[field]) ? req.body[field] : '';
+    req.body[field] = !isEmpty(req.body[field]) ? req.body[field] + '' : '';
 
     let sanitize = san[i].sanitize;
     if (sanitize.toDate) {
@@ -121,6 +121,9 @@ validationHelper.sanitize = (req, san) => {
     }
     if (sanitize.escape) {
       req.body[field] = Validator.escape(req.body[field]);
+    }
+    if (sanitize.toBoolean) {
+      req.body[field] = Validator.toBoolean(req.body[field]);
     }
   }
   return true;

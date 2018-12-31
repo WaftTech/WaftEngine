@@ -77,7 +77,7 @@ holidayController.getData = async (req, res, next) => {
   if (req.query.find_date) {
     searchq = { date: req.query.find_date, ...searchq };
   }
-  selectq = 'title date isActive applicableTo isHalfDay addedBy addedDate';
+  selectq = 'title date titleNepali isActive applicableTo isHalfDay addedBy addedDate';
 
   let datas = await otherHelper.getquerySendResponse(holidaymodel, page, size, sortq, searchq, selectq, next, populate);
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Holidays delivered successfully!!', page, size, datas.totaldata);
@@ -85,7 +85,7 @@ holidayController.getData = async (req, res, next) => {
 
 holidayController.getDataByID = async (req, res, next) => {
   try {
-    let data = await holidaymodel.findOne({ _id: req.params.id, IsDeleted: false }).select('title date isActive applicableTo isHalfDay addedBy addedDate');
+    let data = await holidaymodel.findOne({ _id: req.params.id, IsDeleted: false }).select('title date titleNepali isActive applicableTo isHalfDay addedBy addedDate');
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Holiday in detail delivered successfully!!', null);
   } catch (err) {
     next(err);
