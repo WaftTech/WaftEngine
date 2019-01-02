@@ -7,6 +7,7 @@ const LeaveApplicationController = {};
 const CreateLeaveInternal = require('./../CreateLeave/CreateLeaveController').Internal;
 const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 const LeaveTypeInternal = require('./../LeaveType/LeaveTypeController').Internal;
+const HolidayInternal = require('./../holidaylist/holidayController').Internal;
 
 const moment = require('moment');
 moment().format();
@@ -211,14 +212,17 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   let checkholidaystatus;
   let noOfDays;
   let subtractValue = 0.0;
+  let HalfDays = 0;
 
   let obj = {};
 
   if (req.body.FromIsHalfDay) {
     subtractValue = subtractValue + 0.5;
+    HalfDays = HalfDays + 1;
   }
   if (req.body.ToIsHalfDay) {
     subtractValue = subtractValue + 0.5;
+    HalfDays = HalfDays + 1;
   }
 
   try {
@@ -237,11 +241,20 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
     if (checkholidaystatus.IsHolidayCount) {
       //if checkholiday true count holidays
       //edits needed here
-      obj.NoOfDays = noOfDays;
-      obj.HolidaysInBetween = 0;
+
+      let holidayl = await HolidayInternal.getHolidayInBetween(FromDate, ToDate, EmployID);
+      let // console.log('holidayl', holidayl);
+        subtractValue = holidayl.length;
+      obj.TotalNoOfDays = await subtractDates(FromDate, ToDate);
+      obj.NoOfDays = noOfDays - subtractValue;
+      obj.HalfDays = HalfDays;
+      obj.HolidaysInBetween = subtractValue;
+      obj.Holidays = holidayl;
     } else {
       obj.NoOfDays = noOfDays;
       obj.HolidaysInBetween = 0;
+      obj.TotalNoOfDays = await subtractDates(FromDate, ToDate);
+      obj.HalfDays = HalfDays;
     }
   }
   if (obj.error) {
