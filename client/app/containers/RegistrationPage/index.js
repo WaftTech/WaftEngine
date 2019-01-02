@@ -76,7 +76,7 @@ export class RegistrationPage extends React.Component {
     rowsPerPage: 10
   };
   componentDidMount() {
-    this.props.loadAll();
+    this.props.loadAll({ query: {} });
   }
   handleQueryChange = e => {
     e.persist();
