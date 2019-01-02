@@ -237,6 +237,9 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
 
     if (checkholidaystatus.IsHolidayCount) {
       //if checkholiday true count holidays
+      //edits needed here
+      obj.NoOfDays = noOfDays;
+      obj.HolidaysInBetween = 0;
     } else {
       obj.NoOfDays = noOfDays;
       obj.HolidaysInBetween = 0;
