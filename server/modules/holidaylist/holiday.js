@@ -9,6 +9,7 @@ const holidaySchema = new Schema({
   applicableTo: { type: String, required: true, enum: ['All', 'Male', 'Female', 'Other'] },
   isHalfDay: { type: Boolean, required: true, default: false },
   addedBy: { type: Schema.Types.ObjectId, requires: true, ref: 'users' },
+  ApplicableReligion: { type: String, required: true, enum: ['All', 'Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'], default: 'All' },
   addedDate: { type: Date, required: true, default: Date.now },
   IsDeleted: {
     type: Boolean,
