@@ -84,13 +84,13 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
         },
         {
           condition: 'IsNumeric',
-          msg: LeaveApplicationConfig.ValidationMessage.FromInvalid,
+          msg: LeaveApplicationConfig.ValidationMessage.NoOfDaysInvalid,
         },
         {
-          condition: IsInt,
-          msg: LeaveApplicationConfig.ValidationMessage.FromInvalid,
+          condition: 'IsFloat',
+          msg: LeaveApplicationConfig.ValidationMessage.NoOfDaysInvalid,
           options: {
-            min: 1,
+            gt: 0,
           },
         },
       ],
