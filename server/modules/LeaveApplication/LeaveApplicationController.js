@@ -1,10 +1,11 @@
 const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const LeaveApplicationModel = require('./LeaveApplication');
+const isEmpty = require('../../validation/isEmpty');
 const LeaveApplicationController = {};
 
 const CreateLeaveInternal = require('./../CreateLeave/CreateLeaveController').Internal;
-const FiscalYearInternal = require('./../fiscal/fiscalController').internal;
+const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 const LeaveTypeInternal = require('./../LeaveType/LeaveTypeController').Internal;
 
 const moment = require('moment');
@@ -84,7 +85,7 @@ LeaveApplicationController.GetLeaveApplicationByID = async (req, res, next) => {
 LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
   try {
     let LeaveApplication = req.body;
-    let subtractValue = 0.0;
+    // let subtractValue = 0.0;
     let fiscalyear;
 
     if (LeaveApplication._id) {
@@ -192,16 +193,14 @@ let FindFiscalYear = async (from, to) => {
 };
 
 let CheckDuplicateLeaveApplication = async (from, to, EmployeeId) => {
-  let datas = await LeaveApplicationModel.find({ EmployID: EmployeeId, IsDeleted: false });
-  // for (let i = 0; i < datas.length; i++) {
-  //   let checkTo = datas[i].To;
-  //   let checkFrom = datas[i].From;
-  //   if (moment(from).isBetween(checkFrom, checkTo, 'day', '[]') || moment(to).isBetween(checkFrom, checkTo, 'day', '[]')) {
-  //     return false;
-  //   } else {
-  return true;
-  //   }
-  // }
+  console.log('Employeeid, from, to', EmployeeId, new Date(from), new Date(to));
+  let datas = await LeaveApplicationModel.find({ EmployID: EmployeeId, IsDeleted: false, From: { $lte: new Date(to) }, To: { $gte: new Date(from) } });
+  console.log(datas);
+  if (isEmpty(datas)) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
