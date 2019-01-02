@@ -123,7 +123,7 @@ class LeaveApplication extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Added By"
+                      labelText="Employee Name"
                       id="Added_by"
                       formControlProps={{
                         fullWidth: true
@@ -134,6 +134,8 @@ class LeaveApplication extends Component {
                       }}
                     />
                   </GridItem>
+
+                             
 
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
