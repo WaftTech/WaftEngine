@@ -28,6 +28,11 @@ export const ADD_MESSAGE = "app/App/ADD_MESSAGE";
 export const DELETE_MESSAGE = "app/App/DELETE_MESSAGE";
 export const LOGOUT = "app/App/LOGOUT";
 
+//Notification constant
+export const LOAD_ALL_REQUEST = "app/App/LOAD_ALL_REQUEST";
+export const LOAD_ALL_SUCCESS = "app/App/LOAD_ALL_SUCCESS";
+export const LOAD_ALL_FAILURE = "app/App/LOAD_ALL_FAILURE";
+
 export const DAYS = [
   "sunday",
   "monday",

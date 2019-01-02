@@ -17,25 +17,33 @@ function* loadAll(action) {
   const token = yield select(makeSelectToken());
   let search = "";
   let sort = "";
-
+  let pageNumber = "";
+  let sizeOfPage = "";
   if (action.payload.query) {
+    // {payload, metadata}
+    //{payload: {query, sort}}
     Object.keys(action.payload.query).map(each => {
       search = `${each}=${action.payload.query[each]}&${search}`;
     });
     search = `&find_${search}`;
-  } else if (action.payload.sort) {
-    sort = `${action.payload.sort}`;
+  }
+  if (action.payload.sort) {
+    sort = `&sort=${action.payload.sort}`;
+  }
+  if (action.payload) {
+    pageNumber = `&page=${action.payload.page}&size=${
+      action.payload.rowsPerPage
+    }`;
   }
   yield call(
     Api.get(
-      `designation?&size=10${search}&sort=${sort}`,
+      `designation?${search}${sort}${sizeOfPage}${pageNumber}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token
     )
   );
 }
-
 function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
