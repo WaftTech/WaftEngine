@@ -15,6 +15,11 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 // core components
 import GridItem from "components/Grid/GridItem";
@@ -29,6 +34,7 @@ import reducer from "../reducer";
 import saga from "../saga";
 import { makeSelectOne } from "../selectors";
 import { loadOneRequest, addEditRequest } from "../actions";
+import { makeSelectUser } from "../../App/selectors";
 
 const styles = {
   cardCategoryWhite: {
@@ -108,7 +114,8 @@ class LeaveApplication extends Component {
   };
   render() {
     const { Remarks } = this.state;
-    const { classes } = this.props;
+    const { classes, user } = this.props;
+    console.log(user.toJS());
     return (
       <div>
         <GridContainer>
@@ -121,6 +128,28 @@ class LeaveApplication extends Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel shrink htmlFor="age-label-placeholder">
+                      Employee Name
+                    </InputLabel>
+                    <Select
+                      value={this.state.age}
+                      onChange={this.handleChange}
+                      input={<Input name="age" id="age-label-placeholder" />}
+                      displayEmpty
+                      name="age"
+                      className={classes.selectEmpty}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem>
+                    </Select>
+                    <FormHelperText>Label + placeholder</FormHelperText>
+                  </FormControl>
+
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText="Employee Name"
@@ -134,8 +163,6 @@ class LeaveApplication extends Component {
                       }}
                     />
                   </GridItem>
-
-                             
 
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
@@ -328,7 +355,8 @@ const withReducer = injectReducer({ key: "leaveApplicationPage", reducer });
 const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
+  user: makeSelectUser()
 });
 
 const mapDispatchToProps = dispatch => ({

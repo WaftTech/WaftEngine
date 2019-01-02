@@ -68,7 +68,7 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class LeaveApplication extends React.Component {
-  state = { query: {}, name: "", sortToggle: 0, sortSymbol: "D" };
+  state = { query: {}, sortToggle: 0, sortSymbol: "D" };
   componentDidMount() {
     this.props.loadAll({ query: {} });
   }
