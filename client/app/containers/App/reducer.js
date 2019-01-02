@@ -22,7 +22,8 @@ export const initialState = fromJS({
   dialog: null,
   user: {},
   token: "",
-  status: 0
+  status: 0,
+  all: []
 });
 
 function appReducer(state = initialState, action = { type: "" }) {
@@ -86,6 +87,10 @@ function appReducer(state = initialState, action = { type: "" }) {
       return state.merge({
         user: fromJS({}),
         token: ""
+      });
+    case types.LOAD_ALL_SUCCESS:
+      return state.merge({
+        all: fromJS(action.payload.data)
       });
     default:
       return state;

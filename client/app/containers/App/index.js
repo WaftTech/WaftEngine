@@ -20,6 +20,7 @@ import { createStructuredSelector } from "reselect";
 
 import GuestRoute from "components/Routes/GuestRoute";
 import UserRoute from "components/Routes/UserRoute";
+import injectSaga from "../../utils/injectSaga";
 import ResetPasswordPage from "../ResetPasswordPage";
 import LoginPage from "../LoginPage";
 import SignupPage from "../SignupPage";
@@ -32,6 +33,7 @@ import {
   makeSelectMessages
 } from "./selectors";
 import { deleteMessage } from "./actions";
+import saga from "./saga";
 
 const App = props => {
   const { location } = props;
@@ -74,5 +76,9 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 );
+const withSaga = injectSaga({ key: "global", saga });
 
-export default compose(withConnect)(App);
+export default compose(
+  withConnect,
+  withSaga
+)(App);
