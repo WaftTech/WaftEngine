@@ -89,6 +89,10 @@ validationHelper.validate = (data1, val) => {
         case 'IsBoolean':
           !Validator.isBoolean(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
           break;
+          case 'IsFloat':
+          if(validate[j].options)
+          !Validator.isFloat(fdata, validate[j].options) ? (errors[field] = validate[j].msg) : null;
+          break;
         case 'IsURL':
           if (validate[j].options) {
             !Validator.isURL(data[field], validate[j].options.protocols) ? (errors[field] = validate[j].msg) : null;

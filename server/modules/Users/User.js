@@ -13,6 +13,8 @@ const UserSchema = new Schema({
   nameNepali: { type: String },
   designation: { type: Schema.Types.ObjectId, ref: 'Designation' },
   gender: { type: String, required: true, enum: ['Male', 'Female', 'Other'] },
+  religion: { type: String, required: true, enum: ['Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'] },
+
   citrollno: { type: String },
   permanentaddress: addressdetail,
   tempaddress: addressdetail,
@@ -28,7 +30,7 @@ const UserSchema = new Schema({
   updated_at: { type: Date },
   added_at: { type: Date, default: Date.now, required: true },
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },
-  ReporterID: { type: [Schema.Types.ObjectId], ref: 'users'},
+  ReporterID: [{ type: Schema.Types.ObjectId, ref: 'users' }],
   is_added_by_admin: { type: Boolean, require: true, default: false },
   roles: [{ type: [Schema.Types.ObjectId], require: true, ref: 'roles' }],
   IsDeleted: {

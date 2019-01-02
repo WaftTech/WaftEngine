@@ -2,6 +2,8 @@ const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const AssignedLeave = require('./AssignedLeave');
 
+const FiscalYearInternal = require('./../fiscal/fiscalController').internal;
+
 const AssignedLeaveController = {};
 
 AssignedLeaveController.saveData = async (req, res, next) => {
@@ -58,7 +60,7 @@ AssignedLeaveController.getData = async (req, res, next) => {
 
   if (req.query.find_EmployeeId) {
     searchq = {
-      EmployeeId:  req.query.find_EmployeeId,
+      EmployeeId: req.query.find_EmployeeId,
       ...searchq,
     };
   }
@@ -93,6 +95,18 @@ AssignedLeaveController.deleteById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+AssignedLeaveController.getLeaveListOfEmployee = async (req, res, next) => {
+  let empID = req.params.empid;
+  let data;
+  let Fiscal = await FiscalYearInternal.FindFiscalYear(new Date().toISOString());
+  try {
+    data = await AssignedLeave.find({ EmployeeId: empID, FiscalYear: Fiscal }, 'NoOfDays LeaveRemaining EmployeeId LeaveType').populate({ path: 'LeaveType', select: 'LeaveName' });
+  } catch (errr) {
+    next(err);
+  }
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave List deliver Success !!', null);
 };
 
 module.exports = AssignedLeaveController;
