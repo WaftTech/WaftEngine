@@ -4,6 +4,8 @@ const holidaymodel = require('./holiday');
 const holidayController = {};
 const Internal = {};
 
+const UserInfoInternal = require('./../Users/UserController').Internal;
+
 holidayController.saveData = async (req, res, next) => {
   try {
     let data = req.body;
@@ -104,15 +106,18 @@ holidayController.deleteById = async (req, res, next) => {
 };
 
 Internal.getHolidayInBetween = async (fromdDate, toDate, employeeID) => {
-  let retobj = {};
   let data;
 
   try {
-    //  let employdata = await
-     data = await holidaymodel.find({date:{ $gte: fromdDate,$lte: toDate } });
+    let employdata = await UserInfoInternal.getEmployeeInfo(employeeID);
+    data = await holidaymodel.find(
+      { date: { $gte: fromdDate, $lte: toDate }, $or: [{ applicableTo: 'All' }, { applicableTo: employdata.gender }], $or: [{ applicableReligion: 'All' }, { applicableReligion: employdata.religion }], IsDeleted: false, isHalfDay: false },
+      'date title applicableTo applicableReligion -_id',
+    );
   } catch (err) {
     next(err);
   }
+  return data;
 };
 
 module.exports = { holidayController, Internal };
