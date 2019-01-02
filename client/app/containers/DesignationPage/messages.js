@@ -10,6 +10,10 @@ export default defineMessages({
     id: "app.containers.DesignationPage.designation",
     defaultMessage: "Designation"
   },
+  designationNepali: {
+    id: "app.containers.DesignationPage.designationNepali",
+    defaultMessage: "Designation Nepali"
+  },
   updateDate: {
     id: "app.containers.DesignationPage.updateDate",
     defaultMessage: "Update Date"
