@@ -11,4 +11,6 @@ router.post('/', authorization, AssignedLeaveValidation.Sanitize, AssignedLeaveV
 router.get('/:id', authorization, AssignedLeaveModule.getDataByID);
 router.delete('/:id', authorization, AssignedLeaveModule.deleteById);
 
+router.get('/getassignedleavelist/:empid', authorization, AssignedLeaveModule.getLeaveListOfEmployee);
+
 module.exports = router;
