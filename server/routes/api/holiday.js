@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const holidayModule = require('./../../modules/holidaylist/holidayController');
+const holidayModule = require('./../../modules/holidaylist/holidayController').holidayController;
 
 const { authorization } = require('../../middleware/authentication.middleware');
 
