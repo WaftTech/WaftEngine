@@ -2,7 +2,7 @@ const HttpStatus = require("http-status");
 const otherHelper = require("../../helper/others.helper");
 const AssignedLeave = require("./AssignedLeave");
 
-const FiscalYearInternal = require("./../fiscal/fiscalController").Internal;
+const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 
 const AssignedLeaveController = {};
 
