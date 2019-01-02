@@ -5,7 +5,7 @@ const fiscalConfig = require('./fiscalConfig');
 const FiscalSch = require('./fiscal');
 const moment = require('moment');
 const FiscalController = {};
-const internal = {};
+const Internal = {};
 
 FiscalController.GetFiscal = async (req, res, next) => {
   let page;
@@ -107,7 +107,7 @@ FiscalController.DeleteById = async (req, res, next) => {
 };
 
 //get fiscal year of the supplied date
-internal.FindFiscalYear = async date => {
+Internal.FindFiscalYear = async date => {
   let datas = await FiscalSch.find({ IsDeleted: false });
   let id;
   let from;
@@ -128,4 +128,4 @@ internal.FindFiscalYear = async date => {
     return false;
   }
 };
-module.exports = { FiscalController, internal };
+module.exports = { FiscalController, Internal };
