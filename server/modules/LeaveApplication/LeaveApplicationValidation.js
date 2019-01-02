@@ -76,6 +76,26 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
       ],
     },
     {
+      field: 'NoOfDays',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.NoOfDaysRequired,
+        },
+        {
+          condition: 'IsNumeric',
+          msg: LeaveApplicationConfig.ValidationMessage.FromInvalid,
+        },
+        {
+          condition: IsInt,
+          msg: LeaveApplicationConfig.ValidationMessage.FromInvalid,
+          options: {
+            min: 1,
+          },
+        },
+      ],
+    },
+    {
       field: 'EmployID',
       validate: [
         {
