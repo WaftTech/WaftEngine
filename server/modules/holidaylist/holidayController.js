@@ -2,6 +2,7 @@ const HttpStatus = require('http-status');
 const otherHelper = require('./../../helper/others.helper');
 const holidaymodel = require('./holiday');
 const holidayController = {};
+const Internal = {};
 
 holidayController.saveData = async (req, res, next) => {
   try {
@@ -102,4 +103,16 @@ holidayController.deleteById = async (req, res, next) => {
   }
 };
 
-module.exports = holidayController;
+Internal.getHolidayInBetween = async (fromdDate, toDate, employeeID) => {
+  let retobj = {};
+  let data;
+
+  try {
+    //  let employdata = await
+     data = await holidaymodel.find({date:{ $gte: fromdDate,$lte: toDate } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { holidayController, Internal };
