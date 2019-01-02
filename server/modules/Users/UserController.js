@@ -72,14 +72,14 @@ userController.getAllUser = async (req, res, next) => {
     searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
   }
 
-  if (req.query.find_ApplicableGender) {
-    searchquery = { ApplicableGender: req.query.find_ApplicableGender, ...searchquery };
+  if (req.query.find_gender) {
+    searchq = { gender: req.query.find_gender, ...searchq };
   }
 
   if (req.query.find_email) {
     searchq = { email: { $regex: req.query.find_email, $options: 'i x' }, ...searchq };
   }
-  selectq = 'name nameNepali ReporterID email Gender permanentaddress tempaddress is_active avatar updated_at added_at added_by roles';
+  selectq = 'name nameNepali ReporterID email gender permanentaddress tempaddress is_active avatar updated_at added_at added_by roles';
 
   populate = { path: 'roles', select: '_id RolesTitle' };
 
@@ -96,7 +96,7 @@ userController.getAllUser = async (req, res, next) => {
 };
 userController.getUserDetail = async (req, res, next) => {
   try {
-    const users = await User.findOne({ _id: req.params.id, IsDeleted: false }, 'name nameNepali ReporterID email Gender permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
+    const users = await User.findOne({ _id: req.params.id, IsDeleted: false }, 'name nameNepali ReporterID email gender permanentaddress tempaddress is_active avatar updated_at added_at added_by roles').populate({ path: 'roles', select: '_id RolesTitle' });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, users, null, 'User Detail Get Success', null);
   } catch (err) {
     next(err);
@@ -482,4 +482,17 @@ userController.requestSocialOAuthApiDataHelper = async (req, next, request_url, 
     return next(err);
   }
 };
+
+//to get all the users in reporterid
+userController.getUnderUserList = async (req, res, next) => {
+  let myID = req.user.id;
+  let datas;
+  try {
+    datas = await User.find({ ReporterID: { $eq: myID } }).select('name _id');
+  } catch (err) {
+    next(err);
+  }
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, datas, null, 'Employee list Successfully delivered !!', null);
+};
+
 module.exports = userController;
