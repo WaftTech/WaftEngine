@@ -13,6 +13,8 @@ const UserSchema = new Schema({
   nameNepali: { type: String },
   designation: { type: Schema.Types.ObjectId, ref: 'Designation' },
   gender: { type: String, required: true, enum: ['Male', 'Female', 'Other'] },
+  religion: { type: String, required: true, enum: ['Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'] },
+
   citrollno: { type: String },
   permanentaddress: addressdetail,
   tempaddress: addressdetail,

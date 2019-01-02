@@ -37,6 +37,20 @@ uservalidation.validate = async (req, res, next) => {
       ],
     },
     {
+      field: 'religion',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: userConfig.validationMessage.religionRequired,
+        },
+        {
+          condition: 'Contains',
+          msg: userConfig.validationMessage.religionInvalid,
+          options:  ['Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'],
+        },
+      ],
+    },
+    {
       field: 'gender',
       validate: [
         {
