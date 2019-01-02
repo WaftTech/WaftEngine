@@ -12,6 +12,8 @@ const emailTemplate = require('../../helper/email-render-template');
 const auth = require('../../helper/auth.helper');
 const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
+const AccessSch = require('../Roles/access');
+const ModuleSch = require('../Roles/module');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 
 const userController = {};
@@ -198,7 +200,7 @@ userController.updateUserDetail = async (req, res, next) => {
     }
     const user = req.body;
     const id = req.params.id;
-    const updateUser = await User.findByIdAndUpdate(id, { $set: user });
+    const updateUser = await User.findByIdAndUpdate(id, { $set: user }, { new: true });
     const msg = 'User Update Success';
     return otherHelper.sendResponse(res, HttpStatus.OK, true, updateUser, null, msg, null);
   } catch (err) {
@@ -270,12 +272,16 @@ userController.forgotPassword = async (req, res, next) => {
     const tempalte_path = `${__dirname}/../email/template/passwordreset.pug`;
     const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
     emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
-    const update = await User.findByIdAndUpdate(user._id, {
-      $set: {
-        password_reset_code: user.password_reset_code,
-        password_reset_request_date: user.password_reset_request_date,
+    const update = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          password_reset_code: user.password_reset_code,
+          password_reset_request_date: user.password_reset_request_date,
+        },
       },
-    });
+      { new: true },
+    );
     const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, msg, null);
   } catch (err) {
@@ -319,7 +325,7 @@ userController.resetPassword = async (req, res, next) => {
   }
 };
 
-userController.login = (req, res) => {
+userController.login = async (req, res) => {
   // Check validation
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
@@ -337,10 +343,23 @@ userController.login = (req, res) => {
     }
 
     // Check Password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then(async isMatch => {
       if (isMatch) {
         // User Matched
-
+        let accesses = await AccessSch.find({ RoleId: user.roles, IsActive: true }, { AccessType: 1, _id: 0 });
+        const access = accesses.map(a => a.AccessType).reduce((acc, curr) => [...curr, ...acc]);
+        console.log(access);
+        const routers = await ModuleSch.find({ 'Path._id': access }, { 'Path.AdminRoutes': 1, 'Path.AccessType': 1 });
+        let routes = [];
+        for (let i = 0; i < routers.length; i++) {
+          for (let j = 0; j < routers[i].Path.length; j++) {
+            // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
+            routes.push(routers[i].Path[j]);
+            // }
+          }
+        }
+        // routes = routes.map(a => a.AdminRoutes);
+        console.log(routes);
         // Create JWT payload
         const payload = {
           id: user._id,
@@ -359,6 +378,8 @@ userController.login = (req, res) => {
           },
           (err, token) => {
             token = `Bearer ${token}`;
+            console.log(token);
+            payload.routes = routes;
             return otherHelper.sendResponse(res, HttpStatus.OK, true, payload, null, null, token);
           },
         );
