@@ -22,7 +22,7 @@ const UserSchema = new Schema({
   // avatar: { type: String },
   avatar: { type: Schema.Types.Mixed },
   email_verification_code: { type: String },
-  email_verified: { type: Boolean, required: false, default: false },
+  email_verified: { type: Boolean, required: true, default: false },
   password_reset_code: { type: String },
   password_reset_request_date: { type: Date },
   updated_at: { type: Date },
