@@ -14,8 +14,6 @@ const LeaveTypeSchema = new Schema({
   Added_at: { type: Date, default: Date.now, required: true },
   Added_by: { type: Schema.Types.ObjectId, ref: 'users' },
   IsHolidayCount: { type: Boolean, required: true, default: false },
-
-  ApplicableReligion: { type: String, required: true, enum: ['All', 'Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'] },
   IsCarryOver: { type: Boolean, required: false, default: true },
 
   IsDeleted: { type: Boolean, required: true, default: false },
