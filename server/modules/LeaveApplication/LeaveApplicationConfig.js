@@ -1,7 +1,7 @@
 module.exports = {
   ValidationMessage: {
     NoOfDaysRequired: 'Must enter Numeric Value',
-    NoOfDaysInvalid: 'Must be a number and must be 1 or greater than 1',
+    NoOfDaysInvalid: 'Must be a number greater than 0',
     SubmittedToRequired: 'Submitted to must be entered',
     SubmittedToInvalid: 'Submitted to must be String',
     SubmittedByRequired: 'Submitted by must be entered',
