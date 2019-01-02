@@ -7,8 +7,9 @@ module.exports = {
     dateInvalid: "Sorry, your mistyped in the Date field!!!",
     isActiveRequired: "IsActive field missed!!!",
     applicableToRequired: "Applicable To is Required!!!",
-    applicabletoInvalidValue:
-      "Sorry, invalid value detected in Applicable To!!!",
+    applicabletoInvalidValue:"Sorry, invalid value detected in Applicable To!!!",
+    applicableReligionRequired: "Applicable Religion To is Required!!!",
+    applicableReligionInvalid:"Sorry, invalid value detected in applicable Religion!!!",
     isHalfDayRequired: "Sorry, HalfDay is required!!!",
     dateAlreadyExists:
       "Thank you but the date has already been mentioned by someone!!"

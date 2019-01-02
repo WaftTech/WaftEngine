@@ -2,6 +2,7 @@ const HttpStatus = require("http-status");
 const otherHelper = require("../../helper/others.helper");
 const LeaveTypeModel = require("./LeaveType");
 const LeaveTypeController = {};
+const Internal = {};
 
 LeaveTypeController.GetLeaveType = async (req, res, next) => {
   let page;
@@ -78,7 +79,10 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
   }
 
   if (req.query.find_ApplicableReligion) {
-    searchquery = { ApplicableReligion: req.query.find_ApplicableReligion, ...searchquery };
+    searchquery = {
+      ApplicableReligion: req.query.find_ApplicableReligion,
+      ...searchquery
+    };
   }
 
   if (req.query.find_NoOfDays) {
@@ -93,16 +97,39 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
     }
   }
 
-  selectquery = 'LeaveName LeaveNameNepali IsTransferrable IsPaidLeave IsCarryOver ApplicableGender NoOfDays ApplicableReligion IsReplacementLeave Added_by';
+  selectquery =
+    "LeaveName LeaveNameNepali IsTransferrable IsPaidLeave IsCarryOver ApplicableGender NoOfDays IsHolidayCount ApplicableReligion IsReplacementLeave Added_by";
 
-  let datas = await otherHelper.getquerySendResponse(LeaveTypeModel, page, size, sortquery, searchquery, selectquery, next);
+  let datas = await otherHelper.getquerySendResponse(
+    LeaveTypeModel,
+    page,
+    size,
+    sortquery,
+    searchquery,
+    selectquery,
+    next
+  );
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Leave Type Data delivered successfully', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(
+    res,
+    HttpStatus.OK,
+    true,
+    datas.data,
+    "Leave Type Data delivered successfully",
+    page,
+    size,
+    datas.totaldata
+  );
 };
 
 LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
-    let data = await LeaveTypeModel.findOne({ _id: req.params.id, IsDeleted: false }).select('LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave Added_By');
+    let data = await LeaveTypeModel.findOne({
+      _id: req.params.id,
+      IsDeleted: false
+    }).select(
+      "LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender  IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave IsHolidayCount Added_By"
+    );
     //console.log('data:', data);
     return otherHelper.sendResponse(
       res,
@@ -132,7 +159,7 @@ LeaveTypeController.AddLeaveType = async (req, res, next) => {
         true,
         update,
         null,
-        "Leave Type Saved Success !!",
+        "Leave Type Edit Success !!",
         null
       );
     } else {
@@ -174,4 +201,13 @@ LeaveTypeController.DeleteByID = async (req, res, next) => {
   }
 };
 
-module.exports = LeaveTypeController;
+Internal.getLeaveIsHolidayStatus = async LeaveType => {
+  try {
+    let info = await LeaveTypeModel.findById(LeaveType, "IsHolidayCount");
+    return info;
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { LeaveTypeController, Internal };
