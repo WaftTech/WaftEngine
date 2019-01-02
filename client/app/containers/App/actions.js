@@ -15,8 +15,8 @@
  *    }
  */
 
-import action from 'utils/action';
-import * as types from './constants';
+import action from "utils/action";
+import * as types from "./constants";
 
 /**
  * sets a dialog
@@ -25,7 +25,7 @@ import * as types from './constants';
  *
  * @return {object}       An action object with a type of SET_DIALOG passing the dialog
  */
-export const setDialog = action(types.SET_DIALOG, 'dialog');
+export const setDialog = action(types.SET_DIALOG, "dialog");
 
 /**
  * sets the user
@@ -34,7 +34,7 @@ export const setDialog = action(types.SET_DIALOG, 'dialog');
  *
  * @return {object}       An action object with a type of SET_USER passing the user
  */
-export const setUser = action(types.SET_USER, 'user');
+export const setUser = action(types.SET_USER, "user");
 
 /**
  * sets the token
@@ -43,7 +43,7 @@ export const setUser = action(types.SET_USER, 'user');
  *
  * @return {object}       An action object with a type of SET_TOKEN passing the token
  */
-export const setToken = action(types.SET_TOKEN, 'token');
+export const setToken = action(types.SET_TOKEN, "token");
 
 /**
  * adds a message to the messages stack
@@ -52,7 +52,7 @@ export const setToken = action(types.SET_TOKEN, 'token');
  *
  * @return {object}       An action object with a type of ADD_MESSAGE passing the payload
  */
-export const addMessage = action(types.ADD_MESSAGE, 'payload');
+export const addMessage = action(types.ADD_MESSAGE, "payload");
 
 /**
  * sets the token
@@ -61,7 +61,7 @@ export const addMessage = action(types.ADD_MESSAGE, 'payload');
  *
  * @return {object}       An action object with a type of DELETE_MESSAGE passing the index
  */
-export const deleteMessage = action(types.DELETE_MESSAGE, 'payload');
+export const deleteMessage = action(types.DELETE_MESSAGE, "payload");
 
 /**
  * logs out user clears token in localstorage and resets app redux stores
@@ -69,3 +69,19 @@ export const deleteMessage = action(types.DELETE_MESSAGE, 'payload');
  * @return {object}       An action object with a type of SET_TOKEN passing the token
  */
 export const logout = action(types.LOGOUT);
+
+//Notification Action
+export const loadAllRequest = payload => ({
+  type: types.LOAD_ALL_REQUEST,
+  payload
+});
+
+export const loadAllSuccess = payload => ({
+  type: types.LOAD_ALL_SUCCESS,
+  payload
+});
+
+export const loadAllFailure = payload => ({
+  type: types.LOAD_ALL_FAILURE,
+  payload
+});
