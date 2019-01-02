@@ -59,7 +59,6 @@ class HeaderLinks extends React.Component {
     const { classes, allLinks } = this.props;
     const { open } = this.state;
     const allLinksObj = allLinks.toJS();
-    console.log(allLinksObj);
     return (
       <div>
         <div className={classes.searchWrapper}>
@@ -147,36 +146,15 @@ class HeaderLinks extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      {<MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Mike John responded to your email
-                      </MenuItem>}
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        You have 5 new tasks
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        You're now friend with Andrew
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Another Notification
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Another One
-                      </MenuItem>
+                      {allLinksObj.map(each => (
+                        <MenuItem
+                          key={each._id}
+                          onClick={this.handleClose}
+                          className={classes.dropdownItem}
+                        >
+                          {each.Description}
+                        </MenuItem>
+                      ))}
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
