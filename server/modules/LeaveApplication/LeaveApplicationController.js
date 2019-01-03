@@ -1,7 +1,8 @@
-const HttpStatus = require("http-status");
-const otherHelper = require("../../helper/others.helper");
-const LeaveApplicationModel = require("./LeaveApplication");
-const isEmpty = require("../../validation/isEmpty");
+const HttpStatus = require('http-status');
+const otherHelper = require('../../helper/others.helper');
+const LeaveApplicationModel = require('./LeaveApplication');
+const isEmpty = require('../../validation/isEmpty');
+const LeaveApplicationConfig = require('./LeaveApplicationConfig');
 const LeaveApplicationController = {};
 
 const CreateLeaveInternal = require('./../CreateLeave/CreateLeaveController').Internal;
@@ -93,35 +94,13 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
     populate
   );
 
-  return otherHelper.paginationSendResponse(
-    res,
-    HttpStatus.OK,
-    true,
-    datas.data,
-    "Leave Application Data Delivered Successfully",
-    page,
-    size,
-    datas.totaldata
-  );
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, LeaveApplicationConfig.ValidationMessage.GetLeaveApplication, page, size, datas.totaldata);
 };
 
 LeaveApplicationController.GetLeaveApplicationByID = async (req, res, next) => {
   try {
-    let data = await LeaveApplicationModel.findOne({
-      _id: req.params.id,
-      IsDeleted: false
-    }).select(
-      "IsHalfDay FromIsHalfDay ToIsHalfDay Status NoOfDays SubmittedTo SubmittedBy Added_by To From Remarks"
-    );
-    return otherHelper.sendResponse(
-      res,
-      HttpStatus.OK,
-      true,
-      data,
-      null,
-      "Leave Application data delivered successfully",
-      null
-    );
+    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay FromIsHalfDay ToIsHalfDay Status NoOfDays SubmittedTo SubmittedBy Added_by To From Remarks');
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, LeaveApplicationConfig.ValidationMessage.GetLeaveApplication, null);
   } catch (err) {
     next(err);
   }
@@ -134,19 +113,8 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
     let fiscalyear;
 
     if (LeaveApplication._id) {
-      let update = await LeaveApplicationModel.findByIdAndUpdate(
-        LeaveApplication._id,
-        { $set: LeaveApplication }
-      );
-      return otherHelper.sendResponse(
-        res,
-        HttpStatus.OK,
-        true,
-        update,
-        null,
-        "Leave Application Saved Success !!",
-        null
-      );
+      let update = await LeaveApplicationModel.findByIdAndUpdate(LeaveApplication._id, { $set: LeaveApplication });
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, LeaveApplicationConfig.ValidationMessage.AddLeaveApplication, null);
     } else {
       LeaveApplication.Remarks.UserID = req.user.id;
       if (!LeaveApplication.EmployID) {
@@ -173,15 +141,7 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
       );
 
       if (!fiscalyear.success) {
-        return otherHelper.sendResponse(
-          res,
-          HttpStatus.CONFLICT,
-          false,
-          null,
-          fiscalyear.error,
-          "Leave ApplicationValidation Error!!",
-          null
-        );
+        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, fiscalyear.error, LeaveApplicationConfig.ValidationMessage.ValidationError, null);
       }
       fiscalyear = fiscalyear.id;
 
@@ -193,20 +153,7 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
       );
 
       if (!duplicateStatus) {
-        return otherHelper.sendResponse(
-          res,
-          HttpStatus.CONFLICT,
-          false,
-          null,
-          {
-            errors: {
-              To: "Leave Conflicts with exisiting Leave",
-              From: "Leave Conflicts with exisiting Leave"
-            }
-          },
-          "Leave Conflicts with exisiting leave",
-          null
-        );
+        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, { errors: { To: LeaveApplicationConfig.ValidationMessage.DuplicateStatus, From: LeaveApplicationConfig.ValidationMessage.DuplicateStatus } }, LeaveApplicationConfig.ValidationMessage.DuplicateStatus, null);
       }
 
       let newLeaveApplication = new LeaveApplicationModel(LeaveApplication);
@@ -223,26 +170,10 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
           next(err);
         }
       } else {
-        return otherHelper.sendResponse(
-          res,
-          HttpStatus.CONFLICT,
-          false,
-          null,
-          leaveOk.error,
-          "Leave Application Failed !!",
-          null
-        );
+        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, leaveOk.error, LeaveApplicationConfig.ValidationMessage.ApplicationFailed, null);
       }
 
-      return otherHelper.sendResponse(
-        res,
-        HttpStatus.OK,
-        true,
-        newLeaveApplication,
-        null,
-        "Leave Application Saved Success !!",
-        null
-      );
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, newLeaveApplication, null, LeaveApplicationConfig.ValidationMessage.AddLeaveApplication, null);
     }
   } catch (err) {
     next(err);
@@ -251,18 +182,8 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
 LeaveApplicationController.DeleteByID = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const data = await LeaveApplicationModel.findByIdAndUpdate(id, {
-      $set: { IsDeleted: true, Deleted_By: req.user.id, Deleted_At: new Date() }
-    });
-    return otherHelper.sendResponse(
-      res,
-      HttpStatus.OK,
-      true,
-      data,
-      null,
-      "Leave Application Data delete Success",
-      null
-    );
+    const data = await LeaveApplicationModel.findByIdAndUpdate(id, { $set: { IsDeleted: true, Deleted_By: req.user.id, Deleted_At: new Date() } });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, LeaveApplicationConfig.ValidationMessage.DeleteByID, null);
   } catch (err) {
     next(err);
   }
@@ -282,10 +203,7 @@ let FindFiscalYear = async (from, to) => {
 
   if (!moment(from).isSameOrBefore(to)) {
     obj.success = false;
-    obj.error = {
-      From: "To date is before From date!!!",
-      To: "To date is before From date!!!"
-    };
+    obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToBefore, To: LeaveApplicationConfig.ValidationMessage.ToBefore };
     return obj;
   }
 
@@ -296,18 +214,15 @@ let FindFiscalYear = async (from, to) => {
   } else {
     if (!id1) {
       obj.success = false;
-      obj.error = { From: "From date is not available" };
+      obj.error = { From: LeaveApplicationConfig.ValidationMessage.FromDateRequired };
       return obj;
     } else if (!id2) {
       obj.success = false;
-      obj.error = { To: "To date is not available" };
+      obj.error = { To: LeaveApplicationConfig.ValidationMessage.ToDateRequired };
       return obj;
     } else {
       obj.success = false;
-      obj.error = {
-        From: "To and From must belong to same fiscal year!!!",
-        To: "To and From must belong to same fiscal year!!!"
-      };
+      obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToFromInvalid, To: LeaveApplicationConfig.ValidationMessage.ToFromInvalid };
       return obj;
     }
   }
@@ -361,10 +276,7 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   console.log(checkholidaystatus);
 
   if (!moment(FromDate).isSameOrBefore(ToDate)) {
-    obj.error = {
-      From: "To date is before From date!!!",
-      To: "To date is before From date!!!"
-    };
+    obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToBefore, To: LeaveApplicationConfig.ValidationMessage.ToBefore };
   } else {
     noOfDays = (await subtractDates(FromDate, ToDate)) - subtractValue;
 
@@ -388,25 +300,9 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
     }
   }
   if (obj.error) {
-    return otherHelper.sendResponse(
-      res,
-      HttpStatus.CONFLICT,
-      false,
-      null,
-      obj.error,
-      "No of days fetch Failed !!",
-      null
-    );
+    return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, obj.error, LeaveApplicationConfig.ValidationMessage.FetchFailed, null);
   } else {
-    return otherHelper.sendResponse(
-      res,
-      HttpStatus.OK,
-      true,
-      obj,
-      null,
-      "No of days fetch Success",
-      null
-    );
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, obj, null, LeaveApplicationConfig.ValidationMessage.FetchSuccess, null);
   }
 };
 
