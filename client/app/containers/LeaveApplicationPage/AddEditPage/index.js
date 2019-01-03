@@ -32,11 +32,21 @@ import CardBody from "components/Card/CardBody";
 import CardFooter from "components/Card/CardFooter";
 import reducer from "../reducer";
 import saga from "../saga";
-import { makeSelectOne } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
-import { makeSelectUser } from "../../App/selectors";
+import {
+  makeSelectOne,
+  makeSelectEmployee,
+  makeSelectLeaveType,
+  makeSelectLeaveDays
+} from "../selectors";
+import {
+  loadOneRequest,
+  addEditRequest,
+  loadEmployeeRequest,
+  loadLeaveTypeRequest,
+  loadTotalLeaveDaysRequest
+} from "../actions";
 
-const styles = {
+const styles = theme => ({
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
@@ -52,8 +62,16 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none"
+  },
+
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
   }
-};
+});
 
 class LeaveApplication extends Component {
   state = {
@@ -66,13 +84,17 @@ class LeaveApplication extends Component {
     To: null,
     FromIsHalfDay: null,
     ToIsHalfDay: null,
-    Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }]
+    employee: "",
+    leaveType: "",
+    Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }],
+    singleDay: false
   };
 
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOne(this.props.match.params.id);
     }
+    this.props.loadEmployee(); //load Employee
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -87,9 +109,37 @@ class LeaveApplication extends Component {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
   };
+  handleDateChange = name => event => {
+    this.setState({ [name]: event.target.value }, () => {
+      if (this.state.From && this.state.To) {
+        const { employee, leaveType, From, To } = this.state;
+
+        this.props.loadTotalLeaveDays({
+          leaveDetail: {
+            EmployeeID: employee,
+            LeaveType: leaveType,
+            FromDate: From,
+            ToDate: To
+          }
+        });
+      }
+    });
+  };
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
+  handleDropChange = event => {
+    this.setState({ [event.target.name]: event.target.value }, () =>
+      this.props.loadLeaveType(this.state.employee)
+    );
+  };
+  handleleaveTypeChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+  handleCheckChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
   handleRemarkChange = index => event => {
     event.persist();
     this.setState(state => {
@@ -112,10 +162,14 @@ class LeaveApplication extends Component {
   handleBooleanChange = name => event => {
     this.setState({ [name]: event.target.value === "true" });
   };
+
   render() {
     const { Remarks } = this.state;
-    const { classes, user } = this.props;
-    console.log(user.toJS());
+    const { classes, employeeList, leaveType, totalLeaveDays } = this.props;
+    const employeeArray = employeeList.toJS();
+    const leaveTypeArray = leaveType.toJS();
+    const leaveDays = totalLeaveDays.toJS();
+    console.log(totalLeaveDays.toJS());
     return (
       <div>
         <GridContainer>
@@ -128,41 +182,129 @@ class LeaveApplication extends Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel shrink htmlFor="age-label-placeholder">
-                      Employee Name
-                    </InputLabel>
-                    <Select
-                      value={this.state.age}
-                      onChange={this.handleChange}
-                      input={<Input name="age" id="age-label-placeholder" />}
-                      displayEmpty
-                      name="age"
-                      className={classes.selectEmpty}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                    <FormHelperText>Label + placeholder</FormHelperText>
-                  </FormControl>
-
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Employee Name"
-                      id="Added_by"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        value: this.state.Added_by,
-                        onChange: this.handleChange("Added_by")
-                      }}
+                  <GridItem xs={6} sm={6} md={6}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel shrink htmlFor="employee-label-placeholder">
+                        Employee Name
+                      </InputLabel>
+                      <Select
+                        value={this.state.employee}
+                        onChange={this.handleDropChange}
+                        name="employee"
+                        className={classes.selectEmpty}
+                      >
+                        {employeeArray.map(employee => (
+                          <MenuItem
+                            value={employee._id}
+                            key={employee._id}
+                            name={employee.name}
+                          >
+                            <em>{employee.name}</em>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem xs={6} sm={6} md={6}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel shrink htmlFor="employee-label-placeholder">
+                        Leave Type
+                      </InputLabel>
+                      <Select
+                        value={this.state.leaveType}
+                        onChange={this.handleleaveTypeChange}
+                        name="leaveType"
+                        className={classes.selectEmpty}
+                      >
+                        {leaveTypeArray.map(leaveType => (
+                          <MenuItem
+                            value={leaveType.LeaveType._id}
+                            key={leaveType.LeaveType._id}
+                            name={leaveType.LeaveType.LeaveName}
+                          >
+                            <em>{leaveType.LeaveType.LeaveName}</em>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem xs={2} sm={2} md={2}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.singleDay}
+                          onChange={this.handleCheckChange("singleDay")}
+                          value="singleDay"
+                        />
+                      }
+                      label="Is Single Day"
                     />
                   </GridItem>
+                  <GridItem xs={3} sm={3} md={3}>
+                    <TextField
+                      id="date"
+                      name="from"
+                      label="Start Date"
+                      type="date"
+                      inputProps={{
+                        value: moment(this.state.From).format("YYYY-MM-DD"),
+                        name: "From",
+                        onChange: this.handleDateChange("From")
+                      }}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      margin="normal"
+                      //this.handleQueryChange
+                    />
+                  </GridItem>
+                  <GridItem xs={2} sm={2} md={2}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.FromIsHalfDay}
+                          onChange={this.handleBooleanChange("FromIsHalfDay")}
+                          value={this.state.FromIsHalfDay}
+                        />
+                      }
+                      label="Is HalfDay"
+                    />
+                  </GridItem>
+
+                  {!this.state.singleDay ? (
+                    <React.Fragment>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <TextField
+                          id="date"
+                          name="to"
+                          label="End Date"
+                          type="date"
+                          inputProps={{
+                            value: moment(this.state.To).format("YYYY-MM-DD"),
+                            onChange: this.handleDateChange("To")
+                          }}
+                          InputLabelProps={{
+                            shrink: true
+                          }}
+                          margin="normal"
+                        />
+                      </GridItem>
+                      <GridItem xs={2} sm={2} md={2}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={this.state.ToIsHalfDay}
+                              onChange={this.handleBooleanChange("ToIsHalfDay")}
+                              value={this.state.ToIsHalfDay}
+                            />
+                          }
+                          label="Is HalfDay"
+                        />
+                      </GridItem>
+                    </React.Fragment>
+                  ) : (
+                    <div />
+                  )}
 
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
@@ -172,147 +314,12 @@ class LeaveApplication extends Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.NoOfDays,
+                        value: leaveDays.NoOfDays,
                         onChange: this.handleNumberChange("NoOfDays")
                       }}
                     />
                   </GridItem>
 
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Submitted To"
-                      id="SubmittedTo"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        value: this.state.SubmittedTo,
-                        onChange: this.handleChange("SubmittedTo")
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Submitted By"
-                      id="SubmittedBy"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        value: this.state.SubmittedBy,
-                        onChange: this.handleChange("SubmittedBy")
-                      }}
-                    />
-                  </GridItem>
-
-                  <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                      margin="normal"
-                    >
-                      <FormLabel component="legend">Is HalfDay</FormLabel>
-                      <RadioGroup
-                        aria-label="IsHalfDay"
-                        name="IsHalfDay"
-                        className={classes.group}
-                        value={this.state.IsHalfDay}
-                        onChange={this.handleBooleanChange("IsHalfDay")}
-                      >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem xs={4} sm={4} md={4}>
-                    <FormControl margin="normal">
-                      <FormLabel component="legend">From IsHalfDay</FormLabel>
-                      <RadioGroup
-                        aria-label="FromIsHalfDay"
-                        name="FromIsHalfDay"
-                        className={classes.group}
-                        value={this.state.FromIsHalfDay}
-                        onChange={this.handleBooleanChange("FromIsHalfDay")}
-                      >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </GridItem>
-                  <GridItem xs={4} sm={4} md={4}>
-                    <FormControl margin="normal">
-                      <FormLabel component="legend">To IsHalfDay</FormLabel>
-                      <RadioGroup
-                        aria-label="ToIsHalfDay"
-                        name="ToIsHalfDay"
-                        className={classes.group}
-                        value={this.state.ToIsHalfDay}
-                        onChange={this.handleBooleanChange("ToIsHalfDay")}
-                      >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </GridItem>
-
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TextField
-                      id="date"
-                      name="from"
-                      label="From"
-                      type="date"
-                      inputProps={{
-                        value: moment(this.state.From).format("YYYY-MM-DD"),
-                        name: "From",
-                        onChange: this.handleChange("From")
-                      }}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      margin="normal"
-                      //this.handleQueryChange
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TextField
-                      id="date"
-                      name="to"
-                      label="To"
-                      type="date"
-                      inputProps={{
-                        value: moment(this.state.To).format("YYYY-MM-DD"),
-                        onChange: this.handleChange("To")
-                      }}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      margin="normal"
-                    />
-                  </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
                     {Remarks.map((each, index) => (
                       <CustomInput
@@ -356,12 +363,17 @@ const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
-  user: makeSelectUser()
+  employeeList: makeSelectEmployee(),
+  leaveType: makeSelectLeaveType(),
+  totalLeaveDays: makeSelectLeaveDays()
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
+  loadEmployee: payload => dispatch(loadEmployeeRequest(payload)),
+  loadLeaveType: payload => dispatch(loadLeaveTypeRequest(payload)),
+  loadTotalLeaveDays: payload => dispatch(loadTotalLeaveDaysRequest(payload))
 });
 
 const withConnect = connect(

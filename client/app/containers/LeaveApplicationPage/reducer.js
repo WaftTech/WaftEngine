@@ -8,7 +8,10 @@ import * as types from "./constants";
 
 export const initialState = fromJS({
   all: [],
-  one: {}
+  one: {},
+  employee: [],
+  leaveType: [],
+  totalLeaveDays: []
 });
 
 function reducer(state = initialState, action) {
@@ -26,6 +29,18 @@ function reducer(state = initialState, action) {
         all: state
           .get("all")
           .filter(each => each.get("_id") !== action.payload.data._id)
+      });
+    case types.LOAD_EMPLOYEE_SUCCESS:
+      return state.merge({
+        employee: fromJS(action.payload.data)
+      });
+    case types.LOAD_LEAVETYPE_SUCCESS:
+      return state.merge({
+        leaveType: fromJS(action.payload.data)
+      });
+    case types.LOAD_TOTAL_LEAVE_DAYS_SUCCESS:
+      return state.merge({
+        totalLeaveDays: fromJS(action.payload.data)
       });
     default:
       return state;
