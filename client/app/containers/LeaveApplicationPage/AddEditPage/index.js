@@ -15,6 +15,11 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 // core components
 import GridItem from "components/Grid/GridItem";
@@ -29,6 +34,7 @@ import reducer from "../reducer";
 import saga from "../saga";
 import { makeSelectOne } from "../selectors";
 import { loadOneRequest, addEditRequest } from "../actions";
+import { makeSelectUser } from "../../App/selectors";
 
 const styles = {
   cardCategoryWhite: {
@@ -57,7 +63,10 @@ class LeaveApplication extends Component {
     Added_by: "",
     IsHalfDay: true,
     From: null,
-    To: null
+    To: null,
+    FromIsHalfDay: null,
+    ToIsHalfDay: null,
+    Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }]
   };
 
   componentDidMount() {
@@ -81,6 +90,14 @@ class LeaveApplication extends Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
+  handleRemarkChange = index => event => {
+    event.persist();
+    this.setState(state => {
+      let { Remarks } = state;
+      Remarks[index].Remark = event.target.value;
+      return { Remarks };
+    });
+  };
   handleNumberChange = name => event => {
     this.setState({ [name]: Number(event.target.value) });
   };
@@ -96,7 +113,9 @@ class LeaveApplication extends Component {
     this.setState({ [name]: event.target.value === "true" });
   };
   render() {
-    const { classes } = this.props;
+    const { Remarks } = this.state;
+    const { classes, user } = this.props;
+    console.log(user.toJS());
     return (
       <div>
         <GridContainer>
@@ -109,9 +128,31 @@ class LeaveApplication extends Component {
               </CardHeader>
               <CardBody>
                 <GridContainer>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel shrink htmlFor="age-label-placeholder">
+                      Employee Name
+                    </InputLabel>
+                    <Select
+                      value={this.state.age}
+                      onChange={this.handleChange}
+                      input={<Input name="age" id="age-label-placeholder" />}
+                      displayEmpty
+                      name="age"
+                      className={classes.selectEmpty}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem>
+                    </Select>
+                    <FormHelperText>Label + placeholder</FormHelperText>
+                  </FormControl>
+
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Added By"
+                      labelText="Employee Name"
                       id="Added_by"
                       formControlProps={{
                         fullWidth: true
@@ -168,6 +209,7 @@ class LeaveApplication extends Component {
                     <FormControl
                       component="fieldset"
                       className={classes.formControl}
+                      margin="normal"
                     >
                       <FormLabel component="legend">Is HalfDay</FormLabel>
                       <RadioGroup
@@ -190,6 +232,53 @@ class LeaveApplication extends Component {
                       </RadioGroup>
                     </FormControl>
                   </GridItem>
+                  <GridItem xs={4} sm={4} md={4}>
+                    <FormControl margin="normal">
+                      <FormLabel component="legend">From IsHalfDay</FormLabel>
+                      <RadioGroup
+                        aria-label="FromIsHalfDay"
+                        name="FromIsHalfDay"
+                        className={classes.group}
+                        value={this.state.FromIsHalfDay}
+                        onChange={this.handleBooleanChange("FromIsHalfDay")}
+                      >
+                        <FormControlLabel
+                          value={true}
+                          control={<Radio />}
+                          label="True"
+                        />
+                        <FormControlLabel
+                          value={false}
+                          control={<Radio />}
+                          label="False"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem xs={4} sm={4} md={4}>
+                    <FormControl margin="normal">
+                      <FormLabel component="legend">To IsHalfDay</FormLabel>
+                      <RadioGroup
+                        aria-label="ToIsHalfDay"
+                        name="ToIsHalfDay"
+                        className={classes.group}
+                        value={this.state.ToIsHalfDay}
+                        onChange={this.handleBooleanChange("ToIsHalfDay")}
+                      >
+                        <FormControlLabel
+                          value={true}
+                          control={<Radio />}
+                          label="True"
+                        />
+                        <FormControlLabel
+                          value={false}
+                          control={<Radio />}
+                          label="False"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </GridItem>
+
                   <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       id="date"
@@ -204,6 +293,7 @@ class LeaveApplication extends Component {
                       InputLabelProps={{
                         shrink: true
                       }}
+                      margin="normal"
                       //this.handleQueryChange
                     />
                   </GridItem>
@@ -220,7 +310,26 @@ class LeaveApplication extends Component {
                       InputLabelProps={{
                         shrink: true
                       }}
+                      margin="normal"
                     />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    {Remarks.map((each, index) => (
+                      <CustomInput
+                        key={`remark-${index}`}
+                        labelText="Remarks"
+                        id="Remarks"
+                        name="Remarks"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          value: each.Remark,
+                          onChange: this.handleRemarkChange(index)
+                        }}
+                        margin="normal"
+                      />
+                    ))}
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -246,7 +355,8 @@ const withReducer = injectReducer({ key: "leaveApplicationPage", reducer });
 const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
+  user: makeSelectUser()
 });
 
 const mapDispatchToProps = dispatch => ({

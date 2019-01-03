@@ -1,67 +1,67 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { compose } from "redux";
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import VpnKey from '@material-ui/icons/VpnKey';
-import Close from '@material-ui/icons/Close';
+import withStyles from "@material-ui/core/styles/withStyles";
+import AddIcon from "@material-ui/icons/Add";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Edit from "@material-ui/icons/Edit";
+import VpnKey from "@material-ui/icons/VpnKey";
+import Close from "@material-ui/icons/Close";
 
 // core components
-import GridItem from '../../components/Grid/GridItem';
-import GridContainer from '../../components/Grid/GridContainer';
-import Button from '../../components/CustomButtons/Button';
-import Table from '../../components/Table/Table';
-import Card from '../../components/Card/Card';
+import GridItem from "../../components/Grid/GridItem";
+import GridContainer from "../../components/Grid/GridContainer";
+import Button from "../../components/CustomButtons/Button";
+import Table from "../../components/Table/Table";
+import Card from "../../components/Card/Card";
 // import CardHeader from "../../components/Card/CardHeader";
 // import CardBody from "../../components/Card/CardBody";
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import { loadAllRequest, deleteOneRequest } from './actions';
-import { makeSelectAll } from './selectors';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import injectSaga from "../../utils/injectSaga";
+import injectReducer from "../../utils/injectReducer";
+import reducer from "./reducer";
+import saga from "./saga";
+import { loadAllRequest, deleteOneRequest } from "./actions";
+import { makeSelectAll } from "./selectors";
+import { FormattedMessage } from "react-intl";
+import messages from "./messages";
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
+    "&,& a,& a:hover,& a:focus": {
+      color: "rgba(255,255,255,.62)",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      marginBottom: "0"
     },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
+    "& a,& a:hover,& a:focus": {
+      color: "#FFFFFF"
+    }
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
+    marginBottom: "3px",
+    textDecoration: "none",
+    "& small": {
+      color: "#777",
+      fontSize: "65%",
+      fontWeight: "400",
+      lineHeight: "1"
+    }
+  }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -70,7 +70,7 @@ export class ModuleManagePage extends React.Component {
     this.props.loadAll();
   }
   handleAdd = () => {
-    this.props.history.push('/wt/module-manage/add');
+    this.props.history.push("/wt/module-manage/add");
   };
   handleEdit = id => {
     this.props.history.push(`/wt/module-manage/edit/${id}`);
@@ -100,7 +100,9 @@ export class ModuleManagePage extends React.Component {
             className={classes.tableActionButton}
             onClick={() => this.handleEdit(_id)}
           >
-            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+            <Edit
+              className={classes.tableActionButtonIcon + " " + classes.edit}
+            />
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -114,7 +116,9 @@ export class ModuleManagePage extends React.Component {
             className={classes.tableActionButton}
             onClick={() => this.handleAccessEdit(_id)}
           >
-            <VpnKey className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+            <VpnKey
+              className={classes.tableActionButtonIcon + " " + classes.edit}
+            />
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -128,10 +132,12 @@ export class ModuleManagePage extends React.Component {
             className={classes.tableActionButton}
             onClick={() => this.handleDelete(_id)}
           >
-            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+            <Close
+              className={classes.tableActionButtonIcon + " " + classes.close}
+            />
           </IconButton>
         </Tooltip>
-      </React.Fragment>,
+      </React.Fragment>
     ]);
     return (
       <GridContainer>
@@ -144,7 +150,10 @@ export class ModuleManagePage extends React.Component {
             </CardHeader> */}
               <Table
                 tableHeaderColor="primary"
-                tableHead={[<FormattedMessage {...messages.moduleManage} />, <FormattedMessage {...messages.moduleAction} />]}
+                tableHead={[
+                  <FormattedMessage {...messages.moduleManage} />,
+                  <FormattedMessage {...messages.moduleAction} />
+                ]}
                 tableData={tableData}
               />
               <Button
@@ -166,25 +175,25 @@ export class ModuleManagePage extends React.Component {
 }
 
 ModuleManagePage.propTypes = {
-  loadAll: PropTypes.func.isRequired,
+  loadAll: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
-  all: makeSelectAll(),
+  all: makeSelectAll()
 });
 
 const mapDispatchToProps = dispatch => ({
   loadAll: () => dispatch(loadAllRequest()),
-  deleteOne: (id) => dispatch(deleteOneRequest(id))
+  deleteOne: id => dispatch(deleteOneRequest(id))
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
-const withSaga = injectSaga({ key: 'moduleManagePage', saga });
+const withReducer = injectReducer({ key: "moduleManagePage", reducer });
+const withSaga = injectSaga({ key: "moduleManagePage", saga });
 
 const withStyle = withStyles(styles);
 
@@ -193,5 +202,5 @@ export default compose(
   withStyle,
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(ModuleManagePage);

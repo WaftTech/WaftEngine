@@ -43,7 +43,12 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { Designation: "", UpdateDate: "", IsActive: false };
+  state = {
+    Designation: "",
+    DesignationNepali: "",
+    UpdateDate: "",
+    IsActive: false
+  };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -98,38 +103,20 @@ class AddEdit extends Component {
                       }}
                     />
                   </GridItem>
-                </GridContainer>
-                {/* <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="UpdateDate"
-                      id="update-date"
+                      labelText="Designation(Nepali)"
+                      id="designationNepali"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: this.state.UpdateDate,
-                        onChange: this.handleChange("UpdateDate")
+                        value: this.state.DesignationNepali,
+                        onChange: this.handleChange("DesignationNepali")
                       }}
                     />
                   </GridItem>
                 </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.IsActive || false}
-                          tabIndex={-1}
-                          onClick={this.handleChecked("IsActive")}
-                          value="IsActive"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
-                  </GridItem>
-                </GridContainer> */}
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSave}>
