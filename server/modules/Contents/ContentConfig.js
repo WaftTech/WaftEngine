@@ -8,5 +8,8 @@ module.exports = {
     PublishFromInvalid: 'Please Enter Publish Date in Valid format',
     PublishToRequired: 'Please Enter Publish To Date',
     PublishToInvalid: 'Please Enter Publish To Date in Valid format',
+
+    GetContent: 'Content Get Success !!',
+    SaveContent: 'Content Saved Success !!',
   },
 };

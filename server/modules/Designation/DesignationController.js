@@ -2,6 +2,7 @@ const HttpStatus = require('http-status');
 //var DesignationId = require('mongoose').Types.postId;
 const otherHelper = require('../../helper/others.helper');
 const DesignationSch = require('./Designation');
+const DesignationConfig = require('./DesignationConfig');
 const DesignationController = {};
 
 DesignationController.GetDesignation = async (req, res, next) => {
@@ -47,13 +48,13 @@ DesignationController.GetDesignation = async (req, res, next) => {
   let datas = await otherHelper.getquerySendResponse(DesignationSch, page, size, sortquery, searchquery, selectquery, next);
   console.log(datas);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Designation Data delivered successfully', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, DesignationConfig.validationMessage.GetDesignation, page, size, datas.totaldata);
 };
 
 DesignationController.GetDesignationDetail = async (req, res, next) => {
   try {
-    let data = await DesignationSch.findOne({ _id: req.params.id,IsDeleted: false  });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Designation data in detail delivered successfully!!', null);
+    let data = await DesignationSch.findOne({ _id: req.params.id, IsDeleted: false });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, DesignationConfig.validationMessage.GetDesignationDetail, null);
   } catch (err) {
     next(err);
   }
@@ -64,12 +65,12 @@ DesignationController.AddDesignation = async (req, res, next) => {
     let Designation = req.body;
     if (Designation._id) {
       let update = await DesignationSch.findByIdAndUpdate(Designation._id, { $set: Designation });
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Designation Saved Success !!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, DesignationConfig.validationMessage.AddDesignation, null);
     } else {
       // Designation.Added_by = req.user.id;
       let newDesignation = new DesignationSch(Designation);
       await newDesignation.save();
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, newDesignation, null, 'Designation Saved Success !!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, newDesignation, null, DesignationConfig.validationMessage.AddDesignation, null);
     }
   } catch (err) {
     next(err);
@@ -80,7 +81,7 @@ DesignationController.deletebyID = async (req, res, next) => {
   try {
     const id = req.params.id;
     const Designation = await DesignationSch.findByIdAndUpdate(id, { $set: { IsDeleted: true, Deleted_at: new Date() } });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, Designation, null, 'Designation Get Success !!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, Designation, null, DesignationConfig.validationMessage.DeleteByID, null);
   } catch (err) {
     next(err);
   }
