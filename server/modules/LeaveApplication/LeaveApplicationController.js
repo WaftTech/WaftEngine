@@ -8,8 +8,9 @@ const LeaveApplicationController = {};
 const CreateLeaveInternal = require('./../CreateLeave/CreateLeaveController').Internal;
 const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 const LeaveTypeInternal = require('./../LeaveType/LeaveTypeController').Internal;
+const HolidayInternal = require('./../holidaylist/holidayController').Internal;
 
-const moment = require('moment');
+const moment = require("moment");
 moment().format();
 
 LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
@@ -38,9 +39,9 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
       sortquery = sortfield;
     } else if (sortby == 0 && !isNaN(sortby)) {
       // 0 is for Descending
-      sortquery = '-' + sortfield;
+      sortquery = "-" + sortfield;
     } else {
-      sortquery = '';
+      sortquery = "";
     }
   }
   searchquery = { IsDeleted: false };
@@ -56,20 +57,42 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
     searchquery = { NoOfDays: req.query.find_NoOfDays, ...searchquery };
   }
   if (req.query.find_SubmittedTo) {
-    searchquery = { SubmittedTo: { $regex: req.query.find_SubmittedTo, $options: 'i x' }, ...searchquery };
+    searchquery = {
+      SubmittedTo: { $regex: req.query.find_SubmittedTo, $options: "i x" },
+      ...searchquery
+    };
   }
   if (req.query.find_SubmittedBy) {
-    searchquery = { SubmittedBy: { $regex: req.query.find_SubmittedBy, $options: 'i x' }, ...searchquery };
+    searchquery = {
+      SubmittedBy: { $regex: req.query.find_SubmittedBy, $options: "i x" },
+      ...searchquery
+    };
   }
   if (req.query.find_Added_by) {
-    searchquery = { Added_by: { $regex: req.query.find_Added_by, $options: 'i x' }, ...searchquery };
+    searchquery = {
+      Added_by: { $regex: req.query.find_Added_by, $options: "i x" },
+      ...searchquery
+    };
   }
 
-  selectquery = 'IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Status Remarks';
+  selectquery =
+    "IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Status Remarks";
 
-  populate = [{ path: 'LeaveTypeID', select: 'LeaveName LeaveNameNepali' }, { path: 'EmployID', select: 'name nameNepali' }];
+  populate = [
+    { path: "LeaveTypeID", select: "LeaveName LeaveNameNepali" },
+    { path: "EmployID", select: "name nameNepali" }
+  ];
 
-  let datas = await otherHelper.getquerySendResponse(LeaveApplicationModel, page, size, sortquery, searchquery, selectquery, next, populate);
+  let datas = await otherHelper.getquerySendResponse(
+    LeaveApplicationModel,
+    page,
+    size,
+    sortquery,
+    searchquery,
+    selectquery,
+    next,
+    populate
+  );
 
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, LeaveApplicationConfig.ValidationMessage.GetLeaveApplication, page, size, datas.totaldata);
 };
@@ -112,7 +135,10 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
       LeaveApplication.Remarks.UserID = req.user.id;
 
       //fiscal year check
-      fiscalyear = await FindFiscalYear(LeaveApplication.From, LeaveApplication.To);
+      fiscalyear = await FindFiscalYear(
+        LeaveApplication.From,
+        LeaveApplication.To
+      );
 
       if (!fiscalyear.success) {
         return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, fiscalyear.error, LeaveApplicationConfig.ValidationMessage.ValidationError, null);
@@ -120,14 +146,23 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
       fiscalyear = fiscalyear.id;
 
       //cheking duplicate apllication leave
-      let duplicateStatus = await CheckDuplicateLeaveApplication(LeaveApplication.From, LeaveApplication.To, LeaveApplication.EmployID);
+      let duplicateStatus = await CheckDuplicateLeaveApplication(
+        LeaveApplication.From,
+        LeaveApplication.To,
+        LeaveApplication.EmployID
+      );
 
       if (!duplicateStatus) {
         return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, { errors: { To: LeaveApplicationConfig.ValidationMessage.DuplicateStatus, From: LeaveApplicationConfig.ValidationMessage.DuplicateStatus } }, LeaveApplicationConfig.ValidationMessage.DuplicateStatus, null);
       }
 
       let newLeaveApplication = new LeaveApplicationModel(LeaveApplication);
-      let leaveOk = await CreateLeaveInternal.LeaveRequest(LeaveApplication.LeaveTypeID, fiscalyear, LeaveApplication.EmployID, LeaveApplication.NoOfDays);
+      let leaveOk = await CreateLeaveInternal.LeaveRequest(
+        LeaveApplication.LeaveTypeID,
+        fiscalyear,
+        LeaveApplication.EmployID,
+        LeaveApplication.NoOfDays
+      );
       if (leaveOk.status) {
         try {
           await newLeaveApplication.save();
@@ -157,7 +192,7 @@ LeaveApplicationController.DeleteByID = async (req, res, next) => {
 let subtractDates = (date1, date2) => {
   date1 = moment(date1);
   date2 = moment(date2);
-  return date2.diff(date1, 'days') + 1;
+  return date2.diff(date1, "days") + 1;
 };
 
 //checks if both dates belong to same fiscal year
@@ -172,7 +207,7 @@ let FindFiscalYear = async (from, to) => {
     return obj;
   }
 
-  if (id1 && id2 && id1 + '' === id2 + '') {
+  if (id1 && id2 && id1 + "" === id2 + "") {
     obj.success = true;
     obj.id = id1;
     return obj;
@@ -194,8 +229,13 @@ let FindFiscalYear = async (from, to) => {
 };
 
 let CheckDuplicateLeaveApplication = async (from, to, EmployeeId) => {
-  console.log('Employeeid, from, to', EmployeeId, new Date(from), new Date(to));
-  let datas = await LeaveApplicationModel.find({ EmployID: EmployeeId, IsDeleted: false, From: { $lte: new Date(to) }, To: { $gte: new Date(from) } });
+  console.log("Employeeid, from, to", EmployeeId, new Date(from), new Date(to));
+  let datas = await LeaveApplicationModel.find({
+    EmployID: EmployeeId,
+    IsDeleted: false,
+    From: { $lte: new Date(to) },
+    To: { $gte: new Date(from) }
+  });
   console.log(datas);
   if (isEmpty(datas)) {
     return true;
@@ -212,19 +252,24 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   let checkholidaystatus;
   let noOfDays;
   let subtractValue = 0.0;
+  let HalfDays = 0;
 
   let obj = {};
 
   if (req.body.FromIsHalfDay) {
     subtractValue = subtractValue + 0.5;
+    HalfDays = HalfDays + 1;
   }
   if (req.body.ToIsHalfDay) {
     subtractValue = subtractValue + 0.5;
+    HalfDays = HalfDays + 1;
   }
 
   try {
     //checkisholday.....
-    checkholidaystatus = await LeaveTypeInternal.getLeaveIsHolidayStatus(LeaveType);
+    checkholidaystatus = await LeaveTypeInternal.getLeaveIsHolidayStatus(
+      LeaveType
+    );
   } catch (err) {
     next(err);
   }
@@ -238,11 +283,20 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
     if (checkholidaystatus.IsHolidayCount) {
       //if checkholiday true count holidays
       //edits needed here
-      obj.NoOfDays = noOfDays;
-      obj.HolidaysInBetween = 0;
+
+      let holidayl = await HolidayInternal.getHolidayInBetween(FromDate, ToDate, EmployID);
+      let // console.log('holidayl', holidayl);
+        subtractValue = holidayl.length;
+      obj.TotalNoOfDays = await subtractDates(FromDate, ToDate);
+      obj.NoOfDays = noOfDays - subtractValue;
+      obj.HalfDays = HalfDays;
+      obj.HolidaysInBetween = subtractValue;
+      obj.Holidays = holidayl;
     } else {
       obj.NoOfDays = noOfDays;
       obj.HolidaysInBetween = 0;
+      obj.TotalNoOfDays = await subtractDates(FromDate, ToDate);
+      obj.HalfDays = HalfDays;
     }
   }
   if (obj.error) {

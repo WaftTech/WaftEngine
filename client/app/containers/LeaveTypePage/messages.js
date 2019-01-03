@@ -10,6 +10,10 @@ export default defineMessages({
     id: "app.containers.LeaveTypePage.leaveName",
     defaultMessage: "Leave Name"
   },
+  leaveNameNepali: {
+    id: "app.containers.LeaveTypePage.leaveNameNepali",
+    defaultMessage: "Leave (Nepali)"
+  },
   noOfDays: {
     id: "app.containers.LeaveTypePage.noOfDays",
     defaultMessage: "Number of Days"
@@ -29,5 +33,13 @@ export default defineMessages({
   isReplacementLeave: {
     id: "app.containers.LeaveTypePage.IsReplacementLeave",
     defaultMessage: "Is ReplacementLeave"
+  },
+  applicableReligion: {
+    id: "app.containers.LeaveTypePage.applicableReligion",
+    defaultMessage: "Applicable Religion"
+  },
+  isCarryOver: {
+    id: "app.containers.LeaveTypePage.IsCarryOver",
+    defaultMessage: "Is Carry Over"
   }
 });
