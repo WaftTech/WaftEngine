@@ -107,8 +107,9 @@ export class LeaveApplication extends React.Component {
     this.props.loadAll({ sort: `${this.state.sortToggle}${title}` });
   };
   render() {
-    const { classes, allLinks } = this.props;
+    const { classes, allLinks, employeeList } = this.props;
     const allLinksObj = allLinks.toJS();
+
     const tableData = allLinksObj.map(
       ({
         _id,

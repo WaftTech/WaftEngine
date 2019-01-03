@@ -8,6 +8,30 @@ export const LOAD_ALL_REQUEST = "app/LeaveApplicationPage/LOAD_ALL_REQUEST";
 export const LOAD_ALL_SUCCESS = "app/LeaveApplicationPage/LOAD_ALL_SUCCESS";
 export const LOAD_ALL_FAILURE = "app/LeaveApplicationPage/LOAD_ALL_FAILURE";
 
+//EMPLOYEE CONSTANTS
+export const LOAD_EMPLOYEE_REQUEST =
+  "app/LeaveApplicationPage/LOAD_EMPLOYEE_REQUEST";
+export const LOAD_EMPLOYEE_SUCCESS =
+  "app/LeaveApplicationPage/LOAD_EMPLOYEE_SUCCESS";
+export const LOAD_EMPLOYEE_FAILURE =
+  "app/LeaveApplicationPage/LOAD_EMPLOYEE_FAILURE";
+
+//LEAVETYPE CONSTANTS
+export const LOAD_LEAVETYPE_REQUEST =
+  "app/LeaveApplicationPage/LOAD_LEAVETYPE_REQUEST";
+export const LOAD_LEAVETYPE_SUCCESS =
+  "app/LeaveApplicationPage/LOAD_LEAVETYPE_SUCCESS";
+export const LOAD_LEAVETYPE_FAILURE =
+  "app/LeaveApplicationPage/LOAD_LEAVETYPE_FAILURE";
+
+//TOTAL LEAVE DAYS CONSTANTS
+export const LOAD_TOTAL_LEAVE_DAYS_REQUEST =
+  "app/LeaveApplicationPage/LOAD_TOTAL_LEAVE_DAYS_REQUEST";
+export const LOAD_TOTAL_LEAVE_DAYS_SUCCESS =
+  "app/LeaveApplicationPage/LOAD_TOTAL_LEAVE_DAYS_SUCCESS";
+export const LOAD_TOTAL_LEAVE_DAYS_FAILURE =
+  "app/LeaveApplicationPage/LOAD_TOTAL_LEAVE_DAYS_FAILURE ";
+
 export const LOAD_ONE_REQUEST = "app/LeaveApplicationPage/LOAD_ONE_REQUEST";
 export const LOAD_ONE_SUCCESS = "app/LeaveApplicationPage/LOAD_ONE_SUCCESS";
 export const LOAD_ONE_FAILURE = "app/LeaveApplicationPage/LOAD_ONE_FAILURE";
