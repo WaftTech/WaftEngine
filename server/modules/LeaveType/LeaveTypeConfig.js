@@ -8,5 +8,10 @@ module.exports = {
     NoOfDaysInvalid: 'Must be 1 or greater than 1',
     ApplicableReligionRequired: 'You must select Applicable Religion',
     ApplicableReligionInvalid: 'Please Select Valid Applivcable Religion',
+
+    GetLeaveType: 'Leave Type Data delivered successfully',
+    EditLeaveType: 'Leave Type Edit Success !!',
+    SaveLeaveTye: 'Leave Type Saved Success !!',
+    DeleteByID: 'Leave Type Data delete Success',
   },
 };

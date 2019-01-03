@@ -20,5 +20,18 @@ module.exports = {
     EmployIDInvalid: 'Employee ID invalid!!!',
     LeaveTypeIDRequired: 'Leave type is required!!!',
     LeaveTypeIDInvalid: 'Leave type is Invalid!!!',
+
+    GetLeaveApplication: 'Leave Application Data Delivered Successfully',
+    AddLeaveApplication: 'Leave Application Saved Success !!',
+    ValidationError: 'Leave ApplicationValidation Error!!',
+    DuplicateStatus: 'Leave Conflicts with exisiting leave',
+    ApplicationFailed: 'Leave Application Failed !!',
+    DeleteByID: 'Leave Application Data delete Success',
+    ToBefore: 'To date is before From date!!!',
+    FromDateRequired: 'From date is not available',
+    ToDateRequired: 'To date is not available',
+    ToFromInvalid: 'To and From must belong to same fiscal year!!!',
+    FetchFailed: 'No of days fetch Failed !!',
+    FetchSuccess: 'No of days fetch Success',
   },
 };
