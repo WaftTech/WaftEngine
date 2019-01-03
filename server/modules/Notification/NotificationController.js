@@ -1,6 +1,7 @@
 const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const NotificationModel = require('./Notification');
+const NotificationConfig = require('./NotificationConfig');
 const NotificationController = {};
 
 NotificationController.GetNotification = async (req, res, next) => {
@@ -58,13 +59,13 @@ NotificationController.GetNotification = async (req, res, next) => {
   selectquery = 'Module Description IsSeen AddedAt IsRead UserID';
   let datas = await otherHelper.getquerySendResponse(NotificationModel, page, size, sortquery, searchquery, selectquery, next);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Notification Data delivered successfully', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, NotificationConfig.ValidationMessage.GetNotification, page, size, datas.totaldata);
 };
 NotificationController.GetNotificationByID = async (req, res, next) => {
   try {
     let data = await NotificationModel.findOne({ _id: req.params.id }).select('Module Description IsSeen AddedAt IsRead UserID');
     //console.log('data:', data);
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Notification data delivered successfully', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, NotificationConfig.ValidationMessage.GetNotification, null);
   } catch (err) {
     next(err);
   }
@@ -75,11 +76,11 @@ NotificationController.AddNotification = async (req, res, next) => {
     Notifications.Add_by = req.user.id;
     if (Notifications._id) {
       let update = await NotificationModel.findByIdAndUpdate(Notifications._id, { $set: Notifications });
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Notification Saved Success !!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, NotificationConfig.ValidationMessage.AddNotification, null);
     } else {
       let newNotification = new NotificationModel(Notifications);
       await newNotification.save();
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, newNotification, null, 'Notification Saved Success !!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, newNotification, null, NotificationConfig.ValidationMessage.AddNotification, null);
     }
   } catch (err) {
     next(err);
