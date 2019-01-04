@@ -9,43 +9,33 @@ const LeaveApplicationValidation = {};
 
 LeaveApplicationValidation.validate = async (req, res, next) => {
   let errors = await validationhelper.validate(req.body, [
-    {
-      field: 'Remarks.Status',
-      validate: [
-        {
-          condition: 'contains',
-          msg: LeaveApplicationConfig.ValidationMessage.StatusRequired,
-          options: ['', 'Pending', 'Accepted', 'Rejected'],
-        },
-      ],
-    },
-
-    {
-      field: 'Remarks.Remark',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: LeaveApplicationConfig.ValidationMessage.RemarkRequired,
-        },
-      ],
-    },
-
-    {
-      field: 'Remarks.Date',
-      validate: [
-        {
-          condition: 'IsDate',
-          msg: LeaveApplicationConfig.ValidationMessage.DateRequired,
-        },
-      ],
-    },
-
     // {
-    //   field: 'Remarks.UserID',
+    //   field: 'Remarks.Status',
     //   validate: [
     //     {
-    //       condition: 'IsMONGOID',
-    //       msg: LeaveApplicationConfig.ValidationMessage.UserIDRequired,
+    //       condition: 'contains',
+    //       msg: LeaveApplicationConfig.ValidationMessage.StatusRequired,
+    //       options: ['', 'Pending', 'Accepted', 'Rejected'],
+    //     },
+    //   ],
+    // },
+
+    // {
+    //   field: 'Remarks.Remark',
+    //   validate: [
+    //     {
+    //       condition: 'IsEmpty',
+    //       msg: LeaveApplicationConfig.ValidationMessage.RemarkRequired,
+    //     },
+    //   ],
+    // },
+
+    // {
+    //   field: 'Remarks.Date',
+    //   validate: [
+    //     {
+    //       condition: 'IsDate',
+    //       msg: LeaveApplicationConfig.ValidationMessage.DateRequired,
     //     },
     //   ],
     // },
@@ -124,5 +114,61 @@ LeaveApplicationValidation.validate = async (req, res, next) => {
     next();
   }
 };
+
+LeaveApplicationValidation.validateRemarks = async (req, res, next) => {
+  let vdata = req.body.Remarks;
+  let fvdata = {};
+  let errors = {};
+   console.log(vdata);
+  if (!isEmpty(vdata)) {
+    for (let i = 0; i < vdata.length; i++) {
+      fvdata = vdata[i];
+      errors = await validationhelper.validate(fvdata, [
+        {
+          field: 'Status',
+          validate: [
+            {
+              condition: 'contains',
+              msg: LeaveApplicationConfig.ValidationMessage.StatusRequired,
+              options: ['', 'Pending', 'Accepted', 'Rejected'],
+            },
+          ],
+        },
+
+        {
+          field: 'Remark',
+          validate: [
+            {
+              condition: 'IsEmpty',
+              msg: LeaveApplicationConfig.ValidationMessage.RemarkRequired,
+            },
+          ],
+        },
+
+        {
+          field: 'Date',
+          validate: [
+            {
+              condition: 'IsDate',
+              msg: LeaveApplicationConfig.ValidationMessage.DateRequired,
+            },
+          ],
+        },
+      ]);
+
+      if (!isEmpty(errors)) {
+        break;
+      }
+    }
+  } else {
+    errors = { Remarks: userConfig.validationMessage.RemarkRequired };
+  }
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+  } else {
+    next();
+  }
+};
+
 
 module.exports = LeaveApplicationValidation;
