@@ -108,20 +108,20 @@ holidayController.deleteById = async (req, res, next) => {
   }
 };
 
-Internal.getHolidayInBetween = async (fromdDate, toDate, employeeID) => {
+Internal.getHolidayInBetween = async (fromdDate, toDate, employeeID, weekends) => {
+  //weenkends is an array of weekends
   let data;
-
   try {
     let employdata = await UserInfoInternal.getEmployeeInfo(employeeID);
-    // console.log(employdata);
     data = await holidaymodel.find(
       {
         date: { $gte: fromdDate, $lte: toDate },
         $and: [{ $or: [{ applicableTo: 'All' }, { applicableTo: employdata.gender }] }, { $or: [{ applicableReligion: 'All' }, { applicableReligion: employdata.religion }] }],
         IsDeleted: false,
         isHalfDay: false,
+        holidayDay: { $nin: weekends },
       },
-      'date title applicableTo applicableReligion -_id',
+      'date title applicableTo holidayDay applicableReligion -_id',
     );
   } catch (err) {
     console.log('error: ', err);
