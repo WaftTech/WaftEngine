@@ -1,6 +1,7 @@
 const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const registrationModel = require('./registration');
+const registrationConfig = require('./registrationConfig');
 const registrationController = {};
 
 registrationController.saveData = async (req, res, next) => {
@@ -12,19 +13,19 @@ registrationController.saveData = async (req, res, next) => {
         data.Docuname = req.files;
       }
       let updated = await registrationModel.findByIdAndUpdate(data._id, data);
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, 'Registration updated!!!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, registrationConfig.validationMessage.SaveData, null);
     } else {
       //checking if registration no exists
       let status = await registrationModel.findOne({
         RegistrationNo: data.RegistrationNo,
       });
       if (status != null) {
-        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, null, 'duplicate registration number', null);
+        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, null, registrationConfig.validationMessage.DuplicateRegistration, null);
       } else {
         data.Docuname = req.files;
         let newdata = new registrationModel(data);
         let saved = await newdata.save();
-        return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, 'Registration successful!!', null);
+        return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, registrationConfig.validationMessage.RegistrationSuccessful, null);
       }
     }
   } catch (err) {
@@ -100,13 +101,13 @@ registrationController.getData = async (req, res, next) => {
 
   let datas = await otherHelper.getquerySendResponse(registrationModel, page, size, sortq, searchq, selectq, next, populate);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Registration data delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, registrationConfig.validationMessage.GetData, page, size, datas.totaldata);
 };
 
 registrationController.getDataByID = async (req, res, next) => {
   try {
     let data = await registrationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by');
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Registration data in detail delivered successfully!!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, registrationConfig.validationMessage.GetDataByID, null);
   } catch (err) {
     next(err);
   }
@@ -118,7 +119,7 @@ registrationController.deleteById = async (req, res, next) => {
     const data = await registrationModel.findByIdAndUpdate(id, {
       $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
     });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Registration delete Success !!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, registrationConfig.validationMessage.DeleteByID, null);
   } catch (err) {
     next(err);
   }

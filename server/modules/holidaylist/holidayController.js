@@ -2,6 +2,7 @@ const HttpStatus = require('http-status');
 const otherHelper = require('./../../helper/others.helper');
 const holidaymodel = require('./holiday');
 const moment = require('moment');
+const holidayConfig = require('./holidayConfig');
 const holidayController = {};
 const Internal = {};
 
@@ -15,16 +16,16 @@ holidayController.saveData = async (req, res, next) => {
     console.log(data.holidayDay);
     if (data._id) {
       let updated = await holidaymodel.findByIdAndUpdate(data._id, data);
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, 'Holiday updated!!!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, holidayConfig.validationMessage.HolidayUpdate, null);
     } else {
       //checking if date already exists.
       let status = await holidaymodel.findOne({ date: data.date });
       if (status != null) {
-        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, null, 'Sorry, Date already exists!!', null);
+        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, null, holidayConfig.validationMessage.dateAlreadyExists, null);
       } else {
         let newdata = new holidaymodel(data);
         let saved = await newdata.save();
-        return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, 'Holiday successfully added!!', null);
+        return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, holidayConfig.validationMessage.SaveData, null);
       }
     }
   } catch (err) {
@@ -86,13 +87,13 @@ holidayController.getData = async (req, res, next) => {
   selectq = 'title date titleNepali isActive applicableTo isHalfDay addedBy addedDate';
 
   let datas = await otherHelper.getquerySendResponse(holidaymodel, page, size, sortq, searchq, selectq, next, populate);
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Holidays delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, holidayConfig.validationMessage.GetData, page, size, datas.totaldata);
 };
 
 holidayController.getDataByID = async (req, res, next) => {
   try {
     let data = await holidaymodel.findOne({ _id: req.params.id, IsDeleted: false }).select('title date titleNepali isActive applicableTo isHalfDay addedBy addedDate');
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Holiday in detail delivered successfully!!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, holidayConfig.validationMessage.GetDataByID, null);
   } catch (err) {
     next(err);
   }
@@ -102,7 +103,7 @@ holidayController.deleteById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = await holidaymodel.findByIdAndUpdate(id, { $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() } });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Holiday deleted Successfully!! !!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, holidayConfig.validationMessage.DeleteByID, null);
   } catch (err) {
     next(err);
   }
