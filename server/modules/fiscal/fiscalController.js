@@ -59,7 +59,7 @@ FiscalController.GetFiscal = async (req, res, next) => {
 
   selectq = ('FiscalYear From To', { IsDeleted: false });
   let fiscaldata = await OtherHelper.getquerySendResponse(FiscalSch, page, size, sortquery, searchq, selectq, next);
-  return OtherHelper.paginationSendResponse(res, HttpStatus.OK, true, fiscaldata.data, fiscalConfig.getFiscals, page, size, fiscaldata.totaldata);
+  return OtherHelper.paginationSendResponse(res, HttpStatus.OK, true, fiscaldata.data, fiscalConfig.validateFiscal.getFiscals, page, size, fiscaldata.totaldata);
 
   // try {
   //   const fiscaldata = await FiscalSch.find({ IsDeleted: false }, { IsDeleted: 0, Deleted_at: 0, Deleted_by: 0, CreatedDate: 0, __v: 0 })
@@ -68,7 +68,7 @@ FiscalController.GetFiscal = async (req, res, next) => {
   //     .limit(size * 1);
   //   let totaldata = await FiscalSch.countDocuments({ IsDeleted: false });
   //   console.log('fiscaldata:', fiscaldata);
-  //   return OtherHelper.paginationSendResponse(res, HttpStatus.OK, fiscaldata, fiscalConfig.getFiscals, page, size, totaldata);
+  //   return OtherHelper.paginationSendResponse(res, HttpStatus.OK, fiscaldata, fiscalConfig.validateFiscal.getFiscals, page, size, totaldata);
   // } catch (err) {
   //   next(err);
   // }
@@ -82,11 +82,11 @@ FiscalController.SaveFiscal = async (req, res, next) => {
       const update = await FiscalSch.findByIdAndUpdate(fiscals._id, {
         $set: fiscals,
       });
-      return OtherHelper.sendResponse(res, HttpStatus.OK, true, update, null, fiscalConfig.saveFiscal, null);
+      return OtherHelper.sendResponse(res, HttpStatus.OK, true, update, null, fiscalConfig.validateFiscal.saveFiscal, null);
     } else {
       const newFiscals = new FiscalSch(fiscals);
       const FiscalSave = await newFiscals.save();
-      return OtherHelper.sendResponse(res, HttpStatus.OK, true, FiscalSave, null, fiscalConfig.saveFiscal, null);
+      return OtherHelper.sendResponse(res, HttpStatus.OK, true, FiscalSave, null, fiscalConfig.validateFiscal.saveFiscal, null);
     }
   } catch (err) {
     next(err);
@@ -97,13 +97,13 @@ FiscalController.GetFiscalById = async (req, res, next) => {
   const id = req.params.id;
   const fiscal = await FiscalSch.findOne({ _id: ObjectId(id), IsDeleted: false }, { CreatedDate: 0, __v: 0 });
   console.log(fiscal);
-  return OtherHelper.sendResponse(res, HttpStatus.OK, true, fiscal, null, fiscalConfig.getFiscal, null);
+  return OtherHelper.sendResponse(res, HttpStatus.OK, true, fiscal, null, fiscalConfig.validateFiscal.getFiscal, null);
 };
 
 FiscalController.DeleteById = async (req, res, next) => {
   const id = req.params.id;
   const data = await FiscalSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date(), Deleted_by: req.user.id } });
-  return OtherHelper.sendResponse(res, HttpStatus.OK, true, data, null, fiscalConfig.deleteFiscal, null);
+  return OtherHelper.sendResponse(res, HttpStatus.OK, true, data, null, fiscalConfig.validateFiscal.deleteFiscal, null);
 };
 
 //get fiscal year of the supplied date
