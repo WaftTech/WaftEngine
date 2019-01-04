@@ -78,7 +78,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
 
   selectquery = 'IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Status Remarks';
 
-  populate = [{ path: 'LeaveTypeID', select: 'LeaveName LeaveNameNepali' }, { path: 'EmployID', select: 'name nameNepali' }];
+  populate = [{ path: 'LeaveTypeID', select: 'LeaveName LeaveNameNepali' }, { path: 'EmployID', select: 'name nameNepali' }, { path: 'Added_by', select: 'name nameNepali' }];
 
   let datas = await otherHelper.getquerySendResponse(LeaveApplicationModel, page, size, sortquery, searchquery, selectquery, next, populate);
 
