@@ -227,7 +227,7 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   let ToDate = req.body.ToDate;
   let checkholidaystatus;
   let noOfDays;
-  let noOfWeekends;
+  let noOfWeekends = 0;
   let subtractValue = 0.0;
   let HalfDays = 0;
 
@@ -272,6 +272,7 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
         let d = moment(m).weekday();
         for (let z = 0; z < weekendDays; z++) {
           if (d === weekends[z]) {
+            noOfWeekends = noOfWeekends + 1;
             subtractValue = subtractValue + 1;
             obj.Holidays.push({
               applicableReligion: 'All',
@@ -288,6 +289,7 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
       obj.TotalNoOfDays = noOfDays;
       obj.NoOfDays = noOfDays - subtractValue - HalfDays * 0.5;
       obj.HalfDays = HalfDays;
+      obj.NoOfWeekend = noOfWeekends;
       obj.HolidaysInBetween = subtractValue;
       obj.Holidays.push(...holidayl);
       // console.log(obj.Holidays);
