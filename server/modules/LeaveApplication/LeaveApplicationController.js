@@ -76,24 +76,11 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
     };
   }
 
-  selectquery =
-    "IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Status Remarks";
+  selectquery = 'IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Status Remarks';
 
-  populate = [
-    { path: "LeaveTypeID", select: "LeaveName LeaveNameNepali" },
-    { path: "EmployID", select: "name nameNepali" }
-  ];
+  populate = [{ path: 'LeaveTypeID', select: 'LeaveName LeaveNameNepali' }, { path: 'EmployID', select: 'name nameNepali' }];
 
-  let datas = await otherHelper.getquerySendResponse(
-    LeaveApplicationModel,
-    page,
-    size,
-    sortquery,
-    searchquery,
-    selectquery,
-    next,
-    populate
-  );
+  let datas = await otherHelper.getquerySendResponse(LeaveApplicationModel, page, size, sortquery, searchquery, selectquery, next, populate);
 
   return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, LeaveApplicationConfig.ValidationMessage.GetLeaveApplication, page, size, datas.totaldata);
 };
@@ -248,11 +235,11 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   obj.Holidays = [];
 
   if (req.body.FromIsHalfDay) {
-    subtractValue = subtractValue + 0.5;
+    // subtractValue = subtractValue + 0.5;
     HalfDays = HalfDays + 1;
   }
   if (req.body.ToIsHalfDay) {
-    subtractValue = subtractValue + 0.5;
+    // subtractValue = subtractValue + 0.5;
     HalfDays = HalfDays + 1;
   }
 
@@ -267,7 +254,7 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   if (!moment(FromDate).isSameOrBefore(ToDate)) {
     obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToBefore, To: LeaveApplicationConfig.ValidationMessage.ToBefore };
   } else {
-    noOfDays = (await subtractDates(FromDate, ToDate)) - subtractValue;
+    noOfDays = await subtractDates(FromDate, ToDate);
 
     if (checkholidaystatus.IsHolidayCount) {
       //if checkholiday true count holidays
@@ -285,13 +272,6 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
         let d = moment(m).weekday();
         for (let z = 0; z < weekendDays; z++) {
           if (d === weekends[z]) {
-            console.log(m, d);
-            console.log({
-              applicableReligion: 'All',
-              title: 'weekend',
-              date: m.toISOString(),
-              applicableTo: 'All',
-            });
             subtractValue = subtractValue + 1;
             obj.Holidays.push({
               applicableReligion: 'All',
@@ -305,8 +285,8 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
 
       let holidayl = await HolidayInternal.getHolidayInBetween(FromDate, ToDate, EmployID, weekends); //weenkends is an array of weekends
       subtractValue = subtractValue + holidayl.length;
-      obj.TotalNoOfDays = await subtractDates(FromDate, ToDate);
-      obj.NoOfDays = noOfDays - subtractValue;
+      obj.TotalNoOfDays = noOfDays;
+      obj.NoOfDays = noOfDays - subtractValue - HalfDays * 0.5;
       obj.HalfDays = HalfDays;
       obj.HolidaysInBetween = subtractValue;
       obj.Holidays.push(...holidayl);
