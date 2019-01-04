@@ -9,8 +9,9 @@ const CreateLeaveInternal = require('./../CreateLeave/CreateLeaveController').In
 const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 const LeaveTypeInternal = require('./../LeaveType/LeaveTypeController').Internal;
 const HolidayInternal = require('./../holidaylist/holidayController').Internal;
+const settingsInternal = require('./../Settings/settingsController').Internal;
 
-const moment = require("moment");
+const moment = require('moment');
 moment().format();
 
 LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
@@ -39,9 +40,9 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
       sortquery = sortfield;
     } else if (sortby == 0 && !isNaN(sortby)) {
       // 0 is for Descending
-      sortquery = "-" + sortfield;
+      sortquery = '-' + sortfield;
     } else {
-      sortquery = "";
+      sortquery = '';
     }
   }
   searchquery = { IsDeleted: false };
@@ -58,20 +59,20 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
   }
   if (req.query.find_SubmittedTo) {
     searchquery = {
-      SubmittedTo: { $regex: req.query.find_SubmittedTo, $options: "i x" },
-      ...searchquery
+      SubmittedTo: { $regex: req.query.find_SubmittedTo, $options: 'i x' },
+      ...searchquery,
     };
   }
   if (req.query.find_SubmittedBy) {
     searchquery = {
-      SubmittedBy: { $regex: req.query.find_SubmittedBy, $options: "i x" },
-      ...searchquery
+      SubmittedBy: { $regex: req.query.find_SubmittedBy, $options: 'i x' },
+      ...searchquery,
     };
   }
   if (req.query.find_Added_by) {
     searchquery = {
-      Added_by: { $regex: req.query.find_Added_by, $options: "i x" },
-      ...searchquery
+      Added_by: { $regex: req.query.find_Added_by, $options: 'i x' },
+      ...searchquery,
     };
   }
 
@@ -135,10 +136,7 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
       LeaveApplication.Remarks.UserID = req.user.id;
 
       //fiscal year check
-      fiscalyear = await FindFiscalYear(
-        LeaveApplication.From,
-        LeaveApplication.To
-      );
+      fiscalyear = await FindFiscalYear(LeaveApplication.From, LeaveApplication.To);
 
       if (!fiscalyear.success) {
         return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, fiscalyear.error, LeaveApplicationConfig.ValidationMessage.ValidationError, null);
@@ -146,23 +144,14 @@ LeaveApplicationController.AddLeaveApplication = async (req, res, next) => {
       fiscalyear = fiscalyear.id;
 
       //cheking duplicate apllication leave
-      let duplicateStatus = await CheckDuplicateLeaveApplication(
-        LeaveApplication.From,
-        LeaveApplication.To,
-        LeaveApplication.EmployID
-      );
+      let duplicateStatus = await CheckDuplicateLeaveApplication(LeaveApplication.From, LeaveApplication.To, LeaveApplication.EmployID);
 
       if (!duplicateStatus) {
         return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, { errors: { To: LeaveApplicationConfig.ValidationMessage.DuplicateStatus, From: LeaveApplicationConfig.ValidationMessage.DuplicateStatus } }, LeaveApplicationConfig.ValidationMessage.DuplicateStatus, null);
       }
 
       let newLeaveApplication = new LeaveApplicationModel(LeaveApplication);
-      let leaveOk = await CreateLeaveInternal.LeaveRequest(
-        LeaveApplication.LeaveTypeID,
-        fiscalyear,
-        LeaveApplication.EmployID,
-        LeaveApplication.NoOfDays
-      );
+      let leaveOk = await CreateLeaveInternal.LeaveRequest(LeaveApplication.LeaveTypeID, fiscalyear, LeaveApplication.EmployID, LeaveApplication.NoOfDays);
       if (leaveOk.status) {
         try {
           await newLeaveApplication.save();
@@ -192,7 +181,7 @@ LeaveApplicationController.DeleteByID = async (req, res, next) => {
 let subtractDates = (date1, date2) => {
   date1 = moment(date1);
   date2 = moment(date2);
-  return date2.diff(date1, "days") + 1;
+  return date2.diff(date1, 'days') + 1;
 };
 
 //checks if both dates belong to same fiscal year
@@ -207,7 +196,7 @@ let FindFiscalYear = async (from, to) => {
     return obj;
   }
 
-  if (id1 && id2 && id1 + "" === id2 + "") {
+  if (id1 && id2 && id1 + '' === id2 + '') {
     obj.success = true;
     obj.id = id1;
     return obj;
@@ -229,12 +218,12 @@ let FindFiscalYear = async (from, to) => {
 };
 
 let CheckDuplicateLeaveApplication = async (from, to, EmployeeId) => {
-  console.log("Employeeid, from, to", EmployeeId, new Date(from), new Date(to));
+  console.log('Employeeid, from, to', EmployeeId, new Date(from), new Date(to));
   let datas = await LeaveApplicationModel.find({
     EmployID: EmployeeId,
     IsDeleted: false,
     From: { $lte: new Date(to) },
-    To: { $gte: new Date(from) }
+    To: { $gte: new Date(from) },
   });
   console.log(datas);
   if (isEmpty(datas)) {
@@ -251,10 +240,12 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   let ToDate = req.body.ToDate;
   let checkholidaystatus;
   let noOfDays;
+  let noOfWeekends;
   let subtractValue = 0.0;
   let HalfDays = 0;
 
   let obj = {};
+  obj.Holidays = [];
 
   if (req.body.FromIsHalfDay) {
     subtractValue = subtractValue + 0.5;
@@ -267,13 +258,11 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
 
   try {
     //checkisholday.....
-    checkholidaystatus = await LeaveTypeInternal.getLeaveIsHolidayStatus(
-      LeaveType
-    );
+    checkholidaystatus = await LeaveTypeInternal.getLeaveIsHolidayStatus(LeaveType);
   } catch (err) {
     next(err);
   }
-  console.log(checkholidaystatus);
+  // console.log(checkholidaystatus);
 
   if (!moment(FromDate).isSameOrBefore(ToDate)) {
     obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToBefore, To: LeaveApplicationConfig.ValidationMessage.ToBefore };
@@ -284,14 +273,44 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
       //if checkholiday true count holidays
       //edits needed here
 
-      let holidayl = await HolidayInternal.getHolidayInBetween(FromDate, ToDate, EmployID);
-      let // console.log('holidayl', holidayl);
-        subtractValue = holidayl.length;
+      let weekends = await settingsInternal.getDataByKey('weekends');
+      console.log('weekends: ', weekends);
+
+      if (isEmpty(weekends)) {
+        return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, null, 'Weekends not defined in settings!!', null);
+      }
+      let weekendDays = weekends.length;
+
+      for (var m = moment(FromDate).utc(); m.diff(ToDate, 'days') <= 0; m.add(1, 'days')) {
+        let d = moment(m).weekday();
+        for (let z = 0; z < weekendDays; z++) {
+          if (d === weekends[z]) {
+            console.log(m, d);
+            console.log({
+              applicableReligion: 'All',
+              title: 'weekend',
+              date: m.toISOString(),
+              applicableTo: 'All',
+            });
+            subtractValue = subtractValue + 1;
+            obj.Holidays.push({
+              applicableReligion: 'All',
+              title: 'weekend',
+              date: m.toISOString(),
+              applicableTo: 'All',
+            });
+          }
+        }
+      }
+
+      let holidayl = await HolidayInternal.getHolidayInBetween(FromDate, ToDate, EmployID, weekends); //weenkends is an array of weekends
+      subtractValue = subtractValue + holidayl.length;
       obj.TotalNoOfDays = await subtractDates(FromDate, ToDate);
       obj.NoOfDays = noOfDays - subtractValue;
       obj.HalfDays = HalfDays;
       obj.HolidaysInBetween = subtractValue;
-      obj.Holidays = holidayl;
+      obj.Holidays.push(...holidayl);
+      // console.log(obj.Holidays);
     } else {
       obj.NoOfDays = noOfDays;
       obj.HolidaysInBetween = 0;
