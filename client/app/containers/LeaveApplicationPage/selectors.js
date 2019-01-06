@@ -17,3 +17,5 @@ export const makeSelectLeaveType = () =>
   createSelector(selectDomain, state => state.get("leaveType"));
 export const makeSelectLeaveDays = () =>
   createSelector(selectDomain, state => state.get("totalLeaveDays"));
+export const makeSelectPage = () =>
+  createSelector(selectDomain, state => state.get("page"));

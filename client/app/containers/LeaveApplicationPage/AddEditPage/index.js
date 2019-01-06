@@ -75,13 +75,13 @@ const styles = theme => ({
 
 class LeaveApplication extends Component {
   state = {
-    NoOfDays: null,
+    NoOfDays: "",
     Added_by: "",
     IsHalfDay: true,
     From: null,
     To: null,
-    FromIsHalfDay: null,
-    ToIsHalfDay: null,
+    FromIsHalfDay: false,
+    ToIsHalfDay: false,
     EmployID: "",
     LeaveTypeID: "",
     Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }],
@@ -101,6 +101,12 @@ class LeaveApplication extends Component {
       this.setState(state => ({
         ...oneObj
       }));
+    }
+    if (this.props.totalLeaveDays !== nextProps.totalLeaveDays) {
+      const leaveDays = nextProps.totalLeaveDays.toJS();
+      this.setState({
+        NoOfDays: leaveDays.NoOfDays
+      });
     }
   }
   handleEditorChange = (e, name) => {
@@ -132,6 +138,7 @@ class LeaveApplication extends Component {
                 ToIsHalfDay
               }
             });
+            console.log(this.props.totalLeaveDays.toJS());
           }
         }
       );
@@ -166,8 +173,8 @@ class LeaveApplication extends Component {
   };
   handleDropChange = event => {
     this.setState({ [event.target.name]: event.target.value }, () => {
-      // this.props.loadLeaveType(this.state.EmployID);
-      // leaveTypeArray=LeaveTypeID.toJS();
+      this.props.loadLeaveType(this.state.EmployID);
+      //leaveTypeArray = LeaveTypeID.toJS();
       const leaveDays = this.props.totalLeaveDays.toJS();
       this.setState({ NoOfDays: leaveDays.NoOfDays });
     });
@@ -386,7 +393,7 @@ class LeaveApplication extends Component {
                       margin="normal"
                       InputProps={{
                         readOnly: true,
-                        value: leaveDays.NoOfDays
+                        value: this.state.NoOfDays
                       }}
                     />
                   </GridItem>
@@ -426,7 +433,6 @@ class LeaveApplication extends Component {
     );
   }
 }
-
 const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: "leaveApplicationPage", reducer });

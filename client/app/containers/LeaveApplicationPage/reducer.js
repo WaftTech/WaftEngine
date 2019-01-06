@@ -11,14 +11,16 @@ export const initialState = fromJS({
   one: {},
   employee: [],
   leaveType: [],
-  totalLeaveDays: []
+  totalLeaveDays: [],
+  page: []
 });
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case types.LOAD_ALL_SUCCESS:
       return state.merge({
-        all: fromJS(action.payload.data)
+        all: fromJS(action.payload.data),
+        page: fromJS(action.payload)
       });
     case types.LOAD_ONE_SUCCESS:
       return state.merge({
