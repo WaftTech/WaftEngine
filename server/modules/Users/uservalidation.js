@@ -46,7 +46,7 @@ uservalidation.validate = async (req, res, next) => {
         {
           condition: 'Contains',
           msg: userConfig.validationMessage.religionInvalid,
-          options:  ['Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'],
+          options: ['Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'],
         },
       ],
     },
@@ -117,19 +117,19 @@ uservalidation.validate = async (req, res, next) => {
     //     },
     //   ],
     // },
-    {
-      field: 'roles',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: userConfig.validationMessage.rolesRequired,
-        },
-        {
-          condition: 'IsMONGOID',
-          msg: userConfig.validationMessage.rolesInvalid,
-        },
-      ],
-    },
+    // {
+    //   field: 'roles',
+    //   validate: [
+    //     {
+    //       condition: 'IsEmpty',
+    //       msg: userConfig.validationMessage.rolesRequired,
+    //     },
+    //     {
+    //       condition: 'IsMONGOID',
+    //       msg: userConfig.validationMessage.rolesInvalid,
+    //     },
+    //   ],
+    // },
     {
       field: 'permanentaddress.state',
       validate: [
@@ -196,7 +196,6 @@ uservalidation.validateReporterID = async (req, res, next) => {
   let vdata = req.body.ReporterID;
   let fvdata = {};
   let errors = {};
-  console.log(vdata);
   if (!isEmpty(vdata)) {
     for (let i = 0; i < vdata.length; i++) {
       fvdata.ReporterID = vdata[i];
@@ -222,6 +221,43 @@ uservalidation.validateReporterID = async (req, res, next) => {
     }
   } else {
     errors = { ReporterID: userConfig.validationMessage.ReporterIDRequired };
+  }
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+  } else {
+    next();
+  }
+};
+
+uservalidation.validateRoles = async (req, res, next) => {
+  let vdata = req.body.roles;
+  let fvdata = {};
+  let errors = {};
+  if (!isEmpty(vdata)) {
+    for (let i = 0; i < vdata.length; i++) {
+      fvdata.roles = vdata[i];
+      errors = await validate(fvdata, [
+        {
+          field: 'roles',
+          validate: [
+            {
+              condition: 'IsEmpty',
+              msg: userConfig.validationMessage.rolesRequired,
+            },
+            {
+              condition: 'IsMONGOID',
+              msg: userConfig.validationMessage.rolesInvalid,
+            },
+          ],
+        },
+      ]);
+
+      if (!isEmpty(errors)) {
+        break;
+      }
+    }
+  } else {
+    errors = { roles: userConfig.validationMessage.rolesRequired };
   }
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
