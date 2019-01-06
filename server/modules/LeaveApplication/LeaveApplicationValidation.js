@@ -119,7 +119,7 @@ LeaveApplicationValidation.validateRemarks = async (req, res, next) => {
   let vdata = req.body.Remarks;
   let fvdata = {};
   let errors = {};
-   console.log(vdata);
+  console.log(vdata);
   if (!isEmpty(vdata)) {
     for (let i = 0; i < vdata.length; i++) {
       fvdata = vdata[i];
@@ -170,5 +170,67 @@ LeaveApplicationValidation.validateRemarks = async (req, res, next) => {
   }
 };
 
+LeaveApplicationValidation.validateNoOfDays = async (req, res, next) => {
+  let errors = await validationhelper.validate(req.body, [
+    {
+      field: 'EmployID',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.EmployIDRequired,
+        },
+        {
+          condition: 'IsMONGOID',
+          msg: LeaveApplicationConfig.ValidationMessage.EmployIDInvalid,
+        },
+      ],
+    },
+    {
+      field: 'LeaveType',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.LeaveTypeIDRequired,
+        },
+        {
+          condition: 'IsMONGOID',
+          msg: LeaveApplicationConfig.ValidationMessage.LeaveTypeIDInvalid,
+        },
+      ],
+    },
+    {
+      field: 'ToDate',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.ToRequired,
+        },
+        {
+          condition: 'IsDate',
+          msg: LeaveApplicationConfig.ValidationMessage.ToInvalid,
+        },
+      ],
+    },
+    {
+      field: 'FromDate',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: LeaveApplicationConfig.ValidationMessage.FromRequired,
+        },
+        {
+          condition: 'IsDate',
+          msg: LeaveApplicationConfig.ValidationMessage.FromInvalid,
+        },
+      ],
+    },
+  ]);
+
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error', null);
+  } else {
+    next();
+  }
+};
 
 module.exports = LeaveApplicationValidation;
