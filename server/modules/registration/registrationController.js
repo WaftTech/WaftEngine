@@ -106,7 +106,7 @@ registrationController.getData = async (req, res, next) => {
 
 registrationController.getDataByID = async (req, res, next) => {
   try {
-    let data = await registrationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by');
+    let data = await registrationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('Subject SenderName ReceiverName RegistrationNo Added_date RegisterDate Remarks Docuname Added_by').populate({ path: 'Added_by', select: '_id name' });
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, registrationConfig.validationMessage.GetDataByID, null);
   } catch (err) {
     next(err);

@@ -111,15 +111,22 @@ export class LeaveType extends React.Component {
 
   leaveTypeSort = title => {
     if (!!this.state.sortToggle) {
-      this.setState({ sortToggle: 0, sortSymbol: "D" });
+      this.setState({ sortToggle: 0, sortSymbol: "D" }, () =>
+        this.props.loadAll({
+          sort: `${this.state.sortToggle}${title}`,
+          page: this.state.page,
+          rowsPerPage: this.state.rowsPerPage
+        })
+      );
     } else if (!this.state.sortToggle) {
-      this.setState({ sortToggle: 1, sortSymbol: "A" });
+      this.setState({ sortToggle: 1, sortSymbol: "A" }, () =>
+        this.props.loadAll({
+          sort: `${this.state.sortToggle}${title}`,
+          page: this.state.page,
+          rowsPerPage: this.state.rowsPerPage
+        })
+      );
     }
-    this.props.loadAll({
-      sort: `${this.state.sortToggle}${title}`,
-      page: this.state.page,
-      rowsPerPage: this.state.rowsPerPage
-    });
   };
   //Pagination
   handleChangePage = (event, page) => {

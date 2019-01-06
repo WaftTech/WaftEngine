@@ -29,7 +29,7 @@ import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
 import { loadAllRequest, deleteOneRequest } from "./actions";
-import { makeSelectAll } from "./selectors";
+import { makeSelectAll, makeSelectPage } from "./selectors";
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
 
@@ -68,7 +68,13 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class LeaveApplication extends React.Component {
-  state = { query: {}, sortToggle: 0, sortSymbol: "D" };
+  state = {
+    query: {},
+    sortToggle: 0,
+    sortSymbol: "D",
+    page: 1,
+    rowsPerPage: 10
+  };
   componentDidMount() {
     this.props.loadAll({ query: {} });
   }
@@ -105,15 +111,41 @@ export class LeaveApplication extends React.Component {
       this.setState({ sortToggle: 1, sortSymbol: "A" });
     }
     this.props.loadAll({ sort: `${this.state.sortToggle}${title}` });
+    this.props.loadAll({
+      sort: `${this.state.sortToggle}${title}`,
+      page: this.state.page,
+      rowsPerPage: this.state.rowsPerPage
+    });
   };
-  render() {
-    const { classes, allLinks, employeeList } = this.props;
-    const allLinksObj = allLinks.toJS();
 
+  //Pagination
+  handleChangePage = (event, page) => {
+    this.setState({ page: page + 1 }, () => {
+      this.props.loadAll({
+        page: this.state.page,
+        rowsPerPage: this.state.rowsPerPage
+      });
+    });
+  };
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value }, () => {
+      this.props.loadAll({
+        // page: this.state.page,
+        rowsPerPage: this.state.rowsPerPage
+      });
+    });
+  };
+
+  render() {
+    const { classes, allLinks, employeeList, pageItem } = this.props;
+    const allLinksObj = allLinks.toJS();
+    const pageObj = pageItem.toJS();
+    const { page = 1, size = 10, totaldata = 20 } = pageObj;
     const tableData = allLinksObj.map(
       ({
         _id,
         Added_by,
+        Added_at,
         EmployID,
         LeaveTypeID,
         From,
@@ -124,10 +156,15 @@ export class LeaveApplication extends React.Component {
         ToIsHalfDay
       }) => [
         Added_by.name,
+        moment(Added_at).format("YYYY-MM-DD"),
         EmployID.name,
         LeaveTypeID.LeaveName,
-        moment(From).format("YYYY-MM-DD"),
-        moment(To).format("YYYY-MM-DD"),
+        FromIsHalfDay
+          ? moment(From).format("YYYY-MM-DD") + "(Half Day)"
+          : moment(From).format("YYYY-MM-DD"),
+        ToIsHalfDay
+          ? moment(To).format("YYYY-MM-DD") + "(Half Day)"
+          : moment(To).format("YYYY-MM-DD"),
         NoOfDays,
         Status,
         FromIsHalfDay,
@@ -258,6 +295,15 @@ export class LeaveApplication extends React.Component {
                       </span>
                     )}
                   </FormattedMessage>,
+                  <FormattedMessage {...messages.appliedTime}>
+                    {txt => (
+                      <span
+                        onClick={() => this.LeaveApplicationSort("Added_by")}
+                      >
+                        {txt}
+                      </span>
+                    )}
+                  </FormattedMessage>,
                   <FormattedMessage {...messages.Employee}>
                     {txt => (
                       <span
@@ -314,6 +360,11 @@ export class LeaveApplication extends React.Component {
                   </FormattedMessage>
                 ]}
                 tableData={tableData}
+                page={page}
+                size={size}
+                totaldata={totaldata}
+                handleChangePage={this.handleChangePage}
+                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
               <Button
                 variant="fab"
@@ -338,7 +389,8 @@ LeaveApplication.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll()
+  allLinks: makeSelectAll(),
+  pageItem: makeSelectPage()
 });
 
 const mapDispatchToProps = dispatch => ({

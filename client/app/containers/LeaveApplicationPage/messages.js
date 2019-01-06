@@ -10,6 +10,12 @@ export default defineMessages({
     id: "app.containers.LeaveTypePage.added_by",
     defaultMessage: "Added By"
   },
+
+  appliedTime: {
+    id: "app.containers.LeaveTypePage.appliedTime",
+    defaultMessage: "Applied Time"
+  },
+
   Employee: {
     id: "app.containers.LeaveTypePage.Employee",
     defaultMessage: "Employee"
