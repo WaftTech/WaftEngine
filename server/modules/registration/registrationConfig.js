@@ -10,5 +10,11 @@ module.exports = {
     receiverRequired: 'Receiver Name field is required',
     registrationNoexists: 'Registration number already exists!!!',
     remarksInvalidLength: 'Remarks must be atleast 5 characters',
+    SaveData: 'Registration updated!!!',
+    DuplicateRegistration: 'Duplicate registration number',
+    RegistrationSuccessful: 'Registration successful!!',
+    GetData: 'Registration data delivered successfully!!',
+    GetDataByID: 'Registration data in detail delivered successfully!!',
+    DeleteByID: 'Registration delete Success !!',
   },
 };

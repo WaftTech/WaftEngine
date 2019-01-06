@@ -19,7 +19,7 @@ const upload = multer({
   },
 });
 
-const user = require('../../modules/Users/UserController.js');
+const user = require('../../modules/Users/UserController.js').userController;
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
 /**
  * @route GET api/user/test

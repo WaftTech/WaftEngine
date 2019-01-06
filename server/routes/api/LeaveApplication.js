@@ -9,7 +9,7 @@ const LeaveApplicationValidation = require('./../../modules/LeaveApplication/Lea
 
 router.get('/', LeaveApplicationModule.GetLeaveApplication);
 router.get('/:id', LeaveApplicationModule.GetLeaveApplicationByID);
-const application = [authorization, LeaveApplicationValidation.validate, LeaveApplicationModule.AddLeaveApplication];
+const application = [authorization, LeaveApplicationValidation.validate, LeaveApplicationValidation.validateRemarks, LeaveApplicationModule.AddLeaveApplication];
 
 router.post('/', application);
 router.delete('/:id', authorization, LeaveApplicationModule.DeleteByID);
