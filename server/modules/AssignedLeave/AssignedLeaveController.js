@@ -1,8 +1,9 @@
-const HttpStatus = require("http-status");
-const otherHelper = require("../../helper/others.helper");
-const AssignedLeave = require("./AssignedLeave");
+const HttpStatus = require('http-status');
+const otherHelper = require('../../helper/others.helper');
+const AssignedLeave = require('./AssignedLeave');
+const isEmpty = require('../../validation/isEmpty');
 
-const FiscalYearInternal = require("./../fiscal/fiscalController").Internal;
+const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 
 const AssignedLeaveController = {};
 
@@ -12,27 +13,11 @@ AssignedLeaveController.saveData = async (req, res, next) => {
     if (data._id) {
       let updated = await AssignedLeave.findByIdAndUpdate(data._id, data);
 
-      return otherHelper.sendResponse(
-        res,
-        HttpStatus.OK,
-        true,
-        updated,
-        null,
-        "AssignedLeave updated!!!",
-        null
-      );
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, 'AssignedLeave updated!!!', null);
     } else {
       let newdata = new AssignedLeave(data);
       let saved = await newdata.save();
-      return otherHelper.sendResponse(
-        res,
-        HttpStatus.OK,
-        true,
-        saved,
-        null,
-        "New Assigned Leave successfully added!!",
-        null
-      );
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, 'New Assigned Leave successfully added!!', null);
     }
   } catch (err) {
     next(err);
@@ -67,9 +52,9 @@ AssignedLeaveController.getData = async (req, res, next) => {
       sortq = sortfield;
     } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
       //zero is descending
-      sortq = "-" + sortfield;
+      sortq = '-' + sortfield;
     } else {
-      sortq = "";
+      sortq = '';
     }
   }
   searchq = { IsDeleted: false };
@@ -77,65 +62,28 @@ AssignedLeaveController.getData = async (req, res, next) => {
   if (req.query.find_EmployeeId) {
     searchq = {
       EmployeeId: req.query.find_EmployeeId,
-      ...searchq
+      ...searchq,
     };
   }
 
-  selectq =
-    "LeaveType FiscalYear EmployeeId NoOfDays LeaveTaken LeaveRemaining AppliedLeave CarryOverLeave";
+  selectq = 'LeaveType FiscalYear EmployeeId NoOfDays LeaveTaken LeaveRemaining AppliedLeave CarryOverLeave';
 
-  populate = [
-    { path: "LeaveType", select: "_id LeaveName LeaveNameNepali" },
-    { path: "FiscalYear", select: "_id FiscalYear FiscalYearNepali" },
-    { path: "EmployeeId", select: "_id name nameNepali" }
-  ];
+  populate = [{ path: 'LeaveType', select: '_id LeaveName LeaveNameNepali' }, { path: 'FiscalYear', select: '_id FiscalYear FiscalYearNepali' }, { path: 'EmployeeId', select: '_id name nameNepali' }];
 
-  let datas = await otherHelper.getquerySendResponse(
-    AssignedLeave,
-    page,
-    size,
-    sortq,
-    searchq,
-    selectq,
-    next,
-    populate
-  );
+  let datas = await otherHelper.getquerySendResponse(AssignedLeave, page, size, sortq, searchq, selectq, next, populate);
 
-  return otherHelper.paginationSendResponse(
-    res,
-    HttpStatus.OK,
-    true,
-    datas.data,
-    "Assigned Leave delivered successfully!!",
-    page,
-    size,
-    datas.totaldata
-  );
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Assigned Leave delivered successfully!!', page, size, datas.totaldata);
 };
 
 AssignedLeaveController.getDataByID = async (req, res, next) => {
   try {
     let data = await AssignedLeave.findOne({
       _id: req.params.id,
-      IsDeleted: false
+      IsDeleted: false,
     })
-      .select(
-        "LeaveType FiscalYear EmployeeId NoOfDays LeaveTaken LeaveRemaining AppliedLeave CarryOverLeave"
-      )
-      .populate([
-        { path: "LeaveType", select: "_id LeaveName LeaveNameNepali" },
-        { path: "FiscalYear", select: "_id FiscalYear FiscalYearNepali" },
-        { path: "EmployeeId", select: "_id name nameNepali" }
-      ]);
-    return otherHelper.sendResponse(
-      res,
-      HttpStatus.OK,
-      true,
-      data,
-      null,
-      "Assigned Leave delivered successfully!!",
-      null
-    );
+      .select('LeaveType FiscalYear EmployeeId NoOfDays LeaveTaken LeaveRemaining AppliedLeave CarryOverLeave')
+      .populate([{ path: 'LeaveType', select: '_id LeaveName LeaveNameNepali' }, { path: 'FiscalYear', select: '_id FiscalYear FiscalYearNepali' }, { path: 'EmployeeId', select: '_id name nameNepali' }]);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Assigned Leave delivered successfully!!', null);
   } catch (err) {
     next(err);
   }
@@ -145,17 +93,9 @@ AssignedLeaveController.deleteById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = await AssignedLeave.findByIdAndUpdate(id, {
-      $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() }
+      $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
     });
-    return otherHelper.sendResponse(
-      res,
-      HttpStatus.OK,
-      true,
-      data,
-      null,
-      "Assigned Leave delete Success !!",
-      null
-    );
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Assigned Leave delete Success !!', null);
   } catch (err) {
     next(err);
   }
@@ -164,26 +104,17 @@ AssignedLeaveController.deleteById = async (req, res, next) => {
 AssignedLeaveController.getLeaveListOfEmployee = async (req, res, next) => {
   let empID = req.params.empid;
   let data;
-  let Fiscal = await FiscalYearInternal.FindFiscalYear(
-    new Date().toISOString()
-  );
+  let Fiscal = await FiscalYearInternal.FindFiscalYear(new Date().toISOString());
   try {
-    data = await AssignedLeave.find(
-      { EmployeeId: empID, FiscalYear: Fiscal },
-      "NoOfDays LeaveRemaining EmployeeId LeaveType"
-    ).populate({ path: "LeaveType", select: "LeaveName" });
+    data = await AssignedLeave.find({ EmployeeId: empID, FiscalYear: Fiscal }, 'NoOfDays LeaveRemaining EmployeeId LeaveType').populate({ path: 'LeaveType', select: 'LeaveName' });
   } catch (errr) {
     next(err);
   }
-  return otherHelper.sendResponse(
-    res,
-    HttpStatus.OK,
-    true,
-    data,
-    null,
-    "Leave List deliver Success !!",
-    null
-  );
+  if (isEmpty(data)) {
+    return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, { NoOfDays: 'Sorry,no leave has been assigned!!!' }, 'No leave Have been assigned !!', null);
+  } else {
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Leave List deliver Success !!', null);
+  }
 };
 
 module.exports = AssignedLeaveController;

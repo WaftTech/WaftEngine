@@ -62,7 +62,7 @@ companyValidation.validate = async (req, res, next) => {
   ]);
 
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, companyConfig.validationMessage.ValidationError, null);
   } else {
     return next();
   }
