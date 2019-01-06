@@ -76,7 +76,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
     };
   }
 
-  selectquery = 'IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Status Remarks';
+  selectquery = 'IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Added_at Status Remarks';
 
   populate = [{ path: 'LeaveTypeID', select: 'LeaveName LeaveNameNepali' }, { path: 'EmployID', select: 'name nameNepali' }, { path: 'Added_by', select: 'name nameNepali' }];
 
@@ -87,7 +87,7 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
 
 LeaveApplicationController.GetLeaveApplicationByID = async (req, res, next) => {
   try {
-    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay FromIsHalfDay ToIsHalfDay Status NoOfDays SubmittedTo SubmittedBy Added_by To From Remarks');
+    let data = await LeaveApplicationModel.findOne({ _id: req.params.id, IsDeleted: false }).select('IsHalfDay FromIsHalfDay ToIsHalfDay NoOfDays To From EmployID LeaveTypeID Added_by Added_at Status Remarks');
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, LeaveApplicationConfig.ValidationMessage.GetLeaveApplication, null);
   } catch (err) {
     next(err);
@@ -205,14 +205,12 @@ let FindFiscalYear = async (from, to) => {
 };
 
 let CheckDuplicateLeaveApplication = async (from, to, EmployeeId) => {
-  console.log('Employeeid, from, to', EmployeeId, new Date(from), new Date(to));
   let datas = await LeaveApplicationModel.find({
     EmployID: EmployeeId,
     IsDeleted: false,
     From: { $lte: new Date(to) },
     To: { $gte: new Date(from) },
   });
-  console.log(datas);
   if (isEmpty(datas)) {
     return true;
   } else {
@@ -249,7 +247,6 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-  // console.log(checkholidaystatus);
 
   if (!moment(FromDate).isSameOrBefore(ToDate)) {
     obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToBefore, To: LeaveApplicationConfig.ValidationMessage.ToBefore };
@@ -258,10 +255,8 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
 
     if (checkholidaystatus.IsHolidayCount) {
       //if checkholiday true count holidays
-      //edits needed here
 
       let weekends = await settingsInternal.getDataByKey('weekends');
-      console.log('weekends: ', weekends);
 
       if (isEmpty(weekends)) {
         return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, null, 'Weekends not defined in settings!!', null);
@@ -292,7 +287,6 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
       obj.NoOfWeekend = noOfWeekends;
       obj.HolidaysInBetween = subtractValue;
       obj.Holidays.push(...holidayl);
-      // console.log(obj.Holidays);
     } else {
       obj.NoOfDays = noOfDays;
       obj.HolidaysInBetween = 0;
