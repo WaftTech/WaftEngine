@@ -248,6 +248,10 @@ LeaveApplicationController.getNoOfDaysFromDates = async (req, res, next) => {
     next(err);
   }
 
+  if (isEmpty(checkholidaystatus)) {
+    return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, null, 'HolidayCount not configured in leave type!!', null);
+  }
+
   if (!moment(FromDate).isSameOrBefore(ToDate)) {
     obj.error = { From: LeaveApplicationConfig.ValidationMessage.ToBefore, To: LeaveApplicationConfig.ValidationMessage.ToBefore };
   } else {
