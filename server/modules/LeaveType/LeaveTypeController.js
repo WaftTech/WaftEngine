@@ -31,17 +31,17 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
       sortquery = sortfield;
     } else if (sortby == 0 && !isNaN(sortby)) {
       // 0 is for descending
-      sortquery = "-" + sortfield;
+      sortquery = '-' + sortfield;
     } else {
-      sortquery = "";
+      sortquery = '';
     }
   }
 
   searchquery = { IsDeleted: false };
   if (req.query.find_LeaveName) {
     searchquery = {
-      LeaveName: { $regex: req.query.find_LeaveName, $options: "i x" },
-      ...searchquery
+      LeaveName: { $regex: req.query.find_LeaveName, $options: 'i x' },
+      ...searchquery,
     };
   }
 
@@ -75,14 +75,14 @@ LeaveTypeController.GetLeaveType = async (req, res, next) => {
   if (req.query.find_ApplicableGender) {
     searchquery = {
       ApplicableGender: req.query.find_ApplicableGender,
-      ...searchquery
+      ...searchquery,
     };
   }
 
   if (req.query.find_ApplicableReligion) {
     searchquery = {
       ApplicableReligion: req.query.find_ApplicableReligion,
-      ...searchquery
+      ...searchquery,
     };
   }
 
@@ -109,10 +109,8 @@ LeaveTypeController.GetLeaveTypeByID = async (req, res, next) => {
   try {
     let data = await LeaveTypeModel.findOne({
       _id: req.params.id,
-      IsDeleted: false
-    }).select(
-      "LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender  IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave IsHolidayCount Added_By"
-    );
+      IsDeleted: false,
+    }).select('LeaveName LeaveNameNepali IsTransferrable IsActive IsPaidLeave ApplicableGender  IsCarryOver NoOfDays ApplicableReligion IsReplacementLeave IsHolidayCount Added_By');
     //console.log('data:', data);
     return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, LeaveTypeConfig.ValidationMessage.GetLeaveType, null);
   } catch (err) {
@@ -150,10 +148,11 @@ LeaveTypeController.DeleteByID = async (req, res, next) => {
 
 Internal.getLeaveIsHolidayStatus = async LeaveType => {
   try {
-    let info = await LeaveTypeModel.findById(LeaveType, "IsHolidayCount");
+    let info = await LeaveTypeModel.findById(LeaveType, 'IsHolidayCount');
     return info;
   } catch (err) {
-    next(err);
+    // next(err);
+    console.log('Error:', err);
   }
 };
 

@@ -15,6 +15,6 @@ router.post('/', application);
 router.delete('/:id', authorization, LeaveApplicationModule.DeleteByID);
 
 //get number of days for requested leave
-router.post('/noofdays', authorization, LeaveApplicationModule.getNoOfDaysFromDates);
+router.post('/noofdays', authorization, LeaveApplicationValidation.validateNoOfDays, LeaveApplicationModule.getNoOfDaysFromDates);
 
 module.exports = router;
