@@ -114,24 +114,24 @@ export class LeaveApplication extends React.Component {
       ({
         _id,
         Added_by,
+        EmployID,
+        LeaveTypeID,
+        From,
+        To,
         NoOfDays,
-        SubmittedTo,
-        SubmittedBy,
-        IsHalfDay,
+        Status,
+        FromIsHalfDay,
+        ToIsHalfDay
+      }) => [
+        Added_by.name,
+        EmployID.name,
+        LeaveTypeID.LeaveName,
+        moment(From).format("YYYY-MM-DD"),
+        moment(To).format("YYYY-MM-DD"),
+        NoOfDays,
+        Status,
         FromIsHalfDay,
         ToIsHalfDay,
-        Remarks,
-        Status
-      }) => [
-        Added_by,
-        NoOfDays,
-        SubmittedTo,
-        SubmittedBy,
-        "" + IsHalfDay,
-        "" + FromIsHalfDay,
-        "" + ToIsHalfDay,
-        Remarks[0].Remark,
-        Status,
 
         <React.Fragment>
           <Tooltip
@@ -258,16 +258,7 @@ export class LeaveApplication extends React.Component {
                       </span>
                     )}
                   </FormattedMessage>,
-                  <FormattedMessage {...messages.noOfDays}>
-                    {txt => (
-                      <span
-                        onClick={() => this.LeaveApplicationSort("NoOfDays")}
-                      >
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.submittedTo}>
+                  <FormattedMessage {...messages.Employee}>
                     {txt => (
                       <span
                         onClick={() => this.LeaveApplicationSort("SubmittedTo")}
@@ -276,19 +267,10 @@ export class LeaveApplication extends React.Component {
                       </span>
                     )}
                   </FormattedMessage>,
-                  <FormattedMessage {...messages.submittedBy}>
+                  <FormattedMessage {...messages.LeaveType}>
                     {txt => (
                       <span
-                        onClick={() => this.LeaveApplicationSort("SubmittedBy")}
-                      >
-                        {txt}
-                      </span>
-                    )}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.isHalfDay}>
-                    {txt => (
-                      <span
-                        onClick={() => this.LeaveApplicationSort("IsHalfDay")}
+                        onClick={() => this.LeaveApplicationSort("LeaveType")}
                       >
                         {txt}
                       </span>
@@ -314,9 +296,11 @@ export class LeaveApplication extends React.Component {
                       </span>
                     )}
                   </FormattedMessage>,
-                  <FormattedMessage {...messages.remark}>
+                  <FormattedMessage {...messages.noOfDays}>
                     {txt => (
-                      <span onClick={() => this.LeaveApplicationSort("Remark")}>
+                      <span
+                        onClick={() => this.LeaveApplicationSort("NoOfDays")}
+                      >
                         {txt}
                       </span>
                     )}

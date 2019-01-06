@@ -76,16 +76,14 @@ const styles = theme => ({
 class LeaveApplication extends Component {
   state = {
     NoOfDays: null,
-    SubmittedTo: "",
-    SubmittedBy: "",
     Added_by: "",
     IsHalfDay: true,
     From: null,
     To: null,
     FromIsHalfDay: null,
     ToIsHalfDay: null,
-    employee: "",
-    leaveType: "",
+    EmployID: "",
+    LeaveTypeID: "",
     Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }],
     singleDay: false
   };
@@ -110,34 +108,79 @@ class LeaveApplication extends Component {
     this.setState({ [name]: newContent });
   };
   handleDateChange = name => event => {
-    this.setState({ [name]: event.target.value }, () => {
-      if (this.state.From && this.state.To) {
-        const { employee, leaveType, From, To } = this.state;
+    if (this.state.singleDay) {
+      this.setState(
+        { From: event.target.value, To: event.target.value },
+        () => {
+          if (this.state.From && this.state.To) {
+            const {
+              EmployID,
+              LeaveTypeID,
+              From,
+              To,
+              FromIsHalfDay,
+              ToIsHalfDay
+            } = this.state;
 
-        this.props.loadTotalLeaveDays({
-          leaveDetail: {
-            EmployeeID: employee,
-            LeaveType: leaveType,
-            FromDate: From,
-            ToDate: To
+            this.props.loadTotalLeaveDays({
+              leaveDetail: {
+                EmployeeID: EmployID,
+                LeaveType: LeaveTypeID,
+                FromDate: From,
+                ToDate: To,
+                FromIsHalfDay,
+                ToIsHalfDay
+              }
+            });
           }
-        });
-      }
-    });
+        }
+      );
+    } else {
+      this.setState({ [name]: event.target.value }, () => {
+        if (this.state.From && this.state.To) {
+          const {
+            EmployID,
+            LeaveTypeID,
+            From,
+            To,
+            FromIsHalfDay,
+            ToIsHalfDay
+          } = this.state;
+
+          this.props.loadTotalLeaveDays({
+            leaveDetail: {
+              EmployeeID: EmployID,
+              LeaveType: LeaveTypeID,
+              FromDate: From,
+              ToDate: To,
+              FromIsHalfDay,
+              ToIsHalfDay
+            }
+          });
+        }
+      });
+    }
   };
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
   handleDropChange = event => {
-    this.setState({ [event.target.name]: event.target.value }, () =>
-      this.props.loadLeaveType(this.state.employee)
-    );
+    this.setState({ [event.target.name]: event.target.value }, () => {
+      // this.props.loadLeaveType(this.state.EmployID);
+      // leaveTypeArray=LeaveTypeID.toJS();
+      const leaveDays = this.props.totalLeaveDays.toJS();
+      this.setState({ NoOfDays: leaveDays.NoOfDays });
+    });
   };
   handleleaveTypeChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
   handleCheckChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+    this.setState({ [name]: event.target.checked }, () => {
+      if (this.state.singleDay) {
+        this.setState({ To: this.state.From });
+      }
+    });
   };
 
   handleRemarkChange = index => event => {
@@ -160,16 +203,45 @@ class LeaveApplication extends Component {
   };
 
   handleBooleanChange = name => event => {
-    this.setState({ [name]: event.target.value === "true" });
+    this.setState({ [name]: event.target.checked }, () => {
+      if (this.state.singleDay) {
+        this.setState({ To: this.state.From }, () => {
+          if (
+            this.state.singleDay
+              ? this.state.From
+              : this.state.From && this.state.To
+          ) {
+            const {
+              EmployID,
+              LeaveTypeID,
+              From,
+              To,
+              FromIsHalfDay,
+              ToIsHalfDay
+            } = this.state;
+
+            this.props.loadTotalLeaveDays({
+              leaveDetail: {
+                EmployeeID: EmployID,
+                LeaveType: LeaveTypeID,
+                FromDate: From,
+                ToDate: To,
+                FromIsHalfDay,
+                ToIsHalfDay
+              }
+            });
+          }
+        });
+      }
+    });
   };
 
   render() {
     const { Remarks } = this.state;
-    const { classes, employeeList, leaveType, totalLeaveDays } = this.props;
+    const { classes, employeeList, LeaveTypeID, totalLeaveDays } = this.props;
     const employeeArray = employeeList.toJS();
-    const leaveTypeArray = leaveType.toJS();
+    const leaveTypeArray = LeaveTypeID.toJS();
     const leaveDays = totalLeaveDays.toJS();
-    console.log(totalLeaveDays.toJS());
     return (
       <div>
         <GridContainer>
@@ -188,9 +260,9 @@ class LeaveApplication extends Component {
                         Employee Name
                       </InputLabel>
                       <Select
-                        value={this.state.employee}
+                        value={this.state.EmployID}
                         onChange={this.handleDropChange}
-                        name="employee"
+                        name="EmployID"
                         className={classes.selectEmpty}
                       >
                         {employeeArray.map(employee => (
@@ -211,9 +283,9 @@ class LeaveApplication extends Component {
                         Leave Type
                       </InputLabel>
                       <Select
-                        value={this.state.leaveType}
+                        value={this.state.LeaveTypeID}
                         onChange={this.handleleaveTypeChange}
-                        name="leaveType"
+                        name="LeaveTypeID"
                         className={classes.selectEmpty}
                       >
                         {leaveTypeArray.map(leaveType => (
@@ -307,15 +379,14 @@ class LeaveApplication extends Component {
                   )}
 
                   <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Number of Days"
+                    <TextField
                       id="NoOfDays"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        value: leaveDays.NoOfDays,
-                        onChange: this.handleNumberChange("NoOfDays")
+                      label="Number of Days"
+                      className={classes.textField}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                        value: leaveDays.NoOfDays
                       }}
                     />
                   </GridItem>
@@ -364,7 +435,7 @@ const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   employeeList: makeSelectEmployee(),
-  leaveType: makeSelectLeaveType(),
+  LeaveTypeID: makeSelectLeaveType(),
   totalLeaveDays: makeSelectLeaveDays()
 });
 
