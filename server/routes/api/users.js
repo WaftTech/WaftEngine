@@ -69,7 +69,7 @@ router.post('/register', validateRegisterInput, user.register);
  * @description Register user route
  * @access Public
  */
-router.post('/register/admin', authorization, authentication, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword, userValidation.validateReporterID, userValidation.duplicateValidation, user.registerFromAdmin);
+router.post('/register/admin', authorization, authentication, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword, userValidation.validateRoles, userValidation.validateReporterID, userValidation.duplicateValidation, user.registerFromAdmin);
 
 /**
  * @route POST api/user/register
