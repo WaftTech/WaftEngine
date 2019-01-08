@@ -32,6 +32,12 @@ export const LOAD_TOTAL_LEAVE_DAYS_SUCCESS =
 export const LOAD_TOTAL_LEAVE_DAYS_FAILURE =
   "app/LeaveApplicationPage/LOAD_TOTAL_LEAVE_DAYS_FAILURE ";
 
+//clear success and error message
+export const CLEAR_SUCCESS_MESSAGE =
+  "app/LeaveApplicationPage/LOAD_CLEAR_SUCCESS_MESSAGE";
+export const CLEAR_FAILURE_MESSAGE =
+  "app/LeaveApplicationPage/LOAD_CLEAR_FAILURE_MESSAGE";
+
 export const LOAD_ONE_REQUEST = "app/LeaveApplicationPage/LOAD_ONE_REQUEST";
 export const LOAD_ONE_SUCCESS = "app/LeaveApplicationPage/LOAD_ONE_SUCCESS";
 export const LOAD_ONE_FAILURE = "app/LeaveApplicationPage/LOAD_ONE_FAILURE";
