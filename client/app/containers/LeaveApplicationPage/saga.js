@@ -1,24 +1,16 @@
-import {
-  takeLatest,
-  take,
-  call,
-  fork,
-  put,
-  select,
-  cancel
-} from "redux-saga/effects";
-import { push, LOCATION_CHANGE } from "react-router-redux";
-import Api from "utils/Api";
-import { makeSelectToken } from "../App/selectors";
-import * as types from "./constants";
-import * as actions from "./actions";
+import { takeLatest, take, call, fork, put, select, cancel } from 'redux-saga/effects';
+import { push, LOCATION_CHANGE } from 'react-router-redux';
+import Api from 'utils/Api';
+import { makeSelectToken } from '../App/selectors';
+import * as types from './constants';
+import * as actions from './actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
-  let search = "";
-  let sort = "";
-  let pageNumber = "";
-  let sizeOfPage = "";
+  let search = '';
+  let sort = '';
+  let pageNumber = '';
+  let sizeOfPage = '';
   if (action.payload.query) {
     // {payload, metadata}
     //{payload: {query, sort}}
@@ -31,29 +23,22 @@ function* loadAll(action) {
     sort = `&sort=${action.payload.sort}`;
   }
   if (action.payload) {
-    pageNumber = `&page=${action.payload.page}&size=${
-      action.payload.rowsPerPage
-    }`;
+    pageNumber = `&page=${action.payload.page}&size=${action.payload.rowsPerPage}`;
   }
   yield call(
     Api.get(
       `leaveapplication?${search}${sort}${sizeOfPage}${pageNumber}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
-      token
-    )
+      token,
+    ),
   );
 }
 
 function* employeeList(action) {
   const token = yield select(makeSelectToken());
   yield call(
-    Api.get(
-      `user/getunderlist`,
-      actions.loadEmployeeSuccess,
-      actions.loadEmployeeFailure,
-      token
-    )
+    Api.get(`user/getunderlist`, actions.loadEmployeeSuccess, actions.loadEmployeeFailure, token),
   );
 }
 function* getLeaveType(action) {
@@ -63,23 +48,22 @@ function* getLeaveType(action) {
       `assignedleave/getassignedleavelist/${action.payload}`,
       actions.loadLeaveTypeSuccess,
       actions.loadLeaveTypeFailure,
-      token
-    )
+      token,
+    ),
   );
 }
 function* getTotalLeaveDays(action) {
   const token = yield select(makeSelectToken());
   const { ...data } = action.payload.leaveDetail;
-  console.log(data);
 
   yield fork(
     Api.post(
-      "leaveapplication/noofdays",
+      'leaveapplication/noofdays',
       actions.loadTotalLeaveDaysSuccess,
       actions.loadTotalLeaveDaysFailure,
       data,
-      token
-    )
+      token,
+    ),
   );
 }
 
@@ -90,8 +74,8 @@ function* loadOne(action) {
       `leaveapplication/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
-      token
-    )
+      token,
+    ),
   );
 }
 
@@ -102,14 +86,14 @@ function* deleteOne(action) {
       `leaveapplication/${action.payload}`,
       actions.deleteOneSuccess,
       actions.deleteOneFailure,
-      token
-    )
+      token,
+    ),
   );
 }
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push("/wt/leaveApplication-manage"));
+  yield put(push('/wt/leaveApplication-manage'));
 }
 
 function* addEdit(action) {
@@ -117,13 +101,7 @@ function* addEdit(action) {
   const token = yield select(makeSelectToken());
   const { ...data } = action.payload;
   yield fork(
-    Api.post(
-      "leaveapplication",
-      actions.addEditSuccess,
-      actions.addEditFailure,
-      data,
-      token
-    )
+    Api.post('leaveapplication', actions.addEditSuccess, actions.addEditFailure, data, token),
   );
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
   yield cancel(successWatcher);

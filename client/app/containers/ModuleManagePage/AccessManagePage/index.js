@@ -188,7 +188,7 @@ class AccessManagePage extends Component {
 const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
-const withSaga = injectSaga({ key: 'moduleManagePage', saga });
+const withSaga = injectSaga({ key: 'moduleManagePageAccessManage', saga });
 
 const mapStateToProps = createStructuredSelector({
   access: makeSelectAccess(),
