@@ -1,23 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const holidayModule = require("./../../modules/holidaylist/holidayController")
-  .holidayController;
+const holidayModule = require('./../../modules/holidaylist/holidayController').holidayController;
 
-const { authorization } = require("../../middleware/authentication.middleware");
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 
-const holidayValidation = require("./../../modules/holidaylist/holidayValidation");
+const holidayValidation = require('./../../modules/holidaylist/holidayValidation');
 
-router.get("/", authorization, holidayModule.getData);
-router.get("/:id", authorization, holidayModule.getDataByID);
-router.post(
-  "/",
-  authorization,
-  holidayValidation.sanitize,
-  holidayValidation.validate,
-  holidayValidation.duplicateValidation,
-  holidayModule.saveData
-);
-router.delete("/:id", authorization, holidayModule.deleteById);
+router.get('/', authorization, authentication, holidayModule.getData);
+router.get('/:id', authorization, authentication, holidayModule.getDataByID);
+router.post('/', authorization, authentication, holidayValidation.sanitize, holidayValidation.validate, holidayValidation.duplicateValidation, holidayModule.saveData);
+router.delete('/:id', authorization, authentication,holidayModule.deleteById);
 
 module.exports = router;
