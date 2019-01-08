@@ -70,7 +70,6 @@ function* getLeaveType(action) {
 function* getTotalLeaveDays(action) {
   const token = yield select(makeSelectToken());
   const { ...data } = action.payload.leaveDetail;
-  console.log(data);
 
   yield fork(
     Api.post(

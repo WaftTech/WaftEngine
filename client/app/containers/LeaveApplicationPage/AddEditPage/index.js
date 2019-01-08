@@ -10,16 +10,16 @@ import { connect } from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 // core components
 import GridItem from "components/Grid/GridItem";
@@ -45,6 +45,8 @@ import {
   loadLeaveTypeRequest,
   loadTotalLeaveDaysRequest
 } from "../actions";
+import { makeSelectSuccess } from "../../App/selectors";
+import { makeSuccessSelect, makeErrorSelect } from "../selectors";
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -85,7 +87,13 @@ class LeaveApplication extends Component {
     EmployID: "",
     LeaveTypeID: "",
     Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }],
-    singleDay: false
+    singleDay: false,
+
+    //snackbar
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+    message: ""
   };
 
   componentDidMount() {
@@ -107,6 +115,9 @@ class LeaveApplication extends Component {
       this.setState({
         NoOfDays: leaveDays.NoOfDays
       });
+    }
+    if (this.props.error !== nextProps.error) {
+      this.setState({ open: true, message: nextProps.error.toJS().msg });
     }
   }
   handleEditorChange = (e, name) => {
@@ -138,7 +149,6 @@ class LeaveApplication extends Component {
                 ToIsHalfDay
               }
             });
-            console.log(this.props.totalLeaveDays.toJS());
           }
         }
       );
@@ -207,6 +217,9 @@ class LeaveApplication extends Component {
   };
   handleSave = () => {
     this.props.addEdit(this.state);
+    // this.setState({
+    //   open: true
+    // });
   };
 
   handleBooleanChange = name => event => {
@@ -243,8 +256,12 @@ class LeaveApplication extends Component {
     });
   };
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
-    const { Remarks } = this.state;
+    const { Remarks, open } = this.state;
     const { classes, employeeList, LeaveTypeID, totalLeaveDays } = this.props;
     const employeeArray = employeeList.toJS();
     const leaveTypeArray = LeaveTypeID.toJS();
@@ -429,6 +446,30 @@ class LeaveApplication extends Component {
             </Card>
           </GridItem>
         </GridContainer>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">{this.state.message}</span>}
+          action={
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+        />
       </div>
     );
   }
@@ -442,7 +483,9 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   employeeList: makeSelectEmployee(),
   LeaveTypeID: makeSelectLeaveType(),
-  totalLeaveDays: makeSelectLeaveDays()
+  totalLeaveDays: makeSelectLeaveDays(),
+  success: makeSuccessSelect(),
+  error: makeErrorSelect()
 });
 
 const mapDispatchToProps = dispatch => ({

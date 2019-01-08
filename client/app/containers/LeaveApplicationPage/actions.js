@@ -86,6 +86,16 @@ export const addEditFailure = payload => ({
   payload
 });
 
+//clear success and failure message
+export const clearSuccessMessage = payload => ({
+  type: types.CLEAR_SUCCESS_MESSAGE,
+  payload
+});
+export const clearFailureMessage = payload => ({
+  type: types.CLEAR_FAILURE_MESSAGE,
+  payload
+});
+
 export const deleteOneRequest = payload => ({
   type: types.DELETE_ONE_REQUEST,
   payload

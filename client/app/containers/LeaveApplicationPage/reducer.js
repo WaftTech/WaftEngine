@@ -12,7 +12,9 @@ export const initialState = fromJS({
   employee: [],
   leaveType: [],
   totalLeaveDays: [],
-  page: []
+  page: [],
+  success: "",
+  error: []
 });
 
 function reducer(state = initialState, action) {
@@ -21,6 +23,14 @@ function reducer(state = initialState, action) {
       return state.merge({
         all: fromJS(action.payload.data),
         page: fromJS(action.payload)
+      });
+    case types.ADD_EDIT_FAILURE:
+      return state.merge({
+        error: fromJS(action.payload)
+      });
+    case types.ADD_EDIT_SUCCESS:
+      return state.merge({
+        success: fromJS(action.payload.msg)
       });
     case types.LOAD_ONE_SUCCESS:
       return state.merge({
@@ -43,6 +53,14 @@ function reducer(state = initialState, action) {
     case types.LOAD_TOTAL_LEAVE_DAYS_SUCCESS:
       return state.merge({
         totalLeaveDays: fromJS(action.payload.data)
+      });
+    case types.CLEAR_SUCCESS_MESSAGE:
+      return state.merge({
+        success: null
+      });
+    case types.CLEAR_FAILURE_MESSAGE:
+      return state.merge({
+        error: []
       });
     default:
       return state;
