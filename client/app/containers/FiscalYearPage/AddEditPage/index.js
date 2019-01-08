@@ -1,52 +1,52 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import moment from "moment";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import moment from 'moment';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
-import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
-import TextField from "@material-ui/core/TextField";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import { connect } from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import TextField from '@material-ui/core/TextField';
 
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
-import { makeSelectOne } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
 };
 
 class FiscalAddEdit extends Component {
-  state = { FiscalYear: "", From: null, To: null };
+  state = { FiscalYear: '', From: null, To: null };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -58,7 +58,7 @@ class FiscalAddEdit extends Component {
     this.setState({ [name]: event.target.checked });
   };
   handleGoBack = () => {
-    this.props.history.push("/wt/fiscal-manage");
+    this.props.history.push('/wt/fiscal-manage');
   };
   handleSave = () => {
     this.props.addEdit(this.state);
@@ -72,14 +72,14 @@ class FiscalAddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
   }
   handleFromChange = event => {
     event.persist();
     const {
-      target: { value, name }
+      target: { value, name },
     } = event;
     this.setState({ [name]: value });
   };
@@ -100,11 +100,11 @@ class FiscalAddEdit extends Component {
                       labelText="Fiscal Year"
                       id="fiscal-year"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.FiscalYear,
-                        onChange: this.handleChange("FiscalYear")
+                        onChange: this.handleChange('FiscalYear'),
                       }}
                     />
 
@@ -114,12 +114,12 @@ class FiscalAddEdit extends Component {
                       label="From"
                       type="date"
                       inputProps={{
-                        value: moment(this.state.From).format("YYYY-MM-DD"),
-                        name: "From",
-                        onChange: this.handleChange("From")
+                        value: moment(this.state.From).format('YYYY-MM-DD'),
+                        name: 'From',
+                        onChange: this.handleChange('From'),
                       }}
                       InputLabelProps={{
-                        shrink: true
+                        shrink: true,
                       }}
                       //this.handleQueryChange
                     />
@@ -129,11 +129,11 @@ class FiscalAddEdit extends Component {
                       label="To"
                       type="date"
                       inputProps={{
-                        value: moment(this.state.To).format("YYYY-MM-DD"),
-                        onChange: this.handleChange("To")
+                        value: moment(this.state.To).format('YYYY-MM-DD'),
+                        onChange: this.handleChange('To'),
                       }}
                       InputLabelProps={{
-                        shrink: true
+                        shrink: true,
                       }}
                     />
                   </GridItem>
@@ -157,28 +157,28 @@ class FiscalAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "fiscalYearPage", reducer });
-const withSaga = injectSaga({ key: "fiscalYearPage", saga });
+const withReducer = injectReducer({ key: 'fiscalYearPage', reducer });
+const withSaga = injectSaga({ key: 'fiscalYearPageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(FiscalAddEdit);
 
 {
