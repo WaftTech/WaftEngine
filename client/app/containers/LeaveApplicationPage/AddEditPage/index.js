@@ -1,99 +1,103 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import moment from "moment";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import moment from 'moment';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
-import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import { connect } from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import ErrorIcon from '@material-ui/icons/Error';
 
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectOne,
   makeSelectEmployee,
   makeSelectLeaveType,
-  makeSelectLeaveDays
-} from "../selectors";
+  makeSelectLeaveDays,
+} from '../selectors';
 import {
   loadOneRequest,
   addEditRequest,
   loadEmployeeRequest,
   loadLeaveTypeRequest,
-  loadTotalLeaveDaysRequest
-} from "../actions";
-import { makeSelectSuccess } from "../../App/selectors";
-import { makeSuccessSelect, makeErrorSelect } from "../selectors";
+  loadTotalLeaveDaysRequest,
+} from '../actions';
+import { makeSelectSuccess } from '../../App/selectors';
+import { makeSuccessSelect, makeErrorSelect } from '../selectors';
 
 const styles = theme => ({
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
+    marginBottom: '3px',
+    textDecoration: 'none',
   },
 
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  }
+    marginTop: theme.spacing.unit * 2,
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
 });
 
 class LeaveApplication extends Component {
   state = {
-    NoOfDays: "",
-    Added_by: "",
+    NoOfDays: '',
+    Added_by: '',
     IsHalfDay: true,
     From: null,
     To: null,
     FromIsHalfDay: false,
     ToIsHalfDay: false,
-    EmployID: "",
-    LeaveTypeID: "",
-    Remarks: [{ Date: moment(new Date()).format("YYYY-MM-DD"), Remark: "" }],
+    EmployID: '',
+    LeaveTypeID: '',
+    Remarks: [{ Date: moment(new Date()).format('YYYY-MM-DD'), Remark: '' }],
     singleDay: false,
 
     //snackbar
     open: false,
-    vertical: "top",
-    horizontal: "center",
-    message: ""
+    vertical: 'top',
+    horizontal: 'center',
+    message: '',
   };
 
   componentDidMount() {
@@ -107,13 +111,13 @@ class LeaveApplication extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
     if (this.props.totalLeaveDays !== nextProps.totalLeaveDays) {
       const leaveDays = nextProps.totalLeaveDays.toJS();
       this.setState({
-        NoOfDays: leaveDays.NoOfDays
+        NoOfDays: leaveDays.NoOfDays,
       });
     }
     if (this.props.error !== nextProps.error) {
@@ -126,43 +130,9 @@ class LeaveApplication extends Component {
   };
   handleDateChange = name => event => {
     if (this.state.singleDay) {
-      this.setState(
-        { From: event.target.value, To: event.target.value },
-        () => {
-          if (this.state.From && this.state.To) {
-            const {
-              EmployID,
-              LeaveTypeID,
-              From,
-              To,
-              FromIsHalfDay,
-              ToIsHalfDay
-            } = this.state;
-
-            this.props.loadTotalLeaveDays({
-              leaveDetail: {
-                EmployeeID: EmployID,
-                LeaveType: LeaveTypeID,
-                FromDate: From,
-                ToDate: To,
-                FromIsHalfDay,
-                ToIsHalfDay
-              }
-            });
-          }
-        }
-      );
-    } else {
-      this.setState({ [name]: event.target.value }, () => {
+      this.setState({ From: event.target.value, To: event.target.value }, () => {
         if (this.state.From && this.state.To) {
-          const {
-            EmployID,
-            LeaveTypeID,
-            From,
-            To,
-            FromIsHalfDay,
-            ToIsHalfDay
-          } = this.state;
+          const { EmployID, LeaveTypeID, From, To, FromIsHalfDay, ToIsHalfDay } = this.state;
 
           this.props.loadTotalLeaveDays({
             leaveDetail: {
@@ -171,8 +141,25 @@ class LeaveApplication extends Component {
               FromDate: From,
               ToDate: To,
               FromIsHalfDay,
-              ToIsHalfDay
-            }
+              ToIsHalfDay,
+            },
+          });
+        }
+      });
+    } else {
+      this.setState({ [name]: event.target.value }, () => {
+        if (this.state.From && this.state.To) {
+          const { EmployID, LeaveTypeID, From, To, FromIsHalfDay, ToIsHalfDay } = this.state;
+
+          this.props.loadTotalLeaveDays({
+            leaveDetail: {
+              EmployeeID: EmployID,
+              LeaveType: LeaveTypeID,
+              FromDate: From,
+              ToDate: To,
+              FromIsHalfDay,
+              ToIsHalfDay,
+            },
           });
         }
       });
@@ -213,32 +200,18 @@ class LeaveApplication extends Component {
   };
 
   handleGoBack = () => {
-    this.props.history.push("/wt/leaveApplication-manage");
+    this.props.history.push('/wt/leaveApplication-manage');
   };
   handleSave = () => {
     this.props.addEdit(this.state);
-    // this.setState({
-    //   open: true
-    // });
   };
 
   handleBooleanChange = name => event => {
     this.setState({ [name]: event.target.checked }, () => {
       if (this.state.singleDay) {
         this.setState({ To: this.state.From }, () => {
-          if (
-            this.state.singleDay
-              ? this.state.From
-              : this.state.From && this.state.To
-          ) {
-            const {
-              EmployID,
-              LeaveTypeID,
-              From,
-              To,
-              FromIsHalfDay,
-              ToIsHalfDay
-            } = this.state;
+          if (this.state.singleDay ? this.state.From : this.state.From && this.state.To) {
+            const { EmployID, LeaveTypeID, From, To, FromIsHalfDay, ToIsHalfDay } = this.state;
 
             this.props.loadTotalLeaveDays({
               leaveDetail: {
@@ -247,8 +220,8 @@ class LeaveApplication extends Component {
                 FromDate: From,
                 ToDate: To,
                 FromIsHalfDay,
-                ToIsHalfDay
-              }
+                ToIsHalfDay,
+              },
             });
           }
         });
@@ -263,6 +236,7 @@ class LeaveApplication extends Component {
   render() {
     const { Remarks, open } = this.state;
     const { classes, employeeList, LeaveTypeID, totalLeaveDays } = this.props;
+
     const employeeArray = employeeList.toJS();
     const leaveTypeArray = LeaveTypeID.toJS();
     const leaveDays = totalLeaveDays.toJS();
@@ -272,9 +246,7 @@ class LeaveApplication extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
-                  Add/Edit Leave Application
-                </h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Leave Application</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
@@ -290,11 +262,7 @@ class LeaveApplication extends Component {
                         className={classes.selectEmpty}
                       >
                         {employeeArray.map(employee => (
-                          <MenuItem
-                            value={employee._id}
-                            key={employee._id}
-                            name={employee.name}
-                          >
+                          <MenuItem value={employee._id} key={employee._id} name={employee.name}>
                             <em>{employee.name}</em>
                           </MenuItem>
                         ))}
@@ -329,7 +297,7 @@ class LeaveApplication extends Component {
                       control={
                         <Checkbox
                           checked={this.state.singleDay}
-                          onChange={this.handleCheckChange("singleDay")}
+                          onChange={this.handleCheckChange('singleDay')}
                           value="singleDay"
                         />
                       }
@@ -343,12 +311,12 @@ class LeaveApplication extends Component {
                       label="Start Date"
                       type="date"
                       inputProps={{
-                        value: moment(this.state.From).format("YYYY-MM-DD"),
-                        name: "From",
-                        onChange: this.handleDateChange("From")
+                        value: moment(this.state.From).format('YYYY-MM-DD'),
+                        name: 'From',
+                        onChange: this.handleDateChange('From'),
                       }}
                       InputLabelProps={{
-                        shrink: true
+                        shrink: true,
                       }}
                       margin="normal"
                       //this.handleQueryChange
@@ -359,7 +327,7 @@ class LeaveApplication extends Component {
                       control={
                         <Checkbox
                           checked={this.state.FromIsHalfDay}
-                          onChange={this.handleBooleanChange("FromIsHalfDay")}
+                          onChange={this.handleBooleanChange('FromIsHalfDay')}
                           value={this.state.FromIsHalfDay}
                         />
                       }
@@ -376,11 +344,11 @@ class LeaveApplication extends Component {
                           label="End Date"
                           type="date"
                           inputProps={{
-                            value: moment(this.state.To).format("YYYY-MM-DD"),
-                            onChange: this.handleDateChange("To")
+                            value: moment(this.state.To).format('YYYY-MM-DD'),
+                            onChange: this.handleDateChange('To'),
                           }}
                           InputLabelProps={{
-                            shrink: true
+                            shrink: true,
                           }}
                           margin="normal"
                         />
@@ -390,7 +358,7 @@ class LeaveApplication extends Component {
                           control={
                             <Checkbox
                               checked={this.state.ToIsHalfDay}
-                              onChange={this.handleBooleanChange("ToIsHalfDay")}
+                              onChange={this.handleBooleanChange('ToIsHalfDay')}
                               value={this.state.ToIsHalfDay}
                             />
                           }
@@ -410,7 +378,7 @@ class LeaveApplication extends Component {
                       margin="normal"
                       InputProps={{
                         readOnly: true,
-                        value: this.state.NoOfDays
+                        value: this.state.NoOfDays,
                       }}
                     />
                   </GridItem>
@@ -423,11 +391,11 @@ class LeaveApplication extends Component {
                         id="Remarks"
                         name="Remarks"
                         formControlProps={{
-                          fullWidth: true
+                          fullWidth: true,
                         }}
                         inputProps={{
                           value: each.Remark,
-                          onChange: this.handleRemarkChange(index)
+                          onChange: this.handleRemarkChange(index),
                         }}
                         margin="normal"
                       />
@@ -448,14 +416,14 @@ class LeaveApplication extends Component {
         </GridContainer>
         <Snackbar
           anchorOrigin={{
-            vertical: "top",
-            horizontal: "center"
+            vertical: 'top',
+            horizontal: 'center',
           }}
           open={open}
           autoHideDuration={6000}
           onClose={this.handleClose}
           ContentProps={{
-            "aria-describedby": "message-id"
+            'aria-describedby': 'message-id',
           }}
           message={<span id="message-id">{this.state.message}</span>}
           action={
@@ -476,8 +444,8 @@ class LeaveApplication extends Component {
 }
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "leaveApplicationPage", reducer });
-const withSaga = injectSaga({ key: "leaveApplicationPage", saga });
+const withReducer = injectReducer({ key: 'leaveApplicationPage', reducer });
+const withSaga = injectSaga({ key: 'leaveApplicationPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
@@ -485,7 +453,7 @@ const mapStateToProps = createStructuredSelector({
   LeaveTypeID: makeSelectLeaveType(),
   totalLeaveDays: makeSelectLeaveDays(),
   success: makeSuccessSelect(),
-  error: makeErrorSelect()
+  error: makeErrorSelect(),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -493,17 +461,17 @@ const mapDispatchToProps = dispatch => ({
   addEdit: payload => dispatch(addEditRequest(payload)),
   loadEmployee: payload => dispatch(loadEmployeeRequest(payload)),
   loadLeaveType: payload => dispatch(loadLeaveTypeRequest(payload)),
-  loadTotalLeaveDays: payload => dispatch(loadTotalLeaveDaysRequest(payload))
+  loadTotalLeaveDays: payload => dispatch(loadTotalLeaveDaysRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(LeaveApplication);
