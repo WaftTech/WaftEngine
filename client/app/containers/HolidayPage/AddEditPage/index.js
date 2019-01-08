@@ -1,61 +1,61 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import moment from "moment";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import moment from 'moment';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import TextField from "@material-ui/core/TextField";
+import withStyles from '@material-ui/core/styles/withStyles';
+import { connect } from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import TextField from '@material-ui/core/TextField';
 
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
-import { makeSelectOne } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
 };
 
 class HolidayAddEdit extends Component {
   state = {
     date: null,
-    title: "",
-    applicableTo: "All",
+    title: '',
+    applicableTo: 'All',
     isActive: true,
     isHalfDay: true,
-    addedBy: ""
+    addedBy: '',
   };
 
   componentDidMount() {
@@ -69,7 +69,7 @@ class HolidayAddEdit extends Component {
       const oneObj = nextProps.one.toJS();
       console.log(oneObj);
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
   }
@@ -85,14 +85,14 @@ class HolidayAddEdit extends Component {
   };
 
   handleGoBack = () => {
-    this.props.history.push("/wt/holiday-manage");
+    this.props.history.push('/wt/holiday-manage');
   };
   handleSave = () => {
     this.props.addEdit(this.state);
   };
 
   handleBooleanChange = name => event => {
-    this.setState({ [name]: event.target.value === "true" });
+    this.setState({ [name]: event.target.value === 'true' });
   };
   render() {
     const { classes } = this.props;
@@ -111,11 +111,11 @@ class HolidayAddEdit extends Component {
                       labelText="Title"
                       id="title"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.title,
-                        onChange: this.handleChange("title")
+                        onChange: this.handleChange('title'),
                       }}
                     />
                   </GridItem>
@@ -125,101 +125,60 @@ class HolidayAddEdit extends Component {
                       labelText="Added By"
                       id="addedBy"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.addedBy,
-                        onChange: this.handleChange("addedBy")
+                        onChange: this.handleChange('addedBy'),
                       }}
                     />
                   </GridItem>
 
                   <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
+                    <FormControl component="fieldset" className={classes.formControl}>
                       <FormLabel component="legend">Applicable To</FormLabel>
                       <RadioGroup
                         aria-label="applicableTo"
                         name="applicableTo"
                         className={classes.group}
                         value={this.state.applicableTo}
-                        onChange={this.handleChange("applicableTo")}
+                        onChange={this.handleChange('applicableTo')}
                       >
-                        <FormControlLabel
-                          value="All"
-                          control={<Radio />}
-                          label="All"
-                        />
-                        <FormControlLabel
-                          value="Male"
-                          control={<Radio />}
-                          label="Male"
-                        />
-                        <FormControlLabel
-                          value="Female"
-                          control={<Radio />}
-                          label="Female"
-                        />
-                        <FormControlLabel
-                          value="others"
-                          control={<Radio />}
-                          label="Others"
-                        />
+                        <FormControlLabel value="All" control={<Radio />} label="All" />
+                        <FormControlLabel value="Male" control={<Radio />} label="Male" />
+                        <FormControlLabel value="Female" control={<Radio />} label="Female" />
+                        <FormControlLabel value="others" control={<Radio />} label="Others" />
                       </RadioGroup>
                     </FormControl>
                   </GridItem>
 
                   <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
+                    <FormControl component="fieldset" className={classes.formControl}>
                       <FormLabel component="legend">Is Active</FormLabel>
                       <RadioGroup
                         aria-label="isActive"
                         name="isActive"
                         className={classes.group}
                         value={this.state.isActive}
-                        onChange={this.handleBooleanChange("isActive")}
+                        onChange={this.handleBooleanChange('isActive')}
                       >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
+                        <FormControlLabel value={true} control={<Radio />} label="True" />
+                        <FormControlLabel value={false} control={<Radio />} label="False" />
                       </RadioGroup>
                     </FormControl>
                   </GridItem>
                   <GridItem xs={4} sm={4} md={4}>
-                    <FormControl
-                      component="fieldset"
-                      className={classes.formControl}
-                    >
+                    <FormControl component="fieldset" className={classes.formControl}>
                       <FormLabel component="legend">Is HalfDay</FormLabel>
                       <RadioGroup
                         aria-label="isHalfDay"
                         name="isHalfDay"
                         className={classes.group}
                         value={this.state.isHalfDay}
-                        onChange={this.handleBooleanChange("isHalfDay")}
+                        onChange={this.handleBooleanChange('isHalfDay')}
                       >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="True"
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="False"
-                        />
+                        <FormControlLabel value={true} control={<Radio />} label="True" />
+                        <FormControlLabel value={false} control={<Radio />} label="False" />
                       </RadioGroup>
                     </FormControl>
                   </GridItem>
@@ -230,12 +189,12 @@ class HolidayAddEdit extends Component {
                       label="Date"
                       type="date"
                       inputProps={{
-                        value: moment(this.state.date).format("YYYY-MM-DD"),
-                        name: "date",
-                        onChange: this.handleChange("date")
+                        value: moment(this.state.date).format('YYYY-MM-DD'),
+                        name: 'date',
+                        onChange: this.handleChange('date'),
                       }}
                       InputLabelProps={{
-                        shrink: true
+                        shrink: true,
                       }}
                     />
                   </GridItem>
@@ -260,26 +219,26 @@ class HolidayAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "holidayPage", reducer });
-const withSaga = injectSaga({ key: "holidayPage", saga });
+const withReducer = injectReducer({ key: 'holidayPage', reducer });
+const withSaga = injectSaga({ key: 'holidayPageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(HolidayAddEdit);

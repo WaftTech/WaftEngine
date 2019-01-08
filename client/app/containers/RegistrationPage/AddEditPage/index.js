@@ -1,46 +1,46 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
-import TextField from "@material-ui/core/TextField";
-import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
-import { makeSelectOne, makeSelectError } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne, makeSelectError } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
 };
 
 class AddEdit extends Component {
@@ -48,12 +48,12 @@ class AddEdit extends Component {
     super(props);
     const one = props.one.toJS();
     this.state = {
-      RegistrationNo: "",
-      RegistrationDate: "",
-      Subject: "",
-      ReceiverName: "",
-      SenderName: "",
-      ...one
+      RegistrationNo: '',
+      RegistrationDate: '',
+      Subject: '',
+      ReceiverName: '',
+      SenderName: '',
+      ...one,
     };
   }
   componentDidMount() {
@@ -65,7 +65,7 @@ class AddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
     console.log(this.props.errors.toJS());
@@ -81,7 +81,7 @@ class AddEdit extends Component {
     this.setState({ [name]: event.target.checked });
   };
   handleGoBack = () => {
-    this.props.history.push("/wt/registration-manage");
+    this.props.history.push('/wt/registration-manage');
   };
   handleSave = () => {
     this.props.addEdit(this.state);
@@ -94,9 +94,7 @@ class AddEdit extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
-                  Add/Edit Registration
-                </h4>
+                <h4 className={classes.cardTitleWhite}>Add/Edit Registration</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
@@ -105,11 +103,11 @@ class AddEdit extends Component {
                       labelText="Registration No"
                       id="registration-no"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.RegistrationNo,
-                        onChange: this.handleChange("RegistrationNo")
+                        onChange: this.handleChange('RegistrationNo'),
                       }}
                     />
                   </GridItem>
@@ -120,11 +118,11 @@ class AddEdit extends Component {
                       labelText="Subject"
                       id="subject"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.Subject,
-                        onChange: this.handleChange("Subject")
+                        onChange: this.handleChange('Subject'),
                       }}
                     />
                   </GridItem>
@@ -135,11 +133,11 @@ class AddEdit extends Component {
                       labelText="Sender Name"
                       id="sender-name"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.SenderName,
-                        onChange: this.handleChange("SenderName")
+                        onChange: this.handleChange('SenderName'),
                       }}
                     />
                   </GridItem>
@@ -150,11 +148,11 @@ class AddEdit extends Component {
                       labelText="Receiver Name"
                       id="receiver-name"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.ReceiverName,
-                        onChange: this.handleChange("ReceiverName")
+                        onChange: this.handleChange('ReceiverName'),
                       }}
                     />
                   </GridItem>
@@ -165,11 +163,11 @@ class AddEdit extends Component {
                       labelText="Remarks"
                       id="remarks"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.Remarks,
-                        onChange: this.handleChange("Remarks")
+                        onChange: this.handleChange('Remarks'),
                       }}
                     />
                   </GridItem>
@@ -224,27 +222,27 @@ class AddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "registrationPage", reducer });
-const withSaga = injectSaga({ key: "registrationPage", saga });
+const withReducer = injectReducer({ key: 'registrationPage', reducer });
+const withSaga = injectSaga({ key: 'registrationPageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
-  errors: makeSelectError()
+  errors: makeSelectError(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(AddEdit);

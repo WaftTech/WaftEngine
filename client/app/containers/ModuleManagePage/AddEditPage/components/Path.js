@@ -71,7 +71,7 @@ const Path = props => {
               }}
               inputProps={{
                 value: each.AccessType,
-                onChange: handleAccessTypeChange(each._id),
+                onChange: handleAccessTypeChange(pathIndex),
               }}
             />
           </GridItem>
@@ -87,12 +87,12 @@ const Path = props => {
                     }}
                     inputProps={{
                       value: eachAdminRoute,
-                      onChange: handleAdminRoutesChange(each._id, index),
+                      onChange: handleAdminRoutesChange(index, pathIndex),
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
                             aria-label="Delete client route"
-                            onClick={handleRemoveAdminRoute(each._id, index)}
+                            onClick={handleRemoveAdminRoute(index, pathIndex)}
                           >
                             <TrashIcon fontSize="small" />
                           </IconButton>
@@ -103,7 +103,11 @@ const Path = props => {
                 </li>
               ))}
             </ul>
-            <Button size="sm" aria-label="Add Client Route" onClick={handleAddAdminRoute(each._id)}>
+            <Button
+              size="sm"
+              aria-label="Add Client Route"
+              onClick={handleAddAdminRoute(pathIndex)}
+            >
               Add Client Route
             </Button>
           </GridItem>
@@ -125,7 +129,7 @@ const Path = props => {
                     <Select
                       placeholder="Method"
                       value={eachServerRoute.method}
-                      onChange={handleServerRoutesMethodChange(each._id, index)}
+                      onChange={handleServerRoutesMethodChange(index, pathIndex)}
                       inputProps={{
                         name: 'Method',
                         id: `${each._id}-${eachServerRoute._id}-each-server-route-${index}-method`,
@@ -153,12 +157,12 @@ const Path = props => {
                     }}
                     inputProps={{
                       value: eachServerRoute.route,
-                      onChange: handleServerRoutesRouteChange(each._id, index),
+                      onChange: handleServerRoutesRouteChange(index, pathIndex),
                     }}
                   />
                   <IconButton
                     aria-label="Delete Server Route"
-                    onClick={handleRemoveServerRoute(each._id, index)}
+                    onClick={handleRemoveServerRoute(index, pathIndex)}
                   >
                     <TrashIcon fontSize="small" />
                   </IconButton>
@@ -168,7 +172,7 @@ const Path = props => {
             <Button
               size="sm"
               aria-label="Add Server Route"
-              onClick={handleAddServerRoute(each._id)}
+              onClick={handleAddServerRoute(pathIndex)}
             >
               Add Server Route
             </Button>
