@@ -7,8 +7,8 @@ const { authorization } = require('../../middleware/authentication.middleware');
 
 const LeaveApplicationValidation = require('./../../modules/LeaveApplication/LeaveApplicationValidation');
 
-router.get('/', LeaveApplicationModule.GetLeaveApplication);
-router.get('/:id', LeaveApplicationModule.GetLeaveApplicationByID);
+router.get('/', authorization,LeaveApplicationModule.GetLeaveApplication);
+router.get('/:id', authorization,LeaveApplicationModule.GetLeaveApplicationByID);
 const application = [authorization, LeaveApplicationValidation.validate, LeaveApplicationValidation.validateRemarks, LeaveApplicationModule.AddLeaveApplication];
 
 router.post('/', application);
