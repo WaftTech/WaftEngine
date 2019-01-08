@@ -10,6 +10,7 @@ const FiscalYearInternal = require('./../fiscal/fiscalController').Internal;
 const LeaveTypeInternal = require('./../LeaveType/LeaveTypeController').Internal;
 const HolidayInternal = require('./../holidaylist/holidayController').Internal;
 const settingsInternal = require('./../Settings/settingsController').Internal;
+const employeeInternal = require('./../Users/UserController').Internal;
 
 const moment = require('moment');
 moment().format();
@@ -45,7 +46,15 @@ LeaveApplicationController.GetLeaveApplication = async (req, res, next) => {
       sortquery = '';
     }
   }
-  searchquery = { IsDeleted: false };
+
+  //get user roles
+  let userinfo = await employeeInternal.getUnderUserList(req.user.id);
+
+  //adding own info
+  userinfo.push({ _id: req.user.id, name: req.user.name });
+
+  searchquery = { IsDeleted: false, EmployID: { $in: userinfo } };
+
   if (req.query.find_IsHalfDay) {
     if (req.query.find_IsHalfDay == 0) {
       //0 for true
