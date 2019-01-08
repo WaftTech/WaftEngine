@@ -7,23 +7,34 @@ import * as actions from './actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
-  yield call(Api.get('role/role', actions.loadAllSuccess, actions.loadAllFailure, token));
+  const completionWatcher = yield fork(
+    Api.get('role/role', actions.loadAllSuccess, actions.loadAllFailure, token),
+  );
+  yield take(LOCATION_CHANGE);
+  yield cancel(completionWatcher);
 }
 
 function* loadOne(action) {
   const token = yield select(makeSelectToken());
-  yield call(Api.get(`role/role/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token));
+  const completionWatcher = yield fork(
+    Api.get(`role/role/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token),
+  );
+  yield take(LOCATION_CHANGE);
+  yield cancel(completionWatcher);
 }
 
-function* deleteOne(action){
+function* deleteOne(action) {
   const token = yield select(makeSelectToken());
-  yield call(
-    Api.delete(`role/role/${action.payload}`,
-    actions.deleteOneSuccess,
-    actions.deleteOneFailure,
-    token
-    )
+  const completionWatcher = yield fork(
+    Api.delete(
+      `role/role/${action.payload}`,
+      actions.deleteOneSuccess,
+      actions.deleteOneFailure,
+      token,
+    ),
   );
+  yield take(LOCATION_CHANGE);
+  yield cancel(completionWatcher);
 }
 
 function* redirectOnSuccess() {

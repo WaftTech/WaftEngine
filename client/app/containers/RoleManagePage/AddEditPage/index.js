@@ -92,7 +92,10 @@ class AddEdit extends Component {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      inputProps={{ value: this.state.RolesTitle, onChange: this.handleChange('RolesTitle') }}
+                      inputProps={{
+                        value: this.state.RolesTitle,
+                        onChange: this.handleChange('RolesTitle'),
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -104,13 +107,27 @@ class AddEdit extends Component {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      inputProps={{ value: this.state.Description, onChange: this.handleChange('Description') }}
+                      inputProps={{
+                        value: this.state.Description,
+                        onChange: this.handleChange('Description'),
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel control={<Checkbox checked={this.state.IsActive || false} tabIndex={-1} onClick={this.handleChecked('IsActive')} value="IsActive" color="primary" />} label="Is Active" />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.IsActive || false}
+                          tabIndex={-1}
+                          onClick={this.handleChecked('IsActive')}
+                          value="IsActive"
+                          color="primary"
+                        />
+                      }
+                      label="Is Active"
+                    />
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -133,7 +150,7 @@ class AddEdit extends Component {
 const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'roleManagePage', reducer });
-const withSaga = injectSaga({ key: 'roleManagePage', saga });
+const withSaga = injectSaga({ key: 'roleManagePageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),

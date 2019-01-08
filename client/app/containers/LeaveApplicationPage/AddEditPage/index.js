@@ -445,7 +445,7 @@ class LeaveApplication extends Component {
 const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'leaveApplicationPage', reducer });
-const withSaga = injectSaga({ key: 'leaveApplicationPage', saga });
+const withSaga = injectSaga({ key: 'leaveApplicationPageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
