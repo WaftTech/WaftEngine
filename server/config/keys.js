@@ -10,7 +10,12 @@ module.exports = {
       app_secret: 'w7X0VC_VZX65JuPRlY3owt7h',
       callback_url: 'http://localhost:3333/auth/google/callback',
       google_exchange_oauth_for_token_url: 'https://www.googleapis.com/oauth2/v4/token?',
-      google_scope_permissions: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.me', 'email', 'profile'],
+      google_scope_permissions: [
+        'https://www.googleapis.com/auth/plus.login',
+        'https://www.googleapis.com/auth/plus.me',
+        'email',
+        'profile',
+      ],
     },
     githubAuth: {
       ClientID: 'e578c1b3a9fa9de597f0',
