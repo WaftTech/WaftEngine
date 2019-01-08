@@ -261,7 +261,7 @@ class AddEdit extends Component {
 const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
-const withSaga = injectSaga({ key: 'moduleManagePage', saga });
+const withSaga = injectSaga({ key: 'moduleManagePageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),

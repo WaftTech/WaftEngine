@@ -1,53 +1,53 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import moment from "moment";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import moment from 'moment';
 
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import { connect } from "react-redux";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
+import withStyles from '@material-ui/core/styles/withStyles';
+import { connect } from 'react-redux';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
-import { makeSelectOne } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
 };
 
 class DepartmentAddEdit extends Component {
   state = {
-    departmentName: "",
+    departmentName: '',
     numberofStaff: null,
-    departmentNameNepali: ""
+    departmentNameNepali: '',
   };
 
   componentDidMount() {
@@ -60,7 +60,7 @@ class DepartmentAddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
   }
@@ -76,7 +76,7 @@ class DepartmentAddEdit extends Component {
   };
 
   handleGoBack = () => {
-    this.props.history.push("/wt/department-manage");
+    this.props.history.push('/wt/department-manage');
   };
   handleSave = () => {
     this.props.addEdit(this.state);
@@ -98,11 +98,11 @@ class DepartmentAddEdit extends Component {
                       labelText="Department Name"
                       id="departmentName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.departmentName,
-                        onChange: this.handleChange("departmentName")
+                        onChange: this.handleChange('departmentName'),
                       }}
                     />
                   </GridItem>
@@ -113,11 +113,11 @@ class DepartmentAddEdit extends Component {
                       labelText="Number of Staff"
                       id="numberofStaff"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.numberofStaff,
-                        onChange: this.handleNumberChange("numberofStaff")
+                        onChange: this.handleNumberChange('numberofStaff'),
                       }}
                     />
                   </GridItem>
@@ -126,11 +126,11 @@ class DepartmentAddEdit extends Component {
                       labelText="Department Name Nepali"
                       id="departmentNameNepali"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.departmentNameNepali,
-                        onChange: this.handleChange("departmentNameNepali")
+                        onChange: this.handleChange('departmentNameNepali'),
                       }}
                     />
                   </GridItem>
@@ -155,26 +155,26 @@ class DepartmentAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "departmentPage", reducer });
-const withSaga = injectSaga({ key: "departmentPage", saga });
+const withReducer = injectReducer({ key: 'departmentPage', reducer });
+const withSaga = injectSaga({ key: 'departmentPageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(DepartmentAddEdit);

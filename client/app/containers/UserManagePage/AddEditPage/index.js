@@ -130,14 +130,30 @@ class AddEdit extends Component {
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
-                    <img className="" width="200px" height="200px" src={data.avtar} alt="ProfileImage" />
+                    <img
+                      className=""
+                      width="200px"
+                      height="200px"
+                      src={data.avtar}
+                      alt="ProfileImage"
+                    />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <InputLabel style={{ color: '#AAAAAA' }}>Status</InputLabel>
                     <GridItem xs={12} sm={12} md={8} />
-                    <FormControlLabel control={<Checkbox checked={data.email_verified || false} tabIndex={-1} value="isActive" color="primary" />} label="Is Email Verified" />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={data.email_verified || false}
+                          tabIndex={-1}
+                          value="isActive"
+                          color="primary"
+                        />
+                      }
+                      label="Is Email Verified"
+                    />
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -156,7 +172,7 @@ class AddEdit extends Component {
 const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'userManagePage', reducer });
-const withSaga = injectSaga({ key: 'userManagePage', saga });
+const withSaga = injectSaga({ key: 'userManagePageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
