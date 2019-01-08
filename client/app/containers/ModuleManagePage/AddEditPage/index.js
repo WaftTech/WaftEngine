@@ -47,10 +47,19 @@ const styles = {
 
 class AddEdit extends Component {
   state = { ModuleName: '', Path: [] };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
-  };
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.one !== nextProps.one) {
+      const oneObj = nextProps.one.toJS();
+      this.setState(state => ({
+        ...oneObj,
+      }));
+    }
+  }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
@@ -176,19 +185,6 @@ class AddEdit extends Component {
   handleGoBack = () => {
     this.props.history.push('/wt/module-manage');
   };
-  componentDidMount() {
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOne(this.props.match.params.id);
-    }
-  }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.one !== nextProps.one) {
-      const oneObj = nextProps.one.toJS();
-      this.setState(state => ({
-        ...oneObj,
-      }));
-    }
-  }
   render() {
     const { classes } = this.props;
     const { ModuleName, Path } = this.state;
