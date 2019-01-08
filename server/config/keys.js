@@ -1,6 +1,6 @@
 module.exports = {
   mongoURI: 'mongodb://hrapp:hrapp123@ds123619.mlab.com:23619/hr-app',
-  //mongoURI: 'mongodb://localhost:27017/hr-app',
+  // mongoURI: 'mongodb://localhost:27017/hr-app',
 
   //mongoURI: 'mongodb://askfourtrip:askfourtrip@localhost:27017/askfourtrip',
   secretOrKey: 'jwtsecret',
