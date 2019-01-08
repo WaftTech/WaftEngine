@@ -173,7 +173,7 @@ LeaveApplicationValidation.validateRemarks = async (req, res, next) => {
 LeaveApplicationValidation.validateNoOfDays = async (req, res, next) => {
   let errors = await validationhelper.validate(req.body, [
     {
-      field: 'EmployID',
+      field: 'EmployeeID',
       validate: [
         {
           condition: 'IsEmpty',
