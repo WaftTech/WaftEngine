@@ -1,59 +1,59 @@
-import React, { Component } from "react";
-import { createStructuredSelector } from "reselect";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import moment from "moment";
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import moment from 'moment';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
-import { connect } from "react-redux";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import { connect } from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import CustomInput from "components/CustomInput/CustomInput";
-import Button from "components/CustomButtons/Button";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
-import reducer from "../reducer";
-import saga from "../saga";
-import { makeSelectOne } from "../selectors";
-import { loadOneRequest, addEditRequest } from "../actions";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne } from '../selectors';
+import { loadOneRequest, addEditRequest } from '../actions';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
 };
 
 class BranchAddEdit extends Component {
   state = {
-    BranchName: "",
-    Address: "",
+    BranchName: '',
+    Address: '',
     ContactNo: null,
-    Email: ""
+    Email: '',
   };
 
   componentDidMount() {
@@ -66,7 +66,7 @@ class BranchAddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
-        ...oneObj
+        ...oneObj,
       }));
     }
   }
@@ -82,14 +82,14 @@ class BranchAddEdit extends Component {
   };
 
   handleGoBack = () => {
-    this.props.history.push("/wt/branch-manage");
+    this.props.history.push('/wt/branch-manage');
   };
   handleSave = () => {
     this.props.addEdit(this.state);
   };
 
   handleBooleanChange = name => event => {
-    this.setState({ [name]: event.target.value === "true" });
+    this.setState({ [name]: event.target.value === 'true' });
   };
   render() {
     const { classes } = this.props;
@@ -108,11 +108,11 @@ class BranchAddEdit extends Component {
                       labelText="Branch Name"
                       id="BranchName"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.BranchName,
-                        onChange: this.handleChange("BranchName")
+                        onChange: this.handleChange('BranchName'),
                       }}
                     />
                   </GridItem>
@@ -121,11 +121,11 @@ class BranchAddEdit extends Component {
                       labelText="Address"
                       id="Address"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.Address,
-                        onChange: this.handleChange("Address")
+                        onChange: this.handleChange('Address'),
                       }}
                     />
                   </GridItem>
@@ -134,11 +134,11 @@ class BranchAddEdit extends Component {
                       labelText="Contact Number"
                       id="ContactNo"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.ContactNo,
-                        onChange: this.handleChange("ContactNo")
+                        onChange: this.handleChange('ContactNo'),
                       }}
                     />
                   </GridItem>
@@ -147,11 +147,11 @@ class BranchAddEdit extends Component {
                       labelText="Email"
                       id="Email"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
                         value: this.state.Email,
-                        onChange: this.handleChange("Email")
+                        onChange: this.handleChange('Email'),
                       }}
                     />
                   </GridItem>
@@ -175,26 +175,26 @@ class BranchAddEdit extends Component {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: "branchPage", reducer });
-const withSaga = injectSaga({ key: "branchPage", saga });
+const withReducer = injectReducer({ key: 'branchPage', reducer });
+const withSaga = injectSaga({ key: 'branchPageAddEdit', saga });
 
 const mapStateToProps = createStructuredSelector({
-  one: makeSelectOne()
+  one: makeSelectOne(),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload))
+  addEdit: payload => dispatch(addEditRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 export default compose(
   withRouter,
   withStyle,
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(BranchAddEdit);
