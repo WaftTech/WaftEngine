@@ -3,14 +3,15 @@ const router = express.Router();
 
 const DesignationModule = require('../../modules/Designation/DesignationController');
 
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 const DesignationValidation = require('./../../modules/Designation/DesignationValidation');
 
-router.get('/', DesignationModule.GetDesignation);
+router.get('/', authorization, authentication, DesignationModule.GetDesignation);
 
-router.get('/:id', DesignationModule.GetDesignationDetail);
+router.get('/:id', authorization, authentication, DesignationModule.GetDesignationDetail);
 
-router.post('/', DesignationValidation.Designation, DesignationModule.AddDesignation);
+router.post('/', authorization, authentication, DesignationValidation.Designation, DesignationModule.AddDesignation);
 
-router.delete('/:id', DesignationModule.deletebyID);
+router.delete('/:id', authorization, authentication, DesignationModule.deletebyID);
 
 module.exports = router;
