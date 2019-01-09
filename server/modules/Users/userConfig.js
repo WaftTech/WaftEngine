@@ -17,7 +17,17 @@ module.exports = {
     rolesRequired: 'Sorry, you missed the roles field!!',
     GenderRequired: 'Gender must be entered',
     GenderInvalid: 'Enter valid Gender',
+    religionRequired: 'Religion must be entered',
+    religionInvalid: 'Enter valid Religion',
     ReporterIDRequired: 'Must Enter Reporter ID',
     ReporterIDInvalid: 'Enter Valid Reporter ID',
+    checkMail: 'Validation Error.',
+    ErrorsEmail: 'Mail not found',
+    MailFound: 'Mail found',
+    GetAllUser: 'Registration data delivered successfully!!',
+    GetUserDetail: 'User Detail Get Success',
+    RegisterErrorsEmail: 'Email already exists',
+    UserRegistered: 'User Register Successfully',
+    
   },
 };

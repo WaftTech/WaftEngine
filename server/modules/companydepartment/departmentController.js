@@ -1,6 +1,7 @@
 const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const departmentModel = require('./department');
+const departmentConfig = require('./departmentConfig');
 const departmentController = {};
 
 departmentController.saveData = async (req, res, next) => {
@@ -9,11 +10,11 @@ departmentController.saveData = async (req, res, next) => {
     data.addedBy = req.user.id;
     if (data._id) {
       let updated = await departmentModel.findByIdAndUpdate(data._id, data);
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, 'Company updated!!!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, updated, null, departmentConfig.validationMessage.SaveData, null);
     } else {
       let newdata = new departmentModel(data);
       let saved = await newdata.save();
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, 'Company successfully added!!', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, saved, null, departmentConfig.validationMessage.AddData, null);
     }
   } catch (err) {
     next(err);
@@ -63,13 +64,13 @@ departmentController.getData = async (req, res, next) => {
 
   let datas = await otherHelper.getquerySendResponse(departmentModel, page, size, sortq, searchq, selectq, next);
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, 'Departments data delivered successfully!!', page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, departmentConfig.validationMessage.GetData, page, size, datas.totaldata);
 };
 
 departmentController.getDataByID = async (req, res, next) => {
   try {
     let data = await departmentModel.findOne({ _id: req.params.id, IsDeleted: false }).select('departmentName departmentNameNepali numberofStaff');
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Department in detail delivered successfully!!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, departmentConfig.validationMessage.GetDataByID, null);
   } catch (err) {
     next(err);
   }
@@ -81,7 +82,7 @@ departmentController.deleteById = async (req, res, next) => {
     const data = await departmentModel.findByIdAndUpdate(id, {
       $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
     });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, 'Department delete Success !!', null);
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, data, null, departmentConfig.validationMessage.DeleteById, null);
   } catch (err) {
     next(err);
   }

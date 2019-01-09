@@ -32,7 +32,7 @@ router.use('/wordpress', wordpressRoutes);
 
 // For Designations
 const DesignationRoutes = require('./api/Designation');
-router.use('/Designation', DesignationRoutes);
+router.use('/designation', DesignationRoutes);
 
 // For Leave type
 const LeaveTypeRoutes = require('./api/LeaveType');
@@ -56,7 +56,7 @@ router.use('/department', departmentroutes);
 
 // For Branch
 const BranchRoutes = require('./api/Branch');
-router.use('/Branch', BranchRoutes);
+router.use('/branch', BranchRoutes);
 
 // For Assigned Leave
 const AssignedLeave = require('./api/AssignedLeave');
@@ -69,5 +69,9 @@ router.use('/createleave', CreateLeave);
 // For Notification
 const NotificationRoutes = require('./api/Notification');
 router.use('/notification', NotificationRoutes);
+
+//For settings
+const settingsRoutes = require('./api/settings');
+router.use('/settings', settingsRoutes);
 
 module.exports = router;

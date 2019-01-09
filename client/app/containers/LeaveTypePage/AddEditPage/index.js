@@ -51,11 +51,14 @@ const styles = {
 class LeaveTypeAddEdit extends Component {
   state = {
     LeaveName: '',
+    LeaveNameNepali: '',
     ApplicableGender: 'Female',
     IsTransferrable: true,
     IsPaidLeave: true,
     IsReplacementLeave: true,
     NoOfDays: null,
+    ApplicableReligion: '',
+    IsCarryOver: '',
   };
 
   componentDidMount() {
@@ -118,6 +121,19 @@ class LeaveTypeAddEdit extends Component {
                       }}
                     />
                   </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Leave Name Nepali"
+                      id="LeaveNameNepali"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        value: this.state.LeaveNameNepali,
+                        onChange: this.handleChange('LeaveNameNepali'),
+                      }}
+                    />
+                  </GridItem>
 
                   <GridItem xs={4} sm={4} md={4}>
                     <FormControl component="fieldset" className={classes.formControl}>
@@ -166,7 +182,7 @@ class LeaveTypeAddEdit extends Component {
                       </RadioGroup>
                     </FormControl>
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
+                  <GridItem xs={4} sm={4} md={4}>
                     <FormControl component="fieldset" className={classes.formControl}>
                       <FormLabel component="legend">Is Replacement</FormLabel>
                       <RadioGroup
@@ -181,9 +197,43 @@ class LeaveTypeAddEdit extends Component {
                       </RadioGroup>
                     </FormControl>
                   </GridItem>
+                  <GridItem xs={4} sm={4} md={4}>
+                    <FormControl component="fieldset" className={classes.formControl}>
+                      <FormLabel component="legend">Applicable Religion</FormLabel>
+                      <RadioGroup
+                        aria-label="applicableGender"
+                        name="ApplicableGender"
+                        className={classes.group}
+                        value={this.state.ApplicableReligion}
+                        onChange={this.handleChange('ApplicableReligion')}
+                      >
+                        <FormControlLabel value="All" control={<Radio />} label="All" />
+                        <FormControlLabel value="Hindu" control={<Radio />} label="Hindu" />
+                        <FormControlLabel value="Muslim" control={<Radio />} label="Muslim" />
+                        <FormControlLabel value="Christian" control={<Radio />} label="Christian" />
+                        <FormControlLabel value="Buddisht" control={<Radio />} label="Buddisht" />
+                        <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                      </RadioGroup>
+                    </FormControl>
+                  </GridItem>
+                  <GridItem xs={4} sm={4} md={4}>
+                    <FormControl component="fieldset" className={classes.formControl}>
+                      <FormLabel component="legend">Is CarryOver</FormLabel>
+                      <RadioGroup
+                        aria-label="IsCarryOver"
+                        name="IsCarryOver"
+                        className={classes.group}
+                        value={this.state.IsCarryOver}
+                        onChange={this.handleChange('IsCarryOver')}
+                      >
+                        <FormControlLabel value="true" control={<Radio />} label="true" />
+                        <FormControlLabel value="false" control={<Radio />} label="false" />
+                      </RadioGroup>
+                    </FormControl>
+                  </GridItem>
                   {/* Number of days */}
                   <GridItem>
-                    <GridItem xs={6} sm={6} md={6}>
+                    <GridItem xs={12} sm={12} md={12}>
                       <CustomInput
                         labelText="Number of Days"
                         id="NoOfDays"
