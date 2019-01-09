@@ -2,6 +2,8 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { createStructuredSelector } from 'reselect';
+
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -16,11 +18,17 @@ import Person from '@material-ui/icons/Person';
 import Notifications from '@material-ui/icons/Notifications';
 import Search from '@material-ui/icons/Search';
 // core components
+
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import reducer from '../../containers/App/reducer';
+import saga from '../../containers/App/saga';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
+import { makeSelectAll } from '../../containers/App/selectors';
 
 import headerLinksStyle from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
-import { logout } from '../../containers/App/actions';
+import { logout, loadAllRequest } from '../../containers/App/actions';
 import LanguageSwitcher from '../LanguageSwitcher';
 
 class HeaderLinks extends React.Component {
@@ -43,10 +51,14 @@ class HeaderLinks extends React.Component {
     e.preventDefault();
     console.log('hello');
   };
+  handleClick = () => {
+    this.props.loadNotification();
+  };
 
   render() {
-    const { classes } = this.props;
+    const { classes, allLinks } = this.props;
     const { open } = this.state;
+    const allLinksObj = allLinks.toJS();
     return (
       <div>
         <div className={classes.searchWrapper}>
@@ -98,12 +110,10 @@ class HeaderLinks extends React.Component {
             onClick={this.handleToggle}
             className={classes.buttonLink}
           >
-            <Notifications className={classes.icons} />
+            <Notifications className={classes.icons} onClick={this.handleClick} />
             <span className={classes.notifications}>5</span>
             <Hidden mdUp implementation="css">
-              <p onClick={this.handleClick} className={classes.linkText}>
-                Notification
-              </p>
+              <p className={classes.linkText}>Notification</p>
             </Hidden>
           </Button>
           <Poppers
@@ -124,21 +134,15 @@ class HeaderLinks extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
-                        Mike John responded to your email
-                      </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
-                        You have 5 new tasks
-                      </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
-                        You're now friend with Andrew
-                      </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
-                        Another Notification
-                      </MenuItem>
-                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
-                        Another One
-                      </MenuItem>
+                      {allLinksObj.map(each => (
+                        <MenuItem
+                          key={each._id}
+                          onClick={this.handleClose}
+                          className={classes.dropdownItem}
+                        >
+                          {each.Description}
+                        </MenuItem>
+                      ))}
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -164,12 +168,17 @@ class HeaderLinks extends React.Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  allLinks: makeSelectAll(),
+});
+
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
+  loadNotification: () => dispatch(loadAllRequest()),
 });
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 

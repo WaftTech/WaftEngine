@@ -14,7 +14,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(Api.get(`user/detail/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token));
 }
-function* deleteOne(action) {
+function* deleteOne(action) { 
   const token = yield select(makeSelectToken());
   yield call(
     Api.delete(

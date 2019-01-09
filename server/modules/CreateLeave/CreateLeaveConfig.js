@@ -12,5 +12,10 @@ module.exports = {
     CarryOverLeaveInvalid: 'CarryOver Leave is Invalid!!!',
     LeaveTakenRequired: 'Sorry, Leave taken is required',
     LeaveTakenInvalid: 'Sorry, Leave taken is invalid',
+
+    GetData: 'CreateLeave data delivered successfully!!!',
+    SaveData: 'Leave added for employee!!!',
+    NotEnoughLeave: 'Sorry, you donot have enough leave remaining!!!',
+    NoLeave: 'Sorry, No leave has been assigned for you!!!!',
   },
 };

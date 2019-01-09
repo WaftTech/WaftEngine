@@ -1,7 +1,9 @@
 module.exports = {
-  mongoURI: 'mongodb://hrapp:hrapp123@ds123619.mlab.com:23619/hr-app',
+  mongoURI: "mongodb://hrapp:hrapp123@ds123619.mlab.com:23619/hr-app",
+  //mongoURI: 'mongodb://localhost:27017/hr-app',
+
   //mongoURI: 'mongodb://askfourtrip:askfourtrip@localhost:27017/askfourtrip',
-  secretOrKey: 'jwtsecret',
+  secretOrKey: "jwtsecret",
   tokenExpireTime: 360000,
 
   oauthConfig: {
@@ -18,8 +20,8 @@ module.exports = {
       ],
     },
     githubAuth: {
-      ClientID: 'e578c1b3a9fa9de597f0',
-      ClientSecret: 'e365a7901613b246b55dc9d041960191d5e7b6f0',
-    },
-  },
+      ClientID: "e578c1b3a9fa9de597f0",
+      ClientSecret: "e365a7901613b246b55dc9d041960191d5e7b6f0"
+    }
+  }
 };

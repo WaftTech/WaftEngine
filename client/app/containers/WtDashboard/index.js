@@ -28,6 +28,7 @@ import injectReducer from "utils/injectReducer";
 import makeSelectWtDashboard from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
+import { makeSelectUser } from "../App/selectors";
 
 import sidebarRoutes from "./sidebarRoutes";
 
@@ -73,7 +74,19 @@ export class WtDashboard extends React.Component {
   }
   render() {
     const { mobileOpen } = this.state;
-    const { location, classes } = this.props;
+    const { location, classes, user } = this.props;
+    // console.log(user.toJS());
+    const availablePaths = user.toJS().routes.map(each => each.AdminRoutes[0]);
+    // console.log(availablePaths);
+    // const availablePaths = [
+    //   "/wt/dashboard",
+    //   "/wt/role-manage/add",
+    //   "/wt/role-manage/edit/:id",
+    //   "/wt/role-manage"
+    // ];
+    const filteredRoutes = sidebarRoutes.filter(each =>
+      availablePaths.includes(each.path)
+    );
     return (
       <div className={classes.wrapper}>
         <Sidebar
@@ -104,9 +117,9 @@ export class WtDashboard extends React.Component {
 WtDashboard.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
-  wtdashboard: makeSelectWtDashboard()
+  wtdashboard: makeSelectWtDashboard(),
+  user: makeSelectUser()
 });
-
 
 const withConnect = connect(mapStateToProps);
 

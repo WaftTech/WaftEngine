@@ -4,11 +4,11 @@ const router = express.Router();
 const departmentValidation = require('./../../modules/companydepartment/departmentValidation');
 const departmentModule = require('./../../modules/companydepartment/departmentController');
 
-const { authorization } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 
-router.get('/', authorization, departmentModule.getData);
-router.post('/', authorization, departmentValidation.sanitize, departmentValidation.validate, departmentModule.saveData);
-router.get('/:id', authorization, departmentModule.getDataByID);
-router.delete('/:id', authorization, departmentModule.deleteById);
+router.get('/', authorization, authentication, departmentModule.getData);
+router.post('/', authorization, authentication, departmentValidation.sanitize, departmentValidation.validate, departmentModule.saveData);
+router.get('/:id', authorization, authentication, departmentModule.getDataByID);
+router.delete('/:id', authorization, authentication, departmentModule.deleteById);
 
 module.exports = router;

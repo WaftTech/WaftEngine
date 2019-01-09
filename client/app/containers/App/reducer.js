@@ -10,9 +10,9 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import { fromJS } from 'immutable';
+import { fromJS } from "immutable";
 
-import * as types from './constants';
+import * as types from "./constants";
 
 // The initial state of the App
 export const initialState = fromJS({
@@ -21,69 +21,76 @@ export const initialState = fromJS({
   messages: [],
   dialog: null,
   user: {},
-  token: '',
+  token: "",
   status: 0,
+  all: []
 });
 
-function appReducer(state = initialState, action = { type: '' }) {
-  const callType = action.type.slice(-7);
-  if (callType === 'REQUEST') {
-    return state.update('status', status => status + 1);
-  }
-  if (callType === 'SUCCESS') {
-    if (action.payload.msg) {
-      return state
-        .update('status', status => status - 1)
-        .update('messages', messages =>
-          messages.set(messages.size, {
-            type: 'success',
-            text: action.payload.msg,
-          }),
-        );
-    }
-    return state.update('status', status => status - 1);
-  }
-  if (callType === 'FAILURE') {
-    if (action.payload.msg) {
-      return state
-        .update('status', status => status - 1)
-        .update('messages', messages =>
-          messages.set(messages.size, {
-            type: 'failure',
-            text: action.payload.msg,
-          }),
-        );
-    }
-    return state.update('status', status => status - 1);
-  }
+function appReducer(state = initialState, action = { type: "" }) {
+  // const callType = action.type.slice(-7);
+  // if (callType === 'REQUEST') {
+  //   return state.update('status', status => status + 1);
+  // }
+  // if (callType === 'SUCCESS') {
+  //   if (action.payload.msg) {
+  //     return state
+  //       .update('status', status => status - 1)
+  //       .update('messages', messages =>
+  //         messages.set(messages.size, {
+  //           type: 'success',
+  //           text: action.payload.msg,
+  //         }),
+  //       );
+  //   }
+  //   return state.update('status', status => status - 1);
+  // }
+  // if (callType === 'FAILURE') {
+  //   if (action.payload.msg) {
+  //     return state
+  //       .update('status', status => status - 1)
+  //       .update('messages', messages =>
+  //         messages.set(messages.size, {
+  //           type: 'failure',
+  //           text: action.payload.msg,
+  //         }),
+  //       );
+  //   }
+  //   return state.update('status', status => status - 1);
+  // }
   switch (action.type) {
     // case
     case types.SET_DIALOG:
       return state.merge({ dialog: fromJS(action.dialog) });
     case types.SET_USER:
+      localStorage.setItem("routes", btoa(JSON.stringify(action.user.routes)));
       return state.merge({ user: fromJS(action.user) });
     case types.SET_TOKEN:
-      localStorage.setItem('token', action.token);
+      localStorage.setItem("token", action.token);
       return state.merge({ token: action.token });
     case types.ADD_MESSAGE:
-      return state.update('messages', messages =>
+      return state.update("messages", messages =>
         messages.set(
           messages.size,
           fromJS({
             type: action.payload.type,
-            text: action.payload.text,
-          }),
-        ),
+            text: action.payload.text
+          })
+        )
       );
     case types.DELETE_MESSAGE:
-      return state.update('messages', messages =>
-        messages.delete(action.payload),
+      return state.update("messages", messages =>
+        messages.delete(action.payload)
       );
     case types.LOGOUT:
-      localStorage.setItem('token', '');
+      localStorage.removeItem("token");
+      localStorage.removeItem("routes");
       return state.merge({
         user: fromJS({}),
-        token: '',
+        token: ""
+      });
+    case types.LOAD_ALL_SUCCESS:
+      return state.merge({
+        all: fromJS(action.payload.data)
       });
     default:
       return state;

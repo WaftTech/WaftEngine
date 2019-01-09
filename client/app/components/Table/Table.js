@@ -7,42 +7,80 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
 
-function CustomTable({ ...props }) {
-  const { classes, tableHead, tableData, tableHeaderColor } = props;
-  return (
-    <div className={classes.tableResponsive}>
-      <Table className={classes.table}>
-        {tableHead !== undefined ? (
-          <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
+class CustomTable extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  // handleChangePage = (event, page) => {
+  //   console.log("page number", page);
+  // };
+
+  render() {
+    const {
+      classes,
+      tableHead,
+      tableData,
+      tableHeaderColor,
+      page,
+      size,
+      totaldata,
+      handleChangePage,
+      handleChangeRowsPerPage
+    } = this.props;
+    return (
+      <div className={classes.tableResponsive}>
+        <Table className={classes.table}>
+          {tableHead !== undefined ? (
+            <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
+              <TableRow>
+                {tableHead.map((prop, key) => (
+                  <TableCell
+                    className={`${classes.tableCell} ${classes.tableHeadCell}`}
+                    key={key}
+                  >
+                    {prop}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+          ) : null}
+          <TableBody>
+            {tableData.map((prop, key) => (
+              <TableRow key={key}>
+                {prop.map((prop, key) => (
+                  <TableCell className={classes.tableCell} key={key}>
+                    {prop}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
             <TableRow>
-              {tableHead.map((prop, key) => (
-                <TableCell
-                  className={`${classes.tableCell} ${classes.tableHeadCell}`}
-                  key={key}
-                >
-                  {prop}
-                </TableCell>
-              ))}
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
+                colSpan={3}
+                count={totaldata}
+                rowsPerPage={size}
+                page={page - 1}
+                // SelectProps={{
+                //   native: true
+                // }}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                // ActionsComponent={TablePaginationActionsWrapped}
+              />
             </TableRow>
-          </TableHead>
-        ) : null}
-        <TableBody>
-          {tableData.map((prop, key) => (
-            <TableRow key={key}>
-              {prop.map((prop, key) => (
-                <TableCell className={classes.tableCell} key={key}>
-                  {prop}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
+          </TableFooter>
+        </Table>
+      </div>
+    );
+  }
 }
 
 CustomTable.defaultProps = {
@@ -62,9 +100,6 @@ CustomTable.propTypes = {
   ]),
   tableHead: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.node])
-  ),
-  tableData: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node]))
   ),
   tableData: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node]))
