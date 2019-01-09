@@ -5,7 +5,7 @@ const settingsModule = require('./../../modules/Settings/settingsController').se
 
 const { authorization } = require('../../middleware/authentication.middleware');
 
-const settingsValidation = require('./../../modules/settings/settingsValidation');
+const settingsValidation = require('./../../modules/Settings/settingsValidation');
 
 router.get('/', authorization, settingsModule.getData);
 router.get('/:key', authorization, settingsModule.getDataByKey);
