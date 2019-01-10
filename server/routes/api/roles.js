@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
 const dModule = require('../../modules/Roles/roleController');
 const { authentication, authorization } = require('../../middleware/authentication.middleware');
-
+/**
+ * Routes Of Role Here
+ */
 router.get('/role', authorization, authentication, dModule.GetRoles);
 router.get('/role/:id', authorization, authentication, dModule.GetRoleDetail);
 router.post('/role', authorization, authentication, dModule.AddRoles);
@@ -15,7 +16,7 @@ router.get('/access', authorization, authentication, dModule.getAccessList);
 router.post('/access', authorization, authentication, dModule.SaveAccessList);
 
 /**
- * Access Management of Role to all Module
+ * Access Management of Module to all Roles
  */
 router.get('/access/role/:roleid', authorization, authentication, dModule.getAccessListForRole);
 router.post('/access/role/:roleid', authorization, authentication, dModule.SaveAccessListFromRole);

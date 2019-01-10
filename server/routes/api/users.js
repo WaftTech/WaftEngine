@@ -107,16 +107,16 @@ router.post('/resetpassword', user.resetPassword);
 router.post('/login/github/:access_token', user.githubLogin);
 
 /**
- * @route POST api/user/login/github
- * @description Login user using Github
+ * @route POST api/user/login/google
+ * @description Login user using Google
  * @access Public
  */
 router.post('/login/google/:access_token', user.oauthCodeToToken, user.googleLogin);
 
 /**
- *
- *
- *
+ * @route POST api/user/info
+ * @description returns the user info
+ * @access Public
  */
 router.get('/info', authorization, user.info);
 
