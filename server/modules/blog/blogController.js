@@ -1,38 +1,98 @@
 const HttpStatus = require('http-status');
 var ObjectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
+const blogConfig = require('./blogConfig');
 const BlogSch = require('./blog');
 const blogcontroller = {};
-const internal = {};
 
-blogcontroller.GetBlog = async (req, res, next) => {
-  const blogs = await BlogSch.find({ IsDeleted: false });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, blogs, null, 'blogs got successfully.', null);
-};
-
-blogcontroller.getPost = async (req, res, next) => {
-  const link = req.params.link;
-
+blogcontroller.GetBlogAuthorize = async (req, res, next) => {
   try {
-    let contents = await blogModel.findOne({ link, publish_status: true });
-    if (contents != null) {
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, contents, null, 'Content Get Success!!!', null);
+    const size_default = 10;
+    let page;
+    let size;
+    let sortq;
+    let searchq;
+    let selectq;
+    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+      page = Math.abs(req.query.page);
     } else {
-      return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, "post doesn't exist!", null);
+      page = 1;
     }
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
+    if (req.query.sort) {
+      let sortfield = req.query.sort.slice(1);
+      let sortby = req.query.sort.charAt(0);
+      if (sortby == 1 && !isNaN(sortby) && sortfield) {
+        //one is ascending
+        sortq = sortfield;
+      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+        //zero is descending
+        sortq = '-' + sortfield;
+      } else {
+        sortq = '';
+      }
+    }
+    selectq = 'Title Description Summary Tags Keywords SlugUrl IsPublished PublishedOn IsActive Image Added_by Added_at Updated_at Updated_by';
+    searchq = { IsDeleted: false };
+    if (req.query.find_Title) {
+      searchq = { Title: { $regex: req.query.find_Title, $options: 'i x' }, ...searchq };
+    }
+    if (req.query.find_PublishedOn) {
+      searchq = { PublishedOn: { $regex: req.query.find_PublishedOn, $options: 'i x' }, ...searchq };
+    }
+    let blogs = await otherHelper.getquerySendResponse(BlogSch, page, size, sortq, searchq, selectq, '', next);
+    return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
   }
 };
-blogController.getDefault = async (req, res, next) => {
-  try {
-    let blogContent = await blogModel.find({ publish_status: true }).limit(10);
 
-    if (blogContent != null) {
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, blogContent, null, 'Blog Content Get Success!!!', null);
+blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
+  try {
+    const size_default = 10;
+    let page;
+    let size;
+    let sortq;
+    let searchq;
+    let selectq;
+    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+      page = Math.abs(req.query.page);
     } else {
-      return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, 'No post exists!', null);
+      page = 1;
     }
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
+    if (req.query.sort) {
+      let sortfield = req.query.sort.slice(1);
+      let sortby = req.query.sort.charAt(0);
+      if (sortby == 1 && !isNaN(sortby) && sortfield) {
+        //one is ascending
+        sortq = sortfield;
+      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+        //zero is descending
+        sortq = '-' + sortfield;
+      } else {
+        sortq = '';
+      }
+    }
+    selectq = 'Title Description Summary Tags Keywords SlugUrl PublishedOn IsActive Image Added_by Added_at Updated_at Updated_by';
+    searchq = { IsDeleted: false };
+    searchq = { IsPublished: true, ...searchq };
+    if (req.query.find_Title) {
+      searchq = { Title: { $regex: req.query.find_Title, $options: 'i x' }, ...searchq };
+    }
+    if (req.query.find_PublishedOn) {
+      searchq = { PublishedOn: { $regex: req.query.find_PublishedOn, $options: 'i x' }, ...searchq };
+    }
+    let blogs = await otherHelper.getquerySendResponse(BlogSch, page, size, sortq, searchq, selectq, '', next);
+    return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
   }
@@ -41,32 +101,20 @@ blogController.getDefault = async (req, res, next) => {
 blogcontroller.SaveBlog = async (req, res, next) => {
   try {
     let blogs = req.body;
-    console.log('blogs', blogs);
+    let d = new Date();
+    blogs.SlugUrl = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogs.Title}`);
     if (blogs && blogs._id) {
       if (req.files && req.files[0]) {
-        blogs.BlogImage = req.files[0];
-        // blogs.Updated_by = req.user.id;
+        blogs.Image = req.files;
       }
       const update = await BlogSch.findByIdAndUpdate(blogs._id, { $set: blogs });
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Blogs saved successfully.', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, blogConfig.save, null);
     } else {
-      blogs.BlogImage = req.files && req.files[0];
-      //blogs.Added_by = req.user.id;
+      blogs.Image = req.files;
       const newBlog = new BlogSch(blogs);
       const BlogSave = await newBlog.save();
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, BlogSave, null, 'Blog saved successfully.', null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, BlogSave, null, blogConfig.save, null);
     }
-  } catch (err) {
-    next(err);
-  }
-};
-
-blogcontroller.deletePost = async (req, res, next) => {
-  const link = req.params.link;
-
-  try {
-    let contents = await blogModel.deleteOne({ link });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, contents, null, 'Blog Delete Success!!!', null);
   } catch (err) {
     next(err);
   }
@@ -75,93 +123,17 @@ blogcontroller.deletePost = async (req, res, next) => {
 blogcontroller.GetBlogDetail = async (req, res, next) => {
   const id = req.params.id;
   const blog = await BlogSch.findOne({ _id: id, IsDeleted: false });
-  console.log(blog);
-  if (blog && blog._id) {
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, 'blog successfully obtained.', null);
-  } else {
-    return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, null, 'blog not found', null);
-  }
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, blogConfig.get, null);
 };
-blogController.savePost = async (req, res, next) => {
-  try {
-    let blogContent = req.body;
-    console.log('Blog Contents: ', blogContent);
-    if (blogContent && blogContent._id) {
-      if (req.files && req.files[0]) {
-        //blogContent.contentImage = req.files[0];
-        blogContent.images = req.files;
-      }
-      let update = await blogModel.findByIdAndUpdate(blogContent._id, blogContent);
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Blog Contents update!!!', null);
-    } else {
-      //blogContent.contentImage = req.files && req.files[0];
-      let unique_status = await blogModel.findOne({ link: req.body.link });
-      if (unique_status == null) {
-        blogContent.images = req.files;
-        let newBlog = new blogModel(blogContent);
-        let contentSave = await newBlog.save();
-        return otherHelper.sendResponse(res, HttpStatus.OK, true, contentSave, null, 'Content Save successful!!', null);
-      } else {
-        return otherHelper.sendResponse(res, HttpStatus.CONFLICT, false, null, 'duplicate link!!!', null);
-      }
-    }
-  } catch (err) {
-    console.log('error here!!!');
-    next(err);
-  }
+blogcontroller.GetBlogBySlug = async (req, res, next) => {
+  const slug = req.params.slug;
+  const blogs = await BlogSch.findOne({ SlugUrl: slug, IsDeleted: false, IsPublished: true }, { IsPublished: 0 });
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
-
-blogController.getPost = async (req, res, next) => {
-  const link = req.params.link;
-
-  try {
-    let contents = await blogModel.findOne({ link, publish_status: true });
-    console.log(contents);
-    if (contents != null) {
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, contents, null, 'Content Get Success!!!', null);
-    } else {
-      return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, "post doesn't exist!", null);
-    }
-  } catch (err) {
-    next(err);
-  }
-  const blog = await BlogSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date() } });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, 'Blog deleted successfully!!', null);
-};
-
 blogcontroller.DeleteBlog = async (req, res, next) => {
   const id = req.params.id;
-  const blog = await BlogSch.findByIdAndUpdate(ObjectId(id), {
-    $set: { IsDeleted: true, Deleted_at: new Date() },
-  });
-  console.log(blog);
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, 'Blog deleted successfully!!', null);
-};
-
-blogController.deletePost = async (req, res, next) => {
-  const link = req.params.link;
-
-  try {
-    let contents = await blogModel.deleteOne({ link });
-    return otherHelper.sendResponse(res, HttpStatus.OK, true, contents, null, 'Blog Delete Success!!!', null);
-  } catch (err) {
-    next(err);
-  }
-};
-
-blogController.getByPublisher = async (req, res, next) => {
-  const publisher = req.params.user;
-  try {
-    let contents = await blogModel.find({ publisher });
-    console.log(contents.length);
-    if (contents.length != 0) {
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, contents, null, `posts from ${publisher}`, null);
-    } else {
-      return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, "User doesn't exist!", null);
-    }
-  } catch (err) {
-    next(err);
-  }
+  const blog = await BlogSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date() } });
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, blogConfig.delete, null);
 };
 
 module.exports = blogcontroller;

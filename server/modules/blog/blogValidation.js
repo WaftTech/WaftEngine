@@ -1,0 +1,65 @@
+const Validator = require('validator');
+const HttpStatus = require('http-status');
+const isEmpty = require('../../validation/isEmpty');
+const blogConfig = require('./blogConfig');
+const otherHelper = require('../../helper/others.helper');
+const validation = {};
+
+validation.sanitize = (req, res, next) => {
+  const sanitizeArray = [
+    {
+      field: 'Title',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'Description',
+      sanitize: {
+        trim: true,
+      },
+    },
+  ];
+  otherHelper.sanitize(req, sanitizeArray);
+  next();
+};
+validation.validateInput = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
+    {
+      field: 'Title',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: blogConfig.validate.titleLength,
+          options: { min: 3, max: 100 },
+        },
+      ],
+    },
+    {
+      field: 'Description',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: blogConfig.validate.descriptionLength,
+          options: { min: 5, max: 2000 },
+        },
+      ],
+    },
+  ];
+  const errors = otherHelper.validation(data, validateArray);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, HttpStatus.OK, false, null, errors, 'input errors', null);
+  } else {
+    next();
+  }
+};
+module.exports = validation;
