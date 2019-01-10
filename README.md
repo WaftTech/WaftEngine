@@ -1,10 +1,10 @@
-**To Start Server PORT:- 5020**
+**To Start Server PORT:- 5050**
 
 - cd server
 - npm install
 - npm start
 
-**To Start Client PORT:- 5021**
+**To Start Client PORT:- 5051**
 
 - cd client
 - npm install

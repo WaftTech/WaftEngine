@@ -5,7 +5,6 @@ const ContentSchema = new Schema({
   ContentName: { type: String, required: true },
   Key: { type: String, required: true, unique: true },
   Description: { type: String, required: true },
-  ContentHistory: [{ Description: String, Time: Date }],
   PublishFrom: { type: Date, required: false },
   PublishTo: { type: Date, required: false },
   IsActive: { type: Boolean, required: true, default: false },

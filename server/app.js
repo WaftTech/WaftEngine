@@ -9,18 +9,15 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
-const validator = require('express-validator');
 const HttpStatus = require('http-status');
 const { mongoURI } = require('./config/keys');
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
+const { AddErrorToLogs } = require('./modules/bug/bugController');
 
 const auth = require('./helper/auth.helper');
 
 const app = express();
-
-//express-validator
-app.use(validator());
 
 auth(passport);
 // Logger middleware
@@ -34,10 +31,6 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 // protect against HTTP Parameter Pollution attacks
 app.use(hpp());
-//validate the post requests
-app.use(validator());
-//manage the object, array etc
-// app.use(lodash());
 
 app.use(
   cookieSession({
@@ -48,13 +41,11 @@ app.use(
 );
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
-// app.use('/', express.static(path.join(__dirname, '../client-user/build')));
 
 // DB Config
 mongoose.Promise = global.Promise;
 
 // Database Connection
-// mongoose.connect('mongodb://localhost/my_database');
 mongoose
   .connect(
     mongoURI,
@@ -95,8 +86,13 @@ app.use((req, res, next) => {
 // error handler
 // no stacktraces leaked to user unless in development environment
 app.use((err, req, res, next) => {
-  if (err.status != 404) console.log(err);
-  return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, err, null, null);
+  if (err.status === 404) {
+    return otherHelper.sendResponse(res, HttpStatus.NOT_FOUND, false, null, err, 'Route Not Found', null);
+  } else {
+    console.log('\x1b[41m', err);
+    AddErrorToLogs(req, res, next, err);
+    return otherHelper.sendResponse(res, HttpStatus.INTERNAL_SERVER_ERROR, false, null, err, null, null);
+  }
   // res.status(err.status || 500);
   // res.render('error', {
   //   message: err.message,

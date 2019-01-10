@@ -1,19 +1,25 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { slugify } = require("../../helper/others.helper");
+const { slugify } = require('../../helper/others.helper');
 
 const BlogSchema = new Schema({
-  BlogTitle: { type: String, required: true },
+  Title: { type: String, required: true },
   Description: { type: String, required: true },
+  Summary: { type: String },
+  Tags: { type: [String] },
+  Keywords: { type: String },
+  SlugUrl: { type: String },
+  PublishedOn: { type: Date, default: Date.now },
+  IsPublished: { type: Boolean, required: true, default: true },
   IsActive: { type: Boolean, required: true, default: false },
-  BlogImage: { type: Schema.Types.Mixed, required: false },
+  Image: { type: Schema.Types.Mixed },
   IsDeleted: { type: Boolean, required: true, default: false },
-  Deleted_at: { type: Date, required: false },
-  Deleted_by: { type: Schema.Types.ObjectId, required: false },
-  Added_by: { type: Schema.Types.ObjectId, required: false },
+  Deleted_at: { type: Date, default: Date.now },
+  Deleted_by: { type: Schema.Types.ObjectId, ref: 'users' },
+  Added_by: { type: Schema.Types.ObjectId, ref: 'users' },
   Added_at: { type: Date, default: Date.now },
-  Updated_by: { type: Schema.Types.ObjectId, required: false },
-  Updated_at: { type: Date, default: Date.now }
+  Updated_by: { type: Schema.Types.ObjectId, ref: 'users' },
+  Updated_at: { type: Date, default: Date.now },
 });
 
-module.exports = Blog = mongoose.model("blog", BlogSchema);
+module.exports = Blog = mongoose.model('blog', BlogSchema);

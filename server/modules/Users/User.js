@@ -1,38 +1,26 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const addressdetail = new Schema({
-  state: { type: Schema.Types.ObjectId, ref: 'State' },
-  district: { type: Schema.Types.ObjectId, ref: 'Disctrict' },
-  vdc: { type: Schema.Types.ObjectId, ref: 'VdcMunicipality' },
-  wardno: { type: Number },
-});
-
 const UserSchema = new Schema({
   name: { type: String, required: true },
-  nameNepali: { type: String },
-  designation: { type: Schema.Types.ObjectId, ref: 'Designation' },
-  gender: { type: String, required: true, enum: ['Male', 'Female', 'Other'] },
-  religion: { type: String, required: true, enum: ['Hindu', 'Muslim', 'Christian', 'Buddisht', 'Other'] },
-
-  citrollno: { type: String },
-  permanentaddress: addressdetail,
-  tempaddress: addressdetail,
-  is_active: { type: Boolean, default: true, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  // avatar: { type: String },
-  avatar: { type: Schema.Types.Mixed },
+  avatar: { type: String },
+  date_of_birth: { type: Date },
   email_verification_code: { type: String },
   email_verified: { type: Boolean, required: true, default: false },
   password_reset_code: { type: String },
   password_reset_request_date: { type: Date },
+  last_password_cahnage_date: { type: Date },
   updated_at: { type: Date },
   added_at: { type: Date, default: Date.now, required: true },
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },
-  ReporterID: [{ type: Schema.Types.ObjectId, ref: 'users' }],
+  is_active: { type: Boolean, required: true, default: false },
   is_added_by_admin: { type: Boolean, require: true, default: false },
   roles: [{ type: [Schema.Types.ObjectId], require: true, ref: 'roles' }],
+  bio: { type: String },
+  skills: { type: [String] },
+  description: { type: String },
   IsDeleted: {
     type: Boolean,
     default: false,
