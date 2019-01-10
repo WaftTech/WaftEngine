@@ -1,15 +1,18 @@
+/*******************************************************
+ *      Server Starts From Here                        *
+ *******************************************************/
 'use strict';
 
 const http = require('http');
 const app = require('./app');
-const port = process.env.PORT || 5020;
+const port = process.env.PORT || 5050;
 const server = http.createServer(app);
 
 app.set('PORT_NUMBER', port);
 
 //  Start the app on the specific interface (and port).
 server.listen(port, () => {
-  console.log(`HR-App Server started on port ${port} at Date ${new Date()}`);
+  console.log(`Waft-Engine Server started on port ${port} at Date ${new Date()}`);
 });
 
 process.on('SIGTERM', () => {

@@ -1,21 +1,46 @@
-const isEmpty = require('../../validation/isEmpty');
-const otherHelper = require('../../helper/others.helper');
 const HttpStatus = require('http-status');
+const isEmpty = require('../../validation/isEmpty');
+const config = require('./contentConfig');
+const otherHelper = require('../../helper/others.helper');
+const validations = {};
 
-const { validate } = require('./../../helper/validate.helper');
-
-const ContentConfig = require('./ContentConfig');
-
-const ContentValidation = {};
-
-ContentValidation.validate = async (req, res, next) => {
-  let errors = await validate(req.body, [
+validations.sanitize = (req, res, next) => {
+  const sanitizeArray = [
+    {
+      field: 'ContentName',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'Key',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'Description',
+      sanitize: {
+        trim: true,
+      },
+    },
+  ];
+  otherHelper.sanitize(req, sanitizeArray);
+  next();
+};
+validations.validation = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
     {
       field: 'ContentName',
       validate: [
         {
           condition: 'IsEmpty',
-          msg: ContentConfig.ValidationMessage.ContentNameRequired,
+          msg: config.validation.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validation.nameLength,
         },
       ],
     },
@@ -24,7 +49,11 @@ ContentValidation.validate = async (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: ContentConfig.ValidationMessage.KeyRequired,
+          msg: config.validation.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validation.keyLength,
         },
       ],
     },
@@ -33,7 +62,11 @@ ContentValidation.validate = async (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: ContentConfig.ValidationMessage.DescriptionRequired,
+          msg: config.validation.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validation.descriptionLength,
         },
       ],
     },
@@ -41,12 +74,8 @@ ContentValidation.validate = async (req, res, next) => {
       field: 'PublishFrom',
       validate: [
         {
-          condition: 'IsEmpty',
-          msg: ContentConfig.ValidationMessage.PublishFromRequired,
-        },
-        {
           condition: 'IsDate',
-          msg: ContentConfig.ValidationMessage.PublishToInvalid,
+          msg: config.validation.isDate,
         },
       ],
     },
@@ -54,22 +83,17 @@ ContentValidation.validate = async (req, res, next) => {
       field: 'PublishTo',
       validate: [
         {
-          condition: 'IsEmpty',
-          msg: ContentConfig.ValidationMessage.PublishToRequired,
-        },
-        {
           condition: 'IsDate',
-          msg: ContentConfig.ValidationMessage.PublishFromInvalid,
+          msg: config.validation.isDate,
         },
       ],
     },
-  ]);
+  ];
+  const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'Validation Error.', null);
+    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'input error', null);
   } else {
-    return next();
+    next();
   }
 };
-module.exports = ContentValidation;
-
-//contents history
+module.exports = validations;

@@ -19,59 +19,5 @@ router.use('/module', dmodule);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
-//All route of Blog
-const fiscalRoutes = require('./api/fiscal');
-router.use('/fiscal', fiscalRoutes);
-//All route of registration
-const registrationRoutes = require('./api/registration');
-router.use('/registration', registrationRoutes);
-
-// For word press
-const wordpressRoutes = require('./api/wordpress_schema');
-router.use('/wordpress', wordpressRoutes);
-
-// For Designations
-const DesignationRoutes = require('./api/Designation');
-router.use('/designation', DesignationRoutes);
-
-// For Leave type
-const LeaveTypeRoutes = require('./api/LeaveType');
-router.use('/leavetype', LeaveTypeRoutes);
-
-// For Leave Application
-const LeaveApplicationRoutes = require('./api/LeaveApplication');
-router.use('/leaveapplication', LeaveApplicationRoutes);
-
-// For holidaylist
-const holidayRoutes = require('./api/holiday');
-router.use('/holiday', holidayRoutes);
-
-// For companyInfo
-const companyroutes = require('./api/company');
-router.use('/company', companyroutes);
-
-// For companydepartments
-const departmentroutes = require('./api/department');
-router.use('/department', departmentroutes);
-
-// For Branch
-const BranchRoutes = require('./api/Branch');
-router.use('/branch', BranchRoutes);
-
-// For Assigned Leave
-const AssignedLeave = require('./api/AssignedLeave');
-router.use('/assignedleave', AssignedLeave);
-
-// For Create Leave
-const CreateLeave = require('./api/CreateLeave');
-router.use('/createleave', CreateLeave);
-
-// For Notification
-const NotificationRoutes = require('./api/Notification');
-router.use('/notification', NotificationRoutes);
-
-//For settings
-const settingsRoutes = require('./api/settings');
-router.use('/settings', settingsRoutes);
 
 module.exports = router;

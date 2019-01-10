@@ -45,18 +45,16 @@ otherHelper.sendResponse = (res, status, success, data, errors, msg, token) => {
 };
 otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, pagesize, totaldata) => {
   const response = {};
-  if (success) response.success = success;
   if (data) response.data = data;
+  if (success !== null) response.success = success;
   if (msg) response.msg = msg;
   if (pageno) response.page = pageno;
   if (pagesize) response.size = pagesize;
   if (totaldata) response.totaldata = totaldata;
   return res.status(status).json(response);
 };
+
 otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, selectquery, next, populate) => {
-  if (isEmpty(populate)) {
-    populate = '';
-  }
   let datas = {};
   try {
     datas.data = await model
@@ -67,127 +65,160 @@ otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, s
       .limit(size * 1)
       .populate(populate);
     datas.totaldata = await model.countDocuments(findquery);
+    return datas;
   } catch (err) {
     next(err);
   }
-  return datas;
 };
-otherHelper.validation = (data, val) => {
-  const errors = {};
-  for (let i = 0; i < val.length; i++) {
-    let field = val[i].field;
-    let validate = val[i].validate;
 
-    data[field] = !isEmpty(data[field]) ? data[field] : '';
-
-    for (let j = 0; j < validate.length; j++) {
-      switch (validate[j].condition) {
+otherHelper.sanitize = (req, sanitizeArray) => {
+  sanitizeArray.forEach(sanitizeObj => {
+    const sanitization = sanitizeObj.sanitize;
+    if (sanitization.rtrim) {
+      req.body[sanitizeObj.field] = Validator.rtrim(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.ltrim) {
+      req.body[sanitizeObj.field] = Validator.ltrim(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.blacklist) {
+      req.body[sanitizeObj.field] = Validator.blacklist(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.whitelist) {
+      req.body[sanitizeObj.field] = Validator.whitelist(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.trim) {
+      req.body[sanitizeObj.field] = Validator.trim(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.escape) {
+      req.body[sanitizeObj.field] = Validator.escape(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.unescape) {
+      req.body[sanitizeObj.field] = Validator.unescape(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.toBoolean) {
+      req.body[sanitizeObj.field] = Validator.toBoolean(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.toInt) {
+      req.body[sanitizeObj.field] = Validator.toInt(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.toFloat) {
+      req.body[sanitizeObj.field] = Validator.toFloat(req.body[sanitizeObj.field]);
+    }
+    if (sanitization.toDate) {
+      req.body[sanitizeObj.field] = Validator.toDate(req.body[sanitizeObj.field]);
+    }
+  });
+  return true;
+};
+otherHelper.validation = (data, validationArray) => {
+  let errors = {};
+  validationArray.forEach(validationObj => {
+    const value = data[validationObj.field];
+    const validation = validationObj.validate;
+    for (let i = 0; i < validation.length; i++) {
+      const val = validation[i];
+      switch (val.condition) {
         case 'IsEmpty':
-          Validator.isEmpty(data[field]) ? (errors[field] = validate[j].msg) : null;
+          if (Validator.isEmpty(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsLength':
+          if (val.option) {
+            if (!Validator.isLength(value, val.option)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsInt':
+          if (val.option) {
+            if (!Validator.isInt(value, val.option)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsEqual':
+          if (val.option) {
+            if (!Validator.equals(val.option.one, val.option.two)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsMongoId':
+          if (!Validator.isMongoId(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsIn':
+          if (val.option) {
+            if (!Validator.isIn(value, val.option)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
           break;
         case 'IsDate':
-          !Validator.isISO8601(data[field]) ? (errors[field] = validate[j].msg) : null;
+          if (!Validator.isISO8601(value)) {
+            errors[validationObj.field] = val.msg;
+          }
           break;
-        case 'String':
-          if (validate[j].options) {
-            !Validator.isLength(data[field], validate[j].options) ? (errors[field] = validate[j].msg) : null;
+        case 'IsEmail':
+          if (!Validator.isEmail(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsBoolean':
+          if (!Validator.isBoolean(value.toString())) {
+            errors[validationObj.field] = val.msg;
           }
           break;
         case 'IsAfter':
-          if (validate[j].date) {
-            !Validator.isAfter(data[field], validate[j].date) ? (errors[field] = validate[j].msg) : null;
-          } else {
-            !Validator.isAfter(data[field]) ? (errors[field] = validate[j].msg) : null;
-          }
-          break;
-        case 'IsBefore':
-          if (validate[j].date) {
-            !Validator.isBefore(data[field], validate[j].date) ? (errors[field] = validate[j].msg) : null;
-          } else {
-            !Validator.isBefore(data[field], validate[j].date) ? (errors[field] = validate[j].msg) : null;
-          }
-          break;
-        case 'IsJSON':
-          !Validator.isJSON(data[field]) ? (errors[field] = validate[j].msg) : null;
-          break;
-        case 'IsJWT':
-          !Validator.isJWT(data[field]) ? (errors[field] = validate[j].msg) : null;
-          break;
-        case 'IsPhoneNumber':
-          if (validate[j].options) {
-            let pn;
-            if (validate[j].options.region) {
-              pn = new PhoneNumber(data[field], validate[j].options.region);
-            } else {
-              pn = new PhoneNumber(data[field]);
+          if (val.option) {
+            if (!Validator.isAfter(value, val.option.date)) {
+              errors[validationObj.field] = val.msg;
             }
-            if (validate[j].options.isMobile) pn.isValid() && pn.isMobile() ? null : (errors[field] = validate[j].msg);
-            if (validate[j].options.isFixedLine) pn.isValid() && pn.isFixedLine() ? null : (errors[field] = validate[j].msg);
-          } else {
-            let pn = new PhoneNumber(data[field]);
-            !pn.isValid() ? (errors[field] = validate[j].msg) : null;
           }
           break;
-        case 'IsMONGOID':
-          !Validator.isMongoId(data[field]) ? (errors[field] = validate[j].msg) : null;
+        case 'IsURL':
+          if (val.option) {
+            if (!Validator.isURL(value, val.option.protocols)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
           break;
-        case 'IsNumeric':
-          !Validator.isNumeric(data[field]) ? (errors[field] = validate[j].msg) : null;
+        case 'IsUppercase':
+          if (!Validator.isUppercase(value)) {
+            errors[validationObj.field] = val.msg;
+          }
           break;
-
+        case 'IsPhone':
+          let pn = new PhoneNumber(value);
+          console.log(JSON.stringify(pn, null, 4));
+          if (pn.isValid()) {
+            if (val.option) {
+              if (val.option.isMobile) {
+                if (!pn.isMobile()) {
+                  errors[validationObj.field] = 'Enter mobile number';
+                }
+              } else {
+                if (!pn.isFixedLine()) {
+                  errors[validationObj.field] = 'Enter landline number';
+                }
+              }
+            }
+          } else {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
         default:
           break;
       }
-      if (errors[field]) {
-        break;
+      if (errors[validationObj.field]) {
+        i = validation.length;
       }
     }
-  }
+  });
   return errors;
 };
-otherHelper.sanitize = (req, sanitizeArray) => {
-  sanitizeArray.forEach(sanitizeObj => {
-    let vals = req.body[sanitizeObj.field];
-    vals = !isEmpty(vals) ? vals : '';
-    const sanitization = sanitizeObj.sanitize;
-    // console.log('sanitize', sanitizeObj);
-    if (sanitization.rtrim) {
-      vals = Validator.rtrim(vals);
-    }
-    if (sanitization.ltrim) {
-      vals = Validator.ltrim(vals);
-    }
-    if (sanitization.blacklist) {
-      vals = Validator.blacklist(vals);
-    }
-    if (sanitization.whitelist) {
-      vals = Validator.whitelist(vals);
-    }
-    if (sanitization.trim) {
-      vals = Validator.trim(vals);
-    }
-    if (sanitization.escape) {
-      vals = Validator.escape(vals);
-    }
-    if (sanitization.unescape) {
-      vals = Validator.unescape(vals);
-    }
-    if (sanitization.toBoolean) {
-      vals = Validator.toBoolean(vals);
-    }
-    if (sanitization.toInt) {
-      vals = Validator.toInt(vals);
-    }
-    if (sanitization.toFloat) {
-      vals = Validator.toFloat(vals);
-    }
-    if (sanitization.toDate) {
-      vals = Validator.toDate(vals);
-    }
-  });
-  return;
-};
-
 otherHelper.slugify = text => {
   return text
     .toString()
