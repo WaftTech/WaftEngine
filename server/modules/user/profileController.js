@@ -1,18 +1,17 @@
-const User = require('./User');
-const CompanySch = require('../Company/companySchema');
-const Subscriber = require('./SubscribeSchema');
+const User = require('./userShema');
+const Subscriber = require('./subscribeSchema');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const HttpStatus = require('http-status');
 // Load Input Validation
-const { validateUserScanInput, validateRegisterInput, validateLoginInput } = require('./UserValidations');
+const { validateUserScanInput, validateRegisterInput, validateLoginInput } = require('./userValidations');
 const emailTemplate = require('../../helper/email-render-template');
 const auth = require('../../helper/auth.helper');
 const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
-const mailSender = require('./UserMail');
+const mailSender = require('./userMail');
 const travellSch = require('../Home/Traveller');
 const tripSch = require('../Trip/tripSchema');
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 
-const ContentSchema = new Schema({
+const contentSchema = new schema({
   ContentName: { type: String, required: true },
   Key: { type: String, required: true, unique: true },
   Description: { type: String, required: true },
@@ -13,4 +13,4 @@ const ContentSchema = new Schema({
   Added_at: { type: Date, default: Date.now },
 });
 
-module.exports = Content = mongoose.model('content', ContentSchema);
+module.exports = Content = mongoose.model('content', contentSchema);

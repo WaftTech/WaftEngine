@@ -1,16 +1,16 @@
-const HttpStatus = require('http-status');
-const BugSch = require('./bug');
-const BugHelper = require('../../helper/error.helper');
+const httpStatus = require('http-status');
+const bugSch = require('./bugShema');
+const bugHelper = require('../../helper/error.helper');
 const otherHelper = require('../../helper/others.helper');
 const bugController = {};
 
 bugController.AddErrorToLogs = async (req, res, next, err) => {
-  const errObj = BugHelper.getErrorObj(err, next);
+  const errObj = bugHelper.getErrorObj(err, next);
   errObj.AddedBy = req.user && req.user.id;
   errObj.device = req.device;
   errObj.ip = req.client_ip_address;
-  const Bug = await BugSch(errObj);
-  return Bug.save();
+  const bug = await bugSch(errObj);
+  return bug.save();
 };
 bugController.GetErrors = async (req, res, next) => {
   try {
@@ -45,8 +45,8 @@ bugController.GetErrors = async (req, res, next) => {
     }
     selectq = 'error_message error_stack error_type AddedAt AddedBy device ip';
     searchq = {};
-    let bugs = await otherHelper.getquerySendResponse(BugSch, page, size, sortq, searchq, selectq, '', next);
-    return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totaldata);
+    let bugs = await otherHelper.getquerySendResponse(bugSch, page, size, sortq, searchq, selectq, '', next);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totaldata);
   } catch (err) {
     next(err);
   }
