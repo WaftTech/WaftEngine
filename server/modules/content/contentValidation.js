@@ -1,6 +1,6 @@
-const HttpStatus = require('http-status');
+const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
-const config = require('./contentConfig');
+const contentConfig = require('./contentConfig');
 const otherHelper = require('../../helper/others.helper');
 const validations = {};
 
@@ -36,11 +36,11 @@ validations.validation = (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: config.validation.empty,
+          msg: contentConfig.validation.empty,
         },
         {
           condition: 'IsLength',
-          msg: config.validation.nameLength,
+          msg: contentConfig.validation.nameLength,
         },
       ],
     },
@@ -49,11 +49,11 @@ validations.validation = (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: config.validation.empty,
+          msg: contentConfig.validation.empty,
         },
         {
           condition: 'IsLength',
-          msg: config.validation.keyLength,
+          msg: contentConfig.validation.keyLength,
         },
       ],
     },
@@ -62,11 +62,11 @@ validations.validation = (req, res, next) => {
       validate: [
         {
           condition: 'IsEmpty',
-          msg: config.validation.empty,
+          msg: contentConfig.validation.empty,
         },
         {
           condition: 'IsLength',
-          msg: config.validation.descriptionLength,
+          msg: contentConfig.validation.descriptionLength,
         },
       ],
     },
@@ -75,7 +75,7 @@ validations.validation = (req, res, next) => {
       validate: [
         {
           condition: 'IsDate',
-          msg: config.validation.isDate,
+          msg: contentConfig.validation.isDate,
         },
       ],
     },
@@ -84,14 +84,14 @@ validations.validation = (req, res, next) => {
       validate: [
         {
           condition: 'IsDate',
-          msg: config.validation.isDate,
+          msg: contentConfig.validation.isDate,
         },
       ],
     },
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'input error', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input error', null);
   } else {
     next();
   }

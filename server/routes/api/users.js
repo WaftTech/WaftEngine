@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const validateRegisterInput = require('../../modules/Users/validation/register');
-const userValidation = require('./../../modules/Users/uservalidation');
+const validateRegisterInput = require('../../modules/user/userValidations');
 
 const multer = require('multer');
 const upload = multer({
@@ -19,7 +18,7 @@ const upload = multer({
   },
 });
 
-const user = require('../../modules/Users/UserController.js').userController;
+const userModule = require('../../modules/user/userController');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
 /**
  * @route GET api/user/test
@@ -37,91 +36,91 @@ router.get('/test', (req, res) =>
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/', authorization, authentication, user.getAllUser);
+router.get('/', authorization, authentication, userModule.GetAllUser);
 
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/detail/:id', authorization, authentication, user.getUserDetail);
+router.get('/detail/:id', authorization, authentication, userModule.GetUserDetail);
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.post('/detail/:id', authorization, authentication, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword, userValidation.duplicateValidation, user.updateUserDetail);
+router.post('/detail/:id', authorization, authentication, upload.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.UpdateUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.post('/', user.checkMail);
+router.post('/', userModule.CheckMail);
 
 /**
  * @route POST api/user/register
  * @description Register user route
  * @access Public
  */
-router.post('/register', validateRegisterInput, user.register);
+router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.Register);
 /**
  * @route POST api/user/register
  * @description Register user route
  * @access Public
  */
-router.post('/register/admin', authorization, authentication, upload.single('file'), userValidation.sanitize, userValidation.validate, userValidation.checkPassword, userValidation.validateRoles, userValidation.validateReporterID, userValidation.duplicateValidation, user.registerFromAdmin);
+router.post('/register/admin', authorization, authentication, upload.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
 
 /**
  * @route POST api/user/register
  * @description Register user route
  * @access Public
  */
-router.post('/verifymail', user.verifymail);
+router.post('/verifymail', userModule.Verifymail);
 
 /**
  * @route POST api/user/login
  * @description Login user / Returning JWT Token
  * @access Public
  */
-router.post('/login', user.login);
+router.post('/login', userModule.Login);
 
 /**
  * @route POST api/user/forgotpassword
  * @description Forgot Password
  * @access Public
  */
-router.post('/forgotpassword', user.forgotPassword);
+router.post('/forgotpassword', userModule.ForgotPassword);
 
 /**
  * @route POST api/user/resetpassword
  * @description Forgot Password
  * @access Public
  */
-router.post('/resetpassword', user.resetPassword);
+router.post('/resetpassword', userModule.ResetPassword);
 
 /**
  * @route POST api/user/login/github
  * @description Login user using Github
  * @access Public
  */
-router.post('/login/github/:access_token', user.githubLogin);
+router.post('/login/github/:access_token', userModule.GithubLogin);
 
 /**
  * @route POST api/user/login/google
  * @description Login user using Google
  * @access Public
  */
-router.post('/login/google/:access_token', user.oauthCodeToToken, user.googleLogin);
+router.post('/login/google/:access_token', userModule.OauthCodeToToken, userModule.GoogleLogin);
 
 /**
  * @route POST api/user/info
  * @description returns the user info
  * @access Public
  */
-router.get('/info', authorization, user.info);
+router.get('/info', authorization, userModule.Info);
 
 //@route GET api/user/getunderlist
 // @description returns the list of user under
-router.get('/getunderlist', authorization, user.getUnderUserList);
+router.get('/getunderlist', authorization, userModule.GetUnderUserList);
 
 module.exports = router;

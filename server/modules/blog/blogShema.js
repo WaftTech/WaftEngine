@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 const { slugify } = require('../../helper/others.helper');
 
-const BlogSchema = new Schema({
+const blogSchema = new schema({
   Title: { type: String, required: true },
   Description: { type: String, required: true },
   Summary: { type: String },
@@ -22,4 +22,4 @@ const BlogSchema = new Schema({
   Updated_at: { type: Date, default: Date.now },
 });
 
-module.exports = Blog = mongoose.model('blog', BlogSchema);
+module.exports = Blog = mongoose.model('blog', blogSchema);

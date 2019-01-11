@@ -1,12 +1,12 @@
-const HttpStatus = require('http-status');
-var ObjectId = require('mongoose').Types.ObjectId;
+const httpStatus = require('http-status');
+var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
-const ContentSch = require('./content');
-const config = require('./contentConfig');
-const contentsController = {};
+const contentSch = require('./contentShema');
+const contentConfig = require('./contentConfig');
+const contentController = {};
 const internal = {};
 
-contentsController.GetContent = async (req, res, next) => {
+contentController.GetContent = async (req, res, next) => {
   const size_default = 10;
   let page;
   let size;
@@ -53,31 +53,31 @@ contentsController.GetContent = async (req, res, next) => {
     searchq = { PublishTo: { $regex: req.query.find_PublishTo, $options: 'i x' }, ...searchq };
   }
   selectq = 'ContentName Key Description PublishFrom PublishTo IsActive IsFeature';
-  let datas = await otherHelper.getquerySendResponse(ContentSch, page, size, sortq, searchq, selectq, next, '');
+  let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, '');
 
-  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
 };
-contentsController.SaveContent = async (req, res, next) => {
+contentController.SaveContent = async (req, res, next) => {
   try {
     const contents = req.body;
     console.log('contents', contents);
     if (contents && contents._id) {
-      const update = await ContentSch.findByIdAndUpdate(contents._id, { $set: contents }, { new: true });
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, 'Content Saved Success !!', null);
+      const update = await contentSch.findByIdAndUpdate(contents._id, { $set: contents }, { new: true });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, contentConfig.save, null);
     } else {
       contents.Added_by = req.user.id;
-      const newContent = new ContentSch(contents);
+      const newContent = new contentSch(contents);
       const contentsSave = await newContent.save();
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, contentsSave, null, 'Content Saved Success !!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, contentsSave, null, contentConfig.save, null);
     }
   } catch (err) {
     next(err);
   }
 };
-contentsController.GetContentDetail = async (req, res, next) => {
+contentController.GetContentDetail = async (req, res, next) => {
   const id = req.params.id;
-  const contents = await ContentSch.findOne({ _id: id, IsDeleted: false });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, contents, null, 'Content Get Success !!', null);
+  const contents = await contentSch.findOne({ _id: id, IsDeleted: false });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
 };
 
-module.exports = contentsController;
+module.exports = contentController;

@@ -1,4 +1,4 @@
-const HttpStatus = require('http-status');
+const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const config = require('./UserConfig');
 const otherHelper = require('../../helper/others.helper');
@@ -115,7 +115,7 @@ validations.validateLoginInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
   } else {
     next();
   }
@@ -200,7 +200,7 @@ validations.validateRegisterInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
   } else {
     next();
   }
@@ -224,7 +224,7 @@ validations.validateUserScanInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
   } else {
     next();
   }
@@ -248,7 +248,7 @@ validations.validateBio = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
   } else {
     next();
   }
@@ -272,7 +272,7 @@ validations.validateSkill = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
   } else {
     next();
   }
@@ -296,7 +296,7 @@ validations.validateDescribe = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
   } else {
     next();
   }
@@ -319,7 +319,7 @@ validations.validateSubscribe = (req, res, next) => {
       ];
       const errors = otherHelper.validation(data, validateArray);
       if (!isEmpty(errors)) {
-        return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.inerr, null);
+        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.inerr, null);
       } else {
         next();
       }
@@ -337,12 +337,12 @@ validations.validateSubscribe = (req, res, next) => {
       ];
       const errors = otherHelper.validation(data, validateArray);
       if (!isEmpty(errors)) {
-        return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.inerr, null);
+        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.inerr, null);
       } else {
         next();
       }
     } else {
-      return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, config.validationMessage.userOrCompanyRequired, config.subscribeFail, null);
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, config.validationMessage.userOrCompanyRequired, config.subscribeFail, null);
     }
   }
 };

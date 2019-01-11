@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 
-const MediaSchema = new Schema({
+const mediaSchema = new schema({
   Description: { type: String, required: false },
   MediaImage: { type: Schema.Types.Mixed, required: false },
   fieldname: { type: String, required: false },
@@ -21,4 +21,4 @@ const MediaSchema = new Schema({
   Added_by: { type: Schema.Types.ObjectId, required: true },
 });
 
-module.exports = Media = mongoose.model('media', MediaSchema);
+module.exports = Media = mongoose.model('media', mediaSchema);
