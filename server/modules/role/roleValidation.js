@@ -1,4 +1,4 @@
-const HttpStatus = require('http-status');
+const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const config = require('./roleConfig');
 const otherHelper = require('../../helper/others.helper');
@@ -8,7 +8,7 @@ validations.validateRole = (req, res, next) => {
   const data = req.body;
   const validationArray = [
     {
-      field: 'RolesTitle',
+      field: 'rolesTitle',
       validate: [
         {
           condition: 'IsEmpty',
@@ -22,7 +22,7 @@ validations.validateRole = (req, res, next) => {
       ],
     },
     {
-      field: 'Description',
+      field: 'description',
       validate: [
         {
           condition: 'IsEmpty',
@@ -38,7 +38,7 @@ validations.validateRole = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validationArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
   } else {
     next();
   }
@@ -47,7 +47,7 @@ validations.validateModule = (req, res, next) => {
   const data = req.body;
   const validationArray = [
     {
-      field: 'ModuleName',
+      field: 'moduleName',
       validate: [
         {
           condition: 'IsEmpty',
@@ -61,7 +61,7 @@ validations.validateModule = (req, res, next) => {
       ],
     },
     {
-      field: 'Description',
+      field: 'description',
       validate: [
         {
           condition: 'IsEmpty',
@@ -77,7 +77,7 @@ validations.validateModule = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validationArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
   } else {
     next();
   }
@@ -86,7 +86,7 @@ validations.validateAccess = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: 'ModuleId',
+      field: 'moduleId',
       validate: [
         {
           condition: 'IsMongoId',
@@ -95,7 +95,7 @@ validations.validateAccess = (req, res, next) => {
       ],
     },
     {
-      field: 'RoleId',
+      field: 'roleId',
       validate: [
         {
           condition: 'IsMongoId',
@@ -106,7 +106,7 @@ validations.validateAccess = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, nul, errors, 'invalid object id', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, nul, errors, 'invalid object id', null);
   } else {
     next();
   }
@@ -115,13 +115,13 @@ validations.validateAccess = (req, res, next) => {
 validations.sanitizeRole = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'RolesTitle',
+      field: 'rolesTitle',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Description',
+      field: 'description',
       sanitize: {
         trim: true,
       },
@@ -133,13 +133,13 @@ validations.sanitizeRole = (req, res, next) => {
 validations.sanitizeModule = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'ModuleName',
+      field: 'moduleName',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Description',
+      field: 'description',
       sanitize: {
         trim: true,
       },
@@ -151,13 +151,13 @@ validations.sanitizeModule = (req, res, next) => {
 validations.sanitizeAccess = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'ModuleId',
+      field: 'moduleId',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'RoleId',
+      field: 'roleId',
       sanitize: {
         trim: true,
       },

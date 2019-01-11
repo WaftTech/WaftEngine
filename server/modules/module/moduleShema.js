@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 
-const moduleSchema = new Schema(
+const moduleSchema = new schema(
   {
     module_name: { type: String, required: true },
     module_key: { type: String, require: true },

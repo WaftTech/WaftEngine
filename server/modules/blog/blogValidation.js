@@ -1,5 +1,5 @@
-const Validator = require('validator');
-const HttpStatus = require('http-status');
+const validator = require('validator');
+const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const blogConfig = require('./blogConfig');
 const otherHelper = require('../../helper/others.helper');
@@ -57,7 +57,7 @@ validation.validateInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.OK, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, 'input errors', null);
   } else {
     next();
   }
