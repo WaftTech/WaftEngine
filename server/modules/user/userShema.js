@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const userSchema = new schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -21,17 +21,17 @@ const UserSchema = new Schema({
   bio: { type: String },
   skills: { type: [String] },
   description: { type: String },
-  IsDeleted: {
+  isDeleted: {
     type: Boolean,
     default: false,
     required: true,
   },
-  Deleted_by: {
+  deleted_by: {
     type: Schema.Types.ObjectId,
   },
-  Deleted_at: {
+  deleted_at: {
     type: Date,
   },
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = User = mongoose.model('users', userSchema);

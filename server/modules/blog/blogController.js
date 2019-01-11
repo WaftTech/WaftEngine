@@ -1,8 +1,8 @@
-const HttpStatus = require('http-status');
-var ObjectId = require('mongoose').Types.ObjectId;
+const httpStatus = require('http-status');
+var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const blogConfig = require('./blogConfig');
-const BlogSch = require('./blog');
+const blogSch = require('./blogShema');
 const blogcontroller = {};
 
 blogcontroller.GetBlogAuthorize = async (req, res, next) => {
@@ -44,8 +44,8 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
     if (req.query.find_PublishedOn) {
       searchq = { PublishedOn: { $regex: req.query.find_PublishedOn, $options: 'i x' }, ...searchq };
     }
-    let blogs = await otherHelper.getquerySendResponse(BlogSch, page, size, sortq, searchq, selectq, '', next);
-    return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, '', next);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
   }
@@ -91,8 +91,8 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
     if (req.query.find_PublishedOn) {
       searchq = { PublishedOn: { $regex: req.query.find_PublishedOn, $options: 'i x' }, ...searchq };
     }
-    let blogs = await otherHelper.getquerySendResponse(BlogSch, page, size, sortq, searchq, selectq, '', next);
-    return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, '', next);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
   }
@@ -107,13 +107,13 @@ blogcontroller.SaveBlog = async (req, res, next) => {
       if (req.files && req.files[0]) {
         blogs.Image = req.files;
       }
-      const update = await BlogSch.findByIdAndUpdate(blogs._id, { $set: blogs });
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, update, null, blogConfig.save, null);
+      const update = await blogSch.findByIdAndUpdate(blogs._id, { $set: blogs });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.save, null);
     } else {
       blogs.Image = req.files;
-      const newBlog = new BlogSch(blogs);
+      const newBlog = new blogSch(blogs);
       const BlogSave = await newBlog.save();
-      return otherHelper.sendResponse(res, HttpStatus.OK, true, BlogSave, null, blogConfig.save, null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, BlogSave, null, blogConfig.save, null);
     }
   } catch (err) {
     next(err);
@@ -122,18 +122,18 @@ blogcontroller.SaveBlog = async (req, res, next) => {
 
 blogcontroller.GetBlogDetail = async (req, res, next) => {
   const id = req.params.id;
-  const blog = await BlogSch.findOne({ _id: id, IsDeleted: false });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, blogConfig.get, null);
+  const blog = await blogSch.findOne({ _id: id, IsDeleted: false });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.get, null);
 };
 blogcontroller.GetBlogBySlug = async (req, res, next) => {
   const slug = req.params.slug;
-  const blogs = await BlogSch.findOne({ SlugUrl: slug, IsDeleted: false, IsPublished: true }, { IsPublished: 0 });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, blogs, null, blogConfig.get, null);
+  const blogs = await blogSch.findOne({ SlugUrl: slug, IsDeleted: false, IsPublished: true }, { IsPublished: 0 });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
 blogcontroller.DeleteBlog = async (req, res, next) => {
   const id = req.params.id;
-  const blog = await BlogSch.findByIdAndUpdate(ObjectId(id), { $set: { IsDeleted: true, Deleted_at: new Date() } });
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, blog, null, blogConfig.delete, null);
+  const blog = await blogSch.findByIdAndUpdate(objectId(id), { $set: { IsDeleted: true, Deleted_at: new Date() } });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.delete, null);
 };
 
 module.exports = blogcontroller;

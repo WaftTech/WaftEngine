@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 
-const BugSchema = new Schema({
+const bugSchema = new schema({
   error_message: { type: String, required: true },
   error_stack: { type: String },
   error_type: { type: String },
@@ -11,4 +11,4 @@ const BugSchema = new Schema({
   ip: { type: Schema.Types.Mixed },
 });
 
-module.exports = Bugs = mongoose.model('bugs', BugSchema);
+module.exports = Bugs = mongoose.model('bugs', bugSchema);
