@@ -13,6 +13,9 @@ router.use('/contents', contentRoutes);
 // All route of Media
 const mediaRoutes = require('./api/media');
 router.use('/media', mediaRoutes);
+// All route of setting
+const settingRoutes = require('./api/setting');
+router.use('/setting', settingRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
