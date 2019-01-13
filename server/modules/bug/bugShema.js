@@ -6,9 +6,9 @@ const bugSchema = new schema({
   error_stack: { type: String },
   error_type: { type: String },
   AddedAt: { type: Date, default: Date.now },
-  AddedBy: { type: Schema.Types.ObjectId, ref: 'users' },
-  device: { type: Schema.Types.Mixed },
-  ip: { type: Schema.Types.Mixed },
+  AddedBy: { type: schema.Types.ObjectId, ref: 'users' },
+  device: { type: schema.Types.Mixed },
+  ip: { type: schema.Types.Mixed },
 });
 
 module.exports = Bugs = mongoose.model('bugs', bugSchema);

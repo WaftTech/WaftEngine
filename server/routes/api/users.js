@@ -119,8 +119,4 @@ router.post('/login/google/:access_token', userModule.OauthCodeToToken, userModu
  */
 router.get('/info', authorization, userModule.Info);
 
-//@route GET api/user/getunderlist
-// @description returns the list of user under
-router.get('/getunderlist', authorization, userModule.GetUnderUserList);
-
 module.exports = router;

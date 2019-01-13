@@ -5,7 +5,7 @@ const upload = multer({ dest: 'public/content/' });
 
 const contentValidation = require('./../../modules/Content/ContentValidation');
 
-const dModule = require('../../modules/Contents/contentController');
+const dModule = require('../../modules/content/contentController');
 const { authorization } = require('../../middleware/authentication.middleware');
 
 router.get('/', dModule.GetContent);
