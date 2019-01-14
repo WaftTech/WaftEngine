@@ -17,6 +17,6 @@
 * For const:- write like this:- waftEngine
 * For function:- write like this:- WaftEngine
 * For let:- write like this:- waftengine
-* For schema field:- write like this:- waftengine
+* For schema field:- write like this:- waft_engine
 
   <!-- **********************************************************/ -->

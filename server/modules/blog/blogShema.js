@@ -9,6 +9,7 @@ const blogSchema = new schema({
   Tags: { type: [String] },
   Keywords: { type: String },
   SlugUrl: { type: String },
+  Category: { type: String, required: true },
   PublishedOn: { type: Date, default: Date.now },
   IsPublished: { type: Boolean, required: true, default: true },
   IsActive: { type: Boolean, required: true, default: false },

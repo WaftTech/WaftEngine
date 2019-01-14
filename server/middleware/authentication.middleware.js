@@ -4,9 +4,9 @@ const HttpStatus = require('http-status');
 
 const otherHelper = require('../helper/others.helper');
 const { secretOrKey } = require('../config/keys');
-const accessSch = require('../modules/Roles/access');
-const modulesSch = require('../modules/Roles/module');
-const rolesSch = require('../modules/Roles/role');
+const accessSch = require('../modules/role/accessShema');
+const modulesSch = require('../modules/role/moduleShema');
+const rolesSch = require('../modules/role/roleShema');
 const authMiddleware = {};
 const mongoose = require('mongoose');
 

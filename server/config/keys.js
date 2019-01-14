@@ -1,8 +1,8 @@
 module.exports = {
-  mongoURI: 'mongodb://hrapp:hrapp123@ds123619.mlab.com:23619/hr-app',
-  //mongoURI: 'mongodb://localhost:27017/hr-app',
+  mongoURI: 'mongodb://waftAdmin:waftAdmin1@ds155164.mlab.com:55164/waft-engine',
+  //mongoURI: 'mongodb://localhost:27017/waft-engine',
 
-  //mongoURI: 'mongodb://askfourtrip:askfourtrip@localhost:27017/askfourtrip',
+  //mongoURI: 'mongodb://waft-engine:waft-engine@localhost:27017/waft-engine',
   secretOrKey: 'jwtsecret',
   tokenExpireTime: 360000,
 
