@@ -6,7 +6,7 @@ const bugController = {};
 
 bugController.AddErrorToLogs = async (req, res, next, err) => {
   const errObj = bugHelper.getErrorObj(err, next);
-  errObj.AddedBy = req.user && req.user.id;
+  errObj.added_by = req.user && req.user.id;
   errObj.device = req.device;
   errObj.ip = req.client_ip_address;
   const bug = await bugSch(errObj);
@@ -43,7 +43,7 @@ bugController.GetErrors = async (req, res, next) => {
         sortq = '';
       }
     }
-    selectq = 'error_message error_stack error_type AddedAt AddedBy device ip';
+    selectq = 'error_message error_stack error_type added_at added_by device ip';
     searchq = {};
     let bugs = await otherHelper.getquerySendResponse(bugSch, page, size, sortq, searchq, selectq, '', next);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totaldata);
