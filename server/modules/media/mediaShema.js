@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const mediaSchema = new schema({
   Description: { type: String, required: false },
-  MediaImage: { type: Schema.Types.Mixed, required: false },
+  MediaImage: { type: schema.Types.Mixed, required: false },
   fieldname: { type: String, required: false },
   originalname: { type: String, required: false },
   encoding: { type: String, required: false },
@@ -16,9 +16,9 @@ const mediaSchema = new schema({
   module: { type: String },
   IsDeleted: { type: Boolean, required: true, default: false },
   Deleted_at: { type: Date, required: false },
-  Deleted_by: { type: Schema.Types.ObjectId, required: false },
+  Deleted_by: { type: schema.Types.ObjectId, required: false },
   Added_at: { type: Date, default: Date.now },
-  Added_by: { type: Schema.Types.ObjectId, required: true },
+  Added_by: { type: schema.Types.ObjectId, required: true },
 });
 
 module.exports = Media = mongoose.model('media', mediaSchema);

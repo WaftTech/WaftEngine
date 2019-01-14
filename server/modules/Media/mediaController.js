@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
-const mediaSch = require('./media');
+const mediaSch = require('./mediaShema');
 const mediaController = {};
 const internal = {};
 

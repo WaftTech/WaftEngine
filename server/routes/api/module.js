@@ -7,6 +7,6 @@ const authenticationMiddleware = require('../../middleware/authentication.middle
 router.get('/fields', dModule.GetFieldConfig);
 router.get('/settings', dModule.GetModules);
 router.get('/setting/:name', dModule.GetModuleConfig);
-router.post('/setting/:name', dModule.validateModuleConfig, dModule.SaveModuleConfig);
+router.post('/setting/:name', dModule.SaveModuleConfig);
 
 module.exports = router;
