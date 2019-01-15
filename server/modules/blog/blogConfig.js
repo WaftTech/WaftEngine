@@ -7,4 +7,7 @@ module.exports = {
   save: 'Blog saved successfully.',
   get: 'blogs get successfully.',
   delete: 'Blog deleted successfully!!',
+  csave: 'Blog category saved successfully.',
+  cget: 'blogs category get successfully.',
+  cdelete: 'Blog category deleted successfully!!',
 };
