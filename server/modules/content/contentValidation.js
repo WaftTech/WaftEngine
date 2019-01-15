@@ -7,19 +7,19 @@ const validations = {};
 validations.sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'ContentName',
+      field: 'name',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Key',
+      field: 'key',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Description',
+      field: 'description',
       sanitize: {
         trim: true,
       },
@@ -32,7 +32,7 @@ validations.validation = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: 'ContentName',
+      field: 'name',
       validate: [
         {
           condition: 'IsEmpty',
@@ -45,7 +45,7 @@ validations.validation = (req, res, next) => {
       ],
     },
     {
-      field: 'Key',
+      field: 'key',
       validate: [
         {
           condition: 'IsEmpty',
@@ -58,7 +58,7 @@ validations.validation = (req, res, next) => {
       ],
     },
     {
-      field: 'Description',
+      field: 'description',
       validate: [
         {
           condition: 'IsEmpty',
@@ -71,7 +71,7 @@ validations.validation = (req, res, next) => {
       ],
     },
     {
-      field: 'PublishFrom',
+      field: 'publish_from',
       validate: [
         {
           condition: 'IsDate',
@@ -80,7 +80,7 @@ validations.validation = (req, res, next) => {
       ],
     },
     {
-      field: 'PublishTo',
+      field: 'publish_to',
       validate: [
         {
           condition: 'IsDate',

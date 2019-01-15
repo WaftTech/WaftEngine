@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const mediaSchema = new schema({
-  Description: { type: String, required: false },
-  MediaImage: { type: schema.Types.Mixed, required: false },
-  fieldname: { type: String, required: false },
-  originalname: { type: String, required: false },
+  description: { type: String, required: false },
+  media_image: { type: schema.Types.Mixed, required: false },
+  field_name: { type: String, required: false },
+  original_name: { type: String, required: false },
   encoding: { type: String, required: false },
   mimetype: { type: String, required: false },
   type: { type: String, required: false },
@@ -14,11 +14,11 @@ const mediaSchema = new schema({
   path: { type: String, required: false },
   size: { type: Number, required: false },
   module: { type: String },
-  IsDeleted: { type: Boolean, required: true, default: false },
-  Deleted_at: { type: Date, required: false },
-  Deleted_by: { type: schema.Types.ObjectId, required: false },
-  Added_at: { type: Date, default: Date.now },
-  Added_by: { type: schema.Types.ObjectId, required: true },
+  is_deleted: { type: Boolean, required: true, default: false },
+  deleted_at: { type: Date, required: false },
+  deleted_by: { type: schema.Types.ObjectId, required: false },
+  added_at: { type: Date, default: Date.now },
+  added_by: { type: schema.Types.ObjectId, required: true },
 });
 
 module.exports = Media = mongoose.model('media', mediaSchema);

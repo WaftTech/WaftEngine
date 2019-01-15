@@ -40,19 +40,19 @@ contentController.GetContent = async (req, res, next) => {
 
   searchq = { IsDeleted: false };
 
-  if (req.query.find_ContentName) {
-    searchq = { ContentName: { $regex: req.query.find_ContentName, $options: 'i x' }, ...searchq };
+  if (req.query.find_name) {
+    searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
   }
-  if (req.query.find_Key) {
-    searchq = { Key: { $regex: req.query.find_Key, $options: 'i x' }, ...searchq };
+  if (req.query.find_key) {
+    searchq = { key: { $regex: req.query.find_key, $options: 'i x' }, ...searchq };
   }
-  if (req.query.find_PublishFrom) {
-    searchq = { PublishFrom: { $regex: req.query.find_PublishFrom, $options: 'i x' }, ...searchq };
+  if (req.query.find_publish_from) {
+    searchq = { publish_from: { $regex: req.query.find_publish_from, $options: 'i x' }, ...searchq };
   }
-  if (req.query.find_PublishTo) {
-    searchq = { PublishTo: { $regex: req.query.find_PublishTo, $options: 'i x' }, ...searchq };
+  if (req.query.find_publish_to) {
+    searchq = { publish_to: { $regex: req.query.find_publish_to, $options: 'i x' }, ...searchq };
   }
-  selectq = 'ContentName Key Description PublishFrom PublishTo IsActive IsFeature';
+  selectq = 'name key description publish_from publish_to is_Active is_feature';
   let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, '');
 
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
@@ -60,12 +60,11 @@ contentController.GetContent = async (req, res, next) => {
 contentController.SaveContent = async (req, res, next) => {
   try {
     const contents = req.body;
-    console.log('contents', contents);
     if (contents && contents._id) {
       const update = await contentSch.findByIdAndUpdate(contents._id, { $set: contents }, { new: true });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, contentConfig.save, null);
     } else {
-      contents.Added_by = req.user.id;
+      contents.added_by = req.user.id;
       const newContent = new contentSch(contents);
       const contentsSave = await newContent.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, contentsSave, null, contentConfig.save, null);
@@ -76,7 +75,7 @@ contentController.SaveContent = async (req, res, next) => {
 };
 contentController.GetContentDetail = async (req, res, next) => {
   const id = req.params.id;
-  const contents = await contentSch.findOne({ _id: id, IsDeleted: false });
+  const contents = await contentSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
 };
 

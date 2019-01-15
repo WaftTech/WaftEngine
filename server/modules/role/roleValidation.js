@@ -8,7 +8,7 @@ validations.validateRole = (req, res, next) => {
   const data = req.body;
   const validationArray = [
     {
-      field: 'rolesTitle',
+      field: 'role_title',
       validate: [
         {
           condition: 'IsEmpty',
@@ -47,7 +47,7 @@ validations.validateModule = (req, res, next) => {
   const data = req.body;
   const validationArray = [
     {
-      field: 'moduleName',
+      field: 'module_name',
       validate: [
         {
           condition: 'IsEmpty',
@@ -86,7 +86,7 @@ validations.validateAccess = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: 'moduleId',
+      field: 'module_id',
       validate: [
         {
           condition: 'IsMongoId',
@@ -95,7 +95,7 @@ validations.validateAccess = (req, res, next) => {
       ],
     },
     {
-      field: 'roleId',
+      field: 'role_id',
       validate: [
         {
           condition: 'IsMongoId',
@@ -115,7 +115,7 @@ validations.validateAccess = (req, res, next) => {
 validations.sanitizeRole = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'rolesTitle',
+      field: 'role_title',
       sanitize: {
         trim: true,
       },
@@ -133,7 +133,7 @@ validations.sanitizeRole = (req, res, next) => {
 validations.sanitizeModule = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'moduleName',
+      field: 'module_name',
       sanitize: {
         trim: true,
       },
@@ -151,13 +151,13 @@ validations.sanitizeModule = (req, res, next) => {
 validations.sanitizeAccess = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'moduleId',
+      field: 'module_id',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'roleId',
+      field: 'role_id',
       sanitize: {
         trim: true,
       },

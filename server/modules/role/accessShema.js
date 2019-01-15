@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const accessSchema = new schema({
-  moduleId: { type: schema.Types.ObjectId, required: true, ref: 'moduleAccess' },
-  roleId: { type: schema.Types.ObjectId, required: true, ref: 'roles' },
-  accessType: { type: [schema.Types.ObjectId], required: true },
-  isActive: { type: Boolean, required: true, default: false },
+  module_id: { type: schema.Types.ObjectId, required: true, ref: 'moduleAccess' },
+  role_id: { type: schema.Types.ObjectId, required: true, ref: 'roles' },
+  access_type: { type: [schema.Types.ObjectId], required: true },
+  is_active: { type: Boolean, required: true, default: false },
   added_at: { type: Date, default: Date.now },
 });
 

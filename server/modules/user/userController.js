@@ -62,7 +62,7 @@ userController.GetAllUser = async (req, res, next) => {
       sortq = '';
     }
   }
-  searchq = { isDeleted: false };
+  searchq = { is_deleted: false };
 
   if (req.query.find_name) {
     searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
@@ -72,9 +72,9 @@ userController.GetAllUser = async (req, res, next) => {
   }
   selectq = 'name email password avatar gender date_of_birth is_active password_reset_code updated_at added_at added_by roles';
 
-  populate = { path: 'roles', select: 'RolesTitle' };
+  populate = { path: 'roles', select: 'role_title' };
 
-  let datas = await otherHelper.getquerySendResponse(User, page, size, sortq, searchq, selectq, next, populate);
+  let datas = await otherHelper.getquerySendResponse(user, page, size, sortq, searchq, selectq, next, populate);
 
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
 };
