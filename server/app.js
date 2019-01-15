@@ -51,6 +51,7 @@ mongoose
     mongoURI,
     {
       useNewUrlParser: true,
+      useCreateIndex: true,
     },
   )
   .then(() => console.log('MongoDB Connected'))

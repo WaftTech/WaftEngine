@@ -8,11 +8,11 @@ const internal = {};
 mediaController.GetMedia = async (req, res, next) => {
   const page = parseInt(req.params.page);
   const medias = await mediaSch
-    .find({ IsDeleted: false })
+    .find({ is_deleted: false })
     .limit(12)
     .skip(12 * page)
     .sort({ _id: -1 })
-    .select('_id path fieldname originalname mimetype');
+    .select('_id path field_name original_name mimetype');
   return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Get Success !!', null);
 };
 mediaController.SaveMedia = async (req, res, next) => {
@@ -26,7 +26,7 @@ mediaController.SaveMedia = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'Media Saved Success !!', null);
     } else {
       media = req.files[0];
-      media.Added_by = req.user.id;
+      media.added_by = req.user.id;
       media.type = req.params.type;
       const newMedia = new mediaSch(media);
       const mediaSave = await newMedia.save();
@@ -38,7 +38,7 @@ mediaController.SaveMedia = async (req, res, next) => {
 };
 mediaController.GetMediaDetail = async (req, res, next) => {
   const id = req.params.id;
-  const media = await mediaSch.findOne({ _id: objectId(id), IsDeleted: false });
+  const media = await mediaSch.findOne({ _id: objectId(id), is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Get Success !!', null);
 };
 mediaController.DeleteMedia = async (req, res, next) => {
@@ -46,7 +46,7 @@ mediaController.DeleteMedia = async (req, res, next) => {
   const media = await mediaSch.findByIdAndUpdate(
     objectId(id),
     {
-      $set: { IsDeleted: true, Deleted_by: req.user.id, Deleted_at: new Date() },
+      $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
     },
     { new: true },
   );

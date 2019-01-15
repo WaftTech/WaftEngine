@@ -44,7 +44,7 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
     if (req.query.find_published_on) {
       searchq = { published_on: { $regex: req.query.find_published_on, $options: 'i x' }, ...searchq };
     }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, '', next);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, '');
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
@@ -84,14 +84,14 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
     }
     selectq = 'title description summary tags keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = { is_deleted: false };
-    searchq = { IsPublished: true, ...searchq };
+    searchq = { is_published: true, ...searchq };
     if (req.query.find_title) {
       searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
     }
     if (req.query.find_published_on) {
       searchq = { published_on: { $regex: req.query.find_published_on, $options: 'i x' }, ...searchq };
     }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, '', next);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq,next, '');
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);

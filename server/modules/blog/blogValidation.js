@@ -23,7 +23,7 @@ validation.sanitize = (req, res, next) => {
   otherHelper.sanitize(req, sanitizeArray);
   next();
 };
-validation.validateInput = (req, res, next) => {
+validation.validate = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
