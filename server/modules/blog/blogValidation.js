@@ -62,4 +62,33 @@ validation.validate = (req, res, next) => {
     next();
   }
 };
+validation.catSanitize = (req, res, next) => {
+  otherHelper.sanitize(req, [{
+    field: 'title',
+    sanitize: {
+      trim: true,
+    }
+  }]);
+  next();
+};
+validation.catValidate = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
+    {
+      field: 'title',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+      ],
+    },
+  ];
+  const errors = otherHelper.validation(data, validateArray);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, 'input errors', null);
+  } else {
+    next();
+  }
+};
 module.exports = validation;
