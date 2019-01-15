@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
-const config = require('./UserConfig');
+const config = require('./userConfig');
 const otherHelper = require('../../helper/others.helper');
 const validations = {};
 

@@ -21,7 +21,7 @@ const userSchema = new schema({
   bio: { type: String },
   skills: { type: [String] },
   description: { type: String },
-  isDeleted: {
+  is_deleted: {
     type: Boolean,
     default: false,
     required: true,
