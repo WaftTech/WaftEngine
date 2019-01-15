@@ -9,7 +9,7 @@ const blogSchema = new schema({
   tags: { type: [String] },
   keywords: { type: String },
   slug_url: { type: String },
-  category: { type: String, required: true },
+  category: { type: schema.Types.ObjectId, ref: 'category' },
   published_on: { type: Date, default: Date.now },
   is_published: { type: Boolean, required: true, default: true },
   is_active: { type: Boolean, required: true, default: false },

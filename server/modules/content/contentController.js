@@ -38,7 +38,7 @@ contentController.GetContent = async (req, res, next) => {
     }
   }
 
-  searchq = { IsDeleted: false };
+  searchq = { is_deleted: false };
 
   if (req.query.find_name) {
     searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
@@ -52,7 +52,7 @@ contentController.GetContent = async (req, res, next) => {
   if (req.query.find_publish_to) {
     searchq = { publish_to: { $regex: req.query.find_publish_to, $options: 'i x' }, ...searchq };
   }
-  selectq = 'name key description publish_from publish_to is_Active is_feature';
+  selectq = 'name key description publish_from publish_to is_active is_feature';
   let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, '');
 
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
