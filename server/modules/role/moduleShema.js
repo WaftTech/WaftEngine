@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const moduleSchema = new schema({
-  moduleName: { type: String, required: true, unique: true },
+  module_name: { type: String, required: true, unique: true },
   description: { type: String },
   order: { Type: Number },
   path: [

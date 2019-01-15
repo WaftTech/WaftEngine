@@ -8,13 +8,13 @@ const validation = {};
 validation.sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'Title',
+      field: 'title',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Description',
+      field: 'description',
       sanitize: {
         trim: true,
       },
@@ -23,11 +23,11 @@ validation.sanitize = (req, res, next) => {
   otherHelper.sanitize(req, sanitizeArray);
   next();
 };
-validation.validateInput = (req, res, next) => {
+validation.validate = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: 'Title',
+      field: 'title',
       validate: [
         {
           condition: 'IsEmpty',
@@ -41,7 +41,7 @@ validation.validateInput = (req, res, next) => {
       ],
     },
     {
-      field: 'Description',
+      field: 'description',
       validate: [
         {
           condition: 'IsEmpty',

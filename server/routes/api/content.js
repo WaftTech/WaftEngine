@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const upload = multer({ dest: 'public/content/' });
 
-const contentValidation = require('./../../modules/Content/ContentValidation');
+const contentValidation = require('./../../modules/content/contentValidation');
 
 const dModule = require('../../modules/content/contentController');
 const { authorization } = require('../../middleware/authentication.middleware');
