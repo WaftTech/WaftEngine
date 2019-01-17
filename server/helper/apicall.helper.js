@@ -20,16 +20,6 @@
             const response = await request(options);
             console.log("response",response);
             return response;
-            // return new Promise((resolve, reject) => {
-            //     request(options)
-            //         .then((response) => {
-            //             console.log(response);
-            //             resolve(response);
-            //         })
-            //         .catch((err) => {
-            //             reject(err);
-            //         });
-            // });
         } catch (err) {
             return next(err);
         }

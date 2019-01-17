@@ -10,6 +10,9 @@ router.use('/role', roleRoutes);
 // All route of Content
 const contentRoutes = require('./api/content');
 router.use('/contents', contentRoutes);
+// All route of Contact
+const contactRoutes = require('./api/contact');
+router.use('/contact', contactRoutes);
 // All route of Media
 const mediaRoutes = require('./api/media');
 router.use('/media', mediaRoutes);
@@ -19,9 +22,12 @@ router.use('/setting', settingRoutes);
 // All route of bugs
 const bugRoutes = require('./api/bugs');
 router.use('/bug', bugRoutes);
-// All route of bugs
+// All route of blogs
 const blogRoutes = require('./api/blog');
 router.use('/blog', blogRoutes);
+// All route of sliders
+const sliderRoutes = require('./api/slider');
+router.use('/slider', sliderRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
