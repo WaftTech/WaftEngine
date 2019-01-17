@@ -3,6 +3,7 @@ module.exports = {
   //mongoURI: 'mongodb://localhost:27017/waft-engine',
 
   //mongoURI: 'mongodb://waft-engine:waft-engine@localhost:27017/waft-engine',
+  recaptcha: { secretKey: '1717', siteKey: '171717'},
   secretOrKey: 'jwtsecret',
   tokenExpireTime: 360000,
 

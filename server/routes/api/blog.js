@@ -14,4 +14,5 @@ router.get('/auth', blogModule.GetBlogAuthorize);
 router.post('/', validations.sanitize, validations.validate, blogModule.SaveBlog);
 router.post('/category', validations.catSanitize, validations.catValidate, blogModule.SaveBlogCategory);
 router.get('/:id', blogModule.GetBlogDetail);
+router.delete('/:id', blogModule.DeleteBlog);
 module.exports = router;
