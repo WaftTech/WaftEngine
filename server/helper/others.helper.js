@@ -21,13 +21,25 @@ otherHelper.parsePhoneNo = (phone, RegionCode) => {
     var pn = new PhoneNumber(phone, RegionCode);
     console.log(pn);
     if (!pn.isValid()) {
-      return { status: false, data: 'Provided no is invalid mobile no.' };
+      return {
+        status: false,
+        data: 'Provided no is invalid mobile no.'
+      };
     } else if (!pn.isMobile()) {
-      return { status: false, data: 'Provided no should be mobile no.' };
+      return {
+        status: false,
+        data: 'Provided no should be mobile no.'
+      };
     } else if (pn.isValid()) {
-      return { status: true, data: pn.getNumber('e164') };
+      return {
+        status: true,
+        data: pn.getNumber('e164')
+      };
     } else {
-      return { status: true, data: pn.getNumber('e164') };
+      return {
+        status: true,
+        data: pn.getNumber('e164')
+      };
     }
   } catch (err) {
     console.log(err);
@@ -53,7 +65,6 @@ otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, p
   if (totaldata) response.totaldata = totaldata;
   return res.status(status).json(response);
 };
-
 otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, selectquery, next, populate) => {
   let datas = {};
   try {
@@ -70,42 +81,43 @@ otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, s
     next(err);
   }
 };
-
 otherHelper.sanitize = (req, sanitizeArray) => {
   sanitizeArray.forEach(sanitizeObj => {
+    let sanitizefield = req.body[sanitizeObj.field];
+    sanitizefield = !isEmpty(sanitizefield) ? sanitizefield : '';
     const sanitization = sanitizeObj.sanitize;
     if (sanitization.rtrim) {
-      req.body[sanitizeObj.field] = Validator.rtrim(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.rtrim(sanitizefield);
     }
     if (sanitization.ltrim) {
-      req.body[sanitizeObj.field] = Validator.ltrim(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.ltrim(sanitizefield);
     }
     if (sanitization.blacklist) {
-      req.body[sanitizeObj.field] = Validator.blacklist(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.blacklist(sanitizefield);
     }
     if (sanitization.whitelist) {
-      req.body[sanitizeObj.field] = Validator.whitelist(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.whitelist(sanitizefield);
     }
     if (sanitization.trim) {
-      req.body[sanitizeObj.field] = Validator.trim(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.trim(sanitizefield);
     }
     if (sanitization.escape) {
-      req.body[sanitizeObj.field] = Validator.escape(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.escape(sanitizefield);
     }
     if (sanitization.unescape) {
-      req.body[sanitizeObj.field] = Validator.unescape(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.unescape(sanitizefield);
     }
     if (sanitization.toBoolean) {
-      req.body[sanitizeObj.field] = Validator.toBoolean(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.toBoolean(sanitizefield);
     }
     if (sanitization.toInt) {
-      req.body[sanitizeObj.field] = Validator.toInt(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.toInt(sanitizefield);
     }
     if (sanitization.toFloat) {
-      req.body[sanitizeObj.field] = Validator.toFloat(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.toFloat(sanitizefield);
     }
     if (sanitization.toDate) {
-      req.body[sanitizeObj.field] = Validator.toDate(req.body[sanitizeObj.field]);
+      sanitizefield = Validator.toDate(sanitizefield);
     }
   });
   return true;
@@ -113,7 +125,8 @@ otherHelper.sanitize = (req, sanitizeArray) => {
 otherHelper.validation = (data, validationArray) => {
   let errors = {};
   validationArray.forEach(validationObj => {
-    const value = data[validationObj.field];
+    let value = data[validationObj.field];
+    value = !isEmpty(value) ? value : '';
     const validation = validationObj.validate;
     for (let i = 0; i < validation.length; i++) {
       const val = validation[i];
