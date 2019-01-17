@@ -12,7 +12,7 @@ mediaController.GetMedia = async (req, res, next) => {
     .limit(12)
     .skip(12 * page)
     .sort({ _id: -1 })
-    .select('_id path field_name original_name mimetype');
+    .select('_id path field_name original_name mimetype size encoding');
   return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Get Success !!', null);
 };
 mediaController.SaveMedia = async (req, res, next) => {

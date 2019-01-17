@@ -38,14 +38,31 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
         sortq = '';
       }
     }
-    populate = [{ path: 'category', select: '_id title' }];
+    populate = [{
+      path: 'category',
+      select: '_id title'
+    }];
     selectq = 'title description summary tags category keywords slug_url is_published published_on is_active image added_by added_at udated_at updated_by';
-    searchq = { is_deleted: false };
+    searchq = {
+      is_deleted: false
+    };
     if (req.query.find_title) {
-      searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
+      searchq = {
+        title: {
+          $regex: req.query.find_title,
+          $options: 'i x'
+        },
+        ...searchq
+      };
     }
     if (req.query.find_published_on) {
-      searchq = { published_on: { $regex: req.query.find_published_on, $options: 'i x' }, ...searchq };
+      searchq = {
+        published_on: {
+          $regex: req.query.find_published_on,
+          $options: 'i x'
+        },
+        ...searchq
+      };
     }
     let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
@@ -86,17 +103,37 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
         sortq = '';
       }
     }
-    populate = [{ path: 'category', select: '_id title' }];
+    populate = [{
+      path: 'category',
+      select: '_id title'
+    }];
     selectq = 'title description summary tags category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
-    searchq = { is_deleted: false };
-    searchq = { is_published: true, ...searchq };
+    searchq = {
+      is_deleted: false
+    };
+    searchq = {
+      is_published: true,
+      ...searchq
+    };
     if (req.query.find_title) {
-      searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
+      searchq = {
+        title: {
+          $regex: req.query.find_title,
+          $options: 'i x'
+        },
+        ...searchq
+      };
     }
     if (req.query.find_published_on) {
-      searchq = { published_on: { $regex: req.query.find_published_on, $options: 'i x' }, ...searchq };
+      searchq = {
+        published_on: {
+          $regex: req.query.find_published_on,
+          $options: 'i x'
+        },
+        ...searchq
+      };
     }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq,next, populate);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
@@ -136,7 +173,13 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
     }
     selectq = 'title slug_url added_by added_at';
     if (req.query.find_title) {
-      searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
+      searchq = {
+        title: {
+          $regex: req.query.find_title,
+          $options: 'i x'
+        },
+        ...searchq
+      };
     }
     let blogcats = await otherHelper.getquerySendResponse(blogCatSch, page, size, sortq, searchq, selectq, next, '');
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogcats.data, blogConfig.cget, page, size, blogcats.totaldata);
@@ -147,7 +190,11 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
 
 blogcontroller.GetBlogCatBySlug = async (req, res, next) => {
   const slug = req.params.slug;
-  const blogcats = await blogCatSch.findOne({ slug_url: slug}, {__v: 0});
+  const blogcats = await blogCatSch.findOne({
+    slug_url: slug
+  }, {
+    __v: 0
+  });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
 };
 
@@ -160,7 +207,9 @@ blogcontroller.SaveBlog = async (req, res, next) => {
       if (req.files && req.files[0]) {
         blogs.Image = req.files;
       }
-      const update = await blogSch.findByIdAndUpdate(blogs._id, { $set: blogs });
+      const update = await blogSch.findByIdAndUpdate(blogs._id, {
+        $set: blogs
+      });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.save, null);
     } else {
       blogs.image = req.files;
@@ -179,7 +228,9 @@ blogcontroller.SaveBlogCategory = async (req, res, next) => {
     let d = new Date();
     blogcats.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogcats.title}`);
     if (blogcats && blogcats._id) {
-      const update = await blogCatSch.findByIdAndUpdate(blogcats._id, { $set: blogcats });
+      const update = await blogCatSch.findByIdAndUpdate(blogcats._id, {
+        $set: blogcats
+      });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.csave, null);
     } else {
       // blogcats.added_by = req.user.id;
@@ -194,19 +245,33 @@ blogcontroller.SaveBlogCategory = async (req, res, next) => {
 
 blogcontroller.GetBlogDetail = async (req, res, next) => {
   const id = req.params.id;
-  const blog = await blogSch.findOne({ _id: id, is_deleted: false });
+  const blog = await blogSch.findOne({
+    _id: id,
+    is_deleted: false
+  });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.get, null);
 };
 
 blogcontroller.GetBlogBySlug = async (req, res, next) => {
   const slug = req.params.slug;
-  const blogs = await blogSch.findOne({ slug_url: slug, is_deleted: false, is_published: true }, { IsPublished: 0 });
+  const blogs = await blogSch.findOne({
+    slug_url: slug,
+    is_deleted: false,
+    is_published: true
+  }, {
+    IsPublished: 0
+  });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
 
 blogcontroller.DeleteBlog = async (req, res, next) => {
   const id = req.params.id;
-  const blog = await blogSch.findByIdAndUpdate(objectId(id), { $set: { is_deleted: true, deleted_at: new Date() } });
+  const blog = await blogSch.findByIdAndUpdate(objectId(id), {
+    $set: {
+      is_deleted: true,
+      deleted_at: new Date()
+    }
+  });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.delete, null);
 };
 
