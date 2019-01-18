@@ -264,6 +264,105 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
 
+blogcontroller.GetBlogByCat = async (req, res, next) => {
+  try {
+    let page;
+    let size;
+    let searchq;
+    const size_default = 10;
+    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+      page = Math.abs(req.query.page);
+    } else {
+      page = 1;
+    }
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
+    const id = req.params.id;
+    searchq = {
+      is_deleted: false,
+      category: id
+    };
+    const catgoryBlog = await blogSch.find(searchq);
+    const totaldata = await blogSch.countDocuments(searchq);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, catgoryBlog, blogConfig.get, page, size, totaldata);
+
+  } catch (err) {
+    next(err);
+  }
+};
+blogcontroller.GetBlogByTag = async (req, res, next) => {
+  try {
+    let page;
+    let size;
+    let searchq;
+    const size_default = 10;
+    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+      page = Math.abs(req.query.page);
+    } else {
+      page = 1;
+    }
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
+    const tag = req.params.tag;
+    searchq = {
+      is_deleted: false,
+      tags: tag
+    };
+    const tagBlog = await blogSch.find(searchq);
+    const totaldata = await blogSch.countDocuments(searchq);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog, blogConfig.get, page, size, totaldata);
+
+  } catch (err) {
+    next(err);
+  }
+};
+blogcontroller.GetBlogByDate = async (req, res, next) => {
+  try {
+    let page;
+    let size;
+    let searchq;
+    const size_default = 10;
+    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+      page = Math.abs(req.query.page);
+    } else {
+      page = 1;
+    }
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
+    let start = new Date(req.params.time);
+    let end = new Date(req.params.time);
+    end.setMonth(end.getMonth() + 1);
+
+    searchq = {
+      is_deleted: false
+    };
+    if (start) {
+      searchq = {
+        added_at: {
+          $gte: start,
+          $lt: end
+        },
+        ...searchq
+      };
+    }
+    const tagBlog = await blogSch.find(searchq);
+    const totaldata = await blogSch.countDocuments(searchq);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog, blogConfig.get, page, size, totaldata);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
 blogcontroller.DeleteBlog = async (req, res, next) => {
   const id = req.params.id;
   const blog = await blogSch.findByIdAndUpdate(objectId(id), {
