@@ -14,9 +14,7 @@
   "app.containers.WtDashboard.moduleManage": "मोड्युल व्यवस्थापन",
   "app.containers.WtDashboard.userManage": "प्रयोगकर्ता व्यवस्थापन",
   "app.containers.WtDashboard.contentManage": "सामग्री व्यवस्थापन",
-  "app.containers.WtDashboard.designationManage": "पद व्यवस्थापन",
-  "app.containers.WtDashboard.registrationManage": "दर्ता व्यवस्थापन",
-  "app.containers.WtDashboard.fiscalManage": "वित्तीय व्यवस्थापन",
+  "app.containers.WtDashboard.companyManage": "कम्पनी व्यवस्थापन",
 
   "app.containers.ModuleManagePage.moduleManage": "मोड्युल व्यवस्थापन",
   "app.containers.ModuleManagePage.moduleAction": "कार्य",
@@ -45,19 +43,10 @@
   "app.containers.ContentListingPage.addedTo": "यसमा थपियो",
   "app.containers.ContentListingPage.operations": "सञ्चालनहरू",
 
-
-  "app.containers.DesignationPage.designation": "पद",
-  "app.containers.DesignationPage.updateDate": "अद्यावधिक मिति",
-  "app.containers.DesignationPage.isActive": "सक्रिय छ",
-
-  "app.containers.RegistrationPage.registrationNo": "दर्ता नम्बर",
-  "app.containers.RegistrationPage.senderName": "प्रेषक नाम",
-  "app.containers.RegistrationPage.receiverName": "प्राप्तकर्ता नाम",
-  "app.containers.RegistrationPage.registerDate": "दर्ता मिति",
-
-  "app.containers.FiscalYearPage.roleTitle": "वित्तीय वर्ष",
-  "app.containers.FiscalYearPage.rangeFrom": "बाट",
-  "app.containers.FiscalYearPage.rangeTo": "लाई",
-  "app.containers.FiscalYearPage.isCurrent": "वर्तमान छ",
-  "app.containers.FiscalYearPage.isActive": "सक्रिय छ"
+  "app.containers.CompanyManagePage.companyName":"कम्पनी नाम",
+  "app.containers.CompanyManagePage.companyImage":"कम्पनी छवि",
+  "app.containers.CompanyManagePage.isActive":"सक्रिय छ",
+  "app.containers.CompanyManagePage.action":"कार्य",
+  "app.containers.CompanyManagePage.companyManagement":"कम्पनी व्यवस्थापन",
+  "app.containers.CompanyManagePage.listOfCompany":"यहाँ कम्पनीहरु को सूची हो"
 }

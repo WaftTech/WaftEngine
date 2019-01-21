@@ -11,74 +11,168 @@
  * the linting exception.
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import GuestRoute from "components/Routes/GuestRoute";
-import UserRoute from "components/Routes/UserRoute";
-import injectSaga from "../../utils/injectSaga";
-import ResetPasswordPage from "../ResetPasswordPage";
-import LoginPage from "../LoginPage";
-import SignupPage from "../SignupPage";
-import NotFoundPage from "../NotFoundPage";
-import WtDashboard from "../WtDashboard";
-import ErrorBoundary from "../../ErrorBoundary";
-import {
-  makeSelectDialog,
-  makeSelectLocation,
-  makeSelectMessages
-} from "./selectors";
-import { deleteMessage } from "./actions";
-import saga from "./saga";
+import GuestRoute from 'components/Routes/GuestRoute';
+import UserRoute from 'components/Routes/UserRoute';
+import ResetPasswordPage from '../ResetPasswordPage';
+import LoginPage from '../LoginPage';
+import SignupPage from '../SignupPage';
+import NotFoundPage from '../NotFoundPage';
+import WtDashboard from '../WtDashboard';
+import UserLayout from './layouts/UserLayout';
+import HomePage from '../HomePage';
+import ErrorBoundary from '../../ErrorBoundary';
+import { makeSelectDialog, makeSelectLocation, makeSelectContent } from './selectors';
+import ContactUs from '../ContactUs';
+import AboutUs from '../AboutUs';
+import BlogList from '../BlogList';
+import { loadContentRequest } from './actions';
+import BlogPage from '../BlogPage';
+import CategoryListingPage from '../CategoryListingPage';
+import CategoryDetailPage from '../CategoryDetailPage';
+import saga from './saga';
+import injectSaga from 'utils/injectSaga';
+import { createStructuredSelector } from 'reselect';
 
-const App = props => {
-  const { location } = props;
-  return (
-    <ErrorBoundary>
-      <Switch location={location}>
-        <Route exact path="/" render={() => <Redirect to="/wt" />} />
-        <UserRoute path="/wt" component={WtDashboard} />
-        <Route exact path="/login" component={LoginPage} />
-        <GuestRoute exact path="/register" component={SignupPage} />
-        <GuestRoute exact path="/resetpassword" component={ResetPasswordPage} />
-        <Route path="*" component={NotFoundPage} />
-      </Switch>
-    </ErrorBoundary>
-  );
-};
+class App extends React.Component {
+  componentDidMount() {
+    this.props.loadContent();
+  }
+  render() {
+    const { location, contents } = this.props;
+    return (
+      <ErrorBoundary>
+        <Switch location={location}>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <UserLayout>
+                <HomePage />
+                <Helmet>
+                  <title>Waft Engine</title>
+                </Helmet>
+              </UserLayout>
+            )}
+          />
+
+          <Route
+            exact
+            path="/blog-list"
+            render={() => (
+              <div>
+                <UserLayout>
+                  <BlogList />
+                </UserLayout>
+                <Helmet>
+                  <title>Blogs</title>
+                </Helmet>
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/blog/:slug"
+            render={props => (
+              <UserLayout>
+                <BlogPage {...props} />
+              </UserLayout>
+            )}
+          />
+          <Route
+            exact
+            path="/contact-us"
+            render={() => (
+              <UserLayout>
+                <ContactUs />
+              </UserLayout>
+            )}
+          />
+          <Route
+            exact
+            path="/about-us"
+            render={() => (
+              <div>
+                <UserLayout>
+                  <AboutUs />
+                </UserLayout>
+                <Helmet>
+                  <title>About Us</title>
+                </Helmet>
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/blog-category"
+            render={() => (
+              <div>
+                <UserLayout>
+                  <CategoryListingPage />
+                </UserLayout>
+                <Helmet>
+                  <title>Blog Categories</title>
+                </Helmet>
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/blog-category/:slug"
+            render={() => (
+              <UserLayout>
+                <CategoryDetailPage />
+              </UserLayout>
+            )}
+          />
+
+          <UserRoute path="/wt" component={WtDashboard} />
+          <Route exact path="/login" component={LoginPage} />
+          <GuestRoute exact path="/register" component={SignupPage} />
+          <GuestRoute exact path="/resetpassword" component={ResetPasswordPage} />
+          <Route
+            exact
+            path="*"
+            render={() => (
+              <UserLayout>
+                <NotFoundPage />
+              </UserLayout>
+            )}
+          />
+        </Switch>
+      </ErrorBoundary>
+    );
+  }
+}
 
 App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
     hash: PropTypes.string,
-    key: PropTypes.string
+    key: PropTypes.string,
   }).isRequired,
   dialog: PropTypes.object,
-  messages: PropTypes.object,
-  deleteMsg: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
   dialog: makeSelectDialog(),
   location: makeSelectLocation(),
-  messages: makeSelectMessages()
+  contents: makeSelectContent(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteMsg: index => dispatch(deleteMessage(index))
+  loadContent: payload => dispatch(loadContentRequest(payload)),
 });
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
-const withSaga = injectSaga({ key: "global", saga });
 
-export default compose(
-  withConnect,
-  withSaga
-)(App);
+export default compose(withConnect)(App);

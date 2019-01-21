@@ -2,31 +2,29 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({
-  dest: 'public/blog/'
+  dest: 'public/blog/',
 });
 
-const blogModule = require('../../modules/blog/blogController');
-const {
-  authorization
-} = require('../../middleware/authentication.middleware');
+const dmodule = require('../../modules/blog/blogController');
+const { authorization } = require('../../middleware/authentication.middleware');
 const {
   catSanitize,
   catValidate,
   sanitize,
-  validate
+  validateInput,
 } = require('../../modules/blog/blogValidation');
 
-router.get('/auth', authorization, blogModule.GetBlogAuthorize);
-router.get('/', blogModule.GetBlogUnauthorize);
-router.get('/category', blogModule.GetBlogCategory);
-router.get('/category/:slug', blogModule.GetBlogCatBySlug);
-router.get('/:id', authorization, blogModule.GetBlogDetail);
-router.get('/blog/:slug', authorization, blogModule.GetBlogBySlug);
-router.get('/blogbycat/:id', authorization, blogModule.GetBlogByCat);
-router.get('/blogbytag/:tag', authorization, blogModule.GetBlogByTag);
-router.get('/blogbytime/:time', authorization, blogModule.GetBlogByDate);
-router.post('/', authorization, upload.array('file', 1), sanitize, validate, blogModule.SaveBlog);
-router.post('/category', authorization, catSanitize, catValidate, blogModule.SaveBlogCategory);
-router.delete('/:id', authorization, blogModule.DeleteBlog);
-
+router.get('/', authorization, dmodule.GetBlogAuthorize);
+router.get('/blogs', dmodule.GetBlogUnauthorize);
+router.get('/category', dmodule.GetBlogCategory);
+router.get('/category/:slug', dmodule.GetBlogCatBySlug);
+router.get('/:id', authorization, dmodule.GetBlogDetail);
+router.get('/blog/:slug', authorization, dmodule.GetBlogBySlug);
+router.get('/blogbycat/:id', authorization, dmodule.GetBlogByCat);
+router.get('/blogbycatslug/:slug', authorization, dmodule.GetBlogByCatSlug);
+router.get('/blogbytag/:tag', authorization, dmodule.GetBlogByTag);
+router.get('/blogbytime/:time', authorization, dmodule.GetBlogByDate);
+router.post('/', authorization, upload.array('file', 1), sanitize, validateInput, dmodule.SaveBlog);
+router.post('/category', catSanitize, catValidate, dmodule.SaveBlogCategory);
+router.delete('/:id', authorization, dmodule.DeleteBlog);
 module.exports = router;

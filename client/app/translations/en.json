@@ -2,7 +2,7 @@
   "app.components.NotFoundPage.header": "This is NotFoundPage component!",
   "app.containers.LoginPage.header": "Login to Continue",
   "app.containers.LoginPage.welcomeMessage":
-    "Welcome back, sign in with your HR account",
+    "Welcome back, sign in with your account",
   "app.containers.LoginPage.emailId": "Email ID",
   "app.containers.LoginPage.password": "Password",
   "app.containers.LoginPage.signIn": "SIGN IN",
@@ -14,9 +14,7 @@
   "app.containers.WtDashboard.moduleManage": "Module Manage",
   "app.containers.WtDashboard.userManage": "User Manage",
   "app.containers.WtDashboard.contentManage": "Content Manage",
-  "app.containers.WtDashboard.designationManage": "Designation Manage",
-  "app.containers.WtDashboard.registrationManage": "Registration Manage",
-  "app.containers.WtDashboard.fiscalManage": "Fiscal Manage",
+  "app.containers.WtDashboard.companyManage": "Company Manage",
 
   "app.containers.ModuleManagePage.moduleManage": "Module Manage",
   "app.containers.ModuleManagePage.moduleAction": "Action",
@@ -45,18 +43,11 @@
   "app.containers.ContentListingPage.addedTo": "Added To",
   "app.containers.ContentListingPage.operations": "Operations",
 
-  "app.containers.DesignationPage.designation": "Designation",
-  "app.containers.DesignationPage.updateDate": "Update Date",
-  "app.containers.DesignationPage.isActive": "Is Active",
-
-  "app.containers.RegistrationPage.registrationNo": "Registration No",
-  "app.containers.RegistrationPage.senderName": "Sender Name",
-  "app.containers.RegistrationPage.receiverName": "Receiver Name",
-  "app.containers.RegistrationPage.registerDate": "Register Date",
-
-  "app.containers.FiscalYearPage.roleTitle": "Fiscal Year",
-  "app.containers.FiscalYearPage.rangeFrom": "From",
-  "app.containers.FiscalYearPage.rangeTo": "To",
-  "app.containers.FiscalYearPage.isCurrent": "Is Current",
-  "app.containers.FiscalYearPage.isActive": "Is Active"
+  "app.containers.CompanyManagePage.companyName": "Company Name",
+  "app.containers.CompanyManagePage.companyImage": "Company Image",
+  "app.containers.CompanyManagePage.isActive": "Is Active",
+  "app.containers.CompanyManagePage.action": "Action",
+  "app.containers.CompanyManagePage.companyManagement": "Company Management",
+  "app.containers.CompanyManagePage.listOfCompany":
+    "Here are the list of companies"
 }

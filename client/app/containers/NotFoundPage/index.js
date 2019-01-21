@@ -9,20 +9,25 @@
  * the linting exception.
  */
 
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import LanguageSwitcher from 'components/LanguageSwitcher';
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import LanguageSwitcher from "components/LanguageSwitcher";
 
-import messages from './messages';
+import messages from "./messages";
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NotFound extends React.PureComponent {
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-        <LanguageSwitcher />
-      </h1>
+      <div>
+        <h1 className="loud404">
+          <span> 404</span>
+        </h1>
+        <h2 className="text-center">SORRY! PAGE NOT FOUND</h2>
+
+        {/* <FormattedMessage {...messages.header} />
+        <LanguageSwitcher /> */}
+      </div>
     );
   }
 }
