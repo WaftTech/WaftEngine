@@ -7,11 +7,19 @@ import * as actions from './actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
-  yield call(Api.get('role/module', actions.loadAllSuccess, actions.loadAllFailure, token));
+  let pageNumber = "";
+  if (action.payload) {
+    pageNumber = `&page=${action.payload.page}&size=${
+      action.payload.rowsPerPage
+    }`;
+  }
+  yield call(Api.get(`role/module?${pageNumber}`,
+   actions.loadAllSuccess, actions.loadAllFailure, token));
 }
 
 function* loadOne(action) {
   const token = yield select(makeSelectToken());
+
   yield call(
     Api.get(`role/module/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token),
   );
@@ -29,17 +37,6 @@ function* loadAccess(action) {
   );
 }
 
-function* deleteOne(action) {
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.delete(
-      `role/access/module/${action.payload}`,
-      actions.deleteOneSuccess,
-      actions.deleteOneFailure,
-      token
-    )
-  );
-}
 function* redirectOnSuccess() {
   yield take([types.ADD_EDIT_SUCCESS, types.UPDATE_ACCESS_SUCCESS]);
   yield put(push('/wt/module-manage'));
@@ -77,5 +74,4 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ACCESS_REQUEST, loadAccess);
   yield takeLatest(types.UPDATE_ACCESS_REQUEST, updateAccess);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
 }

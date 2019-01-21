@@ -2,8 +2,6 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { createStructuredSelector } from 'reselect';
-
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,17 +16,11 @@ import Person from '@material-ui/icons/Person';
 import Notifications from '@material-ui/icons/Notifications';
 import Search from '@material-ui/icons/Search';
 // core components
-
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from '../../containers/App/reducer';
-import saga from '../../containers/App/saga';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
-import { makeSelectAll } from '../../containers/App/selectors';
 
 import headerLinksStyle from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
-import { logout, loadAllRequest } from '../../containers/App/actions';
+import { logout } from '../../containers/App/actions';
 import LanguageSwitcher from '../LanguageSwitcher';
 
 class HeaderLinks extends React.Component {
@@ -49,16 +41,11 @@ class HeaderLinks extends React.Component {
 
   searchClicked = e => {
     e.preventDefault();
-    console.log('hello');
-  };
-  handleClick = () => {
-    this.props.loadNotification();
   };
 
   render() {
-    const { classes, allLinks } = this.props;
+    const { classes } = this.props;
     const { open } = this.state;
-    const allLinksObj = allLinks.toJS();
     return (
       <div>
         <div className={classes.searchWrapper}>
@@ -73,17 +60,11 @@ class HeaderLinks extends React.Component {
               },
             }}
           />
-          <Button aria-label="edit" justIcon round onClick={this.searchClicked}>
+          <Button color="Black" aria-label="edit" justIcon round onClick={this.searchClicked}>
             <Search />
           </Button>
         </div>
-        <Button
-          color={window.innerWidth > 959 ? 'transparent' : 'white'}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Dashboard"
-          className={classes.buttonLink}
-        >
+        <Button color={window.innerWidth > 959 ? 'transparent' : 'white'} justIcon={window.innerWidth > 959} simple={!(window.innerWidth > 959)} aria-label="Dashboard" className={classes.buttonLink}>
           <LanguageSwitcher
             render={changeLocale => (
               <React.Fragment>
@@ -110,19 +91,15 @@ class HeaderLinks extends React.Component {
             onClick={this.handleToggle}
             className={classes.buttonLink}
           >
-            <Notifications className={classes.icons} onClick={this.handleClick} />
+            <Notifications className={classes.icons} />
             <span className={classes.notifications}>5</span>
             <Hidden mdUp implementation="css">
-              <p className={classes.linkText}>Notification</p>
+              <p onClick={this.handleClick} className={classes.linkText}>
+                Notification
+              </p>
             </Hidden>
           </Button>
-          <Poppers
-            open={open}
-            anchorEl={this.anchorEl}
-            transition
-            disablePortal
-            className={`${classNames({ [classes.popperClose]: !open })} ${classes.pooperNav}`}
-          >
+          <Poppers open={open} anchorEl={this.anchorEl} transition disablePortal className={`${classNames({ [classes.popperClose]: !open })} ${classes.pooperNav}`}>
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
@@ -134,15 +111,21 @@ class HeaderLinks extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList role="menu">
-                      {allLinksObj.map(each => (
-                        <MenuItem
-                          key={each._id}
-                          onClick={this.handleClose}
-                          className={classes.dropdownItem}
-                        >
-                          {each.Description}
-                        </MenuItem>
-                      ))}
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                        Mike John responded to your email
+                      </MenuItem>
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                        You have 5 new tasks
+                      </MenuItem>
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                        You're now friend with Andrew
+                      </MenuItem>
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                        Another Notification
+                      </MenuItem>
+                      <MenuItem onClick={this.handleClose} className={classes.dropdownItem}>
+                        Another One
+                      </MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -150,14 +133,7 @@ class HeaderLinks extends React.Component {
             )}
           </Poppers>
         </div>
-        <Button
-          color={window.innerWidth > 959 ? 'transparent' : 'white'}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Person"
-          className={classes.buttonLink}
-          onClick={this.props.logout}
-        >
+        <Button color={window.innerWidth > 959 ? 'transparent' : 'white'} justIcon={window.innerWidth > 959} simple={!(window.innerWidth > 959)} aria-label="Person" className={classes.buttonLink} onClick={this.props.logout}>
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Logout</p>
@@ -168,17 +144,12 @@ class HeaderLinks extends React.Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll(),
-});
-
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  loadNotification: () => dispatch(loadAllRequest()),
 });
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 
