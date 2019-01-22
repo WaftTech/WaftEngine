@@ -10,10 +10,7 @@ export default defineMessages({
     id: 'app.containers.ContentListingPage.contentName',
     defaultMessage: 'Content Name',
   },
-  description: {
-    id: 'app.containers.ContentListingPage.description',
-    defaultMessage: 'Description',
-  },
+
   publishedFrom: {
     id: 'app.containers.ContentListingPage.publishedFrom',
     defaultMessage: 'Published From',
@@ -41,5 +38,5 @@ export default defineMessages({
   operations: {
     id: 'app.containers.ContentListingPage.operations',
     defaultMessage: 'Operations',
-  }
+  },
 });

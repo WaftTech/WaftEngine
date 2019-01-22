@@ -61,14 +61,11 @@ if (tokenWithBearer) {
     ) {
       localStorage.removeItem("token");
     } else {
-      const routes = localStorage.getItem("routes");
-
       const user = {
         id: decoded.id,
         name: decoded.name,
         avatar: decoded.avatar,
-        email: decoded.email,
-        routes: JSON.parse(atob(routes))
+        email: decoded.email
       };
       store.dispatch(setUser(user));
       store.dispatch(setToken(tokenWithBearer));

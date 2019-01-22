@@ -15,8 +15,17 @@ import * as actions from './actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
+  let pageNumber = "";
+  if (action.payload) {
+    pageNumber = `&page=${action.payload.page}&size=${
+      action.payload.rowsPerPage
+    }`;
+  }
   yield call(
-    Api.get('contents', actions.loadAllSuccess, actions.loadAllFailure, token),
+    Api.get(`contents?${pageNumber}`,
+    actions.loadAllSuccess,
+     actions.loadAllFailure,
+      token),
   );
 }
 
@@ -27,20 +36,8 @@ function* loadOne(action) {
       `contents/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
-      token,
-    ),
-  );
-}
-
-function* deleteOne(action) {
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.delete(
-      `contents/${action.payload}`,
-      actions.deleteOneSuccess,
-      actions.deleteOneFailure,
       token
-    )
+    ),
   );
 }
 
@@ -52,15 +49,15 @@ function* redirectOnSuccess() {
 function* addEdit(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const { ProfileImage, ProfileImage1, ...data } = action.payload;
-  const files = { ProfileImage, ProfileImage1 };
+  const { ...data } = action.payload;
+  // const files = { ProfileImage, ProfileImage1 };
   yield fork(
     Api.multipartPost(
       'contents',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
-      files,
+      {},
       token,
     ),
   );
@@ -72,5 +69,4 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
 }

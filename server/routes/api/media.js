@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const upload = multer({ dest: 'public/media/' });
 
-const dModule = require('../../modules/media/mediaController');
+const dModule = require('../../modules/Media/mediaController');
 const authenticationMiddleware = require('../../middleware/authentication.middleware');
 
 router.get('/:page', authenticationMiddleware.authorization, dModule.GetMedia);

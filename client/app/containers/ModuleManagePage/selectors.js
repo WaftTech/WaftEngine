@@ -10,6 +10,7 @@ const selectDomain = state => state.get('moduleManagePage', initialState);
 export const makeSelectAll = () => createSelector(selectDomain, state => state.get('all'));
 export const makeSelectOne = () => createSelector(selectDomain, state => state.get('one'));
 export const makeSelectAccess = () => createSelector(selectDomain, state => state.get('access'));
+export const makeSelectPage = () => createSelector(selectDomain, state => state.get('page'));
 
 // export const makeSelectPath = props =>
 //   createSelector(makeSelectOne(), state => console.log(props, state));

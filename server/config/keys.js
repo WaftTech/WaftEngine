@@ -1,12 +1,9 @@
 module.exports = {
-  mongoURI: 'mongodb://waftAdmin:waftAdmin1@ds155164.mlab.com:55164/waft-engine',
-  //mongoURI: 'mongodb://localhost:27017/waft-engine',
-
-  //mongoURI: 'mongodb://waft-engine:waft-engine@localhost:27017/waft-engine',
-  recaptcha: { secretKey: '1717', siteKey: '171717'},
+  mongoURI: 'mongodb://nepaloffers:nepal123@ds113454.mlab.com:13454/nepal-offers',
+  //mongoURI: 'mongodb://askfourtrip:askfourtrip@localhost:27017/askfourtrip',
   secretOrKey: 'jwtsecret',
   tokenExpireTime: 360000,
-
+  recaptcha: { secretKey: '6LftqoQUAAAAAMVlFvpMkX-UUErRzIxru2y2-zWG', siteKey: '6LftqoQUAAAAAOnGULHOWhdUACVQYeHFggJdRojU' },
   oauthConfig: {
     googleAuth: {
       app_id: '97859517140-j5314l26rikte0e4q2150ph45ghdm0vl.apps.googleusercontent.com',

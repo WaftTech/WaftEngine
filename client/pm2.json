@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "HR-APP-CLIENT",
+      "name": "NEPAL-OFFERS-CLIENT",
       "script": "index.js",
       "merge_logs": true,
       "watch": true,
@@ -10,7 +10,7 @@
       "instances": 1,
       "exec_mode": "cluster",
       "env": {
-        "PORT": 5021,
+        "PORT": 5051,
         "NODE_ENV": "development"
       },
       "env_production": {

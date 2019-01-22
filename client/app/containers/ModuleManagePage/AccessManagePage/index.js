@@ -95,18 +95,13 @@ class AccessManagePage extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.access !== nextProps.access) {
       const accessObj = nextProps.access.toJS();
-      this.setState(state => {
-        let AccessType = [];
-        if (accessObj.Access.length) {
-          AccessType = accessObj.Access.map(each => each.AccessType).reduce((each, next, []) => [
+      this.setState({
+        ...accessObj,
+        AccessType:
+          accessObj.Access.map(each => each.AccessType).reduce((each, next, []) => [
             ...each,
             ...next,
-          ]);
-        }
-        return {
-          ...accessObj,
-          AccessType,
-        };
+          ]) || [],
       });
     }
   }

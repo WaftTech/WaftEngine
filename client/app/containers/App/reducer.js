@@ -10,87 +10,69 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import { fromJS } from "immutable";
+import { fromJS } from 'immutable';
 
-import * as types from "./constants";
+import * as types from './constants';
 
+const selectDomain = state => state.get('subscribe', initialState);
 // The initial state of the App
 export const initialState = fromJS({
   requesting: false,
+  isRequesting: false,
   success: false,
-  messages: [],
   dialog: null,
   user: {},
-  token: "",
+  token: '',
   status: 0,
-  all: []
+  successMessage: '',
+  errorMessage: '',
+  contents: {},
 });
 
-function appReducer(state = initialState, action = { type: "" }) {
-  // const callType = action.type.slice(-7);
-  // if (callType === 'REQUEST') {
-  //   return state.update('status', status => status + 1);
-  // }
-  // if (callType === 'SUCCESS') {
-  //   if (action.payload.msg) {
-  //     return state
-  //       .update('status', status => status - 1)
-  //       .update('messages', messages =>
-  //         messages.set(messages.size, {
-  //           type: 'success',
-  //           text: action.payload.msg,
-  //         }),
-  //       );
-  //   }
-  //   return state.update('status', status => status - 1);
-  // }
-  // if (callType === 'FAILURE') {
-  //   if (action.payload.msg) {
-  //     return state
-  //       .update('status', status => status - 1)
-  //       .update('messages', messages =>
-  //         messages.set(messages.size, {
-  //           type: 'failure',
-  //           text: action.payload.msg,
-  //         }),
-  //       );
-  //   }
-  //   return state.update('status', status => status - 1);
-  // }
+function appReducer(state = initialState, action = { type: '' }) {
   switch (action.type) {
     // case
     case types.SET_DIALOG:
       return state.merge({ dialog: fromJS(action.dialog) });
     case types.SET_USER:
-      localStorage.setItem("routes", btoa(JSON.stringify(action.user.routes)));
       return state.merge({ user: fromJS(action.user) });
     case types.SET_TOKEN:
-      localStorage.setItem("token", action.token);
+      localStorage.setItem('token', action.token);
       return state.merge({ token: action.token });
-    case types.ADD_MESSAGE:
-      return state.update("messages", messages =>
-        messages.set(
-          messages.size,
-          fromJS({
-            type: action.payload.type,
-            text: action.payload.text
-          })
-        )
-      );
-    case types.DELETE_MESSAGE:
-      return state.update("messages", messages =>
-        messages.delete(action.payload)
-      );
     case types.LOGOUT:
-      localStorage.removeItem("token");
-      localStorage.removeItem("routes");
+      localStorage.setItem('token', '');
       return state.merge({
         user: fromJS({}),
-        token: ""
+        token: '',
       });
-    case types.LOAD_ALL_SUCCESS:
+    case types.SUBSCRIBE_REQUEST:
       return state.merge({
-        all: fromJS(action.payload.data)
+        isRequesting: true,
+        success: false,
+        successMessage: '',
+        errorMessage: '',
+      });
+    case types.SUBSCRIBE_SUCCESS:
+      return state.merge({
+        isRequesting: false,
+        success: true,
+        successMessage: action.payload.msg,
+      });
+    case types.SUBSCRIBE_FAILURE:
+      return state.merge({
+        isRequesting: false,
+        success: true,
+        errorMessage:
+          typeof action.payload.msg === 'string' ? action.payload.msg : 'something went wrong',
+      });
+    case types.CLEAR_MESSAGES:
+      return state.merge({
+        successMessage: '',
+        errorMessage: '',
+      });
+    case types.LOAD_CONTENT_SUCCESS:
+      return state.merge({
+        contents: fromJS(action.payload.data),
       });
     default:
       return state;

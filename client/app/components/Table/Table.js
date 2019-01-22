@@ -16,11 +16,7 @@ class CustomTable extends React.Component {
   constructor(props) {
     super(props);
   }
-  // handleChangePage = (event, page) => {
-  //   console.log("page number", page);
-  // };
-
-  render() {
+  render(){
     const {
       classes,
       tableHead,
@@ -30,57 +26,51 @@ class CustomTable extends React.Component {
       size,
       totaldata,
       handleChangePage,
-      handleChangeRowsPerPage
-    } = this.props;
-    return (
-      <div className={classes.tableResponsive}>
-        <Table className={classes.table}>
-          {tableHead !== undefined ? (
-            <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
-              <TableRow>
-                {tableHead.map((prop, key) => (
-                  <TableCell
-                    className={`${classes.tableCell} ${classes.tableHeadCell}`}
-                    key={key}
-                  >
-                    {prop}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-          ) : null}
-          <TableBody>
-            {tableData.map((prop, key) => (
-              <TableRow key={key}>
-                {prop.map((prop, key) => (
-                  <TableCell className={classes.tableCell} key={key}>
-                    {prop}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
+    handleChangeRowsPerPage} = this.props;
+  return (
+    <div className={classes.tableResponsive}>
+      <Table className={classes.table}>
+        {tableHead !== undefined ? (
+          <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
             <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                colSpan={3}
-                count={totaldata}
-                rowsPerPage={size}
-                page={page - 1}
-                // SelectProps={{
-                //   native: true
-                // }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                // ActionsComponent={TablePaginationActionsWrapped}
-              />
+              {tableHead.map((prop, key) => (
+                <TableCell
+                  className={`${classes.tableCell} ${classes.tableHeadCell}`}
+                  key={key}
+                >
+                  {prop}
+                </TableCell>
+              ))}
             </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
-    );
-  }
+          </TableHead>
+        ) : null}
+        <TableBody>
+          {tableData.map((prop, key) => (
+            <TableRow key={key}>
+              {prop.map((prop, key) => (
+                <TableCell className={classes.tableCell} key={key}>
+                  {prop}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+            rowsPerPageOptions={[5,10, 25, 50, 100]}
+            colSpan={3}
+            count={totaldata}
+            rowsPerPage={size}
+            page = {page - 1}
+            onChangePage = {handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}/>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
+  );
+}
 }
 
 CustomTable.defaultProps = {
@@ -103,7 +93,7 @@ CustomTable.propTypes = {
   ),
   tableData: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node]))
-  )
+  ),
 };
 
 export default withStyles(tableStyle)(CustomTable);

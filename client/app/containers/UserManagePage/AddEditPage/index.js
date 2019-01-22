@@ -52,7 +52,7 @@ class AddEdit extends Component {
       email_verified: true,
       name: '',
       roles: [],
-      avtar: noImage,
+      avatar: noImage,
     },
   };
   componentDidMount() {
@@ -62,7 +62,6 @@ class AddEdit extends Component {
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
-      console.log('data', nextProps.one);
       const oneObj = nextProps.one.toJS();
       this.setState(state => ({
         ...oneObj,
@@ -89,7 +88,6 @@ class AddEdit extends Component {
   };
   render() {
     const { data } = this.state;
-    console.log(data);
     const { classes } = this.props;
     return (
       <div>
@@ -123,6 +121,7 @@ class AddEdit extends Component {
                       id="name"
                       inputProps={{
                         value: data.name,
+                        onChange: this.handleChange('name'),
                       }}
                       formControlProps={{
                         fullWidth: true,
@@ -134,7 +133,7 @@ class AddEdit extends Component {
                       className=""
                       width="200px"
                       height="200px"
-                      src={data.avtar}
+                      src={data.avatar}
                       alt="ProfileImage"
                     />
                   </GridItem>
@@ -158,8 +157,12 @@ class AddEdit extends Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Save</Button>
-                <Button color="primary">Back</Button>
+                <Button color="primary" onClick={this.handleSave}>
+                  Save
+                </Button>
+                <Button color="primary" onClick={this.handleGoBack}>
+                  Back
+                </Button>
               </CardFooter>
             </Card>
           </GridItem>

@@ -14,6 +14,7 @@ export const initialState = fromJS({
     Module: [],
     Roles: [],
   },
+  page : []
 });
 
 function reducer(state = initialState, action) {
@@ -21,6 +22,7 @@ function reducer(state = initialState, action) {
     case types.LOAD_ALL_SUCCESS:
       return state.merge({
         all: fromJS(action.payload.data),
+        page: fromJS(action.payload)
       });
     case types.LOAD_ONE_SUCCESS:
       return state.merge({
@@ -29,10 +31,6 @@ function reducer(state = initialState, action) {
     case types.LOAD_ACCESS_SUCCESS:
       return state.merge({
         access: fromJS(action.payload.data),
-      });
-    case types.DELETE_ONE_SUCCESS:
-      return state.merge({
-        all: state.get('all').filter(each => each.get('_id')!== action.payload.data._id)
       });
     default:
       return state;
