@@ -13,25 +13,6 @@ import { FormattedMessage } from 'react-intl';
 import DashboardPage from '../Dashboard';
 import RoleManagePage from '../RoleManagePage';
 import RoleManageAddEditPage from '../RoleManagePage/AddEditPage';
-import FiscalYearPage from '../FiscalYearPage';
-import FiscalYearAddEditPage from '../FiscalYearPage/AddEditPage';
-import LeaveTypePage from '../LeaveTypePage';
-import LeaveTypeAddEditPage from '../LeaveTypePage/AddEditPage';
-import LeaveApplicationPage from '../LeaveApplicationPage';
-import LeaveApplicationAddEditPage from '../LeaveApplicationPage/AddEditPage';
-
-import BranchAddEditPage from '../BranchPage/AddEditPage';
-import BranchPage from '../BranchPage';
-import HolidayAddEditPage from '../HolidayPage/AddEditPage';
-import HolidayPage from '../HolidayPage';
-import DepartmentAddEditPage from '../DepartmentPage/AddEditPage';
-import DepartmentPage from '../DepartmentPage';
-import CompanyPage from '../CompanyPage';
-
-import DesignationPage from '../DesignationPage';
-import DesignationAddEditPage from '../DesignationPage/AddEditPage';
-import RegistrationPage from '../RegistrationPage';
-import RegistrationAddEditPage from '../RegistrationPage/AddEditPage';
 import ModuleManagePage from '../ModuleManagePage';
 import ModuleManageAddEditPage from '../ModuleManagePage/AddEditPage';
 import ModuleManageAccessManagePage from '../ModuleManagePage/AccessManagePage';
@@ -39,6 +20,10 @@ import UserManagePage from '../UserManagePage';
 import UserManageAddEditPage from '../UserManagePage/AddEditPage';
 import ContentsListingPage from '../ContentListingPage';
 import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
+import BlogManagePage from '../BlogManagePage';
+import BlogManageAddEditPage from '../BlogManagePage/AddEditPage';
+import CategoryManagePage from '../CategoryManagePage';
+import CategoryManageAddEditPage from '../CategoryManagePage/AddEditPage';
 import messages from './messages';
 
 const dashboardRoutes = [
@@ -56,7 +41,6 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.roleManage} />,
     icon: PermContactCalendar,
     component: RoleManageAddEditPage,
-    exact: true,
     hide: true,
   },
   {
@@ -65,7 +49,6 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.roleManage} />,
     icon: PermContactCalendar,
     component: RoleManageAddEditPage,
-    exact: true,
     hide: true,
   },
   {
@@ -74,203 +57,7 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.roleManage} />,
     icon: PermContactCalendar,
     component: RoleManagePage,
-    exact: true,
   },
-  {
-    path: '/wt/designation-manage/add',
-    sidebarName: <FormattedMessage {...messages.designationManage} />,
-    navbarName: <FormattedMessage {...messages.designationManage} />,
-    icon: PermContactCalendar,
-    component: DesignationAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/designation-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.designationManage} />,
-    navbarName: <FormattedMessage {...messages.designationManage} />,
-    icon: PermContactCalendar,
-    component: DesignationAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/designation-manage',
-    sidebarName: <FormattedMessage {...messages.designationManage} />,
-    navbarName: <FormattedMessage {...messages.designationManage} />,
-    icon: PermContactCalendar,
-    component: DesignationPage,
-  },
-
-  {
-    path: '/wt/registration-manage/add',
-    sidebarName: <FormattedMessage {...messages.registrationManage} />,
-    navbarName: <FormattedMessage {...messages.registrationManage} />,
-    icon: PermContactCalendar,
-    component: RegistrationAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/registration-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.registrationManage} />,
-    navbarName: <FormattedMessage {...messages.registrationManage} />,
-    icon: PermContactCalendar,
-    component: RegistrationAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/registration-manage',
-    sidebarName: <FormattedMessage {...messages.registrationManage} />,
-    navbarName: <FormattedMessage {...messages.registrationManage} />,
-    icon: PermContactCalendar,
-    component: RegistrationPage,
-  },
-
-  {
-    path: '/wt/fiscal-manage/add',
-    sidebarName: <FormattedMessage {...messages.fiscalManage} />,
-    navbarName: <FormattedMessage {...messages.fiscalManage} />,
-    icon: PermContactCalendar,
-    component: FiscalYearAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/fiscal-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.fiscalManage} />,
-    navbarName: <FormattedMessage {...messages.fiscalManage} />,
-    icon: PermContactCalendar,
-    component: FiscalYearAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/fiscal-manage',
-    sidebarName: <FormattedMessage {...messages.fiscalManage} />,
-    navbarName: <FormattedMessage {...messages.fiscalManage} />,
-    icon: PermContactCalendar,
-    component: FiscalYearPage,
-  },
-
-  {
-    path: '/wt/leaveType-manage/add',
-    sidebarName: <FormattedMessage {...messages.leaveTypeManage} />,
-    navbarName: <FormattedMessage {...messages.leaveTypeManage} />,
-    icon: PermContactCalendar,
-    component: LeaveTypeAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/leaveType-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.leaveTypeManage} />,
-    navbarName: <FormattedMessage {...messages.leaveTypeManage} />,
-    icon: PermContactCalendar,
-    component: LeaveTypeAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/leaveType-manage',
-    sidebarName: <FormattedMessage {...messages.leaveTypeManage} />,
-    navbarName: <FormattedMessage {...messages.leaveTypeManage} />,
-    icon: PermContactCalendar,
-    component: LeaveTypePage,
-  },
-  {
-    path: '/wt/leaveApplication-manage/add',
-    sidebarName: <FormattedMessage {...messages.leaveApplicationManage} />,
-    navbarName: <FormattedMessage {...messages.leaveApplicationManage} />,
-    icon: PermContactCalendar,
-    component: LeaveApplicationAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/leaveApplication-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.leaveApplicationManage} />,
-    navbarName: <FormattedMessage {...messages.leaveApplicationManage} />,
-    icon: PermContactCalendar,
-    component: LeaveApplicationAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/leaveApplication-manage',
-    sidebarName: <FormattedMessage {...messages.leaveApplicationManage} />,
-    navbarName: <FormattedMessage {...messages.leaveApplicationManage} />,
-    icon: PermContactCalendar,
-    component: LeaveApplicationPage,
-  },
-  {
-    path: '/wt/branch-manage/add',
-    sidebarName: <FormattedMessage {...messages.branchManage} />,
-    navbarName: <FormattedMessage {...messages.branchManage} />,
-    icon: PermContactCalendar,
-    component: BranchAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/branch-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.branchManage} />,
-    navbarName: <FormattedMessage {...messages.branchManage} />,
-    icon: PermContactCalendar,
-    component: BranchAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/branch-manage',
-    sidebarName: <FormattedMessage {...messages.branchManage} />,
-    navbarName: <FormattedMessage {...messages.branchManage} />,
-    icon: PermContactCalendar,
-    component: BranchPage,
-  },
-  {
-    path: '/wt/holiday-manage/add',
-    sidebarName: <FormattedMessage {...messages.holidayManage} />,
-    navbarName: <FormattedMessage {...messages.holidayManage} />,
-    icon: PermContactCalendar,
-    component: HolidayAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/holiday-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.holidayManage} />,
-    navbarName: <FormattedMessage {...messages.holidayManage} />,
-    icon: PermContactCalendar,
-    component: HolidayAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/holiday-manage',
-    sidebarName: <FormattedMessage {...messages.holidayManage} />,
-    navbarName: <FormattedMessage {...messages.holidayManage} />,
-    icon: PermContactCalendar,
-    component: HolidayPage,
-  },
-  {
-    path: '/wt/department-manage/add',
-    sidebarName: <FormattedMessage {...messages.departmentManage} />,
-    navbarName: <FormattedMessage {...messages.departmentManage} />,
-    icon: PermContactCalendar,
-    component: DepartmentAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/department-manage/edit/:id',
-    sidebarName: <FormattedMessage {...messages.departmentManage} />,
-    navbarName: <FormattedMessage {...messages.departmentManage} />,
-    icon: PermContactCalendar,
-    component: DepartmentAddEditPage,
-    hide: true,
-  },
-  {
-    path: '/wt/department-manage',
-    sidebarName: <FormattedMessage {...messages.departmentManage} />,
-    navbarName: <FormattedMessage {...messages.departmentManage} />,
-    icon: PermContactCalendar,
-    component: DepartmentPage,
-  },
-  {
-    path: '/wt/company-manage',
-    sidebarName: <FormattedMessage {...messages.companyManage} />,
-    navbarName: <FormattedMessage {...messages.companyManage} />,
-    icon: PermContactCalendar,
-    component: CompanyPage,
-  },
-
   {
     path: '/wt/module-manage/add',
     sidebarName: <FormattedMessage {...messages.moduleManage} />,
@@ -347,6 +134,53 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.contentManage} />,
     icon: TextFormat,
     component: ContentsListingPage,
+  },
+
+  {
+    path: '/wt/blog-manage/add',
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: TextFormat,
+    component: BlogManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/blog-manage/edit/:id',
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: TextFormat,
+    component: BlogManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/blog-manage',
+    sidebarName: <FormattedMessage {...messages.blogManage} />,
+    navbarName: <FormattedMessage {...messages.blogManage} />,
+    icon: TextFormat,
+    component: BlogManagePage,
+  },
+  {
+    path: '/wt/category-manage/add',
+    sidebarName: <FormattedMessage {...messages.categoryManage} />,
+    navbarName: <FormattedMessage {...messages.categoryManage} />,
+    icon: TextFormat,
+    component: CategoryManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/category-manage/edit/:id',
+    sidebarName: <FormattedMessage {...messages.categoryManage} />,
+    navbarName: <FormattedMessage {...messages.categoryManage} />,
+    icon: TextFormat,
+    component: CategoryManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/category-manage',
+    sidebarName: <FormattedMessage {...messages.categoryManage} />,
+    navbarName: <FormattedMessage {...messages.categoryManage} />,
+    icon: TextFormat,
+    component: CategoryManagePage,
   },
   { redirect: true, path: '/wt', to: '/wt/dashboard', navbarName: 'Redirect' },
 ];
