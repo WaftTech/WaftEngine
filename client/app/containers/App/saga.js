@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga';
-import { takeLatest, fork, put, cancel, take, select, call } from 'redux-saga/effects';
+import { takeLatest, fork, put, cancel, take, select, call, takeEvery } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
@@ -23,7 +23,7 @@ function* subscribe(action) {
 function* loadContent(action) {
   yield call(
     Api.get(
-      `contents/key/homepagefooteraboutus`,
+      `contents/key/${action.payload}`,
       actions.loadContentSuccess,
       actions.loadContentFailure,
     ),
@@ -32,5 +32,5 @@ function* loadContent(action) {
 
 export default function* defaultSaga() {
   yield takeLatest(types.SUBSCRIBE_REQUEST, subscribe);
-  yield takeLatest(types.LOAD_CONTENT_REQUEST, loadContent);
+  yield takeEvery(types.LOAD_CONTENT_REQUEST, loadContent);
 }
