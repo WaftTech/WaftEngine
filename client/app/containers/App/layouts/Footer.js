@@ -22,6 +22,7 @@ import {
   makeSelectErrorMsg,
   makeSelectContent,
 } from '../selectors';
+import StaticContentDiv from '../../../components/StaticContentDiv';
 const styles = {
   formControl: {
     minWidth: 120,
@@ -79,16 +80,7 @@ class Footer extends React.Component {
         <div className="container">
           <Grid container spacing={24}>
             <Grid item lg={3}>
-              {aboutUsObj.Description && (
-                <div dangerouslySetInnerHTML={{ __html: aboutUsObj.Description }} />
-              )}
-              {/* <h3 className="title">About us</h3>
-              <p>
-                This website aims to list all offers and deals applicable in Nepal. This product is brought to you by
-                <a href="https://www.wafttech.com" target="_blank">
-                  WaftTech
-                </a>.
-              </p> */}
+              <StaticContentDiv contentKey="homepagefooteraboutus" />
             </Grid>
             <Grid item lg={3}>
               <h3 className="title">Links</h3>{' '}
