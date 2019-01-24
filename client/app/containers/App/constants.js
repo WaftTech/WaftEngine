@@ -30,9 +30,6 @@ export const SUBSCRIBE_FAILURE = 'app/App/SUBSCRIBE_FAILURE';
 
 export const CLEAR_MESSAGES = 'app/App/CLEAR_MESSAGES';
 
-export const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-export const TYPE = ['Coupon', 'Offer', 'Discount', 'Cashback', 'Scratchcard'];
-
 export const LOAD_CONTENT_REQUEST = 'app/App/LOAD_CONTENT_REQUEST';
 export const LOAD_CONTENT_SUCCESS = 'app/App/LOAD_CONTENT_SUCCESS';
 export const LOAD_CONTENT_FAILURE = 'app/App/LOAD_CONTENT_FAILURE';

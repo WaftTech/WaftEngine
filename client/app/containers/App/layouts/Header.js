@@ -39,9 +39,6 @@ export default class Header extends Component {
                 </FormControl>
               </Grid>*/}
                   <Grid item xs={12} lg={8} className="text-right hidden-mobile">
-                    <Link className="plainLink" to="/company">
-                      Companies
-                    </Link>
                     <Link className="plainLink" to="/blog-list">
                       Blogs
                     </Link>
