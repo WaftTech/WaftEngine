@@ -6,13 +6,46 @@ const mediaController = {};
 const internal = {};
 
 mediaController.GetMedia = async (req, res, next) => {
-  const page = parseInt(req.params.page);
-  const medias = await MediaSch.find({ IsDeleted: false })
-    .limit(12)
-    .skip(12 * page)
-    .sort({ _id: -1 })
-    .select('_id path fieldname originalname mimetype');
-  return otherHelper.sendResponse(res, HttpStatus.OK, true, medias, null, 'Media Get Success !!', null);
+  let page;
+  let size;
+  let searchq = null;
+  let sortquery = { _id: -1 };
+  let selectq;
+  const size_default = 10;
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+    page = Math.abs(req.query.page);
+  } else {
+    page = 1;
+  }
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
+  } else {
+    size = size_default;
+  }
+
+  selectq = ('_id path fieldname originalname mimetype', { IsDeleted: false });
+
+  let mediadata = await otherHelper.getquerySendResponse(
+    MediaSch,
+    page,
+    size,
+    sortquery,
+    searchq,
+    selectq,
+    '',
+    next,
+  );
+
+  return otherHelper.paginationSendResponse(
+    res,
+    HttpStatus.OK,
+    true,
+    mediadata.data,
+    'Media delivered Successfully',
+    page,
+    size,
+    mediadata.totaldata,
+  );
 };
 mediaController.SaveMedia = async (req, res, next) => {
   try {

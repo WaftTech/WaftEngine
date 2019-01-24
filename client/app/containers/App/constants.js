@@ -17,7 +17,7 @@ export const API_BASE =
     : 'http://localhost:5050/api/';
 
 export const IMAGE_BASE =
-  process.env.NODE_ENV === 'production' ? 'https://waftengine.com/' : 'https://waftengine.com/';
+  process.env.NODE_ENV === 'production' ? 'https://waftengine.com/' : 'http://localhost:5050/';
 
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
