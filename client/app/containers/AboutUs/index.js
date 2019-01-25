@@ -15,12 +15,9 @@ class Greeting extends React.Component {
     this.props.loadAboutUs();
   }
   render() {
-    const { aboutUs } = this.props;
-    const aboutUsObj = aboutUs.toJS();
     return (
       <div className="container">
         <StaticContentDiv contentKey="aboutusheader" />
-      
       </div>
     );
   }

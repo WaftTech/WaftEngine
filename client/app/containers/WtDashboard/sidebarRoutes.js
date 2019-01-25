@@ -26,6 +26,8 @@ import CategoryManagePage from '../CategoryManagePage';
 import CategoryManageAddEditPage from '../CategoryManagePage/AddEditPage';
 import MediaManagePage from '../MediaManagePage';
 import MediaManageAddEditPage from '../MediaManagePage/AddEditPage';
+import ErrorPage from '../ErrorPage';
+
 import messages from './messages';
 
 const dashboardRoutes = [
@@ -206,6 +208,29 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.mediaManage} />,
     icon: TextFormat,
     component: MediaManagePage,
+  },
+  {
+    path: '/wt/error-manage/add',
+    sidebarName: <FormattedMessage {...messages.errorManage} />,
+    navbarName: <FormattedMessage {...messages.errorManage} />,
+    icon: TextFormat,
+    component: ErrorPage,
+    hide: true,
+  },
+  {
+    path: '/wt/error-manage/edit/:id',
+    sidebarName: <FormattedMessage {...messages.errorManage} />,
+    navbarName: <FormattedMessage {...messages.errorManage} />,
+    icon: TextFormat,
+    component: ErrorPage,
+    hide: true,
+  },
+  {
+    path: '/wt/error-manage',
+    sidebarName: <FormattedMessage {...messages.errorManage} />,
+    navbarName: <FormattedMessage {...messages.errorManage} />,
+    icon: TextFormat,
+    component: ErrorPage,
   },
   { redirect: true, path: '/wt', to: '/wt/dashboard', navbarName: 'Redirect' },
 ];
