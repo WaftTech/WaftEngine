@@ -32,6 +32,10 @@ router.use('/offer', offerRoutes);
 // For Blog
 const blogRoutes = require('./api/blog');
 router.use('/blog', blogRoutes);
+// All route of sliders
+const sliderRoutes = require('./api/slider');
+router.use('/slider', sliderRoutes);
+
 // For Errors
 const bugsRoutes = require('./api/bugs');
 router.use('/bugs', bugsRoutes);

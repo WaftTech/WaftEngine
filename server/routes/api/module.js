@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const dModule = require('../../modules/Module/ModuleController');
+const dModule = require('../../modules/module/moduleController');
 const authenticationMiddleware = require('../../middleware/authentication.middleware');
 
 router.get('/fields', dModule.getFieldConfig);
