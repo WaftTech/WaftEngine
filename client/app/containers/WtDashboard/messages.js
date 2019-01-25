@@ -39,4 +39,8 @@ export default defineMessages({
     id: 'app.containers.WtDashboard.mediaManage',
     defaultMessage: 'Media Manage',
   },
+  errorManage: {
+    id: 'app.containers.WtDashboard.errorManage',
+    defaultMessage: 'Error Manage',
+  },
 });
