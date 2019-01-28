@@ -2,13 +2,10 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({
-  dest: 'public/slider'
+  dest: 'public/slider',
 });
 
-const {
-  authentication,
-  authorization
-} = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/authentication.middleware');
 const sliderModule = require('../../modules/slider/sliderController');
 const validations = require('../../modules/slider/sliderValidations');
 
