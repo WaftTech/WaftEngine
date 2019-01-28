@@ -1,29 +1,29 @@
-const HttpStatus = require('http-status');
+const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const config = require('./contactConfig');
 const apiCallHelper = require('../../helper/apicall.helper');
 const {
   recaptcha: { secretKey, siteKey },
 } = require('../../config/keys');
-const IsEmpty = require('../../validation/isEmpty');
+const isEmpty = require('../../validation/isEmpty');
 const validateInput = {};
 
 validateInput.sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'Name',
+      field: 'name',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Email',
+      field: 'email',
       sanitize: {
         trim: true,
       },
     },
     {
-      field: 'Message',
+      field: 'message',
       sanitize: {
         trim: true,
       },
@@ -38,7 +38,7 @@ validateInput.validate = async (req, res, next) => {
    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${code}&remoteip=${req.connection.remoteAddress}`;
    let verified = await apiCallHelper.requestThirdPartyApi(req, verifyUrl, null, next, 'POST');
    if (!(verified && verified.success)) {
-   return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, config.verifyError, null, null);
+   return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, config.verifyError, null, null);
    }
   const validateArray = [
     {
@@ -84,8 +84,8 @@ validateInput.validate = async (req, res, next) => {
     },
   ];
   const errors = otherHelper.validation(data, validateArray);
-  if (!IsEmpty(errors)) {
-    return otherHelper.sendResponse(res, HttpStatus.OK, false, null, errors, config.valErr, null);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, config.valErr, null);
   } else {
     next();
   }
