@@ -37,37 +37,57 @@ sliderController.GetSlider = async (req, res, next) => {
         sortq = '';
       }
     }
-    populate = [{
-      path: 'images.image',
-      select: '_id media_image original_name filename size'
-    }];
+    populate = [
+      {
+        path: 'images.image',
+        select: '_id media_image original_name filename size',
+      },
+    ];
 
     selectq = 'slider_name slider_key images added_by added_at';
 
     searchq = {
-      is_deleted: false
+      is_deleted: false,
     };
 
     if (req.query.find_slider_name) {
       searchq = {
         slider_name: {
           $regex: req.query.find_slider_name,
-          $options: 'i x'
+          $options: 'i x',
         },
-        ...searchq
+        ...searchq,
       };
     }
     if (req.query.find_slider_key) {
       searchq = {
         slider_key: {
           $regex: req.query.find_slider_key,
-          $options: 'i x'
+          $options: 'i x',
         },
-        ...searchq
+        ...searchq,
       };
     }
-    let sliders = await otherHelper.getquerySendResponse(sliderSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totaldata);
+    let sliders = await otherHelper.getquerySendResponse(
+      sliderSch,
+      page,
+      size,
+      sortq,
+      searchq,
+      selectq,
+      populate,
+      next,
+    );
+    return otherHelper.paginationSendResponse(
+      res,
+      httpStatus.OK,
+      true,
+      sliders.data,
+      sliderConfig.get,
+      page,
+      size,
+      sliders.totaldata,
+    );
   } catch (err) {
     next(err);
   }
@@ -76,20 +96,38 @@ sliderController.SaveSlider = async (req, res, next) => {
   try {
     const slider = req.body;
     let d = new Date();
-    slider.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${slider.slider_key}`);
+    slider.slug_url = otherHelper.slugify(
+      `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${slider.slider_key}`,
+    );
     if (slider && slider._id) {
       if (req.files && req.files[0]) {
         slider.images = req.files;
       }
       const update = await sliderSch.findByIdAndUpdate(slider._id, {
-        $set: slider
+        $set: slider,
       });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, sliderConfig.save, null);
+      return otherHelper.sendResponse(
+        res,
+        httpStatus.OK,
+        true,
+        update,
+        null,
+        sliderConfig.save,
+        null,
+      );
     } else {
       slider.added_by = req.user.id;
       const newSlider = new sliderSch(slider);
       const sliderave = await newSlider.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, sliderave, null, sliderConfig.save, null);
+      return otherHelper.sendResponse(
+        res,
+        httpStatus.OK,
+        true,
+        sliderave,
+        null,
+        sliderConfig.save,
+        null,
+      );
     }
   } catch (err) {
     next(err);
@@ -99,7 +137,7 @@ sliderController.GetSliderBySlug = async (req, res, next) => {
   const slug = req.params.slug;
   const slider = await sliderSch.findOne({
     slug_url: slug,
-    is_deleted: false
+    is_deleted: false,
   });
   return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
 };
@@ -108,9 +146,17 @@ sliderController.DeleteSlider = async (req, res, next) => {
   const sliderDel = await sliderSch.findByIdAndUpdate(objectId(id), {
     $set: {
       is_deleted: true,
-      deleted_at: Date.now
-    }
+      deleted_at: Date.now,
+    },
   });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, sliderDel, null, sliderConfig.delete, null);
+  return otherHelper.sendResponse(
+    res,
+    httpStatus.OK,
+    true,
+    sliderDel,
+    null,
+    sliderConfig.delete,
+    null,
+  );
 };
 module.exports = sliderController;
