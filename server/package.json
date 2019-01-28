@@ -25,7 +25,7 @@
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
-    "memory-cache": "^0.2.0",
+    "moment": "^2.23.0",
     "mongoose": "^5.2.4",
     "morgan": "^1.9.0",
     "multer": "^1.4.0",
@@ -36,8 +36,7 @@
     "pug": "^2.0.3",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "validator": "^10.4.0",
-    "xml": "^1.0.1"
+    "validator": "^10.4.0"
   },
   "devDependencies": {
     "concurrently": "4.0.1",
