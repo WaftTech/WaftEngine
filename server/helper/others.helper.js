@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const Validator = require('validator');
 const isEmpty = require('../validation/isEmpty');
 const PhoneNumber = require('awesome-phonenumber');
-const HttpStatus = require('http-status');
+const httpStatus = require('http-status');
 const otherHelper = {};
 
 otherHelper.generateRandomHexString = len => {
@@ -23,22 +23,22 @@ otherHelper.parsePhoneNo = (phone, RegionCode) => {
     if (!pn.isValid()) {
       return {
         status: false,
-        data: 'Provided no is invalid mobile no.'
+        data: 'Provided no is invalid mobile no.',
       };
     } else if (!pn.isMobile()) {
       return {
         status: false,
-        data: 'Provided no should be mobile no.'
+        data: 'Provided no should be mobile no.',
       };
     } else if (pn.isValid()) {
       return {
         status: true,
-        data: pn.getNumber('e164')
+        data: pn.getNumber('e164'),
       };
     } else {
       return {
         status: true,
-        data: pn.getNumber('e164')
+        data: pn.getNumber('e164'),
       };
     }
   } catch (err) {
