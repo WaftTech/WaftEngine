@@ -11,7 +11,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
-import Search from "@material-ui/icons/Search";
 
 // core components
 import GridItem from "../../components/Grid/GridItem";
@@ -28,8 +27,8 @@ import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest, deleteOneRequest } from "./actions";
-import { makeSelectAll } from "./selectors";
+import { loadAllRequest } from "./actions";
+import { makeSelectAll, makeSelectPage } from "./selectors";
 
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
@@ -80,12 +79,29 @@ export class UserManagePage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
-    this.props.deleteOne(id);
     // this.props.history.push(`/wt/user-manage/edit/${id}`);
   };
+  handleChangePage = (event, page) => {
+    this.setState({ page: page + 1 }, () => {
+      this.props.loadAll({
+        page: this.state.page,
+        rowsPerPage: this.state.rowsPerPage
+      });
+    });
+  };
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value }, () => {
+      this.props.loadAll({
+        // page: this.state.page,
+        rowsPerPage: this.state.rowsPerPage
+      });
+    });
+  };
   render() {
-    const { classes, allLinks } = this.props;
+    const { classes, allLinks, pageItem } = this.props;
     const allLinksObj = allLinks.toJS();
+    const pageObj = pageItem.toJS();
+    const { page = 1, size = 10, totaldata = 20 } = pageObj;
     const tableData = allLinksObj.map(
       ({ email, name, email_verified, avatar, roles, _id }) => [
         email,
@@ -178,6 +194,11 @@ export class UserManagePage extends React.Component {
                   <FormattedMessage {...messages.operations} />
                 ]}
                 tableData={tableData}
+                page={page}
+                size={size}
+                totaldata={totaldata}
+                handleChangePage={this.handleChangePage}
+                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
               <Button
                 variant="fab"
@@ -202,12 +223,12 @@ UserManagePage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll()
+  allLinks: makeSelectAll(),
+  pageItem: makeSelectPage(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest()),
-  deleteOne: id => dispatch(deleteOneRequest(id))
+  loadAll: (payload) => dispatch(loadAllRequest(payload))
 });
 
 const withConnect = connect(

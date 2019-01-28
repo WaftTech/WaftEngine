@@ -9,19 +9,19 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
+const validator = require('express-validator');
 const HttpStatus = require('http-status');
-const {
-  mongoURI
-} = require('./config/keys');
+const { mongoURI } = require('./config/keys');
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
-const {
-  AddErrorToLogs
-} = require('./modules/bug/bugController');
+const { AddErrorToLogs } = require('./modules/bug/bugController');
 
 const auth = require('./helper/auth.helper');
 
 const app = express();
+
+//express-validator
+app.use(validator());
 
 auth(passport);
 // Logger middleware
@@ -30,16 +30,15 @@ app.use(logger('dev'));
 // Body parser middleware
 
 // create application/json parser
-app.use(bodyParser.json({
-  limit: '50mb'
-}));
+app.use(bodyParser.json({ limit: '50mb' }));
 // create application/x-www-form-urlencoded parser
-app.use(bodyParser.urlencoded({
-  limit: '50mb',
-  extended: false
-}));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 // protect against HTTP Parameter Pollution attacks
 app.use(hpp());
+//validate the post requests
+app.use(validator());
+//manage the object, array etc
+// app.use(lodash());
 
 app.use(
   cookieSession({
@@ -49,18 +48,26 @@ app.use(
   }),
 );
 app.use(cookieParser());
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(
+  '/public',
+  express.static(path.join(__dirname, 'public'), {
+    setHeaders: function(res, path, stat) {
+      res.set('Content-Type', 'image/png');
+    },
+  }),
+);
+// app.use('/', express.static(path.join(__dirname, '../client-user/build')));
 
 // DB Config
 mongoose.Promise = global.Promise;
 
 // Database Connection
+// mongoose.connect('mongodb://localhost/my_database');
 mongoose
   .connect(
-    mongoURI, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-    },
+    mongoURI,
+    { useNewUrlParser: true ,
+      useCreateIndex: true },
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
@@ -76,7 +83,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // CORS setup for dev
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'DELETE, GET, POST, PUT, PATCH');
@@ -84,6 +91,8 @@ app.use(function (req, res, next) {
 });
 
 // Use Routes
+// app.use(app.router);
+// routes.initialize(app);
 app.use('/api', routes);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -1,8 +1,8 @@
-const httpStatus = require('http-status');
-const objectId = require('mongoose').ObjectId;
+const HttpStatus = require('http-status');
+const ObjectId = require('mongoose').ObjectId;
 const otherHelper = require('../../helper/others.helper');
-const contactConfig = require('./contactConfig');
-const contactSch = require('./contactSchema');
+const config = require('./contactConfig');
+const contactSch = require('./contact');
 const emailTemplate = require('../../helper/email-render-template');
 const contactController = {};
 
@@ -12,8 +12,8 @@ contactController.PostContact = async (req, res, next) => {
     const newUser = new contactSch({ name, email, message, subject });
     const user = await newUser.save();
     if (user) {
-      const templatePathToAdmin = `${__dirname}/../../email/template/contactToAdmin.pug`;
-      const templatePathToUser = `${__dirname}/../../email/template/contactToUser.pug`;
+      const template_path_to_admin = `${__dirname}/../../email/template/contactToAdmin.pug`;
+      const template_path_to_user = `${__dirname}/../../email/template/contactToUser.pug`;
       const data = {
         name: user.name,
         email: user.email,
@@ -21,23 +21,23 @@ contactController.PostContact = async (req, res, next) => {
         sub: user.subject,
       };
       let mailOptionsAdmin = {
-        from: '"Waft Engine Team" <test@mkmpvtltd.tk>', // sender address
+        from: '"Nepal Offer Team" <test@mkmpvtltd.tk>', // sender address
         to: 'navinmishra1717@gmail.com', // list of receivers
         subject: 'User Contacts are here', // Subject line
         text: 'Dear "navinmishra1717@gmail.com" <br/> Some people have contacted us.',
       };
       let mailOptionsUser = {
-        from: '"Waft Engine Team" <test@mkmpvtltd.tk>', // sender address
+        from: '"Nepal Offer Team" <test@mkmpvtltd.tk>', // sender address
         to: user.email, // list of receivers
         subject: 'Contact Successful', // Subject line
-        text: `Dear ${newUser.name} ${contactConfig.usermsg}<br/>`,
+        text: `Dear ${newUser.name} ${config.usermsg}<br/>`,
       };
-      emailTemplate.render(templatePathToAdmin, data, mailOptionsAdmin);
-      emailTemplate.render(templatePathToUser, data, mailOptionsUser);
+      emailTemplate.render(template_path_to_admin, data, mailOptionsAdmin);
+      emailTemplate.render(template_path_to_user, data, mailOptionsUser);
 
-      return otherHelper.sendResponse(res, httpStatus.OK, true, user, null, contactConfig.save, null);
+      return otherHelper.sendResponse(res, HttpStatus.OK, true, user, null, config.save, null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, contactConfig.err, null, null);
+      return otherHelper.sendResponse(res, HttpStatus.BAD_REQUEST, false, null, config.err, null, null);
     }
   } catch (err) {
     next(err);
@@ -74,7 +74,7 @@ contactController.GetContact = async (req, res, next) => {
       sortquery = '';
     }
   }
-  searchq = { is_deleted: false };
+  searchq = { IsDeleted: false };
   if (req.query.find_name) {
     searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
   }
@@ -84,13 +84,13 @@ contactController.GetContact = async (req, res, next) => {
   if (req.query.find_added_at) {
     searchq = { added_at: { $regex: req.query.find_added_at, $options: 'i x' }, ...searchq };
   }
-  selectq = ('name email message subject added_at');
-  let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortquery, searchq, selectq, next, '');
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totaldata);
+  selectq = ('name email message subject added_at', { IsDeleted: false });
+  let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortquery, searchq, selectq, '', next);
+  return otherHelper.paginationSendResponse(res, HttpStatus.OK, true, contacts.data, config.gets, page, size, contacts.totaldata);
 };
 contactController.GetContactById = async (req, res, next) => {
   const id = req.params.id;
-  let contact = await contactSch.findOne({ _id: id, is_deleted: false });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, contact, null, contactConfig.get, null);
+  let contact = await contactSch.findOne({ _id: id, IsDeleted: false });
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, contact, null, config.get, null);
 };
 module.exports = contactController;

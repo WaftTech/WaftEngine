@@ -9,36 +9,27 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const DEFAULT_LOCALE = "en";
+export const DEFAULT_LOCALE = 'en';
 
 export const API_BASE =
-  process.env.NODE_ENV === "production"
-    ? "http://hrapp.wafttech.com.np/api/"
-    : "http://localhost:5020/api/";
+  process.env.NODE_ENV === 'production'
+    ? 'https://waftengine.com/api/'
+    : 'http://localhost:5050/api/';
 
 export const IMAGE_BASE =
-  process.env.NODE_ENV === "production"
-    ? "http://hrapp.wafttech.com.np/"
-    : "http://localhost:5020/api/";
+  process.env.NODE_ENV === 'production' ? 'https://waftengine.com/' : 'http://localhost:5050/';
 
-export const SET_USER = "app/App/SET_USER";
-export const SET_TOKEN = "app/App/SET_TOKEN";
-export const SET_DIALOG = "app/App/SET_DIALOG";
-export const ADD_MESSAGE = "app/App/ADD_MESSAGE";
-export const DELETE_MESSAGE = "app/App/DELETE_MESSAGE";
-export const LOGOUT = "app/App/LOGOUT";
+export const SET_USER = 'app/App/SET_USER';
+export const SET_TOKEN = 'app/App/SET_TOKEN';
+export const SET_DIALOG = 'app/App/SET_DIALOG';
+export const LOGOUT = 'app/App/LOGOUT';
 
-//Notification constant
-export const LOAD_ALL_REQUEST = "app/App/LOAD_ALL_REQUEST";
-export const LOAD_ALL_SUCCESS = "app/App/LOAD_ALL_SUCCESS";
-export const LOAD_ALL_FAILURE = "app/App/LOAD_ALL_FAILURE";
+export const SUBSCRIBE_REQUEST = 'app/App/SUBSCRIBE_REQUEST';
+export const SUBSCRIBE_SUCCESS = 'app/App/SUBSCRIBE_SUCCESS';
+export const SUBSCRIBE_FAILURE = 'app/App/SUBSCRIBE_FAILURE';
 
-export const DAYS = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday"
-];
+export const CLEAR_MESSAGES = 'app/App/CLEAR_MESSAGES';
+
+export const LOAD_CONTENT_REQUEST = 'app/App/LOAD_CONTENT_REQUEST';
+export const LOAD_CONTENT_SUCCESS = 'app/App/LOAD_CONTENT_SUCCESS';
+export const LOAD_CONTENT_FAILURE = 'app/App/LOAD_CONTENT_FAILURE';
