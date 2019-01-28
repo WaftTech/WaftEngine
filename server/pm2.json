@@ -1,11 +1,21 @@
 {
   "apps": [
     {
-      "name": "WAFT-ENGINE-SERVER",
+      "name": "NEPAL-OFFERS-SERVER",
       "script": "index.js",
       "merge_logs": true,
       "watch": true,
-      "ignore_watch": [".certs", ".docker", "node_modules", ".idea", ".env", ".git", "admin/node_modules", "public", "lib/configs/*.json"],
+      "ignore_watch": [
+        ".certs",
+        ".docker",
+        "node_modules",
+        ".idea",
+        ".env",
+        ".git",
+        "admin/node_modules",
+        "public",
+        "lib/configs/*.json"
+      ],
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "instances": 1,
       "exec_mode": "cluster",

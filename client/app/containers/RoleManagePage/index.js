@@ -25,8 +25,8 @@ import injectSaga from "../../utils/injectSaga";
 import injectReducer from "../../utils/injectReducer";
 import reducer from "./reducer";
 import saga from "./saga";
-import { loadAllRequest, deleteOneRequest } from "./actions";
-import { makeSelectAll } from "./selectors";
+import { loadAllRequest } from "./actions";
+import { makeSelectAll, makeSelectPage } from "./selectors";
 import { FormattedMessage } from "react-intl";
 import messages from "./messages";
 
@@ -76,12 +76,30 @@ export class RoleManagePage extends React.Component {
   };
   handleDelete = id => {
     // shoe modal && api call
-    this.props.deleteOne(id);
     // this.props.history.push(`/wt/link-manage/edit/${id}`);
   };
+  handleChangePage = (event, page) => {
+    this.setState({ page: page + 1 }, () => {
+      this.props.loadAll({
+        page: this.state.page,
+        rowsPerPage: this.state.rowsPerPage
+      });
+    });
+  };
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value }, () => {
+      this.props.loadAll({
+        // page: this.state.page,
+        rowsPerPage: this.state.rowsPerPage
+      });
+    });
+  };
+
   render() {
-    const { classes, allLinks } = this.props;
+    const { classes, allLinks, pageItem } = this.props;
     const allLinksObj = allLinks.toJS();
+    const pageObj = pageItem.toJS();
+    const { page = 1, size = 10, totaldata = 20 } = pageObj;
     const tableData = allLinksObj.map(
       ({ _id, RolesTitle, Description, IsActive }) => [
         RolesTitle,
@@ -143,6 +161,11 @@ export class RoleManagePage extends React.Component {
                   <FormattedMessage {...messages.roleAction} />
                 ]}
                 tableData={tableData}
+                page={page}
+                size={size}
+                totaldata={totaldata}
+                handleChangePage={this.handleChangePage}
+                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
               <Button
                 variant="fab"
@@ -167,12 +190,13 @@ RoleManagePage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  allLinks: makeSelectAll()
+  allLinks: makeSelectAll(),
+  pageItem: makeSelectPage()
+
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadAll: () => dispatch(loadAllRequest()),
-  deleteOne:(id) => dispatch(deleteOneRequest(id))
+  loadAll: (payload) => dispatch(loadAllRequest(payload))
 });
 
 const withConnect = connect(

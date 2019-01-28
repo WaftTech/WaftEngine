@@ -1,25 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const validateRegisterInput = require('../../modules/user/userValidations');
 
-const multer = require('multer');
-const upload = multer({
-  dest: 'public/user/',
-  fileFilter: function(req, file, cb) {
-    var filetypes = /jpeg|jpg|png/;
-    var mimetype = filetypes.test(file.mimetype);
-    var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-    cb('Error: File upload only supports the following filetypes - ' + filetypes);
-  },
-});
-
-const userModule = require('../../modules/user/userController');
+const user = require('../../modules/Users/UserController.js');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const validations = require('../../modules/Users/UserValidations');
 /**
  * @route GET api/user/test
  * @description Tests users route
@@ -36,87 +21,88 @@ router.get('/test', (req, res) =>
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/', authorization, authentication, userModule.GetAllUser);
+router.get('/', authorization, authentication, user.getAllUser);
 
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/detail/:id', authorization, authentication, userModule.GetUserDetail);
+router.get('/detail/:id', authorization, authentication, user.getUserDetail);
 /**
  * @route GET api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.post('/detail/:id', authorization, authentication, upload.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.UpdateUserDetail);
+router.post('/detail/:id', authorization, authentication, validations.sanitizeRegister, validations.validateRegisterInput, user.updateUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new
  * @access Public
  */
-router.post('/', userModule.CheckMail);
+router.post('/', validations.sanitizeUserScan, validations.validateUserScanInput, user.checkMail);
 
 /**
  * @route POST api/user/register
  * @description Register user route
  * @access Public
  */
-router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.Register);
+router.post('/register', validations.sanitizeRegister, validations.validateRegisterInput, user.register);
 /**
  * @route POST api/user/register
  * @description Register user route
  * @access Public
  */
-router.post('/register/admin', authorization, authentication, upload.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
+router.post('/register/admin', authorization, validations.sanitizeLogin, validations.validateLoginInput, user.registerFromAdmin);
 
 /**
  * @route POST api/user/register
  * @description Register user route
  * @access Public
  */
-router.post('/verifymail', userModule.Verifymail);
+router.post('/verifymail', validations.sanitizeUserScan, validations.validateUserScanInput, user.verifymail);
 
 /**
  * @route POST api/user/login
  * @description Login user / Returning JWT Token
  * @access Public
  */
-router.post('/login', userModule.Login);
+router.post('/login', validations.sanitizeLogin, validations.validateLoginInput, user.login);
 
 /**
  * @route POST api/user/forgotpassword
  * @description Forgot Password
  * @access Public
  */
-router.post('/forgotpassword', userModule.ForgotPassword);
+router.post('/forgotpassword', validations.sanitizeUserScan, validations.validateUserScanInput, user.forgotPassword);
 
 /**
  * @route POST api/user/resetpassword
  * @description Forgot Password
  * @access Public
  */
-router.post('/resetpassword', userModule.ResetPassword);
+router.post('/resetpassword', validations.sanitizeLogin, validations.validateLoginInput, user.resetPassword);
 
 /**
  * @route POST api/user/login/github
  * @description Login user using Github
  * @access Public
  */
-router.post('/login/github/:access_token', userModule.GithubLogin);
+router.post('/login/github/:access_token', validations.sanitizeLogin, validations.validateLoginInput, user.githubLogin);
 
 /**
- * @route POST api/user/login/google
- * @description Login user using Google
+ * @route POST api/user/login/github
+ * @description Login user using Github
  * @access Public
  */
-router.post('/login/google/:access_token', userModule.OauthCodeToToken, userModule.GoogleLogin);
+router.post('/login/google/:access_token', user.oauthCodeToToken, user.googleLogin);
 
 /**
- * @route POST api/user/info
- * @description returns the user info
- * @access Public
+ *
+ *
+ *
  */
-router.get('/info', authorization, userModule.Info);
+router.get('/info', authorization, user.info);
+router.get('/profile', authorization, user.getProfile);
 
 module.exports = router;

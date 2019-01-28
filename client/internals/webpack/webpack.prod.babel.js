@@ -71,9 +71,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'HR-APP',
-      short_name: 'HR-APP',
-      description: 'HR solution!',
+      name: 'Nepal Offers',
+      short_name: 'Nepal Offers',
+      description: 'Nepal Offers',
       background_color: '#fff',
       theme_color: '#5D524C',
       icons: [

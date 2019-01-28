@@ -1,32 +1,32 @@
-const httpStatus = require('http-status');
+const HttpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
-const { vdcMunicipality, disctrict, state } = require('./staticShema');
+const { VdcMunicipality, Disctrict, State } = require('./static');
 const staticController = {};
 const internal = {};
 
 staticController.GetStates = async (req, res, next) => {
-  const static = await state.find();
-  return otherHelper.sendResponse(res, httpStatus.OK, true, static, null, 'State Get Success !!', null);
+  const static = await State.find();
+  return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'State Get Success !!', null);
 };
 staticController.GetDisctrict = async (req, res, next) => {
-  const stateId = req.params.stateId;
-  if (stateId != 0) {
-    const static = await disctrict.find({ stateId: stateId });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, static, null, 'District of Sate Get Success !!', null);
+  const StateID = req.params.StateID;
+  if (StateID != 0) {
+    const static = await Disctrict.find({ StateID: StateID });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'District of Sate Get Success !!', null);
   } else {
-    const static = await disctrict.find();
-    return otherHelper.sendResponse(res, httpStatus.OK, true, static, null, 'District of Sate Get Success !!', null);
+    const static = await Disctrict.find();
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'District of Sate Get Success !!', null);
   }
 };
 staticController.GetVdcMunicipality = async (req, res, next) => {
-  const districtId = req.params.districtId;
+  const DistrictID = req.params.DistrictID;
 
-  if (districtId != 0) {
-    const static = await vdcMunicipality.find({ districtId: districtId });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, static, null, 'Vdc/Municipality of Disctrict Get Success !!', null);
+  if (DistrictID != 0) {
+    const static = await VdcMunicipality.find({ DistrictID: DistrictID });
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'Vdc/Municipality of Disctrict Get Success !!', null);
   } else {
-    const static = await vdcMunicipality.find();
-    return otherHelper.sendResponse(res, httpStatus.OK, true, static, null, 'Vdc/Municipality of Disctrict Get Success !!', null);
+    const static = await VdcMunicipality.find();
+    return otherHelper.sendResponse(res, HttpStatus.OK, true, static, null, 'Vdc/Municipality of Disctrict Get Success !!', null);
   }
 };
 

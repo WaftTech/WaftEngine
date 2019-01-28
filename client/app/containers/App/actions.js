@@ -15,8 +15,8 @@
  *    }
  */
 
-import action from "utils/action";
-import * as types from "./constants";
+import action from 'utils/action';
+import * as types from './constants';
 
 /**
  * sets a dialog
@@ -25,7 +25,7 @@ import * as types from "./constants";
  *
  * @return {object}       An action object with a type of SET_DIALOG passing the dialog
  */
-export const setDialog = action(types.SET_DIALOG, "dialog");
+export const setDialog = action(types.SET_DIALOG, 'dialog');
 
 /**
  * sets the user
@@ -34,7 +34,7 @@ export const setDialog = action(types.SET_DIALOG, "dialog");
  *
  * @return {object}       An action object with a type of SET_USER passing the user
  */
-export const setUser = action(types.SET_USER, "user");
+export const setUser = action(types.SET_USER, 'user');
 
 /**
  * sets the token
@@ -43,25 +43,7 @@ export const setUser = action(types.SET_USER, "user");
  *
  * @return {object}       An action object with a type of SET_TOKEN passing the token
  */
-export const setToken = action(types.SET_TOKEN, "token");
-
-/**
- * adds a message to the messages stack
- *
- * @param  {object} payload Object defining type and text of message
- *
- * @return {object}       An action object with a type of ADD_MESSAGE passing the payload
- */
-export const addMessage = action(types.ADD_MESSAGE, "payload");
-
-/**
- * sets the token
- *
- * @param  {number} payload The index of message to be deleted
- *
- * @return {object}       An action object with a type of DELETE_MESSAGE passing the index
- */
-export const deleteMessage = action(types.DELETE_MESSAGE, "payload");
+export const setToken = action(types.SET_TOKEN, 'token');
 
 /**
  * logs out user clears token in localstorage and resets app redux stores
@@ -69,19 +51,32 @@ export const deleteMessage = action(types.DELETE_MESSAGE, "payload");
  * @return {object}       An action object with a type of SET_TOKEN passing the token
  */
 export const logout = action(types.LOGOUT);
-
-//Notification Action
-export const loadAllRequest = payload => ({
-  type: types.LOAD_ALL_REQUEST,
-  payload
+export const subscribeRequest = payload => ({
+  type: types.SUBSCRIBE_REQUEST,
+  payload,
+});
+export const subscribeSuccess = payload => ({
+  type: types.SUBSCRIBE_SUCCESS,
+  payload,
+});
+export const subscribeFailure = payload => ({
+  type: types.SUBSCRIBE_FAILURE,
+  payload,
 });
 
-export const loadAllSuccess = payload => ({
-  type: types.LOAD_ALL_SUCCESS,
-  payload
+export const clearMessages = () => ({
+  type: types.CLEAR_MESSAGES,
 });
 
-export const loadAllFailure = payload => ({
-  type: types.LOAD_ALL_FAILURE,
-  payload
+export const loadContentRequest = payload => ({
+  type: types.LOAD_CONTENT_REQUEST,
+  payload,
+});
+export const loadContentSuccess = payload => ({
+  type: types.LOAD_CONTENT_SUCCESS,
+  payload,
+});
+export const loadContentFailure = payload => ({
+  type: types.LOAD_CONTENT_FAILURE,
+  payload,
 });

@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const fs = require('fs');
-
+const route = require('./route');
+app.use('/', route);
 app.use('/', express.static(path.join(__dirname, './build')));
 const outputPath = path.resolve(process.cwd(), 'build');
 app.use((req, res, next) => {

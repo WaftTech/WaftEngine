@@ -31,49 +31,36 @@ class Api {
         //   yield put(onError(response));
         // }
       } catch (err) {
-        // console.log('unexpected error', err);
         // yield put(onError(err));
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {
-          console.log('response not json err', e);
-        }
+        } catch (e) {}
         yield put(onError(error));
       }
     };
   }
 
-  static multipartPost(
-    apiUri,
-    onSuccess,
-    onError,
-    data,
-    document = {},
-    token,
-    metaData,
-  ) {
+  static multipartPost(apiUri, onSuccess, onError, data, document = {}, token, metaData) {
     return function* multiPartApiSetup() {
       const requestURL = `${API_BASE}${apiUri}`;
       let multipartData = new FormData();
       multipartData = objectToFormData(data, multipartData);
-      if (Object.prototype.toString.call(document) === "[object Array]") {
-        for (let i = 0; i < document.length; i++) {
-          multipartData.append("file", document[i]);
-        }
-      } else {
-        multipartData.append("file", document);
-      }
-      // case for multiple files on same key
-      // Object.keys(document).map(each => {
-      //   if (
-      //     Object.prototype.toString.call(document[each]) === '[object Array]'
-      //   ) {
-      //     document[each].map(file => multipartData.append([each], file));
-      //   } else {
-      //     multipartData.append([each], document[each]);
+      // if (Object.prototype.toString.call(document) === "[object Array]") {
+      //   for (let i = 0; i < document.length; i++) {
+      //     multipartData.append("file", document[i]);
       //   }
-      // });
+      // } else {
+      //   multipartData.append("file", document);
+      // }
+      // case for multiple files on same key
+      Object.keys(document).map(each => {
+        if (Object.prototype.toString.call(document) === '[object Array]') {
+          document.map(fileObj => multipartData.append([Object.keys(fileObj)[0]], Object.values(fileObj)[0]));
+        } else {
+          multipartData.append([each], document[each]);
+        }
+      });
       try {
         const options = {
           method: metaData === 'put' ? 'PUT' : 'POST',
@@ -90,13 +77,10 @@ class Api {
         //   yield put(onError(response));
         // }
       } catch (err) {
-        // console.log('unexpected error', err);
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {
-          console.log('response not json err', e);
-        }
+        } catch (e) {}
         yield put(onError(error));
       }
     };
@@ -142,13 +126,10 @@ class Api {
         //   yield put(onError(response));
         // }
       } catch (err) {
-        // console.log('unexpected error', err);
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {
-          console.log('response not json err', e);
-        }
+        } catch (e) {}
         yield put(onError(error));
       }
     };
@@ -176,13 +157,10 @@ class Api {
         //   yield put(onError(response));
         // }
       } catch (err) {
-        // console.log('unexpected error', err);
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {
-          console.log('response not json err', e);
-        }
+        } catch (e) {}
         yield put(onError(error));
       }
     };
