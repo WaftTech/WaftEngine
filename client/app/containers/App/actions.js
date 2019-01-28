@@ -80,3 +80,15 @@ export const loadContentFailure = payload => ({
   type: types.LOAD_CONTENT_FAILURE,
   payload,
 });
+export const postMediaRequest = payload => ({
+  type: types.POST_MEDIA_REQUEST,
+  payload,
+});
+export const postMediaSuccess = payload => ({
+  type: types.POST_MEDIACONTENT_SUCCESS,
+  payload,
+});
+export const postMediaFailure = payload => ({
+  type: types.POST_MEDIACONTENT_FAILURE,
+  payload,
+});

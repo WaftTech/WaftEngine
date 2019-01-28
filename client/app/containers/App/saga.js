@@ -29,8 +29,24 @@ function* loadContent(action) {
     ),
   );
 }
+function* loadMedia(action) {
+  yield call(
+    Api.get(`media/_id/${action.payload}`, actions.loadMediaSuccess, actions.loadMediaFailure),
+  );
+}
+function* postMedia(action) {
+  yield fork(
+    Api.multipartPost(
+      `media/_id/${action.payload}`,
+      actions.postMediaSuccess,
+      actions.postMediaFailure,
+    ),
+  );
+}
 
 export default function* defaultSaga() {
   yield takeLatest(types.SUBSCRIBE_REQUEST, subscribe);
   yield takeEvery(types.LOAD_CONTENT_REQUEST, loadContent);
+  yield takeEvery(types.LOAD_MEDIA_REQUEST, loadMedia);
+  yield takeEvery(types.POST_MEDIA_REQUEST, postMedia);
 }

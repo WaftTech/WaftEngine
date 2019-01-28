@@ -27,6 +27,8 @@ import CategoryManageAddEditPage from '../CategoryManagePage/AddEditPage';
 import MediaManagePage from '../MediaManagePage';
 import MediaManageAddEditPage from '../MediaManagePage/AddEditPage';
 import ErrorPage from '../ErrorPage';
+import SliderManagePage from '../SliderManagePage';
+import SliderManageAddEditPage from '../SliderManagePage/AddEditPage';
 
 import messages from './messages';
 
@@ -231,6 +233,29 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.errorManage} />,
     icon: TextFormat,
     component: ErrorPage,
+  },
+  {
+    path: '/wt/slider-manage/add',
+    sidebarName: <FormattedMessage {...messages.sliderManage} />,
+    navbarName: <FormattedMessage {...messages.sliderManage} />,
+    icon: TextFormat,
+    component: SliderManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/slider-manage/edit/:id',
+    sidebarName: <FormattedMessage {...messages.sliderManage} />,
+    navbarName: <FormattedMessage {...messages.sliderManage} />,
+    icon: TextFormat,
+    component: SliderManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/slider-manage',
+    sidebarName: <FormattedMessage {...messages.sliderManage} />,
+    navbarName: <FormattedMessage {...messages.sliderManage} />,
+    icon: TextFormat,
+    component: SliderManagePage,
   },
   { redirect: true, path: '/wt', to: '/wt/dashboard', navbarName: 'Redirect' },
 ];
