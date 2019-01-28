@@ -4,11 +4,13 @@ const HttpStatus = require('http-status');
 
 const otherHelper = require('../helper/others.helper');
 const { secretOrKey } = require('../config/keys');
-const accessSch = require('../modules/Roles/access');
-const modulesSch = require('../modules/Roles/module');
-const rolesSch = require('../modules/Roles/role');
+const accessSch = require('../modules/role/accessShema');
+const modulesSch = require('../modules/role/moduleShema');
+const rolesSch = require('../modules/role/roleShema');
 const authMiddleware = {};
 const mongoose = require('mongoose');
+
+const isEmpty = require('../validation/isEmpty');
 
 authMiddleware.authorization = async (req, res, next) => {
   try {
@@ -38,16 +40,22 @@ authMiddleware.authentication = async (req, res, next) => {
       'Path.ServerRoutes.method': method,
       'Path.ServerRoutes.route': path,
     };
+    console.log(`${JSON.stringify(GetModuleFilter)}`);
     const modules = await modulesSch.findOne(GetModuleFilter, { Path: 1 });
     let moduleAccessTypeId = null;
-    for (let i = 0; i < modules.Path.length; i++) {
-      const routes = modules.Path[i].ServerRoutes;
-      for (let j = 0; j < routes.length; j++) {
-        if (routes[j].method === method && routes[j].route === path) {
-          moduleAccessTypeId = modules.Path[i]._id;
+    if (!isEmpty(modules) && !isEmpty(modules.Path)) {
+      for (let i = 0; i < modules.Path.length; i++) {
+        const routes = modules.Path[i].ServerRoutes;
+        for (let j = 0; j < routes.length; j++) {
+          if (routes[j].method === method && routes[j].route === path) {
+            moduleAccessTypeId = modules.Path[i]._id;
+          }
         }
       }
+    } else {
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 3', null);
     }
+
     const moduleId = modules && modules._id;
     if (role && role.length && moduleId && moduleAccessTypeId) {
       for (let i = 0; i < role.length; i++) {
