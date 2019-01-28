@@ -27,6 +27,7 @@ export const initialState = fromJS({
   successMessage: '',
   errorMessage: '',
   contents: {},
+  media: {},
 });
 
 function appReducer(state = initialState, action = { type: '' }) {
@@ -74,6 +75,12 @@ function appReducer(state = initialState, action = { type: '' }) {
       return state.merge({
         contents: state.get('contents').merge({
           [action.payload.data.Key]: action.payload.data.Description,
+        }),
+      });
+    case types.LOAD_MEDIA_SUCCESS:
+      return state.merge({
+        contents: state.get('media').merge({
+          [action.payload.data._id]: action.payload.data,
         }),
       });
     default:
