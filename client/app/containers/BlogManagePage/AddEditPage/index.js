@@ -87,19 +87,19 @@ class AddEdit extends Component {
     ],
 
     data: {
-      Title: '',
-      Description: '',
-      Summary: '',
-      Category: {},
-      Tags: [],
-      Keywords: [],
-      PublishedOn: '',
-      IsPublished: false,
-      IsActive: false,
-      Image: null,
+      title: '',
+      description: '',
+      summary: '',
+      category: {},
+      tags: [],
+      keywords: [],
+      published_on: '',
+      is_published: false,
+      is_active: false,
+      image: null,
     },
     images: {
-      Image: defaultImage,
+      image: defaultImage,
     },
     categoryId: '',
     tempTag: '',
@@ -157,12 +157,12 @@ class AddEdit extends Component {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one.toJS();
       const categoryId = (oneObj.Category && oneObj.Category._id) || '';
-      const Image = oneObj.Image && oneObj.Image.path && `${IMAGE_BASE}${oneObj.Image.path}`;
+      const image = oneObj.Image && oneObj.image.path && `${IMAGE_BASE}${oneObj.image.path}`;
 
       this.setState(
         state => ({
           data: { ...state.data, ...oneObj },
-          images: { Image },
+          images: { image },
           categoryId,
         }),
         // () => console.log(this.state),
@@ -179,10 +179,10 @@ class AddEdit extends Component {
   insertTag = event => {
     event.preventDefault();
     this.setState(state => {
-      console.log(state.data.Tags.indexOf(state.tempTag));
-      if (state.data.Tags.indexOf(state.tempTag) === -1) {
+      // console.log(state.data.tags.indexOf(state.tempTag));
+      if (state.data.tags.indexOf(state.tempTag) === -1) {
         return {
-          data: { ...state.data, Tags: [...state.data.Tags, state.tempTag] },
+          data: { ...state.data, tags: [...state.data.tags, state.tempTag] },
           tempTag: '',
         };
       }
@@ -211,7 +211,7 @@ class AddEdit extends Component {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      inputProps={{ value: data.Title, onChange: this.handleChange('Title') }}
+                      inputProps={{ value: data.title, onChange: this.handleChange('title') }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -219,11 +219,11 @@ class AddEdit extends Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <InputLabel style={{ color: '#AAAAAA' }}>Blog Description</InputLabel>
                     <CKEditor
-                      name="Description"
-                      content={data.Description}
+                      name="description"
+                      content={data.description}
                       events={{
-                        change: e => this.handleEditorChange(e, 'Description'),
-                        value: data.Description,
+                        change: e => this.handleEditorChange(e, 'description'),
+                        value: data.description,
                       }}
                     />
                   </GridItem>
@@ -233,11 +233,11 @@ class AddEdit extends Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       id="outlined-multiline-flexible"
-                      label="Summary"
+                      label="summary"
                       multiline
                       inputProps={{
-                        value: data.Summary,
-                        onChange: this.handleChange('Summary'),
+                        value: data.summary,
+                        onChange: this.handleChange('summary'),
                       }}
                       rowsMax="7"
                       className={classes.textField}
@@ -283,7 +283,7 @@ class AddEdit extends Component {
                       />
                     </form>
                     <Paper className={classes.root}>
-                      {data.Tags.map((tag, index) => {
+                      {data.tags.map((tag, index) => {
                         let icon = null;
 
                         return (
@@ -307,7 +307,7 @@ class AddEdit extends Component {
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      inputProps={{ value: data.Keywords, onChange: this.handleChange('Keywords') }}
+                      inputProps={{ value: data.keywords, onChange: this.handleChange('keywords') }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -320,8 +320,8 @@ class AddEdit extends Component {
                         fullWidth: true,
                       }}
                       inputProps={{
-                        value: data.PublishedOn,
-                        onChange: this.handleChange('PublishedOn'),
+                        value: data.published_on,
+                        onChange: this.handleChange('published_on'),
                       }}
                     />
                   </GridItem>
@@ -329,12 +329,12 @@ class AddEdit extends Component {
 
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <Dropzone onDrop={files => this.onDrop(files, 'Image')} multiple={false}>
+                    <Dropzone onDrop={files => this.onDrop(files, 'image')} multiple={false}>
                       <img
                         className=""
                         width="200px"
                         height="200px"
-                        src={images.Image}
+                        src={images.image}
                         alt="blogImage"
                       />
                     </Dropzone>
@@ -345,10 +345,10 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={data.IsPublished || false}
+                          checked={data.is_published || false}
                           tabIndex={-1}
-                          onClick={this.handleCheckedChange('IsPublished')}
-                          value="IsPublished"
+                          onClick={this.handleCheckedChange('is_published')}
+                          value="is_published"
                           color="primary"
                         />
                       }
@@ -361,10 +361,10 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={data.IsActive || false}
+                          checked={data.is_active || false}
                           tabIndex={-1}
-                          onClick={this.handleCheckedChange('IsActive')}
-                          value="IsActive"
+                          onClick={this.handleCheckedChange('is_active')}
+                          value="is_active"
                           color="primary"
                         />
                       }

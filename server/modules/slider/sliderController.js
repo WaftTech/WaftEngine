@@ -68,8 +68,26 @@ sliderController.GetSlider = async (req, res, next) => {
         ...searchq,
       };
     }
-    let sliders = await otherHelper.getquerySendResponse(sliderSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totaldata);
+    let sliders = await otherHelper.getquerySendResponse(
+      sliderSch,
+      page,
+      size,
+      sortq,
+      searchq,
+      selectq,
+      next,
+      populate,
+    );
+    return otherHelper.paginationSendResponse(
+      res,
+      httpStatus.OK,
+      true,
+      sliders.data,
+      sliderConfig.get,
+      page,
+      size,
+      sliders.totaldata,
+    );
   } catch (err) {
     next(err);
   }
@@ -78,7 +96,9 @@ sliderController.SaveSlider = async (req, res, next) => {
   try {
     const slider = req.body;
     let d = new Date();
-    slider.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${slider.slider_key}`);
+    slider.slug_url = otherHelper.slugify(
+      `${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${slider.slider_key}`,
+    );
     if (slider && slider._id) {
       if (req.files && req.files[0]) {
         slider.images = req.files;
@@ -86,12 +106,28 @@ sliderController.SaveSlider = async (req, res, next) => {
       const update = await sliderSch.findByIdAndUpdate(slider._id, {
         $set: slider,
       });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, sliderConfig.save, null);
+      return otherHelper.sendResponse(
+        res,
+        httpStatus.OK,
+        true,
+        update,
+        null,
+        sliderConfig.save,
+        null,
+      );
     } else {
       slider.added_by = req.user.id;
       const newSlider = new sliderSch(slider);
       const sliderave = await newSlider.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, sliderave, null, sliderConfig.save, null);
+      return otherHelper.sendResponse(
+        res,
+        httpStatus.OK,
+        true,
+        sliderave,
+        null,
+        sliderConfig.save,
+        null,
+      );
     }
   } catch (err) {
     next(err);
@@ -113,6 +149,14 @@ sliderController.DeleteSlider = async (req, res, next) => {
       deleted_at: Date.now,
     },
   });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, sliderDel, null, sliderConfig.delete, null);
+  return otherHelper.sendResponse(
+    res,
+    httpStatus.OK,
+    true,
+    sliderDel,
+    null,
+    sliderConfig.delete,
+    null,
+  );
 };
 module.exports = sliderController;

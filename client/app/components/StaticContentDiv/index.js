@@ -5,30 +5,30 @@ import { compose } from 'redux';
 import { makeSelectContent } from '../../containers/App/selectors';
 import { loadContentRequest } from '../../containers/App/actions';
 
-class StaticContent extends React.Component{
-  componentDidMount(){
+class StaticContent extends React.Component {
+  componentDidMount() {
     this.props.loadContent(this.props.contentKey);
   }
-   render(){
-     const {staticcontent}= this.props;
-     const contentObj = staticcontent.toJS();
+  render() {
+    const { staticcontent } = this.props;
+    const contentObj = staticcontent.toJS();
 
-     if(!contentObj[this.props.contentKey]) return null;
-     return <div dangerouslySetInnerHTML ={{__html: contentObj[this.props.contentKey]}}/>;
-   }
+    if (!contentObj[this.props.contentKey]) return null;
+    return <div dangerouslySetInnerHTML={{ __html: contentObj[this.props.contentKey] }} />;
+  }
 }
 
 const mapStateToProps = createStructuredSelector({
   staticcontent: makeSelectContent(),
 });
 
-const mapDispatchToProps = dispatch=>({
-loadContent: payload => dispatch(loadContentRequest(payload))
+const mapDispatchToProps = dispatch => ({
+  loadContent: payload => dispatch(loadContentRequest(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 
-export default compose (withConnect)(StaticContent);
+export default compose(withConnect)(StaticContent);
