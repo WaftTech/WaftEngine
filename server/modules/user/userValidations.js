@@ -145,7 +145,7 @@ validations.validateRegisterInput = (req, res, next) => {
           msg: config.validate.empty,
         },
         {
-          condition: 'Isemail',
+          condition: 'IsEmail',
           msg: config.validate.isEmail,
         },
       ],
