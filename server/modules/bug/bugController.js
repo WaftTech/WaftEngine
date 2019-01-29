@@ -18,6 +18,7 @@ bugController.GetErrors = async (req, res, next) => {
     let page;
     let size;
     let sortq;
+    let populate;
     let searchq;
     let selectq;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
@@ -45,6 +46,7 @@ bugController.GetErrors = async (req, res, next) => {
     }
     selectq = 'error_message error_stack error_type added_at added_by device ip';
     searchq = {};
+    populate = '';
     let bugs = await otherHelper.getquerySendResponse(
       bugSch,
       page,
@@ -53,7 +55,7 @@ bugController.GetErrors = async (req, res, next) => {
       searchq,
       selectq,
       next,
-      '',
+      populate,
     );
     return otherHelper.paginationSendResponse(
       res,

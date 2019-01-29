@@ -41,7 +41,7 @@ settingController.GetSetting = async (req, res, next) => {
       }
     }
 
-    populate = [{ path: 'added_by', select: '_id name' }, { path: 'updated_by', select: '_id name' }];
+    populate = '';
 
     searchq = {};
 
