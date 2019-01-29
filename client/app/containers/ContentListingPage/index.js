@@ -106,20 +106,23 @@ export class ContentsListingPage extends React.Component {
 
     const tableData = allLinksObj.map(
       ({
-        ContentName, // Description,
-        PublishFrom,
-        PublishTo,
-        IsActive,
-        IsFeature,
-        Added_at,
+        name, // Description,
+        key,
+        publish_from,
+        publish_to,
+        is_active,
+        is_feature,
+        added_at,
         _id,
       }) => [
-        ContentName,
-        moment(PublishFrom).format('MMM Do YY'),
-        moment(PublishTo).format('MMM Do YY'),
-        '' + IsActive,
-        '' + IsFeature,
-        Added_at,
+        name,
+        key,
+        moment(publish_from).format('MMM Do YY'),
+        moment(publish_to).format('MMM Do YY'),
+        '' + is_active,
+        '' + is_feature,
+        moment(added_at).format('MMM Do YY'),
+        ,
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -187,12 +190,13 @@ export class ContentsListingPage extends React.Component {
                 tableHeaderColor="primary"
                 tableHead={[
                   <FormattedMessage {...messages.contentName} />,
+                  <FormattedMessage {...messages.key} />,
                   // <FormattedMessage {...messages.shortDescription} />,
                   <FormattedMessage {...messages.publishedFrom} />,
                   <FormattedMessage {...messages.publishedTo} />,
                   <FormattedMessage {...messages.isActive} />,
                   <FormattedMessage {...messages.isFeatured} />,
-                  <FormattedMessage {...messages.addedTo} />,
+                  <FormattedMessage {...messages.addedAt} />,
                   <FormattedMessage {...messages.operations} />,
                 ]}
                 tableData={tableData}

@@ -44,7 +44,6 @@ class AddEdit extends Component {
   state = {
     data: {
       title: '',
-      added_at: '',
     },
   };
   handleChange = name => event => {
