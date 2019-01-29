@@ -14,6 +14,7 @@ const { mongoURI } = require('./config/keys');
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
+const { Respond } = require('./dummyData/constantController');
 
 const auth = require('./helper/auth.helper');
 
@@ -54,17 +55,31 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 // DB Config
 mongoose.Promise = global.Promise;
 
-// Database Connection
-mongoose
-  .connect(
-    mongoURI,
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-    },
-  )
-  .then(() => console.log('MongoDB Connected'))
+let defaults = {};
+Promise.resolve(app)
+  .then(MongoDBConnection)
+  .then(LoadDefaults)
   .catch(err => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
+
+// Database Connection
+function MongoDBConnection(app) {
+  mongoose
+    .connect(
+      mongoURI,
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+      },
+    )
+    .then(() => console.log('MongoDB Connected'));
+
+  return app;
+}
+async function LoadDefaults(app) {
+  console.log('Loading default data...');
+  defaults.respond = await Respond();
+  return app;
+}
 
 // Passport middleware
 app.use(passport.initialize());
