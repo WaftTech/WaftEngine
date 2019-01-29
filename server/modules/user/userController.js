@@ -1,4 +1,4 @@
-const user = require('./userShema');
+const users = require('./userShema');
 const roles = require('../role/roleShema');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
@@ -21,7 +21,7 @@ userController.CheckMail = async (req, res) => {
   const {
     body: { email },
   } = req;
-  const user = await user.findOne({ email });
+  const user = await users.findOne({ email });
   const data = { email };
   if (!user) {
     errors.email = 'Mail not found';
@@ -74,14 +74,14 @@ userController.GetAllUser = async (req, res, next) => {
 
   populate = { path: 'roles', select: 'role_title' };
 
-  let datas = await otherHelper.getquerySendResponse(user, page, size, sortq, searchq, selectq, next, populate);
+  let datas = await otherHelper.getquerySendResponse(users, page, size, sortq, searchq, selectq, next, populate);
 
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
 };
 
 userController.GetUserDetail = async (req, res, next) => {
   try {
-    const users = await user.findById(req.params.id, {
+    const user = await users.findById(req.params.id, {
       email_verified: 1,
       roles: 1,
       name: 1,
@@ -89,23 +89,23 @@ userController.GetUserDetail = async (req, res, next) => {
       avatar: 1,
       updated_at: 1,
     });
-    const roles = await roles.find({}, { RolesTitle: 1, _id: 1 });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { user: users, roles: roles }, null, config.get, null);
+    const role = await roles.find({}, { RolesTitle: 1, _id: 1 });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { user: user, roles: role }, null, config.get, null);
   } catch (err) {
     next(err);
   }
 };
 
 userController.Register = async (req, res) => {
-  const user = await user.findOne({ email: req.body.email });
+  const user = await users.findOne({ email: req.body.email });
   if (user) {
     const errors = { email: 'Email already exists' };
     const data = { email: req.body.email };
     return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
   } else {
-    const { name, email, password, gender } = req.body;
+    const { name, email, password, password2, gender } = req.body;
     const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-    const newUser = new User({ name, email, avatar, password, gender });
+    const newUser = new User({ name, email, avatar, password, password2, gender });
     bcrypt.genSalt(10, async (err, salt) => {
       bcrypt.hash(newUser.password, salt, async (err, hash) => {
         if (err) throw err;
@@ -144,15 +144,15 @@ userController.Register = async (req, res) => {
 };
 userController.RegisterFromAdmin = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await users.findOne({ email: req.body.email });
     if (user) {
       errors.email = 'Email already exists';
       const data = { email: req.body.email };
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
-      const { name, email, password, roles } = req.body;
+      const { name, email, password, password2, roles } = req.body;
       const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-      const newUser = new User({ name, email, avatar, password, roles });
+      const newUser = new User({ name, email, avatar, password, password2, roles });
       bcrypt.genSalt(10, async (err, salt) => {
         bcrypt.hash(newUser.password, salt, async (err, hash) => {
           if (err) throw err;
@@ -184,7 +184,7 @@ userController.UpdateUserDetail = async (req, res, next) => {
   try {
     const user = req.body;
     const id = req.params.id;
-    const updateUser = await user.findByIdAndUpdate(id, { $set: user });
+    const updateUser = await users.findByIdAndUpdate(id, { $set: user });
     const msg = 'User Update Success';
     return otherHelper.sendResponse(res, httpStatus.OK, true, updateUser, null, msg, null);
   } catch (err) {
@@ -197,14 +197,14 @@ userController.Verifymail = async (req, res) => {
     const {
       body: { email, code },
     } = req;
-    const user = await user.findOne({ email, email_verification_code: code });
+    const user = await users.findOne({ email, email_verification_code: code });
     const data = { email };
     console.log(user);
     if (!user) {
       errors.email = 'Invalid Verification Code';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
-    const d = await user.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
+    const d = await users.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     // Create JWT payload
     const payload = {
       id: user._id,
@@ -228,14 +228,14 @@ userController.Verifymail = async (req, res) => {
 userController.VerifyServerMail = async (req, res, next) => {
   try {
     const { id, code } = req.params;
-    const user = await user.findOne({ _id: id, email_verification_code: code });
+    const user = await users.findOne({ _id: id, email_verification_code: code });
     if (!user) {
-      return res.redirect(302, 'http://localhost:5010?verify=false');
+      return res.redirect(302, 'http://localhost:5050?verify=false');
     }
-    const d = await user.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
+    const d = await users.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     const payload = {
       id: user._id,
-      iss: 'http://localhost:5010',
+      iss: 'http://localhost:5050',
       name: user.name,
       avatar: user.avatar,
       email: user.email,
@@ -250,7 +250,7 @@ userController.VerifyServerMail = async (req, res, next) => {
 
       res.cookie('token', token); // add cookie here
       res.cookie('email', user.email); // add cookie here
-      return res.redirect(302, 'http://localhost:5010?verify=true');
+      return res.redirect(302, 'http://localhost:5050?verify=true');
     });
   } catch (err) {
     next(err);
@@ -262,7 +262,7 @@ userController.ForgotPassword = async (req, res, next) => {
     const {
       body: { email },
     } = req;
-    const user = await user.findOne({ email });
+    const user = await users.findOne({ email });
     const data = { email };
     if (!user) {
       errors.email = 'Email not found';
@@ -271,7 +271,7 @@ userController.ForgotPassword = async (req, res, next) => {
     user.password_reset_code = otherHelper.generateRandomHexString(6);
     user.password_reset_request_date = new Date();
     let mailOptions = {
-      from: '"Ask 4 Trip"  <test@mkmpvtltd.tk>', // sender address
+      from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
       to: email, // list of receivers
       subject: 'Password reset request', // Subject line
       text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
@@ -279,7 +279,7 @@ userController.ForgotPassword = async (req, res, next) => {
     const tempalte_path = `${__dirname}/../email/template/passwordreset.pug`;
     const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
     emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
-    const update = await User.findByIdAndUpdate(
+    const update = await users.findByIdAndUpdate(
       user._id,
       {
         $set: {
@@ -301,13 +301,13 @@ userController.ResetPassword = async (req, res, next) => {
     const {
       body: { email, code, password },
     } = req;
-    const user = await user.findOne({ email, password_reset_code: code });
+    const user = await users.findOne({ email, password_reset_code: code });
     const data = { email };
     if (!user) {
       errors.email = 'Invalid Password Reset Code';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
-    const d = await user.findByIdAndUpdate(user._id, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+    const d = await users.findByIdAndUpdate(user._id, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
     const payload = {
       id: user._id,
@@ -333,7 +333,7 @@ userController.Login = async (req, res) => {
   const {
     body: { email, password },
   } = req;
-  user
+  users
     .findOne({
       email,
     })
@@ -347,13 +347,13 @@ userController.Login = async (req, res) => {
       bcrypt.compare(password, user.password).then(async isMatch => {
         if (isMatch) {
           // User Matched
-          let accesses = await accessSch.find({ RoleId: user.roles, IsActive: true }, { AccessType: 1, _id: 0 });
+          let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
 
           let routes = [];
           if (accesses && accesses.length) {
-            const access = accesses.map(a => a.AccessType).reduce((acc, curr) => [...curr, ...acc]);
+            const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
             console.log(access);
-            const routers = await moduleSch.find({ 'Path._id': access }, { 'Path.AdminRoutes': 1, 'Path.AccessType': 1 });
+            const routers = await moduleSch.find({ 'path._id': access }, { 'path.adminRoutes': 1, 'path.accessType': 1 });
             for (let i = 0; i < routers.length; i++) {
               for (let j = 0; j < routers[i].Path.length; j++) {
                 // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
@@ -400,7 +400,7 @@ userController.Info = (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, req.user, null, null, null);
 };
 userController.GetProfile = async (req, res, next) => {
-  const userProfile = await user.findById(req.user.id);
+  const userProfile = await users.findById(req.user.id);
   return otherHelper.sendResponse(res, httpStatus.OK, true, userProfile, null, null, null);
 };
 userController.GithubLogin = (req, res, next) => {};
