@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'app.containers.ContentListingPage.contentName',
     defaultMessage: 'Content Name',
   },
+  key: {
+    id: 'app.containers.ContentListingPage.key',
+    defaultMessage: 'key',
+  },
 
   publishedFrom: {
     id: 'app.containers.ContentListingPage.publishedFrom',
@@ -31,9 +35,9 @@ export default defineMessages({
     id: 'app.containers.ContentListingPage.contentImage',
     defaultMessage: 'Content Image',
   },
-  addedTo: {
-    id: 'app.containers.ContentListingPage.addedTo',
-    defaultMessage: 'Added To',
+  addedAt: {
+    id: 'app.containers.ContentListingPage.addedAt',
+    defaultMessage: 'Added At',
   },
   operations: {
     id: 'app.containers.ContentListingPage.operations',

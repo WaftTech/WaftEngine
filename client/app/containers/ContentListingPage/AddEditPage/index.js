@@ -47,13 +47,13 @@ const styles = {
 
 class AddEdit extends Component {
   state = {
-    ContentName: '',
-    Key: '',
-    Description: '',
-    PublishFrom: '',
-    IsActive: false,
-    IsFeature: false,
-    PublishTo: '',
+    name: '',
+    key: '',
+    description: '',
+    publish_from: '',
+    is_active: false,
+    is_feature: false,
+    publish_to: '',
   };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
@@ -120,8 +120,8 @@ class AddEdit extends Component {
                         fullWidth: true,
                       }}
                       inputProps={{
-                        value: this.state.ContentName,
-                        onChange: this.handleChange('ContentName'),
+                        value: this.state.name,
+                        onChange: this.handleChange('name'),
                       }}
                     />
                   </GridItem>
@@ -129,12 +129,12 @@ class AddEdit extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Key"
+                      labelText="key"
                       id="contents-key"
                       formControlProps={{
                         fullWidth: true,
                       }}
-                      inputProps={{ value: this.state.Key, onChange: this.handleChange('Key') }}
+                      inputProps={{ value: this.state.key, onChange: this.handleChange('key') }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -143,11 +143,11 @@ class AddEdit extends Component {
                   <GridItem xs={12} sm={12} md={12}>
                     <InputLabel style={{ color: '#AAAAAA' }}>Content Description</InputLabel>
                     <CKEditor
-                      name="Description"
-                      content={this.state.Description}
+                      name="description"
+                      content={this.state.description}
                       events={{
-                        change: e => this.handleEditorChange(e, 'Description'),
-                        value: this.state.Description,
+                        change: e => this.handleEditorChange(e, 'description'),
+                        value: this.state.description,
                         // onChange: this.handleChange('Description'),
                       }}
                     />
@@ -163,8 +163,8 @@ class AddEdit extends Component {
                         fullWidth: true,
                       }}
                       inputProps={{
-                        value: this.state.PublishFrom,
-                        onChange: this.handleChange('PublishFrom'),
+                        value: this.state.publish_from,
+                        onChange: this.handleChange('publish_from'),
                       }}
                     />
                   </GridItem>
@@ -176,8 +176,8 @@ class AddEdit extends Component {
                         fullWidth: true,
                       }}
                       inputProps={{
-                        value: this.state.PublishTo,
-                        onChange: this.handleChange('PublishTo'),
+                        value: this.state.publish_to,
+                        onChange: this.handleChange('publish_to'),
                       }}
                     />
                   </GridItem>
@@ -188,10 +188,10 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.IsActive || false}
+                          checked={this.state.is_active || false}
                           tabIndex={-1}
-                          onClick={this.handleCheckedChange('IsActive')}
-                          value="IsActive"
+                          onClick={this.handleCheckedChange('is_active')}
+                          value="is_active"
                           color="primary"
                         />
                       }
@@ -200,13 +200,13 @@ class AddEdit extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.IsFeature || false}
-                          onClick={this.handleCheckedChange('IsFeature')}
-                          value="IsFeatured"
+                          checked={this.state.is_feature || false}
+                          onClick={this.handleCheckedChange('is_feature')}
+                          value="is_feature"
                           color="primary"
                         />
                       }
-                      label="Is Featured"
+                      label="Is Feature"
                     />
                   </GridItem>
                 </GridContainer>

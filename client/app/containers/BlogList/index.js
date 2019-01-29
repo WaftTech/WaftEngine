@@ -43,19 +43,19 @@ export class BlogListPage extends React.Component {
           <div className="container">
             <Grid container spacing={24}>
               {blogListObj.map(each => {
-                const { Image, Title, Description, Added_at, Category, Tags } = each;
+                const { image, title, description, added_at, Category, tags } = each;
                 const blogImage =
-                  (Image && Image.length && Image[0].path && `${IMAGE_BASE}${Image[0].path}`) ||
+                  (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) ||
                   defaultImage;
 
                 return (
                   <Grid item xs={12} lg={4}>
                     <Link to={`/blog/${each._id}`}>
                       <div className="companyItem">
-                        <div>{Title}</div>
+                        <div>{title}</div>
                       </div>
                     </Link>
-                    <div>{moment(Added_at).format('MMM Do YY')}</div>
+                    <div>{moment(added_at).format('MMM Do YY')}</div>
                     <Link to={`/blog-category/${Category ? Category.slug_url : ''}`}>
                       <div className="companyItem">
                         <div>{Category ? Category.title : 'NO'}</div>
@@ -63,7 +63,7 @@ export class BlogListPage extends React.Component {
                     </Link>
                     <Link to={`/blog/${each._id}`}>
                       <div className="companyItem">
-                        <div dangerouslySetInnerHTML={{ __html: Description }} />
+                        <div dangerouslySetInnerHTML={{ __html: description }} />
                       </div>
                     </Link>
                     <Link to={`/blog/${each._id}`}>
@@ -75,7 +75,7 @@ export class BlogListPage extends React.Component {
                       Tags:
                       <Link to={`/blog/${each._id}`}>
                         <div className="companyItem">
-                          <div>{Tags ? Tags : ''}</div>
+                          <div>{tags ? tags : ''}</div>
                         </div>
                       </Link>{' '}
                     </div>
