@@ -47,9 +47,9 @@ export class CategoryDetailPage extends React.Component {
 
             <Grid container spacing={8}>
               {blogObj.blog.map(each => {
-                const { Image, Title, Description, Added_at, Category } = each;
-                const blogImage =
-                  (Image && Image.length && Image[0].path && `${IMAGE_BASE}${Image[0].path}`) ||
+                const { image, title, description, sdded_at, Category } = each;
+                const blogimage =
+                  (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) ||
                   defaultImage;
                 ``;
 
@@ -57,10 +57,10 @@ export class CategoryDetailPage extends React.Component {
                   <Grid key={each._id} item xs={6} md={3}>
                     <Link className="blockLink" to={`/blog/${each._id}`}>
                       <div className="companyItem">
-                        <div>{Title}</div>
+                        <div>{title}</div>
                       </div>
                     </Link>
-                    <div>{moment(Added_at).format('MMM Do YY')}</div>
+                    <div>{moment(added_at).format('MMM Do YY')}</div>
                     <Link to={`/blog-category/${each.slug_url}`}>
                       <div className="companyItem">
                         <div>{Category ? Category.title : 'NO'}</div>
@@ -68,7 +68,7 @@ export class CategoryDetailPage extends React.Component {
                     </Link>
                     <Link to={`/blog/${each._id}`}>
                       <div className="companyItem">
-                        <div dangerouslySetInnerHTML={{ __html: Description }} />
+                        <div dangerouslySetInnerHTML={{ __html: description }} />
                       </div>
                     </Link>
                     <Link to={`/blog/${each._id}`}>

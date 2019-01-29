@@ -75,8 +75,8 @@ sliderController.GetSlider = async (req, res, next) => {
       sortq,
       searchq,
       selectq,
-      populate,
       next,
+      populate,
     );
     return otherHelper.paginationSendResponse(
       res,

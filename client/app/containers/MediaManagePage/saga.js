@@ -13,7 +13,7 @@ function* loadAll(action) {
     pageNumber = `&page=${action.payload.page}&size=${action.payload.rowsPerPage}`;
   }
 
-  yield call(Api.get(`media?${pageNumber}`, actions.loadAllSuccess, actions.loadAllFailure, token));
+  yield call(Api.get(`media/${pageNumber}`, actions.loadAllSuccess, actions.loadAllFailure, token));
 }
 
 function* loadOne(action) {
