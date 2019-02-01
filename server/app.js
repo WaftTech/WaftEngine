@@ -14,7 +14,7 @@ const { mongoURI } = require('./config/keys');
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
-const { Respond } = require('./dummyData/constantController');
+const { Respond } = require('./dumpData/constantController');
 
 const auth = require('./helper/auth.helper');
 
@@ -62,8 +62,8 @@ Promise.resolve(app)
   .catch(err => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
 
 // Database Connection
-function MongoDBConnection(app) {
-  mongoose
+async function MongoDBConnection(app) {
+  await mongoose
     .connect(
       mongoURI,
       {
