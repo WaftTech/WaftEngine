@@ -9,17 +9,22 @@ const modules = require('../modules/module/moduleShema');
 const blogs = require('../modules/blog/blogShema');
 const constantController = {};
 const models = { blogs, contents, media, roles, users };
-constantController.Respond = next => {
+constantController.Respond = async (req, res, next) => {
   try {
     const files = fs.readdirSync(__dirname + '/dumps/');
-    files.map(file => {
+    files.map(async file => {
       const fileString = fs.readFileSync(__dirname + '/dumps/' + file, 'utf-8');
       let fileRead = JSON.parse(fileString);
       let fileName = file.split('.', 1);
       console.log(`inserting ${fileName} data!!`);
-      models[fileName].collection.insertMany(fileRead, (err, r) => {
+      const data = await models[fileName].find();
+      if (!data || data == '') {
+        for (let i = 0; i < fileRead.length; i++) {
+          const d = new models[fileName](fileRead[i]);
+          await d.save();
+        }
         console.log(`${fileName} data inserted!!`);
-      });
+      }
     });
   } catch (err) {
     next(err);
