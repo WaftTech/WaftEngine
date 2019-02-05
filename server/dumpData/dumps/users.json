@@ -1,17 +1,16 @@
 [
   {
-    "_id": "ObjectId('5c3b244f9ef510172cd1dcb0')",
+    "_id": "5c3b244f9ef510172cd1dcb0",
     "avatar": "//www.gravatar.com/avatar/c919a0ca57be37efbad508733daf5069?s=200&r=pg&d=mm",
     "email": "admin+we@wafttech.com",
     "email_verified": "true",
     "name": "waftengine",
     "password": "$2a$10$rwBK5IeXK3nCSyIe2X8ajOrID3NpmRk/v0bIavZVris1ktfi6Xk6q",
-    "roles": "['ObjectId('5bf7ae3694db051f5486f84'\")']"
+    "password2": "navin17"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5c4ffc695261f620dbbecbaa')",
-    "added_at": "ISODate('2019-01-29T12:55:33.839+05:45')",
+    "_id": "5c4ffc695261f620dbbecbaa",
+    "added_at": "2019-01-29T12:55:33.839+05:45",
     "avatar": "//www.gravatar.com/avatar/ce76a83f968b294672e2076cc346a58d?s=200&r=pg&d=mm",
     "email": "navin17@yahoo.com",
     "email_verification_code": "2E00DEB4993A",
@@ -20,11 +19,10 @@
     "is_active": false,
     "is_added_by_admin": false,
     "is_deleted": false,
-    "last_password_cahnage_date": "ISODate('2019-01-29T12:55:34.052+05:45')",
+    "last_password_cahnage_date": "2019-01-29T12:55:34.052+05:45",
     "name": "navindau",
     "password": "$2a$10$nXAJN6vKnAnMUHUCtvOXfO3k7H4yFTH8Hp2K4V25SrreRYY8.q.0i",
     "password2": "navin17",
-    "roles": ["ObjectId('5bf7ae90736db01f8fa21a24')"],
     "skills": []
   }
 ]

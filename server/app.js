@@ -64,13 +64,10 @@ Promise.resolve(app)
 // Database Connection
 async function MongoDBConnection(app) {
   await mongoose
-    .connect(
-      mongoURI,
-      {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-      },
-    )
+    .connect(mongoURI, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    })
     .then(() => console.log('MongoDB Connected'));
 
   return app;
