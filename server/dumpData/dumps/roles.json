@@ -1,65 +1,58 @@
 [
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5bf7ae90736db01f8fa21a24')",
-    "Added_at": "ISODate('2018-11-23T13:23:56.755+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "Default Register User",
-    "IsActive": true,
-    "RolesTitle": "Normal User"
+    "_id": "5bf7ae90736db01f8fa21a24",
+    "added_at": "2018-11-23T13:23:56.755+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "Default Register User",
+    "is_active": true,
+    "role_title": "Normal User"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5bf7ae3694db051f5486f845')",
-    "Added_at": "ISODate('2018-11-23T13:22:26.731+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "Admin User For Developer",
-    "IsActive": true,
-    "RolesTitle": "Super Admin"
+    "_id": "5bf7ae3694db051f5486f845",
+    "added_at": "2018-11-23T13:22:26.731+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "Admin User For Developer",
+    "is_active": true,
+    "role_title": "Super Admin"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5bf7af0a736db01f8fa21a25')",
-    "Added_at": "ISODate('2018-11-23T13:25:58.311+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "Admin User To manage Application",
-    "IsActive": true,
-    "RolesTitle": "Admin"
+    "_id": "5bf7af0a736db01f8fa21a25",
+    "added_at": "2018-11-23T13:25:58.311+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "Admin User To manage Application",
+    "is_active": true,
+    "role_title": "Admin"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5bf7af44736db01f8fa21a26')",
-    "Added_at": "ISODate('2018-11-23T13:26:56.105+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "User Without Login",
-    "IsActive": true,
-    "RolesTitle": "Anonymous User"
+    "_id": "5bf7af44736db01f8fa21a26",
+    "added_at": "2018-11-23T13:26:56.105+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "User Without Login",
+    "is_active": true,
+    "role_title": "Anonymous User"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5bfce27d43dc971fa6527fcf')",
-    "Added_at": "ISODate('2018-11-27T12:06:49.194+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "Vendor For User",
-    "IsActive": true,
-    "RolesTitle": "Vendor"
+    "_id": "5bfce27d43dc971fa6527fcf",
+    "added_at": "2018-11-27T12:06:49.194+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "Vendor For User",
+    "is_active": true,
+    "role_title": "Vendor"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5c1622fe03de4e60874ed1e0')",
-    "Added_at": "ISODate('2018-12-16T15:48:42.054+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "HR Person of Company",
-    "IsActive": true,
-    "RolesTitle": "HR-Admin"
+    "_id": "5c1622fe03de4e60874ed1e0",
+    "added_at": "2018-12-16T15:48:42.054+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "HR Person of Company",
+    "is_active": true,
+    "role_title": "HR-Admin"
   },
   {
-    "__v": "NumberInt(0)",
-    "_id": "ObjectId('5c3835c2241be4077c9dbfcd')",
-    "Added_at": "ISODate('2019-01-11T12:05:50.147+05:45')",
-    "Added_by": "ObjectId('5bd55def672c57136889cc18')",
-    "Description": "Job available for content writer who is interested and capable of doing research.",
-    "IsActive": true,
-    "RolesTitle": "Content Writer"
+    "_id": "5c3835c2241be4077c9dbfcd",
+    "added_at": "2019-01-11T12:05:50.147+05:45",
+    "added_by": "5bd55def672c57136889cc18",
+    "description": "Job available for content writer who is interested and capable of doing research.",
+    "is_active": true,
+    "role_title": "Content Writer"
   }
 ]
