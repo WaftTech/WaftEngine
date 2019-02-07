@@ -28,6 +28,9 @@ router.use('/blog', blogRoutes);
 // All route of sliders
 const sliderRoutes = require('./api/slider');
 router.use('/slider', sliderRoutes);
+// All route of faqs
+const faqRoutes = require('./api/faq');
+router.use('/faq', faqRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
