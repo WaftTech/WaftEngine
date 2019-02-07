@@ -20,12 +20,12 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+// import defaultImage from 'assets/img/upload.png';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import { loadOneRequest, addEditRequest } from '../actions';
 import { IMAGE_BASE } from '../../App/constants';
-import defaultImage from 'assets/img/upload.png';
 
 const styles = {
   cardCategoryWhite: {
@@ -52,7 +52,7 @@ class AddEdit extends Component {
       Image: null,
     },
     images: {
-      Image: defaultImage,
+      Image: null, //defaultImage,
     },
   };
   handleChange = name => event => {
@@ -108,13 +108,7 @@ class AddEdit extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <Dropzone onDrop={files => this.onDrop(files, 'Image')} multiple={false}>
-                      <img
-                        className=""
-                        width="200px"
-                        height="200px"
-                        src={images.Image}
-                        alt="Image"
-                      />
+                      <img className="" width="200px" height="200px" src={images.Image} alt="Image" />
                     </Dropzone>
                   </GridItem>
                 </GridContainer>
