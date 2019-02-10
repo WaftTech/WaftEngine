@@ -31,6 +31,10 @@ export default defineMessages({
     id: 'app.containers.WtDashboard.blogManage',
     defaultMessage: 'Blog Manage',
   },
+  faqManage: {
+    id: 'app.containers.WtDashboard.faqManage',
+    defaultMessage: 'FAQ Manage',
+  },
   categoryManage: {
     id: 'app.containers.WtDashboard.categoryManage',
     defaultMessage: 'Category Manage',

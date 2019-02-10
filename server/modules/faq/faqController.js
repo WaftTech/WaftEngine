@@ -220,5 +220,10 @@ faqController.DeleteFaq = async (req, res, next) => {
   });
   return otherHelper.sendResponse(res, httpStatus.OK, true, faq, null, faqConfig.faqDelete, null);
 };
+faqController.GetFaqAndCat = async (req, res, next) => {
+  const cat = await faqCatSch.find().select('title');
+  const faq = await faqSch.find({ is_deleted: false }).select('title question category');
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { cat, faq }, null, null, null);
+};
 
 module.exports = faqController;

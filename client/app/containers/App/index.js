@@ -27,6 +27,7 @@ import NotFoundPage from '../NotFoundPage';
 import WtDashboard from '../WtDashboard';
 import UserLayout from './layouts/UserLayout';
 import HomePage from '../HomePage';
+import FAQPage from '../FAQPage';
 import ErrorBoundary from '../../ErrorBoundary';
 import { makeSelectDialog, makeSelectLocation, makeSelectContent } from './selectors';
 import ContactUs from '../ContactUs';
@@ -52,6 +53,7 @@ class App extends React.Component {
           <Route
             exact
             path="/"
+            connect
             render={() => (
               <UserLayout>
                 <HomePage />
@@ -119,6 +121,17 @@ class App extends React.Component {
                 <Helmet>
                   <title>Blog Categories</title>
                 </Helmet>
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/faq"
+            render={() => (
+              <div>
+                <UserLayout>
+                  <FAQPage />
+                </UserLayout>
               </div>
             )}
           />
