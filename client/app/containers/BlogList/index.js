@@ -44,9 +44,7 @@ export class BlogListPage extends React.Component {
             <Grid container spacing={24}>
               {blogListObj.map(each => {
                 const { image, title, description, added_at, Category, tags } = each;
-                const blogImage =
-                  (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) ||
-                  defaultImage;
+                const blogImage = (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) || defaultImage;
 
                 return (
                   <Grid item xs={12} lg={4}>

@@ -78,13 +78,7 @@ const MenuProps = {
 
 class AddEdit extends Component {
   state = {
-    chipData: [
-      { key: 0, label: 'Angular' },
-      { key: 1, label: 'jQuery' },
-      { key: 2, label: 'Polymer' },
-      { key: 3, label: 'React' },
-      { key: 4, label: 'Vue.js' },
-    ],
+    chipData: [{ key: 0, label: 'Angular' }, { key: 1, label: 'jQuery' }, { key: 2, label: 'Polymer' }, { key: 3, label: 'React' }, { key: 4, label: 'Vue.js' }],
 
     data: {
       title: '',
@@ -286,15 +280,7 @@ class AddEdit extends Component {
                       {data.tags.map((tag, index) => {
                         let icon = null;
 
-                        return (
-                          <Chip
-                            key={`${tag}-${index}`}
-                            icon={icon}
-                            label={tag}
-                            onDelete={this.handleDelete(index)}
-                            className={classes.chip}
-                          />
-                        );
+                        return <Chip key={`${tag}-${index}`} icon={icon} label={tag} onDelete={this.handleDelete(index)} className={classes.chip} />;
                       })}
                     </Paper>
                   </GridItem>
@@ -330,46 +316,18 @@ class AddEdit extends Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <Dropzone onDrop={files => this.onDrop(files, 'image')} multiple={false}>
-                      <img
-                        className=""
-                        width="200px"
-                        height="200px"
-                        src={images.image}
-                        alt="blogImage"
-                      />
+                      <img className="" width="200px" height="200px" src={images.image} alt="blogImage" />
                     </Dropzone>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={data.is_published || false}
-                          tabIndex={-1}
-                          onClick={this.handleCheckedChange('is_published')}
-                          value="is_published"
-                          color="primary"
-                        />
-                      }
-                      label="Is Published"
-                    />
+                    <FormControlLabel control={<Checkbox checked={data.is_published || false} tabIndex={-1} onClick={this.handleCheckedChange('is_published')} value="is_published" color="primary" />} label="Is Published" />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={data.is_active || false}
-                          tabIndex={-1}
-                          onClick={this.handleCheckedChange('is_active')}
-                          value="is_active"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
+                    <FormControlLabel control={<Checkbox checked={data.is_active || false} tabIndex={-1} onClick={this.handleCheckedChange('is_active')} value="is_active" color="primary" />} label="Is Active" />
                   </GridItem>
                 </GridContainer>
               </CardBody>
