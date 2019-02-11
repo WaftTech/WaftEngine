@@ -65,7 +65,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class BlogManagePage extends React.Component {
+export class FAQManagePage extends React.Component {
   state = { query: {}, sortToggle: 0 };
   componentDidMount() {
     this.props.loadAll({ query: {} });
@@ -80,10 +80,10 @@ export class BlogManagePage extends React.Component {
     }));
   };
   handleAdd = () => {
-    this.props.history.push('/wt/blog-manage/add');
+    this.props.history.push('/wt/faq-manage/add');
   };
   handleEdit = _id => {
-    this.props.history.push(`/wt/blog-manage/edit/${_id}`);
+    this.props.history.push(`/wt/faq-manage/edit/${_id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -93,7 +93,7 @@ export class BlogManagePage extends React.Component {
     this.props.loadAll(this.state.query);
     this.setState({ query: {} });
   };
-  blogSort = title => {
+  faqSort = title => {
     if (!!this.state.sortToggle) {
       this.setState({ sortToggle: 0 });
     } else if (!this.state.sortToggle) {
@@ -128,14 +128,13 @@ export class BlogManagePage extends React.Component {
     const allLinksObj = allLinks.toJS();
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
-    const tableData = allLinksObj.map(({ title, Category, published_on, added_at, is_published, is_active, _id, slug_url }) => [
+    const tableData = allLinksObj.map(({ question, title, category, added_at, updated_at, _id }) => [
+      question,
       title,
-      (Category && Category.title) || 'No',
-      moment(published_on).format('MMM Do YY'),
-
+      (category && category.title) || 'No',
       moment(added_at).format('MMM Do YY'),
-      '' + is_published,
-      '' + is_active,
+
+      moment(updated_at).format('MMM Do YY'),
       <React.Fragment>
         <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
           <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
@@ -155,7 +154,7 @@ export class BlogManagePage extends React.Component {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
-              <input name="title" value={this.state.query.title || ''} onChange={this.handleQueryChange} placeholder="Search By Blog Title" />
+              <input name="question" value={this.state.query.question || ''} onChange={this.handleQueryChange} placeholder="Search By FAQ" />
               <button onClick={this.handleSearch}>Search</button>
             </CardHeader>
           </Card>
@@ -163,19 +162,18 @@ export class BlogManagePage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}> Blog Management</h4>
-              <p className={classes.cardCategoryWhite}>Here are the lists of Blogs</p>
+              <h4 className={classes.cardTitleWhite}> FAQ Management</h4>
+              <p className={classes.cardCategoryWhite}>Here are the lists of FAQS</p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.title}>{txt => <span onClick={() => this.blogSort('title')}>{txt}</span>}</FormattedMessage>,
-                  <FormattedMessage {...messages.category} />,
-                  <FormattedMessage {...messages.publishedOn}>{txt => <span onClick={() => this.blogSort('published_on')}>{txt}</span>}</FormattedMessage>,
-                  <FormattedMessage {...messages.addedAt}>{txt => <span onClick={() => this.blogSort('added_at')}>{txt}</span>}</FormattedMessage>,
-                  <FormattedMessage {...messages.isPublished} />,
-                  <FormattedMessage {...messages.isActive} />,
+                  <FormattedMessage {...messages.question}>{txt => <span onClick={() => this.faqSort('question')}>{txt}</span>}</FormattedMessage>,
+                  <FormattedMessage {...messages.title} />,
+                  <FormattedMessage {...messages.category}>{txt => <span onClick={() => this.faqSort('category')}>{txt}</span>}</FormattedMessage>,
+                  <FormattedMessage {...messages.added_at}>{txt => <span onClick={() => this.faqSort('added_at')}>{txt}</span>}</FormattedMessage>,
+                  <FormattedMessage {...messages.updated_at} />,
                 ]}
                 tableData={tableData}
                 page={page}
@@ -195,7 +193,7 @@ export class BlogManagePage extends React.Component {
   }
 }
 
-BlogManagePage.propTypes = {
+FAQManagePage.propTypes = {
   loadAll: PropTypes.func.isRequired,
 };
 
@@ -215,8 +213,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'blogManagePage', reducer });
-const withSaga = injectSaga({ key: 'blogManagePage', saga });
+const withReducer = injectReducer({ key: 'faqManagePage', reducer });
+const withSaga = injectSaga({ key: 'faqManagePage', saga });
 
 const withStyle = withStyles(styles);
 
@@ -226,4 +224,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(BlogManagePage);
+)(FAQManagePage);
