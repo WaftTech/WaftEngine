@@ -21,6 +21,7 @@ import UserManageAddEditPage from '../UserManagePage/AddEditPage';
 import ContentsListingPage from '../ContentListingPage';
 import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
 import BlogManagePage from '../BlogManagePage';
+import FAQManagePage from '../FAQManagePage';
 import BlogManageAddEditPage from '../BlogManagePage/AddEditPage';
 import CategoryManagePage from '../CategoryManagePage';
 import CategoryManageAddEditPage from '../CategoryManagePage/AddEditPage';
@@ -164,6 +165,13 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.blogManage} />,
     icon: TextFormat,
     component: BlogManagePage,
+  },
+  {
+    path: '/wt/faq-manage',
+    sidebarName: <FormattedMessage {...messages.faqManage} />,
+    navbarName: <FormattedMessage {...messages.faqManage} />,
+    icon: TextFormat,
+    component: FAQManagePage,
   },
   {
     path: '/wt/category-manage/add',
