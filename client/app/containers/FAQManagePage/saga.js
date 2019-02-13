@@ -44,7 +44,7 @@ function* addEdit(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const { ...data } = action.payload;
-  yield fork(Api.multipartPost('faq', actions.addEditSuccess, actions.addEditFailure, data, token));
+  yield fork(Api.post('faq', actions.addEditSuccess, actions.addEditFailure, data, token));
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
   yield cancel(successWatcher);
 }
