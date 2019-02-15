@@ -55,16 +55,7 @@ otherHelper.sendResponse = (res, status, success, data, errors, msg, token) => {
   if (token !== null) response.token = token;
   return res.status(status).json(response);
 };
-otherHelper.paginationSendResponse = (
-  res,
-  status,
-  success,
-  data,
-  msg,
-  pageno,
-  pagesize,
-  totaldata,
-) => {
+otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, pagesize, totaldata) => {
   const response = {};
   if (data) response.data = data;
   if (success !== null) response.success = success;
@@ -74,16 +65,7 @@ otherHelper.paginationSendResponse = (
   if (totaldata) response.totaldata = totaldata;
   return res.status(status).json(response);
 };
-otherHelper.getquerySendResponse = async (
-  model,
-  page,
-  size,
-  sortq,
-  findquery,
-  selectquery,
-  next,
-  populate,
-) => {
+otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, selectquery, next, populate) => {
   let datas = {};
   try {
     datas.data = await model
