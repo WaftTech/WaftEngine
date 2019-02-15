@@ -22,6 +22,8 @@ import ContentsListingPage from '../ContentListingPage';
 import ContentsListingAddEditPage from '../ContentListingPage/AddEditPage';
 import BlogManagePage from '../BlogManagePage';
 import FAQManagePage from '../FAQManagePage';
+import VideoManagePage from '../VideoManagePage';
+import VideoManageAddEditPage from '../VideoManagePage/AddEditPage';
 import BlogManageAddEditPage from '../BlogManagePage/AddEditPage';
 import FAQManageAddEditPage from '../FAQManagePage/AddEditPage';
 import CategoryManagePage from '../CategoryManagePage';
@@ -236,6 +238,29 @@ const dashboardRoutes = [
     navbarName: <FormattedMessage {...messages.mediaManage} />,
     icon: TextFormat,
     component: MediaManagePage,
+  },
+  {
+    path: '/wt/video-manage/add',
+    sidebarName: <FormattedMessage {...messages.videoManage} />,
+    navbarName: <FormattedMessage {...messages.videoManage} />,
+    icon: TextFormat,
+    component: VideoManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/video-manage/edit/:id',
+    sidebarName: <FormattedMessage {...messages.videoManage} />,
+    navbarName: <FormattedMessage {...messages.videoManage} />,
+    icon: TextFormat,
+    component: VideoManageAddEditPage,
+    hide: true,
+  },
+  {
+    path: '/wt/video-manage',
+    sidebarName: <FormattedMessage {...messages.videoManage} />,
+    navbarName: <FormattedMessage {...messages.videoManage} />,
+    icon: TextFormat,
+    component: VideoManagePage,
   },
   {
     path: '/wt/error-manage/add',
