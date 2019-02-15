@@ -68,20 +68,48 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class SliderManagePage extends React.Component {
+export class VideoManagePage extends React.Component {
+  state = { query: {}, sortToggle: 0 };
+
   componentDidMount() {
-    this.props.loadAll();
+    this.props.loadAll({ query: {} });
   }
+  handleQueryChange = e => {
+    e.persist();
+    this.setState(state => ({
+      query: {
+        ...state.query,
+        [e.target.name]: e.target.value,
+      },
+    }));
+  };
   handleAdd = () => {
-    this.props.history.push('/wt/slider-manage/add');
+    this.props.history.push('/wt/video-manage/add');
   };
   handleEdit = id => {
-    this.props.history.push(`/wt/slider-manage/edit/${id}`);
+    this.props.history.push(`/wt/video-manage/edit/${id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
     // this.props.history.push(`/wt/contents-manage/edit/${id}`);
   };
+  handleSearch = () => {
+    this.props.loadAll(this.state.query);
+    this.setState({ query: {} });
+  };
+  videoSort = title => {
+    if (!!this.state.sortToggle) {
+      this.setState({ sortToggle: 0 });
+    } else if (!this.state.sortToggle) {
+      this.setState({ sortToggle: 1 });
+    }
+    this.props.loadAll({
+      sort: `${this.state.sortToggle}${title}`,
+      // page: this.state.page,
+      // rowsPerPage: this.state.rowsPerPage
+    });
+  };
+
   handleChangePage = (event, page) => {
     this.setState({ page: page + 1 }, () => {
       this.props.loadAll({
@@ -104,10 +132,10 @@ export class SliderManagePage extends React.Component {
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
 
-    const tableData = allLinksObj.map(({ slider_name, slider_key, images, slug_url, added_at, _id }) => [
-      slider_name,
-      slider_key,
-      images.length,
+    const tableData = allLinksObj.map(({ video_library, code, videos, added_at, _id }) => [
+      video_library,
+      code,
+      videos.length,
       moment(added_at).format('MMM Do YY'),
 
       <React.Fragment>
@@ -127,36 +155,23 @@ export class SliderManagePage extends React.Component {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={8}>
-                  <CustomInput
-                    id="contents-name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
-                    Search
-                  </Button>
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <CardFooter />
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
+              <input name="video_library" value={this.state.query.video_library || ''} onChange={this.handleQueryChange} placeholder="Search By Video Library Name" />
+              <button onClick={this.handleSearch}>Search</button>
+            </CardHeader>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Slider Listing</h4>
-              <p className={classes.cardCategoryWhite}>Here are the list of Sliders</p>
+              <h4 className={classes.cardTitleWhite}>Video Library Listing</h4>
+              <p className={classes.cardCategoryWhite}>Here are the list of Video Libraries</p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={[<FormattedMessage {...messages.sliderName} />, <FormattedMessage {...messages.sliderKey} />, <FormattedMessage {...messages.noOfImage} />, <FormattedMessage {...messages.addedAt} />]}
+                tableHead={[<FormattedMessage {...messages.videoLibraryName} />, <FormattedMessage {...messages.videoLibraryCode} />, <FormattedMessage {...messages.noOfVideos} />, <FormattedMessage {...messages.addedAt} />]}
                 tableData={tableData}
                 page={page}
                 size={size}
@@ -175,7 +190,7 @@ export class SliderManagePage extends React.Component {
   }
 }
 
-SliderManagePage.propTypes = {
+VideoManagePage.propTypes = {
   loadAll: PropTypes.func.isRequired,
 };
 
@@ -193,8 +208,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'sliderManagePage', reducer });
-const withSaga = injectSaga({ key: 'sliderManagePage', saga });
+const withReducer = injectReducer({ key: 'videoManagePage', reducer });
+const withSaga = injectSaga({ key: 'videoManagePage', saga });
 
 const withStyle = withStyles(styles);
 
@@ -204,4 +219,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(SliderManagePage);
+)(VideoManagePage);
