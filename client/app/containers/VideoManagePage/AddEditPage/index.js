@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import Dropzone from 'react-dropzone';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux';
@@ -22,8 +21,6 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import { loadOneRequest, addEditRequest } from '../actions';
-import { IMAGE_BASE } from '../../App/constants';
-import defaultImage from 'assets/img/logo.svg';
 
 const styles = {
   cardCategoryWhite: {
