@@ -16,9 +16,9 @@ constantController.Respond = async (req, res, next) => {
       const fileString = fs.readFileSync(__dirname + '/dumps/' + file, 'utf-8');
       let fileRead = JSON.parse(fileString);
       let fileName = file.split('.', 1);
-      console.log(`inserting ${fileName} data!!`);
       const data = await models[fileName].find();
       if (!data || data == '') {
+        console.log(`inserting ${fileName} data!!`);
         for (let i = 0; i < fileRead.length; i++) {
           const d = new models[fileName](fileRead[i]);
           await d.save();

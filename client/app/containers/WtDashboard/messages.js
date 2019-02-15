@@ -43,6 +43,10 @@ export default defineMessages({
     id: 'app.containers.WtDashboard.mediaManage',
     defaultMessage: 'Media Manage',
   },
+  videoManage: {
+    id: 'app.containers.WtDashboard.videoManage',
+    defaultMessage: 'Video Manage',
+  },
   errorManage: {
     id: 'app.containers.WtDashboard.errorManage',
     defaultMessage: 'Error Manage',

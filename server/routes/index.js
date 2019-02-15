@@ -34,6 +34,9 @@ router.use('/faq', faqRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
+// All route of videos
+const vidmodule = require('./api/video');
+router.use('/video', vidmodule);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
