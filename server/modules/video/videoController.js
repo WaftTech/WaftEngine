@@ -82,8 +82,8 @@ videoController.PostVideo = async (req, res, next) => {
   }
 };
 videoController.GetVideoByCode = async (req, res, next) => {
-  const code = req.params.code;
-  const video = await videoSch.findOne({ code: code, is_deleted: false });
+  const id = req.params.id;
+  const video = await videoSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, video, null, videoConfig.get, null);
 };
 videoController.DeleteVideo = async (req, res, next) => {

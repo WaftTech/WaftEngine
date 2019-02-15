@@ -86,8 +86,8 @@ export class VideoManagePage extends React.Component {
   handleAdd = () => {
     this.props.history.push('/wt/video-manage/add');
   };
-  handleEdit = id => {
-    this.props.history.push(`/wt/video-manage/edit/${id}`);
+  handleEdit = _id => {
+    this.props.history.push(`/wt/video-manage/edit/${_id}`);
   };
   handleDelete = id => {
     // shoe modal && api call
@@ -106,7 +106,7 @@ export class VideoManagePage extends React.Component {
     this.props.loadAll({
       sort: `${this.state.sortToggle}${title}`,
       // page: this.state.page,
-      // rowsPerPage: this.state.rowsPerPage
+      // rowsPerPage: this.state.rowsPerPage,
     });
   };
 
@@ -171,7 +171,12 @@ export class VideoManagePage extends React.Component {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={[<FormattedMessage {...messages.videoLibraryName} />, <FormattedMessage {...messages.videoLibraryCode} />, <FormattedMessage {...messages.noOfVideos} />, <FormattedMessage {...messages.addedAt} />]}
+                tableHead={[
+                  <FormattedMessage {...messages.video_library}>{txt => <span onClick={() => this.videoSort('video_library')}>{txt}</span>}</FormattedMessage>,
+                  <FormattedMessage {...messages.videoLibraryCode} />,
+                  <FormattedMessage {...messages.noOfVideos} />,
+                  <FormattedMessage {...messages.addedAt}>{txt => <span onClick={() => this.videoSort('added_at')}>{txt}</span>}</FormattedMessage>,
+                ]}
                 tableData={tableData}
                 page={page}
                 size={size}

@@ -35,8 +35,10 @@ import AboutUs from '../AboutUs';
 import BlogList from '../BlogList';
 import { loadContentRequest } from './actions';
 import BlogPage from '../BlogPage';
+import VideosPage from '../VideosPage';
 import CategoryListingPage from '../CategoryListingPage';
 import CategoryDetailPage from '../CategoryDetailPage';
+import VideoLibraryListingPage from '../VideoLibraryListingPage';
 import saga from './saga';
 import injectSaga from 'utils/injectSaga';
 import { createStructuredSelector } from 'reselect';
@@ -122,6 +124,29 @@ class App extends React.Component {
                   <title>Blog Categories</title>
                 </Helmet>
               </div>
+            )}
+          />
+          <Route
+            exact
+            path="/videos"
+            render={() => (
+              <div>
+                <UserLayout>
+                  <VideoLibraryListingPage />
+                </UserLayout>
+                <Helmet>
+                  <title>Available Videos</title>
+                </Helmet>
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/video/:id"
+            render={() => (
+              <UserLayout>
+                <VideosPage />
+              </UserLayout>
             )}
           />
           <Route

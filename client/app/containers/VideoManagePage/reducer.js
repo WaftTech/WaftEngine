@@ -5,7 +5,6 @@ export const initialState = fromJS({
   all: [],
   one: {},
   page: [],
-  video: {},
 });
 
 function reducer(state = initialState, action) {

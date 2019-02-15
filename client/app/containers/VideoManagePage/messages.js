@@ -1,8 +1,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  videoLibraryName: {
-    id: 'app.containers.VideoManagePage.videoName',
+  video_library: {
+    id: 'app.containers.VideoManagePage.video_library',
     defaultMessage: 'Video Library ',
   },
 
