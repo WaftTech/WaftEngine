@@ -33,6 +33,7 @@ export class VideoLibraryListPage extends React.Component {
     const { value } = this.state;
     const { videoLibraryList } = this.props;
     const videoLibraryListObj = videoLibraryList.toJS();
+    console.log('kk', videoLibraryListObj);
 
     return (
       <div>
