@@ -39,6 +39,7 @@ import VideosPage from '../VideosPage';
 import CategoryListingPage from '../CategoryListingPage';
 import CategoryDetailPage from '../CategoryDetailPage';
 import VideoLibraryListingPage from '../VideoLibraryListingPage';
+import VideoDetailPage from '../VideoDetailPage';
 import saga from './saga';
 import injectSaga from 'utils/injectSaga';
 import { createStructuredSelector } from 'reselect';
@@ -143,9 +144,18 @@ class App extends React.Component {
           <Route
             exact
             path="/video/:id"
-            render={() => (
+            render={props => (
               <UserLayout>
-                <VideosPage />
+                <VideosPage {...props} />
+              </UserLayout>
+            )}
+          />
+          <Route
+            exact
+            path="/video/link/:id"
+            render={props => (
+              <UserLayout>
+                <VideoDetailPage {...props} />
               </UserLayout>
             )}
           />
