@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { withRouter, Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid } from '@material-ui/core';
@@ -30,10 +31,33 @@ export class VideoDetailPage extends React.Component {
     }
   }
   render() {
-    const { classes, videoDetail } = this.props;
+    const {
+      videoDetail,
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const videoDetailObj = videoDetail.toJS();
 
-    return <div className="container" />;
+    return (
+      <div className="container">
+        {videoDetailObj.videos &&
+          videoDetailObj.videos.map(video => {
+            if (video._id !== id) return null;
+            const src = `https://www.youtube.com/embed/${video.url.split('=')[1]}?autoplay=1;rel=0;iv_load_policy=3?autoplay=1;rel=0;iv_load_policy=3?autoplay=1;rel=0;iv_load_policy=3`;
+            return (
+              <div key={video.url}>
+                <Helmet>
+                  <title>{video.title}</title>
+                </Helmet>
+                <div>
+                  <iframe src={src} frameBorder="0" allowFullScreen style={{ width: '538px', minWidth: '100%', minHeight: '450px', maxHeight: '450px', marginLeft: '0px' }} />
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    );
   }
 }
 
