@@ -88,7 +88,7 @@ videoController.GetVideoById = async (req, res, next) => {
 };
 videoController.GetVideoDetailById = async (req, res, next) => {
   const id = req.params.id;
-  const videoDetail = await videoSch.findOne({ 'videos._id': id }).select('video_library code videos.title videos.url');
+  const videoDetail = await videoSch.findOne({ 'videos._id': id }).select('video_library code videos.title videos.url videos._id');
   return otherHelper.sendResponse(res, httpStatus.OK, true, videoDetail, null, videoConfig.get, null);
 };
 videoController.DeleteVideo = async (req, res, next) => {

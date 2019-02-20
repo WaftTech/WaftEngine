@@ -77,7 +77,6 @@ export class VideosPage extends React.Component {
   render() {
     const { classes, videos } = this.props;
     const videosObj = videos.toJS();
-    console.log(videosObj);
 
     return (
       <div className="container">
