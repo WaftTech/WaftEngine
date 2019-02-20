@@ -52,6 +52,7 @@ export class VideoDetailPage extends React.Component {
                 </Helmet>
                 <div>
                   <iframe src={src} frameBorder="0" allowFullScreen style={{ width: '538px', minWidth: '100%', minHeight: '450px', maxHeight: '450px', marginLeft: '0px' }} />
+                  <h2>{video.title}</h2>
                 </div>
               </div>
             );
