@@ -8,14 +8,15 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // @material-ui/icons
 
 // core components
-import styles from './styles';
+import cardStyle from 'assets/jss/material-dashboard-react/components/cardStyle';
 
-function Card({ ...props }) {
-  const { classes, className, children, plain, carousel, ...rest } = props;
+const Card = props => {
+  const { classes, className, children, plain, profile, chart, ...rest } = props;
   const cardClasses = classNames({
     [classes.card]: true,
     [classes.cardPlain]: plain,
-    [classes.cardCarousel]: carousel,
+    [classes.cardProfile]: profile,
+    [classes.cardChart]: chart,
     [className]: className !== undefined,
   });
   return (
@@ -23,13 +24,14 @@ function Card({ ...props }) {
       {children}
     </div>
   );
-}
+};
 
 Card.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   plain: PropTypes.bool,
-  carousel: PropTypes.bool,
+  profile: PropTypes.bool,
+  chart: PropTypes.bool,
 };
 
-export default withStyles(styles)(Card);
+export default withStyles(cardStyle)(Card);
