@@ -12,6 +12,7 @@ import { Switch, Route } from 'react-router-dom';
 import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import LoginPage from 'containers/LoginPage/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import reducer from './reducer';
@@ -22,6 +23,7 @@ const App = () => (
   <>
     <Switch>
       <Route exact path="/" component={HomePage} />
+      <Route exact path="/login" component={LoginPage} />
       <Route component={NotFoundPage} />
     </Switch>
     <GlobalStyle />
