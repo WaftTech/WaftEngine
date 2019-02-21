@@ -14,7 +14,6 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import WaftEngineDashboard from 'containers/WaftEngineDashboard';
 import reducer from './reducer';
 import saga from './saga';
 import GlobalStyle from '../../global-styles';
@@ -23,7 +22,6 @@ const App = () => (
   <>
     <Switch>
       <Route exact path="/" component={HomePage} />
-      <Route path="/admin" component={WaftEngineDashboard} />
       <Route component={NotFoundPage} />
     </Switch>
     <GlobalStyle />
