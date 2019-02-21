@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import CustomInput from 'components/CustomInput';
+import CustomInput from 'components/CustomInput/CustomInput';
 import { makeSelectPassword } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
