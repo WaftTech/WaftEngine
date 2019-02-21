@@ -11,9 +11,12 @@ import { compose } from 'redux';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
+import image from 'assets/img/bg7.jpg';
 
-import Footer from 'components/Footer';
-import Card from 'components/Card';
+import Footer from 'components/Footer/Footer';
+import Card from 'components/Card/Card';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -34,14 +37,31 @@ class LoginPage extends React.PureComponent {
     const { classes } = this.props;
     return (
       <>
-        <Card className={classes[this.state.cardAnimaton]}>
-          <form>
-            <UsernameInput />
-            <PasswordInput />
-            <button type="submit">Submit</button>
-          </form>
-        </Card>
-        <Footer whiteFont />
+        {/* <Header /> */}
+
+        <div
+          className={classes.pageHeader}
+          style={{
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'top center',
+          }}
+        >
+          <div className={classes.container}>
+            <GridContainer justify="center">
+              <GridItem xs={12} sm={12} md={4}>
+                <Card className={classes[this.state.cardAnimaton]}>
+                  <form className={classes.form}>
+                    <UsernameInput />
+                    <PasswordInput />
+                    <button type="submit">Submit</button>
+                  </form>
+                </Card>
+              </GridItem>
+            </GridContainer>
+          </div>
+          <Footer whiteFont />
+        </div>
       </>
     );
   }
