@@ -193,16 +193,20 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
 };
 
 blogcontroller.GetBlogCatBySlug = async (req, res, next) => {
-  const slug = req.params.slug;
-  const blogcats = await blogCatSch.findOne(
-    {
-      slug_url: slug,
-    },
-    {
-      __v: 0,
-    },
-  );
-  return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
+  try {
+    const slug = req.params.slug;
+    const blogcats = await blogCatSch.findOne(
+      {
+        slug_url: slug,
+      },
+      {
+        __v: 0,
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
+  } catch (err) {
+    next(err);
+  }
 };
 
 blogcontroller.SaveBlog = async (req, res, next) => {
@@ -302,6 +306,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
     next(err);
   }
 };
+
 blogcontroller.GetBlogByTag = async (req, res, next) => {
   try {
     let page;
@@ -330,6 +335,7 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
     next(err);
   }
 };
+
 blogcontroller.GetBlogByDate = async (req, res, next) => {
   try {
     let page;

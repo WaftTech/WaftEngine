@@ -104,45 +104,25 @@ export class SliderManagePage extends React.Component {
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
 
-    const tableData = allLinksObj.map(
-      ({ slider_name, slider_key, images, slug_url, added_at, _id }) => [
-        slider_name,
-        slider_key,
-        images.length,
-        moment(added_at).format('MMM Do YY'),
+    const tableData = allLinksObj.map(({ slider_name, slider_key, images, slug_url, added_at, _id }) => [
+      slider_name,
+      slider_key,
+      images.length,
+      moment(added_at).format('MMM Do YY'),
 
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>,
-      ],
-    );
+      <React.Fragment>
+        <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
+            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
+            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+          </IconButton>
+        </Tooltip>
+      </React.Fragment>,
+    ]);
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
@@ -176,12 +156,7 @@ export class SliderManagePage extends React.Component {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={[
-                  <FormattedMessage {...messages.sliderName} />,
-                  <FormattedMessage {...messages.sliderKey} />,
-                  <FormattedMessage {...messages.noOfImage} />,
-                  <FormattedMessage {...messages.addedAt} />,
-                ]}
+                tableHead={[<FormattedMessage {...messages.sliderName} />, <FormattedMessage {...messages.sliderKey} />, <FormattedMessage {...messages.noOfImage} />, <FormattedMessage {...messages.addedAt} />]}
                 tableData={tableData}
                 page={page}
                 size={size}
@@ -189,14 +164,7 @@ export class SliderManagePage extends React.Component {
                 handleChangePage={this.handleChangePage}
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-                round={true}
-                onClick={this.handleAdd}
-              >
+              <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
             </CardBody>
