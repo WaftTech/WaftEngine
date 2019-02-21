@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import LoginPage from 'containers/LoginPage/Loadable';
+import SignupPage from 'containers/SignupPage/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import reducer from './reducer';
@@ -24,6 +25,7 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/signup" component={SignupPage} />
       <Route component={NotFoundPage} />
     </Switch>
     <GlobalStyle />
