@@ -128,59 +128,34 @@ export class BlogManagePage extends React.Component {
     const allLinksObj = allLinks.toJS();
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
-    const tableData = allLinksObj.map(
-      ({ title, Category, published_on, added_at, is_published, is_active, _id, slug_url }) => [
-        title,
-        (Category && Category.title) || 'No',
-        moment(published_on).format('MMM Do YY'),
+    const tableData = allLinksObj.map(({ title, Category, published_on, added_at, is_published, is_active, _id, slug_url }) => [
+      title,
+      (Category && Category.title) || 'No',
+      moment(published_on).format('MMM Do YY'),
 
-        moment(added_at).format('MMM Do YY'),
-        '' + is_published,
-        '' + is_active,
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>,
-      ],
-    );
+      moment(added_at).format('MMM Do YY'),
+      '' + is_published,
+      '' + is_active,
+      <React.Fragment>
+        <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
+            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
+            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+          </IconButton>
+        </Tooltip>
+      </React.Fragment>,
+    ]);
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Search and Filter</h4>
-              <input
-                name="title"
-                value={this.state.query.title || ''}
-                onChange={this.handleQueryChange}
-                placeholder="Search By Blog Title"
-              />
+              <input name="title" value={this.state.query.title || ''} onChange={this.handleQueryChange} placeholder="Search By Blog Title" />
               <button onClick={this.handleSearch}>Search</button>
             </CardHeader>
           </Card>
@@ -195,16 +170,10 @@ export class BlogManagePage extends React.Component {
               <Table
                 tableHeaderColor="primary"
                 tableHead={[
-                  <FormattedMessage {...messages.title}>
-                    {txt => <span onClick={() => this.blogSort('title')}>{txt}</span>}
-                  </FormattedMessage>,
+                  <FormattedMessage {...messages.title}>{txt => <span onClick={() => this.blogSort('title')}>{txt}</span>}</FormattedMessage>,
                   <FormattedMessage {...messages.category} />,
-                  <FormattedMessage {...messages.publishedOn}>
-                    {txt => <span onClick={() => this.blogSort('published_on')}>{txt}</span>}
-                  </FormattedMessage>,
-                  <FormattedMessage {...messages.addedAt}>
-                    {txt => <span onClick={() => this.blogSort('added_at')}>{txt}</span>}
-                  </FormattedMessage>,
+                  <FormattedMessage {...messages.publishedOn}>{txt => <span onClick={() => this.blogSort('published_on')}>{txt}</span>}</FormattedMessage>,
+                  <FormattedMessage {...messages.addedAt}>{txt => <span onClick={() => this.blogSort('added_at')}>{txt}</span>}</FormattedMessage>,
                   <FormattedMessage {...messages.isPublished} />,
                   <FormattedMessage {...messages.isActive} />,
                 ]}
@@ -215,14 +184,7 @@ export class BlogManagePage extends React.Component {
                 handleChangePage={this.handleChangePage}
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-                round={true}
-                onClick={this.handleAdd}
-              >
+              <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
             </CardBody>

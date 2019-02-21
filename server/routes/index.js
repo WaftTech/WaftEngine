@@ -28,9 +28,15 @@ router.use('/blog', blogRoutes);
 // All route of sliders
 const sliderRoutes = require('./api/slider');
 router.use('/slider', sliderRoutes);
+// All route of faqs
+const faqRoutes = require('./api/faq');
+router.use('/faq', faqRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
+// All route of videos
+const vidmodule = require('./api/video');
+router.use('/video', vidmodule);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
