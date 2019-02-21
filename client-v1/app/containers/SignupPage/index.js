@@ -1,6 +1,6 @@
 /**
  *
- * LoginPage
+ * SignupPage
  *
  */
 
@@ -9,21 +9,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-
-import Footer from 'components/Footer';
 import Card from 'components/Card';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import { withStyles } from '@material-ui/core';
+import Footer from 'components/Footer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import UsernameInput from './components/UsernameInput';
-import PasswordInput from './components/PasswordInput';
+import EmailInput from './components/EmailInput';
 import styles from './styles';
 
-class LoginPage extends React.PureComponent {
+class SignupPage extends React.PureComponent {
   state = { cardAnimaton: 'cardHidden' };
 
   componentDidMount() {
@@ -37,7 +35,7 @@ class LoginPage extends React.PureComponent {
         <Card className={classes[this.state.cardAnimaton]}>
           <form>
             <UsernameInput />
-            <PasswordInput />
+            <EmailInput />
             <button type="submit">Submit</button>
           </form>
         </Card>
@@ -47,7 +45,7 @@ class LoginPage extends React.PureComponent {
   }
 }
 
-LoginPage.propTypes = {
+SignupPage.propTypes = {
   classes: PropTypes.object,
 };
 
@@ -58,9 +56,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'loginPage', reducer });
-const withSaga = injectSaga({ key: 'loginPage', saga });
-
+const withReducer = injectReducer({ key: 'signupPage', reducer });
+const withSaga = injectSaga({ key: 'signupPage', saga });
 const withStyle = withStyles(styles);
 
 export default compose(
@@ -68,4 +65,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(LoginPage);
+)(SignupPage);
