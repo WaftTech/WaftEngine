@@ -14,23 +14,12 @@ import reducer from './reducer';
 
 /* eslint-disable react/prefer-stateless-function */
 export class CategoryListingPage extends React.Component {
-  state = {
-    value: 0,
-  };
-
   componentDidMount() {
     this.props.loadCategory();
   }
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
   render() {
-    const { value } = this.state;
     const { category } = this.props;
     const categoryObj = category.toJS();
-
     return (
       <div>
         <React.Fragment>
