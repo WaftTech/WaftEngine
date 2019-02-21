@@ -43,11 +43,18 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { roles_title: '', description: '', is_active: false };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
-  };
+  state = { roles_title: '', description: '', is_active: false, errors: {} };
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOne(this.props.match.params.id);
+    }
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.one !== nextProps.one) {
+      const oneObj = nextProps.one.toJS();
+      this.setState({ ...oneObj });
+    }
+  }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
@@ -60,89 +67,63 @@ class AddEdit extends Component {
   handleSave = () => {
     this.props.addEdit(this.state);
   };
-  componentDidMount() {
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOne(this.props.match.params.id);
-    }
-  }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.one !== nextProps.one) {
-      const oneObj = nextProps.one.toJS();
-      this.setState(state => ({
-        ...oneObj,
-      }));
-    }
-  }
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Role Title"
-                      id="role-title"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        value: this.state.roles_title,
-                        onChange: this.handleChange('roles_title'),
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="description"
-                      id="role-description"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        value: this.state.description,
-                        onChange: this.handleChange('description'),
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.is_active || false}
-                          tabIndex={-1}
-                          onClick={this.handleChecked('is_active')}
-                          value="is_active"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <CardFooter>
-                <Button color="primary" onClick={this.handleSave}>
-                  Save
-                </Button>
-                <Button color="primary" onClick={this.handleGoBack}>
-                  Back
-                </Button>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridContainer>
-      </div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Add/Edit Role</h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText="Role Title"
+                    id="role-title"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      value: this.state.roles_title,
+                      onChange: this.handleChange('roles_title'),
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText="description"
+                    id="role-description"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      value: this.state.description,
+                      onChange: this.handleChange('description'),
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <FormControlLabel control={<Checkbox checked={this.state.is_active || false} tabIndex={-1} onClick={this.handleChecked('is_active')} value="is_active" color="primary" />} label="Is Active" />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+            <CardFooter>
+              <Button color="primary" onClick={this.handleSave}>
+                Save
+              </Button>
+              <Button color="primary" onClick={this.handleGoBack}>
+                Back
+              </Button>
+            </CardFooter>
+          </Card>
+        </GridItem>
+      </GridContainer>
     );
   }
 }
