@@ -104,57 +104,29 @@ export class ContentsListingPage extends React.Component {
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
 
-    const tableData = allLinksObj.map(
-      ({
-        name, // Description,
-        key,
-        publish_from,
-        publish_to,
-        is_active,
-        is_feature,
-        added_at,
-        _id,
-      }) => [
-        name,
-        key,
-        moment(publish_from).format('MMM Do YY'),
-        moment(publish_to).format('MMM Do YY'),
-        '' + is_active,
-        '' + is_feature,
-        moment(added_at).format('MMM Do YY'),
-        ,
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>,
-      ],
-    );
+    const tableData = allLinksObj.map(({ name, key, publish_from, publish_to, is_active, is_feature, added_at, _id }) => [
+      // Description,
+      name,
+      key,
+      moment(publish_from).format('MMM Do YY'),
+      moment(publish_to).format('MMM Do YY'),
+      '' + is_active,
+      '' + is_feature,
+      moment(added_at).format('MMM Do YY'),
+      ,
+      <React.Fragment>
+        <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
+            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
+            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+          </IconButton>
+        </Tooltip>
+      </React.Fragment>,
+    ]);
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
@@ -206,14 +178,7 @@ export class ContentsListingPage extends React.Component {
                 handleChangePage={this.handleChangePage}
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
-              <Button
-                variant="fab"
-                color="primary"
-                aria-label="Add"
-                className={classes.button}
-                round={true}
-                onClick={this.handleAdd}
-              >
+              <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
             </CardBody>
