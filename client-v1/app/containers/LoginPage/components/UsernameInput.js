@@ -1,24 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { makeSelectUsername } from '../selectors';
+import { makeSelectEmail, makeSelectEmailError } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 const UsernameInput = props => {
-  const { username, setStoreValue, classes } = props; // eslint-disable-line
+  const { email, setStoreValue, classes, error } = props;
   return (
     <CustomInput
-      labelText="Username"
-      id="username"
+      labelText="Email"
+      id="email"
       formControlProps={{
         fullWidth: true,
       }}
+      error={error}
       inputProps={{
-        value: username,
-        onChange: e => setStoreValue({ key: 'username', value: e.target.value }),
+        value: email,
+        onChange: e => setStoreValue({ key: 'email', value: e.target.value }),
         type: 'email',
         endAdornment: (
           <InputAdornment position="end">
@@ -30,8 +32,16 @@ const UsernameInput = props => {
   );
 };
 
+UsernameInput.propTypes = {
+  email: PropTypes.string.isRequired,
+  setStoreValue: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  error: PropTypes.string,
+};
+
 const mapStateToProps = createStructuredSelector({
-  username: makeSelectUsername(),
+  email: makeSelectEmail(),
+  error: makeSelectEmailError(),
 });
 
 export default connect(

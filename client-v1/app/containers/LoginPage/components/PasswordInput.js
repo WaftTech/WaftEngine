@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { makeSelectPassword } from '../selectors';
+import { makeSelectPassword, makeSelectPasswordError } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 class PasswordInput extends React.PureComponent {
@@ -13,17 +13,19 @@ class PasswordInput extends React.PureComponent {
     password: PropTypes.string.isRequired,
     setStoreValue: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
+    error: PropTypes.string,
   };
 
   state = { isSecure: true };
 
   render() {
     const { isSecure } = this.state;
-    const { password, setStoreValue, classes } = this.props;
+    const { password, setStoreValue, classes, error } = this.props;
     return (
       <CustomInput
         labelText="Password"
         id="password"
+        error={error}
         formControlProps={{
           fullWidth: true,
         }}
@@ -46,6 +48,7 @@ class PasswordInput extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   password: makeSelectPassword(),
+  error: makeSelectPasswordError(),
 });
 
 export default connect(
