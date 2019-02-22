@@ -9,15 +9,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
-import Header from 'components/Header/Header';
-import HeaderLinks from 'components/Header/HeaderLinks';
-import Footer from 'components/Footer/Footer';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Button from 'components/CustomButtons/Button';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
 import image from 'assets/img/bg7.jpg';
@@ -32,6 +28,7 @@ import saga from './saga';
 class LoginPage extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    loginRequest: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -47,56 +44,41 @@ class LoginPage extends React.Component {
     setTimeout(() => this.setState({ cardAnimaton: '' }), 700);
   }
 
+  handleSubmit = () => {
+    this.props.loginRequest();
+  };
+
   render() {
-    const { classes, ...rest } = this.props;
+    const { classes } = this.props;
     return (
-      <>
-        <Header absolute color="transparent" brand="Waft Engine" rightLinks={<HeaderLinks />} {...rest} />
-        <div
-          className={classes.pageHeader}
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'top center',
-          }}
-        >
-          <div className={classes.container}>
-            <GridContainer justify="center">
-              <GridItem xs={12} sm={12} md={4}>
-                <Card className={classes[this.state.cardAnimaton]}>
-                  <form className={classes.form}>
-                    <CardHeader color="primary" className={classes.cardHeader}>
-                      <h4>Login</h4>
-                      <div className={classes.socialLine}>
-                        <Button justIcon href="#pablo" target="_blank" color="transparent" onClick={e => e.preventDefault()}>
-                          <i className="fab fa-twitter" />
-                        </Button>
-                        <Button justIcon href="#pablo" target="_blank" color="transparent" onClick={e => e.preventDefault()}>
-                          <i className="fab fa-facebook" />
-                        </Button>
-                        <Button justIcon href="#pablo" target="_blank" color="transparent" onClick={e => e.preventDefault()}>
-                          <i className="fab fa-google-plus-g" />
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <p className={classes.divider}>Or Be Classical</p>
-                    <CardBody>
-                      <UsernameInput classes={classes} />
-                      <PasswordInput classes={classes} />
-                    </CardBody>
-                    <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
-                        Get started
-                      </Button>
-                    </CardFooter>
-                  </form>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          </div>
-          <Footer whiteFont />
+      <div
+        className={classes.pageHeader}
+        style={{
+          backgroundImage: `url(${image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
+        }}
+      >
+        <div className={classes.container}>
+          <GridContainer justify="center">
+            <GridItem xs={12} sm={12} md={4}>
+              <Card className={classes[this.state.cardAnimaton]}>
+                <form className={classes.form}>
+                  <CardBody>
+                    <UsernameInput classes={classes} />
+                    <PasswordInput classes={classes} />
+                  </CardBody>
+                  <CardFooter className={classes.cardFooter}>
+                    <Button simple color="primary" size="lg" onClick={this.handleSubmit}>
+                      Get started
+                    </Button>
+                  </CardFooter>
+                </form>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
-      </>
+      </div>
     );
   }
 }

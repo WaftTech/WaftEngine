@@ -8,9 +8,10 @@ import { fromJS } from 'immutable';
 import * as types from './constants';
 
 export const initialState = fromJS({
-  username: '',
+  email: '',
   password: '',
   errors: {},
+  loading: true,
 });
 
 const loginPageReducer = (state = initialState, action = {}) => {
