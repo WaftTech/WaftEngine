@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CustomInput from 'components/CustomInput';
+import CustomInput from 'components/CustomInput/CustomInput';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectUsername } from '../selectors';
 import * as mapDispatchToProps from '../actions';

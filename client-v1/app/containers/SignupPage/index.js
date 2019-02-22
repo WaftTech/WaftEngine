@@ -9,11 +9,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import Card from 'components/Card';
+import Card from 'components/Card/Card';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { withStyles } from '@material-ui/core';
-import Footer from 'components/Footer';
+import Footer from 'components/Footer/Footer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
