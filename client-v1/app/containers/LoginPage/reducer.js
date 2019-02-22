@@ -10,6 +10,7 @@ import * as types from './constants';
 export const initialState = fromJS({
   username: '',
   password: '',
+  errors: {},
 });
 
 const loginPageReducer = (state = initialState, action = {}) => {
@@ -18,6 +19,8 @@ const loginPageReducer = (state = initialState, action = {}) => {
       return state.merge({
         [action.payload.key]: action.payload.value,
       });
+    case types.CLEAR_STORE:
+      return initialState;
     default:
       return state;
   }
