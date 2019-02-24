@@ -85,7 +85,7 @@ class CustomDropdown extends React.Component {
     }
     return (
       <div>
-        <div>
+        <div style={{position: 'absolute', right: '0', top: '0'}}>
           <Button
             aria-label="Notifications"
             aria-owns={open ? "menu-list" : null}
