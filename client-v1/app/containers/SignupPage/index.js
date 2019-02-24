@@ -25,6 +25,9 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import UsernameInput from './components/UsernameInput';
 import EmailInput from './components/EmailInput';
+import PasswordInput from './components/PasswordInput';
+import ConfirmPasswordInput from './components/ConfirmPasswordInput';
+import GenderInput from './components/GenderInput';
 import SignupStyles from './styles';
 
 class SignupPage extends React.PureComponent {
@@ -62,6 +65,9 @@ class SignupPage extends React.PureComponent {
                     <CardBody>
                       <UsernameInput classes={classes} />
                       <EmailInput classes={classes} />
+                      <PasswordInput />
+                      <ConfirmPasswordInput />
+                      <GenderInput classes={classes} />
                     </CardBody>
                     <CardFooter className={classes.CardFooter}>
                       <Button simple color="primary" size="lg">
