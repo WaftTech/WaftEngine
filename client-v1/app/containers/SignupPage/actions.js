@@ -14,3 +14,7 @@ export const setStoreValue = payload => ({
   type: types.SET_STORE_VALUE,
   payload,
 });
+export const setGenderValue = payload => ({
+  type: types.SET_GENDER_VALUE,
+  payload,
+});
