@@ -42,6 +42,10 @@ class SignupPage extends React.PureComponent {
     this.timer = setTimeout(() => this.setState({ cardAnimaton: '' }), 700);
   }
 
+  handleSubmit = () => {
+    this.props.signupRequest();
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -65,12 +69,12 @@ class SignupPage extends React.PureComponent {
                     <CardBody>
                       <UsernameInput classes={classes} />
                       <EmailInput classes={classes} />
-                      <PasswordInput />
-                      <ConfirmPasswordInput />
+                      <PasswordInput classes={classes} />
+                      <ConfirmPasswordInput classes={classes} />
                       <GenderInput classes={classes} />
                     </CardBody>
                     <CardFooter className={classes.CardFooter}>
-                      <Button simple color="primary" size="lg">
+                      <Button simple color="primary" size="lg" onClick={this.handleSubmit}>
                         Signup
                       </Button>
                     </CardFooter>
@@ -87,6 +91,7 @@ class SignupPage extends React.PureComponent {
 
 SignupPage.propTypes = {
   classes: PropTypes.object,
+  signupRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = null;

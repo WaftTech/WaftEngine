@@ -4,11 +4,11 @@ import CustomInput from 'components/CustomInput/CustomInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/icons/People';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectUsername } from '../selectors';
+import { makeSelectUsername, makeSelectUsernameError } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 const UsernameInput = props => {
-  const { username, setStoreValue, classes } = props; // eslint-disable-line
+  const { error, username, setStoreValue, classes } = props; // eslint-disable-line
   return (
     <CustomInput
       labelText="username"
@@ -16,6 +16,7 @@ const UsernameInput = props => {
       formControlProps={{
         fullWidth: true,
       }}
+      error={error}
       inputProps={{
         value: username,
         onChange: e => setStoreValue({ key: 'username', value: e.target.value }),
@@ -31,6 +32,7 @@ const UsernameInput = props => {
 
 const mapStateToProps = createStructuredSelector({
   username: makeSelectUsername(),
+  error: makeSelectUsernameError(),
 });
 export default connect(
   mapStateToProps,
