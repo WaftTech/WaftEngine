@@ -103,9 +103,9 @@ userController.Register = async (req, res) => {
     const data = { email: req.body.email };
     return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
   } else {
-    const { name, email, password, password2, gender } = req.body;
+    const { name, email, password, gender } = req.body;
     const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-    const newUser = new user({ name, email, avatar, password, password2, gender });
+    const newUser = new users({ name, email, avatar, password, gender });
     bcrypt.genSalt(10, async (err, salt) => {
       bcrypt.hash(newUser.password, salt, async (err, hash) => {
         if (err) throw err;
@@ -152,7 +152,7 @@ userController.RegisterFromAdmin = async (req, res, next) => {
     } else {
       const { name, email, password, password2, roles } = req.body;
       const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-      const newUser = new User({ name, email, avatar, password, password2, roles });
+      const newUser = new users({ name, email, avatar, password, password2, roles });
       bcrypt.genSalt(10, async (err, salt) => {
         bcrypt.hash(newUser.password, salt, async (err, hash) => {
           if (err) throw err;

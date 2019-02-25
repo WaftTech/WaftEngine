@@ -165,25 +165,6 @@ validations.validateRegisterInput = (req, res, next) => {
       ],
     },
     {
-      field: 'password2',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: config.validate.empty,
-        },
-        {
-          condition: 'IsLength',
-          msg: config.validate.passLength,
-          option: { min: 6, max: 30 },
-        },
-        {
-          condition: 'IsEqual',
-          msg: config.validate.isEqual,
-          option: { one: data && data.password, two: data && data.password2 },
-        },
-      ],
-    },
-    {
       field: 'gender',
       validate: [
         {
@@ -193,7 +174,7 @@ validations.validateRegisterInput = (req, res, next) => {
         {
           condition: 'IsIn',
           msg: config.validate.noGender,
-          option: ['male', 'female', 'other'],
+          option: ['male', 'female', 'non-binary'],
         },
       ],
     },

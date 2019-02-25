@@ -4,11 +4,11 @@ import CustomInput from 'components/CustomInput/CustomInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectEmail } from '../selectors';
+import { makeSelectEmail, makeSelectEmailError, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 const EmailInput = props => {
-  const { email, setStoreValue, classes } = props; // eslint-disable-line
+  const { error, email, setStoreValue, classes, errors } = props; // eslint-disable-line
   return (
     <CustomInput
       labelText="email"
@@ -16,9 +16,13 @@ const EmailInput = props => {
       formControlProps={{
         fullWidth: true,
       }}
+      error={error}
       inputProps={{
         value: email,
-        onChange: e => setStoreValue({ key: 'email', value: e.target.value }),
+        onChange: e => {
+          setStoreValue({ key: 'email', value: e.target.value });
+          if (error) setStoreValue({ key: 'errors', value: errors.set('email', undefined) });
+        },
         type: 'email',
         endAdornment: (
           <InputAdornment position="end">
@@ -31,7 +35,9 @@ const EmailInput = props => {
 };
 
 const mapStateToProps = createStructuredSelector({
+  errors: makeSelectErrors(),
   email: makeSelectEmail(),
+  error: makeSelectEmailError(),
 });
 export default connect(
   mapStateToProps,
