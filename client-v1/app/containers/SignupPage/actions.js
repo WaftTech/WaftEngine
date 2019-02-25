@@ -18,3 +18,7 @@ export const setGenderValue = payload => ({
   type: types.SET_GENDER_VALUE,
   payload,
 });
+
+export const signupRequest = payload => ({ type: types.SIGNUP_REQUEST, payload });
+export const signupSuccess = payload => ({ type: types.SIGNUP_SUCCESS, payload });
+export const signupFailure = payload => ({ type: types.SIGNUP_FAILURE, payload });

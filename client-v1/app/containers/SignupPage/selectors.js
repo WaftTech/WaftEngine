@@ -19,6 +19,17 @@ export const makeSelectPassword = () => createSelector(selectSignupPageDomain, s
 export const makeSelectConfirmPassword = () => createSelector(selectSignupPageDomain, state => state.get('confirmPassword'));
 
 export const makeSelectGender = () => createSelector(selectSignupPageDomain, state => state.get('gender'));
+export const makeSelectErrors = () => createSelector(selectSignupPageDomain, state => state.get('errors'));
+
+export const makeSelectPasswordError = () => createSelector(makeSelectErrors(), state => state.get('password'));
+
+export const makeSelectConfirmPasswordError = () => createSelector(makeSelectErrors(), state => state.get('confirmPassword'));
+
+export const makeSelectEmailError = () => createSelector(makeSelectErrors(), state => state.get('email'));
+export const makeSelectUsernameError = () => createSelector(makeSelectErrors(), state => state.get('username'));
+
+export const makeSelectLoading = () => createSelector(selectSignupPageDomain, state => state.get('loading'));
+
 /**
  * Default selector used by SignupPage
  */
