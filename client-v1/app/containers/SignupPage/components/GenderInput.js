@@ -1,19 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CustomDropdown from 'components/CustomDropdown/CustomDropdown';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectGender } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 class GenderInput extends React.PureComponent {
+  genderList = ['male', 'female', 'non-binary'];
+
   render() {
-    const { classes, gender } = this.props; // eslint-disable-line
+    const { classes, gender, setStoreValue } = this.props; // eslint-disable-line
     return (
-      <div style={{ position: 'relative' }}>
-        <InputLabel htmlFor="demo-controlled-open-dropdown">Gender</InputLabel>
-        <CustomDropdown dropdownList={['navin', 'pradip']} />
-      </div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="gender">Gender</InputLabel>
+            <Select value={gender} onChange={e => setStoreValue({ key: 'gender', value: e.target.value })}>
+              {this.genderList.map(each => (
+                <MenuItem key={each} name={each} value={each}>
+                  {each}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </GridItem>
+      </GridContainer>
     );
   }
 }

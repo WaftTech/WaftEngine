@@ -47,8 +47,8 @@ const signupPageStyle = {
     margin: '0',
   },
   formControl: {
-    margin: '0',
     minWidth: 120,
+    maxWidth: 300,
   },
   dropdowns: {
     position: 'absolute',
@@ -92,7 +92,7 @@ const signupPageStyle = {
     padding: '0',
   },
   inputIconsColor: {
-    color: '#e211ab',
+    color: '#0e0d0d',
   },
 };
 
