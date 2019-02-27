@@ -92,6 +92,7 @@ class SignupPage extends React.PureComponent {
 SignupPage.propTypes = {
   classes: PropTypes.object,
   signupRequest: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = null;
