@@ -5,6 +5,7 @@ import { compose } from 'redux';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
+import { Link } from 'react-router-dom';
 // core utils
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -29,6 +30,7 @@ class LoginPage extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loginRequest: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -46,6 +48,10 @@ class LoginPage extends React.Component {
 
   handleSubmit = () => {
     this.props.loginRequest();
+  };
+
+  handleRedirect = () => {
+    this.props.history.push('/reset-password');
   };
 
   render() {
@@ -67,6 +73,14 @@ class LoginPage extends React.Component {
                   <CardBody>
                     <UsernameInput classes={classes} />
                     <PasswordInput classes={classes} />
+                    <div className={classes.redirect}>
+                      <h4>
+                        Forgot Password?{' '}
+                        <Link to="/reset-password" onClick={this.handleRedirect}>
+                          Click Here
+                        </Link>
+                      </h4>
+                    </div>
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button simple color="primary" size="lg" onClick={this.handleSubmit}>
