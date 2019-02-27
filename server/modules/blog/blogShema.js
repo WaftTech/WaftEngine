@@ -4,7 +4,6 @@ const { slugify } = require('../../helper/others.helper');
 
 const blogSchema = new schema(
   {
-    _id: { type: schema.Types.ObjectId },
     title: {
       type: String,
       required: true,
@@ -76,7 +75,6 @@ const blogSchema = new schema(
       default: Date.now,
     },
   },
-  { _id: false },
 );
 
 module.exports = Blog = mongoose.model('blog', blogSchema);

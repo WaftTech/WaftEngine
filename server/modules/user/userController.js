@@ -262,6 +262,7 @@ userController.ForgotPassword = async (req, res, next) => {
     const {
       body: { email },
     } = req;
+    const errors = {};
     const user = await users.findOne({ email });
     const data = { email };
     if (!user) {
@@ -276,7 +277,7 @@ userController.ForgotPassword = async (req, res, next) => {
       subject: 'Password reset request', // Subject line
       text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
     };
-    const tempalte_path = `${__dirname}/../email/template/passwordreset.pug`;
+    const tempalte_path = `${__dirname}/../../email/template/passwordreset.pug`;
     const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
     emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
     const update = await users.findByIdAndUpdate(
