@@ -18,3 +18,11 @@ export const submitRequest = payload => ({
   type: types.SUBMIT_REQUEST,
   payload,
 });
+export const submitSuccess = payload => ({
+  type: types.SUBMIT_SUCCESS,
+  payload,
+});
+export const submitFailure = payload => ({
+  type: types.SUBMIT_FAILURE,
+  payload,
+});

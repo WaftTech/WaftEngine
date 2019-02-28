@@ -31,6 +31,7 @@ import style from './styles';
 class CodeVerifyPage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    submitRequest: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -44,9 +45,9 @@ class CodeVerifyPage extends React.PureComponent {
     setTimeout(() => this.setState({ cardAnimaton: '' }), 500);
   }
 
-  handleSubmit() {
+  handleSubmit = () => {
     this.props.submitRequest();
-  }
+  };
 
   render() {
     const { classes } = this.props;
