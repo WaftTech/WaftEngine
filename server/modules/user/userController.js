@@ -310,8 +310,8 @@ userController.ResetPassword = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
     let salt = await bcrypt.genSalt(10);
-    let hash = await bcrypt.hash(password, salt);
-    const d = await users.findByIdAndUpdate(user._id, { $set: { last_password_cahnage_date: Date.now(), hash } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } });
+    let hashpw = await bcrypt.hash(password, salt);
+    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } });
     // Create JWT payload
     const payload = {
       id: user._id,
@@ -346,7 +346,6 @@ userController.Login = async (req, res) => {
         errors.email = 'User not found';
         return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
       }
-      console.log(user);
 
       // Check Password
       bcrypt.compare(password, user.password).then(async isMatch => {
