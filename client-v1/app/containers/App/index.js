@@ -16,6 +16,7 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import SignupPage from 'containers/SignupPage/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import ForgotPasswordPage from 'containers/ForgotPasswordPage/Loadable';
+import CodeVerifyPage from 'containers/CodeVerifyPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import reducer from './reducer';
 import saga from './saga';
@@ -28,6 +29,7 @@ const App = () => (
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/signup" component={SignupPage} />
       <Route exact path="/reset-password" component={ForgotPasswordPage} />
+      <Route exact path="/reset-password/code-verify" component={CodeVerifyPage} />
       <Route component={NotFoundPage} />
     </Switch>
     <GlobalStyle />
