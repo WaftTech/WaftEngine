@@ -36,7 +36,7 @@ router.get('/test', (req, res) =>
  * @description Check user is returning user or new
  * @access Public
  */
-router.get('/', authorization, authentication, userModule.GetAllUser);
+router.get('/', authorization, userModule.GetAllUser);
 
 /**
  * @route GET api/user
