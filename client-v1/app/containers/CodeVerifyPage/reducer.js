@@ -11,6 +11,7 @@ export const initialState = fromJS({
   email: '',
   code: '',
   password: '',
+  errors: {},
 });
 
 const codeVerifyPageReducer = (state = initialState, action = {}) => {
