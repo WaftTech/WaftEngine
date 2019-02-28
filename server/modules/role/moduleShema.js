@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const moduleSchema = new schema({
-  module_name: { type: String, required: true, unique: true },
+  module_name: { type: String, required: true },
   description: { type: String },
   order: { Type: Number },
   path: [
@@ -10,7 +10,12 @@ const moduleSchema = new schema({
       accessType: { type: String, required: true },
       accessTypeDescription: { type: String },
       adminRoutes: [{ type: String, required: true }],
-      serverRoutes: [{ route: { type: String, required: true }, method: { type: String, require: true } }],
+      serverRoutes: [
+        {
+          route: { type: String, required: true },
+          method: { type: String, required: true },
+        },
+      ],
     },
   ],
 });
