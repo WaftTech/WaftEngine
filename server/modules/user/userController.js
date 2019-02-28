@@ -291,7 +291,7 @@ userController.ForgotPassword = async (req, res, next) => {
       { new: true },
     );
     const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, msg, null);
   } catch (err) {
     next(err);
   }
@@ -308,21 +308,27 @@ userController.ResetPassword = async (req, res, next) => {
       errors.email = 'Invalid Password Reset Code';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
-    const d = await users.findByIdAndUpdate(user._id, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
-    // Create JWT payload
-    const payload = {
-      id: user._id,
-      name: user.name,
-      avatar: user.avatar,
-      email: user.email,
-      email_verified: user.email_verified,
-      roles: user.roles,
-    };
-    // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
-      const msg = `Password Reset Success`;
-      token = `Bearer ${token}`;
-      return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, token);
+    bcrypt.genSalt(10, async (err, salt) => {
+      bcrypt.hash(password, salt, async (err, hash) => {
+        if (err) throw err;
+        let newPassword = hash;
+        const d = await users.findByIdAndUpdate(user._id, { $set: { newPassword } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+        // Create JWT payload
+        const payload = {
+          id: user._id,
+          name: user.name,
+          avatar: user.avatar,
+          email: user.email,
+          email_verified: user.email_verified,
+          roles: user.roles,
+        };
+        // Sign Token
+        jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
+          const msg = `Password Reset Success`;
+          token = `Bearer ${token}`;
+          return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, token);
+        });
+      });
     });
   } catch (err) {
     return next(err);
