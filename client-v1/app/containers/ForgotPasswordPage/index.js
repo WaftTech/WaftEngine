@@ -21,7 +21,7 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { makeSelectEmail } from './selectors';
+import { makeSelectEmail, makeSelectEmailError } from './selectors';
 import reducer from './reducer';
 import * as mapDispatchToProps from './actions';
 import saga from './saga';
@@ -47,7 +47,7 @@ class ForgotPasswordPage extends React.PureComponent {
   };
 
   render() {
-    const { classes, email, setStoreValue } = this.props;
+    const { classes, email, setStoreValue, error } = this.props;
     return (
       <>
         <div>
@@ -63,10 +63,10 @@ class ForgotPasswordPage extends React.PureComponent {
                     <CustomInput
                       labelText="Email"
                       id="email"
-                      placeholder="Your Email Here"
                       formControlProps={{
                         fullWidth: true,
                       }}
+                      error={error}
                       inputProps={{
                         value: email,
                         onChange: e => setStoreValue({ key: 'email', value: e.target.value }),
@@ -94,10 +94,12 @@ ForgotPasswordPage.propTypes = {
   email: PropTypes.string.isRequired,
   passwordResetRequest: PropTypes.func.isRequired,
   setStoreValue: PropTypes.func.isRequired,
+  error: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
+  error: makeSelectEmailError(),
 });
 
 const withConnect = connect(
