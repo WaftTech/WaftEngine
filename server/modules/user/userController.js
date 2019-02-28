@@ -72,7 +72,7 @@ userController.GetAllUser = async (req, res, next) => {
   }
   selectq = 'name email password avatar gender date_of_birth is_active password_reset_code updated_at added_at added_by roles';
 
-  populate = { path: 'roles', select: 'role_title' };
+  populate = [{ path: 'roles', select: 'role_title' }];
 
   let datas = await otherHelper.getquerySendResponse(users, page, size, sortq, searchq, selectq, next, populate);
 
@@ -346,6 +346,7 @@ userController.Login = async (req, res) => {
         errors.email = 'User not found';
         return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
       }
+      console.log(user);
 
       // Check Password
       bcrypt.compare(password, user.password).then(async isMatch => {
