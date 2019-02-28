@@ -18,7 +18,7 @@ const userSchema = new schema({
   added_by: { type: schema.Types.ObjectId, ref: 'users' },
   is_active: { type: Boolean, required: true, default: false },
   is_added_by_admin: { type: Boolean, require: true, default: false },
-  roles: [{ type: [schema.Types.ObjectId], require: true, ref: 'roles' }],
+  roles: [{ type: [schema.Types.ObjectId], required: true, ref: 'roles' }],
   bio: { type: String },
   skills: { type: [String] },
   description: { type: String },

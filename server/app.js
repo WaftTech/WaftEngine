@@ -58,7 +58,7 @@ mongoose.Promise = global.Promise;
 let defaults = {};
 Promise.resolve(app)
   .then(MongoDBConnection)
-  .then(LoadDefaults)
+  // .then(LoadDefaults)
   .catch(err => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
 
 // Database Connection
