@@ -46,7 +46,7 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { ModuleName: '', Path: [] };
+  state = { module_name: '', path: [] };
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
     this.setState({ [name]: newContent });
@@ -58,24 +58,24 @@ class AddEdit extends Component {
     event.persist();
 
     this.setState(state => ({
-      Path: [...state.Path, { AccessType: '', AdminRoutes: [], ServerRoutes: [] }],
+      path: [...state.path, { access_type: '', admin_routes: [], ServerRoutes: [] }],
     }));
   };
   handleRemovePath = index => event => {
     event.persist();
 
     this.setState(state => ({
-      Path: [...state.Path.slice(0, index), ...state.Path.slice(index + 1)],
+      path: [...state.path.slice(0, index), ...state.path.slice(index + 1)],
     }));
   };
   handleAccessTypeChange = id => event => {
     event.persist();
 
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            const newPath = { ...eachPath, AccessType: event.target.value };
+            const newPath = { ...eachPath, access_type: event.target.value };
             return newPath;
           }
           return eachPath;
@@ -86,12 +86,12 @@ class AddEdit extends Component {
   handleAdminRoutesChange = (id, index) => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            let { AdminRoutes } = eachPath;
-            AdminRoutes[index] = event.target.value;
-            const newPath = { ...eachPath, AdminRoutes };
+            let { admin_routes } = eachPath;
+            admin_routes[index] = event.target.value;
+            const newPath = { ...eachPath, admin_routes };
             return newPath;
           }
           return eachPath;
@@ -102,13 +102,13 @@ class AddEdit extends Component {
   handleRemoveAdminRoute = (id, index) => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            let { AdminRoutes } = eachPath;
+            let { admin_routes } = eachPath;
             const newPath = {
               ...eachPath,
-              AdminRoutes: [...AdminRoutes.slice(0, index), ...AdminRoutes.slice(index + 1)],
+              admin_routes: [...admin_routes.slice(0, index), ...admin_routes.slice(index + 1)],
             };
             return newPath;
           }
@@ -121,11 +121,11 @@ class AddEdit extends Component {
   handleAddAdminRoute = id => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            let { AdminRoutes } = eachPath;
-            const newPath = { ...eachPath, AdminRoutes: [...AdminRoutes, ''] };
+            let { admin_routes } = eachPath;
+            const newPath = { ...eachPath, admin_routes: [...admin_routes, ''] };
             return newPath;
           }
           return eachPath;
@@ -136,8 +136,8 @@ class AddEdit extends Component {
   handleServerRoutesMethodChange = (id, index) => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
             let { ServerRoutes } = eachPath;
             ServerRoutes[index].method = event.target.value;
@@ -152,8 +152,8 @@ class AddEdit extends Component {
   handleServerRoutesRouteChange = (id, index) => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+    path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
             let { ServerRoutes } = eachPath;
             ServerRoutes[index].route = event.target.value;
@@ -168,8 +168,8 @@ class AddEdit extends Component {
   handleAddServerRoute = id => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
             let { ServerRoutes } = eachPath;
             const newPath = {
@@ -186,8 +186,8 @@ class AddEdit extends Component {
   handleRemoveServerRoute = (id, index) => event => {
     event.persist();
     this.setState(state => ({
-      Path: [
-        ...state.Path.map(eachPath => {
+      path: [
+        ...state.path.map(eachPath => {
           if (eachPath._id === id) {
             let { ServerRoutes } = eachPath;
             const newPath = {
@@ -222,7 +222,7 @@ class AddEdit extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { ModuleName, Path } = this.state;
+    const { module_name, path } = this.state;
     return (
       <div>
         <GridContainer>
@@ -241,8 +241,8 @@ class AddEdit extends Component {
                         fullWidth: true,
                       }}
                       inputProps={{
-                        value: ModuleName,
-                        onChange: this.handleChange('ModuleName'),
+                        value: module_name,
+                        onChange: this.handleChange('module_name'),
                       }}
                     />
                   </GridItem>
@@ -251,7 +251,7 @@ class AddEdit extends Component {
             </Card>
             <GridContainer>
               <GridItem xs={12} sm={12} md={12}>
-                {Path.map((each, pathIndex) => (
+                {path.map((each, pathIndex) => (
                   <PathComponent
                     key={`${each._id}-${pathIndex}`}
                     each={each}
