@@ -37,8 +37,8 @@ authMiddleware.authentication = async (req, res, next) => {
     }
     const method = req.method;
     const GetModuleFilter = {
-      'path.serverRoutes.method': method,
-      'path.serverRoutes.route': path,
+      'path.server_routes.method': method,
+      'path.server_routes.route': path,
     };
     console.log(`${JSON.stringify(GetModuleFilter)}`);
     const modules = await modulesSch.findOne(GetModuleFilter, { path: 1 });
@@ -46,7 +46,7 @@ authMiddleware.authentication = async (req, res, next) => {
     let moduleAccessTypeId = null;
     if (!isEmpty(modules) && !isEmpty(modules.path)) {
       for (let i = 0; i < modules.path.length; i++) {
-        const routes = modules.path[i].serverRoutes;
+        const routes = modules.path[i].server_routes;
         for (let j = 0; j < routes.length; j++) {
           if (routes[j].method === method && routes[j].route === path) {
             moduleAccessTypeId = modules.path[i]._id;

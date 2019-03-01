@@ -100,8 +100,8 @@ export class RoleManagePage extends React.Component {
     const allLinksObj = allLinks.toJS();
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
-    const tableData = allLinksObj.map(({ _id, roles_title, description, is_active }) => [
-      roles_title,
+    const tableData = allLinksObj.map(({ _id, role_title, description, is_active }) => [
+      role_title,
       description,
       '' + is_active,
       <React.Fragment>

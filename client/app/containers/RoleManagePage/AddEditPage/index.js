@@ -43,7 +43,7 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { roles_title: '', description: '', is_active: false, errors: {} };
+  state = { role_title: '', description: '', is_active: false, errors: {} };
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOne(this.props.match.params.id);
@@ -86,8 +86,8 @@ class AddEdit extends Component {
                       fullWidth: true,
                     }}
                     inputProps={{
-                      value: this.state.roles_title,
-                      onChange: this.handleChange('roles_title'),
+                      value: this.state.role_title,
+                      onChange: this.handleChange('role_title'),
                     }}
                   />
                 </GridItem>
