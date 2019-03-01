@@ -74,7 +74,7 @@ function appReducer(state = initialState, action = { type: '' }) {
     case types.LOAD_CONTENT_SUCCESS:
       return state.merge({
         contents: state.get('contents').merge({
-          [action.payload.data.Key]: action.payload.data.Description,
+          [action.payload.data.key]: action.payload.data.description,
         }),
       });
     case types.LOAD_MEDIA_SUCCESS:

@@ -161,7 +161,7 @@ class ContactUs extends React.Component {
               </Card>
             </GridItem>
             <GridItem xs={6} sm={6} md={6}>
-              {contactDetailObj.Description && <div dangerouslySetInnerHTML={{ __html: contactDetailObj.Description }} />}
+              {contactDetailObj.description && <div dangerouslySetInnerHTML={{ __html: contactDetailObj.description }} />}
             </GridItem>
           </GridContainer>
         </div>
