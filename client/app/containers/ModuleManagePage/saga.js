@@ -7,34 +7,22 @@ import * as actions from './actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
-  let pageNumber = "";
+  let pageNumber = '';
   if (action.payload) {
-    pageNumber = `&page=${action.payload.page}&size=${
-      action.payload.rowsPerPage
-    }`;
+    pageNumber = `&page=${action.payload.page}&size=${action.payload.rowsPerPage}`;
   }
-  yield call(Api.get(`role/module?${pageNumber}`,
-   actions.loadAllSuccess, actions.loadAllFailure, token));
+  yield call(Api.get(`role/module?${pageNumber}`, actions.loadAllSuccess, actions.loadAllFailure, token));
 }
 
 function* loadOne(action) {
   const token = yield select(makeSelectToken());
 
-  yield call(
-    Api.get(`role/module/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token),
-  );
+  yield call(Api.get(`role/module/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token));
 }
 
 function* loadAccess(action) {
   const token = yield select(makeSelectToken());
-  yield call(
-    Api.get(
-      `role/access/module/${action.payload}`,
-      actions.loadAccessSuccess,
-      actions.loadAccessFailure,
-      token,
-    ),
-  );
+  yield call(Api.get(`role/access/module/${action.payload}`, actions.loadAccessSuccess, actions.loadAccessFailure, token));
 }
 
 function* redirectOnSuccess() {
@@ -45,16 +33,8 @@ function* redirectOnSuccess() {
 function* updateAccess(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const { data, moduleId } = action.payload;
-  yield fork(
-    Api.post(
-      `role/access/module/${moduleId}`,
-      actions.updateAccessSuccess,
-      actions.updateAccessFailure,
-      data,
-      token,
-    ),
-  );
+  const { data, module_id } = action.payload;
+  yield fork(Api.post(`role/access/module/${module_id}`, actions.updateAccessSuccess, actions.updateAccessFailure, data, token));
   yield take([LOCATION_CHANGE, types.UPDATE_ACCESS_FAILURE]);
   yield cancel(successWatcher);
 }
