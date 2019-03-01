@@ -34,7 +34,7 @@ function* addEdit(action) {
   const { ...data } = action.payload;
   // const files = { ProfileImage, ProfileImage1 };
   yield fork(
-    Api.multipartPost('contents', actions.addEditSuccess, actions.addEditFailure, data, {}, token),
+    Api.post('contents', actions.addEditSuccess, actions.addEditFailure, data, token),
   );
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
   yield cancel(successWatcher);
