@@ -52,27 +52,21 @@ class AccessManagePage extends Component {
   handleChecked = (id, roleId, moduleId) => event => {
     if (event.target.checked) {
       this.setState(state => {
-        const index = state.Access.findIndex(
-          each => each.ModuleId === moduleId && each.RoleId === roleId,
-        );
+        const index = state.Access.findIndex(each => each.module_id === moduleId && each.role_id === roleId);
         if (index > -1) {
           state.Access[index].access_type = [...state.Access[index].access_type, id];
           return { Access: state.Access };
         } else {
           return {
-            Access: [...state.Access, { access_type: [id], ModuleId: moduleId, RoleId: roleId }],
+            Access: [...state.Access, { access_type: [id], module_id: moduleId, role_id: roleId }],
           };
         }
       });
     } else {
       this.setState(state => {
-        const index = state.Access.findIndex(
-          each => each.ModuleId === moduleId && each.RoleId === roleId,
-        );
+        const index = state.Access.findIndex(each => each.module_id === moduleId && each.role_id === roleId);
         if (index > -1) {
-          state.Access[index].access_type = [
-            ...state.Access[index].access_type.filter(eachAT => eachAT !== id),
-          ];
+          state.Access[index].access_type = [...state.Access[index].access_type.filter(eachAT => eachAT !== id)];
           return { Access: state.Access };
         }
       });
@@ -81,7 +75,7 @@ class AccessManagePage extends Component {
   handleSave = () => {
     this.props.updateAccess({
       data: { Access: this.state.Access },
-      moduleId: this.props.match.params.id,
+      module_id: this.props.match.params.id,
     });
   };
   handleGoBack = () => {
@@ -93,15 +87,11 @@ class AccessManagePage extends Component {
     }
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.access !== nextProps.access) {
-      const accessObj = nextProps.access.toJS();
+    if (this.props.Access !== nextProps.Access) {
+      const accessObj = nextProps.Access.toJS();
       this.setState({
         ...accessObj,
-        access_type:
-          accessObj.Access.map(each => each.access_type).reduce((each, next, []) => [
-            ...each,
-            ...next,
-          ]) || [],
+        access_type: accessObj.Access.map(each => each.access_type).reduce((each, next, []) => [...each, ...next]) || [],
       });
     }
   }
@@ -113,26 +103,14 @@ class AccessManagePage extends Component {
         (Module &&
           Module.path &&
           Module.path.map(each => {
-            const currentAccess = Access.filter(
-              eachAccess => eachAccess.ModuleId === Module._id && eachAccess.RoleId === roleId,
-            );
+            const currentAccess = Access.filter(eachAccess => eachAccess.module_id === Module._id && eachAccess.role_id === roleId);
             let checked = false;
             if (currentAccess.length) {
               checked = currentAccess[0].access_type.includes(each._id);
             }
             return (
               <div key={each._id}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checked}
-                      tabIndex={-1}
-                      onClick={this.handleChecked(each._id, roleId, Module._id)}
-                      color="primary"
-                    />
-                  }
-                  label={each.access_type}
-                />
+                <FormControlLabel control={<Checkbox checked={checked} tabIndex={-1} onClick={this.handleChecked(each._id, roleId, Module._id)} color="primary" />} label={each.access_type} />
               </div>
             );
           })) ||
@@ -185,7 +163,7 @@ const withReducer = injectReducer({ key: 'moduleManagePage', reducer });
 const withSaga = injectSaga({ key: 'moduleManagePageAccessManage', saga });
 
 const mapStateToProps = createStructuredSelector({
-  access: makeSelectAccess(),
+  Access: makeSelectAccess(),
 });
 
 const mapDispatchToProps = dispatch => ({

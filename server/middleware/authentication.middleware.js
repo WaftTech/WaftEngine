@@ -37,18 +37,19 @@ authMiddleware.authentication = async (req, res, next) => {
     }
     const method = req.method;
     const GetModuleFilter = {
-      'Path.ServerRoutes.method': method,
-      'Path.ServerRoutes.route': path,
+      'path.serverRoutes.method': method,
+      'path.serverRoutes.route': path,
     };
     console.log(`${JSON.stringify(GetModuleFilter)}`);
-    const modules = await modulesSch.findOne(GetModuleFilter, { Path: 1 });
+    const modules = await modulesSch.findOne(GetModuleFilter, { path: 1 });
+    console.log(modules);
     let moduleAccessTypeId = null;
-    if (!isEmpty(modules) && !isEmpty(modules.Path)) {
-      for (let i = 0; i < modules.Path.length; i++) {
-        const routes = modules.Path[i].ServerRoutes;
+    if (!isEmpty(modules) && !isEmpty(modules.path)) {
+      for (let i = 0; i < modules.path.length; i++) {
+        const routes = modules.path[i].serverRoutes;
         for (let j = 0; j < routes.length; j++) {
           if (routes[j].method === method && routes[j].route === path) {
-            moduleAccessTypeId = modules.Path[i]._id;
+            moduleAccessTypeId = modules.path[i]._id;
           }
         }
       }
@@ -60,9 +61,9 @@ authMiddleware.authentication = async (req, res, next) => {
     if (role && role.length && moduleId && moduleAccessTypeId) {
       for (let i = 0; i < role.length; i++) {
         const activeRole = role[i];
-        const accessFilter = { RoleId: activeRole._id, IsActive: true, ModuleId: moduleId, AccessType: moduleAccessTypeId };
+        const accessFilter = { role_id: activeRole._id, is_active: true, module_id: moduleId, access_type: moduleAccessTypeId };
         const access = await accessSch.findOne(accessFilter);
-        if (access && access.AccessType) {
+        if (access && access.access_type) {
           return next();
         }
       }
