@@ -25,6 +25,6 @@ router.post('/access/role/:roleid', authorization, authentication, dModule.SaveA
  *Access Management of Module to all roles
  */
 router.get('/access/module/:moduleid', authorization, dModule.GetAccessListForModule);
-router.post('/access/module/:moduleid', authorization, authentication, dModule.SaveAccessListForModule);
+router.post('/access/module/:moduleid', authorization,  dModule.SaveAccessListForModule);
 
 module.exports = router;
