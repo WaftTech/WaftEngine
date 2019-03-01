@@ -78,5 +78,10 @@ contentController.GetContentDetail = async (req, res, next) => {
   const contents = await contentSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
 };
+contentController.GetContentDetailByKey = async (req, res, next) => {
+  const key = req.params.id;
+  const contents = await contentSch.findOne({ key: key, is_deleted: false });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
+};
 
 module.exports = contentController;
