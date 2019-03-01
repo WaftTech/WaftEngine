@@ -104,8 +104,8 @@ export class ModuleManagePage extends React.Component {
     const allObj = all.toJS();
     const pageObj = pageItem.toJS();
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
-    const tableData = allObj.map(({ _id, ModuleName, Path }) => [
-      ModuleName,
+    const tableData = allObj.map(({ _id, module_name, path }) => [
+      module_name,
       <React.Fragment>
         <Tooltip
           id="tooltip-top"

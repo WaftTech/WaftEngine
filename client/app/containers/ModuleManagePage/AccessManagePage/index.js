@@ -47,7 +47,7 @@ const styles = {
 };
 
 class AccessManagePage extends Component {
-  state = { Access: [], Module: [], Roles: [], AccessType: [] };
+  state = { Access: [], Module: [], Roles: [], access_type: [] };
 
   handleChecked = (id, roleId, moduleId) => event => {
     if (event.target.checked) {
@@ -56,11 +56,11 @@ class AccessManagePage extends Component {
           each => each.ModuleId === moduleId && each.RoleId === roleId,
         );
         if (index > -1) {
-          state.Access[index].AccessType = [...state.Access[index].AccessType, id];
+          state.Access[index].access_type = [...state.Access[index].access_type, id];
           return { Access: state.Access };
         } else {
           return {
-            Access: [...state.Access, { AccessType: [id], ModuleId: moduleId, RoleId: roleId }],
+            Access: [...state.Access, { access_type: [id], ModuleId: moduleId, RoleId: roleId }],
           };
         }
       });
@@ -70,8 +70,8 @@ class AccessManagePage extends Component {
           each => each.ModuleId === moduleId && each.RoleId === roleId,
         );
         if (index > -1) {
-          state.Access[index].AccessType = [
-            ...state.Access[index].AccessType.filter(eachAT => eachAT !== id),
+          state.Access[index].access_type = [
+            ...state.Access[index].access_type.filter(eachAT => eachAT !== id),
           ];
           return { Access: state.Access };
         }
@@ -97,8 +97,8 @@ class AccessManagePage extends Component {
       const accessObj = nextProps.access.toJS();
       this.setState({
         ...accessObj,
-        AccessType:
-          accessObj.Access.map(each => each.AccessType).reduce((each, next, []) => [
+        access_type:
+          accessObj.Access.map(each => each.access_type).reduce((each, next, []) => [
             ...each,
             ...next,
           ]) || [],
@@ -111,14 +111,14 @@ class AccessManagePage extends Component {
     const ModulePathList = ({ roleId }) => {
       return (
         (Module &&
-          Module.Path &&
-          Module.Path.map(each => {
+          Module.path &&
+          Module.path.map(each => {
             const currentAccess = Access.filter(
               eachAccess => eachAccess.ModuleId === Module._id && eachAccess.RoleId === roleId,
             );
             let checked = false;
             if (currentAccess.length) {
-              checked = currentAccess[0].AccessType.includes(each._id);
+              checked = currentAccess[0].access_type.includes(each._id);
             }
             return (
               <div key={each._id}>
@@ -131,7 +131,7 @@ class AccessManagePage extends Component {
                       color="primary"
                     />
                   }
-                  label={each.AccessType}
+                  label={each.access_type}
                 />
               </div>
             );
@@ -154,7 +154,7 @@ class AccessManagePage extends Component {
                     {Roles.map(eachRole => (
                       <Card key={eachRole._id}>
                         <CardHeader color="primary">
-                          <h5 className={classes.cardTitleWhite}>{eachRole.RolesTitle}</h5>
+                          <h5 className={classes.cardTitleWhite}>{eachRole.role_title}</h5>
                         </CardHeader>
                         <CardBody>
                           <ModulePathList roleId={eachRole._id} />

@@ -70,14 +70,14 @@ const Path = props => {
                 fullWidth: false,
               }}
               inputProps={{
-                value: each.AccessType,
+                value: each.access_type,
                 onChange: handleAccessTypeChange(each._id),
               }}
             />
           </GridItem>
           <GridItem md={3}>
             <ul className="customUL">
-              {each.AdminRoutes.map((eachAdminRoute, index) => (
+              {each.admin_routes.map((eachAdminRoute, index) => (
                 <li key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
                   <CustomInput
                     labelText="Client Route"
@@ -85,7 +85,7 @@ const Path = props => {
                     formControlProps={{
                       fullWidth: false,
                     }}
-                    inputProps={{
+                    inputProps={{ 
                       value: eachAdminRoute,
                       onChange: handleAdminRoutesChange(each._id, index),
                       endAdornment: (
@@ -109,7 +109,7 @@ const Path = props => {
           </GridItem>
           <GridItem md={6}>
             <ul className="customUL">
-              {each.ServerRoutes.map((eachServerRoute, index) => (
+              {each.server_routes.map((eachServerRoute, index) => (
                 <li
                   key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}
                 >
