@@ -7,10 +7,10 @@ const moduleSchema = new schema({
   order: { Type: Number },
   path: [
     {
-      accessType: { type: String, required: true },
-      accessTypeDescription: { type: String },
-      adminRoutes: [{ type: String, required: true }],
-      serverRoutes: [
+      access_type: { type: String, required: true },
+      access_type_description: { type: String },
+      admin_routes: [{ type: String, required: true }],
+      server_routes: [
         {
           route: { type: String, required: true },
           method: { type: String, required: true },

@@ -184,7 +184,7 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
     if (access.length) {
       for (let i = 0; i < access.length; i++) {
         if (access[i]._id) {
-          access[i].ModuleId = moduleid;
+          access[i].module_id = moduleid;
           await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
         } else {
           access[i].module_id = moduleid;
@@ -206,7 +206,7 @@ roleController.GetAccessListForRole = async (req, res, next) => {
   try {
     const roleid = req.params.roleid;
     const AccessForRole = await accessSch.find({ role_id: roleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
-    const ModulesForRole = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.AccessType': 1, 'path._id': 1 });
+    const ModulesForRole = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
     const Roles = await roleSch.find({}, { _id: 1, role_title: 1, is_active: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForRole, Module: ModulesForRole, Roles: Roles }, null, 'Access Get Success !!', null);
   } catch (err) {
@@ -216,8 +216,8 @@ roleController.GetAccessListForRole = async (req, res, next) => {
 roleController.GetAccessListForModule = async (req, res, next) => {
   try {
     const moduleid = req.params.moduleid;
-    const AccessForModule = await accessSch.find({ module_id: moduleid }, { _id: 1, access_type: 1, is_active: 1, ModuleId: 1, RoleId: 1 });
-    const ModulesForRole = await moduleSch.findOne({ _id: moduleid }, { _id: 1, module_name: 1, 'path.AccessType': 1, 'Path._id': 1 });
+    const AccessForModule = await accessSch.find({ module_id: moduleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
+    const ModulesForRole = await moduleSch.findOne({ _id: moduleid }, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
     const Roles = await roleSch.find({}, { _id: 1, role_title: 1, is_active: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForModule, Module: ModulesForRole, Roles: Roles }, null, roleConfig.accessGet, null);
   } catch (err) {
