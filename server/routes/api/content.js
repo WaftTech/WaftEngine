@@ -9,5 +9,6 @@ const { authorization } = require('../../middleware/authentication.middleware');
 router.get('/', authorization, dModule.GetContent);
 router.post('/', authorization, contentValidation.sanitize, contentValidation.validation, dModule.SaveContent);
 router.get('/:id', authorization, dModule.GetContentDetail);
+router.get('/key/:id',  dModule.GetContentDetailByKey);
 
 module.exports = router;
