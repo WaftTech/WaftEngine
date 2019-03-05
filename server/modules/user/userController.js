@@ -356,12 +356,11 @@ userController.Login = async (req, res) => {
           let routes = [];
           if (accesses && accesses.length) {
             const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
-            console.log(access);
-            const routers = await moduleSch.find({ 'path._id': access }, { 'path.adminRoutes': 1, 'path.accessType': 1 });
+            const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
             for (let i = 0; i < routers.length; i++) {
-              for (let j = 0; j < routers[i].Path.length; j++) {
+              for (let j = 0; j < routers[i].path.length; j++) {
                 // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
-                routes.push(routers[i].Path[j]);
+                routes.push(routers[i].path[j]);
                 // }
               }
             }
