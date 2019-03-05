@@ -91,7 +91,7 @@ class AccessManagePage extends Component {
       const accessObj = nextProps.Access.toJS();
       this.setState({
         ...accessObj,
-        access_type: accessObj.Access.map(each => each.access_type).reduce((each, next, []) => [...each, ...next]) || [],
+        access_type: accessObj.Access.length > 0 ? accessObj.Access.map(each => each.access_type).reduce((each, next, []) => [...each, ...next]) : [],
       });
     }
   }

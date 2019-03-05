@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -17,7 +16,6 @@ import GridContainer from 'components/Grid/GridContainer';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import reducer from '../reducer';
@@ -46,11 +44,7 @@ const styles = {
 };
 
 class AddEdit extends Component {
-  state = { module_name: '', path: [] };
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
-  };
+  state = { module_name: '', description: '', path: [] };
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
@@ -58,7 +52,7 @@ class AddEdit extends Component {
     event.persist();
 
     this.setState(state => ({
-      path: [...state.path, { access_type: '', admin_routes: [], ServerRoutes: [] }],
+      path: [...state.path, { access_type: '', admin_routes: [], server_routes: [] }],
     }));
   };
   handleRemovePath = index => event => {
@@ -139,9 +133,9 @@ class AddEdit extends Component {
       path: [
         ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            ServerRoutes[index].method = event.target.value;
-            const newPath = { ...eachPath, ServerRoutes };
+            let { server_routes } = eachPath;
+            server_routes[index].method = event.target.value;
+            const newPath = { ...eachPath, server_routes };
             return newPath;
           }
           return eachPath;
@@ -152,12 +146,12 @@ class AddEdit extends Component {
   handleServerRoutesRouteChange = (id, index) => event => {
     event.persist();
     this.setState(state => ({
-    path: [
+      path: [
         ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            ServerRoutes[index].route = event.target.value;
-            const newPath = { ...eachPath, ServerRoutes };
+            let { server_routes } = eachPath;
+            server_routes[index].route = event.target.value;
+            const newPath = { ...eachPath, server_routes };
             return newPath;
           }
           return eachPath;
@@ -165,23 +159,30 @@ class AddEdit extends Component {
       ],
     }));
   };
-  handleAddServerRoute = id => event => {
+  handleAddServerRoute = (index) => event => {
     event.persist();
-    this.setState(state => ({
-      path: [
-        ...state.path.map(eachPath => {
-          if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              ServerRoutes: [...ServerRoutes, { route: '', method: '' }],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    }));
+    this.setState(state => {
+      let { path } = state;
+      path[index] = { ...path[index], server_routes: [...path[index].server_routes, { route: '', method: '' }] };
+      return {
+        path
+      }
+      //   return {
+      //   path: [
+      //     ...state.path.map(eachPath => {
+      //       if (eachPath._id === id) {
+      //         let { server_routes } = eachPath;
+      //         const newPath = {
+      //           ...eachPath,
+      //           server_routes: [...server_routes, { route: '', method: '' }],
+      //         };
+      //         return newPath;
+      //       }
+      //       return eachPath;
+      //     }),
+      //   ],
+      // };
+    });
   };
   handleRemoveServerRoute = (id, index) => event => {
     event.persist();
@@ -189,10 +190,10 @@ class AddEdit extends Component {
       path: [
         ...state.path.map(eachPath => {
           if (eachPath._id === id) {
-            let { ServerRoutes } = eachPath;
+            let { server_routes } = eachPath;
             const newPath = {
               ...eachPath,
-              ServerRoutes: [...ServerRoutes.slice(0, index), ...ServerRoutes.slice(index + 1)],
+              server_routes: [...server_routes.slice(0, index), ...server_routes.slice(index + 1)],
             };
             return newPath;
           }
@@ -222,7 +223,7 @@ class AddEdit extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { module_name, path } = this.state;
+    const { module_name, path, description } = this.state;
     return (
       <div>
         <GridContainer>
@@ -243,6 +244,16 @@ class AddEdit extends Component {
                       inputProps={{
                         value: module_name,
                         onChange: this.handleChange('module_name'),
+                      }}
+                    />
+                    <CustomInput
+                      labelText="Description"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        value: description,
+                        onChange: this.handleChange('description'),
                       }}
                     />
                   </GridItem>
