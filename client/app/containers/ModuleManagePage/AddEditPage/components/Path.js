@@ -77,7 +77,7 @@ const Path = props => {
           </GridItem>
           <GridItem md={3}>
             <ul className="customUL">
-              {each.admin_routes.map((eachAdminRoute, index) => (
+              {(each.admin_routes || []).map((eachAdminRoute, index) => (
                 <li key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
                   <CustomInput
                     labelText="Client Route"
@@ -85,7 +85,7 @@ const Path = props => {
                     formControlProps={{
                       fullWidth: false,
                     }}
-                    inputProps={{ 
+                    inputProps={{
                       value: eachAdminRoute,
                       onChange: handleAdminRoutesChange(each._id, index),
                       endAdornment: (
@@ -109,7 +109,7 @@ const Path = props => {
           </GridItem>
           <GridItem md={6}>
             <ul className="customUL">
-              {each.server_routes.map((eachServerRoute, index) => (
+              {(each.server_routes || []).map((eachServerRoute, index) => (
                 <li
                   key={`${each._id}-${pathIndex}-${eachServerRoute._id}-each-server-route-${index}`}
                 >
@@ -117,7 +117,7 @@ const Path = props => {
                     <InputLabel
                       htmlFor={`${each._id}-${
                         eachServerRoute._id
-                      }-each-server-route-${index}-method`}
+                        }-each-server-route-${index}-method`}
                     >
                       Method
                     </InputLabel>
@@ -135,7 +135,7 @@ const Path = props => {
                         <MenuItem
                           key={`${each._id}-${pathIndex}-${
                             eachServerRoute._id
-                          }-each-server-route-method-${each}`}
+                            }-each-server-route-method-${each}`}
                           value={each}
                         >
                           {each}
@@ -147,7 +147,7 @@ const Path = props => {
                     labelText="Server Route"
                     id={`${each._id}-${
                       eachServerRoute._id
-                    }-each-admin-server-route-route-access-type-${index}`}
+                      }-each-admin-server-route-route-access-type-${index}`}
                     formControlProps={{
                       fullWidth: false,
                     }}
@@ -168,7 +168,7 @@ const Path = props => {
             <Button
               size="sm"
               aria-label="Add Server Route"
-              onClick={handleAddServerRoute(each._id)}
+              onClick={handleAddServerRoute(pathIndex)}
             >
               Add Server Route
             </Button>
