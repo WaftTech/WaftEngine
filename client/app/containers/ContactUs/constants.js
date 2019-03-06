@@ -1,0 +1,9 @@
+export const SAVE_CONTACT_REQUEST = 'app/ContactUs/SAVE_CONTACT_REQUEST';
+export const SAVE_CONTACT_SUCCESS = 'app/ContactUs/SAVE_CONTACT_SUCCESS';
+export const SAVE_CONTACT_FAILURE = 'app/ContactUs/SAVE_CONTACT_FAILURE';
+
+export const CONTACT_DETAIL_REQUEST = 'app/ContactUs/CONTACT_DETAIL_REQUEST';
+export const CONTACT_DETAIL_SUCCESS = 'app/ContactUs/CONTACT_DETAIL_SUCCESS';
+export const CONTACT_DETAIL_FAILURE = 'app/ContactUs/CONTACT_DETAIL_FAILURE';
+
+export const CLEAR_MESSAGES = 'app/ContactUs/CLEAR_MESSAGES';
