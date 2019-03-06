@@ -70,6 +70,7 @@ function appReducer(state = initialState, action = { type: '' }) {
         errorMessage: '',
       });
     case types.LOAD_CONTENT_SUCCESS:
+      if (!action.payload.data) return state;
       return state.merge({
         contents: state.get('contents').merge({
           [action.payload.data.key]: action.payload.data.description,

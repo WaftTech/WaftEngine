@@ -122,6 +122,8 @@ module.exports = options => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.ContextReplacementPlugin(/moment[\\/]locale$/, /^\.\/en$/),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],

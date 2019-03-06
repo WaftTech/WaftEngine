@@ -4,13 +4,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import moment from 'moment';
 
-import { makeSelectVideoLibraryList } from './selectors';
-import { IMAGE_BASE } from 'containers/App/constants';
-import defaultImage from 'assets/img/logo.svg';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import { makeSelectVideoLibraryList } from './selectors';
 import saga from './saga';
 import { loadVideoLibraryListRequest } from './actions';
 import reducer from './reducer';
@@ -33,7 +30,6 @@ export class VideoLibraryListPage extends React.Component {
     const { value } = this.state;
     const { videoLibraryList } = this.props;
     const videoLibraryListObj = videoLibraryList.toJS();
-    console.log('kk', videoLibraryListObj);
 
     return (
       <div>
@@ -47,7 +43,7 @@ export class VideoLibraryListPage extends React.Component {
                 const { video_library } = each;
 
                 return (
-                  <Grid item xs={12} lg={4}>
+                  <Grid item xs={12} lg={4} key={`video-list-${each._id}`}>
                     <Link to={`/video/${each._id}`}>
                       <div className="videosLists">
                         <div className="video_library_name">

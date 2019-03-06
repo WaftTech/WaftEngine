@@ -47,7 +47,7 @@ export class BlogListPage extends React.Component {
                 const blogImage = (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) || defaultImage;
 
                 return (
-                  <Grid item xs={12} lg={4}>
+                  <Grid item xs={12} lg={4} key={`blog-${each._id}`}>
                     <Link to={`/blog/${each._id}`}>
                       <div className="companyItem">
                         <div>{title}</div>

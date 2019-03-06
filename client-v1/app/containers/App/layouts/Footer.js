@@ -52,7 +52,7 @@ class Footer extends React.Component {
   };
 
   componentDidMount() {
-    this.props.loadAboutUs();
+    // this.props.loadAboutUs();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
