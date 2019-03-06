@@ -22,7 +22,7 @@ class StaticContent extends React.Component {
 StaticContent.propTypes = {
   loadContent: PropTypes.func.isRequired,
   staticcontent: PropTypes.object,
-  contentKey: PropTypes.object,
+  contentKey: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({

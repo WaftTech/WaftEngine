@@ -58,22 +58,18 @@ class FAQPage extends React.Component {
                 faqObj.faq.filter(z => z.category == x._id).length !== 0 && (
                   <ExpansionPanel key={`cat-${x._id}`} square expanded={expanded === x._id} onChange={this.handleChange(x._id)}>
                     <ExpansionPanelSummary>
-                      <Typography>
-                        <h2>{x.title}</h2>
-                      </Typography>
+                      <Typography variant="h2">{x.title}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails style={{ display: 'block' }}>
                       {faqObj.faq &&
                         faqObj.faq.filter(z => z.category == x._id).map(y => (
                           <ExpansionPanel key={`faq-${y._id}`} expanded={qExpanded === y._id} onChange={this.handleQChange(y._id)}>
                             <ExpansionPanelSummary>
-                              <Typography>
-                                <h3>{y.question}</h3>
+                              <Typography variant="h5">{y.question}
                               </Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
-                              <Typography>
-                                <h4>{y.title}</h4>
+                              <Typography  variant="h6">{y.title}
                               </Typography>
                             </ExpansionPanelDetails>
                           </ExpansionPanel>

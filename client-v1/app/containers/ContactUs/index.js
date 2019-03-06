@@ -172,7 +172,7 @@ class ContactUs extends React.Component {
 
 ContactUs.propTypes = {
   save: PropTypes.func.isRequired,
-  contactDetail: PropTypes.func.isRequired,
+  contactDetail: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
