@@ -87,7 +87,6 @@ export class VideosPage extends React.Component {
           <Grid container spacing={16}>
             {videosObj.videos &&
               videosObj.videos.map(video => {
-                console.log(video.url.split('=')[1]);
                 return (
                   <Grid item xs={4} key={video._id}>
                     <Card className={classes.card}>

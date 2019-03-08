@@ -6,22 +6,21 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectIsAuthenticated, makeSelectLocation } from '../../../containers/App/selectors';
 
 const AdminRoute = ({ isAuthenticated, ...rest }) => {
-  if (isAuthenticated) return <Route {...rest} />;
-  return null;
-  // delete rest.component; // eslint-disable-line no-param-reassign
-  // return (
-  //   <Route
-  //     {...rest}
-  //     render={props => (
-  //       <Redirect
-  //         to={{
-  //           pathname: '/wt-login',
-  //           state: { from: props.location },
-  //         }}
-  //       />
-  //     )}
-  //   />
-  // );
+  if (isAuthenticated) return <Route {...rest} />; // todo verify is admin
+  delete rest.component; // eslint-disable-line no-param-reassign
+  return (
+    <Route
+      {...rest}
+      render={props => (
+        <Redirect
+          to={{
+            pathname: '/auth/admin-login',
+            state: { from: props.location },
+          }}
+        />
+      )}
+    />
+  );
 };
 
 AdminRoute.propTypes = {
