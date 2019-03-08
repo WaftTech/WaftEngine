@@ -122,13 +122,12 @@ module.exports = options => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.ContextReplacementPlugin(/moment[\\/]locale$/, /^\.\/en$/),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
+    alias: { moment$: path.resolve(process.cwd(), 'node_modules/moment/moment.js') },
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window

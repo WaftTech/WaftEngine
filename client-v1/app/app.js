@@ -16,19 +16,19 @@ import { ConnectedRouter } from 'connected-react-router/immutable';
 import jwtDecode from 'jwt-decode';
 import history from 'utils/history';
 
-// Import root app
-import App from 'containers/App';
-import { setUser, setToken } from 'containers/App/actions';
-
-// Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
-
 import 'assets/css/material-dashboard-react.css?v=1.6.0';
 // Load the favicon and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess';
 /* eslint-enable import/no-unresolved, import/extensions */
+
+// Import root app
+import App from './containers/App';
+import { setUser, setToken } from './containers/App/actions';
+
+// Import Language Provider
+import LanguageProvider from './containers/LanguageProvider';
 
 import configureStore from './configureStore';
 

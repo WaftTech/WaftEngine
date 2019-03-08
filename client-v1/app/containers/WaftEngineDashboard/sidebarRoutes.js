@@ -4,14 +4,13 @@ import DashboardPage from '../Dashboard';
 
 const sidebarRoutes = [
   {
-    path: '/admin/dashboard',
+    path: '/wt',
     sidebarName: 'Dashboard',
     navbarName: 'Dashboard',
     icon: InsertChart,
     component: DashboardPage,
     exact: true,
   },
-  { redirect: true, path: '/admin', to: '/admin/dashboard', navbarName: 'Redirect' },
 ];
 
 export default sidebarRoutes;

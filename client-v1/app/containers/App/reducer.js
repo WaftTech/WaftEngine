@@ -31,16 +31,11 @@ export const initialState = fromJS({
 
 function appReducer(state = initialState, action = { type: '' }) {
   switch (action.type) {
-    // case
-    case types.SET_DIALOG:
-      return state.merge({ dialog: fromJS(action.dialog) });
     case types.SET_USER:
-      return state.merge({ user: fromJS(action.user) });
+      return state.merge({ user: fromJS(action.payload) });
     case types.SET_TOKEN:
-      localStorage.setItem('token', action.token);
-      return state.merge({ token: action.token });
+      return state.merge({ token: action.payload });
     case types.LOGOUT:
-      localStorage.setItem('token', '');
       return state.merge({
         user: fromJS({}),
         token: '',
