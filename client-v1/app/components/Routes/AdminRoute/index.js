@@ -3,21 +3,19 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {
-  makeSelectIsAuthenticated,
-  makeSelectLocation,
-} from '../../../containers/App/selectors';
+import { makeSelectIsAuthenticated, makeSelectLocation } from '../../../containers/App/selectors';
 
 const AdminRoute = ({ isAuthenticated, ...rest }) => {
+  console.log(isAuthenticated);
   if (isAuthenticated) return <Route {...rest} />;
-  delete rest.component;
+  delete rest.component; // eslint-disable-line no-param-reassign
   return (
     <Route
       {...rest}
       render={props => (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/wt-login',
             state: { from: props.location },
           }}
         />

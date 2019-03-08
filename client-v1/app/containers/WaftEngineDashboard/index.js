@@ -11,16 +11,15 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import Sidebar from '../../components/Sidebar';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 import sidebarRoutes from './sidebarRoutes';
 
 const switchRoutes = (
   <Switch>
-    {sidebarRoutes.map(props => {
-      if (props.redirect) return <Redirect from={props.path} to={props.to} key={props.path} />;
-      return <Route path={props.path} component={props.component} exact={props.exact || false} key={props.path} />;
-    })}
+    {sidebarRoutes.map(props => (
+      <Route path={props.path} component={props.component} exact={props.exact || false} key={props.path} />
+    ))}
   </Switch>
 );
 

@@ -20,7 +20,7 @@ class StaticContent extends React.Component {
   }
 }
 StaticContent.propTypes = {
-  loadContent: PropTypes.func.isRequired,
+  loadContent: PropTypes.func.isRequired /*  */,
   staticcontent: PropTypes.object,
   contentKey: PropTypes.string,
 };
