@@ -10,10 +10,10 @@ const switchRoutes = (
   </Switch>
 );
 
-class User extends React.Component {
+class Public extends React.Component {
   render() {
     return <>{switchRoutes}</>;
   }
 }
 
-export default User;
+export default Public;
