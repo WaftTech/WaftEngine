@@ -23,7 +23,7 @@ function* redirectOnSuccess(redirect) {
   if (redirect) {
     yield put(push(redirect));
   } else {
-    yield put(push('/wt'));
+    yield put(push('/admin/dashboard'));
   }
 }
 

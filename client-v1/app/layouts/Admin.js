@@ -16,12 +16,14 @@ import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboar
 
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/reactlogo.png';
+import DashboardPage from '../containers/Dashboard';
 
 const switchRoutes = (
   <Switch>
     {routes.map(prop => (
       <Route key={prop.path} {...prop} />
     ))}
+    <Route component={DashboardPage} />
   </Switch>
 );
 
