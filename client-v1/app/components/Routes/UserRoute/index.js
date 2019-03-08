@@ -3,27 +3,25 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {
-  makeSelectIsAuthenticated,
-  makeSelectLocation,
-} from '../../../containers/App/selectors';
+import { makeSelectIsAuthenticated, makeSelectLocation } from '../../../containers/App/selectors';
 
 const UserRoute = ({ isAuthenticated, ...rest }) => {
   if (isAuthenticated) return <Route {...rest} />;
-  delete rest.component;
-  return (
-    <Route
-      {...rest}
-      render={props => (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: props.location },
-          }}
-        />
-      )}
-    />
-  );
+  return null;
+  // delete rest.component;
+  // return (
+  //   <Route
+  //     {...rest}
+  //     render={props => (
+  //       <Redirect
+  //         to={{
+  //           pathname: '/login',
+  //           state: { from: props.location },
+  //         }}
+  //       />
+  //     )}
+  //   />
+  // );
 };
 
 UserRoute.propTypes = {
