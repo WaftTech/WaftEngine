@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import routes from 'routes/user';
+import Header from '../containers/App/layouts/Header';
 
 const switchRoutes = (
   <Switch>
@@ -12,7 +13,13 @@ const switchRoutes = (
 
 class User extends React.Component {
   render() {
-    return <>{switchRoutes}</>;
+    return (
+      <>
+        <Header />
+        {switchRoutes}
+        <Footer />
+      </>
+    );
   }
 }
 

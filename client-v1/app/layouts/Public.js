@@ -8,7 +8,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import publicStyle from 'assets/jss/material-dashboard-react/layouts/publicStyle';
 
 import routes from 'routes/public';
-import Footer from 'components/Footer/Footer';
+import Footer from '../containers/App/layouts/Footer';
+import Header from '../containers/App/layouts/HeaderPublic';
 
 const switchRoutes = (
   <Switch>
@@ -27,6 +28,7 @@ class PublicLayout extends React.Component {
     const { classes } = this.props;
     return (
       <>
+        <Header />
         <div className={classes.content}>
           <div className={classes.container}>{switchRoutes}</div>
         </div>
