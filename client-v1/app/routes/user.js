@@ -9,12 +9,18 @@
 // import Language from '@material-ui/icons/Language';
 // core components/views for Admin layout
 import HomePage from '../containers/HomePage';
+import BlogPage from '../containers/BlogList';
 
 const userRoutes = [
   {
     path: '/user/home',
     name: 'HomePage',
     component: HomePage,
+  },
+  {
+    path: '/user/blogs',
+    name: 'BlogsPage',
+    component: BlogPage,
   },
 ];
 

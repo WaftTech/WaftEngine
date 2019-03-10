@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+// import Footer from '../components/Footer/Footer';
 import routes from 'routes/guest';
 
 const switchRoutes = (
