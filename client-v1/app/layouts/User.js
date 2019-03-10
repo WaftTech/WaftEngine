@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import routes from 'routes/guest';
+import routes from 'routes/user';
 
 const switchRoutes = (
   <Switch>
