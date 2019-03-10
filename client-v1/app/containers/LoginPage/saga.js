@@ -1,4 +1,4 @@
-import { takeLatest, call, select, put, fork, take, cancel } from 'redux-saga/effects';
+import { takeLatest, select, put, fork, take, cancel } from 'redux-saga/effects';
 import { fromJS } from 'immutable';
 import Api from 'utils/Api';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
@@ -23,7 +23,7 @@ function* redirectOnSuccess(redirect) {
   if (redirect) {
     yield put(push(redirect));
   } else {
-    yield put(push('/user/homepage'));
+    yield put(push('/user/home'));
   }
 }
 
@@ -33,7 +33,7 @@ function* loginAction(action) {
   const data = { email, password };
   const errors = validate(data);
   if (errors.isValid) {
-    const successWatcher = yield fork(redirectOnSuccess, action.redirect);
+    const successWatcher = yield fork(redirectOnSuccess);
     yield put(actions.setStoreValue('loading', true));
     yield fork(Api.post('user/login', actions.loginSuccess, actions.loginFailure, data));
     yield put(actions.setStoreValue('loading', false));
