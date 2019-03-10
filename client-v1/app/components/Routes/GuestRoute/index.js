@@ -9,9 +9,8 @@ const GuestRoute = ({ isAuthenticated, ...rest }) => {
   if (!isAuthenticated) {
     return <Route {...rest} />;
   }
-  return null;
-  // delete rest.component;
-  // return <Route {...rest} render={props => <Redirect to="/wt/dashboard" />} />;
+  delete rest.component;
+  return <Route {...rest} render={props => <Redirect to="/" />} />;
 };
 
 GuestRoute.propTypes = {

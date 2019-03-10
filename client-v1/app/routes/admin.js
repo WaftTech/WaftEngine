@@ -12,7 +12,7 @@ import DashboardPage from '../containers/Dashboard';
 
 const dashboardRoutes = [
   {
-    path: '/dashboard',
+    path: '/admin/dashboard',
     name: 'Dashboard',
     icon: Dashboard,
     component: DashboardPage,
