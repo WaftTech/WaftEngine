@@ -1,7 +1,7 @@
 import LoginPage from '../containers/LoginPage/Loadable';
 import AdminLoginPage from '../containers/AdminLoginPage/Loadable';
 
-const publicRoutes = [
+const routes = [
   {
     path: '/auth/login',
     component: LoginPage,
@@ -14,4 +14,4 @@ const publicRoutes = [
   },
 ];
 
-export default publicRoutes;
+export default routes;

@@ -10,10 +10,10 @@ const switchRoutes = (
   </Switch>
 );
 
-class Guest extends React.Component {
+class GuestLayout extends React.Component {
   render() {
     return <>{switchRoutes}</>;
   }
 }
 
-export default Guest;
+export default GuestLayout;

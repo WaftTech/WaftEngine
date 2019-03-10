@@ -9,14 +9,29 @@ import Dashboard from '@material-ui/icons/Dashboard';
 // import Language from '@material-ui/icons/Language';
 // core components/views for Admin layout
 import DashboardPage from '../containers/Dashboard';
+// Complete login flow
+// Module manage
+// Role Manage
+// UserManage
+// Home Page
+// Blog Manage
+// Banner Manage
+// Faq Manage
+// Side Menu on Dashboard  Manage
 
-const dashboardRoutes = [
+const routes = [
   {
     path: '/admin/dashboard',
     name: 'Dashboard',
     icon: Dashboard,
     component: DashboardPage,
   },
+  {
+    path: '/admin/role-manage',
+    name: 'Role Manage',
+    icon: Dashboard,
+    component: DashboardPage,
+  },
 ];
 
-export default dashboardRoutes;
+export default routes;
