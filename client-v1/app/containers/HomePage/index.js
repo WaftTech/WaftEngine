@@ -10,19 +10,8 @@ import saga from './saga';
 import reducer from './reducer';
 
 /* eslint-disable react/prefer-stateless-function */
-
 class HomePage extends Component {
-  state = {};
-
-  componentDidMount() {}
-
-  handleChange = value => {
-    this.setState({ value });
-  };
-
   render() {
-    const showModal = !!this.props.match.params.slug;
-
     return (
       <div>
         <React.Fragment>

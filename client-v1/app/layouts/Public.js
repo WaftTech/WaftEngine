@@ -1,6 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import routes from 'routes/guest';
+
+// @material-ui/core components
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import publicStyle from 'assets/jss/material-dashboard-react/layouts/publicStyle';
+
+import routes from 'routes/public';
+import Footer from 'components/Footer/Footer';
 
 const switchRoutes = (
   <Switch>
@@ -10,10 +18,22 @@ const switchRoutes = (
   </Switch>
 );
 
-class Public extends React.Component {
+class PublicLayout extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+
   render() {
-    return <>{switchRoutes}</>;
+    const { classes } = this.props;
+    return (
+      <>
+        <div className={classes.content}>
+          <div className={classes.container}>{switchRoutes}</div>
+        </div>
+        <Footer />
+      </>
+    );
   }
 }
 
-export default Public;
+export default withStyles(publicStyle)(PublicLayout);

@@ -27,7 +27,7 @@ const switchRoutes = (
   </Switch>
 );
 
-class Dashboard extends React.Component {
+class AdminLayout extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
@@ -102,4 +102,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withStyles(dashboardStyle)(Dashboard);
+export default withStyles(dashboardStyle)(AdminLayout);
