@@ -49,12 +49,12 @@ import saga from './saga';
 import reducer from './reducer';
 
 const App = () => (
-  <>
+  <Switch>
     <AdminRoute path="/admin" component={Admin} />
     <GuestRoute path="/auth" component={Guest} />
     <UserRoute path="/user" component={User} />
     <Route path="/" component={Public} />
-  </>
+  </Switch>
 );
 
 const withReducer = injectReducer({ key: 'global', reducer });

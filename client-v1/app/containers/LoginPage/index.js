@@ -51,7 +51,7 @@ class LoginPage extends React.Component {
   };
 
   handleRedirect = () => {
-    this.props.history.push('/reset-password');
+    this.props.history.push('/auth/reset-password');
   };
 
   render() {
@@ -76,7 +76,7 @@ class LoginPage extends React.Component {
                     <div className={classes.redirect}>
                       <h4>
                         Forgot Password?{' '}
-                        <Link to="/reset-password" onClick={this.handleRedirect}>
+                        <Link to="/auth/reset-password" onClick={this.handleRedirect}>
                           Click Here
                         </Link>
                       </h4>
