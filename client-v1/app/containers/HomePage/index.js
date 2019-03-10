@@ -26,7 +26,9 @@ class HomePage extends Component {
     return (
       <div>
         <React.Fragment>
-          <div className="container" />
+          <div className="container">
+            <h3>This is HomePage</h3>
+          </div>
         </React.Fragment>
       </div>
     );
