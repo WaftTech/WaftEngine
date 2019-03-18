@@ -192,12 +192,12 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
   }
 };
 
-blogcontroller.GetBlogCatBySlug = async (req, res, next) => {
+blogcontroller.GetBlogCatById = async (req, res, next) => {
   try {
-    const slug = req.params.slug;
+    const id = req.params.id;
     const blogcats = await blogCatSch.findOne(
       {
-        slug_url: slug,
+        _id: id,
       },
       {
         __v: 0,
@@ -280,10 +280,13 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
 
 blogcontroller.GetBlogByCat = async (req, res, next) => {
   try {
+    const size_default = 10;
     let page;
     let size;
+    let sortq;
+    let populate;
     let searchq;
-    const size_default = 10;
+    let selectq;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
     } else {
@@ -294,14 +297,56 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
     } else {
       size = size_default;
     }
+    if (req.query.sort) {
+      let sortfield = req.query.sort.slice(1);
+      let sortby = req.query.sort.charAt(0);
+      if (sortby == 1 && !isNaN(sortby) && sortfield) {
+        //one is ascending
+        sortq = sortfield;
+      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+        //zero is descending
+        sortq = '-' + sortfield;
+      } else {
+        sortq = '';
+      }
+    }
     const id = req.params.id;
+    populate = [
+      {
+        path: 'category',
+        select: '_id title',
+      },
+    ];
+    selectq = 'title description summary tags category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = {
       is_deleted: false,
-      category: id,
     };
-    const catgoryBlog = await blogSch.find(searchq);
-    const totaldata = await blogSch.countDocuments(searchq);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, catgoryBlog, blogConfig.get, page, size, totaldata);
+    searchq = {
+      is_published: true,
+      is_deleted: false,
+      category: id,
+      ...searchq,
+    };
+    if (req.query.find_title) {
+      searchq = {
+        title: {
+          $regex: req.query.find_title,
+          $options: 'i x',
+        },
+        ...searchq,
+      };
+    }
+    if (req.query.find_published_on) {
+      searchq = {
+        published_on: {
+          $regex: req.query.find_published_on,
+          $options: 'i x',
+        },
+        ...searchq,
+      };
+    }
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
   }
