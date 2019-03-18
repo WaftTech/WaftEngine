@@ -47,7 +47,7 @@ export class CategoryDetailPage extends React.Component {
 
             <Grid container spacing={8}>
               {blogObj.blog.map(each => {
-                const { image, title, description, sdded_at, Category } = each;
+                const { image, title, description, added_at, Category } = each;
                 const blogimage =
                   (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) ||
                   defaultImage;

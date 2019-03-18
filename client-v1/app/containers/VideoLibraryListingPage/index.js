@@ -2,6 +2,7 @@ import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { Link, withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
@@ -33,9 +34,10 @@ export class VideoLibraryListPage extends React.Component {
 
     return (
       <div>
-        <div>
-          <h1>Video Gallary</h1>
-        </div>
+        <Helmet>
+          <title>Video Libraries</title>
+        </Helmet>
+        <h1>Video Gallary</h1>
         <React.Fragment>
           <div className="container">
             <Grid container spacing={24}>

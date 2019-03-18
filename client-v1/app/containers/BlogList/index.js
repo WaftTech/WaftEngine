@@ -2,15 +2,16 @@ import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { Link, withRouter } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import moment from 'moment';
 
-import { makeSelectBlogList } from './selectors';
 import { IMAGE_BASE } from 'containers/App/constants';
 import defaultImage from 'assets/img/logo.svg';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import { makeSelectBlogList } from './selectors';
 import saga from './saga';
 import { loadBlogListRequest } from './actions';
 import reducer from './reducer';
@@ -36,9 +37,10 @@ export class BlogListPage extends React.Component {
 
     return (
       <div>
-        <div>
-          <h1>Blogs</h1>
-        </div>
+        <Helmet>
+          <title>Blogs</title>
+        </Helmet>
+        <h1>Blogs</h1>
         <React.Fragment>
           <div className="container">
             <Grid container spacing={24}>
@@ -73,7 +75,7 @@ export class BlogListPage extends React.Component {
                       Tags:
                       <Link to={`/blog/${each._id}`}>
                         <div className="companyItem">
-                          <div>{tags ? tags : ''}</div>
+                          <div>{tags || ''}</div>
                         </div>
                       </Link>{' '}
                     </div>
@@ -83,7 +85,7 @@ export class BlogListPage extends React.Component {
             </Grid>
           </div>
         </React.Fragment>
-        <Link to={`/blog-category`}>
+        <Link to="/blog-category">
           <div>
             <h1>Blog Categories</h1>
           </div>
