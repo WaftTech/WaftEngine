@@ -3,7 +3,12 @@ import * as types from './constants';
 
 export const initialState = fromJS({
   category: {},
-  blog: { blog: [], category: [] },
+  blog: {
+    data: [],
+    page: 1,
+    size: 10,
+    totaldata: 0,
+  },
 });
 
 function categoryDetailPageReducer(state = initialState, action) {
@@ -14,7 +19,7 @@ function categoryDetailPageReducer(state = initialState, action) {
       });
     case types.LOAD_BLOG_SUCCESS:
       return state.merge({
-        blog: fromJS(action.payload.data || { blog: [], category: [] }),
+        blog: fromJS(action.payload),
       });
     default:
       return state;
