@@ -8,7 +8,7 @@ import {
   makeSelectLocation,
 } from '../../../containers/App/selectors';
 
-const UserRoute = ({ isAuthenticated, ...rest }) => {
+const AdminRoute = ({ isAuthenticated, ...rest }) => {
   if (isAuthenticated) return <Route {...rest} />;
   delete rest.component; // eslint-disable-line no-param-reassign
   return (
@@ -17,7 +17,7 @@ const UserRoute = ({ isAuthenticated, ...rest }) => {
       render={props => (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/login-admin',
             state: { from: props.location },
           }}
         />
@@ -26,7 +26,7 @@ const UserRoute = ({ isAuthenticated, ...rest }) => {
   );
 };
 
-UserRoute.propTypes = {
+AdminRoute.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
 };
@@ -36,4 +36,4 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
 });
 
-export default connect(mapStateToProps)(UserRoute);
+export default connect(mapStateToProps)(AdminRoute);
