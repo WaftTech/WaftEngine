@@ -19,25 +19,26 @@ export class CategoryDetailPage extends React.Component {
     const {
       params: { id },
     } = this.props.match;
-    // this.props.loadCategory(id);
+    this.props.loadCategory(id);
     this.props.loadBlog(id);
   }
 
   render() {
-    const { blog } = this.props;
+    const { blog, category } = this.props;
     const blogObj = blog.toJS();
+    const catObj = category.toJS();
 
     return (
       <div className="container">
         <Helmet>
-          <title>{blogObj.data.category ? blogObj.data.category.title : ''}</title>
+          <title>{catObj ? catObj.title : ''}</title>
         </Helmet>
         ;
         <Grid container spacing={8}>
           <Grid item lg={12}>
             <div className="companyHeader">
               <h1 className="pageTitle">
-                <span>Blogs related to {blogObj.data.category ? blogObj.data.category.title : ''}</span>
+                <span>Blogs related to {catObj ? catObj.title : ''}</span>
               </h1>
             </div>
             <Grid container spacing={8}>
