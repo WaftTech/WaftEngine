@@ -40,19 +40,19 @@ export default class Header extends Component {
                 </FormControl>
               </Grid> */}
                   <Grid item xs={12} lg={8} className="text-right hidden-mobile">
-                    <Link className="plainLink" to="/videos">
+                    <Link className="plainLink" to="/user/videos">
                       Videos
                     </Link>
-                    <Link className="plainLink" to="/blog-list">
+                    <Link className="plainLink" to="/user/blog-list">
                       Blogs
                     </Link>
-                    <Link className="plainLink" to="/about-us">
+                    <Link className="plainLink" to="/user/about-us">
                       About
                     </Link>
-                    <Link className="plainLink" to="/contact-us">
+                    <Link className="plainLink" to="/user/contact-us">
                       Contact
                     </Link>
-                    <Link className="plainLink" to="/faq">
+                    <Link className="plainLink" to="/user/faq">
                       FAQ
                     </Link>
                   </Grid>
