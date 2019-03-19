@@ -80,13 +80,13 @@ class Footer extends React.Component {
               <h3 className="title">Links</h3>
               <ul className="one-half first">
                 <li>
-                  <Link to="/user/home">Home</Link>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/user/about-us">About us</Link>
+                  <Link to="/about-us">About us</Link>
                 </li>
                 <li>
-                  <Link to="/user/contact-us">Contact us</Link>
+                  <Link to="/contact-us">Contact us</Link>
                 </li>
               </ul>
             </Grid>
