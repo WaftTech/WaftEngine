@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
@@ -13,13 +13,18 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectAboutUs from './selectors';
+import StaticContentDiv from '../../components/StaticContentDiv';
+import { makeSelectAboutUs } from './selectors';
+import { loadAboutUsRequest } from './actions';
 import reducer from './reducer';
-import * as actions from './actions';
 import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AboutUs extends React.PureComponent {
+  componentDidMount() {
+    this.props.loadAboutUs();
+  }
+
   render() {
     return (
       <div>
@@ -27,13 +32,18 @@ export class AboutUs extends React.PureComponent {
           <title>AboutUs</title>
           <meta name="description" content="Description of AboutUs" />
         </Helmet>
+        <div className="container">
+          <h3>About Waft-Engine</h3>
+          <StaticContentDiv contentKey="aboutusheader" />
+        </div>
       </div>
     );
   }
 }
 
-AboutUs.propTypes = {
-  // defaultAction: PropTypes.func.isRequired,
+AboutUs.PropTypes = {
+  loadAboutUs: PropTypes.func.isRequired,
+  aboutUs: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -41,7 +51,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  defaultAction: () => dispatch(actions.defaultAction()),
+  loadAboutUs: () => dispatch(loadAboutUsRequest()),
 });
 
 const withConnect = connect(

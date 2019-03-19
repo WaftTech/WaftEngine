@@ -45,7 +45,7 @@ export class BlogListPage extends React.Component {
           <div className="container">
             <Grid container spacing={24}>
               {blogListObj.map(each => {
-                const { image, title, description, added_at, Category, tags } = each;
+                const { image, title, description, added_at, category, tags } = each;
                 const blogImage = (image && image.length && image[0].path && `${IMAGE_BASE}${image[0].path}`) || defaultImage;
 
                 return (
@@ -56,9 +56,9 @@ export class BlogListPage extends React.Component {
                       </div>
                     </Link>
                     <div>{moment(added_at).format('MMM Do YY')}</div>
-                    <Link to={`/blog-category/${Category ? Category.slug_url : ''}`}>
+                    <Link to={`/blog-category/${category ? category._id : ''}`}>
                       <div className="companyItem">
-                        <div>{Category ? Category.title : 'NO'}</div>
+                        <div>{category ? category.title : 'NO'}</div>
                       </div>
                     </Link>
                     <Link to={`/blog/${each._id}`}>
