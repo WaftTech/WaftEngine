@@ -19,7 +19,6 @@ function* redirectOnSuccess(redirect) {
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
-  window.localStorage.setItem('token', token);
   if (redirect) {
     yield put(push(redirect));
   } else {
