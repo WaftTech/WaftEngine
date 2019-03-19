@@ -87,7 +87,7 @@ export class RoleManagePage extends React.Component {
     const allObj = all.toJS();
     const { data, page, size, totaldata } = allObj;
     const tablePagination = { page, size, totaldata };
-    const tableData = data.map(({ _id, RolesTitle, Description, IsActive }) => [
+    const tableData = allObj.map(({ _id, RolesTitle, Description, IsActive }) => [
       RolesTitle,
       Description,
       `${IsActive}`,

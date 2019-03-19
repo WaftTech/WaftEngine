@@ -1,15 +1,12 @@
 // @material-ui/icons
 import Dashboard from '@material-ui/icons/Dashboard';
-// import Person from '@material-ui/icons/Person';
-// import LibraryBooks from '@material-ui/icons/LibraryBooks';
-// import BubbleChart from '@material-ui/icons/BubbleChart';
-// import LocationOn from '@material-ui/icons/LocationOn';
-// import Notifications from '@material-ui/icons/Notifications';
-// import Unarchive from '@material-ui/icons/Unarchive';
-// import Language from '@material-ui/icons/Language';
-// core components/views for Admin layout
+import People from '@material-ui/icons/People';
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 import DashboardPage from '../containers/Dashboard';
 import RoleManagePage from '../containers/RoleManagePage';
+import BlogManagePage from '../containers/BlogManagePage';
+import BlogManageAddEditPage from '../containers/BlogManagePage/AddEditPage';
 // Complete login flow
 // Module manage
 // Role Manage
@@ -32,6 +29,12 @@ const routes = [
     name: 'Role Manage',
     icon: Dashboard,
     component: RoleManagePage,
+  },
+  {
+    path: '/admin/blog-manage',
+    name: 'Blog Manage',
+    icon: People,
+    component: BlogManagePage,
   },
 ];
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import routes from 'routes/user';
 import Header from '../containers/App/layouts/Header';
+import Footer from '../containers/App/layouts/Footer';
 
 const switchRoutes = (
   <Switch>
