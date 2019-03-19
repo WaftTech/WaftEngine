@@ -8,7 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import publicStyle from 'assets/jss/material-dashboard-react/layouts/publicStyle';
 
 import routes from 'routes/public';
-import Footer from '../containers/App/layouts/Footer';
+import Footer from '../containers/App/layouts/FooterPublic';
 import Header from '../containers/App/layouts/HeaderPublic';
 
 const switchRoutes = (
