@@ -17,17 +17,18 @@ import injectReducer from 'utils/injectReducer';
 import saga from './saga';
 import reducer from './reducer';
 
-import HomePage from '../HomePage/Loadable';
-import NotFoundPage from '../NotFoundPage/Loadable';
+import RoutesPublic from '../../layouts/Public';
+import RoutesAdmin from '../../layouts/Admin';
 
 import GlobalStyle from '../../global-styles';
+import AdminRoute from '../../components/Routes/AdminRoute';
 
 function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
+        <AdminRoute path="/admin" component={RoutesAdmin} />
+        <Route component={RoutesPublic} />
       </Switch>
       <GlobalStyle />
     </>
