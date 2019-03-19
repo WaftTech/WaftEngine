@@ -4,9 +4,7 @@ import * as types from './constants';
 import * as actions from './actions';
 
 function* loadAboutUs(action) {
-  yield call(
-    Api.get(`contents/key/aboutusheader`, actions.loadAboutUsSuccess, actions.loadAboutUsFailure),
-  );
+  yield call(Api.get(`contents/key/aboutusheader`, actions.loadAboutUsSuccess, actions.loadAboutUsFailure));
 }
 
 export default function* defaultSaga() {
