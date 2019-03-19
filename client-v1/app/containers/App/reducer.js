@@ -34,6 +34,7 @@ function appReducer(state = initialState, action = { type: '' }) {
     case types.SET_USER:
       return state.merge({ user: fromJS(action.payload) });
     case types.SET_TOKEN:
+      window.localStorage.setItem('token', action.payload);
       return state.merge({ token: action.payload });
     case types.LOGOUT:
       return state.merge({

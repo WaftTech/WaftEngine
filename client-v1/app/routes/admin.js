@@ -9,6 +9,7 @@ import Dashboard from '@material-ui/icons/Dashboard';
 // import Language from '@material-ui/icons/Language';
 // core components/views for Admin layout
 import DashboardPage from '../containers/Dashboard';
+import RoleManagePage from '../containers/RoleManagePage';
 // Complete login flow
 // Module manage
 // Role Manage
@@ -30,7 +31,7 @@ const routes = [
     path: '/admin/role-manage',
     name: 'Role Manage',
     icon: Dashboard,
-    component: DashboardPage,
+    component: RoleManagePage,
   },
 ];
 
