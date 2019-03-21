@@ -6,7 +6,6 @@ import People from '@material-ui/icons/People';
 import DashboardPage from '../containers/Dashboard';
 import RoleManagePage from '../containers/RoleManagePage';
 import BlogManagePage from '../containers/BlogManagePage';
-import BlogManageAddEditPage from '../containers/BlogManagePage/AddEditPage';
 // Complete login flow
 // Module manage
 // Role Manage

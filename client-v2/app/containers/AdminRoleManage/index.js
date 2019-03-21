@@ -32,7 +32,7 @@ export class AdminRoleManage extends React.PureComponent {
       msg: '',
       page: 1,
       size: 10,
-      totaldata: 8,
+      totaldata: 0,
     },
   };
 
