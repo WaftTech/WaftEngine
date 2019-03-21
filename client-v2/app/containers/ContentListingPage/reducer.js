@@ -11,6 +11,8 @@ export const initialState = {
   all: {
     data: [],
     page: 1,
+    size: 10,
+    totaldata: 20,
   },
   one: {},
 };
@@ -20,7 +22,6 @@ const reducer = (state = initialState, action) =>
     switch (action.type) {
       case types.LOAD_ALL_SUCCESS:
         draft.all = action.payload;
-        draft.all.page = action.payload.page;
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;
