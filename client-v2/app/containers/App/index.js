@@ -12,11 +12,8 @@ import { Switch, Route } from 'react-router-dom';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 
 import saga from './saga';
-import reducer from './reducer';
-
 import RoutesPublic from '../../layouts/Public';
 import RoutesAdmin from '../../layouts/Admin';
 
@@ -35,10 +32,6 @@ function App() {
   );
 }
 
-const withReducer = injectReducer({ key: 'global', reducer });
 const withSaga = injectSaga({ key: 'global', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-)(App);
+export default compose(withSaga)(App);
