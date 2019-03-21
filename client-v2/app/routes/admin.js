@@ -1,10 +1,11 @@
+import DashboardPage from '../containers/AdminDashboard';
+
 const routes = [
-  // {
-  //   path: '/admin/dashboard',
-  //   name: 'Dashboard',
-  //   icon: Dashboard,
-  //   component: DashboardPage,
-  // },
+  {
+    path: '/admin/dashboard',
+    name: 'Dashboard',
+    component: DashboardPage,
+  },
   // {
   //   path: '/admin/role-manage',
   //   name: 'Role Manage',
