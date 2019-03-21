@@ -20,7 +20,6 @@ class PasswordInput extends React.PureComponent {
     const { password, setStoreValue, error } = this.props;
     return (
       <Input
-        id="password"
         error={error}
         inputProps={{
           type: isSecure ? 'password' : 'text',

@@ -20,6 +20,9 @@ const loginAdminPageReducer = (state = initialState, action) =>
       case types.SET_STORE_VALUE:
         draft[action.payload.key] = action.payload.value;
         break;
+      case types.LOGIN_FAILURE:
+        draft.errors = { ...action.payload.errors };
+        break;
       case types.CLEAR_STORE:
         draft = initialState;
         break;

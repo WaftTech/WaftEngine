@@ -10,7 +10,6 @@ const UsernameInput = props => {
   const { email, setStoreValue, error } = props;
   return (
     <Input
-      id="email"
       error={error}
       inputProps={{
         value: email,
