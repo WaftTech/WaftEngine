@@ -29,7 +29,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         draft.user = action.payload;
         break;
       case types.SET_TOKEN:
-        localStorage.setItem('token', action.token);
+        localStorage.setItem('token', action.payload);
         draft.token = action.payload;
         break;
       case types.LOGOUT:
