@@ -107,15 +107,6 @@ const styles = theme => ({
     height: '100vh',
     overflow: 'auto',
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
-  h5: {
-    marginBottom: theme.spacing.unit * 2,
-  },
 });
 
 const mainListItems = (
@@ -133,7 +124,7 @@ const mainListItems = (
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
-        <ListItemText primary="Orders" />
+        <ListItemText primary="Role Manage" />
       </ListItem>
     </Link>
     <ListItem button>
