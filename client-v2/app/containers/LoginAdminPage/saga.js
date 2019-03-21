@@ -28,7 +28,6 @@ export function* redirectOnSuccess(redirect) {
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
-  window.localStorage.setItem('token', token);
   if (redirect) {
     yield put(push(redirect));
   } else {
@@ -37,6 +36,7 @@ export function* redirectOnSuccess(redirect) {
 }
 
 export function* loginAction(action) {
+  console.log(action.payload);
   const email = yield select(makeSelectEmail());
   const password = yield select(makeSelectPassword());
   const data = { email, password };
