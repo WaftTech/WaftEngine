@@ -7,7 +7,7 @@ import { makeSelectContent } from '../../containers/App/selectors';
 import { loadContentRequest } from '../../containers/App/actions';
 
 /* eslint-disable react/no-danger */
-class StaticContent extends React.Component {
+class StaticContent extends React.PureComponent {
   static propTypes = {
     contentKey: PropTypes.string.isRequired,
     loadContent: PropTypes.func.isRequired,
