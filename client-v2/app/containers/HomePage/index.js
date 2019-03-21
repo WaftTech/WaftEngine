@@ -12,14 +12,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import mainImage from './home.png';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <img style={{ width: '100%', maxWidth: '1440px' }} src={mainImage} />
     );
   }
 }
