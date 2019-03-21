@@ -20,5 +20,5 @@ export const makeSelectOne = () =>
 export const makeSelectPage = () =>
   createSelector(
     selectDomain,
-    state => state.page,
+    state => state.all,
   );
