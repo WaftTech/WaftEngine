@@ -4,12 +4,12 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeSelectIsAuthenticated,
+  makeSelectToken,
   makeSelectLocation,
 } from '../../../containers/App/selectors';
 
-const AdminRoute = ({ isAuthenticated, ...rest }) => {
-  if (isAuthenticated) return <Route {...rest} />;
+const AdminRoute = ({ token, ...rest }) => {
+  if (token) return <Route {...rest} />;
   delete rest.component; // eslint-disable-line no-param-reassign
   return (
     <Route
@@ -27,12 +27,12 @@ const AdminRoute = ({ isAuthenticated, ...rest }) => {
 };
 
 AdminRoute.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: makeSelectIsAuthenticated(),
+  token: makeSelectToken(),
   location: makeSelectLocation(),
 });
 
