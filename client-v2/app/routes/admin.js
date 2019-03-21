@@ -1,5 +1,4 @@
 import Dashboard from '@material-ui/icons/Dashboard';
-import DashboardPage from '../containers/Dashboard';
 import ContentManagePage from '../containers/ContentListingPage';
 import DashboardPage from '../containers/AdminDashboard';
 

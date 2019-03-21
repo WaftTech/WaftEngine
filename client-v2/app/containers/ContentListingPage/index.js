@@ -15,10 +15,17 @@ import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
 
 // core components
+import Grid from '@material-ui/core/Grid';
 import GridItem from '@material-ui/core/Grid';
 import CustomInput from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -67,9 +74,13 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ContentsListingPage extends React.Component {
+  state = {
+    page: 1,
+    rowsPerPage: 10,
+  };
   componentDidMount() {
     this.props.loadAll();
-  }
+  };
   handleAdd = () => {
     this.props.history.push('/admin/content-manage/add');
   };
@@ -98,11 +109,12 @@ export class ContentsListingPage extends React.Component {
   };
   render() {
     const { classes, allLinks, pageItem } = this.props;
-    const allLinksObj = allLinks.toJS();
-    const pageObj = pageItem.toJS();
+    const allLinksObj = allLinks;
+    console.log(allLinksObj);
+    const pageObj = pageItem;
     const { page = 1, size = 10, totaldata = 20 } = pageObj;
 
-    const tableData = allLinksObj.map(({ name, key, publish_from, publish_to, is_active, is_feature, added_at, _id }) => [
+    const tableData = allLinksObj.data.map(({ name, key, publish_from, publish_to, is_active, is_feature, added_at, _id }) => [
       // Description,
       name,
       key,
@@ -130,7 +142,7 @@ export class ContentsListingPage extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardContent>
-              <GridContainer>
+              <Grid container>
                 <GridItem xs={12} sm={12} md={8}>
                   <CustomInput
                     id="contents-name"
@@ -144,7 +156,7 @@ export class ContentsListingPage extends React.Component {
                     Search
                   </Button>
                 </GridItem>
-              </GridContainer>
+              </Grid>
             </CardContent>
           </Card>
         </GridItem>
@@ -155,26 +167,36 @@ export class ContentsListingPage extends React.Component {
               <p className={classes.cardCategoryWhite}>Here are the list of Contents</p>
             </CardHeader>
             <CardContent>
-              <Table
-                tableHeaderColor="primary"
-                tableHead={[
-                  <FormattedMessage {...messages.contentName} />,
-                  <FormattedMessage {...messages.key} />,
-                  // <FormattedMessage {...messages.shortDescription} />,
-                  <FormattedMessage {...messages.publishedFrom} />,
-                  <FormattedMessage {...messages.publishedTo} />,
-                  <FormattedMessage {...messages.isActive} />,
-                  <FormattedMessage {...messages.isFeatured} />,
-                  <FormattedMessage {...messages.addedAt} />,
-                  <FormattedMessage {...messages.operations} />,
-                ]}
-                tableData={tableData}
-                page={page}
-                size={size}
-                totaldata={totaldata}
-                handleChangePage={this.handleChangePage}
-                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
-              />
+              <Table>
+                <TableHead>
+                  <TableRow>
+                  <TableCell><FormattedMessage {...messages.contentName} /></TableCell>
+                  <TableCell><FormattedMessage {...messages.key} /></TableCell>
+                  <TableCell><FormattedMessage {...messages.publishedFrom} />,</TableCell>
+                  <TableCell><FormattedMessage {...messages.publishedTo} /></TableCell>
+                  <TableCell><FormattedMessage {...messages.isActive} /></TableCell>
+                  <TableCell><FormattedMessage {...messages.isFeatured} /></TableCell>
+                  <TableCell><FormattedMessage {...messages.addedAt} /></TableCell>
+                  <TableCell><FormattedMessage {...messages.operations} /></TableCell>
+                  </TableRow>
+                  </TableHead>
+                <TableBody><TableRow><TableCell>{tableData}</TableCell></TableRow></TableBody>
+                {/* <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    colSpan={3}
+                    count={totaldata}
+                    rowsPerPage={size}
+                    page={page}
+                    SelectProps={{
+                      native: true,
+                    }}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage} />
+                  </TableRow>
+                </TableFooter> */}
+              </Table>
               <Button variant="fab" color="primary" aria-label="Add" className={classes.button} round={true} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
