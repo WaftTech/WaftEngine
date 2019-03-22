@@ -17,6 +17,7 @@ import Close from '@material-ui/icons/Close';
 // core components
 import Grid from '@material-ui/core/Grid';
 import CustomInput from '@material-ui/core/Input';
+import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -33,6 +34,11 @@ import { makeSelectAll } from './selectors';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   },
   cardCategoryWhite: {
     '&,& a,& a:hover,& a:focus': {
@@ -72,7 +78,7 @@ export class ContentsListingPage extends React.Component {
       size: 10,
       totaldata: 0,
     },
-    query: {}
+    query: { find_name: '' }
   };
 
   static getDerivedStateFromProps(nextProps) {
@@ -150,17 +156,17 @@ export class ContentsListingPage extends React.Component {
               <Grid container>
                 <Grid xs={12} sm={12} md={8}>
                   <CustomInput
-                    name="title"
+                    name="find_name"
                     id="contents-name"
                     placeholder="search contents by name"
                     formControl={true}
                     fullWidth={true}
-                    value={this.state.query.title}
+                    value={this.state.query.find_name}
                     onChange={this.handleQueryChange}
                   />
                 </Grid>
                 <Grid xs={12} sm={12} md={4}>
-                  <Button variant="fab" color="primary" aria-label="Add" className={classes.button} onClick={this.handleSearch}>
+                  <Button variant="contained" color="primary" aria-label="Add" className={classes.button} onClick={this.handleSearch}>
                     Search
                   </Button>
                 </Grid>
@@ -182,17 +188,15 @@ export class ContentsListingPage extends React.Component {
           pagination={tablePagination}
           handlePagination={this.handlePagination}
         />
-
-              <Button
-                variant="fab"
+              <Fab
                 color="primary"
                 aria-label="Add"
-                className={classes.button}
+                className={classes.fab}
                 round="true"
                 onClick={this.handleAdd}
               >
                 <AddIcon />
-              </Button>
+              </Fab>
             </CardContent>
           </Card>
         </Grid>
