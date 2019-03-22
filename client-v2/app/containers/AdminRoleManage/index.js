@@ -26,19 +26,17 @@ import { makeSelectAll } from './selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRoleManage extends React.PureComponent {
-  state = {
-    all: {
-      data: [],
-      msg: '',
-      page: 1,
-      size: 10,
-      totaldata: 0,
-    },
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    loadAllRequest: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+    all: PropTypes.shape({
+      data: PropTypes.array.isRequired,
+      page: PropTypes.number.isRequired,
+      size: PropTypes.number.isRequired,
+      totaldata: PropTypes.number.isRequired,
+    }),
   };
-
-  static getDerivedStateFromProps(nextProps) {
-    return { all: nextProps.all };
-  }
 
   componentDidMount() {
     this.props.loadAllRequest();
@@ -57,10 +55,10 @@ export class AdminRoleManage extends React.PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     const {
+      classes,
       all: { data, page, size, totaldata },
-    } = this.state;
+    } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ _id, role_title, description, is_active }) => [
@@ -115,12 +113,6 @@ export class AdminRoleManage extends React.PureComponent {
     );
   }
 }
-
-AdminRoleManage.propTypes = {
-  classes: PropTypes.object.isRequired,
-  loadAllRequest: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
