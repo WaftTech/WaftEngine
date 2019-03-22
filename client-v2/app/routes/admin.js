@@ -31,6 +31,18 @@ const routes = [
     exact: true,
   },
   {
+    path: '/admin/content-manage/edit/:id',
+    name: 'Content Manage',
+    component: ContentManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/content-manage/add',
+    name: 'Content Manage',
+    component: ContentManageAddEdit,
+    exact: true,
+  },
+  {
     path: '/admin/module-manage',
     name: 'Module Manage',
     component: ModuleManagePage,
@@ -57,6 +69,7 @@ const routes = [
     path: '/admin/content-manage',
     name: 'Content Manage',
     component: ContentManagePage,
+    exact: true,
   },
 ];
 
