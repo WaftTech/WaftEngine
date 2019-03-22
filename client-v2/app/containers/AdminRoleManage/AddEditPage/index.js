@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
+
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
@@ -31,6 +33,7 @@ class AddEdit extends React.PureComponent {
     }),
     classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -54,7 +57,7 @@ class AddEdit extends React.PureComponent {
   };
 
   handleBack = () => {
-    // this.props.addEditRequest(this.state.one);
+    this.props.push('/admin/role-manage');
   };
 
   render() {
@@ -136,7 +139,7 @@ const mapStateToProps = createStructuredSelector({
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  { ...mapDispatchToProps, push },
 );
 
 const styles = theme => ({
