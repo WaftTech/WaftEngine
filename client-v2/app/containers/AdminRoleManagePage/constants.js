@@ -6,8 +6,8 @@
 
 export const DEFAULT_ACTION = 'app/AdminRoleManage/DEFAULT_ACTION';
 
-export const SET_ONE_VALUE = 'app/AdminLoginPage/SET_ONE_VALUE';
-export const CLEAR_ONE = 'app/AdminLoginPage/CLEAR_ONE';
+export const SET_ONE_VALUE = 'app/AdminRoleManage/SET_ONE_VALUE';
+export const CLEAR_ONE = 'app/AdminRoleManage/CLEAR_ONE';
 
 export const LOAD_ALL_REQUEST = 'app/AdminRoleManage/LOAD_ALL_REQUEST';
 export const LOAD_ALL_SUCCESS = 'app/AdminRoleManage/LOAD_ALL_SUCCESS';
