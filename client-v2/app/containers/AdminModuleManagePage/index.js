@@ -1,6 +1,6 @@
 /**
  *
- * AdminRoleManage
+ * AdminModuleManage
  *
  */
 
@@ -8,10 +8,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import Close from '@material-ui/icons/Close';
+import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -25,11 +26,12 @@ import * as mapDispatchToProps from './actions';
 import { makeSelectAll } from './selectors';
 
 /* eslint-disable react/prefer-stateless-function */
-export class AdminRoleManage extends React.PureComponent {
+export class AdminModuleManage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
+    clearOne: PropTypes.func.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
@@ -43,11 +45,16 @@ export class AdminRoleManage extends React.PureComponent {
   }
 
   handleAdd = () => {
-    this.props.push('/admin/role-manage/add');
+    this.props.clearOne();
+    this.props.push('/admin/module-manage/add');
   };
 
   handleEdit = id => {
-    this.props.push(`/admin/role-manage/edit/${id}`);
+    this.props.push(`/admin/module-manage/edit/${id}`);
+  };
+
+  handleAccessEdit = id => {
+    this.props.push(`/admin/module-manage/access/${id}`);
   };
 
   handlePagination = paging => {
@@ -60,55 +67,38 @@ export class AdminRoleManage extends React.PureComponent {
       all: { data, page, size, totaldata },
     } = this.props;
     const tablePagination = { page, size, totaldata };
-    const tableData = data.map(
-      ({ _id, role_title, description, is_active }) => [
-        role_title,
-        description,
-        `${is_active}`,
-        <React.Fragment>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Role"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
+    const tableData = data.map(({ _id, module_name, description }) => [
+      module_name,
+      description,
+      <React.Fragment>
+        <Tooltip id="tooltip-top" title="Edit Role" placement="top">
+          <Fab
+            color="secondary"
+            aria-label="Edit"
+            className={classes.fab}
+            onClick={() => this.handleEdit(_id)}
           >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Edit
-                className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            id="tooltip-top-start"
-            title="Remove Role"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton
-              aria-label="Close"
-              className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
-            >
-              <Close
-                className={`${classes.tableActionButtonIcon} ${classes.close}`}
-              />
-            </IconButton>
-          </Tooltip>
-        </React.Fragment>,
-      ],
-    );
+            <Icon>edit_icon</Icon>
+          </Fab>
+        </Tooltip>
+      </React.Fragment>,
+    ]);
     return (
       <Paper className={classes.root}>
         <Table
-          tableHead={['Title', 'Description', 'Is Active', 'Action']}
+          tableHead={['Module Name', 'Description', 'Action']}
           tableData={tableData}
           pagination={tablePagination}
           handlePagination={this.handlePagination}
         />
+        <Fab
+          color="primary"
+          aria-label="Add"
+          className={classes.fab}
+          onClick={this.handleAdd}
+        >
+          <AddIcon />
+        </Fab>
       </Paper>
     );
   }
@@ -123,13 +113,16 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const withReducer = injectReducer({ key: 'adminRoleManage', reducer });
-const withSaga = injectSaga({ key: 'adminRoleManage', saga });
+const withReducer = injectReducer({ key: 'adminModuleManage', reducer });
+const withSaga = injectSaga({ key: 'adminModuleManage', saga });
 
 const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
+  },
+  fab: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -140,4 +133,4 @@ export default compose(
   withSaga,
   withConnect,
   withStyle,
-)(AdminRoleManage);
+)(AdminModuleManage);
