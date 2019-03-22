@@ -127,6 +127,14 @@ const mainListItems = (
         <ListItemText primary="Role Manage" />
       </ListItem>
     </Link>
+    <Link to="/admin/module-manage">
+      <ListItem button>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Module Manage" />
+      </ListItem>
+    </Link>
     <Link to="/admin/content-manage">
       <ListItem button>
         <ListItemIcon>
