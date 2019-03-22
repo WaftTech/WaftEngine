@@ -25,6 +25,12 @@ export const initialState = {
 const adminRoleManageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case types.SET_ONE_VALUE:
+        draft.one[action.payload.key] = action.payload.value;
+        break;
+      case types.CLEAR_ONE:
+        draft.one = initialState.one;
+        break;
       case types.LOAD_ALL_SUCCESS:
         draft.all = action.payload;
         break;

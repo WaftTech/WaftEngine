@@ -28,6 +28,12 @@ const routes = [
     component: ContentManageAddEdit,
   },
   {
+    path: '/admin/role-manage/add',
+    name: 'Role Manage',
+    component: RoleManageEditPage,
+    exact: true,
+  },
+  {
     path: '/admin/content-manage',
     name: 'Content Manage',
     component: ContentManagePage,

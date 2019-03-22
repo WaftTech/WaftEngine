@@ -12,6 +12,14 @@ export function defaultAction() {
   };
 }
 
+export const setOneValue = payload => ({
+  type: types.SET_ONE_VALUE,
+  payload,
+});
+export const clearOne = () => ({
+  type: types.CLEAR_ONE,
+});
+
 export const loadAllRequest = payload => ({
   type: types.LOAD_ALL_REQUEST,
   payload,
