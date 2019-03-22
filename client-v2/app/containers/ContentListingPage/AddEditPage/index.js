@@ -209,10 +209,10 @@ class AddEdit extends Component {
                 </GridItem>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSave}>
+                <Button variant="contained" color="primary" onClick={this.handleSave}>
                   Save
                 </Button>
-                <Button color="primary" onClick={this.handleGoBack}>
+                <Button variant="contained" color="secondary" onClick={this.handleGoBack}>
                   Back
                 </Button>
               </CardFooter>
