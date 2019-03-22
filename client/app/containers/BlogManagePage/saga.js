@@ -8,9 +8,7 @@ import * as actions from './actions';
 function* loadCategory(action) {
   const token = yield select(makeSelectToken());
 
-  yield call(
-    Api.get('blog/category', actions.loadCategorySuccess, actions.loadCategoryFailure, token),
-  );
+  yield call(Api.get('blog/category', actions.loadCategorySuccess, actions.loadCategoryFailure, token));
 }
 
 function* loadAll(action) {
@@ -29,21 +27,12 @@ function* loadAll(action) {
   if (action.payload.sort) {
     sort = `&sort=${action.payload.sort}`;
   }
-  yield call(
-    Api.get(
-      `blog?find_${search}&page=1&size=10&${sort}${pageNumber}`,
-      actions.loadAllSuccess,
-      actions.loadAllFailure,
-      token,
-    ),
-  );
+  yield call(Api.get(`blog?find_${search}&page=1&size=10&${sort}${pageNumber}`, actions.loadAllSuccess, actions.loadAllFailure, token));
 }
 
 function* loadOne(action) {
   const token = yield select(makeSelectToken());
-  yield call(
-    Api.get(`blog/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token),
-  );
+  yield call(Api.get(`blog/${action.payload}`, actions.loadOneSuccess, actions.loadOneFailure, token));
 }
 
 function* redirectOnSuccess() {
@@ -55,16 +44,7 @@ function* addEdit(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const { ...data } = action.payload;
-  yield fork(
-    Api.multipartPost(
-      'blog',
-      actions.addEditSuccess,
-      actions.addEditFailure,
-      data,
-      { file: data.Image },
-      token,
-    ),
-  );
+  yield fork(Api.multipartPost('blog', actions.addEditSuccess, actions.addEditFailure, data, { file: data.Image }, token));
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
   yield cancel(successWatcher);
 }

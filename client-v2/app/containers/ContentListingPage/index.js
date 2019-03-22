@@ -72,6 +72,7 @@ export class ContentsListingPage extends React.Component {
       size: 10,
       totaldata: 0,
     },
+    query: {}
   };
 
   static getDerivedStateFromProps(nextProps) {
@@ -83,11 +84,25 @@ export class ContentsListingPage extends React.Component {
   };
 
   handleAdd = () => {
-    // this.props.history.push('/admin/content-manage/add');
+    this.props.history.push('/admin/content-manage/add');
   };
 
   handleEdit = id => {
-    // this.props.history.push(`/admin/content-manage/edit/${id}`);
+    this.props.history.push(`/admin/content-manage/edit/${id}`);
+  };
+  handleQueryChange = e => {
+    e.persist();
+    this.setState( state=> ({
+      query: {
+        ...state.query,
+        [e.target.name]: e.target.value,
+      },
+    }));
+  };
+
+  handleSearch = () => {
+    this.props.loadAllRequest(this.state.query);
+    this.setState({ query: {} });
   };
 
   handleDelete = id => {
@@ -135,16 +150,19 @@ export class ContentsListingPage extends React.Component {
               <Grid container>
                 <Grid xs={12} sm={12} md={8}>
                   <CustomInput
+                    name="title"
                     id="contents-name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
+                    placeholder="search contents by name"
+                    formControl={true}
+                    fullWidth={true}
+                    value={this.state.query.title}
+                    onChange={this.handleQueryChange}
                   />
                 </Grid>
                 <Grid xs={12} sm={12} md={4}>
-                  {/* <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
+                  <Button variant="fab" color="primary" aria-label="Add" className={classes.button} onClick={this.handleSearch}>
                     Search
-                  </Button> */}
+                  </Button>
                 </Grid>
               </Grid>
             </CardContent>
@@ -152,12 +170,10 @@ export class ContentsListingPage extends React.Component {
         </Grid>
         <Grid xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Contents Listing</h4>
-              <p className={classes.cardCategoryWhite}>
-                Here are the list of Contents
-              </p>
-            </CardHeader>
+            <CardHeader color="primary"
+              title="Contents Listing"
+              subheader="Here are the list of Contents"
+            />
             <CardContent>
 
             <Table
@@ -172,7 +188,7 @@ export class ContentsListingPage extends React.Component {
                 color="primary"
                 aria-label="Add"
                 className={classes.button}
-                round
+                round="true"
                 onClick={this.handleAdd}
               >
                 <AddIcon />
