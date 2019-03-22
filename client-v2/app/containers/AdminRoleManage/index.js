@@ -12,6 +12,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
 import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -30,6 +33,7 @@ export class AdminRoleManage extends React.PureComponent {
     classes: PropTypes.object.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
+    clearOne: PropTypes.func.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
@@ -43,6 +47,7 @@ export class AdminRoleManage extends React.PureComponent {
   }
 
   handleAdd = () => {
+    this.props.clearOne();
     this.props.push('/admin/role-manage/add');
   };
 
@@ -109,6 +114,14 @@ export class AdminRoleManage extends React.PureComponent {
           pagination={tablePagination}
           handlePagination={this.handlePagination}
         />
+        <Fab
+          color="primary"
+          aria-label="Add"
+          className={classes.fab}
+          onClick={this.handleAdd}
+        >
+          <AddIcon />
+        </Fab>
       </Paper>
     );
   }
@@ -130,6 +143,9 @@ const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
+  },
+  fab: {
+    margin: theme.spacing.unit,
   },
 });
 
