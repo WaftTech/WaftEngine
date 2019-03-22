@@ -23,20 +23,28 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/content-manage/edit/:id',
-    name: 'Content Manage',
-    component: ContentManageAddEdit,
-  },
-  {
     path: '/admin/role-manage/add',
     name: 'Role Manage',
     component: RoleManageEditPage,
     exact: true,
   },
   {
+    path: '/admin/content-manage/edit/:id',
+    name: 'Content Manage',
+    component: ContentManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/content-manage/add',
+    name: 'Content Manage',
+    component: ContentManageAddEdit,
+    exact: true,
+  },
+  {
     path: '/admin/content-manage',
     name: 'Content Manage',
     component: ContentManagePage,
+    exact: true,
   },
 ];
 

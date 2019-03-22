@@ -18,13 +18,13 @@ function* loadAll(action) {
   let query = '';
   if (action.payload) {
     Object.keys(action.payload).map(each => {
-      query = `${query}&${each}=${action.payload[each]}`;
+      query = `${query}${each}=${action.payload[each]}`;
       return null;
     });
   }
   yield call(
     Api.get(
-      `contents?find_${query}`,
+      `contents?${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
