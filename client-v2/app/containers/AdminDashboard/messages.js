@@ -11,6 +11,6 @@ export const scope = 'app.containers.AdminDashboard';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'This is the AdminDashboard container!',
+    defaultMessage: 'Dashboard',
   },
 });

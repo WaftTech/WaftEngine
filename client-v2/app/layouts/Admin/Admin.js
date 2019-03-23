@@ -14,15 +14,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ExtensionIcon from '@material-ui/icons/Extension';
+import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
+import InsertChartIcon from '@material-ui/icons/InsertChart';
+
 import LayersIcon from '@material-ui/icons/Layers';
 // import { mainListItems, secondaryListItems } from './listItems';
 
@@ -45,8 +47,9 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
+  paperAnchorLeft: { display: 'none' },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24, // keep right padding `when drawer closed
   },
   toolbarIcon: {
     display: 'flex',
@@ -56,6 +59,8 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
+    background: '#007AFF',
+    boxShadow: 'none',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -103,14 +108,33 @@ const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
     height: '100vh',
     overflow: 'auto',
+  },
+  drawerText: {
+    textDecoration: 'none',
+    '& a': {
+      display: 'block',
+      paddingTop: 5,
+      paddingBottom: 5,
+      textDecoration: 'none',
+      fontSize: '0.8em',
+      textTransform: 'uppercase',
+      transition: 'background 0.2s',
+    },
+    '& a:hover': { backgroundColor: '#007AFF', color: '#fff' },
+    '& span': {
+      fontSize: 12,
+    },
+    '& svg': {
+      fontSize: 16,
+    },
+    '& a:hover span, & a:hover svg': { color: '#fff' },
   },
 });
 
 const mainListItems = (
-  <div>
+  <List>
     <Link to="/admin/dashboard">
       <ListItem button>
         <ListItemIcon>
@@ -119,10 +143,10 @@ const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <Link to="/admin/role-manage">
+    <Link style={{}} to="/admin/role-manage">
       <ListItem button>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Role Manage" />
       </ListItem>
@@ -130,32 +154,42 @@ const mainListItems = (
     <Link to="/admin/module-manage">
       <ListItem button>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <ExtensionIcon />
         </ListItemIcon>
         <ListItemText primary="Module Manage" />
       </ListItem>
     </Link>
     <Link to="/admin/content-manage">
-      <ListItem button>
+      <ListItem
+        style={{
+          textDecoration: 'none',
+          fontSize: '0.8em',
+          textTransform: 'uppercase',
+        }}
+      >
         <ListItemIcon>
-          <PeopleIcon />
+          <FormatSizeIcon />
         </ListItemIcon>
         <ListItemText primary="Content Manage" />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
-  </div>
+    <Link to="/">
+      <ListItem>
+        <ListItemIcon>
+          <InsertChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Reports" />
+      </ListItem>
+    </Link>
+    <Link to="/">
+      <ListItem>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Integrations" />
+      </ListItem>
+    </Link>
+  </List>
 );
 
 const AdminLayout = ({ classes }) => {
@@ -171,13 +205,8 @@ const AdminLayout = ({ classes }) => {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <Helmet>
         <title>Admin Dashboard</title>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
       </Helmet>
       <AppBar
         position="absolute"
@@ -194,20 +223,12 @@ const AdminLayout = ({ classes }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            Admin Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
+            <IconButton color="inherit">
+              <AccountCircle />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -225,10 +246,10 @@ const AdminLayout = ({ classes }) => {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <div className={classes.drawerText}> {mainListItems}</div>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
+        {/* <div className={classes.appBarSpacer} /> */}
         {switchRoutes}
       </main>
     </div>
