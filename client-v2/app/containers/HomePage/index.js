@@ -19,17 +19,15 @@ import mainImage from './home.png';
 export default class HomePage extends React.PureComponent {
   render() {
     return (
-      <>
-        <h1>
-          <FormattedMessage {...messages.header} />
-        </h1>
+      <React.Fragment>
+        {' '}
         <img
           style={{ width: '100%', maxWidth: '1440px' }}
           src={mainImage}
           alt="template"
         />
-        <StaticContentDiv contentKey="aboutusheader" />
-      </>
+        {/* <StaticContentDiv contentKey="aboutusheader" /> */}
+      </React.Fragment>
     );
   }
 }

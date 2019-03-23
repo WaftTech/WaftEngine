@@ -19,6 +19,7 @@ import * as mapDispatchToProps from './actions';
 import styles from './styles';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
+import Button from '../../components/CustomButtons/Button'
 
 class LoginAdminPage extends React.Component {
   static propTypes = {
@@ -48,9 +49,9 @@ class LoginAdminPage extends React.Component {
             <div className={classes.redirect}>
               <h4>Forgot Password?</h4>
             </div>
-            <button onClick={this.handleSubmit} type="submit">
+            <Button onClick={this.handleSubmit} type="submit">
               Get started
-            </button>
+            </Button>
           </form>
         </div>
       </div>

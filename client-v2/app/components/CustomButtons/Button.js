@@ -11,7 +11,21 @@ import Button from '@material-ui/core/Button';
 import buttonStyle from './buttonStyle';
 
 const RegularButton = props => {
-  const { classes, color, round, children, disabled, simple, size, block, link, justIcon, className, muiClasses, ...rest } = props;
+  const {
+    classes,
+    color,
+    round,
+    children,
+    disabled,
+    simple,
+    size,
+    block,
+    link,
+    justIcon,
+    className,
+    muiClasses,
+    ...rest
+  } = props;
   const btnClasses = classNames({
     [classes.button]: true,
     [classes[size]]: size,
@@ -33,7 +47,16 @@ const RegularButton = props => {
 
 RegularButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger', 'rose', 'white', 'transparent']),
+  color: PropTypes.oneOf([
+    'primary',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'rose',
+    'white',
+    'transparent',
+  ]),
   size: PropTypes.oneOf(['sm', 'lg']),
   simple: PropTypes.bool,
   round: PropTypes.bool,

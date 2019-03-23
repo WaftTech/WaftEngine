@@ -13,12 +13,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
 
 // core components
 import Grid from '@material-ui/core/Grid';
 import CustomInput from '@material-ui/core/Input';
-import Fab from '@material-ui/core/Fab';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -31,41 +30,20 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import { makeSelectAll } from './selectors';
 
+import Fab from '@material-ui/core/Fab';
+import Button from '../../components/CustomButtons/Button';
+import PageHeader from '../../components/PageHeader/PageHeader';
+import PageContent from '../../components/PageContent/PageContent';
+import { Paper, InputBase, Divider } from '@material-ui/core';
+
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
   fab: {
     position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-  },
-  cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
-    },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
+    bottom: theme.spacing.unit * 3,
+    right: theme.spacing.unit * 4,
   },
 });
 
@@ -149,39 +127,28 @@ export class ContentsListingPage extends React.Component {
       </React.Fragment>,
     ]);
     return (
-      <Grid container spacing={16}>
-        <Grid xs={12} sm={12} md={12}>
-          <Card>
-            <CardContent>
-              <Grid container>
-                <Grid xs={12} sm={12} md={8}>
-                  <CustomInput
-                    name="find_name"
+      <React.Fragment>
+        <PageHeader>
+        Content Manage
+        </PageHeader>
+        <PageContent>
+        <Paper style={{padding:20, overflow:'auto', display:'flex'}}>
+      <InputBase name="find_name"
                     id="contents-name"
-                    placeholder="search contents by name"
-                    formControl={true}
+                    placeholder="Search Contents"
                     fullWidth={true}
                     value={this.state.query.find_name}
-                    onChange={this.handleQueryChange}
-                  />
-                </Grid>
-                <Grid xs={12} sm={12} md={4}>
-                  <Button variant="contained" color="primary" aria-label="Add" className={classes.button} onClick={this.handleSearch}>
-                    Search
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="primary"
-              title="Contents Listing"
-              subheader="Here are the list of Contents"
-            />
-            <CardContent>
+                    onChange={this.handleQueryChange} />
+      <Divider style={{ width: 1,
+    height: 40,
+    margin: 4,}} />
+      <IconButton aria-label="Search" onClick={this.handleSearch} >
+        <SearchIcon />
+      </IconButton>
+    </Paper>
 
+            <br/>
+            <Paper style={{padding:0, overflow:'auto', borderRadius:4, boxShadow:'0 0 0 1px rgba(0,0,0,.2)', display:'flex'}} elevation={0}>
             <Table
           tableHead={['Name', 'Key', 'Pub From', 'Pub To', 'is Active', 'is feature', 'Added at']}
           tableData={tableData}
@@ -194,13 +161,14 @@ export class ContentsListingPage extends React.Component {
                 className={classes.fab}
                 round="true"
                 onClick={this.handleAdd}
+                elevation={0}
               >
                 <AddIcon />
               </Fab>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+              </Paper>
+          </PageContent>
+            </React.Fragment>
+          
     );
   }
 }

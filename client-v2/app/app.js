@@ -16,7 +16,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
 
 import history from 'utils/history';
-import 'sanitize.css/sanitize.css';
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';

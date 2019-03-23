@@ -17,14 +17,15 @@ import makeSelectAdminDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import PageHeader from '../../components/PageHeader/PageHeader';
 
-export function AdminDashboard() {
-  return (
-    <div>
+const AdminDashboard = () => (
+  <div>
+    <PageHeader>
       <FormattedMessage {...messages.header} />
-    </div>
-  );
-}
+    </PageHeader>
+  </div>
+);
 
 AdminDashboard.propTypes = {
   dispatch: PropTypes.func.isRequired,

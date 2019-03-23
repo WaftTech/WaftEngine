@@ -8,8 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Fab from '@material-ui/core/Fab';
+import { Fab, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
 
@@ -20,10 +21,15 @@ import { push } from 'connected-react-router';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Table from 'components/Table';
+import CreateIcon from '@material-ui/icons/Create';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import { makeSelectAll } from './selectors';
+
+import Button from '../../components/CustomButtons/Button';
+import PageHeader from '../../components/PageHeader/PageHeader';
+import PageContent from '../../components/PageContent/PageContent';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRoleManage extends React.PureComponent {
@@ -70,35 +76,35 @@ export class AdminRoleManage extends React.PureComponent {
         `${is_active}`,
         <React.Fragment>
           <Tooltip id="tooltip-top" title="Edit Role" placement="top">
-            <Fab
-              color="secondary"
-              aria-label="Edit"
-              className={classes.fab}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Icon>edit_icon</Icon>
-            </Fab>
+            <IconButton color="primary">
+              <CreateIcon />
+            </IconButton>
           </Tooltip>
         </React.Fragment>,
       ],
     );
     return (
-      <Paper className={classes.root}>
-        <Table
-          tableHead={['Title', 'Description', 'Is Active', 'Action']}
-          tableData={tableData}
-          pagination={tablePagination}
-          handlePagination={this.handlePagination}
-        />
-        <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.fab}
-          onClick={this.handleAdd}
-        >
-          <AddIcon />
-        </Fab>
-      </Paper>
+      <React.Fragment>
+        <PageHeader>Role Manage</PageHeader>
+        <PageContent>
+          <Paper className={classes.root}>
+            <Table
+              tableHead={['Title', 'Description', 'Is Active', 'Action']}
+              tableData={tableData}
+              pagination={tablePagination}
+              handlePagination={this.handlePagination}
+            />
+          </Paper>
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            onClick={this.handleAdd}
+          >
+            <AddIcon />
+          </Fab>
+        </PageContent>
+      </React.Fragment>
     );
   }
 }
@@ -116,12 +122,10 @@ const withReducer = injectReducer({ key: 'adminRoleManage', reducer });
 const withSaga = injectSaga({ key: 'adminRoleManage', saga });
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-  },
   fab: {
-    margin: theme.spacing.unit,
+    position: 'absolute',
+    bottom: theme.spacing.unit * 3,
+    right: theme.spacing.unit * 4,
   },
 });
 
