@@ -131,7 +131,7 @@ class AddEdit extends React.PureComponent {
 }
 
 const withReducer = injectReducer({ key: 'adminRoleManage', reducer });
-const withSaga = injectSaga({ key: 'adminRoleManageAddEdit', saga });
+const withSaga = injectSaga({ key: 'adminRoleManage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
