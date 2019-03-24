@@ -1,9 +1,11 @@
 import DashboardPage from '../containers/AdminDashboard/Loadable';
 import RoleManagePage from '../containers/AdminRoleManagePage/Loadable';
-import RoleManageEditPage from '../containers/AdminRoleManagePage/AddEditPage';
+import RoleManageEditPage from '../containers/AdminRoleManagePage/AddEditPage/Loadable';
 import ModuleManagePage from '../containers/AdminModuleManagePage/Loadable';
 import ModuleManageEditPage from '../containers/AdminModuleManagePage/AddEditPage/Loadable';
 import ModuleAccessManagePage from '../containers/AdminModuleManagePage/AccessManagePage/Loadable';
+import UserManagePage from '../containers/AdminUserManagePage/Loadable';
+import UserManageEditPage from '../containers/AdminUserManagePage/AddEditPage/Loadable';
 import ContentManagePage from '../containers/ContentListingPage/Loadable';
 import ContentManageAddEdit from '../containers/ContentListingPage/AddEditPage';
 
@@ -55,6 +57,21 @@ const routes = [
   {
     path: '/admin/module-manage/access/:id',
     component: ModuleAccessManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/user-manage',
+    component: UserManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/user-manage/edit/:id',
+    component: UserManageEditPage,
+    exact: true,
+  },
+  {
+    path: '/admin/user-manage/add',
+    component: UserManageEditPage,
     exact: true,
   },
   {
