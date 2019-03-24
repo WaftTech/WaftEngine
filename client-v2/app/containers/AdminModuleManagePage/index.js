@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CreateIcon from '@material-ui/icons/Create';
+import VpnKey from '@material-ui/icons/VpnKey';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -77,6 +78,14 @@ export class AdminModuleManage extends React.PureComponent {
         <Tooltip id="tooltip-top" title="Edit Role" placement="top">
           <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
             <CreateIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip id="tooltip-top" title="Edit Access" placement="top">
+          <IconButton
+            color="primary"
+            onClick={() => this.handleAccessEdit(_id)}
+          >
+            <VpnKey />
           </IconButton>
         </Tooltip>
       </>,

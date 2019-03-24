@@ -16,6 +16,10 @@ export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
 });
+export const setAccessValue = payload => ({
+  type: types.SET_ACCESS_VALUE,
+  payload,
+});
 export const clearOne = () => ({
   type: types.CLEAR_ONE,
 });
@@ -43,6 +47,32 @@ export const loadOneSuccess = payload => ({
 });
 export const loadOneFailure = payload => ({
   type: types.LOAD_ONE_FAILURE,
+  payload,
+});
+
+export const loadAccessRequest = payload => ({
+  type: types.LOAD_ACCESS_REQUEST,
+  payload,
+});
+export const loadAccessSuccess = payload => ({
+  type: types.LOAD_ACCESS_SUCCESS,
+  payload,
+});
+export const loadAccessFailure = payload => ({
+  type: types.LOAD_ACCESS_FAILURE,
+  payload,
+});
+
+export const updateAccessRequest = payload => ({
+  type: types.UPDATE_ACCESS_REQUEST,
+  payload,
+});
+export const updateAccessSuccess = payload => ({
+  type: types.UPDATE_ACCESS_SUCCESS,
+  payload,
+});
+export const updateAccessFailure = payload => ({
+  type: types.UPDATE_ACCESS_FAILURE,
   payload,
 });
 
