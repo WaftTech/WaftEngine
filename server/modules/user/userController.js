@@ -13,6 +13,8 @@ const accessSch = require('../role/accessShema');
 const moduleSch = require('../role/moduleShema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const mailSender = require('./userMail');
+const loginlogs = require('./loginlogs/loginlogController').internal;
+const baseurl = require('./../../config//keys').baseURl;
 
 const userController = {};
 
@@ -70,7 +72,7 @@ userController.GetAllUser = async (req, res, next) => {
   if (req.query.find_email) {
     searchq = { email: { $regex: req.query.find_email, $options: 'i x' }, ...searchq };
   }
-  selectq = 'name email password avatar gender date_of_birth is_active password_reset_code updated_at added_at added_by roles';
+  selectq = 'name email avatar email_verified roles';
 
   populate = [{ path: 'roles', select: 'role_title' }];
 
@@ -89,8 +91,8 @@ userController.GetUserDetail = async (req, res, next) => {
       avatar: 1,
       updated_at: 1,
     });
-    const role = await roles.find({}, { RolesTitle: 1, _id: 1 });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { user: user, roles: role }, null, config.get, null);
+    const role = await roles.find({}, { role_title: 1, _id: 1 });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { users: user, roles: role }, null, config.get, null);
   } catch (err) {
     next(err);
   }
@@ -144,22 +146,26 @@ userController.Register = async (req, res) => {
 };
 userController.RegisterFromAdmin = async (req, res, next) => {
   try {
-    const user = await users.findOne({ email: req.body.email });
+    const user = await users.findOne({ email: req.body.email, is_deleted: false });
     if (user) {
       errors.email = 'Email already exists';
       const data = { email: req.body.email };
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
-      const { name, email, password, password2, roles } = req.body;
+      if (req.file && req.file[0]) {
+        req.body.image = req.file;
+      }
+      const { name, email, password, date_of_birth, bio, location, phone, description, is_active, email_verified, roles, image, company_name, company_location, company_established, company_phone_no } = req.body;
       const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
-      const newUser = new users({ name, email, avatar, password, password2, roles });
+      const newUser = new User({ name, email, avatar, password, date_of_birth, bio, description, email_verified, is_active, roles, image, location, phone, company_name, company_location, company_established, company_phone_no });
       bcrypt.genSalt(10, async (err, salt) => {
         bcrypt.hash(newUser.password, salt, async (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
           newUser.email_verified = false;
           newUser.roles = roles;
-          newUser.added_by = req.user._id;
+          newUser.added_by = req.user.id;
+          newUser.is_active = true;
           newUser.is_added_by_admin = true;
           const user = await newUser.save();
           const payload = {
@@ -180,13 +186,27 @@ userController.RegisterFromAdmin = async (req, res, next) => {
     return next(err);
   }
 };
+// multi-part
 userController.UpdateUserDetail = async (req, res, next) => {
   try {
-    const user = req.body;
+    const { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no } = req.body;
     const id = req.params.id;
-    const updateUser = await users.findByIdAndUpdate(id, { $set: user });
+
+    let newdatas = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
+
+    if (req.file) {
+      newdatas.image = req.file;
+    }
+
+    const updateUser = await users.findByIdAndUpdate(id, { $set: newdatas });
     const msg = 'User Update Success';
-    return otherHelper.sendResponse(res, httpStatus.OK, true, updateUser, null, msg, null);
+    const msgfail = 'User not found';
+
+    if (updateUser) {
+      return otherHelper.sendResponse(res, httpStatus.OK, true, req.body, null, msg, null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgfail, null);
+    }
   } catch (err) {
     return next(err);
   }
@@ -311,7 +331,7 @@ userController.ResetPassword = async (req, res, next) => {
     }
     let salt = await bcrypt.genSalt(10);
     let hashpw = await bcrypt.hash(password, salt);
-    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } });
+    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
     const payload = {
       id: user._id,
@@ -332,80 +352,126 @@ userController.ResetPassword = async (req, res, next) => {
   }
 };
 
-userController.Login = async (req, res) => {
-  let errors = {};
-  const {
-    body: { email, password },
-  } = req;
-  users
-    .findOne({
-      email,
-    })
-    .then(user => {
-      if (!user) {
-        errors.email = 'User not found';
-        return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
-      }
+userController.Login = async (req, res, next) => {
+  try {
+    let errors = {};
+    const {
+      body: { email, password },
+    } = req;
+    users
+      .findOne({
+        email,
+      })
+      .then(user => {
+        if (!user) {
+          errors.email = 'User not found';
+          return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
+        }
 
-      // Check Password
-      bcrypt.compare(password, user.password).then(async isMatch => {
-        if (isMatch) {
-          // User Matched
-          let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
+        // Check Password
+        bcrypt.compare(password, user.password).then(async isMatch => {
+          if (isMatch) {
+            // User Matched
+            let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
 
-          let routes = [];
-          if (accesses && accesses.length) {
-            const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
-            const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
-            for (let i = 0; i < routers.length; i++) {
-              for (let j = 0; j < routers[i].path.length; j++) {
-                // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
-                routes.push(routers[i].path[j]);
-                // }
+            let routes = [];
+            if (accesses && accesses.length) {
+              const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
+              const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
+              for (let i = 0; i < routers.length; i++) {
+                for (let j = 0; j < routers[i].path.length; j++) {
+                  // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
+                  routes.push(routers[i].path[j]);
+                  // }
+                }
               }
             }
-          }
 
-          // routes = routes.map(a => a.AdminRoutes);
-          // Create JWT payload
-          const payload = {
-            id: user._id,
-            name: user.name,
-            avatar: user.avatar,
-            email: user.email,
-            email_verified: user.email_verified,
-            roles: user.roles,
-            gender: user.gender,
-          };
-          // Sign Token
-          jwt.sign(
-            payload,
-            secretOrKey,
-            {
-              expiresIn: tokenExpireTime,
-            },
-            (err, token) => {
-              token = `Bearer ${token}`;
-              console.log(token);
-              payload.routes = routes;
-              return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
-            },
-          );
-        } else {
-          errors.password = 'Password incorrect';
-          return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, errors.password, null);
-        }
+            // routes = routes.map(a => a.AdminRoutes);
+            // Create JWT payload
+            const payload = {
+              id: user._id,
+              name: user.name,
+              avatar: user.avatar,
+              email: user.email,
+              email_verified: user.email_verified,
+              roles: user.roles,
+              gender: user.gender,
+            };
+            // Sign Token
+            jwt.sign(
+              payload,
+              secretOrKey,
+              {
+                expiresIn: tokenExpireTime,
+              },
+              (err, token) => {
+                loginlogs.addloginlog(req, token, next);
+                token = `Bearer ${token}`;
+                console.log(token);
+                payload.routes = routes;
+                return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
+              },
+            );
+          } else {
+            errors.password = 'Password incorrect';
+            return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, errors.password, null);
+          }
+        });
       });
-    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 userController.Info = (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, req.user, null, null, null);
 };
 userController.GetProfile = async (req, res, next) => {
-  const userProfile = await users.findById(req.user.id);
-  return otherHelper.sendResponse(res, httpStatus.OK, true, userProfile, null, null, null);
+  try {
+    const userProfile = await users.findById(req.user.id, 'name location date_of_birth phone bio description email added_at email_verified  company_name company_location company_established company_phone_no');
+    return otherHelper.sendResponse(res, httpStatus.OK, true, userProfile, null, null, null);
+  } catch (err) {
+    next(err);
+  }
 };
+
+userController.postProfile = async (req, res, next) => {
+  try {
+    const { name, date_of_birth, bio, description, phone, location, company_name, company_location, company_established, company_phone_no } = req.body;
+    const updateUser = await users.findByIdAndUpdate(req.user.id, { $set: { name, date_of_birth, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() } }, { new: true });
+    const msg = 'User Update Success';
+    const msgfail = 'User not found.';
+    if (updateUser) {
+      return otherHelper.sendResponse(res, httpStatus.OK, true, { name, date_of_birth, bio, description, phone, location, company_name, company_location, company_established, company_phone_no }, null, msg, null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgfail, null);
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
+
+userController.changePassword = async (req, res, next) => {
+  try {
+    let errors = {};
+    const { oldPassword, newPassword } = req.body;
+    const user = await users.findById(req.user.id);
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (isMatch) {
+      const salt = await bcrypt.genSaltSync(10);
+      const hash = await bcrypt.hashSync(newPassword, salt);
+      const dbRes = await users.findByIdAndUpdate(req.user.id, { $set: { password: hash, last_password_cahnage_date: new Date() } }, { $new: true });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'Password Change Success', null);
+    } else {
+      errors.oldPassword = 'Old Password incorrect';
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, null, null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 userController.GithubLogin = (req, res, next) => {};
 
 userController.GoogleLogin = async (req, res, next) => {
@@ -478,9 +544,7 @@ userController.RequestSocialOAuthApiDataHelper = async (req, next, request_url, 
           const timestamp = Math.round(Date.now() / 1000);
           const oAuthSignature = _p.generateOAuthSignature(randomToken, timestamp, req.params.access_token);
           headers = {
-            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${
-              req.params.access_token
-            }", oauth_version="1.0"`,
+            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${req.params.access_token}", oauth_version="1.0"`,
           };
           break;
       }
