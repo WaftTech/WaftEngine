@@ -24,6 +24,12 @@ export const makeSelectOne = () =>
     substate => substate.one,
   );
 
+export const makeSelectAccess = () =>
+  createSelector(
+    selectAdminModuleManageDomain,
+    substate => substate.access,
+  );
+
 /**
  * Default selector used by AdminModuleManage
  */

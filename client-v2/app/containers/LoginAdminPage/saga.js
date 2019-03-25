@@ -15,7 +15,6 @@ import { makeSelectEmail, makeSelectPassword } from './selectors';
 import { setUser, setToken } from '../App/actions';
 
 // Individual exports for testing
-
 export const validate = data => {
   const errors = {};
   if (!data.email) errors.email = 'email is required';
@@ -36,7 +35,6 @@ export function* redirectOnSuccess(redirect) {
 }
 
 export function* loginAction(action) {
-  console.log(action.payload);
   const email = yield select(makeSelectEmail());
   const password = yield select(makeSelectPassword());
   const data = { email, password };

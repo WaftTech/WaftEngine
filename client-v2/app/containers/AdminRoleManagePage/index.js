@@ -8,11 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { Fab, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -27,7 +25,6 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import { makeSelectAll } from './selectors';
 
-import Button from '../../components/CustomButtons/Button';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 
@@ -74,17 +71,17 @@ export class AdminRoleManage extends React.PureComponent {
         role_title,
         description,
         `${is_active}`,
-        <React.Fragment>
+        <>
           <Tooltip id="tooltip-top" title="Edit Role" placement="top">
-            <IconButton color="primary">
+            <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
               <CreateIcon />
             </IconButton>
           </Tooltip>
-        </React.Fragment>,
+        </>,
       ],
     );
     return (
-      <React.Fragment>
+      <>
         <PageHeader>Role Manage</PageHeader>
         <PageContent>
           <Paper className={classes.root}>
@@ -104,7 +101,7 @@ export class AdminRoleManage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </PageContent>
-      </React.Fragment>
+      </>
     );
   }
 }

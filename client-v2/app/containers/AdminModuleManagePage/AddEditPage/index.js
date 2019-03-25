@@ -52,7 +52,7 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
-  handleAddPath = () => event => {
+  handleAddPath = event => {
     event.persist();
     this.props.setOneValue({
       key: 'path',
@@ -63,163 +63,114 @@ class AddEdit extends React.PureComponent {
     });
   };
 
-  handleRemovePath = index => event => {
+  handleRemovePath = pathIndex => event => {
     event.persist();
     this.props.setOneValue({
       key: 'path',
       value: [
-        ...this.props.one.path.slice(0, index),
-        ...this.props.one.path.slice(index + 1),
+        ...this.props.one.path.slice(0, pathIndex),
+        ...this.props.one.path.slice(pathIndex + 1),
       ],
     });
   };
 
-  handleAccessTypeChange = id => event => {
+  handleAccessTypeChange = pathIndex => event => {
     event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].access_type = event.target.value;
     this.props.setOneValue({
       key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const newPath = { ...eachPath, access_type: event.target.value };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
+      value: tempPath,
     });
   };
 
-  handleAdminRoutesChange = (id, index) => event => {
+  handleAdminRoutesChange = (pathIndex, index) => event => {
     event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].admin_routes[index] = event.target.value;
     this.props.setOneValue({
       key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const { admin_routes } = eachPath;
-            admin_routes[index] = event.target.value;
-            const newPath = { ...eachPath, admin_routes };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
+      value: tempPath,
     });
   };
 
-  handleRemoveAdminRoute = (id, index) => event => {
+  handleRemoveAdminRoute = (pathIndex, index) => event => {
     event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].admin_routes = [
+      ...tempPath[pathIndex].admin_routes.slice(0, index),
+      ...tempPath[pathIndex].admin_routes.slice(index + 1),
+    ];
     this.props.setOneValue({
       key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const { admin_routes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              admin_routes: [
-                ...admin_routes.slice(0, index),
-                ...admin_routes.slice(index + 1),
-              ],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
+      value: tempPath,
     });
   };
 
-  handleAddAdminRoute = id => event => {
+  handleAddAdminRoute = pathIndex => event => {
     event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].admin_routes = [
+      ...tempPath[pathIndex].admin_routes,
+      '',
+    ];
     this.props.setOneValue({
       key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const { admin_routes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              admin_routes: [...admin_routes, ''],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
+      value: tempPath,
     });
   };
 
-  handleServerRoutesMethodChange = (id, index) => event => {
+  handleServerRoutesMethodChange = (pathIndex, index) => event => {
     event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].server_routes[index].method = event.target.value;
     this.props.setOneValue({
       key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const { server_routes } = eachPath;
-            server_routes[index].method = event.target.value;
-            const newPath = { ...eachPath, server_routes };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
+      value: tempPath,
     });
   };
 
-  handleServerRoutesRouteChange = (id, index) => event => {
+  handleServerRoutesRouteChange = (pathIndex, index) => event => {
     event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].server_routes[index].route = event.target.value;
     this.props.setOneValue({
       key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const { server_routes } = eachPath;
-            server_routes[index].route = event.target.value;
-            const newPath = { ...eachPath, server_routes };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
-    });
-  };
-
-  handleRemoveServerRoute = (id, index) => event => {
-    event.persist();
-    this.props.setOneValue({
-      key: 'path',
-      value: [
-        ...this.props.one.path.map(eachPath => {
-          if (eachPath._id === id) {
-            const { server_routes } = eachPath;
-            const newPath = {
-              ...eachPath,
-              server_routes: [
-                ...server_routes.slice(0, index),
-                ...server_routes.slice(index + 1),
-              ],
-            };
-            return newPath;
-          }
-          return eachPath;
-        }),
-      ],
+      value: tempPath,
     });
   };
 
   handleAddServerRoute = index => event => {
     event.persist();
     const { path } = this.props.one;
-    path[index] = {
+    const tempPath = [...path];
+    tempPath[index] = {
       ...path[index],
       server_routes: [...path[index].server_routes, { route: '', method: '' }],
     };
     this.props.setOneValue({
       key: 'path',
-      value: path,
+      value: tempPath,
+    });
+  };
+
+  handleRemoveServerRoute = (pathIndex, index) => event => {
+    event.persist();
+    const { path } = this.props.one;
+    const tempPath = [...path];
+    tempPath[pathIndex].server_routes = [
+      ...tempPath[pathIndex].server_routes.slice(0, index),
+      ...tempPath[pathIndex].server_routes.slice(index + 1),
+    ];
+    this.props.setOneValue({
+      key: 'path',
+      value: tempPath,
     });
   };
 
@@ -292,6 +243,7 @@ class AddEdit extends React.PureComponent {
             ))}
           </Grid>
         </Grid>
+        <Button onClick={this.handleAddPath}>Add Access Type</Button>
         <div className={classes.buttons}>
           <Button onClick={this.handleBack} className={classes.button}>
             Back
@@ -311,7 +263,7 @@ class AddEdit extends React.PureComponent {
 }
 
 const withReducer = injectReducer({ key: 'adminModuleManage', reducer });
-const withSaga = injectSaga({ key: 'adminModuleManageAddEdit', saga });
+const withSaga = injectSaga({ key: 'adminModuleManage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),

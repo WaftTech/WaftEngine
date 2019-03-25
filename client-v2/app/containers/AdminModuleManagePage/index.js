@@ -9,11 +9,11 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CreateIcon from '@material-ui/icons/Create';
+import VpnKey from '@material-ui/icons/VpnKey';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -74,16 +74,24 @@ export class AdminModuleManage extends React.PureComponent {
     const tableData = data.map(({ _id, module_name, description }) => [
       module_name,
       description,
-      <React.Fragment>
+      <>
         <Tooltip id="tooltip-top" title="Edit Role" placement="top">
-          <IconButton color="primary">
+          <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
             <CreateIcon />
           </IconButton>
         </Tooltip>
-      </React.Fragment>,
+        <Tooltip id="tooltip-top" title="Edit Access" placement="top">
+          <IconButton
+            color="primary"
+            onClick={() => this.handleAccessEdit(_id)}
+          >
+            <VpnKey />
+          </IconButton>
+        </Tooltip>
+      </>,
     ]);
     return (
-      <React.Fragment>
+      <>
         <PageHeader>Module Manage</PageHeader>
         <PageContent>
           <Paper className={classes.root}>
@@ -103,7 +111,7 @@ export class AdminModuleManage extends React.PureComponent {
             </Fab>
           </Paper>
         </PageContent>
-      </React.Fragment>
+      </>
     );
   }
 }

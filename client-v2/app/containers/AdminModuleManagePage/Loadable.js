@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for AdminRoleManage
+ * Asynchronously loads the component for AdminModuleManagePage
  *
  */
 

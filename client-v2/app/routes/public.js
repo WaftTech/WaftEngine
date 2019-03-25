@@ -10,6 +10,8 @@ import HomePage from '../containers/HomePage';
 // import VideoDetailPage from '../containers/VideoDetailPage';
 
 import LoginAdminPage from '../containers/LoginAdminPage/Loadable';
+import LoginUserPage from '../containers/LoginUserPage/Loadable';
+import SignupUserPage from '../containers/SignupUserPage/Loadable';
 
 const publicRoutes = [
   {
@@ -21,6 +23,21 @@ const publicRoutes = [
     exact: true,
     path: '/login-admin',
     component: LoginAdminPage,
+  },
+  {
+    exact: true,
+    path: '/login-user',
+    component: LoginUserPage,
+  },
+  {
+    exact: true,
+    path: '/signup-user',
+    component: SignupUserPage,
+  },
+  {
+    exact: true,
+    path: '/forgot-password-user',
+    component: LoginUserPage,
   },
   // {
   //   exact: true,
