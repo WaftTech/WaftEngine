@@ -5,6 +5,8 @@ import ModuleManagePage from '../containers/AdminModuleManagePage/Loadable';
 import ModuleManageEditPage from '../containers/AdminModuleManagePage/AddEditPage';
 import ContentManagePage from '../containers/ContentListingPage/Loadable';
 import ContentManageAddEdit from '../containers/ContentListingPage/AddEditPage';
+import FaqManagePage from '../containers/FAQManagePage/Loadable';
+import FaqManageAddEdit from '../containers/FAQManagePage/AddEditPage';
 
 const routes = [
   {
@@ -69,6 +71,24 @@ const routes = [
     path: '/admin/content-manage',
     name: 'Content Manage',
     component: ContentManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/faq-manage/edit/:id',
+    name: 'FAQ Manage',
+    component: FaqManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/faq-manage/add',
+    name: 'FAQ Manage',
+    component: FaqManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/faq-manage',
+    name: 'FAQ Manage',
+    component: FaqManagePage,
     exact: true,
   },
 ];
