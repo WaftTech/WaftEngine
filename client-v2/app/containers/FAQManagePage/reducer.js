@@ -1,9 +1,8 @@
 /*
  *
- * AdsListingPage reducer
+ * FAQManagePage reducer
  *
  */
-
 import produce from 'immer';
 import * as types from './constants';
 
@@ -15,9 +14,9 @@ export const initialState = {
     totaldata: 0,
   },
   one: {},
+  category: [],
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
@@ -26,6 +25,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;
+        break;
+      case types.LOAD_CATEGORY_SUCCESS:
+        draft.category = action.payload.data;
         break;
     }
   });
