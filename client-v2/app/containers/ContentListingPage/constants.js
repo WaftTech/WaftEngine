@@ -19,3 +19,9 @@ export const ADD_EDIT_FAILURE = 'app/ContentsListingPage/ADD_EDIT_FAILURE';
 export const DELETE_ONE_REQUEST = 'app/ContentsListingPage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/ContentsListingPage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/ContentsListingPage/DELETE_ONE_FAILURE';
+
+export const SET_ONE_VALUE = 'app/ContentsListingPage/SET_ONE_VALUE';
+export const CLEAR_ONE = 'app/ContentsListingPage/CLEAR_ONE';
+
+export const SET_QUERY_VALUE = 'app/ContentsListingPage/SET_QUERY_VALUE';
+export const CLEAR_QUERY = 'app/ContentsListingPage/CLEAR_QUERY';
