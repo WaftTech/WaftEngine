@@ -1,6 +1,6 @@
 /*
  *
- * AdminRoleManage actions
+ * AdminModuleManage actions
  *
  */
 

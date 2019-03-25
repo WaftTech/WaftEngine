@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for AdminModuleManagePage
+ * Asynchronously loads the component for SignupUserPage
  *
  */
 
