@@ -5,20 +5,39 @@ import { initialState } from './reducer';
  * Direct selector to the contentsListingPage state domain
  */
 
-const selectDomain = state => state.contentsListingPage || initialState;
+export const selectContentsListingPageDomain = state =>
+  state.contentsListingPage || initialState;
+
+/**
+ * Other specific selectors
+ */
 
 export const makeSelectAll = () =>
   createSelector(
-    selectDomain,
-    state => state.all,
+    selectContentsListingPageDomain,
+    substate => substate.all,
   );
+
 export const makeSelectOne = () =>
   createSelector(
-    selectDomain,
-    state => state.one,
+    selectContentsListingPageDomain,
+    substate => substate.one,
   );
-export const makeSelectPage = () =>
+
+export const makeSelectQuery = () =>
   createSelector(
-    selectDomain,
-    state => state.all,
+    selectContentsListingPageDomain,
+    substate => substate.query,
   );
+
+/**
+ * Default selector used by ContentsListingPage
+ */
+
+const makeSelectContentsListingPage = () =>
+  createSelector(
+    selectContentsListingPageDomain,
+    substate => substate,
+  );
+
+export default makeSelectContentsListingPage;

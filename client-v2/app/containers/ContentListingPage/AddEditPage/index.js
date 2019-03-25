@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CKEditor from 'react-ckeditor-component';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-// import moment from 'moment';
+import { push } from 'connected-react-router';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 // core components
-import GridItem from '@material-ui/core/Grid';
-import CustomInput from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -44,189 +44,171 @@ const styles = {
   },
 };
 
-class AddEdit extends Component {
-  state = {
-    name: '',
-    key: '',
-    description: '',
-    publish_from: '',
-    is_active: false,
-    is_feature: false,
-    publish_to: '',
+class AddEdit extends React.PureComponent {
+  static propTypes = {
+    loadOneRequest: PropTypes.func.isRequired,
+    addEditRequest: PropTypes.func.isRequired,
+    setOneValue: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.object,
+    }),
+    // classes: PropTypes.object.isRequired,
+    one: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
+
+  componentDidMount() {
+    this.props.loadOneRequest(this.props.match.params.id);
+  }
+
   handleEditorChange = (e, name) => {
     const newContent = e.editor.getData();
-    this.setState({ [name]: newContent });
+    this.props.setOneValue({ key: name, value: newContent });
   };
 
-  // handleCheckedChange = name => event => {
-  //   event.persist();
-  //   this.setState(state => ({
-  //     data: { ...state.data, [name]: event.target.checked },
-  //   }));
-  // };
   handleCheckedChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+    event.persist();
+    this.props.setOneValue({ key: name, value: event.target.checked });
   };
+
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+    event.persist();
+    this.props.setOneValue({ key: name, value: event.target.value });
   };
-  // handleChange = name => event => {
-  //   event.persist();
-  //   this.setState(state => ({
-  //     data: { ...state.data, [name]: event.target.value },
-  //   }));
-  // };
+
   handleGoBack = () => {
-    this.props.history.push('/admin/content-manage');
+    this.props.push('/admin/content-manage');
   };
+
   handleSave = () => {
-    this.props.addEditRequest(this.state);
-    this.props.history.push('/admin/content-manage');
+    this.props.addEditRequest();
   };
-  componentDidMount() {
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOneRequest(this.props.match.params.id);
-    }
-  }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.one !== nextProps.one) {
-      const oneObj = nextProps.one;
-      this.setState(state => ({
-        ...oneObj,
-      }));
-    }
-  }
+
   render() {
-    const { classes } = this.props;
+    const { one } = this.props;
     return (
       <div>
-        <GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary"
-                title="Content"
-                subheader="Content info"
+        <Card>
+          <CardHeader
+            color="primary"
+            title="Content"
+            subheader="Content info"
+          />
+          <CardBody>
+            <div>
+              <TextField
+                name="Content Name"
+                id="contents-name"
+                fullWidth
+                placeholder="name of the content"
+                inputProps={{
+                  value: one.name,
+                  onChange: this.handleChange('name'),
+                }}
               />
-              <CardBody>
-                <GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      name="Content Name"
-                      id="contents-name"
-                      formControl={true}
-                      fullWidth = {true}
-                      placeholder = "name of the content"
-                      inputProps={{
-                        value: this.state.name,
-                        onChange: this.handleChange('name'),
-                      }}
-                    />
-                  </GridItem>
-                </GridItem>
-                <GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      name="key"
-                      id="contents-key"
-                      formControl={true}
-                      fullWidth={true}
-                      placeholder="name of the content key"
-                      inputProps={{ value: this.state.key, onChange: this.handleChange('key') }}
-                    />
-                  </GridItem>
-                </GridItem>
-
-                <GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>Content Description</InputLabel>
-                    <CKEditor
-                      name="description"
-                      content={this.state.description}
-                      events={{
-                        change: e => this.handleEditorChange(e, 'description'),
-                        value: this.state.description,
-                      }}
-                    />
-                  </GridItem>
-                </GridItem>
-
-                <GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      name="Published From"
-                      id="contents-from-date"
-                      formControl={true}
-                      fullWidth={true}
-                      placeholder="published from"
-                      inputProps={{
-                        value: this.state.publish_from,
-                        onChange: this.handleChange('publish_from'),
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      name="Published To"
-                      id="contents-to-date"
-                      formControl={true}
-                      fullWidth={true}
-                      placeholder="publish to"
-                      inputProps={{
-                        value: this.state.publish_to,
-                        onChange: this.handleChange('publish_to'),
-                      }}
-                    />
-                  </GridItem>
-                </GridItem>
-                <GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.is_active || false}
-                          tabIndex={-1}
-                          onClick={this.handleCheckedChange('is_active')}
-                          value="is_active"
-                          color="primary"
-                        />
-                      }
-                      label="Is Active"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.is_feature || false}
-                          onClick={this.handleCheckedChange('is_feature')}
-                          value="is_feature"
-                          color="primary"
-                        />
-                      }
-                      label="Is Feature"
-                    />
-                  </GridItem>
-                </GridItem>
-              </CardBody>
-              <CardFooter>
-                <Button variant="contained" color="primary" onClick={this.handleSave}>
-                  Save
-                </Button>
-                <Button variant="contained" color="secondary" onClick={this.handleGoBack}>
-                  Back
-                </Button>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridItem>
+            </div>
+            <div>
+              <TextField
+                name="key"
+                id="contents-key"
+                fullWidth
+                placeholder="name of the content key"
+                inputProps={{
+                  value: one.key,
+                  onChange: this.handleChange('key'),
+                }}
+              />
+            </div>
+            <div>
+              <InputLabel style={{ color: '#AAAAAA' }}>
+                Content Description
+              </InputLabel>
+              <CKEditor
+                name="description"
+                content={one.description}
+                events={{
+                  change: e => this.handleEditorChange(e, 'description'),
+                  value: one.description,
+                }}
+              />
+            </div>
+            <div sm={12} md={6}>
+              <TextField
+                name="Published From"
+                id="contents-from-date"
+                fullWidth
+                placeholder="published from"
+                inputProps={{
+                  value: one.publish_from,
+                  onChange: this.handleChange('publish_from'),
+                }}
+              />
+            </div>
+            <div sm={12} md={6}>
+              <TextField
+                name="Published To"
+                id="contents-to-date"
+                fullWidth
+                placeholder="publish to"
+                inputProps={{
+                  value: one.publish_to,
+                  onChange: this.handleChange('publish_to'),
+                }}
+              />
+            </div>
+            <div>
+              <InputLabel style={{ color: '#AAAAAA' }}>
+                Activity Type
+              </InputLabel>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_active || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_active')}
+                    color="primary"
+                  />
+                }
+                label="Is Active"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_feature || false}
+                    onClick={this.handleCheckedChange('is_feature')}
+                    value="is_feature"
+                    color="primary"
+                  />
+                }
+                label="Is Feature"
+              />
+            </div>
+          </CardBody>
+          <CardFooter>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleSave}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.handleGoBack}
+            >
+              Back
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     );
   }
 }
 
 const withStyle = withStyles(styles);
-const withReducer = injectReducer({ key: 'contentManagePage', reducer });
-const withSaga = injectSaga({ key: 'contentManagePageAddEdit', saga });
+const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
+const withSaga = injectSaga({ key: 'contentsListingPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
@@ -234,7 +216,7 @@ const mapStateToProps = createStructuredSelector({
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  { ...mapDispatchToProps, push },
 );
 
 export default compose(
