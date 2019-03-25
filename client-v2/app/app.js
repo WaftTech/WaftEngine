@@ -14,6 +14,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import pink from '@material-ui/core/colors/pink';
 
 import history from 'utils/history';
 
@@ -68,13 +70,21 @@ if (tokenWithBearer) {
   }
 }
 
+const theme = createMuiTheme({
+  // palette: {
+  //   primary: pink,
+  // },
+});
+
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <MuiThemeProvider theme={theme}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </MuiThemeProvider>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,
