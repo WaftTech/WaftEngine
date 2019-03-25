@@ -19,11 +19,13 @@ module.exports = {
   },
   validate: {
     empty: 'This field is required',
+    invalid: 'Invalid entry',
     isEmail: 'Please input the email type data',
     isMongoId: 'This is not mongo id',
     isEightChar: 'The password must be at least 8 character',
     inerr: 'invalid input',
     nameLength: 'This field should be between 2 to 30',
+    isDate: 'This field must conatain Date.',
     passLength: 'password must be atleast 6 characters, max limit 30 characters',
     bioLength: 'length of bio should be between 5 to 500',
     skillLength: 'length of skill should be between 5 to 400',
