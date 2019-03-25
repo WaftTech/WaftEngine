@@ -22,6 +22,48 @@ validations.sanitizeRegister = (req, res, next) => {
   otherHelper.sanitize(req, sanitizeArray);
   next();
 };
+validations.sanitizeUpdateProfile = (req, res, next) => {
+  const sanitizeArray = [
+    {
+      field: 'name',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'date_of_birth',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'bio',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'skills',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'description',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'roles',
+      sanitize: {
+        trim: true,
+      },
+    },
+  ];
+  otherHelper.sanitize(req, sanitizeArray);
+  next();
+};
 validations.sanitizeLogin = (req, res, next) => {
   const sanitizeArray = [
     {
@@ -82,6 +124,86 @@ validations.sanitizeDescribe = (req, res, next) => {
   otherHelper.sanitize(req, sanitizeArray);
   next();
 };
+validations.sanitizeUpdateUserProfile = (req, res, next) => {
+  const sanitizeArray = [
+    {
+      field: 'name',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'bio',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'description',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'phone',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'location',
+      sanitize: {
+        trim: true,
+      },
+    },
+  ];
+  otherHelper.sanitize(req, sanitizeArray);
+  next();
+};
+validations.validateUpdateUserProfile = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
+    {
+      field: 'name',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.nameLength,
+          option: { min: 2, max: 30 },
+        },
+      ],
+    },
+    {
+      field: 'phone',
+      validate: [
+        {
+          condition: 'IsPhoneNumber',
+          msg: config.validate.invalid,
+        },
+      ],
+    },
+    {
+      field: 'date_of_birth',
+      validate: [
+        {
+          condition: 'IsDate',
+          msg: config.validate.invalid,
+        },
+      ],
+    },
+  ];
+
+  const errors = otherHelper.validation(data, validateArray);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+  } else {
+    next();
+  }
+};
 validations.validateLoginInput = (req, res, next) => {
   const data = req.body;
   const validateArray = [
@@ -120,6 +242,85 @@ validations.validateLoginInput = (req, res, next) => {
     next();
   }
 };
+validations.validateUpdateProfile = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
+    {
+      field: 'name',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.nameLength,
+          option: { min: 2, max: 30 },
+        },
+      ],
+    },
+    {
+      field: 'email',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsEmail',
+          msg: config.validate.isEmail,
+        },
+      ],
+    },
+    {
+      field: 'date_of_birth',
+      validate: [
+        {
+          condition: 'IsDate',
+          msg: config.validate.isDate,
+        },
+      ],
+    },
+    {
+      field: 'email_verified',
+      validate: [
+        {
+          condition: 'IsBoolean',
+          msg: config.validate.inerr,
+        },
+      ],
+    },
+    {
+      field: 'roles',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsMONGOID',
+          msg: config.validate.invalid,
+        },
+      ],
+    },
+    {
+      field: 'phone',
+      validate: [
+        {
+          condition: 'IsPhoneNumber',
+          msg: config.validate.invalid,
+        },
+      ],
+    },
+  ];
+  const errors = otherHelper.validation(data, validateArray);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+  } else {
+    next();
+  }
+};
+
 validations.validateRegisterInput = (req, res, next) => {
   const data = req.body;
   const validateArray = [
@@ -161,20 +362,6 @@ validations.validateRegisterInput = (req, res, next) => {
           condition: 'IsLength',
           msg: config.validate.passLength,
           option: { min: 6, max: 30 },
-        },
-      ],
-    },
-    {
-      field: 'gender',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: config.validate.isGender,
-        },
-        {
-          condition: 'IsIn',
-          msg: config.validate.noGender,
-          option: ['male', 'female', 'non-binary'],
         },
       ],
     },
@@ -325,6 +512,89 @@ validations.validateSubscribe = (req, res, next) => {
     } else {
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, config.validationMessage.userOrCompanyRequired, config.subscribeFail, null);
     }
+  }
+};
+validations.validateLoginlogsLogut = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
+    {
+      field: 'loginID',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsMONGOID',
+          msg: config.validate.inerr,
+        },
+      ],
+    },
+  ];
+
+  const errors = otherHelper.validation(data, validateArray);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+  } else {
+    next();
+  }
+};
+validations.validatechangePassword = (req, res, next) => {
+  const data = req.body;
+  const validateArray = [
+    {
+      field: 'newPassword',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.passLength,
+          option: { min: 6, max: 30 },
+        },
+      ],
+    },
+    {
+      field: 'newPassword2',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.passLength,
+          option: { min: 6, max: 30 },
+        },
+        {
+          condition: 'IsEqual',
+          msg: config.validate.isEqual,
+          option: { one: data.newPassword, two: data.newPassword2 },
+        },
+      ],
+    },
+    {
+      field: 'oldPassword',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.passLength,
+          option: { min: 6, max: 30 },
+        },
+      ],
+    },
+  ];
+  const errors = otherHelper.validation(data, validateArray);
+  if (!isEmpty(errors)) {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+  } else {
+    next();
   }
 };
 module.exports = validations;
