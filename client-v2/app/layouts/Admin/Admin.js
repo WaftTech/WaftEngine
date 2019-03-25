@@ -3,15 +3,15 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
+// import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -144,7 +144,7 @@ const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <Link style={{}} to="/admin/role-manage">
+    <Link to="/admin/role-manage">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
@@ -158,6 +158,14 @@ const mainListItems = (
           <ExtensionIcon />
         </ListItemIcon>
         <ListItemText primary="Module Manage" />
+      </ListItem>
+    </Link>
+    <Link to="/admin/user-manage">
+      <ListItem button>
+        <ListItemIcon>
+          <ExtensionIcon />
+        </ListItemIcon>
+        <ListItemText primary="User Manage" />
       </ListItem>
     </Link>
     <Link to="/admin/content-manage">
