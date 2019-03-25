@@ -160,7 +160,7 @@ roleController.SaveAccessListFromRole = async (req, res, next) => {
     if (access.length) {
       for (let i = 0; i < access.length; i++) {
         if (access[i]._id) {
-          access[i].RoleId = roleid;
+          access[i].role_id = roleid;
           await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
         } else {
           access[i].role_id = roleid;
@@ -184,7 +184,7 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
     if (access.length) {
       for (let i = 0; i < access.length; i++) {
         if (access[i]._id) {
-          access[i].module_id = moduleid;
+          access[i].ModuleId = moduleid;
           await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
         } else {
           access[i].module_id = moduleid;

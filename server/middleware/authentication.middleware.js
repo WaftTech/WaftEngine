@@ -2,6 +2,10 @@
 const jwt = require('jsonwebtoken');
 const HttpStatus = require('http-status');
 
+const useragent = require('useragent');
+const requestIp = require('request-ip');
+const loginlogs = require('./../modules/user/loginlogs/loginlogs');
+
 const otherHelper = require('../helper/others.helper');
 const { secretOrKey } = require('../config/keys');
 const accessSch = require('../modules/role/accessShema');
@@ -19,7 +23,12 @@ authMiddleware.authorization = async (req, res, next) => {
       token = token.replace('Bearer ', '');
       const d = await jwt.verify(token, secretOrKey);
       req.user = d;
-      return next();
+      let passed = await loginlogs.findOne({ token, is_active: true });
+      if (passed) {
+        return next();
+      } else {
+        return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Session Expired', null);
+      }
     }
     return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, token, 'token not found', null);
   } catch (err) {
@@ -42,7 +51,6 @@ authMiddleware.authentication = async (req, res, next) => {
     };
     console.log(`${JSON.stringify(GetModuleFilter)}`);
     const modules = await modulesSch.findOne(GetModuleFilter, { path: 1 });
-    console.log(modules);
     let moduleAccessTypeId = null;
     if (!isEmpty(modules) && !isEmpty(modules.path)) {
       for (let i = 0; i < modules.path.length; i++) {
@@ -74,5 +82,23 @@ authMiddleware.authentication = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+authMiddleware.getClientInfo = async (req, res, next) => {
+  let info = {};
+
+  let agent = useragent.parse(req.headers['user-agent']);
+  // let another = useragent.fromJSON(JSON.stringify(agent));
+
+  info.browser = agent.toAgent().toString();
+  info.os = agent.os.toString();
+  info.device = agent.device.toString();
+
+  info.ip = requestIp.getClientIp(req);
+  // on localhost you'll see 127.0.0.1 if you're using IPv4
+  // or ::1, ::ffff:127.0.0.1 if you're using IPv6
+
+  req.clinfo = info;
+  // console.log(req.clinfo);
+  return next();
 };
 module.exports = authMiddleware;

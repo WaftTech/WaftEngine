@@ -16,6 +16,8 @@ const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
 const { Respond } = require('./dumpData/constantController');
 
+const changephoto = require('./helper/photomanipulate').changephoto;
+
 const auth = require('./helper/auth.helper');
 
 const app = express();
@@ -50,7 +52,6 @@ app.use(
   }),
 );
 app.use(cookieParser());
-app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // DB Config
 mongoose.Promise = global.Promise;
@@ -97,6 +98,9 @@ app.use(function(req, res, next) {
 
 // Use Routes
 app.use('/api', routes);
+
+app.use('/public/:w-:h/*', changephoto);
+app.use('/public', express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
