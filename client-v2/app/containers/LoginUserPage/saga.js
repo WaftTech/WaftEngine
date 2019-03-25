@@ -30,7 +30,7 @@ export function* redirectOnSuccess(redirect) {
   if (redirect) {
     yield put(push(redirect));
   } else {
-    yield put(push('/admin/dashboard'));
+    yield put(push('/'));
   }
 }
 

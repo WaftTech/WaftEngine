@@ -11,10 +11,16 @@ import Api from 'utils/Api';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
 import * as types from './constants';
 import * as actions from './actions';
-import { makeSelectEmail, makeSelectPassword } from './selectors';
+import {
+  makeSelectEmail,
+  makeSelectPassword,
+  makeSelectName,
+  makeSelectGender,
+} from './selectors';
 import { setUser, setToken } from '../App/actions';
 
 // Individual exports for testing
+
 export const validate = data => {
   const errors = {};
   if (!data.email) errors.email = 'email is required';
@@ -23,28 +29,36 @@ export const validate = data => {
 };
 
 export function* redirectOnSuccess(redirect) {
-  const { payload } = yield take(types.LOGIN_SUCCESS);
+  const { payload } = yield take(types.SIGNUP_SUCCESS);
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
   if (redirect) {
     yield put(push(redirect));
   } else {
-    yield put(push('/admin/dashboard'));
+    // do something
+    yield put(push('/'));
   }
 }
 
-export function* loginAction(action) {
+export function* signupAction(action) {
   const email = yield select(makeSelectEmail());
   const password = yield select(makeSelectPassword());
-  const data = { email, password };
+  const name = yield select(makeSelectName());
+  const gender = yield select(makeSelectGender());
+  const data = { email, password, password2: password, name, gender };
   const errors = validate(data);
   if (errors.isValid) {
     const successWatcher = yield fork(redirectOnSuccess, action.redirect);
     yield fork(
-      Api.post('user/login', actions.loginSuccess, actions.loginFailure, data),
+      Api.post(
+        'user/register',
+        actions.signupSuccess,
+        actions.signupFailure,
+        data,
+      ),
     );
-    yield take([LOCATION_CHANGE, types.LOGIN_FAILURE]);
+    yield take([LOCATION_CHANGE, types.SIGNUP_FAILURE]);
     yield cancel(successWatcher);
   } else {
     yield put(
@@ -53,6 +67,6 @@ export function* loginAction(action) {
   }
 }
 
-export default function* loginAdminPageSaga() {
-  yield takeLatest(types.LOGIN_REQUEST, loginAction);
+export default function* signupUserPageSaga() {
+  yield takeLatest(types.SIGNUP_REQUEST, signupAction);
 }

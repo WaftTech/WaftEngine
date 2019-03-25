@@ -1,6 +1,6 @@
 /**
  *
- * LoginAdminPage
+ * SignupUserPage
  *
  */
 
@@ -8,7 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+
 import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -16,15 +18,15 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
-import styles from './styles';
-import UsernameInput from './components/UsernameInput';
+import NameInput from './components/NameInput';
+import EmailInput from './components/EmailInput';
 import PasswordInput from './components/PasswordInput';
-import Button from '../../components/CustomButtons/Button';
+import GenderInput from './components/GenderInput';
 
-const LoginAdminPage = ({ classes, loginRequest }) => {
+const SignupUserPage = ({ classes, signupRequest }) => {
   const handleSubmit = e => {
     e.preventDefault();
-    loginRequest();
+    signupRequest();
   };
 
   const handleRedirect = () => {
@@ -35,9 +37,13 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
     <div className={classes.pageHeader}>
       <div className={classes.container}>
         <form className={classes.form}>
-          <UsernameInput classes={classes} />
+          <NameInput />
           <br />
-          <PasswordInput classes={classes} />
+          <EmailInput />
+          <br />
+          <PasswordInput />
+          <br />
+          <GenderInput />
           <div
             className={classes.redirect}
             onClick={handleRedirect}
@@ -45,7 +51,7 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
             role="link"
             aria-hidden
           >
-            <h4>Forgot Password?</h4>
+            <h4>already a User?</h4>
           </div>
           <Button onClick={handleSubmit} type="submit">
             Get started
@@ -56,9 +62,9 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
   );
 };
 
-LoginAdminPage.propTypes = {
+SignupUserPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  loginRequest: PropTypes.func.isRequired,
+  signupRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = null;
@@ -68,8 +74,17 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
-const withSaga = injectSaga({ key: 'loginAdminPage', saga });
+const withReducer = injectReducer({ key: 'signupUserPage', reducer });
+const withSaga = injectSaga({ key: 'signupUserPage', saga });
+
+// eslint-disable-next-line no-unused-vars
+const styles = theme => ({
+  pageHeader: {},
+  container: {},
+  form: {},
+  redirect: {},
+});
+
 const withStyle = withStyles(styles);
 
 export default compose(
@@ -77,4 +92,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(LoginAdminPage);
+)(SignupUserPage);
