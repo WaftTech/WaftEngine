@@ -111,7 +111,7 @@ class AddEdit extends Component {
   handleSave = () => {
     this.props.addEditRequest({
       ...this.state.data,
-      category: this.state.data.category.slug_url,
+      category: this.state.category_id,
     });
   };
 
@@ -119,24 +119,18 @@ class AddEdit extends Component {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
-    if (this.props.category.size === 0) {
       this.props.loadCategoryRequest();
-    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
       const oneObj = nextProps.one;
-      console.log(oneObj);
-      const category_id = (oneObj.category && oneObj.category) || '';
+      const category_id = oneObj.category || '';
 
-      this.setState(
-        state => ({
-          data: { ...state.data, ...oneObj },
-          category_id,
-        }),
-        // () => console.log(this.state),
-      );
+      this.setState(state => ({
+        data: { ...state.data, ...oneObj },
+        category_id,
+      }));
     }
   }
 
@@ -145,7 +139,7 @@ class AddEdit extends Component {
     this.setState(state => ({
       data: {
         ...state.data,
-        category: { slug_url: e.target.value, title: e.target.name },
+        // category: { _id: e.target.value, title: e.target.name },
       },
       category_id: e.target.value,
     }));
@@ -166,7 +160,8 @@ class AddEdit extends Component {
                     <CustomInput
                       name="Question"
                       id="faq"
-                      fullWidth="true"
+                      fullWidth={true}
+                      placeholder="Question"
                       inputProps={{
                         value: data.question,
                         onChange: this.handleChange('question'),
@@ -180,7 +175,8 @@ class AddEdit extends Component {
                     <CustomInput
                       name="Answer"
                       id="faq-answer"
-                      fullWidth="true"
+                      fullWidth={true}
+                      placeholder="Answer"
                       inputProps={{
                         value: data.title,
                         onChange: this.handleChange('title'),
@@ -218,7 +214,8 @@ class AddEdit extends Component {
                     <CustomInput
                       name="Added At"
                       id="added_at"
-                      fullWidth="true"
+                      fullWidth={true}
+                      placeholder="Added At"
                       inputProps={{
                         value: data.added_at,
                         onChange: this.handleChange('added_at'),
@@ -231,7 +228,8 @@ class AddEdit extends Component {
                     <CustomInput
                       name="Updated At"
                       id="updated_at"
-                      fullWidth="true"
+                      fullWidth={true}
+                      placeholder="Updated At"
                       inputProps={{
                         value: data.updated_at,
                         onChange: this.handleChange('updated_at'),
@@ -241,10 +239,10 @@ class AddEdit extends Component {
                 </GridItem>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSave}>
+                <Button variant="contained" color="primary" onClick={this.handleSave}>
                   Save
                 </Button>
-                <Button color="primary" onClick={this.handleGoBack}>
+                <Button variant="contained" color="secondary" onClick={this.handleGoBack}>
                   Back
                 </Button>
               </CardFooter>

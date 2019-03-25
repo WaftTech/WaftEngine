@@ -34,7 +34,7 @@ import Fab from '@material-ui/core/Fab';
 import Button from '../../components/CustomButtons/Button';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
-import { Paper, InputBase, Divider } from '@material-ui/core';
+import { Paper, Divider } from '@material-ui/core';
 
 const styles = theme => ({
   button: {
@@ -133,10 +133,10 @@ export class ContentsListingPage extends React.Component {
         </PageHeader>
         <PageContent>
         <Paper style={{padding:20, overflow:'auto', display:'flex'}}>
-      <InputBase name="find_name"
+      <CustomInput name="find_name"
                     id="contents-name"
-                    placeholder="Search Contents"
                     fullWidth={true}
+                    placeholder="Search Contents"
                     value={this.state.query.find_name}
                     onChange={this.handleQueryChange} />
       <Divider style={{ width: 1,
