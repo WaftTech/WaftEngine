@@ -24,6 +24,7 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import PeopleIcon from '@material-ui/icons/People';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 
 import LayersIcon from '@material-ui/icons/Layers';
 // import { mainListItems, secondaryListItems } from './listItems';
@@ -179,6 +180,20 @@ const mainListItems = (
           <FormatSizeIcon />
         </ListItemIcon>
         <ListItemText primary="Content Manage" />
+      </ListItem>
+    </Link>
+    <Link to="/admin/faq-manage">
+      <ListItem
+        style={{
+          textDecoration: 'none',
+          fontSize: '0.8em',
+          textTransform: 'uppercase',
+        }}
+      >
+        <ListItemIcon>
+          <QuestionAnswerIcon />
+        </ListItemIcon>
+        <ListItemText primary="FAQ Manage" />
       </ListItem>
     </Link>
     <Link to="/">
