@@ -6,7 +6,7 @@ module.exports = {
     keyLength: 'The length should be between 2 to 20',
     isDate: 'Please input date type data',
   },
-  get: 'Content get successful',
+  get: 'Content get successful!!',
   save: 'Content save successful',
   gets: 'Contents get successful',
 };
