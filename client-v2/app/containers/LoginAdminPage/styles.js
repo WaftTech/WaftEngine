@@ -3,45 +3,18 @@ const styles = {
     zIndex: '2',
     position: 'relative',
     paddingTop: '20vh',
-    color: '#FFFFFF',
-  },
-  cardHidden: {
-    opacity: '0',
-    transform: 'translate3d(0, -60px, 0)',
-  },
-  pageHeader: {
+    background: '#EFEFF4',
     minHeight: '100vh',
-    height: 'auto',
-    display: 'inherit',
-    position: 'relative',
-    margin: '0',
-    padding: '0',
-    border: '0',
-    alignItems: 'center',
-    '&:before': {
-      background: 'rgba(0, 0, 0, 0.5)',
-    },
-    '&:before,&:after': {
-      position: 'absolute',
-      zIndex: '1',
-      width: '100%',
-      height: '100%',
-      display: 'block',
-      left: '0',
-      top: '0',
-      content: '""',
-    },
-    '& footer li a,& footer li a:hover,& footer li a:active': {
-      color: '#FFFFFF',
-    },
-    '& footer': {
-      position: 'absolute',
-      bottom: '0',
-      width: '100%',
-    },
   },
-  form: {
-    margin: '0',
+  card: {
+    background: '#fff',
+    padding: 40,
+    width: 350,
+    margin: '0 auto',
+  },
+  smallFont: {
+    fontSize: 12,
+    textDecoration: 'none',
   },
   cardHeader: {
     width: 'auto',
@@ -82,6 +55,7 @@ const styles = {
   inputIconsColor: {
     color: '#495057',
   },
+  logo: { maxWidth: '100%' },
 };
 
 export default styles;

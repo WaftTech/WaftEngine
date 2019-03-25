@@ -9,9 +9,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import Link from 'react-router-dom/Link';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import { Divider } from '@material-ui/core';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
@@ -20,46 +21,50 @@ import styles from './styles';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import Button from '../../components/CustomButtons/Button';
+import logo from '../../images/logo-wt.png';
 
-const LoginAdminPage = ({ classes, loginRequest }) => {
-  const handleSubmit = e => {
-    e.preventDefault();
-    loginRequest();
+class LoginAdminPage extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    loginRequest: PropTypes.func.isRequired,
+    // history: PropTypes.object.isRequired,
   };
 
-  const handleRedirect = () => {
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.loginRequest();
+  };
+
+  handleRedirect = () => {
     // this.props.history.push('/reset-password');
   };
 
-  return (
-    <div className={classes.pageHeader}>
+  render() {
+    const { classes } = this.props;
+    return (
       <div className={classes.container}>
-        <form className={classes.form}>
-          <UsernameInput classes={classes} />
-          <br />
-          <PasswordInput classes={classes} />
-          <div
-            className={classes.redirect}
-            onClick={handleRedirect}
-            onKeyDown={handleRedirect}
-            role="link"
-            aria-hidden
-          >
-            <h4>Forgot Password?</h4>
-          </div>
-          <Button onClick={handleSubmit} type="submit">
-            Get started
-          </Button>
-        </form>
-      </div>
-    </div>
-  );
-};
+        <div className={classes.card}>
+          <img className={classes.logo} src={logo} />
 
-LoginAdminPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-  loginRequest: PropTypes.func.isRequired,
-};
+          <h3>LOGIN</h3>
+          <form className={classes.form}>
+            <UsernameInput classes={classes} />
+            <PasswordInput classes={classes} />
+            <br />
+            <br />
+            <Link className={classes.smallFont} to="/forgot-password">
+              Forgot Password?
+            </Link>
+            <br />
+            <Button color="primary" onClick={this.handleSubmit} type="submit">
+              LOGIN
+            </Button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = null;
 
