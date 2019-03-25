@@ -79,7 +79,9 @@ const routes = [
   {
     path: '/admin/content-manage/edit/:id',
     component: ContentManageAddEdit,
+    exact: true,
   },
+
   {
     path: '/admin/content-manage',
     component: ContentManagePage,
@@ -91,6 +93,12 @@ const routes = [
     component: FaqManageAddEdit,
     exact: true,
   },
+  // {
+  //   path: '/admin/faq-manage/delete/:id',
+  //   name: 'FAQ Manage',
+  //   component: FaqManageAddEdit,
+  //   exact: true,
+  // },
   {
     path: '/admin/faq-manage/add',
     name: 'FAQ Manage',
