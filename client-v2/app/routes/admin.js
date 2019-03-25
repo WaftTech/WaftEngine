@@ -42,6 +42,11 @@ const routes = [
     exact: true,
   },
   {
+    path: '/admin/content-manage',
+    component: ContentManagePage,
+    exact: true,
+  },
+  {
     path: '/admin/module-manage',
     component: ModuleManagePage,
     exact: true,
@@ -74,15 +79,6 @@ const routes = [
   {
     path: '/admin/user-manage/add',
     component: UserManageEditPage,
-    exact: true,
-  },
-  {
-    path: '/admin/content-manage/edit/:id',
-    component: ContentManageAddEdit,
-  },
-  {
-    path: '/admin/content-manage',
-    component: ContentManagePage,
     exact: true,
   },
   {
