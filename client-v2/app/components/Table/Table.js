@@ -22,7 +22,7 @@ function CustomTable({ ...props }) {
     handlePagination,
   } = props;
   return (
-    <div className={classes.tableResponsive} style={{ marginTop: '0' }}>
+    <div className={classes.tableResponsive}>
       <Table className={classes.table}>
         {tableHead !== undefined ? (
           <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
@@ -107,5 +107,9 @@ CustomTable.propTypes = {
   }),
   handlePagination: PropTypes.func,
 };
+const styles = {
+  tableResponsive: { width: '100%' },
+  tableCell: { padding: '0px 20px 0px 10px' },
+};
 
-export default withStyles({})(CustomTable);
+export default withStyles(styles)(CustomTable);
