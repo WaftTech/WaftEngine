@@ -60,7 +60,9 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.props.loadOneRequest(this.props.match.params.id);
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOneRequest(this.props.match.params.id);
+    }
   }
 
   handleEditorChange = (e, name) => {
@@ -208,6 +210,115 @@ class AddEdit extends React.PureComponent {
             </CardFooter>
           </Card>
         </PageContent>
+          />
+          <CardBody>
+            <div>
+              <TextField
+                name="Content Name"
+                id="contents-name"
+                fullWidth
+                placeholder="name of the content"
+                inputProps={{
+                  value: one.name,
+                  onChange: this.handleChange('name'),
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                name="key"
+                id="contents-key"
+                fullWidth
+                placeholder="name of the content key"
+                inputProps={{
+                  value: one.key,
+                  onChange: this.handleChange('key'),
+                }}
+              />
+            </div>
+            <div>
+              <InputLabel style={{ color: '#AAAAAA' }}>
+                Content Description
+              </InputLabel>
+              <CKEditor
+                name="description"
+                content={one.description}
+                config={{ allowedContent: true }}
+                events={{
+                  change: e => this.handleEditorChange(e, 'description'),
+                  value: one.description,
+                }}
+              />
+            </div>
+            <div sm={12} md={6}>
+              <TextField
+                name="Published From"
+                id="contents-from-date"
+                fullWidth
+                placeholder="published from"
+                inputProps={{
+                  value: one.publish_from,
+                  onChange: this.handleChange('publish_from'),
+                }}
+              />
+            </div>
+            <div sm={12} md={6}>
+              <TextField
+                name="Published To"
+                id="contents-to-date"
+                fullWidth
+                placeholder="publish to"
+                inputProps={{
+                  value: one.publish_to,
+                  onChange: this.handleChange('publish_to'),
+                }}
+              />
+            </div>
+            <div>
+              <InputLabel style={{ color: '#AAAAAA' }}>
+                Activity Type
+              </InputLabel>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_active || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_active')}
+                    color="primary"
+                  />
+                }
+                label="Is Active"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_feature || false}
+                    onClick={this.handleCheckedChange('is_feature')}
+                    value="is_feature"
+                    color="primary"
+                  />
+                }
+                label="Is Feature"
+              />
+            </div>
+          </CardBody>
+          <CardFooter>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleSave}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.handleGoBack}
+            >
+              Back
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     );
   }

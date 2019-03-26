@@ -4,11 +4,12 @@ const multer = require('multer');
 const upload = multer({ dest: 'public/media/' });
 
 const dModule = require('../../modules/media/mediaController');
-const authenticationMiddleware = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/authentication.middleware');
 
-router.get('/:page', authenticationMiddleware.authorization, dModule.GetMedia);
-router.post('/single/:type', authenticationMiddleware.authorization, upload.array('file', 1), dModule.SaveMedia);
+router.get('/:page', authorization, dModule.GetMedia);
+router.get('/', authorization, dModule.GetMediaPagination);
+router.post('/single/:type', authorization, upload.array('file', 1), dModule.SaveMedia);
 router.get('/:id', dModule.GetMediaDetail);
-router.delete('/:id', authenticationMiddleware.authorization, dModule.DeleteMedia);
+router.delete('/:id', authorization, dModule.DeleteMedia);
 
 module.exports = router;
