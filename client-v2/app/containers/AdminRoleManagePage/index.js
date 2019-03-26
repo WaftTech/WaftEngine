@@ -73,7 +73,11 @@ export class AdminRoleManage extends React.PureComponent {
         `${is_active}`,
         <>
           <Tooltip id="tooltip-top" title="Edit Role" placement="top">
-            <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
+            <IconButton
+              className={classes.TableButton}
+              color="primary"
+              onClick={() => this.handleEdit(_id)}
+            >
               <CreateIcon />
             </IconButton>
           </Tooltip>
@@ -119,6 +123,7 @@ const withReducer = injectReducer({ key: 'adminRoleManage', reducer });
 const withSaga = injectSaga({ key: 'adminRoleManage', saga });
 
 const styles = theme => ({
+  TableButton: { padding: 8 },
   fab: {
     position: 'absolute',
     bottom: theme.spacing.unit * 3,
