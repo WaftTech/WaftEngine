@@ -164,6 +164,7 @@ export class ContentsListingPage extends React.Component {
                 'is Active',
                 'is feature',
                 'Added at',
+                'Action',
               ]}
               tableData={tableData}
               pagination={tablePagination}

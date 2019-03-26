@@ -22,6 +22,8 @@ import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import PageContent from '../../../components/PageContent/PageContent';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -191,14 +193,10 @@ class AddEdit extends React.PureComponent {
       one,
     } = this.props;
     return (
+      <React.Fragment>
+        <PageHeader> {id ? 'Edit' : 'Add'} Module</PageHeader>
+        <PageContent>
       <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center">
-          {id ? 'Edit' : 'Add'} Module
-        </Typography>
-
-        <Typography variant="h6" gutterBottom>
-          Form Details
-        </Typography>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -258,6 +256,8 @@ class AddEdit extends React.PureComponent {
           </Button>
         </div>
       </Paper>
+      </PageContent>
+      </React.Fragment>
     );
   }
 }

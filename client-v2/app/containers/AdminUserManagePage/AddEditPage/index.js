@@ -22,6 +22,8 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import PageContent from '../../../components/PageContent/PageContent';
+import PageHeader from '../../../components/PageHeader/PageHeader';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -73,75 +75,80 @@ class AddEdit extends React.PureComponent {
       one: { users, rolesNormalized },
     } = this.props;
     return (
-      <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center">
-          {id ? 'Edit' : 'Add'} User
-        </Typography>
-
-        <Typography variant="h6" gutterBottom>
-          Form Details
-        </Typography>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="email"
-              type="email"
-              label="Email"
-              value={users.email}
-              onChange={this.handleChange('email')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="name"
-              label="Name"
-              value={users.name}
-              onChange={this.handleChange('name')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="secondary"
-                  name="email_verified"
-                  checked={users.email_verified}
-                  onChange={this.handleChecked('email_verified')}
+      <React.Fragment>
+        <PageHeader> {id ? 'Edit' : 'Add'} User</PageHeader>
+        <PageContent>
+          <Paper className={classes.paper}>
+            <Typography variant="h6" gutterBottom>
+              Form Details
+            </Typography>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="email"
+                  type="email"
+                  label="Email"
+                  value={users.email}
+                  onChange={this.handleChange('email')}
+                  fullWidth
                 />
-              }
-              label="Email Verified"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {users.roles.map(each => (
-              <FormControlLabel
-                key={each}
-                control={
-                  <Checkbox color="secondary" checked onChange={() => null} />
-                }
-                label={rolesNormalized[each].role_title}
-              />
-            ))}
-          </Grid>
-        </Grid>
-        <div className={classes.buttons}>
-          <Button onClick={this.handleBack} className={classes.button}>
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSave}
-            className={classes.button}
-          >
-            Save
-          </Button>
-        </div>
-      </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="name"
+                  label="Name"
+                  value={users.name}
+                  onChange={this.handleChange('name')}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      name="email_verified"
+                      checked={users.email_verified}
+                      onChange={this.handleChecked('email_verified')}
+                    />
+                  }
+                  label="Email Verified"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                {users.roles.map(each => (
+                  <FormControlLabel
+                    key={each}
+                    control={
+                      <Checkbox
+                        color="secondary"
+                        checked
+                        onChange={() => null}
+                      />
+                    }
+                    label={rolesNormalized[each].role_title}
+                  />
+                ))}
+              </Grid>
+            </Grid>
+            <div className={classes.buttons}>
+              <Button onClick={this.handleBack} className={classes.button}>
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSave}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </div>
+          </Paper>
+        </PageContent>
+      </React.Fragment>
     );
   }
 }

@@ -21,7 +21,7 @@ import styles from './styles';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import Button from '../../components/CustomButtons/Button';
-import logo from '../../images/logo-wt.png';
+import logo from '../../images/logo.png';
 
 class LoginAdminPage extends React.Component {
   static propTypes = {
