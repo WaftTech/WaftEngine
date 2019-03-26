@@ -66,26 +66,28 @@ export class AdminUserManagePage extends React.PureComponent {
       all: { data, page, size, totaldata },
     } = this.props;
     const tablePagination = { page, size, totaldata };
-    const tableData = data.map(({ _id, email, name, roles, is_active }) => [
-      email,
-      name,
-      roles.map(each => each.role_title).join(', '),
-      `${is_active}`,
-      <>
-        <Tooltip id="tooltip-top" title="Edit User" placement="top">
-          <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
-            <CreateIcon />
-          </IconButton>
-        </Tooltip>
-      </>,
-    ]);
+    const tableData = data.map(
+      ({ _id, email, name, roles, email_verified }) => [
+        email,
+        name,
+        roles.map(each => each.role_title).join(', '),
+        `${email_verified}`,
+        <>
+          <Tooltip id="tooltip-top" title="Edit User" placement="top">
+            <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
+              <CreateIcon />
+            </IconButton>
+          </Tooltip>
+        </>,
+      ],
+    );
     return (
       <>
         <PageHeader>User Manage</PageHeader>
         <PageContent>
           <Paper className={classes.root}>
             <Table
-              tableHead={['Email', 'Name', 'Roles', 'Is Active', 'Action']}
+              tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}

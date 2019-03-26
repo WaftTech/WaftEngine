@@ -10,6 +10,7 @@ import ContentManagePage from '../containers/AdminContentListingPage/Loadable';
 import ContentManageAddEdit from '../containers/AdminContentListingPage/AddEditPage/Loadable';
 import FaqManagePage from '../containers/FAQManagePage/Loadable';
 import FaqManageAddEdit from '../containers/FAQManagePage/AddEditPage';
+import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
 
 const routes = [
   {
@@ -82,28 +83,11 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/content-manage/edit/:id',
-    component: ContentManageAddEdit,
-    exact: true,
-  },
-
-  {
-    path: '/admin/content-manage',
-    component: ContentManagePage,
-    exact: true,
-  },
-  {
     path: '/admin/faq-manage/edit/:id',
     name: 'FAQ Manage',
     component: FaqManageAddEdit,
     exact: true,
   },
-  // {
-  //   path: '/admin/faq-manage/delete/:id',
-  //   name: 'FAQ Manage',
-  //   component: FaqManageAddEdit,
-  //   exact: true,
-  // },
   {
     path: '/admin/faq-manage/add',
     name: 'FAQ Manage',
@@ -114,6 +98,11 @@ const routes = [
     path: '/admin/faq-manage',
     name: 'FAQ Manage',
     component: FaqManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/media-manage',
+    component: MediaManagePage,
     exact: true,
   },
 ];
