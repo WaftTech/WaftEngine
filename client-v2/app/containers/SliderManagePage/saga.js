@@ -12,24 +12,29 @@ import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
-import { makeSelectOne } from './selectors';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
-  let query = '';
+  let pageNumber = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
-      query = `${query}&${each}=${action.payload[each]}`;
-      return null;
-    });
+    pageNumber = `&page=${action.payload.page}&size=${
+      action.payload.rowsPerPage
+    }`;
   }
   yield call(
     Api.get(
-      `contents?${query}`,
+      `slider?${pageNumber}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
     ),
+  );
+}
+function* loadMedia(action) {
+  const token = yield select(makeSelectToken());
+
+  yield call(
+    Api.get('media', actions.loadAllSuccess, actions.loadAllFailure, token),
   );
 }
 
@@ -37,7 +42,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `contents/${action.payload}`,
+      `slider/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token,
@@ -47,19 +52,21 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/admin/content-manage'));
+  yield put(push('/admin/slider-manage'));
 }
 
-function* addEdit() {
+function* addEdit(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const data = yield select(makeSelectOne());
+  const { ...data } = action.payload;
+  // const files = { ProfileImage, ProfileImage1 };
   yield fork(
-    Api.post(
-      'contents',
+    Api.multipartPost(
+      'slider',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
+      {},
       token,
     ),
   );
@@ -71,4 +78,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
+  yield takeLatest(types.LOAD_MEDIA_REQUEST, loadMedia);
 }

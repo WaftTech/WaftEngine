@@ -5,6 +5,48 @@ const mediaSch = require('./mediaShema');
 const mediaController = {};
 const internal = {};
 
+mediaController.GetMediaPagination = async (req, res, next) => {
+  try {
+    const size_default = 10;
+    let page;
+    let size;
+    let sortq;
+    let searchq;
+    let populate;
+    let selectq;
+    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+      page = Math.abs(req.query.page);
+    } else {
+      page = 1;
+    }
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
+    if (req.query.sort) {
+      let sortfield = req.query.sort.slice(1);
+      let sortby = req.query.sort.charAt(0);
+      if (sortby == 1 && !isNaN(sortby) && sortfield) {
+        //one is ascending
+        sortq = sortfield;
+      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+        //zero is descending
+        sortq = '-' + sortfield;
+      } else {
+        sortq = '';
+      }
+    }
+    selectq = 'path field_name original_name mimetype size encoding added_at';
+
+    searchq = { is_deleted: false };
+    populate = '';
+    let media = await otherHelper.getquerySendResponse(mediaSch, page, size, sortq, searchq, selectq, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
 mediaController.GetMedia = async (req, res, next) => {
   const page = parseInt(req.params.page);
   const medias = await mediaSch
