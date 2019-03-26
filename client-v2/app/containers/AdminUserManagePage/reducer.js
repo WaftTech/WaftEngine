@@ -15,14 +15,21 @@ export const initialState = {
     msg: '',
   },
   one: {
-    user: {},
+    users: {
+      email: '',
+      name: '',
+      email_verified: false,
+      roles: [],
+    },
     roles: [],
+    rolesNormalized: {},
   },
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const adminUserManagePageReducer = (state = initialState, action) =>
   produce(state, draft => {
+    const normalizedData = {};
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
@@ -34,7 +41,11 @@ const adminUserManagePageReducer = (state = initialState, action) =>
         draft.all = action.payload;
         break;
       case types.LOAD_ONE_SUCCESS:
-        draft.one = action.payload.data;
+        action.payload.data.roles.map(each => {
+          normalizedData[each._id] = each;
+          return null;
+        });
+        draft.one = { ...action.payload.data, rolesNormalized: normalizedData };
         break;
       case types.DEFAULT_ACTION:
         break;
