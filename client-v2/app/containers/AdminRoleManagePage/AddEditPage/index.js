@@ -22,6 +22,8 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import PageContent from '../../../components/PageContent/PageContent';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -69,63 +71,61 @@ class AddEdit extends React.PureComponent {
       one,
     } = this.props;
     return (
-      <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center">
-          {id ? 'Edit' : 'Add'} Role
-        </Typography>
-
-        <Typography variant="h6" gutterBottom>
-          Form Details
-        </Typography>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="role_title"
-              label="Role Title"
-              value={one.role_title}
-              onChange={this.handleChange('role_title')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="description"
-              label="Descrition"
-              value={one.description}
-              onChange={this.handleChange('description')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="secondary"
-                  name="is_active"
-                  checked={one.is_active}
-                  onChange={this.handleChecked('is_active')}
+      <React.Fragment>
+        <PageHeader> {id ? 'Edit' : 'Add'} Role</PageHeader>
+        <PageContent>
+          <Paper className={classes.paper}>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="role_title"
+                  label="Role Title"
+                  value={one.role_title}
+                  onChange={this.handleChange('role_title')}
+                  fullWidth
                 />
-              }
-              label="Is Active"
-            />
-          </Grid>
-        </Grid>
-        <div className={classes.buttons}>
-          <Button onClick={this.handleBack} className={classes.button}>
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSave}
-            className={classes.button}
-          >
-            Save
-          </Button>
-        </div>
-      </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="description"
+                  label="Descrition"
+                  value={one.description}
+                  onChange={this.handleChange('description')}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      name="is_active"
+                      checked={one.is_active}
+                      onChange={this.handleChecked('is_active')}
+                    />
+                  }
+                  label="Is Active"
+                />
+              </Grid>
+            </Grid>
+            <div className={classes.buttons}>
+              <Button onClick={this.handleBack} className={classes.button}>
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSave}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </div>
+          </Paper>
+        </PageContent>
+      </React.Fragment>
     );
   }
 }
