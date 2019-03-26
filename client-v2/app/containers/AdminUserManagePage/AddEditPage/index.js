@@ -44,16 +44,16 @@ class AddEdit extends React.PureComponent {
 
   handleChange = name => event => {
     event.persist();
-    const tempUser = { ...this.props.one.user };
+    const tempUser = { ...this.props.one.users };
     tempUser[name] = event.target.value;
-    this.props.setOneValue({ key: 'user', value: tempUser });
+    this.props.setOneValue({ key: 'users', value: tempUser });
   };
 
   handleChecked = name => event => {
     event.persist();
     const tempUser = { ...this.props.one.user };
     tempUser[name] = event.target.checked;
-    this.props.setOneValue({ key: 'user', value: tempUser });
+    this.props.setOneValue({ key: 'users', value: tempUser });
   };
 
   handleSave = () => {
@@ -70,9 +70,8 @@ class AddEdit extends React.PureComponent {
       match: {
         params: { id },
       },
-      one: { user, roles },
+      one: { users, rolesNormalized },
     } = this.props;
-    console.log(roles, 'need role name for role display');
     return (
       <Paper className={classes.paper}>
         <Typography component="h1" variant="h4" align="center">
@@ -89,7 +88,7 @@ class AddEdit extends React.PureComponent {
               id="email"
               type="email"
               label="Email"
-              value={user.email}
+              value={users.email}
               onChange={this.handleChange('email')}
               fullWidth
             />
@@ -99,7 +98,7 @@ class AddEdit extends React.PureComponent {
               required
               id="name"
               label="Name"
-              value={user.name}
+              value={users.name}
               onChange={this.handleChange('name')}
               fullWidth
             />
@@ -110,12 +109,23 @@ class AddEdit extends React.PureComponent {
                 <Checkbox
                   color="secondary"
                   name="email_verified"
-                  checked={user.email_verified}
+                  checked={users.email_verified}
                   onChange={this.handleChecked('email_verified')}
                 />
               }
               label="Email Verified"
             />
+          </Grid>
+          <Grid item xs={12}>
+            {users.roles.map(each => (
+              <FormControlLabel
+                key={each}
+                control={
+                  <Checkbox color="secondary" checked onChange={() => null} />
+                }
+                label={rolesNormalized[each].role_title}
+              />
+            ))}
           </Grid>
         </Grid>
         <div className={classes.buttons}>

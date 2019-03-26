@@ -61,11 +61,11 @@ export class AdminMediaManagePage extends React.Component {
   }
 
   handleAdd = () => {
-    this.props.push('/admin/media-manage/add');
+    // this.props.push('/admin/media-manage/add');
   };
 
-  handleEdit = id => {
-    this.props.push(`/admin/media-manage/edit/${id}`);
+  handleDelete = id => {
+    // this.props.push(`/admin/media-manage/edit/${id}`);
   };
 
   handleQueryChange = e => {
@@ -109,14 +109,14 @@ export class AdminMediaManagePage extends React.Component {
         <>
           <Tooltip
             id="tooltip-top"
-            title="Edit Task"
+            title="Delete Media"
             placement="top"
             classes={{ tooltip: classes.tooltip }}
           >
             <IconButton
               aria-label="Edit"
               className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
+              onClick={() => this.handleDelete(_id)}
             >
               <Edit
                 className={`${classes.tableActionButtonIcon} ${classes.edit}`}

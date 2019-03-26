@@ -41,3 +41,16 @@ export const loadMediaFailure = payload => ({
   type: types.LOAD_MEDIA_FAILURE,
   payload,
 });
+
+export const logoutRequest = payload => ({
+  type: types.LOGOUT_REQUEST,
+  payload,
+});
+export const logoutSuccess = payload => ({
+  type: types.LOGOUT_SUCCESS,
+  payload,
+});
+export const logoutFailure = payload => ({
+  type: types.LOGOUT_FAILURE,
+  payload,
+});
