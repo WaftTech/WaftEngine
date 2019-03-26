@@ -58,7 +58,9 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.props.loadOneRequest(this.props.match.params.id);
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOneRequest(this.props.match.params.id);
+    }
   }
 
   handleEditorChange = (e, name) => {
@@ -126,6 +128,7 @@ class AddEdit extends React.PureComponent {
               <CKEditor
                 name="description"
                 content={one.description}
+                config={{ allowedContent: true }}
                 events={{
                   change: e => this.handleEditorChange(e, 'description'),
                   value: one.description,
