@@ -11,6 +11,8 @@ import ContentManageAddEdit from '../containers/AdminContentListingPage/AddEditP
 import FaqManagePage from '../containers/FAQManagePage/Loadable';
 import FaqManageAddEdit from '../containers/FAQManagePage/AddEditPage';
 import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
+import SliderManagePage from '../containers/SliderManagePage/Loadable';
+import SliderManageAddEdit from '../containers/SliderManagePage/AddEditPage/Loadable';
 
 const routes = [
   {
@@ -103,6 +105,20 @@ const routes = [
   {
     path: '/admin/media-manage',
     component: MediaManagePage,
+  },
+  {
+    path: '/admin/slider-manage/edit/:id',
+    component: SliderManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/slider-manage/add',
+    component: SliderManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/slider-manage',
+    component: SliderManagePage,
     exact: true,
   },
 ];
