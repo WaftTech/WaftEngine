@@ -89,22 +89,12 @@ export class AdminMediaManagePage extends React.Component {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({
-        name,
-        key,
-        publish_from,
-        publish_to,
-        is_active,
-        is_feature,
-        added_at,
+      ({ encoding, mimetype, path, size: fileSize, added_at, _id }) => [
         _id,
-      }) => [
-        name,
-        key,
-        moment(publish_from).format('MMM Do YY'),
-        moment(publish_to).format('MMM Do YY'),
-        `${is_active}`,
-        `${is_feature}`,
+        encoding,
+        mimetype,
+        path,
+        `${fileSize}`,
         moment(added_at).format('MMM Do YY'),
         <>
           <Tooltip
@@ -157,12 +147,11 @@ export class AdminMediaManagePage extends React.Component {
           >
             <Table
               tableHead={[
-                'Name',
-                'Key',
-                'Pub From',
-                'Pub To',
-                'is Active',
-                'is feature',
+                'id',
+                'encoding',
+                'mimetype',
+                'path',
+                'size',
                 'Added at',
               ]}
               tableData={tableData}
