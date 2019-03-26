@@ -29,6 +29,12 @@ export const makeSelectUser = () =>
     state => state.user,
   );
 
+export const makeSelectUserIsAdmin = () =>
+  createSelector(
+    makeSelectUser(),
+    state => state.isAdmin,
+  );
+
 export const makeSelectContent = () =>
   createSelector(
     selectGlobal,

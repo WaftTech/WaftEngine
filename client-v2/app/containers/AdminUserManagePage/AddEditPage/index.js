@@ -110,7 +110,7 @@ class AddEdit extends React.PureComponent {
                   color="secondary"
                   name="email_verified"
                   checked={users.email_verified}
-                  onChange={this.handleChecked('email_verified')}
+                  onChange={() => null}
                 />
               }
               label="Email Verified"

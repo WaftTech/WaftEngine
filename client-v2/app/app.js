@@ -60,6 +60,7 @@ if (tokenWithBearer) {
         name: decoded.name,
         avatar: decoded.avatar,
         email: decoded.email,
+        roles: decoded.roles,
       };
       store.dispatch(setToken(tokenWithBearer));
       store.dispatch(setUser(user));

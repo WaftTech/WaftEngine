@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 // import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -31,6 +33,7 @@ import SliderIcon from '@material-ui/icons/Slideshow';
 
 import LayersIcon from '@material-ui/icons/Layers';
 // import { mainListItems, secondaryListItems } from './listItems';
+import { logoutRequest } from '../../containers/App/actions';
 
 import routes from '../../routes/admin';
 
@@ -246,7 +249,7 @@ const mainListItems = (
   </List>
 );
 
-const AdminLayout = ({ classes }) => {
+const AdminLayout = ({ classes, logoutRequest: logout }) => {
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const anchorOpen = Boolean(anchorEl);
@@ -255,6 +258,11 @@ const AdminLayout = ({ classes }) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
     setAnchorEl(null);
   };
 
@@ -314,7 +322,7 @@ const AdminLayout = ({ classes }) => {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Dashboard</MenuItem>
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>
@@ -346,6 +354,17 @@ const AdminLayout = ({ classes }) => {
 
 AdminLayout.propTypes = {
   classes: PropTypes.object.isRequired,
+  logoutRequest: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(AdminLayout);
+const withConnect = connect(
+  null,
+  { logoutRequest },
+);
+
+const withStyle = withStyles(styles);
+
+export default compose(
+  withConnect,
+  withStyle,
+)(AdminLayout);
