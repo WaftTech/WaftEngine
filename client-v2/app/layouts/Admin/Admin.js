@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
@@ -11,30 +11,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import List from '@material-ui/core/List';
-// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-// import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ExtensionIcon from '@material-ui/icons/Extension';
-import FormatSizeIcon from '@material-ui/icons/FormatSize';
-import PeopleIcon from '@material-ui/icons/People';
-import InsertChartIcon from '@material-ui/icons/InsertChart';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import Logo from '../../images/logo.png';
-import SliderIcon from '@material-ui/icons/Slideshow';
-
-import LayersIcon from '@material-ui/icons/Layers';
-// import { mainListItems, secondaryListItems } from './listItems';
+import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
+import Logo from '../../images/logo.png';
 
 import routes from '../../routes/admin';
 
@@ -59,7 +44,7 @@ const styles = theme => ({
   toolbar: {
     paddingRight: 24, // keep right padding `when drawer closed
   },
-  imgFluid: { maxWidth:'100%'},
+  imgFluid: { maxWidth: '100%' },
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
@@ -141,115 +126,6 @@ const styles = theme => ({
     '& a:hover span, & a:hover svg': { color: '#fff' },
   },
 });
-
-const mainListItems = (
-  <List>
-    <Link to="/admin/dashboard">
-      <ListItem button>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/role-manage">
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Role Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/module-manage">
-      <ListItem button>
-        <ListItemIcon>
-          <ExtensionIcon />
-        </ListItemIcon>
-        <ListItemText primary="Module Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/user-manage">
-      <ListItem button>
-        <ListItemIcon>
-          <ExtensionIcon />
-        </ListItemIcon>
-        <ListItemText primary="User Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/content-manage">
-      <ListItem
-        style={{
-          textDecoration: 'none',
-          fontSize: '0.8em',
-          textTransform: 'uppercase',
-        }}
-      >
-        <ListItemIcon>
-          <FormatSizeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Content Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/faq-manage">
-      <ListItem
-        style={{
-          textDecoration: 'none',
-          fontSize: '0.8em',
-          textTransform: 'uppercase',
-        }}
-      >
-        <ListItemIcon>
-          <QuestionAnswerIcon />
-        </ListItemIcon>
-        <ListItemText primary="FAQ Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/media-manage">
-      <ListItem
-        style={{
-          textDecoration: 'none',
-          fontSize: '0.8em',
-          textTransform: 'uppercase',
-        }}
-      >
-        <ListItemIcon>
-          <QuestionAnswerIcon />
-        </ListItemIcon>
-        <ListItemText primary="Media Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/admin/slider-manage">
-      <ListItem
-        style={{
-          textDecoration: 'none',
-          fontSize: '0.8em',
-          textTransform: 'uppercase',
-        }}
-      >
-        <ListItemIcon>
-          <SliderIcon />
-        </ListItemIcon>
-        <ListItemText primary="Slider Manage" />
-      </ListItem>
-    </Link>
-    <Link to="/">
-      <ListItem>
-        <ListItemIcon>
-          <InsertChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reports" />
-      </ListItem>
-    </Link>
-    <Link to="/">
-      <ListItem>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
-      </ListItem>
-    </Link>
-  </List>
-);
 
 const AdminLayout = ({ classes, logoutRequest: logout }) => {
   const [open, setOpen] = useState(true);
@@ -339,13 +215,15 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-        <img className={classes.imgFluid} src={Logo} alt="waft engine" />
+          <img className={classes.imgFluid} src={Logo} alt="waft engine" />
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <div className={classes.drawerText}> {mainListItems}</div>
+        <div className={classes.drawerText}>
+          <MainListItems />
+        </div>
       </Drawer>
       <main className={classes.content}>
         {/* <div className={classes.appBarSpacer} /> */}
