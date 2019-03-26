@@ -53,13 +53,13 @@ function* redirectOnSuccess() {
 function* addEdit() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const { user } = yield select(makeSelectOne());
+  const { users } = yield select(makeSelectOne());
   yield fork(
     Api.post(
       'user',
       actions.addEditSuccess,
       actions.addEditFailure,
-      user,
+      users,
       token,
     ),
   );

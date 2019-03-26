@@ -32,16 +32,16 @@ export const loadOneFailure = payload => ({
   payload,
 });
 
-export const addEditRequest = payload => ({
-  type: types.ADD_EDIT_REQUEST,
+export const addMediaRequest = payload => ({
+  type: types.ADD_MEDIA_REQUEST,
   payload,
 });
-export const addEditSuccess = payload => ({
-  type: types.ADD_EDIT_SUCCESS,
+export const addMediaSuccess = payload => ({
+  type: types.ADD_MEDIA_SUCCESS,
   payload,
 });
-export const addEditFailure = payload => ({
-  type: types.ADD_EDIT_FAILURE,
+export const addMediaFailure = payload => ({
+  type: types.ADD_MEDIA_FAILURE,
   payload,
 });
 
