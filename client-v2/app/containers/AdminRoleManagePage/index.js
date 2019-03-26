@@ -85,7 +85,7 @@ export class AdminRoleManage extends React.PureComponent {
       ],
     );
     return (
-      <>
+      <React.Fragment>
         <PageHeader>Role Manage</PageHeader>
         <PageContent>
           <Paper className={classes.root}>
@@ -105,7 +105,7 @@ export class AdminRoleManage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </PageContent>
-      </>
+      </React.Fragment>
     );
   }
 }

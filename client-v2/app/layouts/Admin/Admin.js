@@ -25,6 +25,7 @@ import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import PeopleIcon from '@material-ui/icons/People';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import Logo from '../../images/logo.png';
 
 import LayersIcon from '@material-ui/icons/Layers';
 // import { mainListItems, secondaryListItems } from './listItems';
@@ -52,6 +53,7 @@ const styles = theme => ({
   toolbar: {
     paddingRight: 24, // keep right padding `when drawer closed
   },
+  imgFluid: { maxWidth:'100%'},
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
@@ -264,6 +266,7 @@ const AdminLayout = ({ classes }) => {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+        <img className={classes.imgFluid} src={Logo} alt="waft engine" />
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
