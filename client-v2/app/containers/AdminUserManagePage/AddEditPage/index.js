@@ -79,6 +79,9 @@ class AddEdit extends React.PureComponent {
         <PageHeader> {id ? 'Edit' : 'Add'} User</PageHeader>
         <PageContent>
           <Paper className={classes.paper}>
+            <Typography variant="h6" gutterBottom>
+              Form Details
+            </Typography>
             <Grid container spacing={24}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -86,7 +89,7 @@ class AddEdit extends React.PureComponent {
                   id="email"
                   type="email"
                   label="Email"
-                  value={user.email}
+                  value={users.email}
                   onChange={this.handleChange('email')}
                   fullWidth
                 />
@@ -96,7 +99,7 @@ class AddEdit extends React.PureComponent {
                   required
                   id="name"
                   label="Name"
-                  value={user.name}
+                  value={users.name}
                   onChange={this.handleChange('name')}
                   fullWidth
                 />
@@ -107,12 +110,27 @@ class AddEdit extends React.PureComponent {
                     <Checkbox
                       color="secondary"
                       name="email_verified"
-                      checked={user.email_verified}
+                      checked={users.email_verified}
                       onChange={this.handleChecked('email_verified')}
                     />
                   }
                   label="Email Verified"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                {users.roles.map(each => (
+                  <FormControlLabel
+                    key={each}
+                    control={
+                      <Checkbox
+                        color="secondary"
+                        checked
+                        onChange={() => null}
+                      />
+                    }
+                    label={rolesNormalized[each].role_title}
+                  />
+                ))}
               </Grid>
             </Grid>
             <div className={classes.buttons}>
@@ -131,75 +149,6 @@ class AddEdit extends React.PureComponent {
           </Paper>
         </PageContent>
       </React.Fragment>
-      <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center">
-          {id ? 'Edit' : 'Add'} User
-        </Typography>
-
-        <Typography variant="h6" gutterBottom>
-          Form Details
-        </Typography>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="email"
-              type="email"
-              label="Email"
-              value={users.email}
-              onChange={this.handleChange('email')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="name"
-              label="Name"
-              value={users.name}
-              onChange={this.handleChange('name')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="secondary"
-                  name="email_verified"
-                  checked={users.email_verified}
-                  onChange={this.handleChecked('email_verified')}
-                />
-              }
-              label="Email Verified"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {users.roles.map(each => (
-              <FormControlLabel
-                key={each}
-                control={
-                  <Checkbox color="secondary" checked onChange={() => null} />
-                }
-                label={rolesNormalized[each].role_title}
-              />
-            ))}
-          </Grid>
-        </Grid>
-        <div className={classes.buttons}>
-          <Button onClick={this.handleBack} className={classes.button}>
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSave}
-            className={classes.button}
-          >
-            Save
-          </Button>
-        </div>
-      </Paper>
     );
   }
 }
