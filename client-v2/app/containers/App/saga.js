@@ -16,7 +16,7 @@ function* loadContent(action) {
 function* loadMedia(action) {
   yield call(
     Api.get(
-      `media/_id/${action.payload}`,
+      `media/${action.payload}`,
       actions.loadMediaSuccess,
       actions.loadMediaFailure,
     ),
