@@ -13,6 +13,7 @@ import FaqManageAddEdit from '../containers/FAQManagePage/AddEditPage';
 import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
 import SliderManagePage from '../containers/SliderManagePage/Loadable';
 import SliderManageAddEdit from '../containers/SliderManagePage/AddEditPage/Loadable';
+import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
 
 const routes = [
   {
@@ -119,6 +120,11 @@ const routes = [
   {
     path: '/admin/slider-manage',
     component: SliderManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/blog-manage',
+    component: BlogManagePage,
     exact: true,
   },
 ];
