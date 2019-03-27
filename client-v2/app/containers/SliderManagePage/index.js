@@ -14,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Edit from '@material-ui/icons/Edit';
-import Close from '@material-ui/icons/Close';
+// import Close from '@material-ui/icons/Close';
 
 // core components
 import CustomInput from '@material-ui/core/Input';
@@ -57,31 +57,38 @@ export class SliderManagePage extends React.Component {
       size: PropTypes.number.isRequired,
       totaldata: PropTypes.number.isRequired,
     }),
-  }
+  };
+
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
   }
+
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/slider-manage/add');
   };
+
   handleEdit = id => {
     this.props.push(`/admin/slider-manage/edit/${id}`);
   };
+
   handleQueryChange = e => {
     e.persist();
     this.props.setQueryValue({ key: e.target.name, value: e.target.value });
-  }
+  };
+
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
   };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
-  handleDelete = id => {
-    // shoe modal && api call
-    // this.props.history.push(`/wt/contents-manage/edit/${id}`);
-  };
+
+  // handleDelete = id => {
+  //   // shoe modal && api call
+  //   // this.props.history.push(`/wt/contents-manage/edit/${id}`);
+  // };
 
   render() {
     const { classes } = this.props;
@@ -89,26 +96,39 @@ export class SliderManagePage extends React.Component {
       all: { data, page, size, totaldata },
       query,
     } = this.props;
-    const tablePagination = {page, size, totaldata};
-    const tableData = data.map(({ slider_name, slider_key, images, added_at, _id }) => [
-      slider_name,
-      slider_key,
-      images.length,
-      moment(added_at).format('MMM Do YY'),
+    const tablePagination = { page, size, totaldata };
+    const tableData = data.map(
+      ({ slider_name, slider_key, images, added_at, _id }) => [
+        slider_name,
+        slider_key,
+        images.length,
+        moment(added_at).format('MMM Do YY'),
 
-      <React.Fragment>
-        <Tooltip id="tooltip-top" title="Edit Task" placement="top" classes={{ tooltip: classes.tooltip }}>
-          <IconButton aria-label="Edit" className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
-            <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
-          </IconButton>
-        </Tooltip>
-        <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
-          <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
-            <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
-          </IconButton>
-        </Tooltip>
-      </React.Fragment>,
-    ]);
+        <React.Fragment>
+          <Tooltip
+            id="tooltip-top"
+            title="Edit Task"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="Edit"
+              className={classes.tableActionButton}
+              onClick={() => this.handleEdit(_id)}
+            >
+              <Edit
+                className={`${classes.tableActionButtonIcon} ${classes.edit}`}
+              />
+            </IconButton>
+          </Tooltip>
+          {/* <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+            <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
+              <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+            </IconButton>
+          </Tooltip> */}
+        </React.Fragment>,
+      ],
+    );
     return (
       <>
         <PageHeader>Slider Manage</PageHeader>
@@ -139,12 +159,7 @@ export class SliderManagePage extends React.Component {
             elevation={0}
           >
             <Table
-              tableHead={[
-                'Slider Name',
-                'Slider Key',
-                'Images',
-                'Added at',
-              ]}
+              tableHead={['Slider Name', 'Slider Key', 'Images', 'Added at']}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}
