@@ -25,7 +25,7 @@ function App() {
     <>
       <Switch>
         <AdminRoute path="/admin" component={RoutesAdmin} />
-        <Route component={RoutesPublic} />
+        <Route path="/" component={RoutesPublic} />
       </Switch>
       <GlobalStyle />
     </>

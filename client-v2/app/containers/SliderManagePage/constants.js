@@ -23,6 +23,7 @@ export const ADD_EDIT_FAILURE = 'app/SliderManagePage/ADD_EDIT_FAILURE';
 export const SET_QUERY_VALUE = 'app/SliderManagePage/SET_QUERY_REQUEST';
 export const SET_ONE_VALUE = 'app/SliderManagePage/SET_ONE_VALUE';
 export const CLEAR_QUERY = 'app/SliderManagePage/CLEAR_QUERY';
+export const CLEAR_ONE = 'app/SliderManagePage/CLEAR_ONE';
 
 export const DELETE_ONE_REQUEST = 'app/SliderManagePage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/SliderManagePage/DELETE_ONE_SUCCESS';
