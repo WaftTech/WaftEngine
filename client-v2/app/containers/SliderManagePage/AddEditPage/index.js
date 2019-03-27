@@ -223,9 +223,9 @@ class AddEdit extends React.PureComponent {
             {one.images.map((each, index) => (
               <div key={`${each._id}-media-${index}`}>
                 {each.image ? (
-                  <div onClick={this.handleSetImage(index)}>
+                  <Button onClick={this.handleSetImage(index)}>
                     <MediaElement mediaKey={each.image} />
-                  </div>
+                  </Button>
                 ) : (
                   <Fab color="primary" onClick={this.handleSetImage(index)}>
                     Add Image
@@ -237,7 +237,10 @@ class AddEdit extends React.PureComponent {
                   value={each.caption}
                   onChange={this.handleImageCaptionChange(index)}
                 />
-                <Fab color="primary" onClick={() => this.handleRemoveSlide(index)}> 
+                <Fab
+                  color="primary"
+                  onClick={() => this.handleRemoveSlide(index)}
+                >
                   <DeleteIcon />
                 </Fab>
               </div>
