@@ -12,6 +12,7 @@ import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
+import { makeSelectOne } from './selectors';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
@@ -32,9 +33,20 @@ function* loadAll(action) {
 }
 function* loadMedia(action) {
   const token = yield select(makeSelectToken());
-
+  let query = '';
+  if (action.payload) {
+    Object.keys(action.payload).map(each => {
+      query = `${query}&${each}=${action.payload[each]}`;
+      return null;
+    });
+  }
   yield call(
-    Api.get('media', actions.loadAllSuccess, actions.loadAllFailure, token),
+    Api.get(
+      `media?${query}`,
+      actions.loadMediaSuccess,
+      actions.loadMediaFailure,
+      token,
+    ),
   );
 }
 
@@ -55,18 +67,16 @@ function* redirectOnSuccess() {
   yield put(push('/admin/slider-manage'));
 }
 
-function* addEdit(action) {
+function* addEdit() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const { ...data } = action.payload;
-  // const files = { ProfileImage, ProfileImage1 };
+  const data = yield select(makeSelectOne());
   yield fork(
-    Api.multipartPost(
+    Api.post(
       'slider',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
-      {},
       token,
     ),
   );
