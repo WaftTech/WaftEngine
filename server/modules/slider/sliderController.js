@@ -38,10 +38,10 @@ sliderController.GetSlider = async (req, res, next) => {
       }
     }
     populate = [
-      {
-        path: 'images.image',
-        select: '_id media_image original_name filename size',
-      },
+      // {
+      //   path: 'images.image',
+      //   select: '_id media_image original_name filename size',
+      // },
     ];
 
     selectq = 'slider_name slider_key images added_by added_at';
