@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) =>
         draft.query = initialState.query;
         break;
       case types.LOAD_ALL_SUCCESS:
-        draft.all = action.payload.data;
+        draft.all = action.payload;
         break;
 
       case types.LOAD_ONE_SUCCESS:

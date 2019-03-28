@@ -1,53 +1,32 @@
-import React, { Component } from 'react';
-import { createStructuredSelector } from 'reselect';
+import React from 'react';
+import PropTypes from 'prop-types';
+import CKEditor from 'react-ckeditor-component';
 import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import Dropzone from 'react-dropzone';
-// import Dropdown from 'react-dropdown'
-// import 'react-dropdown/style.css'
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
+import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+// core components
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardBody from '@material-ui/core/CardContent';
+import CardFooter from '@material-ui/core/CardActions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import TagFacesIcon from '@material-ui/icons/TagFaces';
-// core components
-import GridItem from 'components/Grid/GridItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import GridContainer from 'components/Grid/GridContainer';
-import CustomInput from 'components/CustomInput/CustomInput';
-import Button from 'components/CustomButtons/Button';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
-import CardFooter from 'components/Card/CardFooter';
 import reducer from '../reducer';
 import saga from '../saga';
-import CKEditor from 'react-ckeditor-component';
-import Chip from '@material-ui/core/Chip';
-import { makeSelectOne, makeSelectCategory } from '../selectors';
-import { loadOneRequest, addEditRequest, loadCategoryRequest } from '../actions';
-import { TYPE, IMAGE_BASE } from '../../App/constants';
-import defaultImage from 'assets/img/logo.svg';
+import { makeSelectOne } from '../selectors';
+import * as mapDispatchToProps from '../actions';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import PageContent from '../../../components/PageContent/PageContent';
 
-const styles = theme => ({
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: { margin: theme.spacing.unit / 2 },
+const styles = {
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
     margin: '0',
@@ -64,309 +43,172 @@ const styles = theme => ({
     marginBottom: '3px',
     textDecoration: 'none',
   },
-});
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
 };
 
-class AddEdit extends Component {
-  state = {
-    chipData: [{ key: 0, label: 'Angular' }, { key: 1, label: 'jQuery' }, { key: 2, label: 'Polymer' }, { key: 3, label: 'React' }, { key: 4, label: 'Vue.js' }],
+class AddEdit extends React.PureComponent {
+  static propTypes = {
+    loadOneRequest: PropTypes.func.isRequired,
+    addEditRequest: PropTypes.func.isRequired,
+    setOneValue: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.object,
+    }),
+    // classes: PropTypes.object.isRequired,
+    one: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
+  };
 
-    data: {
-      title: '',
-      description: '',
-      summary: '',
-      category: {},
-      tags: [],
-      keywords: [],
-      published_on: '',
-      is_published: false,
-      is_active: false,
-      image: null,
-    },
-    images: {
-      image: defaultImage,
-    },
-    categoryId: '',
-    tempTag: '',
+  componentDidMount() {
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOneRequest(this.props.match.params.id);
+    }
+  }
+
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.props.setOneValue({ key: name, value: newContent });
+  };
+
+  handleCheckedChange = name => event => {
+    event.persist();
+    this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
   handleChange = name => event => {
     event.persist();
-    this.setState(state => ({
-      data: { ...state.data, [name]: event.target.value },
-    }));
-  };
-  handleCheckedChange = name => event => {
-    event.persist();
-    this.setState(state => ({
-      data: { ...state.data, [name]: event.target.checked },
-    }));
-  };
-
-  handleEditorChange = (e, name) => {
-    const newContent = e.editor.getData();
-    this.setState(state => ({ data: { ...state.data, [name]: newContent } }));
-  };
-
-  handleDelete = index => () => {
-    this.setState(state => {
-      const chipData = [...state.data.Tags];
-
-      chipData.splice(index, 1);
-      return { data: { ...state.data, Tags: chipData } };
-    });
+    this.props.setOneValue({ key: name, value: event.target.value });
   };
 
   handleGoBack = () => {
-    this.props.history.push('/wt/blog-manage');
+    this.props.push('/admin/blog-manage');
   };
-  handleSave = () => {
-    this.props.addEdit({ ...this.state.data, Category: this.state.data.Category.slug_url });
-  };
-  onDrop = (files, name) => {
-    const file = files[0];
-    this.setState(state => ({
-      data: { ...state.data, [name]: file },
-      images: { ...state.images, [name]: file.preview },
-    }));
-  };
-  componentDidMount() {
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOne(this.props.match.params.id);
-    }
-    if (this.props.category.size === 0) {
-      this.props.loadCategory();
-    }
-  }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.one !== nextProps.one) {
-      const oneObj = nextProps.one.toJS();
-      const categoryId = (oneObj.Category && oneObj.Category._id) || '';
-      const image = oneObj.Image && oneObj.image.path && `${IMAGE_BASE}${oneObj.image.path}`;
 
-      this.setState(
-        state => ({
-          data: { ...state.data, ...oneObj },
-          images: { image },
-          categoryId,
-        }),
-        // () => console.log(this.state),
-      );
-    }
-  }
-  handleCategoryChange = e => {
-    e.persist();
-    this.setState(state => ({
-      data: { ...state.data, Category: { slug_url: e.target.value, Name: e.target.name } },
-      categoryId: e.target.value,
-    }));
+  handleSave = () => {
+    this.props.addEditRequest();
   };
-  insertTag = event => {
-    event.preventDefault();
-    this.setState(state => {
-      // console.log(state.data.tags.indexOf(state.tempTag));
-      if (state.data.tags.indexOf(state.tempTag) === -1) {
-        return {
-          data: { ...state.data, tags: [...state.data.tags, state.tempTag] },
-          tempTag: '',
-        };
-      }
-      return { tempTag: '' };
-    });
-  };
-  handleTempTag = e => this.setState({ tempTag: e.target.value });
+
   render() {
-    const { data, images, categoryId } = this.state;
-    const { classes, category } = this.props;
-    const categoryObj = category.toJS();
+    const { one } = this.props;
     return (
       <div>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Add/Edit Blogs</h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Blog Title"
-                      id="blog-title"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{ value: data.title, onChange: this.handleChange('title') }}
+        <PageHeader>Edit Blog</PageHeader>
+        <PageContent>
+          <Card>
+            <CardBody>
+              <div>
+                <TextField
+                  name="Blog Title"
+                  id="blog-title"
+                  fullWidth
+                  placeholder="title of the blog"
+                  inputProps={{
+                    value: one.title,
+                    onChange: this.handleChange('title'),
+                  }}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="category"
+                  id="blog-category"
+                  fullWidth
+                  placeholder="name of the blog category"
+                  inputProps={{
+                    value: one.category,
+                    onChange: this.handleChange('category'),
+                  }}
+                />
+              </div>
+              <div>
+                <InputLabel style={{ color: '#AAAAAA' }}>
+                  Blog Description
+                </InputLabel>
+                <CKEditor
+                  name="description"
+                  content={one.description}
+                  config={{ allowedContent: true }}
+                  events={{
+                    change: e => this.handleEditorChange(e, 'description'),
+                    value: one.description,
+                  }}
+                />
+              </div>
+              <div sm={12} md={6}>
+                <TextField
+                  name="Published On"
+                  id="blog-published_on"
+                  fullWidth
+                  placeholder="published on"
+                  inputProps={{
+                    value: one.published_on,
+                    onChange: this.handleChange('publish_from'),
+                  }}
+                />
+              </div>
+              <div>
+                <InputLabel style={{ color: '#AAAAAA' }}>
+                  Activity Type
+                </InputLabel>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={one.is_active || false}
+                      tabIndex={-1}
+                      onClick={this.handleCheckedChange('is_active')}
+                      color="primary"
                     />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: '#AAAAAA' }}>Blog Description</InputLabel>
-                    <CKEditor
-                      name="description"
-                      content={data.description}
-                      events={{
-                        change: e => this.handleEditorChange(e, 'description'),
-                        value: data.description,
-                      }}
+                  }
+                  label="Is Active"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={one.is_published || false}
+                      tabIndex={-1}
+                      onClick={this.handleCheckedChange('is_published')}
+                      color="primary"
                     />
-                  </GridItem>
-                </GridContainer>
-
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TextField
-                      id="outlined-multiline-flexible"
-                      label="summary"
-                      multiline
-                      inputProps={{
-                        value: data.summary,
-                        onChange: this.handleChange('summary'),
-                      }}
-                      rowsMax="7"
-                      className={classes.textField}
-                      margin="normal"
-                      // variant="outlined"
-                    />
-                  </GridItem>
-                </GridContainer>
-
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel htmlFor="company">Category</InputLabel>
-                      <Select
-                        value={categoryId}
-                        onChange={this.handleCategoryChange}
-                        inputProps={{
-                          name: 'Category',
-                        }}
-                      >
-                        {categoryObj.map(each => (
-                          <MenuItem key={each._id} name={each.title} value={each._id}>
-                            {each.title}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <form onSubmit={this.insertTag}>
-                      <CustomInput
-                        labelText="Tags"
-                        id="blog-tags"
-                        formControlProps={{
-                          fullWidth: true,
-                        }}
-                        inputProps={{
-                          value: this.state.tempTag,
-                          onChange: this.handleTempTag,
-                        }}
-                      />
-                    </form>
-                    <Paper className={classes.root}>
-                      {data.tags.map((tag, index) => {
-                        let icon = null;
-
-                        return <Chip key={`${tag}-${index}`} icon={icon} label={tag} onDelete={this.handleDelete(index)} className={classes.chip} />;
-                      })}
-                    </Paper>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Keywords"
-                      id="blog-keywords"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{ value: data.keywords, onChange: this.handleChange('keywords') }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <CustomInput
-                      labelText="Published On"
-                      id="published-on"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        value: data.published_on,
-                        onChange: this.handleChange('published_on'),
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <Dropzone onDrop={files => this.onDrop(files, 'image')} multiple={false}>
-                      <img className="" width="200px" height="200px" src={images.image} alt="blogImage" />
-                    </Dropzone>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel control={<Checkbox checked={data.is_published || false} tabIndex={-1} onClick={this.handleCheckedChange('is_published')} value="is_published" color="primary" />} label="Is Published" />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel control={<Checkbox checked={data.is_active || false} tabIndex={-1} onClick={this.handleCheckedChange('is_active')} value="is_active" color="primary" />} label="Is Active" />
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <CardFooter>
-                <Button color="primary" onClick={this.handleSave}>
-                  Save
-                </Button>
-                <Button color="primary" onClick={this.handleGoBack}>
-                  Back
-                </Button>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridContainer>
+                  }
+                  label="Is Published"
+                />
+              </div>
+            </CardBody>
+            <CardFooter>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSave}
+              >
+                Save
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.handleGoBack}
+              >
+                Back
+              </Button>
+            </CardFooter>
+          </Card>
+        </PageContent>
       </div>
     );
   }
 }
 
 const withStyle = withStyles(styles);
-
-const withReducer = injectReducer({ key: 'blogManagePage', reducer });
-const withSaga = injectSaga({ key: 'blogManagePageAddEdit', saga });
+const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
+const withSaga = injectSaga({ key: 'contentsListingPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
-  category: makeSelectCategory(),
-});
-
-const mapDispatchToProps = dispatch => ({
-  loadOne: payload => dispatch(loadOneRequest(payload)),
-  addEdit: payload => dispatch(addEditRequest(payload)),
-  loadCategory: () => dispatch(loadCategoryRequest()),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  { ...mapDispatchToProps, push },
 );
+
 export default compose(
   withRouter,
   withStyle,
