@@ -15,7 +15,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardBody from '@material-ui/core/CardContent';
 import CardFooter from '@material-ui/core/CardActions';
 import injectSaga from 'utils/injectSaga';

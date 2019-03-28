@@ -12,9 +12,9 @@ export const LOAD_ONE_REQUEST = 'app/AdminMediaManagePage/LOAD_ONE_REQUEST';
 export const LOAD_ONE_SUCCESS = 'app/AdminMediaManagePage/LOAD_ONE_SUCCESS';
 export const LOAD_ONE_FAILURE = 'app/AdminMediaManagePage/LOAD_ONE_FAILURE';
 
-export const ADD_EDIT_REQUEST = 'app/AdminMediaManagePage/ADD_EDIT_REQUEST';
-export const ADD_EDIT_SUCCESS = 'app/AdminMediaManagePage/ADD_EDIT_SUCCESS';
-export const ADD_EDIT_FAILURE = 'app/AdminMediaManagePage/ADD_EDIT_FAILURE';
+export const ADD_MEDIA_REQUEST = 'app/AdminMediaManagePage/ADD_MEDIA_REQUEST';
+export const ADD_MEDIA_SUCCESS = 'app/AdminMediaManagePage/ADD_MEDIA_SUCCESS';
+export const ADD_MEDIA_FAILURE = 'app/AdminMediaManagePage/ADD_MEDIA_FAILURE';
 
 export const DELETE_ONE_REQUEST = 'app/AdminMediaManagePage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/AdminMediaManagePage/DELETE_ONE_SUCCESS';

@@ -75,8 +75,12 @@ class AddEdit extends React.PureComponent {
       one: { users, rolesNormalized },
     } = this.props;
     return (
-      <React.Fragment>
-        <PageHeader> {id ? 'Edit' : 'Add'} User</PageHeader>
+      <>
+        <PageHeader>
+          <Typography component="h1" variant="h4" align="center">
+            {id ? 'Edit' : 'Add'} User
+          </Typography>
+        </PageHeader>
         <PageContent>
           <Paper className={classes.paper}>
             <Typography variant="h6" gutterBottom>
@@ -111,7 +115,7 @@ class AddEdit extends React.PureComponent {
                       color="secondary"
                       name="email_verified"
                       checked={users.email_verified}
-                      onChange={this.handleChecked('email_verified')}
+                      onChange={() => null}
                     />
                   }
                   label="Email Verified"
@@ -148,7 +152,7 @@ class AddEdit extends React.PureComponent {
             </div>
           </Paper>
         </PageContent>
-      </React.Fragment>
+      </>
     );
   }
 }
