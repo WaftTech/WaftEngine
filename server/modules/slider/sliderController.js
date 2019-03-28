@@ -98,12 +98,16 @@ sliderController.SaveSlider = async (req, res, next) => {
   }
 };
 sliderController.GetSliderById = async (req, res, next) => {
-  const id = req.params.id;
-  const slider = await sliderSch.findOne({
-    _id: id,
-    is_deleted: false,
-  });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
+  try {
+    const id = req.params.id;
+    const slider = await sliderSch.findOne({
+      _id: id,
+      is_deleted: false,
+    });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
+  } catch (err) {
+    next(err);
+  }
 };
 sliderController.DeleteSlider = async (req, res, next) => {
   const id = req.params.id;
