@@ -24,12 +24,15 @@ const PasswordInput = props => {
 
   const handleChange = e =>
     setStoreValue({ key: 'password', value: e.target.value });
+  const hasError = Boolean(error);
   return (
     <FormControl
       className={`${classes.margin} ${classes.textField}`}
-      error={error}
+      error={hasError}
     >
-      <InputLabel htmlFor="adornment-password">Password</InputLabel>
+      <InputLabel htmlFor="adornment-password">
+        {error || 'Password'}
+      </InputLabel>
       <Input
         id="adornment-password"
         type={isSecure ? 'text' : 'password'}

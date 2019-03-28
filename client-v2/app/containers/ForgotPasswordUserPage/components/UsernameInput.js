@@ -10,10 +10,11 @@ const EmailInput = props => {
   const { email, setStoreValue, error } = props;
   const handleChange = e =>
     setStoreValue({ key: 'email', value: e.target.value });
+  const hasError = Boolean(error);
   return (
     <TextField
-      error={error}
-      label="email"
+      error={hasError}
+      label={error || 'email'}
       value={email}
       onChange={handleChange}
       margin="normal"

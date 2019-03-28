@@ -10,10 +10,11 @@ const NameInput = props => {
   const { name, setStoreValue, error } = props;
   const handleChange = e =>
     setStoreValue({ key: 'name', value: e.target.value });
+  const hasError = Boolean(error);
   return (
     <TextField
-      error={error}
-      label="Name"
+      error={hasError}
+      label={error || 'name'}
       value={name}
       onChange={handleChange}
       margin="normal"

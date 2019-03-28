@@ -65,8 +65,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
-const withSaga = injectSaga({ key: 'loginAdminPage', saga });
+const withReducer = injectReducer({ key: 'loginUserPage', reducer });
+const withSaga = injectSaga({ key: 'loginUserPage', saga });
 
 const styles = {
   container: {
