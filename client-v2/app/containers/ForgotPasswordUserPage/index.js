@@ -1,6 +1,6 @@
 /**
  *
- * LoginUserPage
+ * ForgotPasswordUser
  *
  */
 
@@ -19,31 +19,29 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
 import UsernameInput from './components/UsernameInput';
-import PasswordInput from './components/PasswordInput';
 import logo from '../../images/logo.png';
 
-const LoginUserPage = ({ classes, loginRequest }) => {
+const ForgotPasswordUser = ({ classes, forgotPasswordRequest }) => {
   const handleSubmit = e => {
     e.preventDefault();
-    loginRequest();
+    forgotPasswordRequest();
   };
   return (
     <div className={classes.container}>
       <div className={classes.card}>
         <img className={classes.logo} src={logo} alt="logo" />
-        <h3>LOGIN</h3>
+        <h3>FORGOT PASSWORD</h3>
         <form className={classes.form} onSubmit={handleSubmit}>
           <UsernameInput />
-          <PasswordInput />
           <br />
           <Button variant="contained" color="primary" type="submit">
-            LOGIN
+            SUBMIT
           </Button>
         </form>
         <br />
         <br />
-        <Link className={classes.smallFont} to="/forgot-password-user">
-          Forgot Password?
+        <Link className={classes.smallFont} to="/login-user">
+          LOGIN?
         </Link>
         <Link className={classes.smallFont} to="/signup-user">
           Not a user?
@@ -53,9 +51,9 @@ const LoginUserPage = ({ classes, loginRequest }) => {
   );
 };
 
-LoginUserPage.propTypes = {
+ForgotPasswordUser.propTypes = {
   classes: PropTypes.object.isRequired,
-  loginRequest: PropTypes.func.isRequired,
+  forgotPasswordRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = null;
@@ -65,8 +63,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
-const withSaga = injectSaga({ key: 'loginAdminPage', saga });
+const withReducer = injectReducer({ key: 'forgotPasswordUserPage', reducer });
+const withSaga = injectSaga({ key: 'forgotPasswordUserPage', saga });
 
 const styles = {
   container: {
@@ -135,4 +133,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(LoginUserPage);
+)(ForgotPasswordUser);
