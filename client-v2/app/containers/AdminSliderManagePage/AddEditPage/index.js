@@ -75,7 +75,7 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired, 
+    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     media: PropTypes.shape({
@@ -89,7 +89,9 @@ class AddEdit extends React.PureComponent {
   state = { open: false, index: -1 };
 
   componentDidMount() {
-    this.props.loadOneRequest(this.props.match.params.id);
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOneRequest(this.props.match.params.id);
+    }
     this.props.loadMediaRequest();
   }
 
@@ -184,9 +186,7 @@ class AddEdit extends React.PureComponent {
                     <CardActionArea>
                       <img
                         className={classes.media}
-                        src={`${IMAGE_BASE}${
-                          each.path
-                        }`}
+                        src={`${IMAGE_BASE}${each.path}`}
                         alt={each.caption}
                       />
                     </CardActionArea>
