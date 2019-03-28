@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { push } from 'connected-react-router';
 import moment from 'moment';
+import Dropzone from 'react-dropzone';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -28,6 +28,7 @@ import { makeSelectAll, makeSelectQuery } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import { IMAGE_BASE } from '../App/constants';
 
 const styles = theme => ({
   button: {
@@ -45,7 +46,7 @@ export class AdminMediaManagePage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
+    addMediaRequest: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
@@ -60,13 +61,14 @@ export class AdminMediaManagePage extends React.Component {
     this.props.loadAllRequest(this.props.query);
   }
 
-  handleAdd = () => {
+  handleAdd = files => {
+    this.props.addMediaRequest(files);
     // this.props.push('/admin/media-manage/add');
   };
 
-  handleDelete = id => {
-    // this.props.push(`/admin/media-manage/edit/${id}`);
-  };
+  // handleDelete = id => {
+  //   // this.props.push(`/admin/media-manage/edit/${id}`);
+  // };
 
   handleQueryChange = e => {
     e.persist();
@@ -89,22 +91,12 @@ export class AdminMediaManagePage extends React.Component {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({
-        name,
-        key,
-        publish_from,
-        publish_to,
-        is_active,
-        is_feature,
-        added_at,
+      ({ encoding, mimetype, path, size: fileSize, added_at, _id }) => [
         _id,
-      }) => [
-        name,
-        key,
-        moment(publish_from).format('MMM Do YY'),
-        moment(publish_to).format('MMM Do YY'),
-        `${is_active}`,
-        `${is_feature}`,
+        encoding,
+        mimetype,
+        <img src={`${IMAGE_BASE}${path}`} height="20" alt="thumbnail" />,
+        `${fileSize}`,
         moment(added_at).format('MMM Do YY'),
         <>
           <Tooltip
@@ -157,28 +149,33 @@ export class AdminMediaManagePage extends React.Component {
           >
             <Table
               tableHead={[
-                'Name',
-                'Key',
-                'Pub From',
-                'Pub To',
-                'is Active',
-                'is feature',
+                'id',
+                'encoding',
+                'mimetype',
+                'path',
+                'size',
                 'Added at',
               ]}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}
             />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              round="true"
-              onClick={this.handleAdd}
-              elevation={0}
-            >
-              <AddIcon />
-            </Fab>
+            <Dropzone onDrop={this.handleAdd}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <Fab
+                    color="primary"
+                    aria-label="Add"
+                    className={classes.fab}
+                    round="true"
+                    elevation={0}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </div>
+              )}
+            </Dropzone>
           </Paper>
         </PageContent>
       </>
@@ -193,7 +190,7 @@ const mapStateToProps = createStructuredSelector({
 
 const withConnect = connect(
   mapStateToProps,
-  { ...mapDispatchToProps, push },
+  mapDispatchToProps,
 );
 
 const withReducer = injectReducer({ key: 'adminMediaManagePage', reducer });

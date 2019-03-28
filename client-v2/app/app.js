@@ -17,6 +17,7 @@ import jwtDecode from 'jwt-decode';
 import green from '@material-ui/core/colors/green';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 
 import history from 'utils/history';
 
@@ -62,6 +63,7 @@ if (tokenWithBearer) {
         name: decoded.name,
         avatar: decoded.avatar,
         email: decoded.email,
+        roles: decoded.roles,
       };
       store.dispatch(setToken(tokenWithBearer));
       store.dispatch(setUser(user));
@@ -86,7 +88,9 @@ const render = messages => {
       <LanguageProvider messages={messages}>
         <MuiThemeProvider theme={theme}>
           <ConnectedRouter history={history}>
-            <App />
+            <SnackbarProvider maxSnack={3}>
+              <App />
+            </SnackbarProvider>
           </ConnectedRouter>
         </MuiThemeProvider>
       </LanguageProvider>

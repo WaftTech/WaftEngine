@@ -23,6 +23,9 @@ export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
 export const LOGOUT = 'app/App/LOGOUT';
 
+export const ENQUEUE_SNACKBAR = 'app/App/ENQUEUE_SNACKBAR';
+export const REMOVE_SNACKBAR = 'app/App/REMOVE_SNACKBAR';
+
 export const LOGOUT_REQUEST = 'app/App/LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'app/App/LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'app/App/LOGOUT_FAILURE';
