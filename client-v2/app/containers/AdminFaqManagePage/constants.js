@@ -20,10 +20,12 @@ export const DELETE_ONE_REQUEST = 'app/FAQManagePage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/FAQManagePage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/FAQManagePage/DELETE_ONE_FAILURE';
 
-// export const LOAD_BLOG_REQUEST = 'app/FAQManagePage/LOAD_BLOG_REQUEST';
-// export const LOAD_BLOG_SUCCESS = 'app/FAQManagePage/LOAD_BLOG_SUCCESS';
-// export const LOAD_BLOG_FAILURE = 'app/FAQManagePage/LOAD_BLOG_FAILURE';
-
 export const LOAD_CATEGORY_REQUEST = 'app/FAQManagePage/LOAD_CATEGORY_REQUEST';
 export const LOAD_CATEGORY_SUCCESS = 'app/FAQManagePage/LOAD_CATEGORY_SUCCESS';
 export const LOAD_CATEGORY_FAILURE = 'app/FAQManagePage/LOAD_CATEGORY_FAILURE';
+
+export const SET_ONE_VALUE = 'app/ContentsListingPage/SET_ONE_VALUE';
+export const CLEAR_ONE = 'app/ContentsListingPage/CLEAR_ONE';
+
+export const SET_QUERY_VALUE = 'app/ContentsListingPage/SET_QUERY_VALUE';
+export const CLEAR_QUERY = 'app/ContentsListingPage/CLEAR_QUERY';
