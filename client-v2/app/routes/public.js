@@ -11,7 +11,9 @@ import HomePage from '../containers/HomePage';
 
 import LoginAdminPage from '../containers/LoginAdminPage/Loadable';
 import LoginUserPage from '../containers/LoginUserPage/Loadable';
+import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadable';
 import SignupUserPage from '../containers/SignupUserPage/Loadable';
+import FaqPage from '../containers/FAQPage/Loadable';
 
 const publicRoutes = [
   {
@@ -37,7 +39,12 @@ const publicRoutes = [
   {
     exact: true,
     path: '/forgot-password-user',
-    component: LoginUserPage,
+    component: ForgotPasswordUserPage,
+  },
+  {
+    exact: true,
+    path: '/faq',
+    component: FaqPage,
   },
   // {
   //   exact: true,

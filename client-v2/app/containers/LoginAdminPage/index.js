@@ -9,62 +9,54 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+
 import Link from 'react-router-dom/Link';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { Divider } from '@material-ui/core';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
-import styles from './styles';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
-import Button from '../../components/CustomButtons/Button';
 import logo from '../../images/logo.png';
 
-class LoginAdminPage extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    loginRequest: PropTypes.func.isRequired,
-    // history: PropTypes.object.isRequired,
-  };
-
-  handleSubmit = e => {
+const LoginAdminPage = ({ classes, loginRequest }) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.loginRequest();
+    loginRequest();
   };
-
-  handleRedirect = () => {
-    // this.props.history.push('/reset-password');
-  };
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.container}>
-        <div className={classes.card}>
-          <img className={classes.logo} src={logo} />
-
-          <h3>LOGIN</h3>
-          <form className={classes.form}>
-            <UsernameInput classes={classes} />
-            <PasswordInput classes={classes} />
-            <br />
-            <br />
-            <Link className={classes.smallFont} to="/forgot-password">
-              Forgot Password?
-            </Link>
-            <br />
-            <Button color="primary" onClick={this.handleSubmit} type="submit">
-              LOGIN
-            </Button>
-          </form>
-        </div>
+  return (
+    <div className={classes.container}>
+      <div className={classes.card}>
+        <img className={classes.logo} src={logo} alt="logo" />
+        <h3>LOGIN</h3>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <UsernameInput />
+          <PasswordInput />
+          <br />
+          <Button variant="contained" color="primary" type="submit">
+            LOGIN
+          </Button>
+        </form>
+        <br />
+        <br />
+        <Link className={classes.smallFont} to="/forgot-password-user">
+          Forgot Password?
+        </Link>
+        <Link className={classes.smallFont} to="/signup-user">
+          Not a user?
+        </Link>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+LoginAdminPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+  loginRequest: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = null;
 
@@ -75,6 +67,67 @@ const withConnect = connect(
 
 const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
 const withSaga = injectSaga({ key: 'loginAdminPage', saga });
+
+const styles = {
+  container: {
+    zIndex: '2',
+    position: 'relative',
+    paddingTop: '20vh',
+    background: '#EFEFF4',
+    minHeight: '100vh',
+  },
+  card: {
+    background: '#fff',
+    padding: 40,
+    width: 350,
+    margin: '0 auto',
+  },
+  smallFont: {
+    fontSize: 12,
+    textDecoration: 'none',
+  },
+  cardHeader: {
+    width: 'auto',
+    textAlign: 'center',
+    marginLeft: '20px',
+    marginRight: '20px',
+    marginTop: '-40px',
+    padding: '20px 0',
+    marginBottom: '15px',
+  },
+  socialIcons: {
+    maxWidth: '24px',
+    marginTop: '0',
+    width: '100%',
+    transform: 'none',
+    left: '0',
+    top: '0',
+    height: '100%',
+    lineHeight: '41px',
+    fontSize: '20px',
+  },
+  divider: {
+    marginTop: '30px',
+    marginBottom: '0px',
+    textAlign: 'center',
+  },
+  cardFooter: {
+    paddingTop: '0rem',
+    border: '0',
+    borderRadius: '6px',
+    justifyContent: 'center !important',
+  },
+  socialLine: {
+    marginTop: '1rem',
+    textAlign: 'center',
+    padding: '0',
+  },
+  inputIconsColor: {
+    color: '#495057',
+  },
+  logo: { maxWidth: '100%' },
+};
+
 const withStyle = withStyles(styles);
 
 export default compose(
