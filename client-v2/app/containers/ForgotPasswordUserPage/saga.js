@@ -6,7 +6,6 @@ import {
   take,
   cancel,
 } from 'redux-saga/effects';
-import { fromJS } from 'immutable';
 import Api from 'utils/Api';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import * as types from './constants';
@@ -46,12 +45,10 @@ export function* forgotPasswordAction(action) {
         data,
       ),
     );
-    yield take([LOCATION_CHANGE, types.LOGIN_FAILURE]);
+    yield take([LOCATION_CHANGE, types.FORGOT_PASSWORD_FAILURE]);
     yield cancel(successWatcher);
   } else {
-    yield put(
-      actions.setStoreValue({ key: 'errors', value: fromJS(errors.errors) }),
-    );
+    yield put(actions.setStoreValue({ key: 'errors', value: errors.errors }));
   }
 }
 
