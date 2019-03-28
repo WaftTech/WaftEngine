@@ -172,7 +172,6 @@ export class BlogManagePage extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
-  category: makeSelectCategory(),
   query: makeSelectQuery(),
 });
 

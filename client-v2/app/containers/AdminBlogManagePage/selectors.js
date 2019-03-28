@@ -17,7 +17,6 @@ export const makeSelectOne = () =>
     selectDomain,
     state => state.one,
   );
-// export const makeSelectBlog = () => createSelector(selectDomain, state => state'));
 export const makeSelectCategory = () =>
   createSelector(
     selectDomain,

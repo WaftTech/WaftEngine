@@ -11,8 +11,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 // core components
 import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardBody from '@material-ui/core/CardContent';
@@ -21,7 +25,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne } from '../selectors';
+import { makeSelectOne, makeSelectCategory } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -48,12 +52,13 @@ const styles = {
 class AddEdit extends React.PureComponent {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
+    loadCategoryRequest: PropTypes.func.isRequired,
     addEditRequest: PropTypes.func.isRequired,
     setOneValue: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    // classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
@@ -62,6 +67,7 @@ class AddEdit extends React.PureComponent {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
+    this.props.loadCategoryRequest();
   }
 
   handleEditorChange = (e, name) => {
@@ -79,6 +85,11 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.value });
   };
 
+  handleCategoryChange = name => e => {
+    e.persist();
+    this.props.setOneValue({ key: name, value: e.target.value });
+  };
+
   handleGoBack = () => {
     this.props.push('/admin/blog-manage');
   };
@@ -88,7 +99,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one } = this.props;
+    const { classes, one, category } = this.props;
     return (
       <div>
         <PageHeader>Edit Blog</PageHeader>
@@ -108,16 +119,26 @@ class AddEdit extends React.PureComponent {
                 />
               </div>
               <div>
-                <TextField
-                  name="category"
-                  id="blog-category"
-                  fullWidth
-                  placeholder="name of the blog category"
-                  inputProps={{
-                    value: one.category,
-                    onChange: this.handleChange('category'),
-                  }}
-                />
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="category">Category</InputLabel>
+                  <Select
+                    value={one.category}
+                    onChange={this.handleCategoryChange('category')}
+                    inputProps={{
+                      name: 'category',
+                    }}
+                  >
+                    {category.map(each => (
+                      <MenuItem
+                        key={each._id}
+                        name={each.title}
+                        value={each._id}
+                      >
+                        {each.title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
               <div>
                 <InputLabel style={{ color: '#AAAAAA' }}>
@@ -141,7 +162,7 @@ class AddEdit extends React.PureComponent {
                   placeholder="published on"
                   inputProps={{
                     value: one.published_on,
-                    onChange: this.handleChange('publish_from'),
+                    onChange: this.handleChange('published_on'),
                   }}
                 />
               </div>
@@ -197,11 +218,12 @@ class AddEdit extends React.PureComponent {
 }
 
 const withStyle = withStyles(styles);
-const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
-const withSaga = injectSaga({ key: 'contentsListingPage', saga });
+const withReducer = injectReducer({ key: 'blogManagePage', reducer });
+const withSaga = injectSaga({ key: 'blogManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
+  category: makeSelectCategory(),
 });
 
 const withConnect = connect(
