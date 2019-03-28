@@ -62,7 +62,7 @@ otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, p
   if (msg) response.msg = msg;
   if (pageno) response.page = pageno;
   if (pagesize) response.size = pagesize;
-  if (totaldata) response.totaldata = totaldata;
+  if (typeof totaldata === 'number') response.totaldata = totaldata;
   return res.status(status).json(response);
 };
 otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, selectquery, next, populate) => {
