@@ -9,6 +9,7 @@ import {
 } from 'redux-saga/effects';
 import { push, LOCATION_CHANGE } from 'connected-react-router';
 import Api from 'utils/Api';
+import { makeSelectOne } from './selectors';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -65,20 +66,19 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/wt/blog-manage'));
+  yield put(push('/admin/blog-manage'));
 }
 
 function* addEdit(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const { ...data } = action.payload;
+  const data = yield select(makeSelectOne());
   yield fork(
-    Api.multipartPost(
+    Api.post(
       'blog',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
-      { file: data.Image },
       token,
     ),
   );
