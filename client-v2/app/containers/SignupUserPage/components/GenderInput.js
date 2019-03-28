@@ -17,15 +17,15 @@ const GenderInput = props => {
 
   const handleChange = e =>
     setStoreValue({ key: 'gender', value: e.target.value });
-
+  const hasError = Boolean(error);
   return (
     <div className={classes.root}>
       <FormControl
         component="fieldset"
         className={classes.formControl}
-        error={error}
+        error={hasError}
       >
-        <FormLabel component="legend">Gender</FormLabel>
+        <FormLabel component="legend">{error || 'Gender'}</FormLabel>
         <RadioGroup
           aria-label="Gender"
           name="gender"

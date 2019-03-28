@@ -8,11 +8,13 @@ import UserManagePage from '../containers/AdminUserManagePage/Loadable';
 import UserManageEditPage from '../containers/AdminUserManagePage/AddEditPage/Loadable';
 import ContentManagePage from '../containers/AdminContentListingPage/Loadable';
 import ContentManageAddEdit from '../containers/AdminContentListingPage/AddEditPage/Loadable';
-import FaqManagePage from '../containers/FAQManagePage/Loadable';
-import FaqManageAddEdit from '../containers/FAQManagePage/AddEditPage';
+import FaqManagePage from '../containers/AdminFaqManagePage/Loadable';
+import FaqManageAddEdit from '../containers/AdminFaqManagePage/AddEditPage/Loadable';
 import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
-import SliderManagePage from '../containers/SliderManagePage/Loadable';
-import SliderManageAddEdit from '../containers/SliderManagePage/AddEditPage/Loadable';
+import SliderManagePage from '../containers/AdminSliderManagePage/Loadable';
+import SliderManageAddEdit from '../containers/AdminSliderManagePage/AddEditPage/Loadable';
+import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
+import BlogManageAddEdit from '../containers/AdminBlogManagePage/AddEditPage/Loadable';
 
 const routes = [
   {
@@ -120,6 +122,21 @@ const routes = [
   {
     path: '/admin/slider-manage',
     component: SliderManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/blog-manage/edit/:id',
+    component: BlogManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/blog-manage/add',
+    component: BlogManageAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/blog-manage',
+    component: BlogManagePage,
     exact: true,
   },
 ];
