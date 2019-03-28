@@ -26,6 +26,7 @@
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
+    "mailgun-js": "^0.22.0",
     "moment": "^2.23.0",
     "mongoose": "^5.2.4",
     "morgan": "^1.9.0",
