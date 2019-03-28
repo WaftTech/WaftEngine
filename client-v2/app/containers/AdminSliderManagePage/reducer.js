@@ -44,6 +44,9 @@ const reducer = (state = initialState, action) =>
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;
         break;
+      case types.CLEAR_ONE:
+        draft.one = initialState.one;
+        break;
     }
   });
 
