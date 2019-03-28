@@ -6,6 +6,7 @@
 export const SET_ONE_VALUE = 'app/BlogManagePage/SET_ONE_VALUE';
 export const SET_QUERY_VALUE = 'app/BlogManagePage/SET_QUERY_VALUE';
 export const CLEAR_ONE = 'app/BlogManagePage/CLEAR_ONE';
+export const CLEAR_QUERY = 'app/BlogManagePage/CLEAR_QUERY';
 
 export const LOAD_ALL_REQUEST = 'app/BlogManagePage/LOAD_ALL_REQUEST';
 export const LOAD_ALL_SUCCESS = 'app/BlogManagePage/LOAD_ALL_SUCCESS';
