@@ -64,7 +64,6 @@ export class SliderManagePage extends React.Component {
   }
 
   handleAdd = () => {
-    this.props.clearOne();
     this.props.push('/admin/slider-manage/add');
   };
 

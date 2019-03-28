@@ -32,9 +32,6 @@ const reducer = (state = initialState, action) =>
       case types.CLEAR_QUERY:
         draft.query = initialState.query;
         break;
-      case types.CLEAR_ONE:
-        draft.one = initialState.one;
-        break;
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         break;

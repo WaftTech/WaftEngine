@@ -11,8 +11,8 @@ import ContentManageAddEdit from '../containers/AdminContentListingPage/AddEditP
 import FaqManagePage from '../containers/FAQManagePage/Loadable';
 import FaqManageAddEdit from '../containers/FAQManagePage/AddEditPage';
 import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
-import SliderManagePage from '../containers/SliderManagePage/Loadable';
-import SliderManageAddEdit from '../containers/SliderManagePage/AddEditPage/Loadable';
+import SliderManagePage from '../containers/AdminSliderManagePage/Loadable';
+import SliderManageAddEdit from '../containers/AdminSliderManagePage/AddEditPage/Loadable';
 import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
 
 const routes = [

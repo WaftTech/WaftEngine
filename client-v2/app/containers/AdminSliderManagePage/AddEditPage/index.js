@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
@@ -19,7 +20,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardBody from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -150,8 +150,18 @@ class AddEdit extends React.PureComponent {
     this.props.addEditRequest();
   };
 
+  handleImagePagination = query => {
+    this.props.loadMediaRequest(query);
+  };
+
   render() {
     const { one, classes, media } = this.props;
+
+    // media next prev logic
+    const lastPage = Math.ceil(media.totaldata / media.size);
+    const firstPage = 1;
+    const isFirstPage = media.page === firstPage;
+    const isLastPage = media.page === lastPage;
     return (
       <>
         <Modal
@@ -173,9 +183,12 @@ class AddEdit extends React.PureComponent {
                 <Grid item key={each._id}>
                   <Card className={classes.card}>
                     <CardActionArea>
-                      <CardMedia
+                      <img
                         className={classes.media}
-                        image={`${IMAGE_BASE}${each.path}`}
+                        src={`${IMAGE_BASE}public/100-100/media/${
+                          each.filename
+                        }`}
+                        alt={each.caption}
                       />
                     </CardActionArea>
                     <CardActions>
@@ -190,6 +203,30 @@ class AddEdit extends React.PureComponent {
                   </Card>
                 </Grid>
               ))}
+              <Grid item>
+                {!isFirstPage && (
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() =>
+                      this.handleImagePagination({ page: media.page - 1 })
+                    }
+                  >
+                    Prev
+                  </Button>
+                )}
+                {!isLastPage && (
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() =>
+                      this.handleImagePagination({ page: media.page + 1 })
+                    }
+                  >
+                    Next
+                  </Button>
+                )}
+              </Grid>
             </Grid>
           </div>
         </Modal>
@@ -224,7 +261,7 @@ class AddEdit extends React.PureComponent {
               <div key={`${each._id}-media-${index}`}>
                 {each.image ? (
                   <Button onClick={this.handleSetImage(index)}>
-                    <MediaElement mediaKey={each.image} />
+                    <MediaElement mediaKey={each.image} size="100-100" />
                   </Button>
                 ) : (
                   <Fab color="primary" onClick={this.handleSetImage(index)}>
