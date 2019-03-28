@@ -17,7 +17,7 @@ export const initialState = {
     title: '',
     category: '',
     published_on: '',
-    added_at: '',
+    added_at: Date.now,
     is_published: true,
     is_active: false,
   },
