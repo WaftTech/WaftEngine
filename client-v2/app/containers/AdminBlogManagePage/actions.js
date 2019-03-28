@@ -18,6 +18,10 @@ export const clearOne = payload => ({
   type: types.CLEAR_ONE,
   payload,
 });
+export const clearQuery = payload => ({
+  type: types.CLEAR_QUERY,
+  payload,
+});
 export const loadAllRequest = payload => ({
   type: types.LOAD_ALL_REQUEST,
   payload,
