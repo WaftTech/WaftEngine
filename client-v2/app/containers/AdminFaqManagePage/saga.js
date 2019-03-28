@@ -12,10 +12,10 @@ import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
+import { makeSelectOne } from './selectors';
 
-function* loadCategory(action) {
+function* loadCategory() {
   const token = yield select(makeSelectToken());
-
   yield call(
     Api.get(
       'faq/cat',
@@ -29,17 +29,11 @@ function* loadCategory(action) {
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
   let query = '';
-  // let sort = '';
-
   if (action.payload) {
-    // pageNumber = `&page=${action.payload.page}&size=${action.payload.rowsPerPage}`;
     Object.keys(action.payload).map(each => {
-      query = `${query}${each}=${action.payload[each]}`;
+      query = `${query}&${each}=${action.payload[each]}`;
+      return null;
     });
-  }
-
-  if (action.payload.sort) {
-    sort = `&sort=${action.payload.sort}`;
   }
   yield call(
     Api.get(
@@ -68,10 +62,10 @@ function* redirectOnSuccess() {
   yield put(push('/admin/faq-manage'));
 }
 
-function* addEdit(action) {
+function* addEdit() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
-  const { ...data } = action.payload;
+  const data = yield select(makeSelectOne());
   yield fork(
     Api.post(
       'faq',
@@ -89,6 +83,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-
   yield takeLatest(types.LOAD_CATEGORY_REQUEST, loadCategory);
 }
