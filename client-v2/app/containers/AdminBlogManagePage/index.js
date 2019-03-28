@@ -88,9 +88,8 @@ export class BlogManagePage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
-      category,
     } = this.props;
-
+    const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ title, category, published_on, added_at, is_published, is_active, _id }) => [
       title,
       (category && category.title) || 'No',
@@ -144,13 +143,11 @@ export class BlogManagePage extends React.Component {
             <Table
               tableHead={[
                 'Title',
-                '',
-                'Pub From',
-                'Pub To',
-                'is Active',
-                'is feature',
-                'Added at',
-                'Action',
+                'Category',
+                'Published On',
+                'Added At',
+                'Is Published',
+                'Is Active'
               ]}
               tableData={tableData}
               pagination={tablePagination}
