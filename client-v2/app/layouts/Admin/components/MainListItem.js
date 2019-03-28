@@ -175,6 +175,21 @@ const MainListItems = ({ classes, location: { pathname } }) => {
               <ListItemText primary="Slider Manage" />
             </ListItem>
           </Link>
+          <Link to="/admin/blog-manage" className={classes.nested}>
+            <ListItem
+              style={{
+                textDecoration: 'none',
+                fontSize: '0.8em',
+                textTransform: 'uppercase',
+              }}
+              selected={pathname === '/admin/slider-manage'}
+            >
+              <ListItemIcon>
+                <QuestionAnswerIcon />
+              </ListItemIcon>
+              <ListItemText primary="Blog Manage" />
+            </ListItem>
+          </Link>
           <Link to="/admin/reports" className={classes.nested}>
             <ListItem button selected={pathname === '/admin/reports'}>
               <ListItemIcon>
