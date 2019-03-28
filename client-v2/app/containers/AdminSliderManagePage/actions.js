@@ -8,6 +8,10 @@ export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
 });
+export const clearOne = payload => ({
+  type: types.CLEAR_ONE,
+  payload,
+});
 export const loadAllRequest = payload => ({
   type: types.LOAD_ALL_REQUEST,
   payload,

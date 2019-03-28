@@ -3,6 +3,7 @@
  * ContentsListingPage constants
  *
  */
+export const CLEAR_ONE = 'app/SliderManagePage/CLEAR_ONE';
 
 export const LOAD_ALL_REQUEST = 'app/SliderManagePage/LOAD_ALL_REQUEST';
 export const LOAD_ALL_SUCCESS = 'app/SliderManagePage/LOAD_ALL_SUCCESS';

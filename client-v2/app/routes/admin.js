@@ -107,6 +107,7 @@ const routes = [
   {
     path: '/admin/media-manage',
     component: MediaManagePage,
+    exact: true,
   },
   {
     path: '/admin/slider-manage/edit/:id',
