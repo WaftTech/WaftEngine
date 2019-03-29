@@ -1,68 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { Grid } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import moment from 'moment';
 
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 import { IMAGE_BASE } from 'containers/App/constants';
 import defaultImage from 'assets/img/logo.svg';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import { makeSelectBlogList } from './selectors';
-import saga from './saga';
 import * as mapDispatchToProps from './actions';
+import { makeSelectCategory, makeSelectBlog } from './selectors';
 import reducer from './reducer';
+import saga from './saga';
 
-/* eslint-disable react/prefer-stateless-function */
-class BlogListPage extends React.Component {
-  static propTypes = {
-    loadBlogListRequest: PropTypes.func.isRequired,
-    blogList: PropTypes.array,
-  };
-
+class CategoryDetailPage extends React.Component {
   componentDidMount() {
-    this.props.loadBlogListRequest();
+    const {
+      params: { id },
+    } = this.props.match;
+    this.props.loadBlogRequest(id);
   }
 
   render() {
-    const { blogList } = this.props;
-
+    const { blog } = this.props;
     return (
-      <div>
-        <div>
-          <h1>Blogs</h1>
-        </div>
-        <React.Fragment>
-          <div className="container">
-            <Grid container spacing={24}>
-              {blogList.map(each => {
-                const {
-                  image,
-                  title,
-                  description,
-                  added_at,
-                  category,
-                  tags,
-                } = each;
+      <div className="container">
+        <Helmet>
+          <title>{blog[0].category ? blog[0].category.title : ''}</title>
+        </Helmet>
+        <Grid container spacing={8}>
+          <Grid item lg={12}>
+            <div className="companyHeader">
+              <h1 className="pageTitle">
+                <span>
+                  Blogs related to{' '}
+                  {blog[0].category ? blog[0].category.title : ''}
+                </span>
+              </h1>
+            </div>
+
+            <Grid container spacing={8}>
+              {blog.map(each => {
+                const { image, title, description, added_at, category } = each;
                 const blogImage =
                   (image &&
                     image.length &&
                     image[0].path &&
                     `${IMAGE_BASE}${image[0].path}`) ||
                   defaultImage;
+                ``;
 
                 return (
-                  <Grid key={each._id} item xs={12} lg={4}>
-                    <Link to={`/blog/${each._id}`}>
+                  <Grid key={`blogcat-${each._id}`} item xs={6} md={3}>
+                    <Link className="blockLink" to={`/blog/${each._id}`}>
                       <div className="companyItem">
                         <div>{title}</div>
                       </div>
                     </Link>
                     <div>{moment(added_at).format('MMM Do YY')}</div>
-                    <Link to={`/blog-category/${category ? category._id : ''}`}>
+                    <Link to={`/blog-category/${each.slug_url}`}>
                       <div className="companyItem">
                         <div>{category ? category.title : 'NO'}</div>
                       </div>
@@ -79,35 +79,30 @@ class BlogListPage extends React.Component {
                         <img src={blogImage} width="200px" />
                       </div>
                     </Link>
-                    <div>
-                      Tags:
-                      <Link to={`/blog/${each._id}`}>
-                        <div className="companyItem">
-                          <div>{tags || ''}</div>
-                        </div>
-                      </Link>{' '}
-                    </div>
                   </Grid>
                 );
               })}
             </Grid>
-          </div>
-        </React.Fragment>
-        <Link to="/blog-category">
-          <div>
-            <h1>Blog Categories</h1>
-          </div>
-        </Link>
+          </Grid>
+        </Grid>
+
+        {/* {showModal && <OfferDetailPage />} */}
       </div>
     );
   }
 }
 
-const withReducer = injectReducer({ key: 'blogList', reducer });
-const withSaga = injectSaga({ key: 'blogList', saga });
+CategoryDetailPage.propTypes = {
+  loadCategoryRequest: PropTypes.func.isRequired,
+  loadBlogRequest: PropTypes.func.isRequired,
+};
+
+const withReducer = injectReducer({ key: 'categoryDetailPage', reducer });
+const withSaga = injectSaga({ key: 'categoryDetailPage', saga });
 
 const mapStateToProps = createStructuredSelector({
-  blogList: makeSelectBlogList(),
+  category: makeSelectCategory(),
+  blog: makeSelectBlog(),
 });
 
 const withConnect = connect(
@@ -118,4 +113,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(BlogListPage);
+)(CategoryDetailPage);

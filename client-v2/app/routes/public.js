@@ -5,6 +5,8 @@ import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadabl
 import SignupUserPage from '../containers/SignupUserPage/Loadable';
 import FaqPage from '../containers/FAQPage/Loadable';
 import BlogListPage from '../containers/BlogList/Loadable';
+import CategoryListingPage from '../containers/CategoryListingPage/Loadable';
+import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
 
 const publicRoutes = [
   {
@@ -42,27 +44,16 @@ const publicRoutes = [
     path: '/blog-list',
     component: BlogListPage,
   },
-  // {
-  //   exact: true,
-  //   path: '/blog-list',
-  //   component: BlogList,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/blog/:slug',
-  //   component: BlogPage,
-  // },
-
-  // {
-  //   exact: true,
-  //   path: '/blog-category',
-  //   component: CategoryListingPage,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/blog-category/:id',
-  //   component: CategoryDetailPage,
-  // },
+  {
+    exact: true,
+    path: '/blog-category',
+    component: CategoryListingPage,
+  },
+  {
+    exact: true,
+    path: '/blog-category/:id',
+    component: CategoryDetailPage,
+  },
 
   // {
   //   exact: true,
