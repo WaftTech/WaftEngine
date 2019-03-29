@@ -14,7 +14,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
-import green from '@material-ui/core/colors/green';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { SnackbarProvider } from 'notistack';
@@ -77,9 +76,9 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
-  palette: {
-    primary: green,
-  },
+  // palette: {
+  //   primary: '#333',
+  // },
 });
 
 const render = messages => {
