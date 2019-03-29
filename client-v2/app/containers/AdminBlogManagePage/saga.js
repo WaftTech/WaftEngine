@@ -11,6 +11,7 @@ import { push, LOCATION_CHANGE } from 'connected-react-router';
 import Api from 'utils/Api';
 import { makeSelectOne } from './selectors';
 import { makeSelectToken } from '../App/selectors';
+import { enqueueSnackbar } from '../App/actions';
 import * as types from './constants';
 import * as actions from './actions';
 
@@ -86,10 +87,21 @@ function* addEdit(action) {
   yield cancel(successWatcher);
 }
 
+function* addEditFail(action) {
+  const defaultError = {
+    message: action.payload.msg || 'something went wrong',
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultError));
+}
+
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-
+  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFail);
   yield takeLatest(types.LOAD_CATEGORY_REQUEST, loadCategory);
 }
