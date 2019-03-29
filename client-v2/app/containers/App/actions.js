@@ -15,6 +15,17 @@ export const setToken = token => ({
   type: types.SET_TOKEN,
   payload: token,
 });
+export const enqueueSnackbar = notification => ({
+  type: types.ENQUEUE_SNACKBAR,
+  payload: {
+    key: new Date().getTime() + Math.random(),
+    ...notification,
+  },
+});
+export const removeSnackbar = payload => ({
+  type: types.REMOVE_SNACKBAR,
+  payload,
+});
 
 export const loadContentRequest = payload => ({
   type: types.LOAD_CONTENT_REQUEST,

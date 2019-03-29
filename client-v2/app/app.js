@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 
 import history from 'utils/history';
 
@@ -85,7 +86,9 @@ const render = messages => {
       <LanguageProvider messages={messages}>
         <MuiThemeProvider theme={theme}>
           <ConnectedRouter history={history}>
-            <App />
+            <SnackbarProvider maxSnack={3}>
+              <App />
+            </SnackbarProvider>
           </ConnectedRouter>
         </MuiThemeProvider>
       </LanguageProvider>
