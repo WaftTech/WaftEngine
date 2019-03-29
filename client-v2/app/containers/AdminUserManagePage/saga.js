@@ -10,6 +10,7 @@ import {
 import { push, LOCATION_CHANGE } from 'connected-react-router';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
+import { enqueueSnackbar } from '../App/actions';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectOne } from './selectors';
@@ -67,8 +68,20 @@ function* addEdit() {
   yield cancel(successWatcher);
 }
 
+function* addEditFail(action) {
+  const defaultError = {
+    message: action.payload.msg || 'something went wrong',
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultError));
+}
+
 export default function* adminUserManagePageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
+  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFail);
 }

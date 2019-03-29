@@ -6,7 +6,7 @@ import { withSnackbar } from 'notistack';
 import { removeSnackbar, enqueueSnackbar } from '../actions';
 import { makeSelectNotifications } from '../selectors';
 
-class Notifier extends React.PureComponent {
+class Notifier extends React.Component {
   static propTypes = {
     removeSnackbar: PropTypes.func.isRequired,
     enqueueSnackbar: PropTypes.func.isRequired,
@@ -19,18 +19,18 @@ class Notifier extends React.PureComponent {
     this.displayed = [...this.displayed, id];
   };
 
-  // shouldComponentUpdate({ notifications: newSnacks = [] }) {
-  //   const { notifications: currentSnacks } = this.props;
-  //   let notExists = false;
-  //   for (let i = 0; i < newSnacks.length; i += 1) {
-  //     if (!notExists) {
-  //       notExists =
-  //         notExists ||
-  //         !currentSnacks.filter(({ key }) => newSnacks[i].key === key).length;
-  //     }
-  //   }
-  //   return notExists;
-  // }
+  shouldComponentUpdate({ notifications: newSnacks = [] }) {
+    const { notifications: currentSnacks } = this.props;
+    let notExists = false;
+    for (let i = 0; i < newSnacks.length; i += 1) {
+      if (!notExists) {
+        notExists =
+          notExists ||
+          !currentSnacks.filter(({ key }) => newSnacks[i].key === key).length;
+      }
+    }
+    return notExists;
+  }
 
   componentDidUpdate() {
     const { notifications = [] } = this.props;
