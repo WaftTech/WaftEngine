@@ -16,6 +16,7 @@ const EmailInput = props => {
       error={hasError}
       label={error || 'email'}
       value={email}
+      name="username"
       onChange={handleChange}
       margin="normal"
     />

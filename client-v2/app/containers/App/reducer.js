@@ -19,6 +19,7 @@ export const initialState = {
   token: '',
   content: {},
   media: {},
+  notifications: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -55,6 +56,16 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           ...draft.media,
           [action.payload.data._id]: action.payload.data, // eslint-disable-line no-underscore-dangle
         };
+        break;
+      case types.ENQUEUE_SNACKBAR:
+        draft.notifications = [...draft.notifications, { ...action.payload }];
+        break;
+      case types.REMOVE_SNACKBAR:
+        draft.notifications = [
+          ...draft.notifications.filter(
+            notification => notification.key !== action.payload,
+          ),
+        ];
         break;
     }
   });
