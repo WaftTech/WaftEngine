@@ -13,23 +13,13 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import StaticContentDiv from '../../components/StaticContentDiv';
+import SlickSlider from '../../components/SlickSlider';
 import mainImage from './home.png';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
   render() {
     const { classes, category } = this.props;
-
-    const settings = {
-      slidesToShow: 4,
-      slidesToScroll: 3,
-      dots: true,
-      centerMode: true,
-      centerPadding: '40px',
-      autoplay: true,
-      autoplaySpeed: 2000,
-      focusOnSelect: true,
-    };
 
     return (
       <React.Fragment>
@@ -38,7 +28,7 @@ export default class HomePage extends React.PureComponent {
           src={mainImage}
           alt="template"
         />
-        {/* <StaticContentDiv contentKey="aboutusheader" /> */}
+        <SlickSlider slideKey="manoj-dai" />
       </React.Fragment>
     );
   }

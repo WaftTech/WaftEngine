@@ -61,7 +61,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
       case types.LOAD_SLIDE_SUCCESS:
         draft.slide = {
           ...draft.slide,
-          // [action.payload.data.key]: action.payload.data.description,
+          [action.payload.data.slider_key]: action.payload.data,
         };
         break;
       case types.ENQUEUE_SNACKBAR:

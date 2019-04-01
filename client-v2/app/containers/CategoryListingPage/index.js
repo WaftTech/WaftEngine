@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectCategory } from './selectors';
+import { makeSelectCategory, makeSelectTotalData } from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
@@ -32,7 +32,7 @@ class CategoryListingPage extends React.Component {
                     <Link to={`/blog-category/${each._id}`}>
                       <div>
                         <div className="info">
-                          <h1>{title}</h1>
+                          <h1> {`${title}`}</h1>
                         </div>
                       </div>
                     </Link>
