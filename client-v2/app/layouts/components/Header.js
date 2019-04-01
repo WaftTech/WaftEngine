@@ -177,7 +177,7 @@ const Header = props => {
             <NavLink className={classes.menu} to="/blog-list">
               Blog Module
             </NavLink>
-            <NavLink className={classes.menu} to="/contact">
+            <NavLink className={classes.menu} to="/contact-us">
               Contact Module
             </NavLink>
             <NavLink className={classes.menu} to="/faq">
