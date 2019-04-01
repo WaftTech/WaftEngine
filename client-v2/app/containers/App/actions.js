@@ -27,6 +27,19 @@ export const removeSnackbar = payload => ({
   payload,
 });
 
+export const logoutRequest = payload => ({
+  type: types.LOGOUT_REQUEST,
+  payload,
+});
+export const logoutSuccess = payload => ({
+  type: types.LOGOUT_SUCCESS,
+  payload,
+});
+export const logoutFailure = payload => ({
+  type: types.LOGOUT_FAILURE,
+  payload,
+});
+
 export const loadContentRequest = payload => ({
   type: types.LOAD_CONTENT_REQUEST,
   payload,
@@ -53,15 +66,15 @@ export const loadMediaFailure = payload => ({
   payload,
 });
 
-export const logoutRequest = payload => ({
-  type: types.LOGOUT_REQUEST,
+export const loadSlideRequest = payload => ({
+  type: types.LOAD_SLIDE_REQUEST,
   payload,
 });
-export const logoutSuccess = payload => ({
-  type: types.LOGOUT_SUCCESS,
+export const loadSlideSuccess = payload => ({
+  type: types.LOAD_SLIDE_SUCCESS,
   payload,
 });
-export const logoutFailure = payload => ({
-  type: types.LOGOUT_FAILURE,
+export const loadSlideFailure = payload => ({
+  type: types.LOAD_SLIDE_FAILURE,
   payload,
 });
