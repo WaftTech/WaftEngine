@@ -20,12 +20,16 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardBody from '@material-ui/core/CardContent';
 import CardFooter from '@material-ui/core/CardActions';
+import { Paper } from '@material-ui/core';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne, makeSelectCategory } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
+  p20: { padding: 20 },
   formControl: {
     minWidth: 120,
     maxWidth: 300,
@@ -35,22 +39,6 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   chip: { margin: theme.spacing.unit / 2 },
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
 });
 
 class AddEdit extends React.PureComponent {
@@ -98,64 +86,60 @@ class AddEdit extends React.PureComponent {
     // const { data, category_id } = this.state;
     return (
       <div>
-        <Grid container>
-          <Grid item xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary" title="Add/Edit FAQs" />
-              <CardBody>
-                <Grid item xs={12} sm={12} md={12}>
-                  <TextField
-                    name="Question"
-                    id="faq"
-                    placeholder="Question"
-                    value={one.question}
-                    onChange={this.handleChange('question')}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                  <TextField
-                    name="Answer"
-                    id="faq-answer"
-                    placeholder="Answer"
-                    value={one.title}
-                    onChange={this.handleChange('title')}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="category">Category</InputLabel>
-                    <Select
-                      value={one.category}
-                      onChange={this.handleChange('category')}
-                    >
-                      {category.map(each => (
-                        <MenuItem key={each._id} value={each._id}>
-                          {each.title}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleSave}
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={this.handleGoBack}
-                >
-                  Back
-                </Button>
-              </CardFooter>
-            </Card>
-          </Grid>
-        </Grid>
+        <PageHeader> Add/Edit FAQs</PageHeader>
+        <PageContent>
+          <Paper className={classes.p20}>
+            <TextField
+              name="Question"
+              id="faq"
+              label="Question"
+              value={one.question}
+              onChange={this.handleChange('question')}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              name="Answer"
+              id="faq-answer"
+              label="Answer"
+              value={one.title}
+              onChange={this.handleChange('title')}
+              margin="normal"
+              fullWidth
+            />
+            <FormControl
+              className={classes.formControl}
+              margin="normal"
+              fullWidth
+            >
+              <InputLabel htmlFor="category">Category</InputLabel>
+              <Select
+                value={one.category}
+                onChange={this.handleChange('category')}
+              >
+                {category.map(each => (
+                  <MenuItem key={each._id} value={each._id}>
+                    {each.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleSave}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.handleGoBack}
+            >
+              Back
+            </Button>
+          </Paper>
+        </PageContent>
       </div>
     );
   }
