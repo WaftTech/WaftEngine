@@ -1,0 +1,232 @@
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { Helmet } from 'react-helmet';
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
+
+import GridItem from '@material-ui/core/Grid';
+import CustomInput from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardBody from '@material-ui/core/CardContent';
+import CardFooter from '@material-ui/core/CardActions';
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import saga from './saga';
+import reducer from './reducer';
+import {
+  makeSelectIsRequesting,
+  makeSelectSuccess,
+  makeSelectMsg,
+  makeSelectErrorMsg,
+  makeSelectContactDetail,
+} from './selectors';
+import * as mapDispatchToProps from './actions';
+
+const styles = {
+  cardCategoryWhite: {
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
+  },
+  cardTitleWhite: {
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: '3px',
+    textDecoration: 'none',
+  },
+};
+const recaptchaRef = React.createRef();
+class ContactUs extends React.Component {
+  state = { name: '', email: '', subject: '', message: '' };
+
+  componentDidMount() {
+    this.props.ContactDetailRequest();
+  }
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.success !== this.props.success && nextProps.success) {
+      this.setState({ name: '', email: '', subject: '', message: '' }, () => {
+        window.grecaptcha && window.grecaptcha.reset();
+      });
+    }
+  }
+
+  handleSave = () => {
+    this.props.saveContactRequest(this.state);
+  };
+
+  onSubmit = () => {
+    const recaptchaValue = recaptchaRef.current.getValue();
+    this.props.onSubmit(recaptchaValue);
+  };
+
+  onChange = e => {
+    this.setState({
+      reCaptcha: e,
+    });
+  };
+
+  render() {
+    const { isRequesting, msg, contactDetail } = this.props;
+    const { name, email, subject, message } = this.state;
+
+    return (
+      <div className="container">
+        <Helmet>
+          <title>Contact Us</title>
+        </Helmet>
+        <div>
+          <h1> Contact Us </h1>
+        </div>
+        <div>
+          <GridItem>
+            <GridItem item xs={6} sm={6} md={6}>
+              <Card>
+                <CardBody>
+                  <GridItem>
+                    <GridItem item xs={12} sm={12} md={12}>
+                      <CustomInput
+                        name="Name"
+                        id="name"
+                        fullWidth
+                        placeholder="Name"
+                        inputProps={{
+                          value: name,
+                          onChange: this.handleChange('name'),
+                        }}
+                      />
+                    </GridItem>
+                  </GridItem>
+                  <GridItem>
+                    <GridItem item xs={12} sm={12} md={12}>
+                      <CustomInput
+                        name="Email"
+                        id="email"
+                        fullWidth
+                        placeholder="Email"
+                        inputProps={{
+                          value: email,
+                          onChange: this.handleChange('email'),
+                        }}
+                      />
+                    </GridItem>
+                  </GridItem>
+                  <GridItem>
+                    <GridItem item xs={12} sm={12} md={12}>
+                      <CustomInput
+                        name="Subject"
+                        id="subject"
+                        fullWidth
+                        placeholder="Subject"
+                        inputProps={{
+                          value: subject,
+                          onChange: this.handleChange('subject'),
+                        }}
+                      />
+                    </GridItem>
+                  </GridItem>
+                  <GridItem>
+                    <GridItem item xs={12} sm={12} md={12}>
+                      <CustomInput
+                        name="Message"
+                        id="message"
+                        fullWidth
+                        placeholder="Message"
+                        inputProps={{
+                          value: message,
+                          onChange: this.handleChange('message'),
+                        }}
+                      />
+                    </GridItem>
+                  </GridItem>
+                  <GridItem>
+                    <GridItem item xs={12} sm={12} md={12}>
+                      <form onSubmit={this.onSubmit}>
+                        <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey="6LftqoQUAAAAAOnGULHOWhdUACVQYeHFggJdRojU"
+                          onChange={this.onChange}
+                        />
+                      </form>
+                    </GridItem>
+                  </GridItem>
+                </CardBody>
+                <CardFooter>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={isRequesting}
+                    onClick={this.handleSave}
+                  >
+                    Save Message
+                  </Button>
+
+                  <div>
+                    <h1>{msg}</h1>
+                  </div>
+                  <div>
+                    <h1>{this.props.error}</h1>
+                  </div>
+                </CardFooter>
+              </Card>
+            </GridItem>
+            <GridItem item xs={6} sm={6} md={6}>
+              {contactDetail.description && (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: contactDetail.description,
+                  }}
+                />
+              )}
+            </GridItem>
+          </GridItem>
+        </div>
+      </div>
+    );
+  }
+}
+
+ContactUs.propTypes = {
+  saveContactRequest: PropTypes.func.isRequired,
+  ContactDetailRequest: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  isRequesting: makeSelectIsRequesting(),
+  success: makeSelectSuccess(),
+  msg: makeSelectMsg(),
+  error: makeSelectErrorMsg(),
+  contactDetail: makeSelectContactDetail(),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'contactUs', reducer });
+const withSaga = injectSaga({ key: 'contactUs', saga });
+
+const withStyle = withStyles(styles);
+
+export default compose(
+  withRouter,
+  withStyle,
+  withReducer,
+  withSaga,
+  withConnect,
+)(ContactUs);

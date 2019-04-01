@@ -1,19 +1,16 @@
-import { fromJS } from 'immutable';
+import produce from 'immer';
 import * as types from './constants';
 
-export const initialState = fromJS({
+export const initialState = {
   blog: {},
-});
+};
 
-function blogPageReducer(state = initialState, action) {
-  switch (action.type) {
-    case types.LOAD_BLOG_SUCCESS:
-      return state.merge({
-        blog: fromJS(action.payload.data),
-      });
-    default:
-      return state;
-  }
-}
+const blogPageReducer = (state = initialState, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case types.LOAD_BLOG_SUCCESS:
+        draft.blog = action.payload.data;
+    }
+  });
 
 export default blogPageReducer;
