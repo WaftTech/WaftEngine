@@ -10,7 +10,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-
+import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 
 import saga from './saga';
@@ -23,11 +23,12 @@ import AdminRoute from '../../components/Routes/AdminRoute';
 import UserRoute from '../../components/Routes/UserRoute';
 import Notifier from './components/Notifier';
 import { enqueueSnackbar } from './actions';
+import { makeSelectLocation } from './selectors';
 
-const App = () => (
+const App = ({ location }) => (
   <>
     <Notifier />
-    <Switch>
+    <Switch location={location}>
       <UserRoute path="/user" component={RoutesUser} />
       <AdminRoute path="/admin" component={RoutesAdmin} />
       <Route path="/" component={RoutesPublic} />
@@ -38,8 +39,11 @@ const App = () => (
 
 const withSaga = injectSaga({ key: 'global', saga });
 
+const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
+});
 const withConnect = connect(
-  null,
+  mapStateToProps,
   { enqueueSnackbar },
 );
 

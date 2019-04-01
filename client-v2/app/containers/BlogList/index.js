@@ -17,7 +17,7 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 
 /* eslint-disable react/prefer-stateless-function */
-class BlogListPage extends React.Component {
+export class BlogListPage extends React.Component {
   static propTypes = {
     loadBlogListRequest: PropTypes.func.isRequired,
     blogList: PropTypes.array,

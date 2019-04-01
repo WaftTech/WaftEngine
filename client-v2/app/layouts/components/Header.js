@@ -186,6 +186,9 @@ const Header = props => {
             <NavLink className={classes.menu} to="/subscribe">
               Susbscribe Module
             </NavLink>
+            <NavLink className={classes.menu} to="/blog-list">
+              Blogs
+            </NavLink>
           </div>
         </div>
       </header>

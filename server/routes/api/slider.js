@@ -10,6 +10,7 @@ const sliderModule = require('../../modules/slider/sliderController');
 const validations = require('../../modules/slider/sliderValidations');
 
 router.get('/', authorization, sliderModule.GetSlider);
+router.get('/key/:key', sliderModule.GetSliderByKey);
 router.get('/:id', authorization, sliderModule.GetSliderById);
 router.post('/', authorization, upload.array('file', 1), validations.sanitize, validations.validate, sliderModule.SaveSlider);
 router.delete('/:id', authorization, sliderModule.DeleteSlider);
