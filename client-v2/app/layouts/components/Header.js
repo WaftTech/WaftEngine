@@ -178,6 +178,9 @@ const Header = props => {
             <NavLink className={classes.menu} to="/contact-us">
               Contact Us
             </NavLink>
+            <NavLink className={classes.menu} to="/blog-list">
+              Blogs
+            </NavLink>
           </div>
         </div>
       </header>
