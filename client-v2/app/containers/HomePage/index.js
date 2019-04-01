@@ -18,9 +18,21 @@ import mainImage from './home.png';
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
   render() {
+    const { classes, category } = this.props;
+
+    const settings = {
+      slidesToShow: 4,
+      slidesToScroll: 3,
+      dots: true,
+      centerMode: true,
+      centerPadding: '40px',
+      autoplay: true,
+      autoplaySpeed: 2000,
+      focusOnSelect: true,
+    };
+
     return (
       <React.Fragment>
-        {' '}
         <img
           style={{ width: '100%', maxWidth: '1440px' }}
           src={mainImage}

@@ -10,6 +10,7 @@ import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
 import AboutUsPage from '../containers/AboutUsPage/Loadable';
 import BlogDetailPage from '../containers/BlogPage/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
+import SubscribePage from '../containers/SubscribePage/index';
 
 const publicRoutes = [
   {
@@ -57,7 +58,11 @@ const publicRoutes = [
     path: '/blog-category/:id',
     component: CategoryDetailPage,
   },
-
+  {
+    exact: true,
+    path: '/subscribe',
+    component: SubscribePage,
+  },
   {
     exact: true,
     path: '/blog/:id',

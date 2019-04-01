@@ -20,7 +20,7 @@ const PublicLayout = () => (
   <>
     <Header />
     {switchRoutes}
-    <Footer />
+    {/* <Footer /> */}
   </>
 );
 
