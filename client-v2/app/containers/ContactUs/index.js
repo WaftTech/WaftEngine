@@ -8,7 +8,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import GridItem from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import CustomInput from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -93,12 +93,12 @@ class ContactUs extends React.Component {
           <h1> Contact Us </h1>
         </div>
         <div>
-          <GridItem>
-            <GridItem item xs={6} sm={6} md={6}>
+          <Grid container>
+            <Grid item xs={6} sm={6} md={6}>
               <Card>
                 <CardBody>
-                  <GridItem>
-                    <GridItem item xs={12} sm={12} md={12}>
+                  <Grid>
+                    <Grid item xs={12} sm={12} md={12}>
                       <CustomInput
                         name="Name"
                         id="name"
@@ -109,10 +109,10 @@ class ContactUs extends React.Component {
                           onChange: this.handleChange('name'),
                         }}
                       />
-                    </GridItem>
-                  </GridItem>
-                  <GridItem>
-                    <GridItem item xs={12} sm={12} md={12}>
+                    </Grid>
+                  </Grid>
+                  <Grid>
+                    <Grid item xs={12} sm={12} md={12}>
                       <CustomInput
                         name="Email"
                         id="email"
@@ -123,10 +123,10 @@ class ContactUs extends React.Component {
                           onChange: this.handleChange('email'),
                         }}
                       />
-                    </GridItem>
-                  </GridItem>
-                  <GridItem>
-                    <GridItem item xs={12} sm={12} md={12}>
+                    </Grid>
+                  </Grid>
+                  <Grid>
+                    <Grid item xs={12} sm={12} md={12}>
                       <CustomInput
                         name="Subject"
                         id="subject"
@@ -137,10 +137,10 @@ class ContactUs extends React.Component {
                           onChange: this.handleChange('subject'),
                         }}
                       />
-                    </GridItem>
-                  </GridItem>
-                  <GridItem>
-                    <GridItem item xs={12} sm={12} md={12}>
+                    </Grid>
+                  </Grid>
+                  <Grid>
+                    <Grid item xs={12} sm={12} md={12}>
                       <CustomInput
                         name="Message"
                         id="message"
@@ -151,10 +151,10 @@ class ContactUs extends React.Component {
                           onChange: this.handleChange('message'),
                         }}
                       />
-                    </GridItem>
-                  </GridItem>
-                  <GridItem>
-                    <GridItem item xs={12} sm={12} md={12}>
+                    </Grid>
+                  </Grid>
+                  <Grid>
+                    <Grid item xs={12} sm={12} md={12}>
                       <form onSubmit={this.onSubmit}>
                         <ReCAPTCHA
                           ref={recaptchaRef}
@@ -162,8 +162,8 @@ class ContactUs extends React.Component {
                           onChange={this.onChange}
                         />
                       </form>
-                    </GridItem>
-                  </GridItem>
+                    </Grid>
+                  </Grid>
                 </CardBody>
                 <CardFooter>
                   <Button
@@ -183,8 +183,8 @@ class ContactUs extends React.Component {
                   </div>
                 </CardFooter>
               </Card>
-            </GridItem>
-            <GridItem item xs={6} sm={6} md={6}>
+            </Grid>
+            <Grid item xs={6} sm={6} md={6}>
               {contactDetail.description && (
                 <div
                   dangerouslySetInnerHTML={{
@@ -192,8 +192,8 @@ class ContactUs extends React.Component {
                   }}
                 />
               )}
-            </GridItem>
-          </GridItem>
+            </Grid>
+          </Grid>
         </div>
       </div>
     );

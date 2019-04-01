@@ -18,6 +18,7 @@ import {
   makeSelectUser,
 } from '../../containers/App/selectors';
 import { logoutRequest } from '../../containers/App/actions';
+import logo from '../../assets/img/we_logo.png';
 
 const styles = theme => ({
   logo20: {
@@ -29,11 +30,9 @@ const styles = theme => ({
     justifyContent: 'flex-end',
     marginTop: 20,
     marginBottom: 20,
-    color: '#fff',
     boxShadow: 'none',
-    background: '#53813a',
     '&:hover': {
-      background: '#204E07',
+      background: '#cf0b24',
       color: '#fff',
     },
   },
@@ -51,7 +50,7 @@ const styles = theme => ({
     fontSize: 18,
   },
   menuWrapper: {
-    background: '#4c5447',
+    background: '#cf0b24',
     width: '100%',
     '& a': {
       display: 'inline-block',
@@ -98,9 +97,9 @@ const Header = props => {
     <div>
       <header>
         <div className="container">
-          <Grid container spacing={24}>
+          <Grid container>
             <Grid item xs={6} sm={6}>
-              {/* <img src={logo} alt="Waft Engine" className={classes.logo20} /> */}
+              <img src={logo} alt="Waft Engine" className={classes.logo20} />
             </Grid>
             <Grid item xs={12} sm={6}>
               {!token ? (
@@ -172,11 +171,20 @@ const Header = props => {
             <NavLink className={classes.menu} exact to="/">
               Home
             </NavLink>
-            <NavLink className={classes.menu} to="/about-us">
-              About Us
+            <NavLink className={classes.menu} to="/slider">
+              Slider Module
+            </NavLink>
+            <NavLink className={classes.menu} to="/blog-list">
+              Blog Module
             </NavLink>
             <NavLink className={classes.menu} to="/contact-us">
-              Contact Us
+              Contact Module
+            </NavLink>
+            <NavLink className={classes.menu} to="/faq">
+              FAQ Module
+            </NavLink>
+            <NavLink className={classes.menu} to="/subscribe">
+              Susbscribe Module
             </NavLink>
             <NavLink className={classes.menu} to="/blog-list">
               Blogs
