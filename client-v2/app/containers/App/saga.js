@@ -22,6 +22,15 @@ function* loadMedia(action) {
     ),
   );
 }
+function* loadSlide(action) {
+  yield call(
+    Api.get(
+      `slider/key/${action.payload}`,
+      actions.loadSlideSuccess,
+      actions.loadSlideFailure,
+    ),
+  );
+}
 function* logOut() {
   const token = yield select(makeSelectToken());
   yield call(
@@ -32,5 +41,6 @@ function* logOut() {
 export default function* defaultSaga() {
   yield takeEvery(types.LOAD_CONTENT_REQUEST, loadContent);
   yield takeEvery(types.LOAD_MEDIA_REQUEST, loadMedia);
+  yield takeEvery(types.LOAD_SLIDE_REQUEST, loadSlide);
   yield takeLatest(types.LOGOUT_REQUEST, logOut);
 }

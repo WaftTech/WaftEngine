@@ -19,6 +19,7 @@ export const initialState = {
   token: '',
   content: {},
   media: {},
+  slide: {},
   notifications: [],
 };
 
@@ -48,13 +49,19 @@ const appReducer = (state = initialState, action = { type: '' }) =>
       case types.LOAD_CONTENT_SUCCESS:
         draft.content = {
           ...draft.content,
-          [action.payload.data.key]: action.payload.data.description,
+          [action.payload.data.slider_key]: action.payload.data,
         };
         break;
       case types.LOAD_MEDIA_SUCCESS:
         draft.media = {
           ...draft.media,
           [action.payload.data._id]: action.payload.data, // eslint-disable-line no-underscore-dangle
+        };
+        break;
+      case types.LOAD_SLIDE_SUCCESS:
+        draft.slide = {
+          ...draft.slide,
+          // [action.payload.data.key]: action.payload.data.description,
         };
         break;
       case types.ENQUEUE_SNACKBAR:
