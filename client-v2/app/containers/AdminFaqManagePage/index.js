@@ -90,9 +90,8 @@ export class FAQManagePage extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ question, title, category, added_at, updated_at, _id }) => [
+      ({ question, category, added_at, updated_at, _id }) => [
         question,
-        title,
         (category && category.title) || 'No',
         moment(added_at).format('MMM Do YY'),
         moment(updated_at).format('MMM Do YY'),
@@ -154,10 +153,10 @@ export class FAQManagePage extends React.PureComponent {
             <Table
               tableHead={[
                 'Question',
-                'Answer',
                 'Category',
                 'Added At',
                 'Updated At',
+                'Actions',
               ]}
               tableData={tableData}
               pagination={tablePagination}

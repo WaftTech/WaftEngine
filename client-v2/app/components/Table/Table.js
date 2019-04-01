@@ -53,6 +53,7 @@ function CustomTable({ ...props }) {
           <TableFooter>
             <TableRow>
               <TablePagination
+                style={{ display: 'flex', justifyContent: 'flex-start' }}
                 rowsPerPageOptions={[5, 10, 25, 50, 100]}
                 colSpan={3}
                 count={pagination.totaldata}
