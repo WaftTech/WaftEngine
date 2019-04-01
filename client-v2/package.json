@@ -90,6 +90,7 @@
     "react-ckeditor-component": "^1.1.0",
     "react-dom": "16.8.4",
     "react-dropzone": "^10.0.6",
+    "react-google-recaptcha": "^1.0.5",
     "react-helmet": "5.2.0",
     "react-intl": "2.8.0",
     "react-redux": "6.0.1",
