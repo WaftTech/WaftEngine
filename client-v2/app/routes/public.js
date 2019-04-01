@@ -7,6 +7,8 @@ import FaqPage from '../containers/FAQPage/Loadable';
 import BlogListPage from '../containers/BlogList/Loadable';
 import CategoryListingPage from '../containers/CategoryListingPage/Loadable';
 import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
+import ContactPage from '../containers/ContactPage/index';
+import SubscribePage from '../containers/SubscribePage/index';
 
 const publicRoutes = [
   {
@@ -54,12 +56,16 @@ const publicRoutes = [
     path: '/blog-category/:id',
     component: CategoryDetailPage,
   },
-
-  // {
-  //   exact: true,
-  //   path: '/contact-us',
-  //   component: ContactUs,
-  // },
+  {
+    exact: true,
+    path: '/contact',
+    component: ContactPage,
+  },
+  {
+    exact: true,
+    path: '/subscribe',
+    component: SubscribePage,
+  },
   // {
   //   exact: true,
   //   path: '/about-us',

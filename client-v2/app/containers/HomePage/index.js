@@ -11,9 +11,6 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import messages from './messages';
 import StaticContentDiv from '../../components/StaticContentDiv';
 import mainImage from './home.png';
@@ -36,18 +33,6 @@ export default class HomePage extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Slider {...settings}>
-          <div key={each._id}>
-            <img
-              className={classes.category}
-              src={`${IMAGE_BASE}${each.image.path}`}
-              style={{ height: 100, width: 100 }}
-              alt={each.name}
-            />
-            {/* <h3 className={classes.categoryTitle}>{each.name}</h3> */}
-          </div>
-        </Slider>
-
         <img
           style={{ width: '100%', maxWidth: '1440px' }}
           src={mainImage}
