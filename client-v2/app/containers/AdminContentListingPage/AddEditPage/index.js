@@ -25,25 +25,14 @@ import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
+import { spacing, palette } from '@material-ui/system';
 
-const styles = {
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-};
+const styles = { 
+
+}
+
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -91,38 +80,46 @@ class AddEdit extends React.PureComponent {
     const { one } = this.props;
     return (
       <div>
-        <PageHeader>Edit Content</PageHeader>
+        <PageHeader>
+        <IconButton onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon color="white" />
+        </IconButton>Edit Content</PageHeader>
         <PageContent>
           <Card>
             <CardBody>
               <div>
                 <TextField
+                fullWidth
+                label="Content Title"
+                  margin='normal'
+                  InputLabelProps= {{
+                    shrink:true,
+                  }}
                   name="Content Name"
                   id="contents-name"
-                  fullWidth
-                  placeholder="name of the content"
                   inputProps={{
                     value: one.name,
                     onChange: this.handleChange('name'),
                   }}
+                  
                 />
               </div>
               <div>
                 <TextField
+                    fullWidth
+                    label="Content Key"
+                      margin='normal'
+                      InputLabelProps= {{
+                        shrink:true,
+                      }}
                   name="key"
                   id="contents-key"
-                  fullWidth
-                  placeholder="name of the content key"
                   inputProps={{
                     value: one.key,
                     onChange: this.handleChange('key'),
                   }}
                 />
               </div>
-              <div>
-                <InputLabel style={{ color: '#AAAAAA' }}>
-                  Content Description
-                </InputLabel>
                 <CKEditor
                   name="description"
                   content={one.description}
@@ -132,13 +129,17 @@ class AddEdit extends React.PureComponent {
                     value: one.description,
                   }}
                 />
-              </div>
               <div sm={12} md={6}>
                 <TextField
+                 fullWidth
+                 label="Publish From"
+                   margin='normal'
+                   InputLabelProps= {{
+                     shrink:true,
+                   }}
                   name="Published From"
                   id="contents-from-date"
-                  fullWidth
-                  placeholder="published from"
+                 
                   inputProps={{
                     value: one.publish_from,
                     onChange: this.handleChange('publish_from'),
@@ -147,10 +148,15 @@ class AddEdit extends React.PureComponent {
               </div>
               <div sm={12} md={6}>
                 <TextField
+                 fullWidth
+                 label="Publish To"
+                   margin='normal'
+                   InputLabelProps= {{
+                     shrink:true,
+                   }}
                   name="Published To"
                   id="contents-to-date"
                   fullWidth
-                  placeholder="publish to"
                   inputProps={{
                     value: one.publish_to,
                     onChange: this.handleChange('publish_to'),
@@ -158,9 +164,6 @@ class AddEdit extends React.PureComponent {
                 />
               </div>
               <div>
-                <InputLabel style={{ color: '#AAAAAA' }}>
-                  Activity Type
-                </InputLabel>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -193,13 +196,7 @@ class AddEdit extends React.PureComponent {
               >
                 Save
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={this.handleGoBack}
-              >
-                Back
-              </Button>
+              
             </CardFooter>
           </Card>
         </PageContent>
