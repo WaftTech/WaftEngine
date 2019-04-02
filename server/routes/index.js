@@ -35,8 +35,10 @@ router.use('/faq', faqRoutes);
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
 // All route of videos
-const vidmodule = require('./api/video');
-router.use('/video', vidmodule);
+const vidRoutes = require('./api/video');
+router.use('/video', vidRoutes);
+const subscribeRoutes = require('./api/subscribe');
+router.use('/subscribe', subscribeRoutes);
 // All route of Static Data from DB Module
 const staticRoutes = require('./api/static');
 router.use('/static', staticRoutes);
