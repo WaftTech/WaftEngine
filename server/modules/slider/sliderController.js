@@ -90,8 +90,8 @@ sliderController.SaveSlider = async (req, res, next) => {
     } else {
       slider.added_by = req.user.id;
       const newSlider = new sliderSch(slider);
-      const sliderave = await newSlider.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, sliderave, null, sliderConfig.save, null);
+      const slidersave = await newSlider.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, slidersave, null, sliderConfig.save, null);
     }
   } catch (err) {
     next(err);

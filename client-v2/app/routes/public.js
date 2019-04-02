@@ -10,7 +10,7 @@ import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
 import AboutUsPage from '../containers/AboutUsPage/Loadable';
 import BlogDetailPage from '../containers/BlogPage/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
-import SubscribePage from '../containers/SubscribePage/index';
+import SubscribePage from '../containers/SubscriberPage/Loadable';
 
 const publicRoutes = [
   {
@@ -78,11 +78,11 @@ const publicRoutes = [
     path: '/contact-us',
     component: ContactUsPage,
   },
-  // {
-  //   exact: true,
-  //   path: '/video/:id',
-  //   component: VideosPage,
-  // },
+  {
+    exact: true,
+    path: '/subscribe',
+    component: SubscribePage,
+  },
   // {
   //   exact: true,
   //   path: '/video/link/:id',
