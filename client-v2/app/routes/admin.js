@@ -15,6 +15,7 @@ import SliderManagePage from '../containers/AdminSliderManagePage/Loadable';
 import SliderManageAddEdit from '../containers/AdminSliderManagePage/AddEditPage/Loadable';
 import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
 import BlogManageAddEdit from '../containers/AdminBlogManagePage/AddEditPage/Loadable';
+import SubscribePage from '../containers/AdminSubscribePage/Loadable';
 
 const routes = [
   {
@@ -137,6 +138,16 @@ const routes = [
   {
     path: '/admin/blog-manage',
     component: BlogManagePage,
+    exact: true,
+  },
+  // {
+  //   path: '/admin/subscribe-manage/view/:id',
+  //   component: SubscribePage,
+  //   exact: true,
+  // },
+  {
+    path: '/admin/subscribe-manage',
+    component: SubscribePage,
     exact: true,
   },
 ];
