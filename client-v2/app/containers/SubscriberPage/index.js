@@ -15,7 +15,12 @@ import { TextField, Button } from '@material-ui/core';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectEmail } from './selectors';
+import {
+  makeSelectEmail,
+  makeSelectEmailError,
+  makeSelectSuccess,
+  makeSelectSuccessMsg,
+} from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -24,6 +29,8 @@ import saga from './saga';
 export class SubscriberPage extends React.PureComponent {
   static propTypes = {
     setStoreValue: PropTypes.func.isRequired,
+    error: PropTypes.string,
+    email: PropTypes.string.isRequired,
   };
 
   handleChange = name => e => {
@@ -37,7 +44,8 @@ export class SubscriberPage extends React.PureComponent {
   };
 
   render() {
-    const { email } = this.props;
+    const { email, error, successMsg } = this.props;
+    const hasError = Boolean(error);
     return (
       <>
         <div>
@@ -46,8 +54,9 @@ export class SubscriberPage extends React.PureComponent {
         <form>
           <div className="mb-2">
             <TextField
+              error={hasError}
               fullWidth
-              label="Enter Your Email"
+              label={error || 'Enter Your Email'}
               margin="normal"
               value={email}
               onChange={this.handleChange('email')}
@@ -60,6 +69,9 @@ export class SubscriberPage extends React.PureComponent {
           >
             Subscribe
           </Button>
+          <div>
+            <h1>{successMsg}</h1>
+          </div>
         </form>
       </>
     );
@@ -68,6 +80,9 @@ export class SubscriberPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
+  error: makeSelectEmailError(),
+  success: makeSelectSuccess(),
+  successMsg: makeSelectSuccessMsg(),
 });
 
 const withConnect = connect(

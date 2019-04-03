@@ -1,4 +1,4 @@
-import { take, takeLatest, put, select, fork } from 'redux-saga/effects';
+import { take, takeLatest, put, call, select } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
 import { makeSelectEmail } from './selectors';
@@ -12,20 +12,13 @@ export const validate = data => {
   return { errors, isValid: !Object.keys(errors).length };
 };
 
-// export function* redirectOnSuccess() {
-//   yield take(types.SAVE_SUBSCRIBER_SUCCESS);
-//   yield put(push('/subscribe'));
-//   yield actions.clearStoreValue;
-// }
-
 export function* saveSubscriber() {
   const token = yield select(makeSelectToken());
   const email = yield select(makeSelectEmail());
   const data = { email };
   const errors = validate(data);
   if (errors.isValid) {
-    // const successWatcher = yield fork(redirectOnSuccess);
-    yield fork(
+    yield call(
       Api.post(
         `subscribe`,
         actions.saveSubscriberSuccess,
@@ -36,6 +29,8 @@ export function* saveSubscriber() {
     );
     yield take(LOCATION_CHANGE, types.SAVE_SUBSCRIBER_FAILURE);
     yield cancel(successWatcher);
+  } else {
+    yield put(actions.setStoreValue({ key: 'errors', value: errors.errors }));
   }
 }
 
