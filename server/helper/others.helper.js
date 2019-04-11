@@ -175,6 +175,7 @@ otherHelper.validation = (data, validationArray) => {
           }
           break;
         case 'IsEmail':
+          console.log(value);
           if (!Validator.isEmail(value)) {
             errors[validationObj.field] = val.msg;
           }
