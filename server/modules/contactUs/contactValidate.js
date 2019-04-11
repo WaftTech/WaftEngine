@@ -34,12 +34,13 @@ validateInput.sanitize = (req, res, next) => {
 };
 validateInput.validate = async (req, res, next) => {
   const data = req.body;
-   let code = data.reCaptcha;
-   const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${code}&remoteip=${req.connection.remoteAddress}`;
-   let verified = await apiCallHelper.requestThirdPartyApi(req, verifyUrl, null, next, 'POST');
-   if (!(verified && verified.success)) {
-   return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, config.verifyError, null, null);
-   }
+  // console.log('data', data);
+  let code = data.reCaptcha;
+  const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${code}&remoteip=${req.connection.remoteAddress}`;
+  let verified = await apiCallHelper.requestThirdPartyApi(req, verifyUrl, null, next, 'POST');
+  if (!(verified && verified.success)) {
+    return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, config.verifyError, null, null);
+  }
   const validateArray = [
     {
       field: 'name',
@@ -84,6 +85,7 @@ validateInput.validate = async (req, res, next) => {
     },
   ];
   const errors = otherHelper.validation(data, validateArray);
+  // console.log(errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, config.valErr, null);
   } else {
