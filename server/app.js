@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const device = require('express-device');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -25,7 +26,7 @@ const app = express();
 auth(passport);
 // Logger middleware
 app.use(logger('dev'));
-// app.use(device.capture());
+app.use(device.capture());
 // Body parser middleware
 
 // create application/json parser
