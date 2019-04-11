@@ -2,6 +2,7 @@
 const nodemailer = require('nodemailer');
 const emailConf = require('../config/email');
 const mailgun = require('mailgun-js')({ apiKey: emailConf.mailgun.api_key, domain: emailConf.mailgun.domain });
+const sgMail = require('@sendgrid/mail');
 
 const sendMail = {};
 
@@ -27,6 +28,9 @@ sendMail.send = mailOptions => {
       }
       return info;
     });
+  } else if (emailConf.channel === 'sendgrid') {
+    sgMail.setApiKey(emailConf.sendgrid.api_key);
+    return sgMail.send(mailOptions);
   } else if (emailConf.channel === 'smtp') {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {

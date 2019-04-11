@@ -25,7 +25,7 @@ const app = express();
 auth(passport);
 // Logger middleware
 app.use(logger('dev'));
-
+app.use(device.capture());
 // Body parser middleware
 
 // create application/json parser
@@ -90,6 +90,7 @@ app.set('view engine', 'pug');
 
 // CORS setup for dev
 app.use(function(req, res, next) {
+  req.client_ip_address = requestIp.getClientIp(req);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'DELETE, GET, POST, PUT, PATCH');
