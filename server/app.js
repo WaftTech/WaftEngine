@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const device = require('express-device');
+const requestIp = require('request-ip');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
