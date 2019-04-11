@@ -25,7 +25,7 @@ const app = express();
 auth(passport);
 // Logger middleware
 app.use(logger('dev'));
-app.use(device.capture());
+// app.use(device.capture());
 // Body parser middleware
 
 // create application/json parser
