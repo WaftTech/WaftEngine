@@ -70,7 +70,7 @@ mediaController.SaveMedia = async (req, res, next) => {
       media = req.file;
       media.added_by = req.user.id;
       media.destination =
-        media.destinatio
+        media.destination
           .split('\\')
           .join('/')
           .split('server/')[1] + '/';
