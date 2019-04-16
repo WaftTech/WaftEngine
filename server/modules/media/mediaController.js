@@ -61,14 +61,23 @@ mediaController.SaveMedia = async (req, res, next) => {
   try {
     let media = req.body;
     if (media._id) {
-      if (req.files && req.files[0]) {
-        media = req.files[0];
+      if (req.file && req.file) {
+        media = req.file;
       }
       const update = await mediaSch.findByIdAndUpdate(media._id, { $set: media }, { new: true });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'Media Saved Success !!', null);
     } else {
-      media = req.files[0];
+      media = req.file;
       media.added_by = req.user.id;
+      media.destination =
+        media.destinatio
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      media.path = media.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
       media.type = req.params.type;
       const newMedia = new mediaSch(media);
       const mediaSave = await newMedia.save();
