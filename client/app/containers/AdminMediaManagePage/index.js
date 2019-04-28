@@ -14,7 +14,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
-import { Paper, InputBase, Divider } from '@material-ui/core';
+import { Paper, InputBase, Divider, Grid } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 // core components
 import Table from 'components/Table';
@@ -122,7 +129,7 @@ export class AdminMediaManagePage extends React.Component {
       <>
         <PageHeader>Media Manage</PageHeader>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+          {/* <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
             <InputBase
               name="find_name"
               id="contents-name"
@@ -136,47 +143,62 @@ export class AdminMediaManagePage extends React.Component {
               <SearchIcon />
             </IconButton>
           </Paper>
-          <br />
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
-            elevation={0}
-          >
-            <Table
-              tableHead={[
-                'id',
-                'encoding',
-                'mimetype',
-                'path',
-                'size',
-                'Added at',
-              ]}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-            <Dropzone onDrop={this.handleAdd}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <Fab
-                    color="primary"
-                    aria-label="Add"
-                    className={classes.fab}
-                    round="true"
-                    elevation={0}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </div>
-              )}
-            </Dropzone>
-          </Paper>
+          <br /> */}
+          <Grid container>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Card className={classes.card}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image="http://localhost:5050/public/media/23ac8d4e0b367da508dc92d23b48566a"
+                  />
+                  <CardContent>
+                    <Typography component="p">
+                      7bit | image/jpeg | 32KB
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    Copy Path
+                  </Button>
+                  <Button size="small" color="secondary">
+                    Delete
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
+
+          <Table
+            tableHead={[
+              'id',
+              'encoding',
+              'mimetype',
+              'Thumbnail',
+              'size',
+              'Added at',
+            ]}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+          <Dropzone onDrop={this.handleAdd}>
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <Fab
+                  color="primary"
+                  aria-label="Add"
+                  className={classes.fab}
+                  round="true"
+                  elevation={0}
+                >
+                  <AddIcon />
+                </Fab>
+              </div>
+            )}
+          </Dropzone>
         </PageContent>
       </>
     );

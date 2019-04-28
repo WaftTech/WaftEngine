@@ -32,7 +32,7 @@ class MediaElement extends React.PureComponent {
     return (
       <img
         src={`${IMAGE_BASE}${media.path}`}
-        style={{ height: 400, width: 400 }}
+        style={{ maxWidth: 200, maxHeight: 200 }}
         alt="slider media"
       />
     );

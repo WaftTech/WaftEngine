@@ -76,81 +76,70 @@ class AddEdit extends React.PureComponent {
     } = this.props;
     return (
       <>
-        <PageHeader>
-          <Typography component="h1" variant="h4" align="center">
-            {id ? 'Edit' : 'Add'} User
-          </Typography>
-        </PageHeader>
+        <PageHeader>{id ? 'Edit' : 'Add'} User</PageHeader>
         <PageContent>
-          <Paper className={classes.paper}>
-            <Typography variant="h6" gutterBottom>
-              Form Details
-            </Typography>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="email"
-                  type="email"
-                  label="Email"
-                  value={users.email}
-                  onChange={this.handleChange('email')}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="name"
-                  label="Name"
-                  value={users.name}
-                  onChange={this.handleChange('name')}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      name="email_verified"
-                      checked={users.email_verified}
-                      onChange={() => null}
-                    />
-                  }
-                  label="Email Verified"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                {users.roles.map(each => (
-                  <FormControlLabel
-                    key={each}
-                    control={
-                      <Checkbox
-                        color="secondary"
-                        checked
-                        onChange={() => null}
-                      />
-                    }
-                    label={rolesNormalized[each].role_title}
+          <Grid container spacing={24}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="email"
+                type="email"
+                label="Email"
+                value={users.email}
+                onChange={this.handleChange('email')}
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: 'true',
+                }}
+              />
+              <TextField
+                required
+                id="name"
+                label="Name"
+                value={users.name}
+                onChange={this.handleChange('name')}
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: 'true',
+                }}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="secondary"
+                    name="email_verified"
+                    checked={users.email_verified}
+                    onChange={() => null}
                   />
-                ))}
-              </Grid>
+                }
+                label="Email Verified"
+              />
+              {users.roles.map(each => (
+                <FormControlLabel
+                  key={each}
+                  control={
+                    <Checkbox color="secondary" checked onChange={() => null} />
+                  }
+                  label={rolesNormalized[each].role_title}
+                />
+              ))}
             </Grid>
-            <div className={classes.buttons}>
-              <Button onClick={this.handleBack} className={classes.button}>
+          </Grid>
+          {/* <Button onClick={this.handleBack} className={classes.button}>
                 Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleSave}
-                className={classes.button}
-              >
-                Save
-              </Button>
-            </div>
-          </Paper>
+              </Button> */}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleSave}
+            className={classes.button}
+          >
+            Save
+          </Button>
         </PageContent>
       </>
     );

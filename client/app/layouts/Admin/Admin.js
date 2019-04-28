@@ -19,7 +19,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
-import Logo from '../../images/logo.png';
+import Logo from '../../assets/img/logo.svg';
 
 import routes from '../../routes/admin';
 
@@ -161,7 +161,7 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
         position="absolute"
         className={`${classes.appBar} ${open ? classes.appBarShift : ''}`}
       >
-        <Toolbar disableGutters={!open} className={classes.toolbar}>
+        <div className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
@@ -203,7 +203,7 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
-        </Toolbar>
+        </div>
       </AppBar>
       <Drawer
         variant="permanent"
