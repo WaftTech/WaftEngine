@@ -23,7 +23,7 @@ export const initialState = {
     is_feature: false,
     publish_to: '',
   },
-  query: { find_name: '', size: 2 },
+  query: { find_name: '', size: 10 },
 };
 
 /* eslint-disable default-case, no-param-reassign */
