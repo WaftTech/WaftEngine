@@ -103,10 +103,9 @@ export class ContentsListingPage extends React.Component {
       }) => [
         name,
         key,
-        moment(publish_from).format('MMM Do YY'),
-        moment(publish_to).format('MMM Do YY'),
+        // moment(publish_from).format('MMM Do YY'),
+        // moment(publish_to).format('MMM Do YY'),
         `${is_active}`,
-        `${is_feature}`,
         moment(added_at).format('MMM Do YY'),
         <>
           <Tooltip
@@ -132,7 +131,7 @@ export class ContentsListingPage extends React.Component {
       <>
         <PageHeader>Content Manage</PageHeader>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+          {/* <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
             <InputBase
               name="find_name"
               id="contents-name"
@@ -146,43 +145,31 @@ export class ContentsListingPage extends React.Component {
               <SearchIcon />
             </IconButton>
           </Paper>
-          <br />
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
+          <br /> */}
+          <Table
+            tableHead={[
+              'Name',
+              'Key',
+              // 'Pub From',
+              // 'Pub To',
+              'is Active',
+              'Added at',
+              'Action',
+            ]}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            round="true"
+            onClick={this.handleAdd}
             elevation={0}
           >
-            <Table
-              tableHead={[
-                'Name',
-                'Key',
-                'Pub From',
-                'Pub To',
-                'is Active',
-                'is feature',
-                'Added at',
-                'Action',
-              ]}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              round="true"
-              onClick={this.handleAdd}
-              elevation={0}
-            >
-              <AddIcon />
-            </Fab>
-          </Paper>
+            <AddIcon />
+          </Fab>
         </PageContent>
       </>
     );

@@ -102,119 +102,94 @@ class AddEdit extends React.PureComponent {
     const { classes, one, category } = this.props;
     return (
       <div>
-        <PageHeader>Edit Blog</PageHeader>
+        <PageHeader>
+          {' '}
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.handleGoBack}
+          >
+            Back
+          </Button>
+        </PageHeader>
         <PageContent>
-          <Card>
-            <CardBody>
-              <div>
-                <TextField
-                  name="Blog Title"
-                  id="blog-title"
-                  fullWidth
-                  label="Title"
-                  inputProps={{
-                    value: one.title,
-                    onChange: this.handleChange('title'),
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  margin="normal"
+          <TextField
+            name="Blog Title"
+            id="blog-title"
+            fullWidth
+            label="Title"
+            inputProps={{
+              value: one.title,
+              onChange: this.handleChange('title'),
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="category">Category</InputLabel>
+            <Select
+              value={one.category}
+              onChange={this.handleCategoryChange('category')}
+              inputProps={{
+                name: 'category',
+              }}
+            >
+              {category.map(each => (
+                <MenuItem key={each._id} name={each.title} value={each._id}>
+                  {each.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <CKEditor
+            name="description"
+            content={one.description}
+            config={{ allowedContent: true }}
+            events={{
+              change: e => this.handleEditorChange(e, 'description'),
+              value: one.description,
+            }}
+          />
+          <TextField
+            name="Published On"
+            id="blog-published_on"
+            fullWidth
+            placeholder="published on"
+            inputProps={{
+              value: one.published_on,
+              onChange: this.handleChange('published_on'),
+            }}
+          />
+          <div>
+            <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={one.is_active || false}
+                  tabIndex={-1}
+                  onClick={this.handleCheckedChange('is_active')}
+                  color="primary"
                 />
-              </div>
-              <div>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="category">Category</InputLabel>
-                  <Select
-                    value={one.category}
-                    onChange={this.handleCategoryChange('category')}
-                    inputProps={{
-                      name: 'category',
-                    }}
-                  >
-                    {category.map(each => (
-                      <MenuItem
-                        key={each._id}
-                        name={each.title}
-                        value={each._id}
-                      >
-                        {each.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              <div>
-                <InputLabel style={{ color: '#AAAAAA' }}>
-                  Blog Description
-                </InputLabel>
-                <CKEditor
-                  name="description"
-                  content={one.description}
-                  config={{ allowedContent: true }}
-                  events={{
-                    change: e => this.handleEditorChange(e, 'description'),
-                    value: one.description,
-                  }}
+              }
+              label="Is Active"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={one.is_published || false}
+                  tabIndex={-1}
+                  onClick={this.handleCheckedChange('is_published')}
+                  color="primary"
                 />
-              </div>
-              <div sm={12} md={6}>
-                <TextField
-                  name="Published On"
-                  id="blog-published_on"
-                  fullWidth
-                  placeholder="published on"
-                  inputProps={{
-                    value: one.published_on,
-                    onChange: this.handleChange('published_on'),
-                  }}
-                />
-              </div>
-              <div>
-                <InputLabel style={{ color: '#AAAAAA' }}>
-                  Activity Type
-                </InputLabel>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={one.is_active || false}
-                      tabIndex={-1}
-                      onClick={this.handleCheckedChange('is_active')}
-                      color="primary"
-                    />
-                  }
-                  label="Is Active"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={one.is_published || false}
-                      tabIndex={-1}
-                      onClick={this.handleCheckedChange('is_published')}
-                      color="primary"
-                    />
-                  }
-                  label="Is Published"
-                />
-              </div>
-            </CardBody>
-            <CardFooter>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleSave}
-              >
-                Save
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={this.handleGoBack}
-              >
-                Back
-              </Button>
-            </CardFooter>
-          </Card>
+              }
+              label="Is Published"
+            />
+          </div>
+          <Button variant="contained" color="primary" onClick={this.handleSave}>
+            Save
+          </Button>
         </PageContent>
       </div>
     );

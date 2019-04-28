@@ -12,9 +12,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import StaticContentDiv from '../../components/StaticContentDiv';
-import SlickSlider from '../../components/SlickSlider';
-import mainImage from './home.png';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
@@ -23,12 +20,7 @@ export default class HomePage extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <img
-          style={{ width: '100%', maxWidth: '1440px' }}
-          src={mainImage}
-          alt="template"
-        />
-        <SlickSlider slideKey="manoj-dai" />
+        <h1>This is homepage</h1>
       </React.Fragment>
     );
   }
