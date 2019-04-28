@@ -88,57 +88,76 @@ class AddEdit extends React.PureComponent {
       <div>
         <PageHeader> Add/Edit FAQs</PageHeader>
         <PageContent>
-          <Paper className={classes.p20}>
-            <TextField
-              name="Question"
-              id="faq"
-              label="Question"
-              value={one.question}
-              onChange={this.handleChange('question')}
-              margin="normal"
-              fullWidth
-            />
-            <TextField
-              name="Answer"
-              id="faq-answer"
-              label="Answer"
-              value={one.title}
-              onChange={this.handleChange('title')}
-              margin="normal"
-              fullWidth
-            />
-            <FormControl
-              className={classes.formControl}
-              margin="normal"
-              fullWidth
-            >
-              <InputLabel htmlFor="category">Category</InputLabel>
-              <Select
+          <Grid container>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="Question"
+                id="faq"
+                label="Question"
+                value={one.question}
+                onChange={this.handleChange('question')}
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: 'true',
+                }}
+              />
+              <TextField
+                name="Answer"
+                id="faq-answer"
+                label="Answer"
+                value={one.title}
+                onChange={this.handleChange('title')}
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: 'true',
+                }}
+              />
+
+              <TextField
+                select
+                label="Select"
                 value={one.category}
                 onChange={this.handleChange('category')}
+                onChange={this.handleChange('currency')}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                InputLabelProps={{
+                  shrink: 'true',
+                }}
               >
                 {category.map(each => (
                   <MenuItem key={each._id} value={each._id}>
                     {each.title}
                   </MenuItem>
                 ))}
-              </Select>
-            </FormControl>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSave}
-            >
-              Save
-            </Button>
-            <Button
+              </TextField>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSave}
+              >
+                Save
+              </Button>
+              {/* <Button
               variant="contained"
               color="secondary"
               onClick={this.handleGoBack}
             >
               Back
-            </Button>
-          </Paper>
+            </Button> */}
+            </Grid>
+          </Grid>
         </PageContent>
       </div>
     );

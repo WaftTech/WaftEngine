@@ -73,7 +73,7 @@ export class AdminUserManagePage extends React.PureComponent {
         roles.map(each => each.role_title).join(', '),
         `${email_verified}`,
         <>
-          <Tooltip id="tooltip-top" title="Edit User" placement="top">
+          <Tooltip id="tooltip-left" title="Edit User" placement="left">
             <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
               <CreateIcon />
             </IconButton>
@@ -85,14 +85,12 @@ export class AdminUserManagePage extends React.PureComponent {
       <>
         <PageHeader>User Manage</PageHeader>
         <PageContent>
-          <Paper className={classes.root}>
-            <Table
-              tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-          </Paper>
+          <Table
+            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
           <Fab
             color="primary"
             aria-label="Add"
