@@ -55,7 +55,7 @@ const MainListItems = ({ classes, location: { pathname } }) => {
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText inset primary="First Set" />
+        <ListItemText inset primary="Content Management" />
         {openFirstSet ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
@@ -66,41 +66,6 @@ const MainListItems = ({ classes, location: { pathname } }) => {
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/role-manage" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/role-manage'}>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Role Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/module-manage" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/module-manage'}>
-              <ListItemIcon>
-                <ExtensionIcon />
-              </ListItemIcon>
-              <ListItemText primary="Module Manage" />
-            </ListItem>
-          </Link>
-        </List>
-      </Collapse>
-      <ListItem button onClick={handleSecondSetClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Second Set" />
-        {openSecondSet ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Link to="/admin/user-manage" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/user-manage'}>
-              <ListItemIcon>
-                <ExtensionIcon />
-              </ListItemIcon>
-              <ListItemText primary="User Manage" />
             </ListItem>
           </Link>
           <Link to="/admin/content-manage" className={classes.nested}>
@@ -133,18 +98,6 @@ const MainListItems = ({ classes, location: { pathname } }) => {
               <ListItemText primary="FAQ Manage" />
             </ListItem>
           </Link>
-        </List>
-      </Collapse>
-
-      <ListItem button onClick={handleThirdSetClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Third Set" />
-        {openThirdSet ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
           <Link to="/admin/media-manage" className={classes.nested}>
             <ListItem
               style={{
@@ -182,7 +135,7 @@ const MainListItems = ({ classes, location: { pathname } }) => {
                 fontSize: '0.8em',
                 textTransform: 'uppercase',
               }}
-              selected={pathname === '/admin/slider-manage'}
+              selected={pathname === '/admin/blog-manage'}
             >
               <ListItemIcon>
                 <QuestionAnswerIcon />
@@ -190,6 +143,53 @@ const MainListItems = ({ classes, location: { pathname } }) => {
               <ListItemText primary="Blog Manage" />
             </ListItem>
           </Link>
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleSecondSetClick}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Access Management" />
+        {openSecondSet ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <Link to="/admin/user-manage" className={classes.nested}>
+            <ListItem button selected={pathname === '/admin/user-manage'}>
+              <ListItemIcon>
+                <ExtensionIcon />
+              </ListItemIcon>
+              <ListItemText primary="User Manage" />
+            </ListItem>
+          </Link>
+          <Link to="/admin/role-manage" className={classes.nested}>
+            <ListItem button selected={pathname === '/admin/role-manage'}>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Role Manage" />
+            </ListItem>
+          </Link>
+          <Link to="/admin/module-manage" className={classes.nested}>
+            <ListItem button selected={pathname === '/admin/module-manage'}>
+              <ListItemIcon>
+                <ExtensionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Module Manage" />
+            </ListItem>
+          </Link>
+        </List>
+      </Collapse>
+
+      <ListItem button onClick={handleThirdSetClick}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Settings" />
+        {openThirdSet ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
           <Link to="/admin/reports" className={classes.nested}>
             <ListItem button selected={pathname === '/admin/reports'}>
               <ListItemIcon>
