@@ -7,7 +7,7 @@ const PageContent = props => {
     <div
       style={{
         margin: 24,
-        marginTop: -30,
+        marginBottom: 100,
       }}
     >
       {children}

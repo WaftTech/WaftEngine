@@ -21,11 +21,16 @@ import CardBody from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import MediaElement from '../../../components/MediaElement';
-
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne, makeSelectMedia } from '../selectors';
@@ -33,36 +38,17 @@ import * as mapDispatchToProps from '../actions';
 import { IMAGE_BASE } from '../../App/constants';
 
 const styles = theme => ({
-  paper: {
-    position: 'absolute',
-    // width: '90%',
-    // height: '70%',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: 'none',
-  },
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-  card: {
-    maxWidth: 345,
-  },
+  modal: { backgroundColor: '#fff', padding: '20' },
   media: {
-    height: 140,
+    width: '100px',
+    height: '100px',
+    overflow: 'hidden',
+    marginRight: '20px',
+    marginBottom: '20px',
+    borderRadius: '6px',
+    background: '#f0f0f0',
+    display: 'inline-block',
+    '& > img': { maxWidth: '100%' },
   },
 });
 
@@ -165,7 +151,8 @@ class AddEdit extends React.PureComponent {
     const isLastPage = media.page === lastPage;
     return (
       <>
-        <Modal
+        <Dialog
+          className={classes.modal}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={this.state.open}
@@ -173,71 +160,66 @@ class AddEdit extends React.PureComponent {
         >
           <div
             style={{
-              top: `${10}%`,
-              left: `${10}%`,
-              transform: `translate(-${10}%, -${10}%)`,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottom: '1px solid #ccc',
+              marginBottom: '20px',
             }}
-            className={classes.paper}
           >
-            <Grid container>
-              {media.data.map(each => (
-                <Grid item key={each._id}>
-                  <Card className={classes.card}>
-                    <CardActionArea>
-                      <img
-                        className={classes.media}
-                        src={`${IMAGE_BASE}${each.path}`}
-                        alt={each.caption}
-                      />
-                    </CardActionArea>
-                    <CardActions>
-                      <Button
-                        size="small"
-                        color="primary"
-                        onClick={() => this.handleImageImageChange(each._id)}
-                      >
-                        Select
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-              <Grid item>
-                {!isFirstPage && (
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() =>
-                      this.handleImagePagination({ page: media.page - 1 })
-                    }
-                  >
-                    Prev
-                  </Button>
-                )}
-                {!isLastPage && (
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() =>
-                      this.handleImagePagination({ page: media.page + 1 })
-                    }
-                  >
-                    Next
-                  </Button>
-                )}
-              </Grid>
-            </Grid>
+            <DialogTitle id="form-dialog-title">Select Media</DialogTitle>
+            <div>
+              {' '}
+              {!isFirstPage && (
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={() =>
+                    this.handleImagePagination({ page: media.page - 1 })
+                  }
+                >
+                  Prev
+                </Button>
+              )}
+              {!isLastPage && (
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={() =>
+                    this.handleImagePagination({ page: media.page + 1 })
+                  }
+                >
+                  Next
+                </Button>
+              )}
+            </div>
           </div>
-        </Modal>
+          <DialogContent>
+            {media.data.map(each => (
+              <div
+                key={each._id}
+                className={classes.media}
+                onClick={() => this.handleImageImageChange(each._id)}
+              >
+                <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
+              </div>
+            ))}
+          </DialogContent>
+        </Dialog>
         <Card>
           <CardHeader color="primary" title="Slider" subheader="Slider info" />
           <CardBody>
             <div>
               <TextField
+                variant="outlined"
                 name="slider_name"
                 id="slider-name"
                 fullWidth
-                placeholder="Slider Name"
+                margin="normal"
+                label="Slider Name"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 inputProps={{
                   value: one.slider_name,
                   onChange: this.handleChange('slider_name'),
@@ -246,52 +228,94 @@ class AddEdit extends React.PureComponent {
             </div>
             <div>
               <TextField
+                variant="outlined"
                 name="slider_key"
                 id="slider-key"
                 fullWidth
-                placeholder="Slider Key"
+                margin="normal"
+                label="Slider Key"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 inputProps={{
                   value: one.slider_key,
                   onChange: this.handleChange('slider_key'),
                 }}
               />
             </div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleAddSlide}
+            >
+              Add Slide
+            </Button>
             {one.images.map((each, index) => (
-              <div key={`${each._id}-media-${index}`}>
-                {each.image ? (
-                  <Button onClick={this.handleSetImage(index)}>
-                    <MediaElement mediaKey={each.image} />
-                  </Button>
-                ) : (
-                  <Fab color="primary" onClick={this.handleSetImage(index)}>
-                    Add Image
-                  </Fab>
-                )}
-                <TextField
-                  id={`slider-caption-${index}`}
-                  placeholder="Caption"
-                  value={each.caption}
-                  onChange={this.handleImageCaptionChange(index)}
-                />
-                <Fab
-                  color="primary"
-                  onClick={() => this.handleRemoveSlide(index)}
-                >
-                  <DeleteIcon />
-                </Fab>
+              <div
+                style={{
+                  marginTop: 20,
+                  padding: 20,
+                  background: '#f0f0f0',
+                  borderRadius: '6px',
+                }}
+                key={`${each._id}-media-${index}`}
+              >
+                <Grid container spacing={24}>
+                  <Grid item xs={3} style={{ textAlign: 'center' }}>
+                    {each.image ? (
+                      <MediaElement
+                        mediaKey={each.image}
+                        onClick={this.handleSetImage(index)}
+                      />
+                    ) : (
+                      <Button
+                        color="primary"
+                        onClick={this.handleSetImage(index)}
+                      >
+                        Add Image
+                      </Button>
+                    )}
+                  </Grid>
+                  <Grid item xs={7}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      multiline
+                      rows="2"
+                      id={`slider-caption-${index}`}
+                      label="Caption"
+                      value={each.caption}
+                      onChange={this.handleImageCaptionChange(index)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <IconButton
+                      color="secondary"
+                      onClick={() => this.handleRemoveSlide(index)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
               </div>
             ))}
-            <Fab color="primary" onClick={this.handleAddSlide}>
-              Add Slide
-            </Fab>
           </CardBody>
-          <CardActions>
-            <Fab color="primary" onClick={this.handleSave}>
-              Save
-            </Fab>
-            <Fab color="secondary" onClick={this.handleGoBack}>
+          <CardActions
+            style={{marginBottom: '100px' }}
+          >
+            {/* <Button color="secondary" onClick={this.handleGoBack}>
               Back
-            </Fab>
+            </Button> */}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleSave}
+            >
+              Save
+            </Button>
           </CardActions>
         </Card>
       </>
