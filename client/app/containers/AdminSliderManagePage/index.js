@@ -148,33 +148,29 @@ export class SliderManagePage extends React.Component {
             </IconButton>
           </Paper>
           <br />
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
+
+          <Table
+            tableHead={[
+              'Slider Name',
+              'Slider Key',
+              'Images',
+              'Added at',
+              'Actions',
+            ]}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            round="true"
+            onClick={this.handleAdd}
             elevation={0}
           >
-            <Table
-              tableHead={['Slider Name', 'Slider Key', 'Images', 'Added at']}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              round="true"
-              onClick={this.handleAdd}
-              elevation={0}
-            >
-              <AddIcon />
-            </Fab>
-          </Paper>
+            <AddIcon />
+          </Fab>
         </PageContent>
       </>
     );

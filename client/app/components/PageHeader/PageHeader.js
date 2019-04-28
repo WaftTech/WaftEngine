@@ -8,10 +8,9 @@ const PageHeader = props => {
       style={{
         background: '#02B7DD',
         height: 50,
-        padding: 24,
+        padding: '72px 24px 0',
         fontSize: 24,
         color: '#fff',
-        paddingTop: 100,
         textTransform: 'uppercase',
         fontFamily: 'Roboto',
         fontWeight: 300,

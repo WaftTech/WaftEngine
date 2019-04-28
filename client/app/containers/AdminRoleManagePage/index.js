@@ -88,14 +88,12 @@ export class AdminRoleManage extends React.PureComponent {
       <React.Fragment>
         <PageHeader>Role Manage</PageHeader>
         <PageContent>
-          <Paper className={classes.root}>
-            <Table
-              tableHead={['Title', 'Description', 'Is Active', 'Action']}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-          </Paper>
+          <Table
+            tableHead={['Title', 'Description', 'Is Active', 'Action']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
           <Fab
             color="primary"
             aria-label="Add"

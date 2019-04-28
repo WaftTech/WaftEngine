@@ -161,7 +161,7 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
         position="absolute"
         className={`${classes.appBar} ${open ? classes.appBarShift : ''}`}
       >
-        <Toolbar disableGutters={!open} className={classes.toolbar}>
+        <div className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
@@ -203,7 +203,7 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
-        </Toolbar>
+        </div>
       </AppBar>
       <Drawer
         variant="permanent"
