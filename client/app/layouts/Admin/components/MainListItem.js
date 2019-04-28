@@ -14,6 +14,7 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import PeopleIcon from '@material-ui/icons/People';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
+import ErrorIcon from '@material-ui/icons/Error';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import SliderIcon from '@material-ui/icons/Slideshow';
 import LayersIcon from '@material-ui/icons/Layers';
@@ -38,6 +39,7 @@ const MainListItems = ({ classes, location: { pathname } }) => {
   const [openFirstSet, setOpenFirstSet] = useState(false);
   const [openSecondSet, setOpenSecondSet] = useState(false);
   const [openThirdSet, setOpenThirdSet] = useState(false);
+  const [openFourSet, setOpenFourSet] = useState(false);
 
   const handleFirstSetClick = () => {
     setOpenFirstSet(openFirstSetVal => !openFirstSetVal);
@@ -48,9 +50,20 @@ const MainListItems = ({ classes, location: { pathname } }) => {
   const handleThirdSetClick = () => {
     setOpenThirdSet(openThirdSetVal => !openThirdSetVal);
   };
+  const handleFourSetClick = () => {
+    setOpenFourSet(openFourSetVal => !openFourSetVal);
+  };
 
   return (
     <List component="nav">
+      <Link to="/admin/dashboard" className={classes.nested}>
+        <ListItem button selected={pathname === '/admin/dashboard'}>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+      </Link>
       <ListItem button onClick={handleFirstSetClick}>
         <ListItemIcon>
           <InboxIcon />
@@ -60,14 +73,6 @@ const MainListItems = ({ classes, location: { pathname } }) => {
       </ListItem>
       <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <Link to="/admin/dashboard" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/dashboard'}>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
           <Link to="/admin/content-manage" className={classes.nested}>
             <ListItem
               style={{
@@ -204,6 +209,33 @@ const MainListItems = ({ classes, location: { pathname } }) => {
                 <LayersIcon />
               </ListItemIcon>
               <ListItemText primary="Integrations" />
+            </ListItem>
+          </Link>
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleFourSetClick}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Reports" />
+        {openFourSet ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={openFourSet} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <Link to="/admin/reports" className={classes.nested}>
+            <ListItem button selected={pathname === '/admin/reports'}>
+              <ListItemIcon>
+                <InsertChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Reports" />
+            </ListItem>
+          </Link>
+          <Link to="/admin/errors" className={classes.nested}>
+            <ListItem button selected={pathname === '/admin/errors'}>
+              <ListItemIcon>
+                <ErrorIcon />
+              </ListItemIcon>
+              <ListItemText primary="Errors" />
             </ListItem>
           </Link>
         </List>
