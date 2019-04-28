@@ -37,10 +37,10 @@ mediaController.GetMediaPagination = async (req, res, next) => {
         sortq = '';
       }
     }
-    selectq = 'path field_name original_name mimetype size encoding added_at';
+    selectq = 'field_name type destination path field_name original_name mimetype size encoding added_at module';
 
     searchq = { is_deleted: false };
-    populate = '';
+    populate = { path: 'added_by' };
     let media = await otherHelper.getquerySendResponse(mediaSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totaldata);
   } catch (err) {
@@ -79,6 +79,7 @@ mediaController.SaveMedia = async (req, res, next) => {
         .join('/')
         .split('server/')[1];
       media.type = req.params.type;
+      media.added_by = req.user.id;
       const newMedia = new mediaSch(media);
       const mediaSave = await newMedia.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, mediaSave, null, 'Media Saved Success !!', null);
