@@ -115,7 +115,7 @@ export class BlogManagePage extends React.Component {
       <>
         <PageHeader>Blog Manage</PageHeader>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+          {/* <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
             <InputBase
               name="find_title"
               id="blog-title"
@@ -129,17 +129,7 @@ export class BlogManagePage extends React.Component {
               <SearchIcon />
             </IconButton>
           </Paper>
-          <br />
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
-            elevation={0}
-          >
+          <br /> */}
             <Table
               tableHead={[
                 'Title',
@@ -163,7 +153,6 @@ export class BlogManagePage extends React.Component {
             >
               <AddIcon />
             </Fab>
-          </Paper>
         </PageContent>
       </>
     );

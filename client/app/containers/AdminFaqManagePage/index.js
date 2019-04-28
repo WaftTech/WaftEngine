@@ -29,11 +29,8 @@ import * as mapDispatchToProps from './actions';
 import { makeSelectAll, makeSelectQuery } from './selectors';
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing.unit * 3,
     right: theme.spacing.unit * 4,
   },
@@ -119,7 +116,7 @@ export class FAQManagePage extends React.PureComponent {
       <>
         <PageHeader>FAQ Manage</PageHeader>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+          <Paper style={{ padding: 20, overflow: 'auto', display: 'none' }}>
             <CustomInput
               name="find_question"
               id="question-name"
@@ -139,40 +136,28 @@ export class FAQManagePage extends React.PureComponent {
               <SearchIcon />
             </IconButton>
           </Paper>
-          <br />
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
+          <Table
+            tableHead={[
+              'Question',
+              'Category',
+              'Added At',
+              'Updated At',
+              'Actions',
+            ]}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            round="true"
+            onClick={this.handleAdd}
             elevation={0}
           >
-            <Table
-              tableHead={[
-                'Question',
-                'Category',
-                'Added At',
-                'Updated At',
-                'Actions',
-              ]}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              round="true"
-              onClick={this.handleAdd}
-              elevation={0}
-            >
-              <AddIcon />
-            </Fab>
-          </Paper>
+            <AddIcon />
+          </Fab>
         </PageContent>
       </>
     );
