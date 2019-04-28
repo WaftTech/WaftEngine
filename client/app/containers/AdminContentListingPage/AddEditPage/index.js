@@ -81,14 +81,12 @@ class AddEdit extends React.PureComponent {
     return (
       <div>
         <PageHeader>
-        <IconButton onClick={this.handleGoBack} aria-label="Back">
-          <BackIcon color="white" />
-        </IconButton>Edit Content</PageHeader>
+        <IconButton style={{color:'#fff'}} onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon />
+        </IconButton></PageHeader>
         <PageContent>
-          <Card>
-            <CardBody>
-              <div>
                 <TextField
+                variant="outlined"
                 fullWidth
                 label="Content Title"
                   margin='normal'
@@ -103,9 +101,8 @@ class AddEdit extends React.PureComponent {
                   }}
                   
                 />
-              </div>
-              <div>
                 <TextField
+                    variant="outlined"
                     fullWidth
                     label="Content Key"
                       margin='normal'
@@ -119,7 +116,6 @@ class AddEdit extends React.PureComponent {
                     onChange: this.handleChange('key'),
                   }}
                 />
-              </div>
                 <CKEditor
                   name="description"
                   content={one.description}
@@ -129,8 +125,8 @@ class AddEdit extends React.PureComponent {
                     value: one.description,
                   }}
                 />
-              <div sm={12} md={6}>
                 <TextField
+                 variant="outlined"
                  fullWidth
                  label="Publish From"
                    margin='normal'
@@ -145,9 +141,8 @@ class AddEdit extends React.PureComponent {
                     onChange: this.handleChange('publish_from'),
                   }}
                 />
-              </div>
-              <div sm={12} md={6}>
                 <TextField
+                 variant="outlined"
                  fullWidth
                  label="Publish To"
                    margin='normal'
@@ -162,8 +157,6 @@ class AddEdit extends React.PureComponent {
                     onChange: this.handleChange('publish_to'),
                   }}
                 />
-              </div>
-              <div>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -186,9 +179,8 @@ class AddEdit extends React.PureComponent {
                   }
                   label="Is Feature"
                 />
-              </div>
-            </CardBody>
-            <CardFooter>
+
+<br/>
               <Button
                 variant="contained"
                 color="primary"
@@ -196,9 +188,6 @@ class AddEdit extends React.PureComponent {
               >
                 Save
               </Button>
-              
-            </CardFooter>
-          </Card>
         </PageContent>
       </div>
     );

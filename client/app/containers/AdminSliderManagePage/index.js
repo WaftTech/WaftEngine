@@ -133,7 +133,7 @@ export class SliderManagePage extends React.Component {
       <>
         <PageHeader>Slider Manage</PageHeader>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+          {/* <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
             <CustomInput
               name="find_slider_name"
               id="slider-name"
@@ -147,7 +147,7 @@ export class SliderManagePage extends React.Component {
               <SearchIcon />
             </IconButton>
           </Paper>
-          <br />
+          <br /> */}
 
           <Table
             tableHead={[
