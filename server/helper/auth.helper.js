@@ -20,7 +20,7 @@ module.exports = passport => {
       {
         clientID: googleAuth.client_id,
         clientSecret: googleAuth.client_secret,
-        callbackURL: googleAuth.redirect_uris[0],
+        callbackURL: googleAuth.redirect_uris,
         accessType: 'offline',
       },
       async (accessToken, refreshToken, profile, cb) => {
