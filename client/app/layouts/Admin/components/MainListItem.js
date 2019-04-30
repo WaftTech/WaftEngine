@@ -56,7 +56,7 @@ const MainListItems = ({ classes, location: { pathname } }) => {
 
   return (
     <List component="nav">
-      <Link to="/admin/dashboard" className={classes.nested}>
+      <Link to="/admin/dashboard">
         <ListItem button selected={pathname === '/admin/dashboard'}>
           <ListItemIcon>
             <DashboardIcon />
