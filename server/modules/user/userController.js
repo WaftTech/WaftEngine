@@ -544,7 +544,9 @@ userController.RequestSocialOAuthApiDataHelper = async (req, next, request_url, 
           const timestamp = Math.round(Date.now() / 1000);
           const oAuthSignature = _p.generateOAuthSignature(randomToken, timestamp, req.params.access_token);
           headers = {
-            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${req.params.access_token}", oauth_version="1.0"`,
+            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${
+              req.params.access_token
+            }", oauth_version="1.0"`,
           };
           break;
       }
@@ -557,5 +559,42 @@ userController.RequestSocialOAuthApiDataHelper = async (req, next, request_url, 
   } catch (err) {
     return next(err);
   }
+};
+
+userController.loginGOath = async (req, res, next) => {
+  const user = req.user;
+  const payload = {
+    id: user._id,
+    name: user.name,
+    avatar: user.avatar,
+    email: user.email,
+    email_verified: user.email_verified,
+    roles: user.roles,
+    gender: user.gender,
+  };
+
+  let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
+
+  let routes = [];
+  if (accesses && accesses.length) {
+    const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
+    const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
+    for (let i = 0; i < routers.length; i++) {
+      for (let j = 0; j < routers[i].path.length; j++) {
+        // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
+        routes.push(routers[i].path[j]);
+        // }
+      }
+    }
+  }
+
+  // Sign Token
+  let token = jwt.sign(payload, secretOrKey, {
+    expiresIn: tokenExpireTime,
+  });
+  await loginlogs.addloginlog(req, token, next);
+  token = `Bearer ${token}`;
+  payload.routes = routes;
+  return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
 };
 module.exports = userController;

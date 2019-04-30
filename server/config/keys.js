@@ -9,11 +9,13 @@ module.exports = {
 
   oauthConfig: {
     googleAuth: {
-      app_id: '97859517140-j5314l26rikte0e4q2150ph45ghdm0vl.apps.googleusercontent.com',
-      app_secret: 'w7X0VC_VZX65JuPRlY3owt7h',
-      callback_url: 'http://localhost:3333/auth/google/callback',
-      google_exchange_oauth_for_token_url: 'https://www.googleapis.com/oauth2/v4/token?',
-      google_scope_permissions: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.me', 'email', 'profile'],
+      client_id: '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com',
+      project_id: 'fir-project-1366e',
+      auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_uri: 'https://oauth2.googleapis.com/token',
+      auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+      client_secret: 'orIG3V40y4lCDC14869UEzwS',
+      redirect_uris: ['http://localhost:5050/api/user/callback/goauth/'],
     },
     githubAuth: {
       ClientID: 'e578c1b3a9fa9de597f0',
