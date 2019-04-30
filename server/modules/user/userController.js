@@ -311,7 +311,7 @@ userController.ForgotPassword = async (req, res, next) => {
       { new: true },
     );
     const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
-    return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, msg, null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, msg, null);
   } catch (err) {
     next(err);
   }
