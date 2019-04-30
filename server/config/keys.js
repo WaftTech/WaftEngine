@@ -17,6 +17,11 @@ module.exports = {
       client_secret: 'orIG3V40y4lCDC14869UEzwS',
       redirect_uris: ['http://localhost:5050/api/user/callback/goauth/'],
     },
+    facebookAuth: {
+      FACEBOOK_APP_ID: '308391736756480',
+      FACEBOOK_APP_SECRET: '293741164a98e9378bf6552a169c3c86',
+      callbackURL: 'http://localhost:5050/api/user/callback/facebook',
+    },
     githubAuth: {
       ClientID: 'e578c1b3a9fa9de597f0',
       ClientSecret: 'e365a7901613b246b55dc9d041960191d5e7b6f0',
