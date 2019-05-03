@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const templateSch = require('./templateSchema');
 const otherHelper = require('../../helper/others.helper');
 const templateConfig = require('./templateConfig');
+const isEmpty = require('../../validation/isEmpty');
 const templateController = {};
 const internal = {};
 
@@ -31,10 +32,10 @@ templateController.getTemplateDetail = async (req, res, next) => {
 
 templateController.postTemplate = async (req, res, next) => {
   try {
-    const { _id, template_name, template_key, information, variables, from, subject, body } = req.body;
+    const { _id, template_name, template_key, information, variables, from, subject, alternate_text, body } = req.body;
 
     // if (_id) {
-    const update = await templateSch.findOneAndUpdate({ _id, template_name, template_key }, { $set: { template_name, template_key, information, variables, from, subject, body, updated_by: req.user.id, updated_at: Date.now() } });
+    const update = await templateSch.findOneAndUpdate({ _id, template_name, template_key }, { $set: { template_name, template_key, information, variables, from, subject, alternate_text, body, updated_by: req.user.id, updated_at: Date.now() } });
 
     if (update) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, req.body, null, templateConfig.templateSave, null);
@@ -51,18 +52,26 @@ templateController.postTemplate = async (req, res, next) => {
   }
 };
 
-internal.renderTemplate = async (template_key, variables) => {
+internal.renderTemplate = async (template_key, variables_OBJ, toEmail) => {
+  if (isEmpty(template_key) || isEmpty(variables_OBJ) || isEmpty(toEmail)) {
+    return { error: 'Empty Data' };
+  }
   const unrendered = await templateSch.findOne({ template_key });
+  if (isEmpty(unrendered)) {
+    return { error: 'Invalid Template Key' };
+  }
   let from = unrendered.from + '';
   let body = unrendered.body + '';
   let subject = unrendered.subject + '';
-  let variables_keys = Object.keys(variables);
+  let alternate_text = unrendered.alternate_text + '';
+  let variables_keys = Object.keys(variables_OBJ);
 
   for (let i = 0; i < variables_keys.length; i++) {
-    subject = subject.replace(`%${variables_keys[i]}%`, variables[variables_keys[i]]);
-    body = body.replace(`%${variables_keys[i]}%`, variables[variables_keys[i]]);
+    subject = subject.replace(`%${variables_keys[i]}%`, variables_OBJ[variables_keys[i]]);
+    body = body.replace(`%${variables_keys[i]}%`, variables_OBJ[variables_keys[i]]);
+    alternate_text = alternate_text.replace(`%${variables_keys[i]}%`, variables_OBJ[variables_keys[i]]);
   }
-  return { from, subject, body };
+  return { from, subject, html: body, text: alternate_text, to: toEmail };
 };
 
 module.exports = { templateController, internal };
