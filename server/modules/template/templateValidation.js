@@ -48,6 +48,12 @@ templateValidation.sanitze = (req, res, next) => {
         trim: true,
       },
     },
+    {
+      field: 'alternative_text',
+      sanitize: {
+        trim: true,
+      },
+    },
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
@@ -149,6 +155,20 @@ templateValidation.validate = (req, res, next) => {
     },
     {
       field: 'body',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: templateConfig.validate.isEmpty,
+        },
+        {
+          condition: 'IsLength',
+          msg: templateConfig.validate.isLength,
+          option: { min: 2 },
+        },
+      ],
+    },
+    {
+      field: 'alternate_text',
       validate: [
         {
           condition: 'IsEmpty',

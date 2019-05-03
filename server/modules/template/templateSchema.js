@@ -8,6 +8,7 @@ const templateSchema = new schema({
   variables: [{ type: String, required: true }],
   from: { type: String, required: true },
   subject: { type: String, required: true },
+  alternate_text: { type: String, required: true },
   body: { type: String, required: true },
   updated_at: { type: Date },
   updated_by: { type: schema.Types.ObjectId, ref: 'users' },
