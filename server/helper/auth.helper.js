@@ -6,7 +6,8 @@ const randomHexGenerator = require('./../helper/others.helper').generateRandomHe
 const bcrypt = require('bcryptjs');
 const userSch = require('./../modules/user/userShema');
 
-const emailTemplate = require('./email-render-template');
+const emailHelper = require('./email.helper');
+const renderMail = require('./../modules/template/templateController').internal;
 
 module.exports = passport => {
   passport.serializeUser((user, done) => {
@@ -46,15 +47,30 @@ module.exports = passport => {
 
           const retuser = await newUser.save();
 
-          let mailOptions = {
-            from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
-            to: profile.emails[0].value, // list of receivers
-            subject: 'Signup using Google', // Subject line
-            text: `Dear ${profile.displayName} . Your auto generated password is ${randompassword}. We request you to change it as soon as possible.`,
-          };
-          const tempalte_path = `${__dirname}/../email/template/googleSignUp.pug`;
-          const dataTemplate = { name: profile.displayName, email: profile.emails[0].value, password: randompassword, account: 'Google' };
-          emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
+          // let mailOptions = {
+          //   from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
+          //   to: profile.emails[0].value, // list of receivers
+          //   subject: 'Signup using Google', // Subject line
+          //   text: `Dear ${profile.displayName} . Your auto generated password is ${randompassword}. We request you to change it as soon as possible.`,
+          // };
+          // const tempalte_path = `${__dirname}/../email/template/googleSignUp.pug`;
+          // const dataTemplate = { name: profile.displayName, email: profile.emails[0].value, password: randompassword, account: 'Google' };
+          // emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
+          const renderedMail = await renderMail.renderTemplate(
+            'third_party_signup',
+            {
+              name: profile.displayName,
+              email: profile.emails[0].value,
+              password: randompassword,
+              account: 'Google',
+            },
+            profile.emails[0].value,
+          );
+          if (renderMail.error) {
+            console.log('render mail error: ', renderMail.error);
+          } else {
+            emailHelper.send(renderedMail);
+          }
 
           console.log('mail sent!');
           cb(null, retuser);
@@ -99,15 +115,30 @@ module.exports = passport => {
 
             const retuser = await newUser.save();
 
-            let mailOptions = {
-              from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
-              to: profile.emails[0].value, // list of receivers
-              subject: 'Signup using Facebook', // Subject line
-              text: `Dear ${displayName} . Your auto generated password is ${randompassword}. We request you to change it as soon as possible.`,
-            };
-            const tempalte_path = `${__dirname}/../email/template/googleSignUp.pug`;
-            const dataTemplate = { name: displayName, email: profile.emails[0].value, password: randompassword, account: 'Facebook' };
-            emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
+            // let mailOptions = {
+            //   from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
+            //   to: profile.emails[0].value, // list of receivers
+            //   subject: 'Signup using Facebook', // Subject line
+            //   text: `Dear ${displayName} . Your auto generated password is ${randompassword}. We request you to change it as soon as possible.`,
+            // };
+            // const tempalte_path = `${__dirname}/../email/template/googleSignUp.pug`;
+            // const dataTemplate = { name: displayName, email: profile.emails[0].value, password: randompassword, account: 'Facebook' };
+            // emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
+            const renderedMail = await renderMail.renderTemplate(
+              'third_party_signup',
+              {
+                name: displayName,
+                email: profile.emails[0].value,
+                password: randompassword,
+                account: 'Facebook',
+              },
+              profile.emails[0].value,
+            );
+            if (renderMail.error) {
+              console.log('render mail error: ', renderMail.error);
+            } else {
+              emailHelper.send(renderedMail);
+            }
 
             done(null, retuser);
           } else {
