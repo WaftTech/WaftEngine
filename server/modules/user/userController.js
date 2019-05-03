@@ -6,13 +6,15 @@ const jwt = require('jsonwebtoken');
 const config = require('./userConfig');
 const httpStatus = require('http-status');
 const emailTemplate = require('../../helper/email-render-template');
+const emailHelper = require('./../../helper/email.helper');
+const renderMail = require('./../template/templateController').internal;
 const auth = require('../../helper/auth.helper');
 const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessShema');
 const moduleSch = require('../role/moduleShema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
-const mailSender = require('./userMail');
+// const mailSender = require('./userMail');
 const loginlogs = require('./loginlogs/loginlogController').internal;
 const baseurl = require('./../../config//keys').baseURl;
 
@@ -117,13 +119,30 @@ userController.Register = async (req, res) => {
         newUser.roles = ['5bf7ae90736db01f8fa21a24'];
         newUser.last_password_cahnage_date = new Date();
         const user = await newUser.save();
-        mailSender.SendMailAtRegistration({
-          email: newUser.email,
-          name: newUser.name,
-          gender: newUser.gender,
-          _id: user._id,
-          email_verification_code: newUser.email_verification_code,
-        });
+
+        const renderedMail = await renderMail.renderTemplate(
+          'user_registration',
+          {
+            name: newUser.name,
+            email: newUser.email,
+            code: newUser.email_verification_code,
+          },
+          newUser.email,
+        );
+        if (renderMail.error) {
+          console.log('render mail error: ', renderMail.error);
+        } else {
+          emailHelper.send(renderedMail);
+        }
+
+        // mailSender.SendMailAtRegistration({
+        //   email: newUser.email,
+        //   name: newUser.name,
+        //   gender: newUser.gender,
+        //   _id: user._id,
+        //   email_verification_code: newUser.email_verification_code,
+        // });
+
         // Create JWT payload
         const payload = {
           id: user._id,
@@ -136,6 +155,7 @@ userController.Register = async (req, res) => {
         };
         // Sign Token
         jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
+          loginlogs.addloginlog(req, token, next);
           const msg = config.registerUser;
           token = `Bearer ${token}`;
           return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, msg, token);
@@ -291,15 +311,15 @@ userController.ForgotPassword = async (req, res, next) => {
     }
     user.password_reset_code = otherHelper.generateRandomHexString(6);
     user.password_reset_request_date = new Date();
-    let mailOptions = {
-      from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
-      to: email, // list of receivers
-      subject: 'Password reset request', // Subject line
-      text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
-    };
-    const tempalte_path = `${__dirname}/../../email/template/passwordreset.pug`;
-    const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
-    emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
+    // let mailOptions = {
+    //   from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
+    //   to: email, // list of receivers
+    //   subject: 'Password reset request', // Subject line
+    //   text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
+    // };
+    // const tempalte_path = `${__dirname}/../../email/template/passwordreset.pug`;
+    // const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
+    // emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
     const update = await users.findByIdAndUpdate(
       user._id,
       {
@@ -310,6 +330,22 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
+
+    const renderedMail = await renderMail.renderTemplate(
+      'user_registration',
+      {
+        name: user.name,
+        email: user.email,
+        code: user.password_reset_code,
+      },
+      user.email,
+    );
+    if (renderMail.error) {
+      console.log('render mail error: ', renderMail.error);
+    } else {
+      emailHelper.send(renderedMail);
+    }
+
     const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
     return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, msg, null);
   } catch (err) {
