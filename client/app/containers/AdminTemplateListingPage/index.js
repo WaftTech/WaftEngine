@@ -171,18 +171,6 @@ export function AdminTemplateListingPage({
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                id="alternate_text"
-                label="Alternate Text"
-                value={one.alternate_text || ''}
-                className={classes.textField}
-                margin="normal"
-                onChange={handleChange}
-                inputProps={{ name: 'alternate_text' }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
                 id="subject_email"
                 label="Subject"
                 value={one.subject || ''}
@@ -193,7 +181,22 @@ export function AdminTemplateListingPage({
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={12}>
+              <TextField
+                id="alternate_text"
+                label="Alternate Text"
+                value={one.alternate_text || ''}
+                className={classes.textField}
+                margin="normal"
+                onChange={handleChange}
+                inputProps={{ name: 'alternate_text' }}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <div dangerouslySetInnerHTML={{ __html: one.body }} />
+            </Grid>
+            <Grid item xs={12} md={12}>
               <TextField
                 id="body_email"
                 label="Body"
