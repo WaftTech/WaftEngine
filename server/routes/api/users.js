@@ -65,7 +65,7 @@ router.post('/', userModule.CheckMail);
  * @description Register user route
  * @access Public
  */
-router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.Register);
+router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, getClientInfo, userModule.Register);
 
 /**
  * @route POST api/user/login/google
