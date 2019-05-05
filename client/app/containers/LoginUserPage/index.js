@@ -54,8 +54,11 @@ const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest }) => {
           color="primary"
           onClick={() => loginWithFbRequest()}
         >
-          LOGIN with FB
+          LOGIN with FB1
         </Button>
+        <a href="http://localhost:5050/api/user/login/facebook">
+          Login with FB2
+        </a>
         <FacebookLogin
           appId="308391736756480"
           autoLoad={true}
