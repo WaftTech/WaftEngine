@@ -195,6 +195,21 @@ const MainListItems = ({ classes, location: { pathname } }) => {
       </ListItem>
       <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
+          <Link to="/admin/template-manage" className={classes.nested}>
+            <ListItem
+              style={{
+                textDecoration: 'none',
+                fontSize: '0.8em',
+                textTransform: 'uppercase',
+              }}
+              selected={pathname === '/admin/template-manage'}
+            >
+              <ListItemIcon>
+                <SliderIcon />
+              </ListItemIcon>
+              <ListItemText primary="Template Manage" />
+            </ListItem>
+          </Link>
           <Link to="/admin/reports" className={classes.nested}>
             <ListItem button selected={pathname === '/admin/reports'}>
               <ListItemIcon>

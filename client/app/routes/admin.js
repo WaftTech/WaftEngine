@@ -16,6 +16,7 @@ import SliderManageAddEdit from '../containers/AdminSliderManagePage/AddEditPage
 import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
 import BlogManageAddEdit from '../containers/AdminBlogManagePage/AddEditPage/Loadable';
 import SubscribePage from '../containers/AdminSubscribePage/Loadable';
+import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
 
 const routes = [
   {
@@ -148,6 +149,11 @@ const routes = [
   {
     path: '/admin/subscribe-manage',
     component: SubscribePage,
+    exact: true,
+  },
+  {
+    path: '/admin/template-manage',
+    component: TemplateListingPage,
     exact: true,
   },
 ];
