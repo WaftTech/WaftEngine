@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
+import FacebookLogin from 'react-facebook-login';
 
 import Link from 'react-router-dom/Link';
 import injectSaga from 'utils/injectSaga';
@@ -22,7 +23,7 @@ import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import logo from '../../images/logo.png';
 
-const LoginUserPage = ({ classes, loginRequest }) => {
+const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest }) => {
   const handleSubmit = e => {
     e.preventDefault();
     loginRequest();
@@ -48,6 +49,20 @@ const LoginUserPage = ({ classes, loginRequest }) => {
         <Link className={classes.smallFont} to="/signup-user">
           Not a user?
         </Link>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => loginWithFbRequest()}
+        >
+          LOGIN with FB
+        </Button>
+        <FacebookLogin
+          appId="308391736756480"
+          autoLoad={true}
+          fields="email"
+          onClick={p => console.log('onClick', p)}
+          callback={p => console.log('cb', p)}
+        />
       </div>
     </div>
   );
@@ -56,6 +71,7 @@ const LoginUserPage = ({ classes, loginRequest }) => {
 LoginUserPage.propTypes = {
   classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
+  loginWithFbRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = null;
