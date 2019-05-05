@@ -52,11 +52,13 @@ export function* loginAction(action) {
 }
 
 export function* loginFbAction(action) {
+  console.log(action);
   yield call(
-    Api.get(
-      'user/login/facebook',
+    Api.post(
+      `user/callback/facebook`,
       actions.loginWithFbSuccess,
       actions.loginWithFbFailure,
+      { ...action.payload },
     ),
   );
 }
