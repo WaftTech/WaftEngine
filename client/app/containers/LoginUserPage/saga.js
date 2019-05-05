@@ -5,6 +5,7 @@ import {
   fork,
   take,
   cancel,
+  call,
 } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
@@ -50,6 +51,17 @@ export function* loginAction(action) {
   }
 }
 
+export function* loginFbAction(action) {
+  yield call(
+    Api.get(
+      'user/login/facebook',
+      actions.loginWithFbSuccess,
+      actions.loginWithFbFailure,
+    ),
+  );
+}
+
 export default function* loginAdminPageSaga() {
   yield takeLatest(types.LOGIN_REQUEST, loginAction);
+  yield takeLatest(types.LOGIN_WITH_FB_REQUEST, loginFbAction);
 }
