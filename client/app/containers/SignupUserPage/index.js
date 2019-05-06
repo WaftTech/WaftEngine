@@ -24,6 +24,7 @@ import EmailInput from './components/EmailInput';
 import PasswordInput from './components/PasswordInput';
 import GenderInput from './components/GenderInput';
 import logo from '../../images/logo.png';
+import { FB_APP_ID, FB_APP_FIELDS } from '../App/constants';
 
 const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest }) => {
   const handleSubmit = e => {
@@ -51,13 +52,11 @@ const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest }) => {
           </Link>
           <br />
           <FacebookLogin
-            appId="308391736756480"
+            appId={FB_APP_ID}
             autoLoad={true}
-            fields="id,email,name"
+            fields={FB_APP_FIELDS}
             callback={signupWithFbRequest}
-            render={renderProps => (
-              <button onClick={renderProps.onClick}>Continue with FB</button>
-            )}
+            textButton="Signup with facebook"
           />
         </form>
       </div>
