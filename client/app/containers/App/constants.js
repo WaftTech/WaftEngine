@@ -9,6 +9,10 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
+export const FB_APP_ID = '308391736756480';
+export const FB_APP_FIELDS = 'id,email,name';
+export const GOOGLE_CLIENT_ID = '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com'
+
 export const API_BASE =
   process.env.NODE_ENV === 'production'
     ? 'http://www.waftengine.org/api/'

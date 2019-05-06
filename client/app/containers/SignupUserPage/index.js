@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Link from 'react-router-dom/Link';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
@@ -24,8 +25,9 @@ import EmailInput from './components/EmailInput';
 import PasswordInput from './components/PasswordInput';
 import GenderInput from './components/GenderInput';
 import logo from '../../images/logo.png';
+import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
 
-const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest }) => {
+const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest, signupWithGoogleRequest }) => {
   const handleSubmit = e => {
     e.preventDefault();
     signupRequest();
@@ -51,13 +53,20 @@ const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest }) => {
           </Link>
           <br />
           <FacebookLogin
-            appId="308391736756480"
-            autoLoad={true}
-            fields="id,email,name"
+            appId={FB_APP_ID}
+            autoLoad={false}
+            fields={FB_APP_FIELDS}
             callback={signupWithFbRequest}
-            render={renderProps => (
-              <button onClick={renderProps.onClick}>Continue with FB</button>
-            )}
+            textButton="Signup with facebook"
+          />
+          <GoogleLogin
+            clientId={GOOGLE_CLIENT_ID}
+            buttonText="Signup with Google"
+            onSuccess={signupWithGoogleRequest}
+            onFailure={(err) => {
+              console.log('something went wrong!', err)
+            }}
+            cookiePolicy={'single_host_origin'}
           />
         </form>
       </div>
