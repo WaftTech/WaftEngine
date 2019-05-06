@@ -68,21 +68,14 @@ router.post('/', userModule.CheckMail);
 router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, getClientInfo, userModule.Register);
 
 /**
- * @route POST api/user/login/google
- * @description Register/login user route
- * @access Public
- */
-router.get('/login/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-
-/**
- * @route POST api/user/callback/goauth
+ * @route POST api/user/login/google/
  * @description Register user route
  * @access Public
  */
-router.get('/callback/goauth/', getClientInfo, passport.authenticate('google'), userModule.loginGOath);
+router.get('/login/google/', getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
 
 /**
- * @route POST api/user/callback/facebook
+ * @route POST api/user/login/facebook/
  * @description Register user route
  * @access Public
  */
