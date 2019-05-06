@@ -49,7 +49,6 @@ const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest }) => {
         <Link className={classes.smallFont} to="/signup-user">
           Not a user?
         </Link>
-        <a href="http://localhost:5050/api/user/login/facebook">fb login</a>
         <FacebookLogin
           appId="308391736756480"
           autoLoad={true}

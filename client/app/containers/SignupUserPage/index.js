@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Link from 'react-router-dom/Link';
+import FacebookLogin from 'react-facebook-login';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
@@ -24,7 +25,7 @@ import PasswordInput from './components/PasswordInput';
 import GenderInput from './components/GenderInput';
 import logo from '../../images/logo.png';
 
-const SignupUserPage = ({ classes, signupRequest }) => {
+const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest }) => {
   const handleSubmit = e => {
     e.preventDefault();
     signupRequest();
@@ -49,6 +50,15 @@ const SignupUserPage = ({ classes, signupRequest }) => {
             Already a user?
           </Link>
           <br />
+          <FacebookLogin
+            appId="308391736756480"
+            autoLoad={true}
+            fields="id,email,name"
+            callback={signupWithFbRequest}
+            render={renderProps => (
+              <button onClick={renderProps.onClick}>Continue with FB</button>
+            )}
+          />
         </form>
       </div>
     </div>

@@ -30,3 +30,16 @@ export function defaultAction() {
     type: types.DEFAULT_ACTION,
   };
 }
+
+export const signupWithFbRequest = payload => ({
+  type: types.SIGNUP_WITH_FB_REQUEST,
+  payload,
+});
+export const signupWithFbSuccess = payload => ({
+  type: types.SIGNUP_WITH_FB_SUCCESS,
+  payload,
+});
+export const signupWithFbFailure = payload => ({
+  type: types.SIGNUP_WITH_FB_FAILURE,
+  payload,
+});
