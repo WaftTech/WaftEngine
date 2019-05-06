@@ -30,7 +30,7 @@ export const validate = data => {
 };
 
 export function* redirectOnSuccess(redirect) {
-  const { payload } = yield take([types.SIGNUP_SUCCESS, types.SIGNUP_WITH_FB_SUCCESS]);
+  const { payload } = yield take([types.SIGNUP_SUCCESS, types.SIGNUP_WITH_FB_SUCCESS, types.SIGNUP_WITH_GOOGLE_SUCCESS]);
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
@@ -81,7 +81,25 @@ export function* signupFbAction(action) {
   yield take([LOCATION_CHANGE, types.SIGNUP_WITH_FB_FAILURE]);
   yield cancel(successWatcher);
 }
+
+export function* signupGoogleAction(action) {
+  const body = { access_token: action.payload.accessToken }
+  const successWatcher = yield fork(redirectOnSuccess, action.redirect);
+    
+  yield fork(
+    Api.post(
+      `user/login/google`,
+      actions.signupWithGoogleSuccess,
+      actions.signupWithGoogleFailure,
+      body,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.SIGNUP_WITH_GOOGLE_FAILURE]);
+  yield cancel(successWatcher);
+}
+
 export default function* signupUserPageSaga() {
   yield takeLatest(types.SIGNUP_REQUEST, signupAction);
   yield takeLatest(types.SIGNUP_WITH_FB_REQUEST, signupFbAction);
+  yield takeLatest(types.SIGNUP_WITH_GOOGLE_REQUEST, signupGoogleAction);
 }
