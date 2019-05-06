@@ -30,7 +30,7 @@ export const validate = data => {
 };
 
 export function* redirectOnSuccess(redirect) {
-  const { payload } = yield take(types.SIGNUP_SUCCESS);
+  const { payload } = yield take([types.SIGNUP_SUCCESS, types.SIGNUP_WITH_FB_SUCCESS]);
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
@@ -66,6 +66,22 @@ export function* signupAction(action) {
   }
 }
 
+export function* signupFbAction(action) {
+  const body = { access_token: action.payload.accessToken }
+  const successWatcher = yield fork(redirectOnSuccess, action.redirect);
+    
+  yield fork(
+    Api.post(
+      `user/login/facebook`,
+      actions.signupWithFbSuccess,
+      actions.signupWithFbFailure,
+      body,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.SIGNUP_WITH_FB_FAILURE]);
+  yield cancel(successWatcher);
+}
 export default function* signupUserPageSaga() {
   yield takeLatest(types.SIGNUP_REQUEST, signupAction);
+  yield takeLatest(types.SIGNUP_WITH_FB_REQUEST, signupFbAction);
 }
