@@ -72,7 +72,7 @@ router.post('/register', validateRegisterInput.sanitizeRegister, validateRegiste
  * @description Register user route
  * @access Public
  */
-router.get('/login/google/', getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
+router.post('/login/google/', getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
 
 /**
  * @route POST api/user/login/facebook/
