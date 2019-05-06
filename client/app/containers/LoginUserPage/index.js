@@ -11,6 +11,7 @@ import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 import Link from 'react-router-dom/Link';
 import injectSaga from 'utils/injectSaga';
@@ -22,9 +23,9 @@ import * as mapDispatchToProps from './actions';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import logo from '../../images/logo.png';
-import { FB_APP_ID, FB_APP_FIELDS } from '../App/constants';
+import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
 
-const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest }) => {
+const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest, loginWithGoogleRequest }) => {
   const handleSubmit = e => {
     e.preventDefault();
     loginRequest();
@@ -52,9 +53,18 @@ const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest }) => {
         </Link>
         <FacebookLogin
           appId={FB_APP_ID}
-          autoLoad={true}
+          autoLoad={false}
           fields={FB_APP_FIELDS}
           callback={loginWithFbRequest}
+        />
+        <GoogleLogin
+          clientId={GOOGLE_CLIENT_ID}
+          buttonText="Login with Google"
+          onSuccess={loginWithGoogleRequest}
+          onFailure={(err) => {
+            console.log('something went wrong!', err)
+          }}
+          cookiePolicy={'single_host_origin'}
         />
       </div>
     </div>
@@ -65,6 +75,7 @@ LoginUserPage.propTypes = {
   classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   loginWithFbRequest: PropTypes.func.isRequired,
+  loginWithGoogleRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = null;
