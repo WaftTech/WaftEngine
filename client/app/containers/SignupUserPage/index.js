@@ -59,15 +59,15 @@ const SignupUserPage = ({ classes, signupRequest, signupWithFbRequest, signupWit
             callback={signupWithFbRequest}
             textButton="Signup with facebook"
           />
-        <GoogleLogin
-          clientId={GOOGLE_CLIENT_ID}
-          buttonText="Signup with Google"
-          onSuccess={signupWithGoogleRequest}
-          onFailure={(err) => {
-            console.log('something went wrong!', err)
-          }}
-          cookiePolicy={'single_host_origin'}
-        />
+          <GoogleLogin
+            clientId={GOOGLE_CLIENT_ID}
+            buttonText="Signup with Google"
+            onSuccess={signupWithGoogleRequest}
+            onFailure={(err) => {
+              console.log('something went wrong!', err)
+            }}
+            cookiePolicy={'single_host_origin'}
+          />
         </form>
       </div>
     </div>
