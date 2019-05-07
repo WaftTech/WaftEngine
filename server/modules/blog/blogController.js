@@ -212,18 +212,30 @@ blogcontroller.GetBlogCatById = async (req, res, next) => {
 blogcontroller.SaveBlog = async (req, res, next) => {
   try {
     let blogs = req.body;
+    if (req.file) {
+      req.file.destination =
+        req.file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      req.file.path = req.file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
+    }
     let d = new Date();
+
     blogs.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogs.title}`);
     if (blogs && blogs._id) {
-      if (req.files && req.files[0]) {
-        blogs.Image = req.files;
+      if (req.file) {
+        blogs.Image = req.file;
       }
       const update = await blogSch.findByIdAndUpdate(blogs._id, {
         $set: blogs,
       });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.save, null);
     } else {
-      blogs.image = req.files;
+      blogs.image = req.file;
       const newBlog = new blogSch(blogs);
       const BlogSave = await newBlog.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, BlogSave, null, blogConfig.save, null);

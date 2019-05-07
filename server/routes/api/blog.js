@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const upload = multer({
-  dest: 'public/blog/',
-});
+const fileUpload = require('../../helper/upload.helper')('public/blog/');
+const uploader = fileUpload.uploader;
+
+// const upload = multer({
+//   dest: 'public/blog/',
+// });
 
 const blogModule = require('../../modules/blog/blogController');
 const { authorization } = require('../../middleware/authentication.middleware');
@@ -18,7 +20,7 @@ router.get('/blog/:slug', blogModule.GetBlogBySlug);
 router.get('/blogbycat/:id', blogModule.GetBlogByCat);
 router.get('/blogbytag/:tag', blogModule.GetBlogByTag);
 router.get('/blogbytime/:time', blogModule.GetBlogByDate);
-router.post('/', authorization, upload.array('file', 1), sanitize, validate, blogModule.SaveBlog);
+router.post('/', authorization,  uploader.single('file'), sanitize, validate, blogModule.SaveBlog);
 router.post('/category', authorization, catSanitize, catValidate, blogModule.SaveBlogCategory);
 router.delete('/:id', authorization, blogModule.DeleteBlog);
 
