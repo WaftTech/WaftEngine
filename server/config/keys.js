@@ -11,12 +11,10 @@ module.exports = {
     googleAuth: {
       client_id: '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com',
       client_secret: 'orIG3V40y4lCDC14869UEzwS',
-      redirect_uris: 'http://localhost:5050/api/user/callback/goauth/',
     },
     facebookAuth: {
       FACEBOOK_APP_ID: '308391736756480',
       FACEBOOK_APP_SECRET: '293741164a98e9378bf6552a169c3c86',
-      callbackURL: 'http://localhost:5050/api/user/callback/facebook',
     },
     githubAuth: {
       ClientID: 'e578c1b3a9fa9de597f0',
