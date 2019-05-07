@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const upload = multer({
-  dest: 'public/blog/',
-});
+
 
 const validations = require('../../modules/faq/faqValidation');
 const faqModule = require('../../modules/faq/faqController');
