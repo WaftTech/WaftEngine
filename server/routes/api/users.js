@@ -5,21 +5,22 @@ const validateRegisterInput = require('../../modules/user/userValidations');
 
 const loginlogs = require('../../modules/user/loginlogs/loginlogController').loginlogController;
 
-const path = require('path');
-const multer = require('multer');
-const upload = multer({
-  dest: 'public/user/',
-  fileFilter: function(req, file, cb) {
-    var filetypes = /jpeg|jpg|png/;
-    var mimetype = filetypes.test(file.mimetype);
-    var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+const fileUpload = require('../../helper/upload.helper')('public/user/');
+const uploader = fileUpload.uploader;
+// const path = require('path');
+// const multer = require('multer');
+// const upload = multer({
+//   fileFilter: function(req, file, cb) {
+//     var filetypes = /jpeg|jpg|png/;
+//     var mimetype = filetypes.test(file.mimetype);
+//     var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-    cb('Error: File upload only supports the following filetypes - ' + filetypes);
-  },
-});
+//     if (mimetype && extname) {
+//       return cb(null, true);
+//     }
+//     cb('Error: File upload only supports the following filetypes - ' + filetypes);
+//   },
+// });
 
 const userModule = require('../../modules/user/userController');
 const { authorization, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
@@ -52,7 +53,7 @@ router.get('/detail/:id', authorization, authentication, userModule.GetUserDetai
  * @description Check user is returning user or new || for admin
  * @access Public
  */
-router.post('/detail/:id', authorization, authentication, upload.single('file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
+router.post('/detail/:id', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
 /**
  * @route POST api/user
  * @description Check user is returning user or new
@@ -86,7 +87,7 @@ router.post('/login/facebook/', getClientInfo, passport.authenticate('facebook-t
  * @description Register user route || for admin
  * @access Public
  */
-router.post('/register/admin', authorization, authentication, upload.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
+router.post('/register/admin', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
 
 /**
  * @route POST api/user/register
@@ -177,6 +178,6 @@ router.get('/profile', authorization, userModule.GetProfile);
  * @description POST user profile info
  * @access Public
  */
-router.post('/profile', authorization, upload.single('file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
+router.post('/profile', authorization, uploader.single('file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
 
 module.exports = router;

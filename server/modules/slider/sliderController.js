@@ -80,9 +80,6 @@ sliderController.SaveSlider = async (req, res, next) => {
     let d = new Date();
     slider.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${slider.slider_key}`);
     if (slider && slider._id) {
-      if (req.files && req.files[0]) {
-        slider.images = req.files;
-      }
       const update = await sliderSch.findByIdAndUpdate(slider._id, {
         $set: slider,
       });
