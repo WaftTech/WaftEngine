@@ -100,7 +100,7 @@ userController.GetUserDetail = async (req, res, next) => {
   }
 };
 
-userController.Register = async (req, res) => {
+userController.Register = async (req, res, next) => {
   const user = await users.findOne({ email: req.body.email });
   if (user) {
     const errors = { email: 'Email already exists' };
@@ -153,13 +153,30 @@ userController.Register = async (req, res) => {
           roles: user.roles,
           gender: user.gender,
         };
+
+        let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
+
+        let routes = [];
+        if (accesses && accesses.length) {
+          const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
+          const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
+          for (let i = 0; i < routers.length; i++) {
+            for (let j = 0; j < routers[i].path.length; j++) {
+              // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
+              routes.push(routers[i].path[j]);
+              // }
+            }
+          }
+        }
+
         // Sign Token
-        jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
-          loginlogs.addloginlog(req, token, next);
-          const msg = config.registerUser;
-          token = `Bearer ${token}`;
-          return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, msg, token);
+        let token = jwt.sign(payload, secretOrKey, {
+          expiresIn: tokenExpireTime,
         });
+        await loginlogs.addloginlog(req, token, next);
+        token = `Bearer ${token}`;
+        payload.routes = routes;
+        return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
       });
     });
   }
