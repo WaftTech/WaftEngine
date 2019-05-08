@@ -44,7 +44,7 @@ sliderController.GetSlider = async (req, res, next) => {
       // },
     ];
 
-    selectq = 'slider_name slider_key images added_by added_at';
+    selectq = 'slider_name slider_key images settings added_by added_at';
 
     searchq = {
       is_deleted: false,
