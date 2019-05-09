@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const bugModule = require('../../modules/bug/bugController');
-const { authorization } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 
-router.get('/', authorization, bugModule.GetErrors);
+router.get('/', authorization, authentication, bugModule.GetErrors);
 module.exports = router;

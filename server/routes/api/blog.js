@@ -8,20 +8,20 @@ const uploader = fileUpload.uploader;
 // });
 
 const blogModule = require('../../modules/blog/blogController');
-const { authorization } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 const { catSanitize, catValidate, sanitize, validate } = require('../../modules/blog/blogValidation');
 
-router.get('/auth', authorization, blogModule.GetBlogAuthorize);
+router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
 router.get('/', blogModule.GetBlogUnauthorize);
 router.get('/category', blogModule.GetBlogCategory);
-router.get('/category/:id', blogModule.GetBlogCatById);
-router.get('/:id', blogModule.GetBlogDetail);
+router.get('/category/:id', authorization, authentication, blogModule.GetBlogCatById);
+router.get('/:id', authorization, authentication, blogModule.GetBlogDetail);
 router.get('/blog/:slug', blogModule.GetBlogBySlug);
 router.get('/blogbycat/:id', blogModule.GetBlogByCat);
 router.get('/blogbytag/:tag', blogModule.GetBlogByTag);
 router.get('/blogbytime/:time', blogModule.GetBlogByDate);
-router.post('/', authorization,  uploader.single('file'), sanitize, validate, blogModule.SaveBlog);
-router.post('/category', authorization, catSanitize, catValidate, blogModule.SaveBlogCategory);
-router.delete('/:id', authorization, blogModule.DeleteBlog);
+router.post('/', authorization, authentication, uploader.single('file'), sanitize, validate, blogModule.SaveBlog);
+router.post('/category', authorization, authentication, catSanitize, catValidate, blogModule.SaveBlogCategory);
+router.delete('/:id', authorization, authentication, blogModule.DeleteBlog);
 
 module.exports = router;

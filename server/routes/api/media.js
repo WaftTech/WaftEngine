@@ -7,9 +7,9 @@ const dModule = require('../../modules/media/mediaController');
 const { authentication, authorization } = require('../../middleware/authentication.middleware');
 
 // router.get('/:page', authorization, dModule.GetMedia);
-router.get('/', authorization, dModule.GetMediaPagination);
-router.post('/single/:type', authorization, uploader.single('file'), dModule.SaveMedia);
+router.get('/', authorization, authentication, dModule.GetMediaPagination);
+router.post('/single/:type', authorization, authentication, uploader.single('file'), dModule.SaveMedia);
 router.get('/:id', dModule.GetMediaDetail);
-router.delete('/:id', authorization, dModule.DeleteMedia);
+router.delete('/:id', authorization, authentication, dModule.DeleteMedia);
 
 module.exports = router;
