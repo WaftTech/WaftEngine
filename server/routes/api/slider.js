@@ -11,10 +11,10 @@ const { authentication, authorization } = require('../../middleware/authenticati
 const sliderModule = require('../../modules/slider/sliderController');
 const validations = require('../../modules/slider/sliderValidations');
 
-router.get('/', authorization, sliderModule.GetSlider);
+router.get('/', authorization, authentication, sliderModule.GetSlider);
 router.get('/key/:key', sliderModule.GetSliderByKey);
 router.get('/:id', authorization, sliderModule.GetSliderById);
-router.post('/', authorization,  validations.sanitize, validations.validate, sliderModule.SaveSlider);
-router.delete('/:id', authorization, sliderModule.DeleteSlider);
+router.post('/', authorization, authentication, validations.sanitize, validations.validate, sliderModule.SaveSlider);
+router.delete('/:id', authorization, authentication, sliderModule.DeleteSlider);
 
 module.exports = router;
