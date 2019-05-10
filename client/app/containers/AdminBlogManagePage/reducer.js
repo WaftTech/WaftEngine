@@ -17,12 +17,15 @@ export const initialState = {
     title: '',
     category: '',
     published_on: '',
-    added_at: Date.now,
+    image: {},
     is_published: true,
     is_active: false,
+    tags: [],
+    author: '',
   },
   query: { find_title: '' },
   category: [],
+  tempTag: '',
 };
 
 const reducer = (state = initialState, action) =>
@@ -50,6 +53,9 @@ const reducer = (state = initialState, action) =>
 
       case types.LOAD_CATEGORY_SUCCESS:
         draft.category = action.payload.data;
+        break;
+      case types.SET_TAG_VALUE:
+        draft.tempTag = action.payload;
         break;
     }
   });
