@@ -44,7 +44,7 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags short_description meta_tag meta-description category keywords slug_url is_published published_on is_active image added_by added_at udated_at updated_by';
+    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url is_published published_on is_active image added_by added_at udated_at updated_by';
     searchq = {
       is_deleted: false,
     };
@@ -111,7 +111,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = {
       is_deleted: false,
     };
@@ -228,7 +228,7 @@ blogcontroller.SaveBlog = async (req, res, next) => {
     blogs.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogs.title}`);
     if (blogs && blogs._id) {
       if (req.file) {
-        blogs.Image = req.file;
+        blogs.image = req.file;
       }
       const update = await blogSch.findByIdAndUpdate(
         blogs._id,
@@ -340,7 +340,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = {
       is_deleted: false,
     };

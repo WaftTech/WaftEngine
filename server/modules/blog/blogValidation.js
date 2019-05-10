@@ -6,7 +6,8 @@ const otherHelper = require('../../helper/others.helper');
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
-  const sanitizeArray = [{
+  const sanitizeArray = [
+    {
       field: 'title',
       sanitize: {
         trim: true,
@@ -24,9 +25,11 @@ validation.sanitize = (req, res, next) => {
 };
 validation.validate = (req, res, next) => {
   const data = req.body;
-  const validateArray = [{
+  const validateArray = [
+    {
       field: 'title',
-      validate: [{
+      validate: [
+        {
           condition: 'IsEmpty',
           msg: blogConfig.validate.empty,
         },
@@ -35,14 +38,15 @@ validation.validate = (req, res, next) => {
           msg: blogConfig.validate.titleLength,
           options: {
             min: 3,
-            max: 100
+            max: 100,
           },
         },
       ],
     },
     {
       field: 'description',
-      validate: [{
+      validate: [
+        {
           condition: 'IsEmpty',
           msg: blogConfig.validate.empty,
         },
@@ -51,7 +55,7 @@ validation.validate = (req, res, next) => {
           msg: blogConfig.validate.descriptionLength,
           options: {
             min: 5,
-            max: 2000
+            max: 2000,
           },
         },
       ],
@@ -59,29 +63,35 @@ validation.validate = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
     next();
   }
 };
 validation.catSanitize = (req, res, next) => {
-  otherHelper.sanitize(req, [{
-    field: 'title',
-    sanitize: {
-      trim: true,
-    }
-  }]);
+  otherHelper.sanitize(req, [
+    {
+      field: 'title',
+      sanitize: {
+        trim: true,
+      },
+    },
+  ]);
   next();
 };
 validation.catValidate = (req, res, next) => {
   const data = req.body;
-  const validateArray = [{
-    field: 'title',
-    validate: [{
-      condition: 'IsEmpty',
-      msg: blogConfig.validate.empty,
-    }, ],
-  }, ];
+  const validateArray = [
+    {
+      field: 'title',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+      ],
+    },
+  ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, 'input errors', null);

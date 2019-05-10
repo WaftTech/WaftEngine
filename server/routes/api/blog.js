@@ -3,10 +3,6 @@ const router = express.Router();
 const fileUpload = require('../../helper/upload.helper')('public/blog/');
 const uploader = fileUpload.uploader;
 
-// const upload = multer({
-//   dest: 'public/blog/',
-// });
-
 const blogModule = require('../../modules/blog/blogController');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
 const { catSanitize, catValidate, sanitize, validate } = require('../../modules/blog/blogValidation');

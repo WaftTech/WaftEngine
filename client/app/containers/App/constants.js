@@ -11,19 +11,20 @@
 
 export const FB_APP_ID = '308391736756480';
 export const FB_APP_FIELDS = 'id,email,name';
-export const GOOGLE_CLIENT_ID = '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com'
+export const GOOGLE_CLIENT_ID =
+  '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com';
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
     ? 'http://www.waftengine.org/api/'
-    // : 'http://localhost:5050/api/';
-: 'http://192.168.100.117:5050/api/';
+    : 'http://localhost:5050/api/';
+// : 'http://192.168.100.117:5050/api/';
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
     ? 'http://www.waftengine.org/'
-    // : 'http://localhost:5050/';
-: 'http://192.168.100.117:5050/';
+    : 'http://localhost:5050/';
+// : 'http://192.168.100.117:5050/';
 
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
