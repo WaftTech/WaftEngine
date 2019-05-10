@@ -200,15 +200,14 @@ class AddEdit extends React.PureComponent {
                 />
               </div>
               <div>
-                <img
+                {one.image && one.image.filename && <img
                   src={
-                    one.image &&
                     `${IMAGE_BASE}${one.image.path}`
                   }
                   alt="image"
                   width="384"
                   height="325"
-                />
+                />}
               </div>
               <div>
                 <Dropzone onDrop={this.onDrop}>
