@@ -23,11 +23,12 @@ const blogSchema = new schema({
   summary: {
     type: String,
   },
-  tags: [
-    {
-      type: String,
-    },
-  ],
+  tags: {
+    type: [String],
+  },
+  author: {
+    type: String,
+  },
   keywords: {
     type: String,
   },
