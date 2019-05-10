@@ -9,8 +9,10 @@ const sliderSchema = new schema({
     {
       image: { type: schema.Types.ObjectId, ref: 'media' },
       caption: { type: String },
+      link: { type: String },
     },
   ],
+  settings: { type: schema.Types.Mixed },
   is_deleted: { type: Boolean, required: true, default: false },
   added_by: { type: schema.Types.ObjectId, ref: 'users' },
   added_at: { type: Date, default: Date.now },
