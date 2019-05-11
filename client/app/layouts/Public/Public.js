@@ -19,8 +19,8 @@ const switchRoutes = (
 const PublicLayout = () => (
   <>
     <Header />
-    {switchRoutes}
-    {/* <Footer /> */}
+    <main className="min-h-screen">{switchRoutes}</main>
+    <Footer />
   </>
 );
 

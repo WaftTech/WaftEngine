@@ -20,7 +20,7 @@ import * as mapDispatchToProps from './actions';
 
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
-import logo from '../../images/logo.png';
+import logo from '../../assets/img/logo.svg';
 
 const LoginAdminPage = ({ classes, loginRequest }) => {
   const handleSubmit = e => {
@@ -28,26 +28,29 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
     loginRequest();
   };
   return (
-    <div className={classes.container}>
-      <div className={classes.card}>
-        <img className={classes.logo} src={logo} alt="logo" />
-        <h3>LOGIN</h3>
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <UsernameInput />
-          <PasswordInput />
-          <br />
-          <Button variant="contained" color="primary" type="submit">
-            LOGIN
-          </Button>
-        </form>
-        <br />
-        <br />
-        <Link className={classes.smallFont} to="/forgot-password-user">
-          Forgot Password?
-        </Link>
-        <Link className={classes.smallFont} to="/signup-user">
-          Not a user?
-        </Link>
+    <div className="flex">
+      <div className="w-1/2 min-h-screen bg-gray-light  h-screen overflow-hidden">
+        <img
+          className="w-full"
+          src="https://source.unsplash.com/collection/175083/500x900/daily/"
+        />
+      </div>
+
+      <div className="w-1/2">
+        <div className="max-w-5xl m-32">
+          <img className="mb-6" src={logo} alt="WaftEngine" />
+          <h4>LOGIN</h4>
+          <form className="mt-4" onSubmit={handleSubmit}>
+            <UsernameInput />
+            <PasswordInput />
+            <button
+              className="bg-grey-darker hover:bg-grey-dark text-white font-bold py-2 px-4 rounded mt-4"
+              type="submit"
+            >
+              LOGIN
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
@@ -68,65 +71,7 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
 const withSaga = injectSaga({ key: 'loginAdminPage', saga });
 
-const styles = {
-  container: {
-    zIndex: '2',
-    position: 'relative',
-    paddingTop: '20vh',
-    background: '#EFEFF4',
-    minHeight: '100vh',
-  },
-  card: {
-    background: '#fff',
-    padding: 40,
-    width: 350,
-    margin: '0 auto',
-  },
-  smallFont: {
-    fontSize: 12,
-    textDecoration: 'none',
-  },
-  cardHeader: {
-    width: 'auto',
-    textAlign: 'center',
-    marginLeft: '20px',
-    marginRight: '20px',
-    marginTop: '-40px',
-    padding: '20px 0',
-    marginBottom: '15px',
-  },
-  socialIcons: {
-    maxWidth: '24px',
-    marginTop: '0',
-    width: '100%',
-    transform: 'none',
-    left: '0',
-    top: '0',
-    height: '100%',
-    lineHeight: '41px',
-    fontSize: '20px',
-  },
-  divider: {
-    marginTop: '30px',
-    marginBottom: '0px',
-    textAlign: 'center',
-  },
-  cardFooter: {
-    paddingTop: '0rem',
-    border: '0',
-    borderRadius: '6px',
-    justifyContent: 'center !important',
-  },
-  socialLine: {
-    marginTop: '1rem',
-    textAlign: 'center',
-    padding: '0',
-  },
-  inputIconsColor: {
-    color: '#495057',
-  },
-  logo: { maxWidth: '100%' },
-};
+const styles = {};
 
 const withStyle = withStyles(styles);
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -26,30 +27,41 @@ const PasswordInput = props => {
     setStoreValue({ key: 'password', value: e.target.value });
   const hasError = Boolean(error);
   return (
-    <FormControl
-      className={`${classes.margin} ${classes.textField}`}
-      error={hasError}
-    >
-      <InputLabel htmlFor="adornment-password">
-        {error || 'Password'}
-      </InputLabel>
-      <Input
-        id="adornment-password"
-        type={isSecure ? 'text' : 'password'}
-        value={password}
-        onChange={handleChange}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="Toggle password visibility"
-              onClick={handleTogglePassword}
-            >
-              {isSecure ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-    </FormControl>
+    <div className="mb-4">
+      <div className="flex justify-between">
+        <label
+          className="block text-grey-darker text-sm mb-2"
+          htmlFor="Password"
+        >
+          Password
+        </label>
+
+        <Link
+          className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+          to="/forgot-password-user"
+        >
+          Forgot Password?
+        </Link>
+      </div>
+      <div className="relative">
+        <input
+          error={hasError}
+          onChange={handleChange}
+          value={password}
+          id="Password"
+          type={isSecure ? 'text' : 'password'}
+          placeholder="Enter Password"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+        />
+        <span
+          className={classes.EyeIcon}
+          aria-label="Toggle password visibility"
+          onClick={handleTogglePassword}
+        >
+          {isSecure ? <Visibility /> : <VisibilityOff />}
+        </span>
+      </div>
+    </div>
   );
 };
 
@@ -71,15 +83,7 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
-  margin: {
-    // margin: theme.spacing.unit,
-  },
-  withoutLabel: {
-    marginTop: theme.spacing.unit * 3,
-  },
-  textField: {
-    // flexBasis: 200,
-  },
+  EyeIcon: { position: 'absolute', right: 12, top: 6 },
 });
 
 const withStyle = withStyles(styles);

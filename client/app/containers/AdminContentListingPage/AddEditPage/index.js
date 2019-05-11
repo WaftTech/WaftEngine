@@ -81,7 +81,7 @@ class AddEdit extends React.PureComponent {
     return (
       <div>
         <PageHeader>
-        <IconButton style={{color:'#fff'}} onClick={this.handleGoBack} aria-label="Back">
+        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
         </IconButton></PageHeader>
         <PageContent>
@@ -182,6 +182,7 @@ class AddEdit extends React.PureComponent {
 
 <br/>
               <Button
+              
                 variant="contained"
                 color="primary"
                 onClick={this.handleSave}

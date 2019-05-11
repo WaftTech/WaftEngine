@@ -13,6 +13,7 @@ import {
   makeSelectUser,
 } from '../../containers/App/selectors';
 import { logoutRequest } from '../../containers/App/actions';
+import logo from '../../assets/img/logo.svg';
 
 const styles = theme => ({});
 
@@ -40,32 +41,33 @@ const Header = props => {
   };
 
   return (
-    <header>
-      <div className="container mx-auto">
+    <header className="">
+      <div className="container mx-auto pt-2 pb-2 border-b flex justify-between">
+        <Link to="/">
+          <img src={logo} alt="WaftEngine" />
+        </Link>
+
         {!token ? (
           <div>
-            <Button
+            <button
               onClick={redirectToRegister}
-              variant="contained"
-              className={classes.button}
+              className="bg-grey-lighter hover:bg-grey-light text-red py-2 px-4 rounded text-sm mr-2"
             >
               Register
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={redirectToLogin}
-              variant="contained"
-              className={classes.button}
+              className="bg-red text-white py-2 px-4 rounded text-sm"
             >
               Login
-            </Button>
+            </button>
           </div>
         ) : (
           <div className={classes.topRightWrapper}>
-            <Button className={classes.dropDown} onClick={handleMenu}>
+            <button className={classes.dropDown} onClick={handleMenu}>
               <span>{user.name}</span>
-
               <AccountCircle />
-            </Button>
+            </button>
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
