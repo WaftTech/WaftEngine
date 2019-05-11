@@ -100,11 +100,7 @@ const styles = theme => ({
     // },
   },
   appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
+  content: {},
   drawerText: {
     textDecoration: 'none',
     '& a': {
@@ -153,83 +149,39 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
-      <AppBar
-        position="absolute"
-        className={`${classes.appBar} ${open ? classes.appBarShift : ''}`}
-      >
-        <div className={classes.toolbar}>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleDrawerOpen}
-            className={`${classes.menuButton} ${
-              open ? classes.menuButtonHidden : ''
-            }`}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <div style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
-            <IconButton color="inherit" onClick={handleMenu}>
-              <AccountCircle />
-            </IconButton>
-            {/* <IconButton
-                    aria-owns={open ? 'menu-appbar' : undefined}
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                  </IconButton> */}
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={anchorOpen}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Dashboard</MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
-          </div>
-        </div>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: `${classes.drawerPaper} ${
-            open ? '' : classes.drawerPaperClose
-          }`,
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <img className={classes.imgFluid} src={Logo} alt="waft engine" />
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <div className={classes.drawerText}>
+      <div className="flex overflow-y-hidden">
+        <div
+          className="overflow-x-hidden h-screen border-r bg-grey-lightest"
+          style={{ width: 250 }}
+        >
+          <img
+            className="mt-3 mb-6 mx-auto flex"
+            src={Logo}
+            alt="waft engine"
+          />
           <MainListItems />
         </div>
-      </Drawer>
-      <main className={classes.content}>
-        {/* <div className={classes.appBarSpacer} /> */}
-        {switchRoutes}
-      </main>
-    </div>
+        <main className="h-screen flex-1 overflow-auto">
+          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
+          <AccountCircle onClick={handleMenu} />
+          <div
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            open={anchorOpen}
+            onClose={handleClose}
+          >
+            <div onClick={handleClose}>Dashboard</div>
+            <div onClick={handleLogout}>Logout</div>
+          </div>
+        </div> */}
+          {switchRoutes}
+        </main>
+      </div>
+    </React.Fragment>
   );
 };
 

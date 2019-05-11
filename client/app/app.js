@@ -79,7 +79,7 @@ const theme = createMuiTheme({
     useNextVariants: true,
   },
   // palette: {
-  //   primary: '#333',
+  //   primary: 'blue',
   // },
 });
 

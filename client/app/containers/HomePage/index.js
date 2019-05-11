@@ -11,6 +11,7 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import Link from 'react-router-dom/Link';
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -19,9 +20,28 @@ export default class HomePage extends React.PureComponent {
     const { classes, category } = this.props;
 
     return (
-      <React.Fragment>
-        <h1>This is homepage</h1>
-      </React.Fragment>
+      <div className="container mx-auto pt-12 pb-12">
+        <p className="">
+          For Admin Login:
+          <br />
+          <Link className="text-blue" to="/login-admin">
+            /login-admin
+          </Link>
+        </p>
+        <br />
+        <br />
+        <p className="">
+          For Documentation:
+          <br />
+          <a
+            className="text-blue"
+            target="_blank"
+            href="http://www.waftengine.org"
+          >
+            http://www.waftengine.org/docs
+          </a>
+        </p>
+      </div>
     );
   }
 }
