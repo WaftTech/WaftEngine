@@ -5,43 +5,17 @@ import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-// core components
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardBody from '@material-ui/core/CardContent';
-import CardFooter from '@material-ui/core/CardActions';
-import { Paper } from '@material-ui/core';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne, makeSelectCategory } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 
-
-const styles = theme => ({
-  p20: { padding: 20 },
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: { margin: theme.spacing.unit / 2 },
-});
+const styles = theme => ({});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -89,23 +63,23 @@ class AddEdit extends React.PureComponent {
     return (
       <div>
         <PageHeader>
-        <ArrowBack className="cursor-pointer" onClick={this.handleGoBack}/>
-         </PageHeader>
+          <ArrowBack className="cursor-pointer" onClick={this.handleGoBack} />
+        </PageHeader>
         <PageContent>
           <Grid container>
             <Grid item xs={12} md={6}>
-              <TextField
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                htmlFor="grid-last-name"
+              >
+                Question
+              </label>
+              <input
+                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                 name="Question"
                 id="faq"
-                label="Question"
                 value={one.question}
                 onChange={this.handleChange('question')}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                InputLabelProps={{
-                  shrink: 'true',
-                }}
               />
               <TextField
                 multiline
@@ -149,7 +123,7 @@ class AddEdit extends React.PureComponent {
               </TextField>
 
               <Button
-              className="mt-4"
+                className="mt-4"
                 fullWidth
                 variant="outlined"
                 color="primary"
@@ -157,7 +131,6 @@ class AddEdit extends React.PureComponent {
               >
                 Save
               </Button>
-              
             </Grid>
           </Grid>
         </PageContent>
