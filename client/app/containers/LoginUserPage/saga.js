@@ -5,6 +5,7 @@ import {
   fork,
   take,
   cancel,
+  call,
 } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
@@ -22,7 +23,7 @@ export const validate = data => {
 };
 
 export function* redirectOnSuccess(redirect) {
-  const { payload } = yield take(types.LOGIN_SUCCESS);
+  const { payload } = yield take([types.LOGIN_SUCCESS, types.LOGIN_WITH_FB_SUCCESS, types.LOGIN_WITH_GOOGLE_SUCCESS]);
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
@@ -50,6 +51,40 @@ export function* loginAction(action) {
   }
 }
 
+export function* loginFbAction(action) {
+  const body = { access_token: action.payload.accessToken }
+  const successWatcher = yield fork(redirectOnSuccess, action.redirect);
+    
+  yield fork(
+    Api.post(
+      `user/login/facebook`,
+      actions.loginWithFbSuccess,
+      actions.loginWithFbFailure,
+      body,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.LOGIN_WITH_FB_FAILURE]);
+  yield cancel(successWatcher);
+}
+
+export function* loginGoogleAction(action) {
+  console.log(action)
+  const body = { access_token: action.payload.accessToken }
+  const successWatcher = yield fork(redirectOnSuccess, action.redirect);
+    
+  yield fork(
+    Api.post(
+      `user/login/google`,
+      actions.loginWithGoogleSuccess,
+      actions.loginWithGoogleFailure,
+      body,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.LOGIN_WITH_GOOGLE_FAILURE]);
+  yield cancel(successWatcher);
+}
 export default function* loginAdminPageSaga() {
   yield takeLatest(types.LOGIN_REQUEST, loginAction);
+  yield takeLatest(types.LOGIN_WITH_FB_REQUEST, loginFbAction);
+  yield takeLatest(types.LOGIN_WITH_GOOGLE_REQUEST, loginGoogleAction);
 }

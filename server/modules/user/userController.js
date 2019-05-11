@@ -6,13 +6,15 @@ const jwt = require('jsonwebtoken');
 const config = require('./userConfig');
 const httpStatus = require('http-status');
 const emailTemplate = require('../../helper/email-render-template');
+const emailHelper = require('./../../helper/email.helper');
+const renderMail = require('./../template/templateController').internal;
 const auth = require('../../helper/auth.helper');
 const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessShema');
 const moduleSch = require('../role/moduleShema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
-const mailSender = require('./userMail');
+// const mailSender = require('./userMail');
 const loginlogs = require('./loginlogs/loginlogController').internal;
 const baseurl = require('./../../config//keys').baseURl;
 
@@ -98,7 +100,7 @@ userController.GetUserDetail = async (req, res, next) => {
   }
 };
 
-userController.Register = async (req, res) => {
+userController.Register = async (req, res, next) => {
   const user = await users.findOne({ email: req.body.email });
   if (user) {
     const errors = { email: 'Email already exists' };
@@ -117,13 +119,30 @@ userController.Register = async (req, res) => {
         newUser.roles = ['5bf7ae90736db01f8fa21a24'];
         newUser.last_password_cahnage_date = new Date();
         const user = await newUser.save();
-        mailSender.SendMailAtRegistration({
-          email: newUser.email,
-          name: newUser.name,
-          gender: newUser.gender,
-          _id: user._id,
-          email_verification_code: newUser.email_verification_code,
-        });
+
+        const renderedMail = await renderMail.renderTemplate(
+          'user_registration',
+          {
+            name: newUser.name,
+            email: newUser.email,
+            code: newUser.email_verification_code,
+          },
+          newUser.email,
+        );
+        if (renderMail.error) {
+          console.log('render mail error: ', renderMail.error);
+        } else {
+          emailHelper.send(renderedMail);
+        }
+
+        // mailSender.SendMailAtRegistration({
+        //   email: newUser.email,
+        //   name: newUser.name,
+        //   gender: newUser.gender,
+        //   _id: user._id,
+        //   email_verification_code: newUser.email_verification_code,
+        // });
+
         // Create JWT payload
         const payload = {
           id: user._id,
@@ -134,12 +153,30 @@ userController.Register = async (req, res) => {
           roles: user.roles,
           gender: user.gender,
         };
+
+        let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
+
+        let routes = [];
+        if (accesses && accesses.length) {
+          const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
+          const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
+          for (let i = 0; i < routers.length; i++) {
+            for (let j = 0; j < routers[i].path.length; j++) {
+              // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
+              routes.push(routers[i].path[j]);
+              // }
+            }
+          }
+        }
+
         // Sign Token
-        jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
-          const msg = config.registerUser;
-          token = `Bearer ${token}`;
-          return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, msg, token);
+        let token = jwt.sign(payload, secretOrKey, {
+          expiresIn: tokenExpireTime,
         });
+        await loginlogs.addloginlog(req, token, next);
+        token = `Bearer ${token}`;
+        payload.routes = routes;
+        return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
       });
     });
   }
@@ -152,7 +189,16 @@ userController.RegisterFromAdmin = async (req, res, next) => {
       const data = { email: req.body.email };
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
-      if (req.file && req.file[0]) {
+      if (req.file) {
+        req.file.destination =
+          req.file.destination
+            .split('\\')
+            .join('/')
+            .split('server/')[1] + '/';
+        req.file.path = req.file.path
+          .split('\\')
+          .join('/')
+          .split('server/')[1];
         req.body.image = req.file;
       }
       const { name, email, password, date_of_birth, bio, location, phone, description, is_active, email_verified, roles, image, company_name, company_location, company_established, company_phone_no } = req.body;
@@ -194,7 +240,20 @@ userController.UpdateUserDetail = async (req, res, next) => {
 
     let newdatas = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
 
+    // if (req.file) {
+    //   newdatas.image = req.file;
+    // }
+
     if (req.file) {
+      req.file.destination =
+        req.file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      req.file.path = req.file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
       newdatas.image = req.file;
     }
 
@@ -291,15 +350,15 @@ userController.ForgotPassword = async (req, res, next) => {
     }
     user.password_reset_code = otherHelper.generateRandomHexString(6);
     user.password_reset_request_date = new Date();
-    let mailOptions = {
-      from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
-      to: email, // list of receivers
-      subject: 'Password reset request', // Subject line
-      text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
-    };
-    const tempalte_path = `${__dirname}/../../email/template/passwordreset.pug`;
-    const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
-    emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
+    // let mailOptions = {
+    //   from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
+    //   to: email, // list of receivers
+    //   subject: 'Password reset request', // Subject line
+    //   text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
+    // };
+    // const tempalte_path = `${__dirname}/../../email/template/passwordreset.pug`;
+    // const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
+    // emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
     const update = await users.findByIdAndUpdate(
       user._id,
       {
@@ -310,8 +369,24 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
+
+    const renderedMail = await renderMail.renderTemplate(
+      'user_registration',
+      {
+        name: user.name,
+        email: user.email,
+        code: user.password_reset_code,
+      },
+      user.email,
+    );
+    if (renderMail.error) {
+      console.log('render mail error: ', renderMail.error);
+    } else {
+      emailHelper.send(renderedMail);
+    }
+
     const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
-    return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, msg, null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, msg, null);
   } catch (err) {
     next(err);
   }
@@ -438,12 +513,24 @@ userController.GetProfile = async (req, res, next) => {
 
 userController.postProfile = async (req, res, next) => {
   try {
-    const { name, date_of_birth, bio, description, phone, location, company_name, company_location, company_established, company_phone_no } = req.body;
-    const updateUser = await users.findByIdAndUpdate(req.user.id, { $set: { name, date_of_birth, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() } }, { new: true });
+    if (req.file) {
+      req.file.destination =
+        req.file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      req.file.path = req.file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
+      req.body.image = req.file;
+    }
+    const { name, date_of_birth, bio, description, image, phone, location, company_name, company_location, company_established, company_phone_no } = req.body;
+    const updateUser = await users.findByIdAndUpdate(req.user.id, { $set: { name, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() } }, { new: true });
     const msg = 'User Update Success';
     const msgfail = 'User not found.';
     if (updateUser) {
-      return otherHelper.sendResponse(res, httpStatus.OK, true, { name, date_of_birth, bio, description, phone, location, company_name, company_location, company_established, company_phone_no }, null, msg, null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, { name, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no }, null, msg, null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgfail, null);
     }
@@ -544,7 +631,9 @@ userController.RequestSocialOAuthApiDataHelper = async (req, next, request_url, 
           const timestamp = Math.round(Date.now() / 1000);
           const oAuthSignature = _p.generateOAuthSignature(randomToken, timestamp, req.params.access_token);
           headers = {
-            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${req.params.access_token}", oauth_version="1.0"`,
+            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${
+              req.params.access_token
+            }", oauth_version="1.0"`,
           };
           break;
       }
@@ -557,5 +646,42 @@ userController.RequestSocialOAuthApiDataHelper = async (req, next, request_url, 
   } catch (err) {
     return next(err);
   }
+};
+
+userController.loginGOath = async (req, res, next) => {
+  const user = req.user;
+  const payload = {
+    id: user._id,
+    name: user.name,
+    avatar: user.avatar,
+    email: user.email,
+    email_verified: user.email_verified,
+    roles: user.roles,
+    gender: user.gender,
+  };
+
+  let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
+
+  let routes = [];
+  if (accesses && accesses.length) {
+    const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
+    const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
+    for (let i = 0; i < routers.length; i++) {
+      for (let j = 0; j < routers[i].path.length; j++) {
+        // for (let k = 0; k < routers[i].Path[j].AdminRoutes.length; k++) {
+        routes.push(routers[i].path[j]);
+        // }
+      }
+    }
+  }
+
+  // Sign Token
+  let token = jwt.sign(payload, secretOrKey, {
+    expiresIn: tokenExpireTime,
+  });
+  await loginlogs.addloginlog(req, token, next);
+  token = `Bearer ${token}`;
+  payload.routes = routes;
+  return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
 };
 module.exports = userController;

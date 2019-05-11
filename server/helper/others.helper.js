@@ -84,7 +84,7 @@ otherHelper.getquerySendResponse = async (model, page, size, sortq, findquery, s
 otherHelper.sanitize = (req, sanitizeArray) => {
   sanitizeArray.forEach(sanitizeObj => {
     let sanitizefield = req.body[sanitizeObj.field];
-    sanitizefield = !isEmpty(sanitizefield) ? sanitizefield : '';
+    sanitizefield = !isEmpty(sanitizefield) ? sanitizefield + '' : '';
     const sanitization = sanitizeObj.sanitize;
     if (sanitization.rtrim) {
       sanitizefield = Validator.rtrim(sanitizefield);
@@ -126,7 +126,7 @@ otherHelper.validation = (data, validationArray) => {
   let errors = {};
   validationArray.forEach(validationObj => {
     let value = data[validationObj.field];
-    value = !isEmpty(value) ? value : '';
+    value = !isEmpty(value) ? value + '' : '';
     const validation = validationObj.validate;
     for (let i = 0; i < validation.length; i++) {
       const val = validation[i];

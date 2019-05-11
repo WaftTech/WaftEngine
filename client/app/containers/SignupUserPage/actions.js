@@ -30,3 +30,29 @@ export function defaultAction() {
     type: types.DEFAULT_ACTION,
   };
 }
+
+export const signupWithFbRequest = payload => ({
+  type: types.SIGNUP_WITH_FB_REQUEST,
+  payload,
+});
+export const signupWithFbSuccess = payload => ({
+  type: types.SIGNUP_WITH_FB_SUCCESS,
+  payload,
+});
+export const signupWithFbFailure = payload => ({
+  type: types.SIGNUP_WITH_FB_FAILURE,
+  payload,
+});
+
+export const signupWithGoogleRequest = payload => ({
+  type: types.SIGNUP_WITH_GOOGLE_REQUEST,
+  payload,
+});
+export const signupWithGoogleSuccess = payload => ({
+  type: types.SIGNUP_WITH_GOOGLE_SUCCESS,
+  payload,
+});
+export const signupWithGoogleFailure = payload => ({
+  type: types.SIGNUP_WITH_GOOGLE_FAILURE,
+  payload,
+});
