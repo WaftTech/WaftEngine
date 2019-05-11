@@ -46,11 +46,11 @@ const colors = {
   transparent: 'transparent',
 
   black: '#000',
-  'grey-darkest': '#333',
-  'grey-darker': '#555',
-  'grey-dark': '#8795a1',
-  grey: '#999',
-  'grey-light': '#e9e9e9',
+  'grey-darkest': '#4a4a4a',
+  'grey-darker': '#666666',
+  'grey-dark': '#808080',
+  grey: '#a9a9a9',
+  'grey-light': '#d8d8d8',
   'grey-lighter': '#f0f0f0',
   'grey-lightest': '#f7f7f7',
   white: '#ffffff',
@@ -99,7 +99,7 @@ const colors = {
   // 'blue-darker': '#1c3d5a',
   // 'blue-dark': '#2779bd',
   blue: '#3490dc',
-  // 'blue-light': '#6cb2eb',
+  'blue-light': '#02b7dd',
   // 'blue-lighter': '#bcdefa',
   // 'blue-lightest': '#eff8ff',
 
@@ -191,11 +191,11 @@ module.exports = {
 
   fonts: {
     sans: [
-      'system-ui',
-      'BlinkMacSystemFont',
-      '-apple-system',
+      // 'system-ui',
+      // 'BlinkMacSystemFont',
+      // '-apple-system',
       // 'Segoe UI',
-      'Roboto',
+      // 'Roboto',
       // 'Oxygen',
       // 'Ubuntu',
       // 'Cantarell',

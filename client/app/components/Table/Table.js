@@ -2,12 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 // core components
 
@@ -22,36 +16,41 @@ function CustomTable({ ...props }) {
     handlePagination,
   } = props;
   return (
-    <div className={classes.tableResponsive}>
-      <Table className={classes.table}>
+    <div className="mx-auto">
+      <table className="text-left w-full border-collapse text-sm">
         {tableHead !== undefined ? (
-          <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
-            <TableRow>
+          <thead>
+            <tr>
               {tableHead.map((prop, key) => (
-                <TableCell
-                  className={`${classes.tableCell} ${classes.tableHeadCell}`}
+                <th
+                  className="py-4 px-6 font-bold text-xs text-grey-darker border-b border-grey-light"
                   key={key}
                 >
                   {prop}
-                </TableCell>
+                </th>
               ))}
-            </TableRow>
-          </TableHead>
+            </tr>
+          </thead>
         ) : null}
-        <TableBody>
+        <tbody>
           {tableData.map((prop, key) => (
-            <TableRow key={key}>
+            <tr key={key}>
               {prop.map((each, index) => (
-                <TableCell className={classes.tableCell} key={index}>
+                <td
+                  className="py-4 px-6 border-b border-grey-light text-grey-dark"
+                  key={index}
+                >
                   {each}
-                </TableCell>
+                </td>
               ))}
-            </TableRow>
+            </tr>
           ))}
-        </TableBody>
-        {pagination && handlePagination && (
-          <TableFooter>
-            <TableRow>
+        </tbody>
+      </table>
+      <table className="w-full">
+        <tbody>
+          <tr>
+            {pagination && handlePagination && (
               <TablePagination
                 style={{ display: 'flex', justifyContent: 'flex-start' }}
                 rowsPerPageOptions={[5, 10, 25, 50, 100]}
@@ -72,10 +71,10 @@ function CustomTable({ ...props }) {
                   handlePagination({ ...pagination, size: e.target.value })
                 }
               />
-            </TableRow>
-          </TableFooter>
-        )}
-      </Table>
+            )}
+          </tr>
+        </tbody>
+      </table>{' '}
     </div>
   );
 }

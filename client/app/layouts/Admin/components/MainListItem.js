@@ -6,9 +6,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import FormatSizeIcon from '@material-ui/icons/FormatSize';
@@ -22,6 +19,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import Settings from '@material-ui/icons/settings';
 import { makeSelectLocation } from '../../../containers/App/selectors';
 
 const styles = theme => ({
@@ -35,7 +33,7 @@ const styles = theme => ({
   },
 });
 
-const MainListItems = ({ classes, location: { pathname } }) => {
+const Mainlis = ({ classes, location: { pathname } }) => {
   const [openFirstSet, setOpenFirstSet] = useState(false);
   const [openSecondSet, setOpenSecondSet] = useState(false);
   const [openThirdSet, setOpenThirdSet] = useState(false);
@@ -55,211 +53,195 @@ const MainListItems = ({ classes, location: { pathname } }) => {
   };
 
   return (
-    <List component="nav">
-      <Link to="/admin/dashboard">
-        <ListItem button selected={pathname === '/admin/dashboard'}>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-      </Link>
-      <ListItem button onClick={handleFirstSetClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Content Management" />
-        {openFirstSet ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Link to="/admin/content-manage" className={classes.nested}>
-            <ListItem
-              style={{
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                textTransform: 'uppercase',
-              }}
-              selected={pathname === '/admin/content-manage'}
+    <div>
+      <ul className="list-reset">
+        <li
+          className="pl-2 pr-2 pointer"
+          selected={pathname === '/admin/dashboard'}
+        >
+          <Link
+            to="/admin/dashboard"
+            className="text-grey-darker hover:text-black text-sm no-underline flex items-center p-2"
+          >
+            <DashboardIcon className="mr-3" />
+            Dashboard
+          </Link>
+        </li>
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleFirstSetClick}
+        >
+          <div className="flex items-center">
+            <FormatSizeIcon className="mr-3" />
+            <span className="dropdown-title">Content Manage</span>
+          </div>
+          {openFirstSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
+          <ul className="list-reset">
+            <li selected={pathname === '/admin/content-manage'}>
+              <Link
+                to="/admin/content-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+              >
+                <FormatSizeIcon className="mr-3" />
+                Static Content
+              </Link>
+            </li>
+            <li selected={pathname === '/admin/faq-manage'}>
+              <Link
+                to="/admin/faq-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                FAQ
+              </Link>
+            </li>
+            <li selected={pathname === '/admin/media-manage'}>
+              <Link
+                to="/admin/media-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                Media
+              </Link>
+            </li>
+            <li selected={pathname === '/admin/slider-manage'}>
+              <Link
+                to="/admin/slider-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <SliderIcon className="mr-3" />
+                Slider
+              </Link>
+            </li>
+            <li selected={pathname === '/admin/blog-manage'}>
+              <Link
+                to="/admin/blog-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                Blog
+              </Link>
+            </li>
+          </ul>
+        </Collapse>
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleSecondSetClick}
+        >
+          <div className="flex items-center">
+            <InboxIcon className="mr-3" />
+            <span className="dropdown-title">Access Manage</span>
+          </div>
+          {openSecondSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
+          <li selected={pathname === '/admin/user-manage'}>
+            <Link
+              to="/admin/user-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
             >
-              <ListItemIcon>
-                <FormatSizeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Content Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/faq-manage" className={classes.nested}>
-            <ListItem
-              style={{
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                textTransform: 'uppercase',
-              }}
-              selected={pathname === '/admin/faq-manage'}
+              <ExtensionIcon className="mr-3" />
+              Users
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/role-manage'}>
+            <Link
+              to="/admin/role-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
             >
-              <ListItemIcon>
-                <QuestionAnswerIcon />
-              </ListItemIcon>
-              <ListItemText primary="FAQ Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/media-manage" className={classes.nested}>
-            <ListItem
-              style={{
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                textTransform: 'uppercase',
-              }}
-              selected={pathname === '/admin/media-manage'}
+              <PeopleIcon className="mr-3" />
+              Roles
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/module-manage'}>
+            <Link
+              to="/admin/module-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
             >
-              <ListItemIcon>
-                <QuestionAnswerIcon />
-              </ListItemIcon>
-              <ListItemText primary="Media Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/slider-manage" className={classes.nested}>
-            <ListItem
-              style={{
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                textTransform: 'uppercase',
-              }}
-              selected={pathname === '/admin/slider-manage'}
-            >
-              <ListItemIcon>
-                <SliderIcon />
-              </ListItemIcon>
-              <ListItemText primary="Slider Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/blog-manage" className={classes.nested}>
-            <ListItem
-              style={{
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                textTransform: 'uppercase',
-              }}
-              selected={pathname === '/admin/blog-manage'}
-            >
-              <ListItemIcon>
-                <QuestionAnswerIcon />
-              </ListItemIcon>
-              <ListItemText primary="Blog Manage" />
-            </ListItem>
-          </Link>
-        </List>
-      </Collapse>
-      <ListItem button onClick={handleSecondSetClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Access Management" />
-        {openSecondSet ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Link to="/admin/user-manage" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/user-manage'}>
-              <ListItemIcon>
-                <ExtensionIcon />
-              </ListItemIcon>
-              <ListItemText primary="User Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/role-manage" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/role-manage'}>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Role Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/module-manage" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/module-manage'}>
-              <ListItemIcon>
-                <ExtensionIcon />
-              </ListItemIcon>
-              <ListItemText primary="Module Manage" />
-            </ListItem>
-          </Link>
-        </List>
-      </Collapse>
+              <ExtensionIcon className="mr-3" />
+              Modules
+            </Link>
+          </li>
+        </Collapse>
 
-      <ListItem button onClick={handleThirdSetClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Settings" />
-        {openThirdSet ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Link to="/admin/template-manage" className={classes.nested}>
-            <ListItem
-              style={{
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                textTransform: 'uppercase',
-              }}
-              selected={pathname === '/admin/template-manage'}
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleThirdSetClick}
+        >
+          <div className="flex items-center">
+            {' '}
+            <Settings className="mr-3" />
+            <span className="dropdown-title">Settings</span>
+          </div>
+          {openThirdSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
+          <li selected={pathname === '/admin/template-manage'}>
+            <Link
+              to="/admin/template-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
             >
-              <ListItemIcon>
-                <SliderIcon />
-              </ListItemIcon>
-              <ListItemText primary="Template Manage" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/reports" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/reports'}>
-              <ListItemIcon>
-                <InsertChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Reports" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/integration" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/integration'}>
-              <ListItemIcon>
-                <LayersIcon />
-              </ListItemIcon>
-              <ListItemText primary="Integrations" />
-            </ListItem>
-          </Link>
-        </List>
-      </Collapse>
-      <ListItem button onClick={handleFourthSetClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Reports" />
-        {openFourthSet ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={openFourthSet} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Link to="/admin/reports" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/reports'}>
-              <ListItemIcon>
-                <InsertChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Reports" />
-            </ListItem>
-          </Link>
-          <Link to="/admin/errors" className={classes.nested}>
-            <ListItem button selected={pathname === '/admin/errors'}>
-              <ListItemIcon>
-                <ErrorIcon />
-              </ListItemIcon>
-              <ListItemText primary="Errors" />
-            </ListItem>
-          </Link>
-        </List>
-      </Collapse>
-    </List>
+              <SliderIcon className="mr-3" />
+              Template
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/reports'}>
+            <Link
+              to="/admin/reports"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <InsertChartIcon className="mr-3" />
+              Reports
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/integration'}>
+            <Link
+              to="/admin/integration"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <LayersIcon className="mr-3" />
+              Integrations
+            </Link>
+          </li>
+        </Collapse>
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleFourthSetClick}
+        >
+          <div className="flex items-center">
+            <InsertChartIcon className="mr-3" />
+            <span className="dropdown-title">Reports</span>
+          </div>
+          {openFourthSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openFourthSet} timeout="auto" unmountOnExit>
+          <li selected={pathname === '/admin/reports'}>
+            <Link
+              to="/admin/reports"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <InsertChartIcon />
+              Reports
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/errors'}>
+            <Link
+              to="/admin/errors"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ErrorIcon />
+              Errors
+            </Link>
+          </li>
+        </Collapse>
+      </ul>
+    </div>
   );
 };
 
-MainListItems.propTypes = {
+Mainlis.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
@@ -274,4 +256,4 @@ const withStyle = withStyles(styles);
 export default compose(
   withConnect,
   withStyle,
-)(MainListItems);
+)(Mainlis);
