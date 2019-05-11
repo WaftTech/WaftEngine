@@ -44,7 +44,7 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags category keywords slug_url is_published published_on is_active image added_by added_at udated_at updated_by';
+    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url is_published published_on is_active image added_by added_at udated_at updated_by';
     searchq = {
       is_deleted: false,
     };
@@ -111,7 +111,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = {
       is_deleted: false,
     };
@@ -212,18 +212,34 @@ blogcontroller.GetBlogCatById = async (req, res, next) => {
 blogcontroller.SaveBlog = async (req, res, next) => {
   try {
     let blogs = req.body;
+    if (req.file) {
+      req.file.destination =
+        req.file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      req.file.path = req.file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
+    }
     let d = new Date();
+
     blogs.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogs.title}`);
     if (blogs && blogs._id) {
-      if (req.files && req.files[0]) {
-        blogs.Image = req.files;
+      if (req.file) {
+        blogs.image = req.file;
       }
-      const update = await blogSch.findByIdAndUpdate(blogs._id, {
-        $set: blogs,
-      });
+      const update = await blogSch.findByIdAndUpdate(
+        blogs._id,
+        {
+          $set: blogs,
+        },
+        { new: true },
+      );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.save, null);
     } else {
-      blogs.image = req.files;
+      blogs.image = req.file;
       const newBlog = new blogSch(blogs);
       const BlogSave = await newBlog.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, BlogSave, null, blogConfig.save, null);
@@ -239,9 +255,13 @@ blogcontroller.SaveBlogCategory = async (req, res, next) => {
     let d = new Date();
     blogcats.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogcats.title}`);
     if (blogcats && blogcats._id) {
-      const update = await blogCatSch.findByIdAndUpdate(blogcats._id, {
-        $set: blogcats,
-      });
+      const update = await blogCatSch.findByIdAndUpdate(
+        blogcats._id,
+        {
+          $set: blogcats,
+        },
+        { new: true },
+      );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.csave, null);
     } else {
       // blogcats.added_by = req.user.id;
@@ -320,7 +340,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = {
       is_deleted: false,
     };
