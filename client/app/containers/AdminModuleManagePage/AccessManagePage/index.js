@@ -78,9 +78,6 @@ class AccessManagePage extends React.PureComponent {
     } = this.props;
     return (
       <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center">
-          Edit Module Access
-        </Typography>
         {Roles.map(role => {
           const accessFiltered = Access.filter(
             each => each.role_id === role._id,

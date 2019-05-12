@@ -85,37 +85,23 @@ class AddEdit extends React.PureComponent {
           <BackIcon />
         </IconButton></PageHeader>
         <PageContent>
-                <TextField
-                variant="outlined"
-                fullWidth
-                label="Content Title"
-                  margin='normal'
-                  InputLabelProps= {{
-                    shrink:true,
-                  }}
-                  name="Content Name"
-                  id="contents-name"
-                  inputProps={{
-                    value: one.name,
-                    onChange: this.handleChange('name'),
-                  }}
-                  
-                />
-                <TextField
-                    variant="outlined"
-                    fullWidth
-                    label="Content Key"
-                      margin='normal'
-                      InputLabelProps= {{
-                        shrink:true,
-                      }}
-                  name="key"
-                  id="contents-key"
-                  inputProps={{
-                    value: one.key,
-                    onChange: this.handleChange('key'),
-                  }}
-                />
+
+           <div class="w-full md:w-1/2 px-3 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Content Title
+      </label>
+      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.name}
+                    onChange= {this.handleChange('name')} />
+    </div>
+
+               <div class="w-full md:w-1/2 px-3 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Content Key
+      </label>
+      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.key}
+                    onChange= {this.handleChange('key')} />
+    </div>
+    <div className="mb-4 px-3">
                 <CKEditor
                   name="description"
                   content={one.description}
@@ -125,38 +111,23 @@ class AddEdit extends React.PureComponent {
                     value: one.description,
                   }}
                 />
-                <TextField
-                 variant="outlined"
-                 fullWidth
-                 label="Publish From"
-                   margin='normal'
-                   InputLabelProps= {{
-                     shrink:true,
-                   }}
-                  name="Published From"
-                  id="contents-from-date"
-                 
-                  inputProps={{
-                    value: one.publish_from,
-                    onChange: this.handleChange('publish_from'),
-                  }}
-                />
-                <TextField
-                 variant="outlined"
-                 fullWidth
-                 label="Publish To"
-                   margin='normal'
-                   InputLabelProps= {{
-                     shrink:true,
-                   }}
-                  name="Published To"
-                  id="contents-to-date"
-                  fullWidth
-                  inputProps={{
-                    value: one.publish_to,
-                    onChange: this.handleChange('publish_to'),
-                  }}
-                />
+                </div>
+
+                 <div class="w-full md:w-1/2 px-3 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      Published From
+      </label>
+      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.publish_from}
+                    onChange= {this.handleChange('publish_from')} />
+    </div>
+    <div class="w-full md:w-1/2 px-3 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      Published To
+      </label>
+      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.publish_to}
+                    onChange= {this.handleChange('publish_to')} />
+    </div>
+
                 <FormControlLabel
                   control={
                     <Checkbox

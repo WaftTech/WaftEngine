@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
@@ -158,11 +158,13 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
           className="overflow-x-hidden h-screen border-r bg-grey-lightest"
           style={{ width: 250 }}
         >
-          <img
-            className="mt-3 mb-6 mx-auto flex"
-            src={Logo}
-            alt="waft engine"
-          />
+          <Link to="/">
+            <img
+              className="mt-3 mb-6 ml-4 mx-auto flex"
+              src={Logo}
+              alt="waft engine"
+            />
+          </Link>
           <MainListItems />
         </div>
         <main className="h-screen flex-1 overflow-auto">

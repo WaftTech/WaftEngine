@@ -10,9 +10,14 @@ import { push } from 'connected-react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import CheckIcon from '@material-ui/icons/Check';
+import Fab from '@material-ui/core/Fab';
+import BackIcon from '@material-ui/icons/ArrowBack';
+
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -24,6 +29,7 @@ import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
+
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -194,69 +200,84 @@ class AddEdit extends React.PureComponent {
     } = this.props;
     return (
       <React.Fragment>
-        <PageHeader> {id ? 'Edit' : 'Add'} Module</PageHeader>
-        <PageContent>
-      <Paper className={classes.paper}>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="module_name"
-              label="Module Name"
-              value={one.module_name}
-              onChange={this.handleChange('module_name')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="description"
-              label="Descrition"
-              value={one.description}
-              onChange={this.handleChange('description')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {one.path.map((each, pathIndex) => (
-              <PathComponent
-                key={`${each._id}-${pathIndex}`}
-                each={each}
-                pathIndex={pathIndex}
-                handleAccessTypeChange={this.handleAccessTypeChange}
-                handleAdminRoutesChange={this.handleAdminRoutesChange}
-                handleRemoveAdminRoute={this.handleRemoveAdminRoute}
-                handleAddAdminRoute={this.handleAddAdminRoute}
-                handleServerRoutesMethodChange={
-                  this.handleServerRoutesMethodChange
-                }
-                handleServerRoutesRouteChange={
-                  this.handleServerRoutesRouteChange
-                }
-                handleRemoveServerRoute={this.handleRemoveServerRoute}
-                handleAddServerRoute={this.handleAddServerRoute}
-                handleRemovePath={this.handleRemovePath}
-              />
-            ))}
-          </Grid>
-        </Grid>
-        <Button onClick={this.handleAddPath}>Add Access Type</Button>
-        <div className={classes.buttons}>
-          <Button onClick={this.handleBack} className={classes.button}>
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSave}
-            className={classes.button}
+        <PageHeader className="text-sm">
+          <IconButton
+            className="mr-4"
+            onClick={this.handleBack}
+            aria-label="Back"
           >
-            Save
-          </Button>
-        </div>
-      </Paper>
-      </PageContent>
+            <BackIcon />
+          </IconButton>{' '}
+          {id ? 'Edit' : 'Add'} Module
+        </PageHeader>
+        <PageContent>
+          <Paper className={classes.paper}>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="module_name"
+                  label="Module Name"
+                  value={one.module_name}
+                  onChange={this.handleChange('module_name')}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="description"
+                  label="Descrition"
+                  value={one.description}
+                  onChange={this.handleChange('description')}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                {one.path.map((each, pathIndex) => (
+                  <PathComponent
+                    key={`${each._id}-${pathIndex}`}
+                    each={each}
+                    pathIndex={pathIndex}
+                    handleAccessTypeChange={this.handleAccessTypeChange}
+                    handleAdminRoutesChange={this.handleAdminRoutesChange}
+                    handleRemoveAdminRoute={this.handleRemoveAdminRoute}
+                    handleAddAdminRoute={this.handleAddAdminRoute}
+                    handleServerRoutesMethodChange={
+                      this.handleServerRoutesMethodChange
+                    }
+                    handleServerRoutesRouteChange={
+                      this.handleServerRoutesRouteChange
+                    }
+                    handleRemoveServerRoute={this.handleRemoveServerRoute}
+                    handleAddServerRoute={this.handleAddServerRoute}
+                    handleRemovePath={this.handleRemovePath}
+                  />
+                ))}
+              </Grid>
+            </Grid>
+            <Button onClick={this.handleAddPath}>Add Access Type</Button>
+            <div className={classes.buttons}>
+              <Fab
+                color="primary"
+                aria-label="Save"
+                className={classes.fab}
+                onClick={this.handleSave}
+              >
+                <CheckIcon />
+              </Fab>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSave}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </div>
+          </Paper>
+        </PageContent>
       </React.Fragment>
     );
   }
@@ -275,23 +296,10 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginTop: theme.spacing.unit * 6,
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
-    },
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit,
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 3,
+    right: theme.spacing.unit * 4,
   },
 });
 
