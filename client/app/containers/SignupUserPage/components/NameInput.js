@@ -12,13 +12,18 @@ const NameInput = props => {
     setStoreValue({ key: 'name', value: e.target.value });
   const hasError = Boolean(error);
   return (
-    <TextField
-      error={hasError}
-      label={error || 'name'}
-      value={name}
-      onChange={handleChange}
-      margin="normal"
-    />
+    <div className="mb-4">
+      <label className="block text-grey-darker text-sm mb-2" htmlFor="username">
+        {error || 'Name'}
+      </label>
+      <input
+        error={hasError}
+        onChange={handleChange}
+        value={name}
+        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:border-grey-dark"
+        type="text"
+      />
+    </div>
   );
 };
 

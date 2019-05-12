@@ -12,13 +12,18 @@ const EmailInput = props => {
     setStoreValue({ key: 'email', value: e.target.value });
   const hasError = Boolean(error);
   return (
-    <TextField
-      error={hasError}
-      label={error || 'email'}
-      value={email}
-      onChange={handleChange}
-      margin="normal"
-    />
+    <div className="mb-4">
+      <label className="block text-grey-darker text-sm mb-2" htmlFor="username">
+        {error || 'Email'}
+      </label>
+      <input
+        error={hasError}
+        onChange={handleChange}
+        value={email}
+        className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+      />
+    </div>
   );
 };
 
