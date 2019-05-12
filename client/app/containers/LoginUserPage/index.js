@@ -25,46 +25,75 @@ import PasswordInput from './components/PasswordInput';
 import logo from '../../images/logo.png';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
 
-const LoginUserPage = ({ classes, loginRequest, loginWithFbRequest, loginWithGoogleRequest }) => {
+const LoginUserPage = ({
+  classes,
+  loginRequest,
+  loginWithFbRequest,
+  loginWithGoogleRequest,
+}) => {
   const handleSubmit = e => {
     e.preventDefault();
     loginRequest();
   };
   return (
-    <div className={classes.container}>
-      <div className={classes.card}>
-        <img className={classes.logo} src={logo} alt="logo" />
-        <h3>LOGIN</h3>
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <UsernameInput />
-          <PasswordInput />
-          <br />
-          <Button variant="contained" color="primary" type="submit">
-            LOGIN
-          </Button>
-        </form>
-        <br />
-        <br />
-        <Link className={classes.smallFont} to="/forgot-password-user">
-          Forgot Password?
-        </Link>
-        <Link className={classes.smallFont} to="/signup-user">
-          Not a user?
-        </Link>
+    <div className="mx-auto max-w-xs pl-2 pr-2 mt-24 mb-24">
+      <h1 className="font-light">LOGIN</h1>
+      <form className="mt-4" onSubmit={handleSubmit}>
+        <UsernameInput />
+        <PasswordInput />
+        <button
+          className="bg-grey-darker hover:bg-grey-dark text-white font-bold py-2 px-4 rounded mt-4 block"
+          type="submit"
+        >
+          LOGIN
+        </button>
+      </form>
+
+      <Link
+        className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+        to="/signup-user"
+      >
+        Don't Have Account? Register
+      </Link>
+
+      <p className="text-muted text-center mt-10 mb-4 text-xs">OR LOGIN WITH</p>
+
+      <div className="mt-5 mb-5 flex space-around">
         <FacebookLogin
           appId={FB_APP_ID}
+          textButton="Facebook"
           autoLoad={false}
           fields={FB_APP_FIELDS}
           callback={loginWithFbRequest}
+          containerStyle={{
+            textAlign: 'center',
+            backgroundColor: '#3b5998',
+            borderColor: '#3b5998',
+            flex: 1,
+            color: '#fff',
+            cursor: 'pointer',
+          }}
+          buttonStyle={{
+            flex: 1,
+            textTransform: 'none',
+            padding: '12px',
+            background: 'none',
+            border: 'none',
+            fontSize: '13px',
+          }}
+          icon="fa-facebook"
         />
         <GoogleLogin
+          containerStyle={{ boxShadow: 'none', border: '1px solid #ccc' }}
+          buttonStyle={{ boxShadow: 'none', border: '1px solid #ccc' }}
+          className="flex jusitify-center flex-1 shadow-none"
           clientId={GOOGLE_CLIENT_ID}
-          buttonText="Login with Google"
+          buttonText="Google"
           onSuccess={loginWithGoogleRequest}
-          onFailure={(err) => {
-            console.log('something went wrong!', err)
+          onFailure={err => {
+            console.log('something went wrong!', err);
           }}
-          cookiePolicy={'single_host_origin'}
+          cookiePolicy="single_host_origin"
         />
       </div>
     </div>
