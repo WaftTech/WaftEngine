@@ -4,8 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import routes from '../../routes/public';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const switchRoutes = (
   <Switch>
@@ -19,7 +19,7 @@ const switchRoutes = (
 const PublicLayout = () => (
   <>
     <Header />
-    <main className="min-h-screen">{switchRoutes}</main>
+    <main className="flex-1">{switchRoutes}</main>
     <Footer />
   </>
 );

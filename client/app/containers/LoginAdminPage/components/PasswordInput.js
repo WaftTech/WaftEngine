@@ -35,13 +35,6 @@ const PasswordInput = props => {
         >
           Password
         </label>
-
-        <Link
-          className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
-          to="/forgot-password-user"
-        >
-          Forgot Password?
-        </Link>
       </div>
       <div className="relative">
         <input
@@ -51,7 +44,7 @@ const PasswordInput = props => {
           id="Password"
           type={isSecure ? 'text' : 'password'}
           placeholder="Enter Password"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow focus:border-grey"
         />
         <span
           className={classes.EyeIcon}
