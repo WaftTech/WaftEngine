@@ -66,8 +66,7 @@ class AddEdit extends React.PureComponent {
           <ArrowBack className="cursor-pointer" onClick={this.handleGoBack} />
         </PageHeader>
         <PageContent>
-          <Grid container>
-            <Grid item xs={12} md={6}>
+        <div class="w-full md:w-1/2 px-3 pb-4">
               <label
                 className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                 htmlFor="grid-last-name"
@@ -131,8 +130,7 @@ class AddEdit extends React.PureComponent {
               >
                 Save
               </Button>
-            </Grid>
-          </Grid>
+           </div>
         </PageContent>
       </div>
     );

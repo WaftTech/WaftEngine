@@ -94,22 +94,20 @@ export class AdminModuleManage extends React.PureComponent {
       <>
         <PageHeader>Module Manage</PageHeader>
         <PageContent>
-          <Paper className={classes.root}>
-            <Table
-              tableHead={['Module Name', 'Description', 'Action']}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              onClick={this.handleAdd}
-            >
-              <AddIcon />
-            </Fab>
-          </Paper>
+          <Table
+            tableHead={['Module Name', 'Description', '']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            onClick={this.handleAdd}
+          >
+            <AddIcon />
+          </Fab>
         </PageContent>
       </>
     );
