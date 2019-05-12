@@ -29,7 +29,7 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
   };
   return (
     <div className="flex">
-      <div className="w-1/2 min-h-screen bg-gray-light  h-screen overflow-hidden">
+      <div className="w-1/2 min-h-screen bg-grey-light  h-screen overflow-hidden">
         <img
           className="w-full"
           src="https://source.unsplash.com/collection/175083/500x900/daily/"
@@ -38,13 +38,12 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
 
       <div className="w-1/2">
         <div className="max-w-5xl m-32">
-          <img className="mb-6" src={logo} alt="WaftEngine" />
-          <h4>LOGIN</h4>
+          <img src={logo} alt="WaftEngine" />
           <form className="mt-4" onSubmit={handleSubmit}>
             <UsernameInput />
             <PasswordInput />
             <button
-              className="bg-grey-darker hover:bg-grey-dark text-white font-bold py-2 px-4 rounded mt-4"
+              className="bg-grey-darker hover:bg-grey-dark text-white font-bold py-2 px-4 rounded mt-4 w-full"
               type="submit"
             >
               LOGIN

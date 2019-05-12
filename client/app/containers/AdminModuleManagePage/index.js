@@ -75,19 +75,18 @@ export class AdminModuleManage extends React.PureComponent {
       module_name,
       description,
       <>
-        <Tooltip id="tooltip-top" title="Edit Role" placement="top">
-          <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
-            <CreateIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip id="tooltip-top" title="Edit Access" placement="top">
-          <IconButton
-            color="primary"
-            onClick={() => this.handleAccessEdit(_id)}
-          >
-            <VpnKey />
-          </IconButton>
-        </Tooltip>
+        <button
+          className="text-blue hover:bg-grey-lighter rounded-full w-10 h-10 text-center"
+          onClick={() => this.handleEdit(_id)}
+        >
+          <CreateIcon />
+        </button>
+        <button
+          className="text-blue hover:bg-grey-lighter rounded-full w-10 h-10 text-center"
+          onClick={() => this.handleAccessEdit(_id)}
+        >
+          <VpnKey />
+        </button>
       </>,
     ]);
     return (

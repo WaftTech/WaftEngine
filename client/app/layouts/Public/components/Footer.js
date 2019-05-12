@@ -22,9 +22,7 @@ class Footer extends React.Component {
     const { classes } = this.props;
 
     return (
-      <footer>
-        <p className={classes.poweredBy}>Powered By: Waft Technology</p>
-      </footer>
+      <footer/>
     );
   }
 }
