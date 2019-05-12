@@ -43,7 +43,7 @@ const LoginUserPage = ({
           <UsernameInput />
           <PasswordInput />
           <button
-            className="bg-grey-darker hover:bg-grey-dark text-white font-bold py-2 px-4 rounded mt-4 block"
+            className="bg-grey-darker hover:bg-grey-dark text-white py-2 px-4 rounded mt-4 mb-2  w-full"
             type="submit"
           >
             LOGIN

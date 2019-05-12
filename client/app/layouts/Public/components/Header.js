@@ -11,9 +11,9 @@ import { createStructuredSelector } from 'reselect';
 import {
   makeSelectToken,
   makeSelectUser,
-} from '../../containers/App/selectors';
-import { logoutRequest } from '../../containers/App/actions';
-import logo from '../../assets/img/logo.svg';
+} from '../../../containers/App/selectors';
+import { logoutRequest } from '../../../containers/App/actions';
+import logo from '../../../assets/img/logo.svg';
 
 const styles = theme => ({});
 

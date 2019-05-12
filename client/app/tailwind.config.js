@@ -97,8 +97,8 @@ const colors = {
 
   // 'blue-darkest': '#12283a',
   // 'blue-darker': '#1c3d5a',
-  // 'blue-dark': '#2779bd',
-  blue: '#3490dc',
+  'blue-dark': '#0291DD',
+  blue: '#007AFF',
   'blue-light': '#02b7dd',
   // 'blue-lighter': '#bcdefa',
   // 'blue-lightest': '#eff8ff',

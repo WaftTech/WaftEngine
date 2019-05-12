@@ -14,6 +14,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import CheckIcon from '@material-ui/icons/Check';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -22,6 +24,8 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectAccess } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import PageContent from '../../../components/PageContent/PageContent';
 
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
@@ -77,52 +81,50 @@ class AccessManagePage extends React.PureComponent {
       access: { Roles, Module, Access },
     } = this.props;
     return (
-      <Paper className={classes.paper}>
-        {Roles.map(role => {
-          const accessFiltered = Access.filter(
-            each => each.role_id === role._id,
-          );
-          let accesses = [];
-          if (accessFiltered.length > 0) {
-            accesses = [...accessFiltered[0].access_type];
-          }
-          return (
-            <div key={role._id}>
-              <Typography component="h3" variant="h5">
-                {role.role_title}
-              </Typography>
-              <ToggleButtonGroup
-                value={accesses}
-                onChange={(_, moduleId) =>
-                  this.handleAccessUpdate(moduleId, role._id, Module._id)
-                }
-              >
-                {Module.path.map(eachPath => (
-                  <ToggleButton
-                    key={`${eachPath._id}-${role._id}`}
-                    value={eachPath._id}
-                  >
-                    {eachPath.access_type}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-            </div>
-          );
-        })}
-        <div className={classes.buttons}>
-          <Button onClick={this.handleBack} className={classes.button}>
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
+      <React.Fragment>
+        <PageHeader className="text-sm">
+          <BackIcon />
+          Edit Access
+        </PageHeader>
+        <PageContent>
+          {Roles.map(role => {
+            const accessFiltered = Access.filter(
+              each => each.role_id === role._id,
+            );
+            let accesses = [];
+            if (accessFiltered.length > 0) {
+              accesses = [...accessFiltered[0].access_type];
+            }
+            return (
+              <div className="mb-4" key={role._id}>
+                <h3 className="font-normal">{role.role_title}</h3>
+                <ToggleButtonGroup
+                  value={accesses}
+                  onChange={(_, moduleId) =>
+                    this.handleAccessUpdate(moduleId, role._id, Module._id)
+                  }
+                >
+                  {Module.path.map(eachPath => (
+                    <ToggleButton
+                      key={`${eachPath._id}-${role._id}`}
+                      value={eachPath._id}
+                    >
+                      {eachPath.access_type}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              </div>
+            );
+          })}
+
+          <button
+            className="shadow w-12 h-12 rounded-full text-white bg-blue absolute pin-b pin-r mr-10 mb-10"
             onClick={this.handleSave}
-            className={classes.button}
           >
-            Save
-          </Button>
-        </div>
-      </Paper>
+            <CheckIcon />
+          </button>
+        </PageContent>
+      </React.Fragment>
     );
   }
 }
