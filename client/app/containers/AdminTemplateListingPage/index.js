@@ -4,14 +4,13 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -82,140 +81,118 @@ export function AdminTemplateListingPage({
     setOneValue({ key: name, value });
   };
   return (
-    <>
-      <PageHeader>Template Manage</PageHeader>
+    <div>
+      <PageHeader>Email Template Manage</PageHeader>
       <PageContent>
-        <form
-          className={classes.root}
-          autoComplete="off"
-          onSubmit={handleSubmit}
-        >
-          <Grid container spacing={24}>
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="template-name"
-                label="Template Name"
-                value={one.template_name || ''}
-                className={classes.textField}
-                margin="normal"
-                InputProps={{
-                  readOnly: true,
-                }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="template-key">Template Key</InputLabel>
-                <Select
-                  value={data || ''}
-                  onChange={handleTemplateChange}
-                  inputProps={{
-                    id: 'template-key',
-                  }}
-                  fullWidth
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {all.map(each => (
-                    <MenuItem value={each.template_key} key={each._id}>
-                      {each.template_key}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="informations"
-                label="Information"
-                value={one.information || ''}
-                className={classes.textField}
-                margin="normal"
-                InputProps={{
-                  readOnly: true,
-                }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="select-multiple">Variables</InputLabel>
-                <Select
-                  multiple
-                  value={one.variables}
-                  onChange={() => null}
-                  input={<Input id="select-multiple" />}
-                  fullWidth
-                >
-                  {one.variables.map(name => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="from_email"
-                label="From"
-                value={one.from || ''}
-                className={classes.textField}
-                margin="normal"
-                onChange={handleChange}
-                inputProps={{ name: 'from' }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="subject_email"
-                label="Subject"
-                value={one.subject || ''}
-                className={classes.textField}
-                margin="normal"
-                onChange={handleChange}
-                inputProps={{ name: 'subject' }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <TextField
-                id="alternate_text"
-                label="Alternate Text"
-                value={one.alternate_text || ''}
-                className={classes.textField}
-                margin="normal"
-                onChange={handleChange}
-                inputProps={{ name: 'alternate_text' }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <div dangerouslySetInnerHTML={{ __html: one.body }} />
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <TextField
-                id="body_email"
-                label="Body"
-                value={one.body || ''}
-                className={classes.textField}
-                margin="normal"
-                onChange={handleChange}
-                multiline
-                inputProps={{ name: 'body' }}
-                fullWidth
-              />
-            </Grid>
-          </Grid>
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block mb-2">Template Name</label>
+            <input
+              readOnly="rea"
+              id="template-name"
+              value={one.template_name || ''}
+              className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+              type="text"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">Template Key</label>
+            <select
+              className="h-12 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey "
+              id="template-key"
+              value={data || ''}
+              onChange={handleTemplateChange}
+            >
+              <option value="">
+                <em>None</em>
+              </option>
+              {all.map(each => (
+                <option value={each.template_key} key={each._id}>
+                  {each.template_key}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">Informations</label>
+            <input
+              className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+              type="text"
+              id="informations"
+              value={one.information || ''}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">Variables</label>
+            <select
+              multiple
+              value={one.variables}
+              onChange={() => null}
+              // input={<Input id="select-multiple" />}
+            >
+              {one.variables.map(name => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <TextField
+            id="from_email"
+            label="From"
+            value={one.from || ''}
+            className={classes.textField}
+            margin="normal"
+            onChange={handleChange}
+            inputProps={{ name: 'from' }}
+            fullWidth
+          />
+
+          <TextField
+            id="subject_email"
+            label="Subject"
+            value={one.subject || ''}
+            className={classes.textField}
+            margin="normal"
+            onChange={handleChange}
+            inputProps={{ name: 'subject' }}
+            fullWidth
+          />
+
+          <TextField
+            id="alternate_text"
+            label="Alternate Text"
+            value={one.alternate_text || ''}
+            className={classes.textField}
+            margin="normal"
+            onChange={handleChange}
+            inputProps={{ name: 'alternate_text' }}
+            fullWidth
+          />
+
+          <div dangerouslySetInnerHTML={{ __html: one.body }} />
+
+          <TextField
+            id="body_email"
+            label="Body"
+            value={one.body || ''}
+            className={classes.textField}
+            margin="normal"
+            onChange={handleChange}
+            multiline
+            inputProps={{ name: 'body' }}
+            fullWidth
+          />
+
           <Button variant="contained" color="primary" type="submit">
             Save
           </Button>
         </form>
       </PageContent>
-    </>
+    </div>
   );
 }
 

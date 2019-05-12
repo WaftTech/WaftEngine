@@ -4,13 +4,20 @@
 
 @tailwind utilities;
 
-/* Custom css */
+/* Remove autofill bg color */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
 button:focus {
   outline: none;
+}
+.w-9vh {
+  width: 9vh;
+}
+.h-9vh {
+  height: 9vh;
 }
