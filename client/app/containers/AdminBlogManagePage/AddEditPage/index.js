@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import Dropzone from 'react-dropzone';
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -114,6 +115,13 @@ class AddEdit extends React.PureComponent {
   onDrop = files => {
     this.props.setOneValue({ key: 'image', value: files[0] });
   };
+
+  handlePublishedOn = event => {
+    event.persist();
+    const published_on = moment(event.target.value);
+    this.props.setOneValue({key: 'published_on', value: published_on.format('YYYY-MM-DD')});
+  };
+
 
   handleGoBack = () => {
     this.props.push('/admin/blog-manage');
@@ -227,13 +235,18 @@ class AddEdit extends React.PureComponent {
                 </Dropzone>
               </div>
               <div>
-                <CustomInput
-                  name="Published On"
-                  id="blog-published_on"
-                  placeholder="Published On"
-                  inputProps={{
-                    value: one.published_on || '',
-                    onChange: this.handleChange('published_on'),
+                <TextField
+                  name="published_on"
+                  label="Published On"
+                  type="date"
+                  value={
+                    (one.published_on &&
+                      moment(one.published_on).format('YYYY-MM-DD')) ||
+                    null
+                  }
+                  onChange={this.handlePublishedOn}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
                 />
               </div>
@@ -244,7 +257,7 @@ class AddEdit extends React.PureComponent {
                     id="blog-tags"
                     placeholder="tags"
                     inputProps={{
-                      value: tempTag,
+                      value: tempTag || '',
                       onChange: this.handleTempTag,
                     }}
                   />

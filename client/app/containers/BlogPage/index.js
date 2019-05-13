@@ -17,6 +17,7 @@ import * as mapDispatchToProps from './actions';
 import { makeSelectBlog } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { IMAGE_BASE } from '../App/constants';
 
 export class BlogPage extends React.Component {
   componentDidMount() {
@@ -47,30 +48,45 @@ export class BlogPage extends React.Component {
 
   render() {
     const { blog } = this.props;
-    // const blogImage =
-    //   (blog.Image && blog.Image.path && `${IMAGE_BASE}${blog.Image.path}`) || defaultImage;
-
+    console.log(blog);
     return (
       <div className="container">
-        <Helmet>
-          <title>{blog.title}</title>
-        </Helmet>
+        <div className="justify-center">
+          <Helmet>
+            <title>{blog.title}</title>
+          </Helmet>
 
-        {/* <Grid container spacing={8}> */}
-        <h1 className="pageTitle">
-          <span>{blog.title}</span>
-        </h1>
-        <div className="img">
-          <img src={blog.image} />
+          <h1 className="pageTitle">
+            <span>{blog.title}</span>
+          </h1>
+          <br />
+          <div className="img">
+            <img
+              src={
+                blog.image &&
+                blog.image.filename &&
+                `${IMAGE_BASE}${blog.image.path}`
+              }
+              className=""
+              alt="image"
+              height="534"
+              width="493"
+            />
+          </div>
+          <br />
+          <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+          <br />
+          <div>
+            tags:{' '}
+            {(blog.tags && blog.tags.length && blog.tags.join(',')) ||
+              `no tags`}
+          </div>
+          <br />
+          <div>
+            {' '}
+            <div id="disqus_thread" />{' '}
+          </div>
         </div>
-
-        <div dangerouslySetInnerHTML={{ __html: blog.description }} />
-
-        <div>
-          {' '}
-          <div id="disqus_thread" />{' '}
-        </div>
-        {/* </Grid> */}
       </div>
     );
   }
