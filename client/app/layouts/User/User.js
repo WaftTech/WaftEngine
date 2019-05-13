@@ -4,8 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import routes from '../../routes/user';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../Public/components/Header';
+import Footer from '../Public/components/Footer';
 
 const switchRoutes = (
   <Switch>
