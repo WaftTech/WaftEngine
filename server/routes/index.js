@@ -45,5 +45,8 @@ router.use('/static', staticRoutes);
 // All route of templates (email)
 const template = require('./api/template');
 router.use('/template', template);
+// All route of meta module (meta data)
+const meta = require('./api/meta');
+router.use('/meta', meta);
 
 module.exports = router;
