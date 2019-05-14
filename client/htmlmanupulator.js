@@ -142,6 +142,7 @@ htmlmanupulator.sendWithRoute = async (req, res, next) => {
         next,
         'GET',
       );
+      console.log(response);
 
       if (response.data && response.data[0]) {
         internal.createHtml(
