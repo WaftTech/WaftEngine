@@ -77,11 +77,6 @@ const publicRoutes = [
     path: '/subscribe',
     component: SubscribePage,
   },
-  // {
-  //   exact: true,
-  //   path: '/video/link/:id',
-  //   component: VideoDetailPage,
-  // },
 ];
 
 export default publicRoutes;
