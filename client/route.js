@@ -1,11 +1,21 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const htmlManupulator = require('./htmlmanupulator');
 
-router.get('/blog', htmlManupulator.sendWithRoute);
-// router.get('/company/:id', htmlManupulator.sendForCompanyDetail);
-// router.get('/offer/:slug', htmlManupulator.sendForOfferDetail);
-// router.get('/blog/:slug', htmlManupulator.sendForBlogDetail);
-// router.get('/about-us', htmlManupulator.sendForAboutUS);
+const checkExt = (req, res, next) => {
+  const filepath = req.params[0];
+  if (!filepath) {
+    htmlManupulator.sendForHome(req, res, next);
+  } else {
+    const filarr = filepath.split('.');
+    if (filarr.length > 1) {
+      next();
+    } else {
+      htmlManupulator.sendWithRoute(req, res, next);
+    }
+  }
+};
+router.get('/*', checkExt);
 
 module.exports = router;
