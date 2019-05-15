@@ -4,17 +4,23 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION } from './constants';
+import * as types from './constants';
 
-export const initialState = {};
+export const initialState = {
+  users: '',
+  errors: '',
+};
 
-/* eslint-disable default-case, no-param-reassign */
-const adminDashboardReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+const reducer = (state = initialState, action) =>
+  produce(state, draft => {
     switch (action.type) {
-      case DEFAULT_ACTION:
+      case types.LOAD_USER_SUCCESS:
+        draft.users = action.payload.totaldata;
+        break;
+      case types.LOAD_ERROR_SUCCESS:
+        draft.errors = action.payload.totaldata;
         break;
     }
   });
 
-export default adminDashboardReducer;
+export default reducer;

@@ -17,11 +17,13 @@ import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
 import BlogManageAddEdit from '../containers/AdminBlogManagePage/AddEditPage/Loadable';
 import SubscribePage from '../containers/AdminSubscribePage/Loadable';
 import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
+import ErrorManagePage from '../containers/AdminErrorManagePage/Loadable';
 
 const routes = [
   {
     path: '/admin/dashboard',
     component: DashboardPage,
+    exact: true,
   },
   {
     path: '/admin/role-manage',
@@ -154,6 +156,11 @@ const routes = [
   {
     path: '/admin/template-manage',
     component: TemplateListingPage,
+    exact: true,
+  },
+  {
+    path: '/admin/errors',
+    component: ErrorManagePage,
     exact: true,
   },
 ];
