@@ -80,7 +80,7 @@ metaController.getDetail = async (req, res, next) => {
 
 metaController.getByRoute = async (req, res, next) => {
   try {
-    const route = req.params.id;
+    const route = req.params[0];
     const metaDetail = await metaSch.findOne({ client_route: route, is_deleted: false }, 'title meta_keywords meta_description meta_image');
     return otherHelper.sendResponse(res, httpStatus.OK, true, metaDetail, null, metaConfig.get, null);
   } catch (err) {
