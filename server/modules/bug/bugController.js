@@ -46,6 +46,9 @@ bugController.GetErrors = async (req, res, next) => {
     }
     selectq = 'error_message error_stack error_type added_at added_by device ip';
     searchq = {};
+    if (req.query.find_errors) {
+      searchq = { error_stack: req.query.find_errors, ...searchq };
+    }
     populate = '';
     let bugs = await otherHelper.getquerySendResponse(bugSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totaldata);

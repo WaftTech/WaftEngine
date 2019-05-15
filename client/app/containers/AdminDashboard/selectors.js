@@ -5,7 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the adminDashboard state domain
  */
 
-const selectAdminDashboardDomain = state =>
+export const selectAdminDashboardDomain = state =>
   state.adminDashboard || initialState;
 
 /**
@@ -16,11 +16,13 @@ const selectAdminDashboardDomain = state =>
  * Default selector used by AdminDashboard
  */
 
-const makeSelectAdminDashboard = () =>
+export const makeSelectErrors = () =>
   createSelector(
     selectAdminDashboardDomain,
-    substate => substate,
+    state => state.errors,
   );
-
-export default makeSelectAdminDashboard;
-export { selectAdminDashboardDomain };
+export const makeSelectUsers = () =>
+  createSelector(
+    selectAdminDashboardDomain,
+    state => state.users,
+  );

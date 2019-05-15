@@ -548,8 +548,8 @@ userController.changePassword = async (req, res, next) => {
     if (isMatch) {
       const salt = await bcrypt.genSaltSync(10);
       const hash = await bcrypt.hashSync(newPassword, salt);
-      const dbRes = await users.findByIdAndUpdate(req.user.id, { $set: { password: hash, last_password_cahnage_date: new Date() } }, { $new: true });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'Password Change Success', null);
+      const dbRes = await users.findByIdAndUpdate(req.user.id, { $set: { password: hash, last_password_change_date: new Date() } }, { $new: true });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, dbRes, null, 'Password Change Success', null);
     } else {
       errors.oldPassword = 'Old Password incorrect';
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, null, null);
