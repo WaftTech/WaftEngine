@@ -56,4 +56,16 @@ bugController.GetErrors = async (req, res, next) => {
     next(err);
   }
 };
+bugController.GetErrorsGRBY = async (req, res, next) => {
+  try {
+    const bugs = await bugSch.aggregate([{ $group: { _id: '$error_type', count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
+    let totaldata = 0;
+    bugs.forEach(each => {
+      totaldata = totaldata + each.count;
+    });
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs, 'errors by group by get success!!', 1, 1, totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = bugController;
