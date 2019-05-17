@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { API_BASE } from 'containers/App/constants';
+import { API_BASE1 } from 'containers/App/constants';
 import objectToFormData from './objectToFormData';
 import request from './request';
 
@@ -29,13 +30,49 @@ class Api {
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {} 
+        } catch (e) {}
         yield put(onError(error));
       }
     };
   }
 
-  static multipartPost(apiUri, onSuccess, onError, data, document = {}, token, metaData) {
+  static dataLoader1(apiUri, onSuccess, onError, data, token, metaData) {
+    return function* commonApiSetup() {
+      const baseUrl = API_BASE1;
+      const requestURL = `${baseUrl}${apiUri}`;
+      try {
+        const options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        };
+        if (data !== undefined) {
+          options.method = metaData === 'put' ? 'PUT' : 'POST';
+          options.body = JSON.stringify(data);
+        }
+        const response = yield call(request, requestURL, options);
+        yield put(onSuccess(response));
+      } catch (err) {
+        let error = null;
+        try {
+          error = yield call(() => err.response.json());
+        } catch (e) {}
+        yield put(onError(error));
+      }
+    };
+  }
+
+  static multipartPost(
+    apiUri,
+    onSuccess,
+    onError,
+    data,
+    document = {},
+    token,
+    metaData,
+  ) {
     return function* multiPartApiSetup() {
       const requestURL = `${API_BASE}${apiUri}`;
       let multipartData = new FormData();
@@ -50,7 +87,12 @@ class Api {
       // case for multiple files on same key
       Object.keys(document).map(each => {
         if (Object.prototype.toString.call(document) === '[object Array]') {
-          document.map(fileObj => multipartData.append([Object.keys(fileObj)[0]], Object.values(fileObj)[0]));
+          document.map(fileObj =>
+            multipartData.append(
+              [Object.keys(fileObj)[0]],
+              Object.values(fileObj)[0],
+            ),
+          );
         } else {
           multipartData.append([each], document[each]);
         }
@@ -79,24 +121,32 @@ class Api {
       }
     };
   }
+
   /*
    * Shorthand GET function
    */
   static get(apiUri, onSuccess, onError, token) {
     return this.dataLoader(apiUri, onSuccess, onError, undefined, token);
   }
+
+  static get1(apiUri, onSuccess, onError, token) {
+    return this.dataLoader1(apiUri, onSuccess, onError, undefined, token);
+  }
+
   /*
    * Shorthand POST function
    */
   static post(apiUri, onSuccess, onError, data, token) {
     return this.dataLoader(apiUri, onSuccess, onError, data, token);
   }
+
   /*
    * Shorthand PUT function
    */
   static put(apiUri, onSuccess, onError, data, token, metaData = 'put') {
     return this.dataLoader(apiUri, onSuccess, onError, data, token, metaData);
   }
+
   /*
    * Shorthand PATCH function
    */
@@ -128,6 +178,7 @@ class Api {
       }
     };
   }
+
   /*
    * Shorthand DELETE function
    */

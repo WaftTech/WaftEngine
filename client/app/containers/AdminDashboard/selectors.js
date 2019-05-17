@@ -26,3 +26,14 @@ export const makeSelectUsers = () =>
     selectAdminDashboardDomain,
     state => state.users,
   );
+export const makeSelectInfo = () =>
+  createSelector(
+    selectAdminDashboardDomain,
+    state => state.info,
+  );
+
+export const makeSelectBlog = () =>
+  createSelector(
+    selectAdminDashboardDomain,
+    state => state.blog,
+  );

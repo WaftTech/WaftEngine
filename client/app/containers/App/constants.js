@@ -20,6 +20,12 @@ export const API_BASE =
     : 'http://localhost:5050/api/';
 // : 'http://192.168.100.117:5050/api/';
 
+export const API_BASE1 =
+  process.env.NODE_ENV === 'production'
+    ? 'http://www.waftengine.org/api/'
+    : 'http://localhost:5120/api/';
+// : 'http://192.168.100.117:5050/api/';
+
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
     ? 'http://www.waftengine.org/'

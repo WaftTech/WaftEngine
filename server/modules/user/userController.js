@@ -34,6 +34,19 @@ userController.CheckMail = async (req, res) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Mail found', null);
 };
 
+userController.GetAllUserGRBY = async (req, res, next) => {
+  try {
+    const user = await users.aggregate([{ $group: { _id: '$roles', count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $unwind: '$_id' }, { $lookup: { from: 'roles', localField: '_id', foreignField: '_id', as: 'roles' } }, { $unwind: '$roles' }]);
+    let totaldata = 0;
+    user.forEach(each => {
+      totaldata = totaldata + each.count;
+    });
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, user, 'users by group by get success!!', 1, 1, totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
+
 userController.GetAllUser = async (req, res, next) => {
   const size_default = 10;
   let page;
@@ -42,6 +55,11 @@ userController.GetAllUser = async (req, res, next) => {
   let sortq;
   let populate;
   let selectq;
+  if (req.query.page && req.query.page == 0) {
+    const us = await users.find({ is_deleted: false }).select('_id name');
+    const totaldata = us.length;
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, us, 'all users get!', 1, 1, totaldata);
+  }
   if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
     page = Math.abs(req.query.page);
   } else {
