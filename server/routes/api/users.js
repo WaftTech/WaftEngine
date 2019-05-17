@@ -43,6 +43,13 @@ router.get('/test', (req, res) =>
 router.get('/', authorization, authentication, userModule.GetAllUser);
 
 /**
+ * @route GET api/user/grby
+ * @description Check user is returning user group by or new  || for admin
+ * @access Public
+ */
+router.get('/grby', authorization, userModule.GetAllUserGRBY);
+
+/**
  * @route GET api/user
  * @description Check user is returning user or new || for admin
  * @access Public

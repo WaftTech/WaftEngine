@@ -16,7 +16,12 @@ import Paper from '@material-ui/core/Paper';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectErrors, makeSelectUsers } from './selectors';
+import {
+  makeSelectErrors,
+  makeSelectUsers,
+  makeSelectInfo,
+  makeSelectBlog,
+} from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -29,15 +34,47 @@ export class AdminDashboard extends React.PureComponent {
   componentDidMount() {
     this.props.loadUserRequest();
     this.props.loadErrorRequest();
+    this.props.loadInfoRequest();
+    this.props.loadBlogRequest();
   }
 
   render() {
-    const { users, errors } = this.props;
+    const { users, info, errors, blogs } = this.props;
     return (
       <>
         <div>
           <PageHeader>Dashboard</PageHeader>
           <PageContent>
+            <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+              <Grid item xs={12} sm={12}>
+                {info.map(each => (
+                  <div key={each._id}>
+                    <h4>{each.title}</h4>
+                    <div dangerouslySetInnerHTML={{ __html: each.detail }} />
+                    <br />
+                  </div>
+                ))}
+              </Grid>
+            </Paper>
+            <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+              <Grid item xs={12} sm={12}>
+                <div>
+                  {blogs.map(each => (
+                    <LinkBoth
+                      key={each._id}
+                      to={`https://www.waftengine.org/blog/${each._id}`}
+                      target="_blank"
+                    >
+                      <div>
+                        <h4>{each.title}</h4>
+                        <br />
+                      </div>
+                    </LinkBoth>
+                  ))}
+                </div>
+              </Grid>
+            </Paper>
+            <br />
             <Grid container>
               <Grid item xs={12} sm={6}>
                 <div>
@@ -46,7 +83,10 @@ export class AdminDashboard extends React.PureComponent {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <div>
-                  <LinkBoth to="https://www.waftengine.org/documentation">
+                  <LinkBoth
+                    to="https://www.waftengine.org/documentation"
+                    target="_blank"
+                  >
                     Click documentation to get started
                   </LinkBoth>
                 </div>
@@ -57,10 +97,28 @@ export class AdminDashboard extends React.PureComponent {
               <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
                 <Grid container>
                   <Grid item xs={12} sm={6}>
-                    <div>Total users:{users}</div>
+                    <div>Total users: {users.totaldata}</div>
+                    <div>
+                      <br />
+                      <h3>By Roles: </h3>
+                      {users.data.map(each => (
+                        <div key={each._id}>
+                          {each.roles.role_title}: {each.count}
+                        </div>
+                      ))}
+                    </div>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <div>Total errors: {errors}</div>
+                    <div>Total errors: {errors.totaldata}</div>
+                    <div>
+                      <br />
+                      <h3>By Types: </h3>
+                      {errors.data.map(each => (
+                        <div key={each._id}>
+                          {each._id}: {each.count}
+                        </div>
+                      ))}
+                    </div>
                   </Grid>
                 </Grid>
               </Paper>
@@ -74,13 +132,18 @@ export class AdminDashboard extends React.PureComponent {
 AdminDashboard.propTypes = {
   loadUserRequest: PropTypes.func.isRequired,
   loadErrorRequest: PropTypes.func.isRequired,
-  users: PropTypes.string.isRequired,
-  errors: PropTypes.string.isRequired,
+  loadInfoRequest: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  info: PropTypes.array.isRequired,
+  blogs: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   users: makeSelectUsers(),
   errors: makeSelectErrors(),
+  info: makeSelectInfo(),
+  blogs: makeSelectBlog(),
 });
 
 const withConnect = connect(
