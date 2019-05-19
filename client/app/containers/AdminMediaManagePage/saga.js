@@ -48,9 +48,21 @@ function* addMedia(action) {
     ),
   );
 }
+function* deleteMedia(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(
+      `media/${action.payload}`,
+      actions.deleteOneSuccess,
+      actions.addMediaFailure,
+      token,
+    ),
+  );
+}
 
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_MEDIA_REQUEST, addMedia);
+  yield takeLatest(types.DELETE_ONE_REQUEST, deleteMedia);
 }

@@ -46,10 +46,10 @@ settingController.GetSetting = async (req, res, next) => {
     searchq = {};
 
     if (req.query.find_title) {
-      searchq = { title: { $regex: req.query.find_title, $options: 'i x' }, ...searchq };
+      searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
     }
     if (req.query.find_value) {
-      searchq = { value: { $regex: req.query.find_value, $options: 'i x' }, ...searchq };
+      searchq = { value: { $regex: req.query.find_value, $options: 'i' }, ...searchq };
     }
 
     selectq = 'title value email_setting added_by updated_by updated_at';
