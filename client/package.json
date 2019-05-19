@@ -89,6 +89,7 @@
     "prop-types": "15.7.2",
     "react": "16.8.4",
     "react-ckeditor-component": "^1.1.0",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "16.8.4",
     "react-dropzone": "^10.0.6",
     "react-facebook-login": "^4.1.1",
