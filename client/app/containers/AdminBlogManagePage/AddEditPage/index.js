@@ -11,7 +11,7 @@ import moment from 'moment';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import {Checkbox, IconButton} from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
@@ -35,6 +35,8 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
+import BackIcon from '@material-ui/icons/ArrowBack';
+
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -149,12 +151,13 @@ class AddEdit extends React.PureComponent {
   render() {
     const { classes, one, category, tempTag } = this.props;
     return (
-      <div>
-        <PageHeader>Edit Blog</PageHeader>
+      <React.Fragment>
+              <PageHeader>
+        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon />
+        </IconButton>Blog > Add</PageHeader>
         <PageContent>
-          <Card>
-            <CardBody>
-              <div>
+              
                 <TextField
                   name="Blog Title"
                   id="blog-title"
@@ -169,8 +172,7 @@ class AddEdit extends React.PureComponent {
                   }}
                   margin="normal"
                 />
-              </div>
-              <div>
+              
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="category">Category</InputLabel>
                   <Select
@@ -192,8 +194,7 @@ class AddEdit extends React.PureComponent {
                     ))}
                   </Select>
                 </FormControl>
-              </div>
-              <div>
+              
                 <InputLabel style={{ color: '#AAAAAA' }}>
                   Blog Description
                 </InputLabel>
@@ -206,8 +207,7 @@ class AddEdit extends React.PureComponent {
                     value: one.description || '',
                   }}
                 />
-              </div>
-              <div>
+              
                 {one.image && one.image.filename && <img
                   src={
                     `${IMAGE_BASE}${one.image.path}`
@@ -216,8 +216,7 @@ class AddEdit extends React.PureComponent {
                   width="384"
                   height="325"
                 />}
-              </div>
-              <div>
+              
                 <Dropzone onDrop={this.onDrop}>
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()}>
@@ -229,12 +228,11 @@ class AddEdit extends React.PureComponent {
                         elevation={0}
                       >
                         <Button variant="contained">Add Files</Button>
-                      </div>
-                    </div>
+                        </div>
+                        </div>
                   )}
                 </Dropzone>
-              </div>
-              <div>
+              
                 <TextField
                   name="published_on"
                   label="Published On"
@@ -249,8 +247,7 @@ class AddEdit extends React.PureComponent {
                     shrink: true,
                   }}
                 />
-              </div>
-              <div>
+              
                 <form onSubmit={this.insertTags}>
                   <CustomInput
                     name="Tags"
@@ -277,8 +274,7 @@ class AddEdit extends React.PureComponent {
                         );
                       })}
                     </Paper>
-              </div>
-              <div>
+              
                 <CustomInput
                     name="Author"
                     id="blog-author"
@@ -288,8 +284,7 @@ class AddEdit extends React.PureComponent {
                       onChange: this.handleChange('author'),
                   }}
                   />
-              </div>
-              <div>
+              
                 <InputLabel style={{ color: '#AAAAAA' }}>
                   Activity Type
                 </InputLabel>
@@ -315,9 +310,6 @@ class AddEdit extends React.PureComponent {
                   }
                   label="Is Published"
                 />
-              </div>
-            </CardBody>
-            <CardFooter>
               <Button
                 variant="contained"
                 color="primary"
@@ -325,17 +317,8 @@ class AddEdit extends React.PureComponent {
               >
                 Save
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={this.handleGoBack}
-              >
-                Back
-              </Button>
-            </CardFooter>
-          </Card>
         </PageContent>
-      </div>
+        </React.Fragment>
     );
   }
 }

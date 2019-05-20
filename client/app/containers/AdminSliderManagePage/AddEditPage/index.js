@@ -13,6 +13,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
 import TextField from '@material-ui/core/TextField';
+import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
@@ -167,7 +168,7 @@ class AddEdit extends React.PureComponent {
               marginBottom: '20px',
             }}
           >
-            <DialogTitle id="form-dialog-title">Select Media</DialogTitle>
+            <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
             <div>
               {' '}
               {!isFirstPage && (
@@ -209,6 +210,69 @@ class AddEdit extends React.PureComponent {
         <Card>
           <CardHeader color="primary" title="Slider" subheader="Slider info" />
           <CardBody>
+            <div className="w-full md:w-1/2 px-3 pb-4">
+              <label
+                className="block tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                SlidesToShow
+              </label>
+              <input
+                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                id="grid-last-name"
+                type="text"
+                onChange={this.handleChange()}
+              />
+            </div>
+            <div className="w-full md:w-1/2 px-3 pb-4">
+              <label
+                className="block tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                SlidesToScroll
+              </label>
+              <input
+                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                id="grid-last-name"
+                type="text"
+                onChange={this.handleChange()}
+              />
+            </div>
+
+             <div className="w-full md:w-1/2 px-3 pb-4 flex items-center">
+            <label
+                className="block tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Dots
+              </label>
+              <Switch value="checkedA" />
+            </div>
+            <div className="w-full md:w-1/2 px-3 pb-4 flex items-center">
+            <label
+                className="block tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                AutoPlay
+              </label>
+              <Switch value="checkedA" />
+            </div>
+
+            <div className="w-full md:w-1/2 px-3 pb-4">
+              <label
+                className="block tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                AutoplaySpeed
+              </label>
+              <input
+                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                id="grid-last-name"
+                type="text"
+                onChange={this.handleChange()}
+              />
+            </div>
+
             <div>
               <TextField
                 variant="outlined"
@@ -303,9 +367,7 @@ class AddEdit extends React.PureComponent {
               </div>
             ))}
           </CardBody>
-          <CardActions
-            style={{marginBottom: '100px' }}
-          >
+          <CardActions style={{ marginBottom: '100px' }}>
             {/* <Button color="secondary" onClick={this.handleGoBack}>
               Back
             </Button> */}
