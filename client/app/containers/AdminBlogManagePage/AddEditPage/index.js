@@ -11,7 +11,7 @@ import moment from 'moment';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
-import {Checkbox, IconButton} from '@material-ui/core/';
+import { Checkbox, IconButton } from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
@@ -28,15 +28,20 @@ import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import BackIcon from '@material-ui/icons/ArrowBack';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectCategory, makeSelectChip, makeSelectTag } from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectCategory,
+  makeSelectChip,
+  makeSelectTag,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
-import BackIcon from '@material-ui/icons/ArrowBack';
-
+import defaultImage from '../../../assets/img/logo.svg';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -67,6 +72,10 @@ const styles = theme => ({
 });
 
 class AddEdit extends React.PureComponent {
+  state = {
+    tempImage: defaultImage,
+  };
+
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
     loadCategoryRequest: PropTypes.func.isRequired,
@@ -87,6 +96,16 @@ class AddEdit extends React.PureComponent {
       this.props.loadOneRequest(this.props.match.params.id);
     }
     this.props.loadCategoryRequest();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    if(this.props.one !== nextProps.one){
+      const {one} = nextProps;
+      if(one.image && one.image.fieldname){
+        const tempImage = one.image && one.image.path && `${IMAGE_BASE}${one.image.path}`;
+        this.setState({...one, tempImage});
+      }
+    }
   }
 
   handleEditorChange = (e, name) => {
@@ -114,16 +133,28 @@ class AddEdit extends React.PureComponent {
     this.props.setTagValue(e.target.value);
   };
 
-  onDrop = files => {
-    this.props.setOneValue({ key: 'image', value: files[0] });
+  onDrop = (files, name) => {
+    const file = files[0];
+    this.props.setOneValue({ key: [name], value: file });
+    const reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.setState({ tempImage: reader.result });
+      },
+      false,
+    );
+    reader.readAsDataURL(file);
   };
 
   handlePublishedOn = event => {
     event.persist();
     const published_on = moment(event.target.value);
-    this.props.setOneValue({key: 'published_on', value: published_on.format('YYYY-MM-DD')});
+    this.props.setOneValue({
+      key: 'published_on',
+      value: published_on.format('YYYY-MM-DD'),
+    });
   };
-
 
   handleGoBack = () => {
     this.props.push('/admin/blog-manage');
@@ -132,193 +163,181 @@ class AddEdit extends React.PureComponent {
   handleSave = () => {
     this.props.addEditRequest();
   };
- 
-  handleDelete = index => () => {
-      const chipData = [...this.props.one.tags];
 
-      chipData.splice(index, 1);
-      this.props.setOneValue({key: 'tags', value: chipData});
+  handleDelete = index => () => {
+    const chipData = [...this.props.one.tags];
+
+    chipData.splice(index, 1);
+    this.props.setOneValue({ key: 'tags', value: chipData });
   };
+
   insertTags = event => {
     event.preventDefault();
-    if(this.props.one.tags.indexOf(this.props.tempTag) === -1){
-        this.props.setOneValue({key: 'tags', value:  [...this.props.one.tags, this.props.tempTag]});
-        this.props.setTagValue('');
+    if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
+      this.props.setOneValue({
+        key: 'tags',
+        value: [...this.props.one.tags, this.props.tempTag],
+      });
+      this.props.setTagValue('');
     }
-    return {tempTag: this.props.setTagValue('')};
+    return { tempTag: this.props.setTagValue('') };
   };
 
   render() {
     const { classes, one, category, tempTag } = this.props;
+    const { tempImage } = this.state;
     return (
       <React.Fragment>
-              <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
-          <BackIcon />
-        </IconButton>Blog > Add</PageHeader>
+        <PageHeader>
+          <IconButton
+            className="cursor-pointer"
+            onClick={this.handleGoBack}
+            aria-label="Back"
+          >
+            <BackIcon />
+          </IconButton>
+          Blog > Add
+        </PageHeader>
         <PageContent>
-              
-                <TextField
-                  name="Blog Title"
-                  id="blog-title"
-                  fullWidth
-                  label="Title"
-                  inputProps={{
-                    value: one.title || '',
-                    onChange: this.handleChange('title'),
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  margin="normal"
-                />
-              
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="category">Category</InputLabel>
-                  <Select
-                    value={one.category}
-                    onChange={this.handleCategoryChange('category')}
-                    inputProps={{
-                      value: one.category || '',
-                      name: 'category',
-                    }}
-                  >
-                    {category.map(each => (
-                      <MenuItem
-                        key={each._id}
-                        name={each.title}
-                        value={each._id}
-                      >
-                        {each.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              
-                <InputLabel style={{ color: '#AAAAAA' }}>
-                  Blog Description
-                </InputLabel>
-                <CKEditor
-                  name="description"
-                  content={one.description}
-                  config={{ allowedContent: true }}
-                  events={{
-                    change: e => this.handleEditorChange(e, 'description'),
-                    value: one.description || '',
-                  }}
-                />
-              
-                {one.image && one.image.filename && <img
-                  src={
-                    `${IMAGE_BASE}${one.image.path}`
-                  }
-                  alt="image"
-                  width="384"
-                  height="325"
-                />}
-              
-                <Dropzone onDrop={this.onDrop}>
-                  {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <div
-                        color="primary"
-                        aria-label="Add"
-                        round="true"
-                        elevation={0}
-                      >
-                        <Button variant="contained">Add Files</Button>
-                        </div>
-                        </div>
-                  )}
-                </Dropzone>
-              
-                <TextField
-                  name="published_on"
-                  label="Published On"
-                  type="date"
-                  value={
-                    (one.published_on &&
-                      moment(one.published_on).format('YYYY-MM-DD')) ||
-                    null
-                  }
-                  onChange={this.handlePublishedOn}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              
-                <form onSubmit={this.insertTags}>
-                  <CustomInput
-                    name="Tags"
-                    id="blog-tags"
-                    placeholder="tags"
-                    inputProps={{
-                      value: tempTag || '',
-                      onChange: this.handleTempTag,
-                    }}
-                  />
-                </form>
-                <Paper>
-                      {one.tags.map((tag, index) => {
-                        let icon = null;
+          <TextField
+            name="Blog Title"
+            id="blog-title"
+            fullWidth
+            label="Title"
+            inputProps={{
+              value: one.title || '',
+              onChange: this.handleChange('title'),
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
 
-                        return (
-                          <Chip
-                            key={`${tag}-${index}`}
-                            icon={icon}
-                            label={tag}
-                            onDelete={this.handleDelete(index)}
-                            className={classes.chip}
-                          />
-                        );
-                      })}
-                    </Paper>
-              
-                <CustomInput
-                    name="Author"
-                    id="blog-author"
-                    placeholder="Author"
-                    inputProps={{
-                      value: one.author || '',
-                      onChange: this.handleChange('author'),
-                  }}
-                  />
-              
-                <InputLabel style={{ color: '#AAAAAA' }}>
-                  Activity Type
-                </InputLabel>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={one.is_active || false}
-                      tabIndex={-1}
-                      onClick={this.handleCheckedChange('is_active')}
-                      color="primary"
-                    />
-                  }
-                  label="Is Active"
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="category">Category</InputLabel>
+            <Select
+              value={one.category}
+              onChange={this.handleCategoryChange('category')}
+              inputProps={{
+                value: one.category || '',
+                name: 'category',
+              }}
+            >
+              {category.map(each => (
+                <MenuItem key={each._id} name={each.title} value={each._id}>
+                  {each.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <InputLabel style={{ color: '#AAAAAA' }}>Blog Description</InputLabel>
+          <CKEditor
+            name="description"
+            content={one.description}
+            config={{ allowedContent: true }}
+            events={{
+              change: e => this.handleEditorChange(e, 'description'),
+              value: one.description || '',
+            }}
+          />
+
+          <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <img
+                  className=""
+                  width="200px"
+                  height="200px"
+                  src={tempImage}
+                  alt="Blogimage"
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={one.is_published || false}
-                      tabIndex={-1}
-                      onClick={this.handleCheckedChange('is_published')}
-                      color="primary"
-                    />
-                  }
-                  label="Is Published"
+              </div>
+            )}
+          </Dropzone>
+
+          <TextField
+            name="published_on"
+            label="Published On"
+            type="date"
+            value={
+              (one.published_on &&
+                moment(one.published_on).format('YYYY-MM-DD')) ||
+              null
+            }
+            onChange={this.handlePublishedOn}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+
+          <form onSubmit={this.insertTags}>
+            <CustomInput
+              name="Tags"
+              id="blog-tags"
+              placeholder="tags"
+              inputProps={{
+                value: tempTag || '',
+                onChange: this.handleTempTag,
+              }}
+            />
+          </form>
+          <Paper>
+            {one.tags.map((tag, index) => {
+              const icon = null;
+
+              return (
+                <Chip
+                  key={`${tag}-${index}`}
+                  icon={icon}
+                  label={tag}
+                  onDelete={this.handleDelete(index)}
+                  className={classes.chip}
                 />
-              <Button
-                variant="contained"
+              );
+            })}
+          </Paper>
+
+          <CustomInput
+            name="Author"
+            id="blog-author"
+            placeholder="Author"
+            inputProps={{
+              value: one.author || '',
+              onChange: this.handleChange('author'),
+            }}
+          />
+
+          <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={one.is_active || false}
+                tabIndex={-1}
+                onClick={this.handleCheckedChange('is_active')}
                 color="primary"
-                onClick={this.handleSave}
-              >
-                Save
-              </Button>
+              />
+            }
+            label="Is Active"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={one.is_published || false}
+                tabIndex={-1}
+                onClick={this.handleCheckedChange('is_published')}
+                color="primary"
+              />
+            }
+            label="Is Published"
+          />
+          <Button variant="contained" color="primary" onClick={this.handleSave}>
+            Save
+          </Button>
         </PageContent>
-        </React.Fragment>
+      </React.Fragment>
     );
   }
 }

@@ -35,15 +35,3 @@ export const makeSelectMedia = () =>
     selectSliderManagePageDomain,
     substate => substate.media,
   );
-
-/**
- * Default selector used by SliderManagePage
- */
-
-const makeSelectSliderManagePage = () =>
-  createSelector(
-    selectSliderManagePageDomain,
-    substate => substate,
-  );
-
-export default makeSelectSliderManagePage;

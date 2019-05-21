@@ -73,11 +73,12 @@ class AddEdit extends React.PureComponent {
     }),
   };
 
-  state = { open: false, index: -1 };
+  state = { open: false, index: -1, subheader: 'Slider Add'};
 
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
+      this.setState({ subheader: 'Slider Edit' });
     }
     this.props.loadMediaRequest();
   }
@@ -144,6 +145,7 @@ class AddEdit extends React.PureComponent {
 
   render() {
     const { one, classes, media } = this.props;
+    const { subheader } = this.state;
 
     // media next prev logic
     const lastPage = Math.ceil(media.totaldata / media.size);
@@ -208,71 +210,8 @@ class AddEdit extends React.PureComponent {
           </DialogContent>
         </Dialog>
         <Card>
-          <CardHeader color="primary" title="Slider" subheader="Slider info" />
+          <CardHeader color="primary" title="Slider" subheader={subheader} />
           <CardBody>
-            <div className="w-full md:w-1/2 px-3 pb-4">
-              <label
-                className="block tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="grid-last-name"
-              >
-                SlidesToShow
-              </label>
-              <input
-                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                id="grid-last-name"
-                type="text"
-                onChange={this.handleChange()}
-              />
-            </div>
-            <div className="w-full md:w-1/2 px-3 pb-4">
-              <label
-                className="block tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="grid-last-name"
-              >
-                SlidesToScroll
-              </label>
-              <input
-                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                id="grid-last-name"
-                type="text"
-                onChange={this.handleChange()}
-              />
-            </div>
-
-             <div className="w-full md:w-1/2 px-3 pb-4 flex items-center">
-            <label
-                className="block tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="grid-last-name"
-              >
-                Dots
-              </label>
-              <Switch value="checkedA" />
-            </div>
-            <div className="w-full md:w-1/2 px-3 pb-4 flex items-center">
-            <label
-                className="block tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="grid-last-name"
-              >
-                AutoPlay
-              </label>
-              <Switch value="checkedA" />
-            </div>
-
-            <div className="w-full md:w-1/2 px-3 pb-4">
-              <label
-                className="block tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="grid-last-name"
-              >
-                AutoplaySpeed
-              </label>
-              <input
-                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                id="grid-last-name"
-                type="text"
-                onChange={this.handleChange()}
-              />
-            </div>
-
             <div>
               <TextField
                 variant="outlined"
@@ -307,6 +246,17 @@ class AddEdit extends React.PureComponent {
                 }}
               />
             </div>
+            <div>
+              <textarea
+                placeholder="Slider Settings"
+                name="slider settings"
+                id="slider_setting"
+                cols="50"
+                rows="8"
+                onChange={this.handleChange('settings')}
+                value={one.settings || ''}
+              />
+            </div>
             <Button
               variant="contained"
               color="primary"
@@ -327,10 +277,7 @@ class AddEdit extends React.PureComponent {
                 <Grid container spacing={24}>
                   <Grid item xs={3} style={{ textAlign: 'center' }}>
                     {each.image ? (
-                      <MediaElement
-                        mediaKey={each.image}
-                        onClick={this.handleSetImage(index)}
-                      />
+                      <img src={`${IMAGE_BASE}public/300-300/media/${each.image.filename}`}/>
                     ) : (
                       <Button
                         color="primary"
@@ -368,9 +315,9 @@ class AddEdit extends React.PureComponent {
             ))}
           </CardBody>
           <CardActions style={{ marginBottom: '100px' }}>
-            {/* <Button color="secondary" onClick={this.handleGoBack}>
+            <Button  variant="contained" color="secondary" onClick={this.handleGoBack}>
               Back
-            </Button> */}
+            </Button>
             <Button
               variant="contained"
               color="primary"

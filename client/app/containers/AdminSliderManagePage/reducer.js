@@ -11,6 +11,7 @@ export const initialState = {
   one: {
     slider_name: '',
     slider_key: '',
+    settings: '',
     images: [],
   },
   media: {

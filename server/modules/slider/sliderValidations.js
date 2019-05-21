@@ -24,9 +24,9 @@ validations.sanitize = (req, res, next) => {
   next();
 };
 validations.validate = async (req, res, next) => {
-  const data = await sliderSch.countDocuments({
-    slider_key: req.body.slider_key,
-  });
+  // const data = await sliderSch.countDocuments({
+  //   slider_key: req.body.slider_key,
+  // });
   let errors = otherHelper.validation(req.body, [
     {
       field: 'slider_name',
@@ -56,9 +56,9 @@ validations.validate = async (req, res, next) => {
     },
   ]);
 
-  if (data) {
-    errors['slider_key'] = sliderConfig.validate.duplicateKey;
-  }
+  // if (data) {
+  //   errors['slider_key'] = sliderConfig.validate.duplicateKey;
+  // }
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'validation err!', null);
   } else {
