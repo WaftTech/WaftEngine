@@ -44,7 +44,7 @@ subscribeController.GetSubscribe = async (req, res, next) => {
       searchq = {
         email: {
           $regex: req.query.find_email,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
