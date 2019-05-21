@@ -16,15 +16,22 @@ import { makeSelectOne } from './selectors';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
-  let pageNumber = '';
+  let query = '';
+  let sort = '';
+
   if (action.payload) {
-    pageNumber = `&page=${action.payload.page}&size=${
-      action.payload.rowsPerPage
-    }`;
+    Object.keys(action.payload).map(each => {
+      query = `${query}&${each}=${action.payload[each]}`;
+      return null;
+    });
+  }
+
+  if (action.payload.sort) {
+    sort = `&sort=${action.payload.sort}`;
   }
   yield call(
     Api.get(
-      `slider?${pageNumber}`,
+      `slider?${query}&${sort}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
@@ -33,20 +40,8 @@ function* loadAll(action) {
 }
 function* loadMedia(action) {
   const token = yield select(makeSelectToken());
-  let query = '';
-  if (action.payload) {
-    Object.keys(action.payload).map(each => {
-      query = `${query}&${each}=${action.payload[each]}`;
-      return null;
-    });
-  }
   yield call(
-    Api.get(
-      `media?${query}`,
-      actions.loadMediaSuccess,
-      actions.loadMediaFailure,
-      token,
-    ),
+    Api.get('media', actions.loadMediaSuccess, actions.loadMediaFailure, token),
   );
 }
 

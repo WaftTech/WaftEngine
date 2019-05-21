@@ -14,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Edit from '@material-ui/icons/Edit';
-// import Close from '@material-ui/icons/Close';
+import Close from '@material-ui/icons/Close';
 
 // core components
 import CustomInput from '@material-ui/core/Input';
@@ -85,10 +85,10 @@ export class SliderManagePage extends React.Component {
     this.props.loadAllRequest(paging);
   };
 
-  // handleDelete = id => {
-  //   // shoe modal && api call
-  //   // this.props.history.push(`/wt/contents-manage/edit/${id}`);
-  // };
+  handleDelete = id => {
+    // shoe modal && api call
+    // this.props.history.push(`/wt/contents-manage/edit/${id}`);
+  };
 
   render() {
     const { classes } = this.props;
@@ -121,11 +121,11 @@ export class SliderManagePage extends React.Component {
               />
             </IconButton>
           </Tooltip>
-          {/* <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
+          <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
             <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
               <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
             </IconButton>
-          </Tooltip> */}
+          </Tooltip>
         </React.Fragment>,
       ],
     );
@@ -133,7 +133,7 @@ export class SliderManagePage extends React.Component {
       <>
         <PageHeader>Slider Manage</PageHeader>
         <PageContent>
-          {/* <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
             <CustomInput
               name="find_slider_name"
               id="slider-name"
@@ -147,7 +147,7 @@ export class SliderManagePage extends React.Component {
               <SearchIcon />
             </IconButton>
           </Paper>
-          <br /> */}
+          <br />
 
           <Table
             tableHead={[
