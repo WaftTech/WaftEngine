@@ -16,6 +16,9 @@ import SliderManageAddEdit from '../containers/AdminSliderManagePage/AddEditPage
 import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
 import BlogManageAddEdit from '../containers/AdminBlogManagePage/AddEditPage/Loadable';
 import SubscribePage from '../containers/AdminSubscribePage/Loadable';
+import SubscribeViewPage from '../containers/AdminSubscribePage/SubscribeView';
+import ContactListPage from '../containers/AdminContactListPage/Loadable';
+import ContactViewPage from '../containers/AdminContactListPage/ViewContactList';
 import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
 import ErrorManagePage from '../containers/AdminErrorManagePage/Loadable';
 
@@ -143,14 +146,24 @@ const routes = [
     component: BlogManagePage,
     exact: true,
   },
-  // {
-  //   path: '/admin/subscribe-manage/view/:id',
-  //   component: SubscribePage,
-  //   exact: true,
-  // },
+  {
+    path: '/admin/subscribe-manage/view/:id',
+    component: SubscribeViewPage,
+    exact: true,
+  },
   {
     path: '/admin/subscribe-manage',
     component: SubscribePage,
+    exact: true,
+  },
+  {
+    path: '/admin/contact-manage/view/:id',
+    component: ContactViewPage,
+    exact: true,
+  },
+  {
+    path: '/admin/contact-manage',
+    component: ContactListPage,
     exact: true,
   },
   {

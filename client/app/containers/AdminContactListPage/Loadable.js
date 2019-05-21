@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for AdminContactUsManagePage
+ * Asynchronously loads the component for AdminContactListPage
  *
  */
 

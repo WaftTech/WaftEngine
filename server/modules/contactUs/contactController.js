@@ -76,13 +76,13 @@ contactController.GetContact = async (req, res, next) => {
   }
   searchq = { is_deleted: false };
   if (req.query.find_name) {
-    searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
+    searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
   }
   if (req.query.find_subject) {
-    searchq = { subject: { $regex: req.query.find_subject, $options: 'i x' }, ...searchq };
+    searchq = { subject: { $regex: req.query.find_subject, $options: 'i' }, ...searchq };
   }
   if (req.query.find_added_at) {
-    searchq = { added_at: { $regex: req.query.find_added_at, $options: 'i x' }, ...searchq };
+    searchq = { added_at: { $regex: req.query.find_added_at, $options: 'i' }, ...searchq };
   }
   selectq = ('name email message subject added_at');
   let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortquery, searchq, selectq, next, '');

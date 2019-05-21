@@ -1,9 +1,9 @@
 // import produce from 'immer';
-import adminContactUsManagePageReducer from '../reducer';
+import adminContactListPageReducer from '../reducer';
 // import { someAction } from '../actions';
 
 /* eslint-disable default-case, no-param-reassign */
-describe('adminContactUsManagePageReducer', () => {
+describe('adminContactListPageReducer', () => {
   let state;
   beforeEach(() => {
     state = {
@@ -13,9 +13,7 @@ describe('adminContactUsManagePageReducer', () => {
 
   it('returns the initial state', () => {
     const expectedResult = state;
-    expect(adminContactUsManagePageReducer(undefined, {})).toEqual(
-      expectedResult,
-    );
+    expect(adminContactListPageReducer(undefined, {})).toEqual(expectedResult);
   });
 
   /**

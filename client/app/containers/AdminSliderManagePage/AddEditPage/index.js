@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -73,7 +74,7 @@ class AddEdit extends React.PureComponent {
     }),
   };
 
-  state = { open: false, index: -1, subheader: 'Slider Add'};
+  state = { open: false, index: -1, subheader: 'Slider Add' };
 
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
@@ -129,6 +130,10 @@ class AddEdit extends React.PureComponent {
 
   handleSetImage = index => () => {
     this.setState({ open: true, index });
+  };
+
+  onDragEnd = result => {
+    //
   };
 
   handleGoBack = () => {
@@ -209,124 +214,154 @@ class AddEdit extends React.PureComponent {
             ))}
           </DialogContent>
         </Dialog>
-        <Card>
-          <CardHeader color="primary" title="Slider" subheader={subheader} />
-          <CardBody>
-            <div>
-              <TextField
-                variant="outlined"
-                name="slider_name"
-                id="slider-name"
-                fullWidth
-                margin="normal"
-                label="Slider Name"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  value: one.slider_name,
-                  onChange: this.handleChange('slider_name'),
-                }}
-              />
-            </div>
-            <div>
-              <TextField
-                variant="outlined"
-                name="slider_key"
-                id="slider-key"
-                fullWidth
-                margin="normal"
-                label="Slider Key"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  value: one.slider_key,
-                  onChange: this.handleChange('slider_key'),
-                }}
-              />
-            </div>
-            <div>
-              <textarea
-                placeholder="Slider Settings"
-                name="slider settings"
-                id="slider_setting"
-                cols="50"
-                rows="8"
-                onChange={this.handleChange('settings')}
-                value={one.settings || ''}
-              />
-            </div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleAddSlide}
-            >
-              Add Slide
-            </Button>
-            {one.images.map((each, index) => (
-              <div
-                style={{
-                  marginTop: 20,
-                  padding: 20,
-                  background: '#f0f0f0',
-                  borderRadius: '6px',
-                }}
-                key={`${each._id}-media-${index}`}
-              >
-                <Grid container spacing={24}>
-                  <Grid item xs={3} style={{ textAlign: 'center' }}>
-                    {each.image ? (
-                      <img src={`${IMAGE_BASE}public/300-300/media/${each.image.filename}`}/>
-                    ) : (
-                      <Button
-                        color="primary"
-                        onClick={this.handleSetImage(index)}
-                      >
-                        Add Image
-                      </Button>
-                    )}
-                  </Grid>
-                  <Grid item xs={7}>
-                    <TextField
-                      variant="outlined"
-                      fullWidth
-                      multiline
-                      rows="2"
-                      id={`slider-caption-${index}`}
-                      label="Caption"
-                      value={each.caption}
-                      onChange={this.handleImageCaptionChange(index)}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <IconButton
-                      color="secondary"
-                      onClick={() => this.handleRemoveSlide(index)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Grid>
-                </Grid>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Card>
+            <CardHeader color="primary" title="Slider" subheader={subheader} />
+            <CardBody>
+              <div>
+                <TextField
+                  variant="outlined"
+                  name="slider_name"
+                  id="slider-name"
+                  fullWidth
+                  margin="normal"
+                  label="Slider Name"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    value: one.slider_name,
+                    onChange: this.handleChange('slider_name'),
+                  }}
+                />
               </div>
-            ))}
-          </CardBody>
-          <CardActions style={{ marginBottom: '100px' }}>
-            <Button  variant="contained" color="secondary" onClick={this.handleGoBack}>
-              Back
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSave}
-            >
-              Save
-            </Button>
-          </CardActions>
-        </Card>
+              <div>
+                <TextField
+                  variant="outlined"
+                  name="slider_key"
+                  id="slider-key"
+                  fullWidth
+                  margin="normal"
+                  label="Slider Key"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    value: one.slider_key,
+                    onChange: this.handleChange('slider_key'),
+                  }}
+                />
+              </div>
+              <div>
+                <textarea
+                  placeholder="Slider Settings"
+                  name="slider settings"
+                  id="slider_setting"
+                  cols="50"
+                  rows="8"
+                  onChange={this.handleChange('settings')}
+                  value={one.settings || ''}
+                />
+              </div>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleAddSlide}
+              >
+                Add Slide
+              </Button>
+              <Droppable droppableId="slider-droppable">
+                {provided => {
+                  {
+                    one.images.map((each, index) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        style={{
+                          marginTop: 20,
+                          padding: 20,
+                          background: '#f0f0f0',
+                          borderRadius: '6px',
+                        }}
+                        key={`${each._id}-media-${index}`}
+                      >
+                        <Draggable draggableId={each.image.filename}>
+                          {provided => (
+                            <div
+                            className="flex"
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              itemRef={provided.innerRef}
+                            >
+                              <Grid item xs={3} style={{ textAlign: 'center' }}>
+                                {each.image ? (
+                                  <img
+                                    src={`${IMAGE_BASE}public/300-300/media/${
+                                      each.image.filename
+                                    }`}
+                                  />
+                                ) : (
+                                  <Button
+                                    color="primary"
+                                    onClick={this.handleSetImage(index)}
+                                  >
+                                    Add Image
+                                  </Button>
+                                )}
+                              </Grid>
+                              <Grid item xs={7}>
+                                <TextField
+                                  variant="outlined"
+                                  fullWidth
+                                  multiline
+                                  rows="2"
+                                  id={`slider-caption-${index}`}
+                                  label="Caption"
+                                  value={each.caption}
+                                  onChange={this.handleImageCaptionChange(
+                                    index,
+                                  )}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <IconButton
+                                  color="secondary"
+                                  onClick={() => this.handleRemoveSlide(index)}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              </Grid>
+                            </div>
+                          )}
+                        </Draggable>
+                        {provided.placeholder}
+                      </div>
+                    ));
+                  }
+                }}
+              </Droppable>
+            </CardBody>
+            <CardActions style={{ marginBottom: '100px' }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.handleGoBack}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSave}
+              >
+                Save
+              </Button>
+            </CardActions>
+          </Card>
+        </DragDropContext>
       </>
     );
   }

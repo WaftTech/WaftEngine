@@ -1,6 +1,6 @@
 /*
  *
- * AdminSubscribePage reducer
+ * AdminContactListPage reducer
  *
  */
 import produce from 'immer';
@@ -14,21 +14,18 @@ export const initialState = {
     totaldata: 0,
   },
   one: {},
-  query: { find_email: '' },
+  query: { find_name: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const adminSubscribePageReducer = (state = initialState, action) =>
+const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case types.LOAD_SUBSCRIBER_SUCCESS:
+      case types.LOAD_ALL_SUCCESS:
         draft.all = action.payload;
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
-        break;
-      case types.CLEAR_QUERY:
-        draft.query = initialState.query;
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;
@@ -36,4 +33,4 @@ const adminSubscribePageReducer = (state = initialState, action) =>
     }
   });
 
-export default adminSubscribePageReducer;
+export default reducer;
