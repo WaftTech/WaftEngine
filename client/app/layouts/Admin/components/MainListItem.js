@@ -164,6 +164,24 @@ const Mainlis = ({ classes, location: { pathname } }) => {
               Modules
             </Link>
           </li>
+          <li selected={pathname === '/admin/contact-manage'}>
+            <Link
+              to="/admin/contact-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ExtensionIcon className="mr-3" />
+              Contacts
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/subscribe-manage'}>
+            <Link
+              to="/admin/subscribe-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ExtensionIcon className="mr-3" />
+              Subscribes
+            </Link>
+          </li>
         </Collapse>
 
         <li

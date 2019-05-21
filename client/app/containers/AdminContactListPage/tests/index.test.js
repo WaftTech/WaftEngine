@@ -1,6 +1,6 @@
 /**
  *
- * Tests for AdminContactUsManagePage
+ * Tests for AdminContactListPage
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -11,10 +11,10 @@ import { cleanup, render } from 'react-testing-library';
 import { IntlProvider } from 'react-intl';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import { AdminContactUsManagePage } from '../index';
+import { AdminContactListPage } from '../index';
 import { DEFAULT_LOCALE } from '../../../i18n';
 
-describe('<AdminContactUsManagePage />', () => {
+describe('<AdminContactListPage />', () => {
   afterEach(cleanup);
 
   it('Expect to not log errors in console', () => {
@@ -22,7 +22,7 @@ describe('<AdminContactUsManagePage />', () => {
     const dispatch = jest.fn();
     render(
       <IntlProvider locale={DEFAULT_LOCALE}>
-        <AdminContactUsManagePage dispatch={dispatch} />
+        <AdminContactListPage dispatch={dispatch} />
       </IntlProvider>,
     );
     expect(spy).not.toHaveBeenCalled();
@@ -42,7 +42,7 @@ describe('<AdminContactUsManagePage />', () => {
       container: { firstChild },
     } = render(
       <IntlProvider locale={DEFAULT_LOCALE}>
-        <AdminContactUsManagePage />
+        <AdminContactListPage />
       </IntlProvider>,
     );
     expect(firstChild).toMatchSnapshot();
