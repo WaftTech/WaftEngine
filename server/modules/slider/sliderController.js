@@ -38,10 +38,10 @@ sliderController.GetSlider = async (req, res, next) => {
       }
     }
     populate = [
-      // {
-      //   path: 'images.image',
-      //   select: '_id media_image original_name filename size',
-      // },
+      {
+        path: 'images.image',
+        select: '_id path mimetype filename size',
+      },
     ];
 
     selectq = 'slider_name slider_key images settings added_by added_at';
@@ -54,7 +54,7 @@ sliderController.GetSlider = async (req, res, next) => {
       searchq = {
         slider_name: {
           $regex: req.query.find_slider_name,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -63,7 +63,7 @@ sliderController.GetSlider = async (req, res, next) => {
       searchq = {
         slider_key: {
           $regex: req.query.find_slider_key,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -97,10 +97,18 @@ sliderController.SaveSlider = async (req, res, next) => {
 sliderController.GetSliderById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const slider = await sliderSch.findOne({
-      _id: id,
-      is_deleted: false,
-    });
+    let populate = [
+      {
+        path: 'images.image',
+        // select: '_id path mimetype filename size',
+      },
+    ];
+    const slider = await sliderSch
+      .findOne({
+        _id: id,
+        is_deleted: false,
+      })
+      .populate(populate);
     return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
   } catch (err) {
     next(err);
@@ -116,7 +124,7 @@ sliderController.GetSliderByKey = async (req, res, next) => {
 };
 sliderController.DeleteSlider = async (req, res, next) => {
   const id = req.params.id;
-  const sliderDel = await sliderSch.findByIdAndUpdate(objectId(id), {
+  const sliderDel = await sliderSch.findByIdAndUpdate(id, {
     $set: {
       is_deleted: true,
       deleted_at: Date.now,
