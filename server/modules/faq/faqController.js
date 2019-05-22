@@ -124,6 +124,11 @@ faqController.GetFaqCat = async (req, res, next) => {
     let searchq;
     let populate;
     let selectq;
+    if (req.query.page && req.query.page == 0) {
+      selectq = 'title is_active';
+      const faqCats = await faqCatSch.find({ is_deleted: false }).select(selectq);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, faqCats, null, 'all faq cats get success!!', null);
+    }
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
     } else {
@@ -147,14 +152,14 @@ faqController.GetFaqCat = async (req, res, next) => {
         sortq = '';
       }
     }
-    selectq = 'title slug_url added_by added_at';
+    selectq = 'title slug_url is_active is_deleted added_by added_at';
 
     searchq = { is_deleted: false };
     if (req.query.find_title) {
       searchq = {
         title: {
           $regex: req.query.find_title,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -166,17 +171,13 @@ faqController.GetFaqCat = async (req, res, next) => {
     next(err);
   }
 };
-faqController.GetFaqCatBySlug = async (req, res, next) => {
+faqController.GetFaqCatById = async (req, res, next) => {
   try {
-    const slug = req.params.slug;
-    const faqCats = await faqCatSch.findOne(
-      {
-        slug_url: slug,
-      },
-      {
-        __v: 0,
-      },
-    );
+    const id = req.params.id;
+    const faqCats = await faqCatSch.findOne({
+      _id: id,
+      is_deleted: false,
+    });
     return otherHelper.sendResponse(res, httpStatus.OK, true, faqCats, null, faqConfig.catGet, null);
   } catch (err) {
     next(err);

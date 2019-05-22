@@ -97,6 +97,15 @@ const Mainlis = ({ classes, location: { pathname } }) => {
                 FAQ
               </Link>
             </li>
+            <li selected={pathname === '/admin/faq-cat-manage'}>
+              <Link
+                to="/admin/faq-cat-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                FAQ Category
+              </Link>
+            </li>
             <li selected={pathname === '/admin/media-manage'}>
               <Link
                 to="/admin/media-manage"
