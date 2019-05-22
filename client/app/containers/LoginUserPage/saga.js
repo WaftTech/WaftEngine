@@ -23,7 +23,11 @@ export const validate = data => {
 };
 
 export function* redirectOnSuccess(redirect) {
-  const { payload } = yield take([types.LOGIN_SUCCESS, types.LOGIN_WITH_FB_SUCCESS, types.LOGIN_WITH_GOOGLE_SUCCESS]);
+  const { payload } = yield take([
+    types.LOGIN_SUCCESS,
+    types.LOGIN_WITH_FB_SUCCESS,
+    types.LOGIN_WITH_GOOGLE_SUCCESS,
+  ]);
   const { token, data } = payload;
   yield put(setUser(data));
   yield put(setToken(token));
@@ -52,9 +56,10 @@ export function* loginAction(action) {
 }
 
 export function* loginFbAction(action) {
-  const body = { access_token: action.payload.accessToken }
+  const body = { access_token: action.payload.accessToken };
+  console.log(body);
   const successWatcher = yield fork(redirectOnSuccess, action.redirect);
-    
+
   yield fork(
     Api.post(
       `user/login/facebook`,
@@ -68,10 +73,10 @@ export function* loginFbAction(action) {
 }
 
 export function* loginGoogleAction(action) {
-  console.log(action)
-  const body = { access_token: action.payload.accessToken }
+  console.log(action);
+  const body = { access_token: action.payload.accessToken };
   const successWatcher = yield fork(redirectOnSuccess, action.redirect);
-    
+
   yield fork(
     Api.post(
       `user/login/google`,

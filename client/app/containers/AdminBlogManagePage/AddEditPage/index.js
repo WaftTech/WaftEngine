@@ -92,6 +92,7 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearOne();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
