@@ -9,7 +9,7 @@ router.get('/', authorization, authentication, faqModule.GetFaq);
 router.get('/all', faqModule.GetFaqAndCat);
 router.get('/cat', faqModule.GetFaqCat);
 router.get('/:id', faqModule.GetFaqById);
-router.get('/cat/:slug', authorization, authentication, faqModule.GetFaqCatBySlug);
+router.get('/cat/:id', authorization, faqModule.GetFaqCatById);
 router.get('/bycat/:id', faqModule.GetFaqByCat);
 router.post('/', authorization, authentication, validations.Sanitize, validations.Validation, faqModule.PostFaq);
 router.post('/cat', authorization, authentication, validations.Sanitize, validations.Validation, faqModule.PostFaqCat);

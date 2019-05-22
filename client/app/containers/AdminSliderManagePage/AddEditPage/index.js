@@ -271,76 +271,74 @@ class AddEdit extends React.PureComponent {
                 Add Slide
               </Button>
               <Droppable droppableId="slider-droppable">
-                {provided => {
-                  {
-                    one.images.map((each, index) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        style={{
-                          marginTop: 20,
-                          padding: 20,
-                          background: '#f0f0f0',
-                          borderRadius: '6px',
-                        }}
-                        key={`${each._id}-media-${index}`}
+                {(provided) => {
+                  one.images.map((each, index) => (
+                    <div
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      style={{
+                        marginTop: 20,
+                        padding: 20,
+                        background: '#f0f0f0',
+                        borderRadius: '6px',
+                      }}
+                      key={`${each._id}-media-${index}`}
+                    >
+                      <Draggable
+                        draggableId={each.image.filename}
+                        index={index}
                       >
-                        <Draggable draggableId={each.image.filename}>
-                          {provided => (
-                            <div
-                            className="flex"
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              itemRef={provided.innerRef}
-                            >
-                              <Grid item xs={3} style={{ textAlign: 'center' }}>
-                                {each.image ? (
-                                  <img
-                                    src={`${IMAGE_BASE}public/300-300/media/${
-                                      each.image.filename
-                                    }`}
-                                  />
-                                ) : (
-                                  <Button
-                                    color="primary"
-                                    onClick={this.handleSetImage(index)}
-                                  >
-                                    Add Image
-                                  </Button>
-                                )}
-                              </Grid>
-                              <Grid item xs={7}>
-                                <TextField
-                                  variant="outlined"
-                                  fullWidth
-                                  multiline
-                                  rows="2"
-                                  id={`slider-caption-${index}`}
-                                  label="Caption"
-                                  value={each.caption}
-                                  onChange={this.handleImageCaptionChange(
-                                    index,
-                                  )}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                  }}
+                        {(provided) => (
+                          <div
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                          >
+                            <Grid item xs={3} style={{ textAlign: 'center' }}>
+                              {each.image ? (
+                                <img
+                                  src={`${IMAGE_BASE}public/300-300/media/${
+                                    each.image.filename
+                                  }`}
                                 />
-                              </Grid>
-                              <Grid item xs={2}>
-                                <IconButton
-                                  color="secondary"
-                                  onClick={() => this.handleRemoveSlide(index)}
+                              ) : (
+                                <Button
+                                  color="primary"
+                                  onClick={this.handleSetImage(index)}
                                 >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Grid>
-                            </div>
-                          )}
-                        </Draggable>
-                        {provided.placeholder}
-                      </div>
-                    ));
-                  }
+                                  Add Image
+                                </Button>
+                              )}
+                            </Grid>
+                            <Grid item xs={7}>
+                              <TextField
+                                variant="outlined"
+                                fullWidth
+                                multiline
+                                rows="2"
+                                id={`slider-caption-${index}`}
+                                label="Caption"
+                                value={each.caption}
+                                onChange={this.handleImageCaptionChange(index)}
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={2}>
+                              <IconButton
+                                color="secondary"
+                                onClick={() => this.handleRemoveSlide(index)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </Grid>
+                          </div>
+                        )}
+                      </Draggable>
+                      {provided.placeholder}
+                    </div>
+                  ));
                 }}
               </Droppable>
             </CardBody>
