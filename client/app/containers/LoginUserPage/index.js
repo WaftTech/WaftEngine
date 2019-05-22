@@ -68,6 +68,9 @@ const LoginUserPage = ({
             autoLoad={false}
             fields={FB_APP_FIELDS}
             callback={loginWithFbRequest}
+            onFailure={err => {
+              console.log('something went wrong!', err);
+            }}
             containerStyle={{
               textAlign: 'center',
               backgroundColor: '#3b5998',

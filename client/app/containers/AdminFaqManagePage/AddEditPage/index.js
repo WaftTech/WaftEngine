@@ -4,7 +4,15 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+
 import withStyles from '@material-ui/core/styles/withStyles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import ArrowBack from '@material-ui/icons/ArrowBack';
@@ -15,7 +23,12 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
-const styles = theme => ({});
+const styles = theme => ({
+  formcontrol: {
+    minWidth: 120,
+    maxWidth: 300,
+  },
+});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -59,78 +72,77 @@ class AddEdit extends React.PureComponent {
 
   render() {
     const { classes, category, one } = this.props;
-    // const { data, category_id } = this.state;
     return (
       <div>
         <PageHeader>
           <ArrowBack className="cursor-pointer" onClick={this.handleGoBack} />
         </PageHeader>
         <PageContent>
-        <div class="w-full md:w-1/2 px-3 pb-4">
-              <label
-                className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                htmlFor="grid-last-name"
-              >
-                Question
-              </label>
-              <input
-                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                name="Question"
-                id="faq"
-                value={one.question}
-                onChange={this.handleChange('question')}
-              />
-              <TextField
-                multiline
-                rows="5"
-                name="Answer"
-                id="faq-answer"
-                label="Answer"
-                value={one.title}
-                onChange={this.handleChange('title')}
-                fullWidth
-                variant="outlined"
+          <div className="w-full md:w-1/2 px-3 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+              htmlFor="grid-last-name"
+            >
+              Question
+            </label>
+            <input
+              className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+              name="Question"
+              id="faq"
+              value={one.question || ''}
+              onChange={this.handleChange('question')}
+            />
+            <TextField
+              multiline
+              rows="5"
+              name="Answer"
+              id="faq-answer"
+              label="Answer"
+              value={one.title || ''}
+              onChange={this.handleChange('title')}
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <div>
+              <FormControl
                 margin="normal"
-                InputLabelProps={{
-                  shrink: 'true',
-                }}
-              />
-
-              <TextField
-                select
-                label="Select Category"
-                value={one.category}
-                onChange={this.handleChange('category')}
-                onChange={this.handleChange('currency')}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                }}
-                variant="outlined"
-                margin="normal"
+                className={classes.formControl}
                 fullWidth
-                InputLabelProps={{
-                  shrink: 'true',
-                }}
               >
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id}>
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </TextField>
+                <InputLabel htmlFor="category">Category</InputLabel>
+                <Select
+                  value={one.category}
+                  onChange={this.handleChange('category')}
+                  inputProps={{
+                    name: 'category',
+                    id: 'category-title',
+                  }}
+                >
+                  {category &&
+                    category.length &&
+                    category.map(each => (
+                      <MenuItem key={each._id} value={each._id}>
+                        {each.title}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </div>
 
-              <Button
-                className="mt-4"
-                fullWidth
-                variant="outlined"
-                color="primary"
-                onClick={this.handleSave}
-              >
-                Save
-              </Button>
-           </div>
+            <Button
+              className="mt-4"
+              fullWidth
+              variant="outlined"
+              color="primary"
+              onClick={this.handleSave}
+            >
+              Save
+            </Button>
+          </div>
         </PageContent>
       </div>
     );

@@ -9,6 +9,7 @@ import UserManageEditPage from '../containers/AdminUserManagePage/AddEditPage/Lo
 import ContentManagePage from '../containers/AdminContentListingPage/Loadable';
 import ContentManageAddEdit from '../containers/AdminContentListingPage/AddEditPage/Loadable';
 import FaqManagePage from '../containers/AdminFaqManagePage/Loadable';
+import FaqCatManagePage from '../containers/AdminFaqCategoryManagePage/Loadable';
 import FaqManageAddEdit from '../containers/AdminFaqManagePage/AddEditPage/Loadable';
 import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
 import SliderManagePage from '../containers/AdminSliderManagePage/Loadable';
@@ -21,6 +22,7 @@ import ContactListPage from '../containers/AdminContactListPage/Loadable';
 import ContactViewPage from '../containers/AdminContactListPage/ViewContactList';
 import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
 import ErrorManagePage from '../containers/AdminErrorManagePage/Loadable';
+import FaqCatAddEditPage from '../containers/AdminFaqCategoryManagePage/AddEdit/Loadable';
 
 const routes = [
   {
@@ -109,6 +111,21 @@ const routes = [
     path: '/admin/faq-manage',
     name: 'FAQ Manage',
     component: FaqManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/faq-cat-manage/edit/:id',
+    component: FaqCatAddEditPage,
+    exact: true,
+  },
+  {
+    path: '/admin/faq-cat-manage/add',
+    component: FaqCatAddEditPage,
+    exact: true,
+  },
+  {
+    path: '/admin/faq-cat-manage',
+    component: FaqCatManagePage,
     exact: true,
   },
   {
