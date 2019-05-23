@@ -53,10 +53,23 @@ class AddEdit extends React.PureComponent {
 
   handleChecked = name => event => {
     event.persist();
-    const tempUser = { ...this.props.one.user };
+    const tempUser = { ...this.props.one.users };
     tempUser[name] = event.target.checked;
     this.props.setOneValue({ key: 'users', value: tempUser });
   };
+  handleRolesChecked = roleid => {
+    const tempUser = { ...this.props.one.users };
+    if (tempUser.roles.includes(roleid)) {
+      const index = tempUser.roles.indexOf(roleid);
+      tempUser.roles = [
+        ...tempUser.roles.slice(0, index),
+        ...tempUser.roles.slice(index + 1),
+      ];
+    } else {
+      tempUser.roles = [...tempUser.roles, roleid];
+    }
+    this.props.setOneValue({ key: 'users', value: tempUser });
+  }
 
   handleSave = () => {
     this.props.addEditRequest();
@@ -72,7 +85,7 @@ class AddEdit extends React.PureComponent {
       match: {
         params: { id },
       },
-      one: { users, rolesNormalized },
+      one: { users, rolesNormalized, roles},
     } = this.props;
     return (
       <>
@@ -91,7 +104,7 @@ class AddEdit extends React.PureComponent {
                 variant="outlined"
                 margin="normal"
                 InputLabelProps={{
-                  shrink: 'true',
+                  shrink: true,
                 }}
               />
               <TextField
@@ -104,7 +117,7 @@ class AddEdit extends React.PureComponent {
                 variant="outlined"
                 margin="normal"
                 InputLabelProps={{
-                  shrink: 'true',
+                  shrink: true,
                 }}
               />
               <FormControlLabel
@@ -112,26 +125,28 @@ class AddEdit extends React.PureComponent {
                   <Checkbox
                     color="secondary"
                     name="email_verified"
-                    checked={users.email_verified}
-                    onChange={() => null}
+                    checked={users.email_verified || false}
+                    onChange={this.handleChecked('email_verified')}
                   />
                 }
                 label="Email Verified"
               />
-              {users.roles.map(each => (
+              {roles.map(each => (
                 <FormControlLabel
-                  key={each}
+                  key={each._id}
                   control={
-                    <Checkbox color="secondary" checked onChange={() => null} />
+                    <Checkbox
+                      key={each}
+                      color="secondary"
+                      checked={users.roles.includes(each._id)}
+                      onChange={() => this.handleRolesChecked(each._id)}
+                    />
                   }
-                  label={rolesNormalized[each].role_title}
+                  label={each.role_title}
                 />
               ))}
             </Grid>
           </Grid>
-          {/* <Button onClick={this.handleBack} className={classes.button}>
-                Back
-              </Button> */}
           <Button
             variant="contained"
             color="primary"
