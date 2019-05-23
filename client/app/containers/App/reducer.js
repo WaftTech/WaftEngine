@@ -49,7 +49,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
       case types.LOAD_CONTENT_SUCCESS:
         draft.content = {
           ...draft.content,
-          [action.payload.data.slider_key]: action.payload.data,
+          [action.payload.data.key]: action.payload.data.description,
         };
         break;
       case types.LOAD_MEDIA_SUCCESS:
