@@ -19,7 +19,24 @@ const loginlogs = require('./loginlogs/loginlogController').internal;
 const baseurl = require('./../../config//keys').baseURl;
 
 const userController = {};
-
+userController.PostUser = async (req, res, next) => {
+  try {
+    const user = req.body;
+    if (user && user._id) {
+      const update = await users.findByIdAndUpdate(user._id, {
+        $set: user,
+      });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success', null);
+    } else {
+      // user.added_by = req.user.id;
+      const newUser = new users(user);
+      const usersave = await newUser.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, usersave, null, 'user add success', null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 userController.CheckMail = async (req, res) => {
   let errors = {};
   const {
@@ -111,7 +128,7 @@ userController.GetUserDetail = async (req, res, next) => {
       avatar: 1,
       updated_at: 1,
     });
-    const role = await roles.find({}, { role_title: 1, _id: 1 });
+    const role = await roles.find({ is_deleted: false }, { role_title: 1, _id: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { users: user, roles: role }, null, config.get, null);
   } catch (err) {
     next(err);

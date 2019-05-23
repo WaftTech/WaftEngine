@@ -23,6 +23,8 @@ import ContactViewPage from '../containers/AdminContactListPage/ViewContactList'
 import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
 import ErrorManagePage from '../containers/AdminErrorManagePage/Loadable';
 import FaqCatAddEditPage from '../containers/AdminFaqCategoryManagePage/AddEdit/Loadable';
+import AdminReportPage from '../containers/AdminReportPage/Loadable';
+import AdminIntegrationPage from '../containers/AdminIntegrationPage/Loadable';
 
 const routes = [
   {
@@ -191,6 +193,16 @@ const routes = [
   {
     path: '/admin/errors',
     component: ErrorManagePage,
+    exact: true,
+  },
+  {
+    path: '/admin/reports',
+    component: AdminReportPage,
+    exact: true,
+  },
+  {
+    path: '/admin/integration',
+    component: AdminIntegrationPage,
     exact: true,
   },
 ];
