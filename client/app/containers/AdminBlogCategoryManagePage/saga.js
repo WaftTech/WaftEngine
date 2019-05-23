@@ -1,18 +1,18 @@
 import {
-  takeLatest,
   take,
+  takeLatest,
   call,
-  fork,
   put,
   select,
+  fork,
   cancel,
 } from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
 import Api from 'utils/Api';
-import { makeSelectToken } from '../App/selectors';
+import { LOCATION_CHANGE, push } from 'connected-react-router';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectOne } from './selectors';
+import { makeSelectToken } from '../App/selectors';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
@@ -25,57 +25,36 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `role/role?${query}`,
+      `blog/category?${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
     ),
   );
 }
-
 function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `role/role/${action.payload}`,
+      `blog/category/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token,
     ),
   );
 }
-function* redirectOnDelete() {
-  yield take(types.DELETE_ONE_SUCCESS);
-  yield put(push('/admin/role-manage'));
-}
-
-function* deleteOne(action) {
-  const deleteWatcher = yield fork(redirectOnDelete);
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.delete(
-      `role/role/${action.payload}`,
-      actions.deleteOneSuccess,
-      actions.deleteOneFailure,
-      token,
-    ),
-  );
-  yield take([LOCATION_CHANGE, types.DELETE_ONE_FAILURE]);
-  yield cancel(deleteWatcher);
-}
-
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/admin/role-manage'));
+  yield put(push('/admin/blogCat-manage'));
 }
 
 function* addEdit() {
-  const successWatcher = yield fork(redirectOnSuccess);
+  const sucessWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
   yield fork(
     Api.post(
-      'role/role',
+      `blog/category`,
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
@@ -83,12 +62,11 @@ function* addEdit() {
     ),
   );
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
-  yield cancel(successWatcher);
+  yield cancel(sucessWatcher);
 }
-
-export default function* adminRoleManageSaga() {
+// Individual exports for testing
+export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
 }
