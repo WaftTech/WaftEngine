@@ -23,7 +23,7 @@ function CustomTable({ ...props }) {
             <tr>
               {tableHead.map((prop, key) => (
                 <th
-                  className="py-4 px-6 font-bold text-xs text-grey-darker border-b border-grey-light"
+                  className="py-4 px-6 font-bold text-xs text-black border-b border-grey-light"
                   key={key}
                 >
                   {prop}
@@ -37,7 +37,7 @@ function CustomTable({ ...props }) {
             <tr key={key}>
               {prop.map((each, index) => (
                 <td
-                  className="py-2 px-6 border-b border-grey-light text-grey-dark leading-normal"
+                  className="py-2 px-6 border-b border-grey-light text-black leading-normal"
                   key={index}
                 >
                   {each}

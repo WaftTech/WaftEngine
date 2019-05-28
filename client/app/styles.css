@@ -21,3 +21,10 @@ button:focus {
 .h-9vh {
   height: 9vh;
 }
+.grayscale1 {
+  filter: grayscale(1);
+}
+
+svg.text-sm {
+  font-size: 0.875rem;
+}
