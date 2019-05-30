@@ -4,6 +4,11 @@
 
 @tailwind utilities;
 
+
+html{
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
 /* Remove autofill bg color */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -21,10 +26,64 @@ button:focus {
 .h-9vh {
   height: 9vh;
 }
-.grayscale1 {
-  filter: grayscale(1);
+
+.btn-waft{
+  background: #ff3b30; /* Old browsers */
+  background: -moz-linear-gradient(top, #ff3b30 0%, #d82929 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ff3b30 0%,#d82929 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #ff3b30 0%,#d82929 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3b30', endColorstr='#d82929',GradientType=0 ); /* IE6-9 */ 
 }
 
-svg.text-sm {
-  font-size: 0.875rem;
+.btn-waft:hover{
+ background:#ff3b30;
+}
+
+.login-l{
+  position: relative;
+  background: #ff3b30; /* Old browsers */
+background: -moz-linear-gradient(top, #ff3b30 0%, #d82929 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #ff3b30 0%,#d82929 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #ff3b30 0%,#d82929 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3b30', endColorstr='#d82929',GradientType=0 ); /* IE6-9 */ 
+}
+
+.waftltext , .walfRlogin{
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform:translateY(-50%);
+}
+
+.waftltext h1{
+  font-size:3rem;
+}
+
+.waftltext p{
+  position: relative;
+  font-size: 1.25rem;
+}
+
+.waftltext p:after {
+  background: #FFF;
+  position: absolute;
+  content: "";
+  width: 100px;
+  height: 4px;
+  bottom: -15px;
+  left: 0;
+}
+
+.login-R {
+  background: rgb(243, 243, 243);
+}
+
+.fealogin li {
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 767px) {
+
+
 }
