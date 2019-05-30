@@ -21,11 +21,15 @@ export const initialState = {
     is_published: true,
     is_active: false,
     tags: [],
+    meta_description: '',
+    meta_tag: '',
+    keywords: '',
     author: '',
   },
   query: { find_title: '' },
   category: [],
   tempTag: '',
+  loading: false,
 };
 
 const reducer = (state = initialState, action) =>
@@ -43,7 +47,11 @@ const reducer = (state = initialState, action) =>
       case types.CLEAR_QUERY:
         draft.query = initialState.query;
         break;
+      case types.LOAD_ALL_REQUEST:
+        draft.loading = true;
+        break;
       case types.LOAD_ALL_SUCCESS:
+        draft.loading = false;
         draft.all = action.payload;
         break;
 

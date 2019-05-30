@@ -28,11 +28,19 @@ const appReducer = (state = initialState, action = { type: '' }) =>
   produce(state, draft => {
     switch (action.type) {
       case types.SET_USER:
+        localStorage.setItem(
+          'routes',
+          action.payload.routes
+            ? JSON.stringify(action.payload.routes)
+            : localStorage.routes,
+        );
         draft.user = {
           ...action.payload,
           isAdmin:
             (action.payload.roles &&
-              action.payload.roles.includes('5bf7ae3694db051f5486f845')) ||
+              action.payload.roles.includes(
+                '5bf7ae3694db051f5486f845' || '5bf7af0a736db01f8fa21a25',
+              )) ||
             false,
         };
         break;
@@ -43,6 +51,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
       case types.LOGOUT:
       case types.LOGOUT_SUCCESS:
         localStorage.setItem('token', '');
+        localStorage.setItem('routes', '');
         draft.user = {};
         draft.token = '';
         break;
@@ -58,6 +67,9 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           [action.payload.data._id]: action.payload.data, // eslint-disable-line no-underscore-dangle
         };
         break;
+      // case types.LOAD_AVAILABLE_SUCCESS:
+      //   draft.module = action.payload.data;
+      //   break;
       case types.LOAD_SLIDE_SUCCESS:
         draft.slide = {
           ...draft.slide,

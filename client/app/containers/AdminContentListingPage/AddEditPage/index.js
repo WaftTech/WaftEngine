@@ -6,11 +6,15 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 // core components
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -68,6 +72,10 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.value });
   };
 
+  handleDateChange = name => date => {
+    this.props.setOneValue({key: name, value: moment(date).format('YYYY/MM/DD')})
+  }
+
   handleGoBack = () => {
     this.props.push('/admin/content-manage');
   };
@@ -77,7 +85,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one } = this.props;
+    const { one, classes} = this.props;
     return (
       <div>
         <PageHeader>
@@ -113,19 +121,39 @@ class AddEdit extends React.PureComponent {
                 />
                 </div>
 
-                 <div class="w-full md:w-1/2 px-3 pb-4">
-      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
-      Published From
-      </label>
-      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.publish_from}
-                    onChange= {this.handleChange('publish_from')} />
-    </div>
+      <div class="w-full md:w-1/2 px-3 pb-4">
+        <FormControl
+          margin="normal"
+          className={classes.formControl}
+        >
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+          Published From
+          </label>
+          <DatePicker
+            margin="normal"
+            name="publish_from"
+            className={classes.textField}
+            value={(one.publish_from && moment(one.publish_from).format('YYYY/MM/DD')) || ''}
+            onChange={this.handleDateChange('publish_from')}
+          />
+        </FormControl>
+      </div>
     <div class="w-full md:w-1/2 px-3 pb-4">
-      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
-      Published To
-      </label>
-      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.publish_to}
-                    onChange= {this.handleChange('publish_to')} />
+      <FormControl
+        margin="normal"
+        className={classes.formControl}
+      >
+        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Published To
+        </label>
+        <DatePicker
+          margin="normal"
+          name="publish_to"
+          className={classes.textField}
+          value={(one.publish_to && moment(one.publish_to).format('YYYY/MM/DD')) || ''}
+          onChange={this.handleDateChange('publish_to')}
+        />
+      </FormControl>
     </div>
 
                 <FormControlLabel
