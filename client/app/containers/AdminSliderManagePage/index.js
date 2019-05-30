@@ -59,6 +59,10 @@ export class SliderManagePage extends React.Component {
     }),
   };
 
+  state = {
+    display: false,
+  };
+
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
   }
@@ -86,12 +90,18 @@ export class SliderManagePage extends React.Component {
   };
 
   handleDelete = id => {
-    // shoe modal && api call
+    // show modal && api call
     // this.props.history.push(`/wt/contents-manage/edit/${id}`);
+  };
+
+  handleToggle = () => {
+    this.setState(state => ({ display: !state.display }));
   };
 
   render() {
     const { classes } = this.props;
+    const { display } = this.state;
+
     const {
       all: { data, page, size, totaldata },
       query,
@@ -121,9 +131,20 @@ export class SliderManagePage extends React.Component {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip id="tooltip-top-start" title="Remove" placement="top" classes={{ tooltip: classes.tooltip }}>
-            <IconButton aria-label="Close" className={classes.tableActionButton} onClick={() => this.handleDelete(_id)}>
-              <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+          <Tooltip
+            id="tooltip-top-start"
+            title="Remove"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="Close"
+              className={classes.tableActionButton}
+              onClick={() => this.handleDelete(_id)}
+            >
+              <Close
+                className={`${classes.tableActionButtonIcon} ${classes.close}`}
+              />
             </IconButton>
           </Tooltip>
         </React.Fragment>,
@@ -131,9 +152,24 @@ export class SliderManagePage extends React.Component {
     );
     return (
       <>
-        <PageHeader>Slider Manage</PageHeader>
-        <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+        <div className="flex justify-between items-center mt-4 mr-6 mb-2 ml-6">
+          <h1 className="font-light text-2xl">Slider Manage</h1>
+          <button
+            className="flex items-center justify-center p-2 text-sm rounded hover:bg-grey-lighter"
+            onClick={this.handleToggle}
+          >
+            <SearchIcon className="text-sm mr-2" />
+            Search
+          </button>
+        </div>
+        <div className="pl-6 pr-6 pb-12">
+          <Paper
+            style={{
+              display: display ? 'flex' : 'none',
+              padding: 20,
+              overflow: 'auto',
+            }}
+          >
             <CustomInput
               name="find_slider_name"
               id="slider-name"
@@ -171,7 +207,7 @@ export class SliderManagePage extends React.Component {
           >
             <AddIcon />
           </Fab>
-        </PageContent>
+        </div>
       </>
     );
   }
