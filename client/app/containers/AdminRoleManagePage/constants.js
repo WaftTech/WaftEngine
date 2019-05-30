@@ -9,6 +9,9 @@ export const DEFAULT_ACTION = 'app/AdminRoleManage/DEFAULT_ACTION';
 export const SET_ONE_VALUE = 'app/AdminRoleManage/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/AdminRoleManage/CLEAR_ONE';
 
+export const SET_QUERY_VALUE = 'app/AdminRoleManage/SET_QUERY_VALUE';
+export const CLEAR_QUERY = 'app/AdminRoleManage/CLEAR_QUERY';
+
 export const LOAD_ALL_REQUEST = 'app/AdminRoleManage/LOAD_ALL_REQUEST';
 export const LOAD_ALL_SUCCESS = 'app/AdminRoleManage/LOAD_ALL_SUCCESS';
 export const LOAD_ALL_FAILURE = 'app/AdminRoleManage/LOAD_ALL_FAILURE';
