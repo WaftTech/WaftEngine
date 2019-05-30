@@ -24,6 +24,12 @@ export const makeSelectOne = () =>
     substate => substate.one,
   );
 
+export const makeSelectQuery = () =>
+  createSelector(
+    selectAdminRoleManageDomain,
+    substate => substate.query,
+  );
+
 /**
  * Default selector used by AdminRoleManage
  */

@@ -99,12 +99,13 @@ class AddEdit extends React.PureComponent {
     this.props.loadCategoryRequest();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
-    if(this.props.one !== nextProps.one){
-      const {one} = nextProps;
-      if(one.image && one.image.fieldname){
-        const tempImage = one.image && one.image.path && `${IMAGE_BASE}${one.image.path}`;
-        this.setState({...one, tempImage});
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.one !== nextProps.one) {
+      const { one } = nextProps;
+      if (one.image && one.image.fieldname) {
+        const tempImage =
+          one.image && one.image.path && `${IMAGE_BASE}${one.image.path}`;
+        this.setState({ ...one, tempImage });
       }
     }
   }
@@ -300,7 +301,33 @@ class AddEdit extends React.PureComponent {
               );
             })}
           </Paper>
-
+          <TextField
+            name="meta-description"
+            label="Meta Description"
+            value={one.meta_description || ''}
+            onChange={this.handleChange('meta_description')}
+            InputProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            name="meta-tag"
+            label="Meta Tag"
+            value={one.meta_tag || ''}
+            onChange={this.handleChange('meta_tag')}
+            InputProps={{
+              shrink: true,
+            }}
+          />
+          <CustomInput
+            name="keywords"
+            id="blog-meta-keywords"
+            placeholder="Meta Keywords"
+            inputProps={{
+              value: one.keywords || '',
+              onChange: this.handleChange('keywords'),
+            }}
+          />
           <CustomInput
             name="Author"
             id="blog-author"

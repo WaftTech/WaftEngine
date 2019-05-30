@@ -13,6 +13,11 @@ roleController.GetRoles = async (req, res, next) => {
   let searchq;
   let sortq;
   let selectq;
+  if(req.query.page && req.query.page==0){
+    selectq = 'role_title description is_active is_deleted';
+    const roles = await roleSch.find({is_deleted: false}).select(selectq);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!!', null);
+  }
   if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
     page = Math.abs(req.query.page);
   } else {
