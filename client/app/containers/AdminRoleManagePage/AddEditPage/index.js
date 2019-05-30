@@ -86,7 +86,7 @@ class AddEdit extends React.PureComponent {
                 fullWidth
                 margin="normal"
                 InputLabelProps={{
-                  shrink: 'true',
+                  shrink: true,
                 }}
               />
               <TextField
@@ -99,7 +99,7 @@ class AddEdit extends React.PureComponent {
                 fullWidth
                 margin="normal"
                 InputLabelProps={{
-                  shrink: 'true',
+                  shrink: true,
                 }}
               />
               <FormControlLabel

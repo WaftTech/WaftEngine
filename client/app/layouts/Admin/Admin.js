@@ -160,7 +160,7 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
         >
           <Link to="/">
             <img
-              className="mt-3 mb-6 ml-4 mx-auto flex"
+              className="mt-3 mb-6 ml-4 mx-auto flex grayscale1"
               src={Logo}
               alt="waft engine"
             />
@@ -168,18 +168,19 @@ const AdminLayout = ({ classes, logoutRequest: logout }) => {
           <MainListItems />
         </div>
         <main className="h-screen flex-1 overflow-auto">
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
-          <AccountCircle onClick={handleMenu} />
-          <div
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            open={anchorOpen}
-            onClose={handleClose}
-          >
-            <div onClick={handleClose}>Dashboard</div>
-            <div onClick={handleLogout}>Logout</div>
+          <div className="flex justify-end flex1 border-b pt-2 pb-2 pl-6 pr-6">
+            <AccountCircle onClick={handleMenu} />
+            <div
+              className="hidden"
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              open={anchorOpen}
+              onClose={handleClose}
+            >
+              <div onClick={handleClose}>Dashboard</div>
+              <div onClick={handleLogout}>Logout</div>
+            </div>
           </div>
-        </div> */}
           {switchRoutes}
         </main>
       </div>

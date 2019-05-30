@@ -67,6 +67,12 @@ router.post('/detail/:id', authorization, authentication, uploader.single('file'
  * @access Public
  */
 router.post('/', userModule.CheckMail);
+/**
+ * @route POST api/user
+ * @description Check user is returning user or new
+ * @access Public
+ */
+router.post('/change', userModule.PostUser);
 
 /**
  * @route POST api/user/register
