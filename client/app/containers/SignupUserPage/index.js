@@ -39,8 +39,27 @@ const SignupUserPage = ({
   };
 
   return (
-    <div className="container mx-auto pl-2 pr-2 mt-24 mb-24">
-      <div className=" max-w-xs">
+    <div className="flex h-screen">
+    <div className="hidden md:block md:w-3/5 login-l">
+      <div className="waftltext px-5 text-white lg:px-32">
+      <h1>Waft Engine</h1>
+      <p>A Powerful Mern Engine</p>
+      <ul className="fealogin mt-10">
+        <li>Quick Scaffolding</li>
+        <li>Instant feedback</li>
+        <li>Predictable state management</li>
+        <li>Next generation javascript</li>
+        <li>Next generation CSS</li>
+        <li>Industry-stand routing</li>
+        <li>Industry-standard internationalization support</li>
+        <li>Offline first</li>
+        <li>Static code analysis</li>
+      </ul>
+      </div>
+    </div>
+
+    <div className="login-R w-full md:w-2/5 relative block">
+      <div className="walfRlogin px-10 md:px-12 lg:px-16 xl:px-24 w-full"> 
         <h1 className="font-light">SIGN UP</h1>
         <form className="mt-4" onSubmit={handleSubmit}>
           <NameInput />
@@ -48,7 +67,7 @@ const SignupUserPage = ({
           <PasswordInput />
           {/* <GenderInput /> */}
           <button
-            className="bg-grey-darker hover:bg-grey-dark text-white py-2 px-4 rounded mt-4 mb-2 w-full"
+            className="text-white py-2 px-4 rounded mt-4 w-full btn-waft"
             type="submit"
           >
             SIGN UP
@@ -103,6 +122,7 @@ const SignupUserPage = ({
             />
           </div>
         </form>
+        </div>
       </div>
     </div>
   );
