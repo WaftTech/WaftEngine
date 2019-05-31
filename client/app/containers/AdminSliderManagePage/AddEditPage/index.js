@@ -101,7 +101,7 @@ const SortableImageList = SortableContainer(({items, _this}) => {
   return (
     <ul>
       {items.map((value, index) => (
-        <SortableImageItem key={`item-image-${index}`} index={index} value={value} _this={_this}/>
+        <SortableImageItem key={`${value._id}-item-image-${index}`} index={index} value={value} _this={_this}/>
       ))}
     </ul>
   );
@@ -126,7 +126,7 @@ class AddEdit extends React.PureComponent {
     }),
   };
 
-  state = { open: false, index: -1, subheader: 'Slider Add', items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']};
+  state = { open: false, index: -1, subheader: 'Slider Add'};
 
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
@@ -320,7 +320,13 @@ class AddEdit extends React.PureComponent {
               >
                 Add Slide
               </Button>
-              <div>
+              <div
+              style={{
+                marginTop: 20,
+                padding: 20,
+                background: '#f0f0f0',
+                borderRadius: '6px',
+              }}>
                 <SortableImageList items={one.images} _this={this} onSortEnd={this.onImageSortEnd}/>
               </div>
             </CardBody>
