@@ -100,7 +100,7 @@ sliderController.GetSliderById = async (req, res, next) => {
     let populate = [
       {
         path: 'images.image',
-        // select: '_id path mimetype filename size',
+        select: '_id path mimetype filename size',
       },
     ];
     const slider = await sliderSch
