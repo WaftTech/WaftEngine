@@ -539,7 +539,8 @@ userController.Info = (req, res, next) => {
 };
 userController.GetProfile = async (req, res, next) => {
   try {
-    const userProfile = await users.findById(req.user.id, 'name location date_of_birth phone bio description email added_at email_verified  company_name company_location company_established company_phone_no');
+    let populate = [{ path: 'roles', select: '_id role_title' }];
+    const userProfile = await users.findById(req.user.id, 'name date_of_birth email added_at email_verified roles avatar').populate(populate);
     return otherHelper.sendResponse(res, httpStatus.OK, true, userProfile, null, null, null);
   } catch (err) {
     next(err);
