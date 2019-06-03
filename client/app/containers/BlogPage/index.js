@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectBlog } from './selectors';
+import { makeSelectBlog, makeSelectLoading } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { IMAGE_BASE } from '../App/constants';
@@ -47,9 +47,10 @@ export class BlogPage extends React.Component {
   }
 
   render() {
-    const { blog } = this.props;
-    console.log(blog);
-    return (
+    const { blog, loading } = this.props;
+    return loading && loading == true ? (
+      <div>loading</div>
+    ) : (
       <div className="container">
         <div className="justify-center">
           <Helmet>
@@ -101,6 +102,7 @@ const withSaga = injectSaga({ key: 'blogPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   blog: makeSelectBlog(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
