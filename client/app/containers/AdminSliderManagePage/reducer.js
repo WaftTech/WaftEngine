@@ -20,7 +20,7 @@ export const initialState = {
     size: 10,
     totaldata: 0,
   },
-  query: { find_slider_name: '', size: 3 },
+  query: { find_slider_name: '', size: 10 },
 };
 
 /* eslint-disable default-case, no-param-reassign */
