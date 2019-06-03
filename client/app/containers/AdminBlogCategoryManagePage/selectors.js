@@ -32,3 +32,8 @@ export const makeSelectOne = () =>
     selectAdminBlogCategoryManagePageDomain,
     substate => substate.one,
   );
+export const makeSelectLoading = () =>
+  createSelector(
+    selectAdminBlogCategoryManagePageDomain,
+    state => state.loading,
+  );
