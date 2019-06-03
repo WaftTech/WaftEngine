@@ -55,6 +55,7 @@ const styles = theme => ({
   },
 });
 const SortableImageItem = SortableElement(({value, index, _this}) => <div>
+  <Grid container spacing={24}>
   <Grid item xs={3} style={{ textAlign: 'center' }}>
     {value.image ? (
       <img
@@ -94,6 +95,8 @@ const SortableImageItem = SortableElement(({value, index, _this}) => <div>
       <DeleteIcon />
     </IconButton>
   </Grid>
+  </Grid>
+  <br/>
   </div>
   );
 
