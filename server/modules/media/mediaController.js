@@ -14,6 +14,10 @@ mediaController.GetMediaPagination = async (req, res, next) => {
     let searchq;
     let populate;
     let selectq;
+    if (req.query.page && req.query.page == 0) {
+      const media = await mediaSch.find({ is_deleted: false });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'all media success!!', null);
+    }
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
     } else {
