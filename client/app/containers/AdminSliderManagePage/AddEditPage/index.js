@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -53,7 +54,61 @@ const styles = theme => ({
     '& > img': { maxWidth: '100%' },
   },
 });
+const SortableImageItem = SortableElement(({value, index, _this}) => <div>
+  <Grid container spacing={24}>
+  <Grid item xs={3} style={{ textAlign: 'center' }}>
+    {value.image ? (
+      <img
+        src={`${IMAGE_BASE}public/300-300/media/${
+          value.image.filename
+        }`}
+      />
+    ) : (
+      <Button
+        color="primary"
+        onClick={_this.handleSetImage(index)}
+      >
+        Add Image
+      </Button>
+    )}
+  </Grid>
+  <Grid item xs={7}>
+    <TextField
+      variant="outlined"
+      fullWidth
+      multiline
+      rows="2"
+      id={`slider-caption-${index}`}
+      label="Caption"
+      value={value.caption}
+      onChange={_this.handleImageCaptionChange(index)}
+      InputLabelProps={{
+        shrink: true,
+      }}
+    />
+  </Grid>
+  <Grid item xs={2}>
+    <IconButton
+      color="secondary"
+      onClick={() => _this.handleRemoveSlide(index)}
+    >
+      <DeleteIcon />
+    </IconButton>
+  </Grid>
+  </Grid>
+  <br/>
+  </div>
+  );
 
+const SortableImageList = SortableContainer(({items, _this}) => {
+  return (
+    <ul>
+      {items.map((value, index) => (
+        <SortableImageItem key={`${value._id}-item-image-${index}`} index={index} value={value} _this={_this}/>
+      ))}
+    </ul>
+  );
+});
 class AddEdit extends React.PureComponent {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -74,7 +129,7 @@ class AddEdit extends React.PureComponent {
     }),
   };
 
-  state = { open: false, index: -1, subheader: 'Slider Add' };
+  state = { open: false, index: -1, subheader: 'Slider Add'};
 
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
@@ -132,10 +187,6 @@ class AddEdit extends React.PureComponent {
     this.setState({ open: true, index });
   };
 
-  onDragEnd = result => {
-    //
-  };
-
   handleGoBack = () => {
     this.props.push('/admin/slider-manage');
   };
@@ -148,6 +199,9 @@ class AddEdit extends React.PureComponent {
     this.props.loadMediaRequest(query);
   };
 
+  onImageSortEnd = ({oldIndex, newIndex}) => {
+    this.props.setOneValue({ key: 'images', value: arrayMove(this.props.one.images, oldIndex, newIndex)})
+  };
   render() {
     const { one, classes, media } = this.props;
     const { subheader } = this.state;
@@ -214,7 +268,6 @@ class AddEdit extends React.PureComponent {
             ))}
           </DialogContent>
         </Dialog>
-        <DragDropContext onDragEnd={this.onDragEnd}>
           <Card>
             <CardHeader color="primary" title="Slider" subheader={subheader} />
             <CardBody>
@@ -270,77 +323,15 @@ class AddEdit extends React.PureComponent {
               >
                 Add Slide
               </Button>
-              <Droppable droppableId="slider-droppable">
-                {(provided) => {
-                  one.images.map((each, index) => (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{
-                        marginTop: 20,
-                        padding: 20,
-                        background: '#f0f0f0',
-                        borderRadius: '6px',
-                      }}
-                      key={`${each._id}-media-${index}`}
-                    >
-                      <Draggable
-                        draggableId={each.image.filename}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <div
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                          >
-                            <Grid item xs={3} style={{ textAlign: 'center' }}>
-                              {each.image ? (
-                                <img
-                                  src={`${IMAGE_BASE}public/300-300/media/${
-                                    each.image.filename
-                                  }`}
-                                />
-                              ) : (
-                                <Button
-                                  color="primary"
-                                  onClick={this.handleSetImage(index)}
-                                >
-                                  Add Image
-                                </Button>
-                              )}
-                            </Grid>
-                            <Grid item xs={7}>
-                              <TextField
-                                variant="outlined"
-                                fullWidth
-                                multiline
-                                rows="2"
-                                id={`slider-caption-${index}`}
-                                label="Caption"
-                                value={each.caption}
-                                onChange={this.handleImageCaptionChange(index)}
-                                InputLabelProps={{
-                                  shrink: true,
-                                }}
-                              />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <IconButton
-                                color="secondary"
-                                onClick={() => this.handleRemoveSlide(index)}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </Grid>
-                          </div>
-                        )}
-                      </Draggable>
-                      {provided.placeholder}
-                    </div>
-                  ));
-                }}
-              </Droppable>
+              <div
+              style={{
+                marginTop: 20,
+                padding: 20,
+                background: '#f0f0f0',
+                borderRadius: '6px',
+              }}>
+                <SortableImageList items={one.images} _this={this} onSortEnd={this.onImageSortEnd}/>
+              </div>
             </CardBody>
             <CardActions style={{ marginBottom: '100px' }}>
               <Button
@@ -359,7 +350,6 @@ class AddEdit extends React.PureComponent {
               </Button>
             </CardActions>
           </Card>
-        </DragDropContext>
       </>
     );
   }

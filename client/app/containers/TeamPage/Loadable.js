@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for ProfilePage
+ * Asynchronously loads the component for TeamPage
  *
  */
 

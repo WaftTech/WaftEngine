@@ -15,7 +15,7 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `media?${query}`,
+      `media?page=0${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
