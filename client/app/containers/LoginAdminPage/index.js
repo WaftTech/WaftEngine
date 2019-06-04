@@ -30,10 +30,6 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
   return (
     <div className="flex h-screen">
       <div className="hidden md:block md:w-3/5 login-l">
-        {/* <img
-          className="w-full"
-          src="https://source.unsplash.com/collection/175083/500x900/daily/"
-        /> */}
         <div className="waftltext px-5 text-white lg:px-32">
         <h1>Waft Engine</h1>
         <p>A Powerful Mern Engine</p>
