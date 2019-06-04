@@ -35,6 +35,22 @@ authMiddleware.authorization = async (req, res, next) => {
     return next(err);
   }
 };
+
+authMiddleware.authorizationForLogout = async (req, res, next) => {
+  try {
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
+    if (token && token.length) {
+      token = token.replace('Bearer ', '');
+      const d = await jwt.verify(token, secretOrKey);
+      req.user = d;
+      return next();
+    }
+    return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, token, 'token not found', null);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 authMiddleware.authentication = async (req, res, next) => {
   try {
     // return next();

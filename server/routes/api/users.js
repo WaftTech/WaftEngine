@@ -23,7 +23,7 @@ const uploader = fileUpload.uploader;
 // });
 
 const userModule = require('../../modules/user/userController');
-const { authorization, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
+const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
 /**
  * @route GET api/user/test
  * @description Tests users route
@@ -177,7 +177,7 @@ router.post('/loginlogs/logout', authorization, validateRegisterInput.validateLo
  * @description remove token from loginlog
  * @access Public
  */
-router.get('/logout', authorization, loginlogs.logout);
+router.get('/logout', authorizationForLogout, loginlogs.logout);
 
 /**
  * @route GET api/user/profile

@@ -78,3 +78,15 @@ export const loadSlideFailure = payload => ({
   type: types.LOAD_SLIDE_FAILURE,
   payload,
 });
+export const availableRequest = payload => ({
+  type: types.LOAD_AVAILABLE_REQUEST,
+  payload,
+});
+export const availableSuccess = payload => ({
+  type: types.LOAD_AVAILABLE_SUCCESS,
+  payload,
+});
+export const availableFailure = payload => ({
+  type: types.LOAD_AVAILABLE_FAILURE,
+  payload,
+});

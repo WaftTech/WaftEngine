@@ -26,7 +26,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery, makeSelectCategory } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -85,10 +85,11 @@ export class BlogManagePage extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes} = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ title, category, image, published_on, added_at, is_published, is_active, tags, author, _id }) => [
@@ -115,6 +116,7 @@ export class BlogManagePage extends React.Component {
       </React.Fragment>,
     ]);
     return (
+      loading && loading == true ? <div>loading</div> : 
       <>
         <PageHeader>Blog Manage</PageHeader>
         <PageContent>
@@ -186,6 +188,7 @@ export class BlogManagePage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

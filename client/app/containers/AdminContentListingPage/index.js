@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
-import { Paper, InputBase, Divider } from '@material-ui/core';
+import { Paper, InputBase, Divider, Grid } from '@material-ui/core';
 
 // core components
 import Table from 'components/Table';
@@ -90,62 +90,69 @@ export class ContentsListingPage extends React.Component {
       query,
     } = this.props;
     const tablePagination = { page, size, totaldata };
-    const tableData = data.map(
-      ({
-        name,
-        key,
-        publish_from,
-        publish_to,
-        is_active,
-        is_feature,
-        added_at,
-        _id,
-      }) => [
-        name,
-        key,
-        // moment(publish_from).format('MMM Do YY'),
-        // moment(publish_to).format('MMM Do YY'),
-        `${is_active}`,
-        moment(added_at).format('MMM Do YY'),
-        <>
-          <Tooltip
-            id="tooltip-top"
-            title="Edit Task"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
+    const tableData = data.map(({ name, key, is_active, added_at, _id }) => [
+      name,
+      key,
+      `${is_active}`,
+      moment(added_at).format('MMM Do YY'),
+      <>
+        <Tooltip
+          id="tooltip-top"
+          title="Edit Task"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            onClick={() => this.handleEdit(_id)}
           >
-            <IconButton
-              aria-label="Edit"
-              className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
-            >
-              <Edit
-                className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-              />
-            </IconButton>
-          </Tooltip>
-        </>,
-      ],
-    );
+            <Edit
+              className={`${classes.tableActionButtonIcon} ${classes.edit}`}
+            />
+          </IconButton>
+        </Tooltip>
+      </>,
+    ]);
     return (
       <>
         <PageHeader>Content Manage</PageHeader>
         <PageContent>
-          {/* <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-            <InputBase
-              name="find_name"
-              id="contents-name"
-              placeholder="Search Contents"
-              fullWidth
-              value={query.find_name}
-              onChange={this.handleQueryChange}
-            />
-            <Divider style={{ width: 1, height: 40, margin: 4 }} />
-            <IconButton aria-label="Search" onClick={this.handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <br /> */}
+          <Grid container>
+            <Grid item xs={12} sm={12}>
+              <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+                <InputBase
+                  name="find_name"
+                  id="contents-name"
+                  placeholder="Search Contents by name"
+                  fullWidth
+                  value={query.find_name}
+                  onChange={this.handleQueryChange}
+                />
+                <Divider style={{ width: 1, height: 40, margin: 4 }} />
+                <IconButton aria-label="Search" onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+                <InputBase
+                  name="find_key"
+                  id="contents-key"
+                  placeholder="Search Contents  by key"
+                  fullWidth
+                  value={query.find_key}
+                  onChange={this.handleQueryChange}
+                />
+                <Divider style={{ width: 1, height: 40, margin: 4 }} />
+                <IconButton aria-label="Search" onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+          </Grid>
+          <br />
           <Table
             tableHead={[
               'Name',
