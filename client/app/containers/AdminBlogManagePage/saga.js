@@ -98,6 +98,36 @@ function* addEditFail(action) {
 
   yield put(enqueueSnackbar(defaultError));
 }
+function* deleteBlog(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(
+      `blog/${action.payload}`,
+      actions.deleteOneSuccess,
+      actions.deleteOneFailure,
+      token,
+    ),
+  );
+}
+function* deleteSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Blog delete success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* deleteFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while deleting!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
 
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
@@ -105,4 +135,7 @@ export default function* defaultSaga() {
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFail);
   yield takeLatest(types.LOAD_CATEGORY_REQUEST, loadCategory);
+  yield takeLatest(types.DELETE_ONE_REQUEST, deleteBlog);
+  yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
+  yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
 }

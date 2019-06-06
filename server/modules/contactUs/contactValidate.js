@@ -85,7 +85,7 @@ validateInput.validate = async (req, res, next) => {
     },
   ];
   const errors = otherHelper.validation(data, validateArray);
-  // console.log(errors);
+  console.log(errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.OK, false, null, errors, config.valErr, null);
   } else {

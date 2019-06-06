@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
+import Close from '@material-ui/icons/Close';
 import { Paper, InputBase, Divider, Grid } from '@material-ui/core';
 
 // core components
@@ -24,7 +25,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading} from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -44,6 +45,7 @@ const styles = theme => ({
 export class ContentsListingPage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
+    deleteOneRequest: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -79,6 +81,10 @@ export class ContentsListingPage extends React.Component {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleDelete = id => {
+    this.props.deleteOneRequest(id);
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -88,6 +94,7 @@ export class ContentsListingPage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ name, key, is_active, added_at, _id }) => [
@@ -112,9 +119,26 @@ export class ContentsListingPage extends React.Component {
             />
           </IconButton>
         </Tooltip>
+        <Tooltip
+          id="tooltip-top-start"
+          title="Remove"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="Close"
+              className={classes.tableActionButton}
+              onClick={() => this.handleDelete(_id)}
+            >
+              <Close className={classes.tableActionButtonIcon + ' ' + classes.close} />
+            </IconButton>
+        </Tooltip>
       </>,
     ]);
     return (
+      loading && loading == true ? (
+        <div>loading</div>
+      ) : ( 
       <>
         <PageHeader>Content Manage</PageHeader>
         <PageContent>
@@ -179,6 +203,7 @@ export class ContentsListingPage extends React.Component {
           </Fab>
         </PageContent>
       </>
+      )
     );
   }
 }
@@ -186,6 +211,7 @@ export class ContentsListingPage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

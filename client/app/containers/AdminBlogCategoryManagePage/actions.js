@@ -50,6 +50,19 @@ export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
 });
+
+export const deleteCatRequest = payload => ({
+  type: types.DELETE_CAT_REQUEST,
+  payload,
+});
+export const deleteCatSuccess = payload => ({
+  type: types.DELETE_CAT_SUCCESS,
+  payload,
+});
+export const deleteCatFailure = payload => ({
+  type: types.DELETE_CAT_FAILURE,
+  payload,
+});
 export const clearOne = () => ({
   type: types.CLEAR_ONE,
 });

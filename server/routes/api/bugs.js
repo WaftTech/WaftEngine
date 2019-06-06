@@ -6,4 +6,6 @@ const { authorization, authentication } = require('../../middleware/authenticati
 
 router.get('/', authorization, authentication, bugModule.GetErrors);
 router.get('/grby', authorization, bugModule.GetErrorsGRBY);
+router.delete('/all', authorization, bugModule.DeleteAll);
+router.delete('/:id', authorization, bugModule.DeleteError);
 module.exports = router;
