@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
+import Helmet from 'react-helmet';
+
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -186,10 +188,17 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, category, tempTag } = this.props;
+    const { classes, one, category, tempTag, match} = this.props;
     const { tempImage } = this.state;
     return (
       <React.Fragment>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Blog'
+              : 'Add Blog'}
+          </title>
+        </Helmet>
         <PageHeader>
           <IconButton
             className="cursor-pointer"
@@ -198,7 +207,9 @@ class AddEdit extends React.PureComponent {
           >
             <BackIcon />
           </IconButton>
-          Blog > Add
+          {match && match.params && match.params.id
+            ? 'Edit Blog'
+            : 'Add Blog'}
         </PageHeader>
         <PageContent>
           <TextField

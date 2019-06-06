@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -15,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
 import CustomInput from '@material-ui/core/Input';
@@ -27,7 +29,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -90,8 +92,7 @@ export class SliderManagePage extends React.Component {
   };
 
   handleDelete = id => {
-    // show modal && api call
-    // this.props.history.push(`/wt/contents-manage/edit/${id}`);
+    this.props.deleteOneRequest(id);
   };
 
   handleToggle = () => {
@@ -105,6 +106,7 @@ export class SliderManagePage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -150,8 +152,13 @@ export class SliderManagePage extends React.Component {
         </React.Fragment>,
       ],
     );
-    return (
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
+        <Helmet>
+          <title>Slider Listing</title>
+        </Helmet>
         <div className="flex justify-between items-center mt-4 mr-6 mb-2 ml-6">
           <h1 className="font-light text-2xl">Slider Manage</h1>
           <button
@@ -216,6 +223,7 @@ export class SliderManagePage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

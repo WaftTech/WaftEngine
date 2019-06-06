@@ -23,6 +23,11 @@ export const makeSelectOne = () =>
     selectAdminTemplateListingPageDomain,
     substate => substate.one,
   );
+export const makeSelectLoading = () =>
+  createSelector(
+    selectAdminTemplateListingPageDomain,
+    substate => substate.loading,
+  );
 
 /**
  * Default selector used by AdminTemplateListingPage

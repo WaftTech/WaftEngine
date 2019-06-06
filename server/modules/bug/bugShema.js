@@ -7,6 +7,7 @@ const bugSchema = new schema({
   error_type: { type: String },
   added_at: { type: Date, default: Date.now },
   added_by: { type: schema.Types.ObjectId, ref: 'users' },
+  is_deleted: { type: Boolean, default: false },
   device: { type: schema.Types.Mixed },
   ip: { type: schema.Types.Mixed },
 });

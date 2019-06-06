@@ -78,7 +78,6 @@ export class AdminRoleManage extends React.PureComponent {
   };
 
   handleDelete = id => {
-    confirm('Are you sure you want to delete this role??');
     this.props.deleteOneRequest(id);
   };
 

@@ -13,6 +13,7 @@ import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectOne } from './selectors';
 import { makeSelectToken } from '../App/selectors';
+import { enqueueSnackbar } from '../App/actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
@@ -64,9 +65,42 @@ function* addEdit() {
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
   yield cancel(sucessWatcher);
 }
+function* deleteCat(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(
+      `faq/cat/${action.payload}`,
+      actions.deleteCatSuccess,
+      actions.deleteCatFailure,
+      token,
+    ),
+  );
+}
+function* deleteSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Blog Category delete success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* deleteFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while deleting!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
 // Individual exports for testing
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
+  yield takeLatest(types.DELETE_CAT_REQUEST, deleteCat);
+  yield takeLatest(types.DELETE_CAT_SUCCESS, deleteSuccessFunc);
+  yield takeLatest(types.DELETE_CAT_FAILURE, deleteFailureFunc);
 }

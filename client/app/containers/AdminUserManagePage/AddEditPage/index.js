@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -89,6 +90,9 @@ class AddEdit extends React.PureComponent {
     } = this.props;
     return (
       <>
+       <Helmet>
+          <title>{id ? 'Edit User' : 'Add User'}</title>
+        </Helmet>
         <PageHeader>{id ? 'Edit' : 'Add'} User</PageHeader>
         <PageContent>
           <Grid container spacing={24}>

@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
@@ -71,9 +72,14 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, category, one } = this.props;
+    const { classes, category, one, match } = this.props;
     return (
       <div>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
+          </title>
+        </Helmet>
         <PageHeader>
           <ArrowBack className="cursor-pointer" onClick={this.handleGoBack} />
         </PageHeader>
