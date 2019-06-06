@@ -7,6 +7,7 @@
 export const DEFAULT_ACTION = 'app/AdminUserManagePage/DEFAULT_ACTION';
 
 export const SET_ONE_VALUE = 'app/AdminUserManagePage/SET_ONE_VALUE';
+export const SET_QUERY_VALUE = 'app/AdminUserManagePage/SET_QUERY_VALUE';
 export const CLEAR_ONE = 'app/AdminUserManagePage/CLEAR_ONE';
 
 export const LOAD_ALL_REQUEST = 'app/AdminUserManagePage/LOAD_ALL_REQUEST';

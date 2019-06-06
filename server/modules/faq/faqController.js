@@ -221,6 +221,22 @@ faqController.DeleteFaq = async (req, res, next) => {
   });
   return otherHelper.sendResponse(res, httpStatus.OK, true, faq, null, faqConfig.faqDelete, null);
 };
+
+faqController.DeleteFaqCat = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const delCat = await faqCatSch.findByIdAndUpdate(id, {
+      $set: {
+        is_deleted: true,
+        deleted_at: new Date(),
+      },
+    });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, delCat, null, 'faq cat deleted!!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
 faqController.GetFaqAndCat = async (req, res, next) => {
   const cat = await faqCatSch.find().select('title');
   const faq = await faqSch.find({ is_deleted: false }).select('title question category');

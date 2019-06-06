@@ -11,14 +11,17 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import moment from 'moment';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
+
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
-import { Paper, Divider } from '@material-ui/core';
+import { Paper, Divider, Button } from '@material-ui/core';
 import CustomInput from '@material-ui/core/Input';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
 import Table from 'components/Table';
@@ -28,7 +31,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -39,6 +42,8 @@ const styles = theme => ({});
 export class AdminErrorManagePage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
+    errorDeleteRequest: PropTypes.func.isRequired,
+    deleteAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
@@ -55,7 +60,13 @@ export class AdminErrorManagePage extends React.Component {
     this.props.loadAllRequest(this.props.query);
   }
 
-  handleDelete = id => {};
+  handleDelete = id => {
+    this.props.errorDeleteRequest(id);
+  };
+
+  handleDeleteAll = () => {
+    this.props.deleteAllRequest();
+  };
 
   handleQueryChange = e => {
     e.persist();
@@ -75,20 +86,11 @@ export class AdminErrorManagePage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({
-        error_message,
-        error_stack,
-        error_type,
-        added_at,
-        is_published,
-        is_active,
-        tags,
-        author,
-        _id,
-      }) => [
+      ({ error_message, error_stack, error_type, added_at, _id }) => [
         error_message,
         error_stack,
         error_type,
@@ -96,7 +98,7 @@ export class AdminErrorManagePage extends React.Component {
         <React.Fragment>
           <Tooltip
             id="tooltip-top-start"
-            title="Remove"
+            title="Remove from list"
             placement="top"
             classes={{ tooltip: classes.tooltip }}
           >
@@ -113,8 +115,13 @@ export class AdminErrorManagePage extends React.Component {
         </React.Fragment>,
       ],
     );
-    return (
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
+        <Helmet>
+          <title>Error Listing</title>
+        </Helmet>
         <PageHeader>Error Manage</PageHeader>
         <PageContent>
           <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
@@ -137,6 +144,14 @@ export class AdminErrorManagePage extends React.Component {
               <SearchIcon />
             </IconButton>
           </Paper>
+          <br />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.handleDeleteAll}
+          >
+            Delete All
+          </Button>
           <br />
           <Paper
             style={{
@@ -170,6 +185,7 @@ export class AdminErrorManagePage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

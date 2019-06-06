@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -59,10 +60,11 @@ class AddEdit extends React.PureComponent {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.value });
   };
+
   handleCheckedChange = name => event => {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.checked });
-  }
+  };
 
   handleGoBack = () => {
     this.props.push('/admin/faq-cat-manage');
@@ -73,36 +75,49 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one } = this.props;
+    const { classes, one, match } = this.props;
     return (
       <div>
-        <PageHeader> Add/Edit FAQ Category</PageHeader>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Faq Category'
+              : 'Add Faq Category'}
+          </title>
+        </Helmet>
+        <PageHeader>
+          {match && match.params && match.params.id
+            ? 'Edit Faq Category'
+            : 'Add Faq Category'}
+        </PageHeader>
         <PageContent>
           <Paper className={classes.p20}>
-          <div>
-            <TextField
-              name="Title"
-              id="title"
-              label="Title"
-              value={one.title}
-              onChange={this.handleChange('title')}
-              margin="normal"
-              fullWidth
-            />
+            <div>
+              <TextField
+                name="Title"
+                id="title"
+                label="Title"
+                value={one.title}
+                onChange={this.handleChange('title')}
+                margin="normal"
+                fullWidth
+              />
             </div>
             <div>
-            <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
-            />
+              <InputLabel style={{ color: '#AAAAAA' }}>
+                Activity Type
+              </InputLabel>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_active || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_active')}
+                    color="primary"
+                  />
+                }
+                label="Is Active"
+              />
             </div>
             <Button
               variant="contained"
@@ -128,7 +143,10 @@ class AddEdit extends React.PureComponent {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: 'adminFaqCategoryManagePage', reducer });
+const withReducer = injectReducer({
+  key: 'adminFaqCategoryManagePage',
+  reducer,
+});
 const withSaga = injectSaga({ key: 'adminFaqCategoryManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
