@@ -6,15 +6,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
+import Close from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
@@ -24,6 +25,7 @@ import CustomInput from '@material-ui/core/Input';
 import Table from 'components/Table';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -76,8 +78,11 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
   };
 
   handleEdit = id => {
-    this.props.push(`/admin/blogCat-manage/edit/${id}`);
+    this.props.push(`/admin/blog-cat-manage/edit/${id}`);
   };
+  handleDelete = id => {
+    this.props.deleteCatRequest(id);
+  }
 
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
@@ -85,7 +90,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
 
   handleAdd = () => {
     this.props.clearOne();
-    this.props.push('/admin/blogCat-manage/add');
+    this.props.push('/admin/blog-cat-manage/add');
   };
 
   render() {
@@ -119,13 +124,32 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
               />
             </IconButton>
           </Tooltip>
+          <Tooltip
+            id="tooltip-top-start"
+            title="Remove"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="Close"
+              className={classes.tableActionButton}
+              onClick={() => this.handleDelete(_id)}
+            >
+              <Close
+                className={`${classes.tableActionButtonIcon} ${classes.close}`}
+              />
+            </IconButton>
+          </Tooltip>
         </>,
       ],
     );
     return loading && loading == true ? (
-      <div>loading</div>
+      <CircularProgress color="primary" disableShrink/>
     ) : (
       <>
+       <Helmet>
+          <title>Blog Category Listing</title>
+        </Helmet>
         <PageHeader>Blog Category Manage</PageHeader>
         <PageContent>
           <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
@@ -209,7 +233,6 @@ const withStyle = withStyles(styles);
 
 export default compose(
   withStyle,
-  withRouter,
   withReducer,
   withSaga,
   withConnect,

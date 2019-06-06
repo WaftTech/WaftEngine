@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -203,7 +204,7 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'images', value: arrayMove(this.props.one.images, oldIndex, newIndex)})
   };
   render() {
-    const { one, classes, media } = this.props;
+    const { one, classes, media, match } = this.props;
     const { subheader } = this.state;
 
     // media next prev logic
@@ -268,6 +269,13 @@ class AddEdit extends React.PureComponent {
             ))}
           </DialogContent>
         </Dialog>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </title>
+        </Helmet>
           <Card>
             <CardHeader color="primary" title="Slider" subheader={subheader} />
             <CardBody>

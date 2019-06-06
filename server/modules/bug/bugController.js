@@ -44,10 +44,10 @@ bugController.GetErrors = async (req, res, next) => {
         sortq = '';
       }
     }
-    selectq = 'error_message error_stack error_type added_at added_by device ip';
-    searchq = {};
+    selectq = 'error_message error_stack error_type added_at added_by device ip is_deleted';
+    searchq = { is_deleted: false };
     if (req.query.find_errors) {
-      searchq = { error_stack: req.query.find_errors, ...searchq };
+      searchq = { error_stack: { $regex: req.query.find_errors, $options: 'i' }, ...searchq };
     }
     populate = '';
     let bugs = await otherHelper.getquerySendResponse(bugSch, page, size, sortq, searchq, selectq, next, populate);
@@ -64,6 +64,23 @@ bugController.GetErrorsGRBY = async (req, res, next) => {
       totaldata = totaldata + each.count;
     });
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs, 'errors by group by get success!!', 1, 1, totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
+bugController.DeleteError = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const del = await bugSch.findByIdAndUpdate(id, { $set: { is_deleted: true } });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'bug delete success!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+bugController.DeleteAll = async (req, res, next) => {
+  try {
+    const dels = await bugSch.remove({});
+    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'all errors deleted!!', null);
   } catch (err) {
     next(err);
   }

@@ -148,6 +148,15 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   Blog
                 </Link>
               </li>
+              <li selected={pathname === '/admin/blog-cat-manage'}>
+                <Link
+                  to="/admin/blog-cat-manage"
+                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+                >
+                  <QuestionAnswerIcon className="mr-3" />
+                  Blog Category
+                </Link>
+              </li>
             </ul>
           </Collapse>
           <li
@@ -188,24 +197,6 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Modules
               </Link>
             </li>
-            <li selected={pathname === '/admin/contact-manage'}>
-              <Link
-                to="/admin/contact-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ExtensionIcon className="mr-3" />
-                Contacts
-              </Link>
-            </li>
-            <li selected={pathname === '/admin/subscribe-manage'}>
-              <Link
-                to="/admin/subscribe-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ExtensionIcon className="mr-3" />
-                Subscribes
-              </Link>
-            </li>
           </Collapse>
 
           <li
@@ -229,24 +220,6 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Template
               </Link>
             </li>
-            <li selected={pathname === '/admin/reports'}>
-              <Link
-                to="/admin/reports"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <InsertChartIcon className="mr-3" />
-                Reports
-              </Link>
-            </li>
-            <li selected={pathname === '/admin/integration'}>
-              <Link
-                to="/admin/integration"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <LayersIcon className="mr-3" />
-                Integrations
-              </Link>
-            </li>
           </Collapse>
           <li
             className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
@@ -259,6 +232,24 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
             {openFourthSet ? <ExpandLess /> : <ExpandMore />}
           </li>
           <Collapse in={openFourthSet} timeout="auto" unmountOnExit>
+            <li selected={pathname === '/admin/contact-manage'}>
+              <Link
+                to="/admin/contact-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+              >
+                <ExtensionIcon className="mr-3" />
+                Contacts
+              </Link>
+            </li>
+            <li selected={pathname === '/admin/subscribe-manage'}>
+              <Link
+                to="/admin/subscribe-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+              >
+                <ExtensionIcon className="mr-3" />
+                Subscribes
+              </Link>
+            </li>
             <li selected={pathname === '/admin/reports'}>
               <Link
                 to="/admin/reports"

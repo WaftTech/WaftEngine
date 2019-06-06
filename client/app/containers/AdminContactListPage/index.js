@@ -11,19 +11,20 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Close from '@material-ui/icons/Close';
 import View from '@material-ui/icons/RemoveRedEyeOutlined';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
 import CustomInput from '@material-ui/core/Input';
 import { Paper, Divider } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table/Table';
 
 import injectSaga from '../../utils/injectSaga';
@@ -31,7 +32,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -84,11 +85,16 @@ export class AdminContactListPage extends React.Component {
     this.props.push(`/admin/contact-manage/view/${id}`);
   };
 
+  handleDelete = id => {
+    this.props.deleteOneRequest(id);
+  };
+
   render() {
     const { classes } = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ name, email, subject, added_at, _id }) => [
@@ -114,10 +120,31 @@ export class AdminContactListPage extends React.Component {
             />
           </IconButton>
         </Tooltip>
+        <Tooltip
+          id="tooltip-top-start"
+          title="Remove"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Close"
+            className={classes.tableActionButton}
+            onClick={() => this.handleDelete(_id)}
+          >
+            <Close
+              className={`${classes.tableActionButtonIcon} ${classes.close}`}
+            />
+          </IconButton>
+        </Tooltip>
       </React.Fragment>,
     ]);
-    return (
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
+        <Helmet>
+          <title>Contact List</title>
+        </Helmet>
         <PageHeader>Contact List</PageHeader>
         <PageContent>
           <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
@@ -142,16 +169,6 @@ export class AdminContactListPage extends React.Component {
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
         </PageContent>
       </>
     );
@@ -161,6 +178,7 @@ export class AdminContactListPage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

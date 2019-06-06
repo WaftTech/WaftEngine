@@ -11,12 +11,15 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import ViewIcon from '@material-ui/icons/RemoveRedEye';
 import SearchIcon from '@material-ui/icons/Search';
+import Close from '@material-ui/icons/Close';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CustomInput from '@material-ui/core/Input';
 import { Paper, Divider } from '@material-ui/core';
@@ -24,7 +27,12 @@ import Table from 'components/Table/Table';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectAll, makeSelectOne, makeSelectQuery } from './selectors';
+import {
+  makeSelectAll,
+  makeSelectOne,
+  makeSelectQuery,
+  makeSelectLoading,
+} from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -74,6 +82,10 @@ export class AdminSubscribePage extends React.PureComponent {
     this.props.loadSubscriberRequest(this.props.query);
   };
 
+  handleDelete = id => {
+    this.props.deleteOneRequest(id);
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -83,6 +95,7 @@ export class AdminSubscribePage extends React.PureComponent {
       all: { data, page, size, totaldata },
       query,
       one,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ _id, email, is_subscribed, added_at }) => [
@@ -96,10 +109,20 @@ export class AdminSubscribePage extends React.PureComponent {
             <ViewIcon />
           </IconButton>
         </Tooltip>
+        <Tooltip id="tooltip-top" title="Remove" placement="top">
+          <IconButton onClick={() => this.handleDelete(_id)}>
+            <Close />
+          </IconButton>
+        </Tooltip>
       </React.Fragment>,
     ]);
-    return (
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
+        <Helmet>
+          <title>Subscriber List</title>
+        </Helmet>
         <PageHeader>Subscribe Manage</PageHeader>
         <PageContent>
           <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
@@ -134,6 +157,7 @@ export class AdminSubscribePage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
