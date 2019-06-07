@@ -78,20 +78,16 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
   const availableRoutes = arr;
 
   const loadCheckRoutes = () => {
-    // const accesses =
-    //   availableRoutes &&
-    //   availableRoutes.map(each => each.admin_routes.map(adroute => adroute));
-    const accesses = [];
     for (let i = 0; i < availableRoutes.length; i++) {
       for (let j = 0; j < availableRoutes[i].admin_routes.length; j++) {
         accesses.push(availableRoutes[i].admin_routes[j]);
       }
     }
-    console.log(accesses);
     setAccesses(accesses);
   };
+  console.log(accesses);
+  const hasAccess = key => ! accesses.includes(key);
 
-  const hasAccess = key => !accesses.includes(key);
   return (
     <div>
       <ul className="list-reset">
