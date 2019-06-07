@@ -62,236 +62,285 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
     setOpenFourthSet(openFourthSetVal => !openFourthSetVal);
   };
 
-  // is SuperAdmin?
-  const isSuperAdmin = roles.includes('5bf7ae3694db051f5486f845');
-  // is NormalUser?
-  const isNormalUser = roles.includes('5bf7ae90736db01f8fa21a24');
-  // is Admin?
-  const isAdmin = roles.includes('5bf7af0a736db01f8fa21a25');
-  // is NoticeUploadUser?
-  const isNoticeUploadUser = roles.includes('5cbdaa39a1892e16b344d19a');
-  // is Approval?
-  const isApproval = roles.includes('5cbdada4a1892e16b344d1da');
+  // // is SuperAdmin?
+  // const isSuperAdmin = roles.includes('5bf7ae3694db051f5486f845');
+  // // is NormalUser?
+  // const isNormalUser = roles.includes('5bf7ae90736db01f8fa21a24');
+  // // is Admin?
+  // const isAdmin = roles.includes('5bf7af0a736db01f8fa21a25');
+  // // is NoticeUploadUser?
+  // const isNoticeUploadUser = roles.includes('5cbdaa39a1892e16b344d19a');
+  // // is Approval?
+  // const isApproval = roles.includes('5cbdada4a1892e16b344d1da');
 
   const route = window.localStorage.getItem('routes');
   const arr = JSON.parse(route);
   const availableRoutes = arr;
 
   const loadCheckRoutes = () => {
-    const accesses = availableRoutes && availableRoutes.map(each => each.admin_routes.map(adroute => adroute));
+    // const accesses =
+    //   availableRoutes &&
+    //   availableRoutes.map(each => each.admin_routes.map(adroute => adroute));
+    const accesses = [];
+    for (let i = 0; i < availableRoutes.length; i++) {
+      for (let j = 0; j < availableRoutes[i].admin_routes.length; j++) {
+        accesses.push(availableRoutes[i].admin_routes[j]);
+      }
+    }
+    console.log(accesses);
     setAccesses(accesses);
   };
 
-  const hasAccess = (key) => {
-    return !accesses.includes(key);
-  }
-    return (
-      <div>
-        <ul className="list-reset">
+  const hasAccess = key => !accesses.includes(key);
+  return (
+    <div>
+      <ul className="list-reset">
+        <li
+          hidden={hasAccess('/admin/dashboard')}
+          className="pl-2 pr-2 pointer"
+          selected={pathname === '/admin/dashboard'}
+        >
+          <Link
+            to="/admin/dashboard"
+            className="text-grey-darker hover:text-black text-sm no-underline flex items-center p-2"
+          >
+            <DashboardIcon className="mr-3" />
+            Dashboard
+          </Link>
+        </li>
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleFirstSetClick}
+        >
+          <div className="flex items-center">
+            <FormatSizeIcon className="mr-3" />
+            <span className="dropdown-title">Content Manage</span>
+          </div>
+          {openFirstSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
+          <ul className="list-reset">
+            <li
+              hidden={hasAccess('/admin/content-manage')}
+              selected={pathname === '/admin/content-manage'}
+            >
+              <Link
+                to="/admin/content-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+              >
+                <FormatSizeIcon className="mr-3" />
+                Static Content
+              </Link>
+            </li>
+            <li
+              hidden={hasAccess('/admin/faq-manage')}
+              selected={pathname === '/admin/faq-manage'}
+            >
+              <Link
+                to="/admin/faq-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                FAQ
+              </Link>
+            </li>
+            <li
+              hidden={hasAccess('/admin/faq-cat-manage')}
+              selected={pathname === '/admin/faq-cat-manage'}
+            >
+              <Link
+                to="/admin/faq-cat-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                FAQ Category
+              </Link>
+            </li>
+            <li
+              hidden={hasAccess('/admin/media-manage')}
+              selected={pathname === '/admin/media-manage'}
+            >
+              <Link
+                to="/admin/media-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                Media
+              </Link>
+            </li>
+            <li
+              hidden={hasAccess('/admin/slider-manage')}
+              selected={pathname === '/admin/slider-manage'}
+            >
+              <Link
+                to="/admin/slider-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <SliderIcon className="mr-3" />
+                Slider
+              </Link>
+            </li>
+            <li
+              hidden={hasAccess('/admin/blog-manage')}
+              selected={pathname === '/admin/blog-manage'}
+            >
+              <Link
+                to="/admin/blog-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                Blog
+              </Link>
+            </li>
+            <li
+              hidden={hasAccess('/admin/blog-cat-manage')}
+              selected={pathname === '/admin/blog-cat-manage'}
+            >
+              <Link
+                to="/admin/blog-cat-manage"
+                className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
+              >
+                <QuestionAnswerIcon className="mr-3" />
+                Blog Category
+              </Link>
+            </li>
+          </ul>
+        </Collapse>
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleSecondSetClick}
+        >
+          <div className="flex items-center">
+            <InboxIcon className="mr-3" />
+            <span className="dropdown-title">Access Manage</span>
+          </div>
+          {openSecondSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
           <li
-            hidden={hasAccess('/admin/dashboard')}
-            className="pl-2 pr-2 pointer"
-            selected={pathname === '/admin/dashboard'}
+            hidden={hasAccess('/admin/user-manage')}
+            selected={pathname === '/admin/user-manage'}
           >
             <Link
-              to="/admin/dashboard"
-              className="text-grey-darker hover:text-black text-sm no-underline flex items-center p-2"
+              to="/admin/user-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
             >
-              <DashboardIcon className="mr-3" />
-              Dashboard
+              <ExtensionIcon className="mr-3" />
+              Users
             </Link>
           </li>
           <li
-            className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
-            onClick={handleFirstSetClick}
+            hidden={hasAccess('/admin/role-manage')}
+            selected={pathname === '/admin/role-manage'}
           >
-            <div className="flex items-center">
-              <FormatSizeIcon className="mr-3" />
-              <span className="dropdown-title">Content Manage</span>
-            </div>
-            {openFirstSet ? <ExpandLess /> : <ExpandMore />}
+            <Link
+              to="/admin/role-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <PeopleIcon className="mr-3" />
+              Roles
+            </Link>
           </li>
-          <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
-            <ul className="list-reset">
-              <li hidden={hasAccess('/admin/content-manage')} selected={pathname === '/admin/content-manage'}>
-                <Link
-                  to="/admin/content-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-                >
-                  <FormatSizeIcon className="mr-3" />
-                  Static Content
-                </Link>
-              </li>
-              <li hidden={hasAccess('/admin/faq-manage')} selected={pathname === '/admin/faq-manage'}>
-                <Link
-                  to="/admin/faq-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
-                >
-                  <QuestionAnswerIcon className="mr-3" />
-                  FAQ
-                </Link>
-              </li>
-              <li hidden={hasAccess('/admin/faq-cat-manage')} selected={pathname === '/admin/faq-cat-manage'}>
-                <Link
-                  to="/admin/faq-cat-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
-                >
-                  <QuestionAnswerIcon className="mr-3" />
-                  FAQ Category
-                </Link>
-              </li>
-              <li hidden={hasAccess('/admin/media-manage')} selected={pathname === '/admin/media-manage'}>
-                <Link
-                  to="/admin/media-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
-                >
-                  <QuestionAnswerIcon className="mr-3" />
-                  Media
-                </Link>
-              </li>
-              <li hidden={hasAccess('/admin/slider-manage')} selected={pathname === '/admin/slider-manage'}>
-                <Link
-                  to="/admin/slider-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
-                >
-                  <SliderIcon className="mr-3" />
-                  Slider
-                </Link>
-              </li>
-              <li hidden={hasAccess('/admin/blog-manage')} selected={pathname === '/admin/blog-manage'}>
-                <Link
-                  to="/admin/blog-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
-                >
-                  <QuestionAnswerIcon className="mr-3" />
-                  Blog
-                </Link>
-              </li>
-              <li hidden={hasAccess('/admin/blog-cat-manage')} selected={pathname === '/admin/blog-cat-manage'}>
-                <Link
-                  to="/admin/blog-cat-manage"
-                  className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
-                >
-                  <QuestionAnswerIcon className="mr-3" />
-                  Blog Category
-                </Link>
-              </li>
-            </ul>
-          </Collapse>
           <li
-            className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
-            onClick={handleSecondSetClick}
+            hidden={hasAccess('/admin/module-manage')}
+            selected={pathname === '/admin/module-manage'}
           >
-            <div className="flex items-center">
-              <InboxIcon className="mr-3" />
-              <span className="dropdown-title">Access Manage</span>
-            </div>
-            {openSecondSet ? <ExpandLess /> : <ExpandMore />}
+            <Link
+              to="/admin/module-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ExtensionIcon className="mr-3" />
+              Modules
+            </Link>
           </li>
-          <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
-            <li hidden={hasAccess('/admin/user-manage')} selected={pathname === '/admin/user-manage'}>
-              <Link
-                to="/admin/user-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ExtensionIcon className="mr-3" />
-                Users
-              </Link>
-            </li>
-            <li hidden={hasAccess('/admin/role-manage')} selected={pathname === '/admin/role-manage'}>
-              <Link
-                to="/admin/role-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <PeopleIcon className="mr-3" />
-                Roles
-              </Link>
-            </li>
-            <li hidden={hasAccess('/admin/module-manage')} selected={pathname === '/admin/module-manage'}>
-              <Link
-                to="/admin/module-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ExtensionIcon className="mr-3" />
-                Modules
-              </Link>
-            </li>
-          </Collapse>
+        </Collapse>
 
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleThirdSetClick}
+        >
+          <div className="flex items-center">
+            {' '}
+            <Settings className="mr-3" />
+            <span className="dropdown-title">Settings</span>
+          </div>
+          {openThirdSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
           <li
-            className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
-            onClick={handleThirdSetClick}
+            hidden={hasAccess('/admin/template-manage')}
+            selected={pathname === '/admin/template-manage'}
           >
-            <div className="flex items-center">
-              {' '}
-              <Settings className="mr-3" />
-              <span className="dropdown-title">Settings</span>
-            </div>
-            {openThirdSet ? <ExpandLess /> : <ExpandMore />}
+            <Link
+              to="/admin/template-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <SliderIcon className="mr-3" />
+              Template
+            </Link>
           </li>
-          <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
-            <li hidden={hasAccess('/admin/template-manage')} selected={pathname === '/admin/template-manage'}>
-              <Link
-                to="/admin/template-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <SliderIcon className="mr-3" />
-                Template
-              </Link>
-            </li>
-          </Collapse>
+        </Collapse>
+        <li
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+          onClick={handleFourthSetClick}
+        >
+          <div className="flex items-center">
+            <InsertChartIcon className="mr-3" />
+            <span className="dropdown-title">Reports</span>
+          </div>
+          {openFourthSet ? <ExpandLess /> : <ExpandMore />}
+        </li>
+        <Collapse in={openFourthSet} timeout="auto" unmountOnExit>
           <li
-            className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
-            onClick={handleFourthSetClick}
+            hidden={hasAccess('/admin/contact-manage')}
+            selected={pathname === '/admin/contact-manage'}
           >
-            <div className="flex items-center">
-              <InsertChartIcon className="mr-3" />
-              <span className="dropdown-title">Reports</span>
-            </div>
-            {openFourthSet ? <ExpandLess /> : <ExpandMore />}
+            <Link
+              to="/admin/contact-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ExtensionIcon className="mr-3" />
+              Contacts
+            </Link>
           </li>
-          <Collapse in={openFourthSet} timeout="auto" unmountOnExit>
-            <li hidden={hasAccess('/admin/contact-manage')} selected={pathname === '/admin/contact-manage'}>
-              <Link
-                to="/admin/contact-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ExtensionIcon className="mr-3" />
-                Contacts
-              </Link>
-            </li>
-            <li hidden={hasAccess('/admin/subscribe-manage')} selected={pathname === '/admin/subscribe-manage'}>
-              <Link
-                to="/admin/subscribe-manage"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ExtensionIcon className="mr-3" />
-                Subscribes
-              </Link>
-            </li>
-            <li hidden={hasAccess('/admin/reports')} selected={pathname === '/admin/reports'}>
-              <Link
-                to="/admin/reports"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <InsertChartIcon />
-                Reports
-              </Link>
-            </li>
-            <li  selected={pathname === '/admin/errors'}>
-              <Link
-                to="/admin/errors"
-                className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
-              >
-                <ErrorIcon />
-                Errors
-              </Link>
-            </li>
-          </Collapse>
-        </ul>
-      </div>
-    );
-  };
+          <li
+            hidden={hasAccess('/admin/subscribe-manage')}
+            selected={pathname === '/admin/subscribe-manage'}
+          >
+            <Link
+              to="/admin/subscribe-manage"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ExtensionIcon className="mr-3" />
+              Subscribes
+            </Link>
+          </li>
+          <li
+            hidden={hasAccess('/admin/reports')}
+            selected={pathname === '/admin/reports'}
+          >
+            <Link
+              to="/admin/reports"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <InsertChartIcon />
+              Reports
+            </Link>
+          </li>
+          <li selected={pathname === '/admin/errors'}>
+            <Link
+              to="/admin/errors"
+              className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
+            >
+              <ErrorIcon />
+              Errors
+            </Link>
+          </li>
+        </Collapse>
+      </ul>
+    </div>
+  );
+};
 
 Mainlis.propTypes = {
   classes: PropTypes.object.isRequired,
