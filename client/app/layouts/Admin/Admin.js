@@ -29,65 +29,31 @@ import routes from '../../routes/admin';
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 
 const switchRoutes = roles => {
-  // is SuperAdmin?
-  const isSuperAdmin = roles.includes('5bf7ae3694db051f5486f845');
-  // is Admin?
-  const isAdmin = roles.includes('5bf7af0a736db01f8fa21a25');
-  // is NormalUser?
-  const isNormalUser = roles.includes('5bf7ae90736db01f8fa21a24');
-  // is Guest?
-  const isGuest = roles.includes('5ce126fcdd1e3e3b0c8a36aa');
-
   const route = window.localStorage.getItem('routes');
   const arr = JSON.parse(route);
   const availableRoutes = arr;
 
-  if (isSuperAdmin) {
-    return (
-      <Switch>
-        {routes.map(prop => (
+  const hasAccess = path => {
+    const available = [];
+    availableRoutes.map(
+      each =>
+        each.admin_routes &&
+        each.admin_routes.length &&
+        each.admin_routes.map(e => available.push(e)),
+    );
+    return available.includes(path);
+  };
+
+  return (
+    <Switch>
+      {routes
+        .filter(each => hasAccess(each.path))
+        .map(prop => (
           <Route key={prop.path} {...prop} />
         ))}
-        <Route component={NotFoundPage} />
-      </Switch>
-    );
-  }
-  if (isAdmin) {
-    return (
-      <Switch>
-        {routes
-          .filter(each => availableRoutes.includes(each.path))
-          .map(prop => (
-            <Route key={prop.path} {...prop} />
-          ))}
-        <Route component={NotFoundPage} />
-      </Switch>
-    );
-  }
-  if (isNormalUser) {
-    return (
-      <Switch>
-        {routes
-          .filter(each => availableRoutes.includes(each.path))
-          .map(prop => (
-            <Route key={prop.path} {...prop} />
-          ))}
-        <Route component={NotFoundPage} />
-      </Switch>
-    );
-  }
-  if (isGuest) {
-    return (
-      <Switch>
-        {routes
-          .filter(each => availableRoutes.includes(each.path))
-          .map(prop => (
-            <Route key={prop.path} {...prop} />
-          ))}
-        <Route component={NotFoundPage} />
-      </Switch>
-    );
-  }
+      <Route component={NotFoundPage} />
+    </Switch>
+  );
 };
 
 const drawerWidth = 240;
