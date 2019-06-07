@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Link from 'react-router-dom/NavLink';
@@ -41,6 +41,13 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
   const [openSecondSet, setOpenSecondSet] = useState(false);
   const [openThirdSet, setOpenThirdSet] = useState(false);
   const [openFourthSet, setOpenFourthSet] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  const [accesses, setAccesses] = useState([]);
+
+  useEffect(() => {
+    loadCheckRoutes();
+  }, []);
 
   const handleFirstSetClick = () => {
     setOpenFirstSet(openFirstSetVal => !openFirstSetVal);
@@ -66,11 +73,23 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
   // is Approval?
   const isApproval = roles.includes('5cbdada4a1892e16b344d1da');
 
-  if (isSuperAdmin) {
+  const route = window.localStorage.getItem('routes');
+  const arr = JSON.parse(route);
+  const availableRoutes = arr;
+
+  const loadCheckRoutes = () => {
+    const accesses = availableRoutes && availableRoutes.map(each => each.admin_routes.map(adroute => adroute));
+    setAccesses(accesses);
+  };
+
+  const hasAccess = (key) => {
+    return !accesses.includes(key);
+  }
     return (
       <div>
         <ul className="list-reset">
           <li
+            hidden={hasAccess('/admin/dashboard')}
             className="pl-2 pr-2 pointer"
             selected={pathname === '/admin/dashboard'}
           >
@@ -94,7 +113,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
           </li>
           <Collapse in={openFirstSet} timeout="auto" unmountOnExit>
             <ul className="list-reset">
-              <li selected={pathname === '/admin/content-manage'}>
+              <li hidden={hasAccess('/admin/content-manage')} selected={pathname === '/admin/content-manage'}>
                 <Link
                   to="/admin/content-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -103,7 +122,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   Static Content
                 </Link>
               </li>
-              <li selected={pathname === '/admin/faq-manage'}>
+              <li hidden={hasAccess('/admin/faq-manage')} selected={pathname === '/admin/faq-manage'}>
                 <Link
                   to="/admin/faq-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
@@ -112,7 +131,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   FAQ
                 </Link>
               </li>
-              <li selected={pathname === '/admin/faq-cat-manage'}>
+              <li hidden={hasAccess('/admin/faq-cat-manage')} selected={pathname === '/admin/faq-cat-manage'}>
                 <Link
                   to="/admin/faq-cat-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
@@ -121,7 +140,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   FAQ Category
                 </Link>
               </li>
-              <li selected={pathname === '/admin/media-manage'}>
+              <li hidden={hasAccess('/admin/media-manage')} selected={pathname === '/admin/media-manage'}>
                 <Link
                   to="/admin/media-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
@@ -130,7 +149,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   Media
                 </Link>
               </li>
-              <li selected={pathname === '/admin/slider-manage'}>
+              <li hidden={hasAccess('/admin/slider-manage')} selected={pathname === '/admin/slider-manage'}>
                 <Link
                   to="/admin/slider-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
@@ -139,7 +158,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   Slider
                 </Link>
               </li>
-              <li selected={pathname === '/admin/blog-manage'}>
+              <li hidden={hasAccess('/admin/blog-manage')} selected={pathname === '/admin/blog-manage'}>
                 <Link
                   to="/admin/blog-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
@@ -148,7 +167,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                   Blog
                 </Link>
               </li>
-              <li selected={pathname === '/admin/blog-cat-manage'}>
+              <li hidden={hasAccess('/admin/blog-cat-manage')} selected={pathname === '/admin/blog-cat-manage'}>
                 <Link
                   to="/admin/blog-cat-manage"
                   className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
@@ -170,7 +189,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
             {openSecondSet ? <ExpandLess /> : <ExpandMore />}
           </li>
           <Collapse in={openSecondSet} timeout="auto" unmountOnExit>
-            <li selected={pathname === '/admin/user-manage'}>
+            <li hidden={hasAccess('/admin/user-manage')} selected={pathname === '/admin/user-manage'}>
               <Link
                 to="/admin/user-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -179,7 +198,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Users
               </Link>
             </li>
-            <li selected={pathname === '/admin/role-manage'}>
+            <li hidden={hasAccess('/admin/role-manage')} selected={pathname === '/admin/role-manage'}>
               <Link
                 to="/admin/role-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -188,7 +207,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Roles
               </Link>
             </li>
-            <li selected={pathname === '/admin/module-manage'}>
+            <li hidden={hasAccess('/admin/module-manage')} selected={pathname === '/admin/module-manage'}>
               <Link
                 to="/admin/module-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -211,7 +230,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
             {openThirdSet ? <ExpandLess /> : <ExpandMore />}
           </li>
           <Collapse in={openThirdSet} timeout="auto" unmountOnExit>
-            <li selected={pathname === '/admin/template-manage'}>
+            <li hidden={hasAccess('/admin/template-manage')} selected={pathname === '/admin/template-manage'}>
               <Link
                 to="/admin/template-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -232,7 +251,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
             {openFourthSet ? <ExpandLess /> : <ExpandMore />}
           </li>
           <Collapse in={openFourthSet} timeout="auto" unmountOnExit>
-            <li selected={pathname === '/admin/contact-manage'}>
+            <li hidden={hasAccess('/admin/contact-manage')} selected={pathname === '/admin/contact-manage'}>
               <Link
                 to="/admin/contact-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -241,7 +260,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Contacts
               </Link>
             </li>
-            <li selected={pathname === '/admin/subscribe-manage'}>
+            <li hidden={hasAccess('/admin/subscribe-manage')} selected={pathname === '/admin/subscribe-manage'}>
               <Link
                 to="/admin/subscribe-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -250,7 +269,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Subscribes
               </Link>
             </li>
-            <li selected={pathname === '/admin/reports'}>
+            <li hidden={hasAccess('/admin/reports')} selected={pathname === '/admin/reports'}>
               <Link
                 to="/admin/reports"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -259,7 +278,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 Reports
               </Link>
             </li>
-            <li selected={pathname === '/admin/errors'}>
+            <li  selected={pathname === '/admin/errors'}>
               <Link
                 to="/admin/errors"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
@@ -272,8 +291,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
         </ul>
       </div>
     );
-  }
-};
+  };
 
 Mainlis.propTypes = {
   classes: PropTypes.object.isRequired,
