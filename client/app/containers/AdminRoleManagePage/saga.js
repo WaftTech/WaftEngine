@@ -13,6 +13,7 @@ import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectOne } from './selectors';
+import { enqueueSnackbar } from '../App/actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
@@ -44,13 +45,8 @@ function* loadOne(action) {
     ),
   );
 }
-function* redirectOnDelete() {
-  yield take(types.DELETE_ONE_SUCCESS);
-  yield put(push('/admin/role-manage'));
-}
 
 function* deleteOne(action) {
-  const deleteWatcher = yield fork(redirectOnDelete);
   const token = yield select(makeSelectToken());
   yield call(
     Api.delete(
@@ -60,8 +56,6 @@ function* deleteOne(action) {
       token,
     ),
   );
-  yield take([LOCATION_CHANGE, types.DELETE_ONE_FAILURE]);
-  yield cancel(deleteWatcher);
 }
 
 function* redirectOnSuccess() {
@@ -86,9 +80,42 @@ function* addEdit() {
   yield cancel(successWatcher);
 }
 
+function* deleteSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Role delete success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* deleteFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while deleting!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* addEditFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while updating!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* adminRoleManageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
+  yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
+  yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
+  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
 }
