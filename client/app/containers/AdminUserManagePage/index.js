@@ -111,7 +111,7 @@ export class AdminUserManagePage extends React.PureComponent {
               name="find_name"
               id="user-name"
               fullWidth
-              placeholder="Search Cat"
+              placeholder="Search User by name"
               value={query.find_name}
               onChange={this.handleQueryChange}
             />

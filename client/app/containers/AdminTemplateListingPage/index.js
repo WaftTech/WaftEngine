@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -83,6 +84,9 @@ export function AdminTemplateListingPage({
     <CircularProgress color="primary" disableShrink />
   ) : (
     <>
+      <Helmet>
+          <title>Email Template</title>
+        </Helmet>
       <PageHeader>Email Template Manage</PageHeader>
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
