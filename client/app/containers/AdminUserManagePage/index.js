@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
+import Edit from '@material-ui/icons/Edit';
 import Paper from '@material-ui/core/Paper';
 import { Fab, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -27,6 +28,7 @@ import { makeSelectAll } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminUserManagePage extends React.PureComponent {
@@ -74,7 +76,7 @@ export class AdminUserManagePage extends React.PureComponent {
         `${email_verified}`,
         <>
           <Tooltip id="tooltip-left" title="Edit User" placement="left">
-            <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
+            <IconButton className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
               <CreateIcon />
             </IconButton>
           </Tooltip>
@@ -83,15 +85,9 @@ export class AdminUserManagePage extends React.PureComponent {
     );
     return (
       <>
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>User Manage</PageHeader>
-        <PageContent>
-          <Table
-            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
-            tableData={tableData}
-            pagination={tablePagination}
-            handlePagination={this.handlePagination}
-          />
-          <Fab
+        <Fab
             color="primary"
             aria-label="Add"
             className={classes.fab}
@@ -99,6 +95,15 @@ export class AdminUserManagePage extends React.PureComponent {
           >
             <AddIcon />
           </Fab>
+          </div>
+        <PageContent>
+          <Table
+            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+        
         </PageContent>
       </>
     );
@@ -116,9 +121,17 @@ const withConnect = connect(
 
 const styles = theme => ({
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
+    width:'40px',
+    height:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+  },
+  tableActionButton:{
+    padding:0,
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
   },
 });
 

@@ -20,14 +20,13 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne, makeSelectCategory } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
-  formcontrol: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
+ 
 });
 
 class AddEdit extends React.PureComponent {
@@ -74,11 +73,15 @@ class AddEdit extends React.PureComponent {
     const { classes, category, one } = this.props;
     return (
       <div>
+        <div class="flex justify-between mt-1 mb-1">
         <PageHeader>
-          <ArrowBack className="cursor-pointer" onClick={this.handleGoBack} />
+        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon />
+        </IconButton>
         </PageHeader>
+        </div>
         <PageContent>
-          <div className="w-full md:w-1/2 px-3 pb-4">
+          <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
               htmlFor="grid-last-name"
@@ -86,63 +89,61 @@ class AddEdit extends React.PureComponent {
               Question
             </label>
             <input
-              className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+              className="Waftinputbox"
               name="Question"
               id="faq"
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
-            <TextField
+            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+              htmlFor="grid-last-name"
+            >
+              Answer
+            </label>
+            <textarea className="Waftinputbox"
               multiline
               rows="5"
               name="Answer"
               id="faq-answer"
-              label="Answer"
               value={one.title || ''}
               onChange={this.handleChange('title')}
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
-            <div>
-              <FormControl
-                margin="normal"
-                className={classes.formControl}
-                fullWidth
-              >
-                <InputLabel htmlFor="category">Category</InputLabel>
-                <Select
-                  value={one.category}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+              htmlFor="category"
+            >
+              Category
+            </label>
+            <select class="Waftinputbox"  value={one.category}
                   onChange={this.handleChange('category')}
                   inputProps={{
                     name: 'category',
                     id: 'category-title',
-                  }}
-                >
-                  {category &&
+                  }}>
+
+                    {category &&
                     category.length &&
                     category.map(each => (
-                      <MenuItem key={each._id} value={each._id}>
+                      <option key={each._id} value={each._id}>
                         {each.title}
-                      </MenuItem>
+                      </option>
                     ))}
-                </Select>
-              </FormControl>
-            </div>
 
-            <Button
-              className="mt-4"
-              fullWidth
-              variant="outlined"
-              color="primary"
+                  </select>
+            </div>
+            
+
+            <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
               onClick={this.handleSave}
-            >
-              Save
-            </Button>
-          </div>
+              >
+                Save</button>
+          
         </PageContent>
       </div>
     );

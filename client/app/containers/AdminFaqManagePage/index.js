@@ -30,9 +30,18 @@ import { makeSelectAll, makeSelectQuery } from './selectors';
 
 const styles = theme => ({
   fab: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
+    width:'40px',
+    height:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+  },
+
+  tableActionButton:{
+    padding:0,
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
   },
 });
 
@@ -114,7 +123,19 @@ export class FAQManagePage extends React.PureComponent {
     );
     return (
       <>
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>FAQ Manage</PageHeader>
+        <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            round="true"
+            onClick={this.handleAdd}
+            elevation={0}
+          >
+            <AddIcon />
+          </Fab>
+          </div>
         <PageContent>
           <Paper style={{ padding: 20, overflow: 'auto', display: 'none' }}>
             <CustomInput
@@ -148,16 +169,7 @@ export class FAQManagePage extends React.PureComponent {
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+        
         </PageContent>
       </>
     );

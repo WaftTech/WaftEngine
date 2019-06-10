@@ -51,7 +51,7 @@ const colors = {
   'grey-dark': '#808080',
   grey: '#a9a9a9',
   'grey-light': '#d8d8d8',
-  'grey-lighter': '#f0f0f0',
+  'grey-lighter': '#F4F4F4',
   'grey-lightest': '#f7f7f7',
   white: '#ffffff',
 

@@ -24,6 +24,8 @@ import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -72,36 +74,30 @@ class AddEdit extends React.PureComponent {
     } = this.props;
     return (
       <React.Fragment>
-        <PageHeader> {id ? 'Edit' : 'Add'} Role</PageHeader>
+        {/* <PageHeader> {id ? 'Edit' : 'Add'} Role</PageHeader> */}
+        <div class="flex justify-between mt-1 mb-1">
+        <PageHeader>
+        <IconButton className="cursor-pointer"	 onClick={this.handleBack} aria-label="Back">
+          <BackIcon />
+        </IconButton></PageHeader>
+        </div>
         <PageContent>
-          <Grid container spacing={24}>
-            <Grid item xs={12} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                id="role_title"
-                label="Role Title"
-                value={one.role_title}
-                onChange={this.handleChange('role_title')}
-                fullWidth
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <TextField
-                variant="outlined"
-                required
-                id="description"
-                label="Descrition"
-                value={one.description}
-                onChange={this.handleChange('description')}
-                fullWidth
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+            <div class="w-full md:w-1/2 pb-4">
+            <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            Role Title
+            </label>
+            <input class="Waftinputbox" id="role_title" type="text"  value={one.role_title}
+                       onChange={this.handleChange('role_title')} required/>
+          </div>
+
+          <div class="w-full md:w-1/2 pb-4">
+            <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            Description
+            </label>
+            <textarea class="Waftinputbox" id="description" type="text"   value={one.description}
+                       onChange={this.handleChange('description')} required/>
+          </div>
+             
               <FormControlLabel
                 control={
                   <Checkbox
@@ -113,21 +109,12 @@ class AddEdit extends React.PureComponent {
                 }
                 label="Is Active"
               />
-            </Grid>
-          </Grid>
-          <div className={classes.buttons}>
-            {/* <Button onClick={this.handleBack} className={classes.button}>
-                Back
-              </Button> */}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSave}
-              className={classes.button}
-            >
+      <br/>
+          
+              <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
               Save
-            </Button>
-          </div>
+              </button>
+        
         </PageContent>
       </React.Fragment>
     );

@@ -20,6 +20,8 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
@@ -76,22 +78,28 @@ class AddEdit extends React.PureComponent {
     const { classes, one } = this.props;
     return (
       <div>
-        <PageHeader> Add/Edit FAQ Category</PageHeader>
+        <div class="flex justify-between mt-1 mb-1">
+        <PageHeader>
+        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon />
+        </IconButton></PageHeader>
+        </div>
         <PageContent>
-          <Paper className={classes.p20}>
-          <div>
-            <TextField
+          <div class="w-full md:w-1/2 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Title
+      </label>
+            <input type="text"
+            className="Waftinputbox"
               name="Title"
               id="title"
               label="Title"
               value={one.title}
               onChange={this.handleChange('title')}
-              margin="normal"
-              fullWidth
             />
             </div>
             <div>
-            <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
+         
             <FormControlLabel
               control={
                 <Checkbox
@@ -104,22 +112,12 @@ class AddEdit extends React.PureComponent {
               label="Is Active"
             />
             </div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSave}
-            >
-              Save
-            </Button>
 
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.handleGoBack}
-            >
-              Back
-            </Button>
-          </Paper>
+            <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
+              onClick={this.handleSave}
+              >
+                Save</button>
+           
         </PageContent>
       </div>
     );

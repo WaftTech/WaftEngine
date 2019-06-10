@@ -39,10 +39,29 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
+    width:'40px',
+    height:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
   },
+  tableActionButton:{
+    padding:0,
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
+  },
+
+  waftsrch:{
+    padding:0,
+    position:'absolute',
+    borderLeft:'1px solid #d9e3e9',
+    borderRadius:0,
+      '&:hover':{
+        background : 'transparent',
+        color: '#404040',
+      },
+    },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -119,37 +138,39 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
     );
     return (
       <>
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>FAQ Category Manage</PageHeader>
+        <Fab
+              color="primary"
+              aria-label="Add"
+              className={classes.fab}
+              round="true"
+              onClick={this.handleAdd}
+              elevation={0}
+            >
+              <AddIcon />
+            </Fab>
+            </div>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-            <CustomInput
-              name="find_title"
-              id="faq-title"
-              fullWidth
-              placeholder="Search Cat"
-              value={query.find_title}
-              onChange={this.handleQueryChange}
-            />
-            <Divider
-              style={{
-                width: 1,
-                height: 40,
-                margin: 4,
-              }}
-            />
-            <IconButton aria-label="Search" onClick={this.handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <br />
+          <div className="flex justify-end">
+          <div className="waftformgroup flex relative">
+                <input type="text"
+                  name="find_title"
+                  id="faq-title"
+                  placeholder="Search Category"
+                  className="m-auto Waftinputbox"
+                  value={query.find_title}
+                  onChange={this.handleQueryChange}
+                />
+              <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+                </div>
+                </div>
+                 
+         
           <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
+           
             elevation={0}
           >
             <Table
@@ -164,16 +185,6 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
               pagination={tablePagination}
               handlePagination={this.handlePagination}
             />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              round="true"
-              onClick={this.handleAdd}
-              elevation={0}
-            >
-              <AddIcon />
-            </Fab>
           </Paper>
         </PageContent>
       </>
