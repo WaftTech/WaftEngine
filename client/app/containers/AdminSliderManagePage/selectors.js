@@ -35,3 +35,9 @@ export const makeSelectMedia = () =>
     selectSliderManagePageDomain,
     substate => substate.media,
   );
+
+export const makeSelectLoading = () =>
+  createSelector(
+    selectSliderManagePageDomain,
+    substate => substate.loading,
+  );

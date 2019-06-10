@@ -24,6 +24,12 @@ export const ADD_EDIT_SUCCESS =
   'app/AdminBlogCategoryManagePage/ADD_EDIT_SUCCESS';
 export const ADD_EDIT_FAILURE =
   'app/AdminBlogCategoryManagePage/ADD_EDIT_FAILURE';
+export const DELETE_CAT_REQUEST =
+  'app/AdminBlogCategoryManagePage/DELETE_CAT_REQUEST';
+export const DELETE_CAT_SUCCESS =
+  'app/AdminBlogCategoryManagePage/DELETE_CAT_SUCCESS';
+export const DELETE_CAT_FAILURE =
+  'app/AdminBlogCategoryManagePage/DELETE_CAT_FAILURE';
 export const CLEAR_QUERY = 'app/AdminBlogCategoryManagePage/CLEAR_QUERY';
 export const SET_ONE_VALUE = 'app/AdminBlogCategoryManagePage/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/AdminBlogCategoryManagePage/CLEAR_ONE';

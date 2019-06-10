@@ -23,6 +23,12 @@ export const ADD_EDIT_SUCCESS =
   'app/AdminFaqCategoryManagePage/ADD_EDIT_SUCCESS';
 export const ADD_EDIT_FAILURE =
   'app/AdminFaqCategoryManagePage/ADD_EDIT_FAILURE';
+export const DELETE_CAT_REQUEST =
+  'app/AdminFaqCategoryManagePage/DELETE_CAT_REQUEST';
+export const DELETE_CAT_SUCCESS =
+  'app/AdminFaqCategoryManagePage/DELETE_CAT_SUCCESS';
+export const DELETE_CAT_FAILURE =
+  'app/AdminFaqCategoryManagePage/DELETE_CAT_FAILURE';
 export const CLEAR_QUERY = 'app/AdminFaqCategoryManagePage/CLEAR_QUERY';
 export const SET_ONE_VALUE = 'app/AdminFaqCategoryManagePage/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/AdminFaqCategoryManagePage/CLEAR_ONE';

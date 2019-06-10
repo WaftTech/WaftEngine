@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -15,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
 import CustomInput from '@material-ui/core/Input';
@@ -27,7 +29,8 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -37,6 +40,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
+  
     width:'40px',
     height:'40px',
     marginTop:'auto',
@@ -110,8 +114,7 @@ export class SliderManagePage extends React.Component {
   };
 
   handleDelete = id => {
-    // show modal && api call
-    // this.props.history.push(`/wt/contents-manage/edit/${id}`);
+      this.props.deleteOneRequest(id);
   };
 
   handleToggle = () => {
@@ -125,6 +128,7 @@ export class SliderManagePage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -170,9 +174,15 @@ export class SliderManagePage extends React.Component {
         </React.Fragment>,
       ],
     );
-    return (
+    <Helmet>
+       <title>Slider Listing</title>
+    </Helmet>
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
-      <div className="flex justify-between mt-3 mb-3">
+    
+ <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Slider Manage</PageHeader>
         <Fab
             color="primary"
@@ -180,8 +190,8 @@ export class SliderManagePage extends React.Component {
             className={classes.fab}
             round="true"
             onClick={this.handleAdd}
-            elevation={0}
-          >
+            elevation={0}          >
+         
             <AddIcon />
           </Fab>
           </div>
@@ -215,6 +225,8 @@ export class SliderManagePage extends React.Component {
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
+       
+     
            </PageContent>
       </>
     );
@@ -224,6 +236,7 @@ export class SliderManagePage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

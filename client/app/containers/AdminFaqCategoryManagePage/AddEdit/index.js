@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -61,10 +62,11 @@ class AddEdit extends React.PureComponent {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.value });
   };
+
   handleCheckedChange = name => event => {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.checked });
-  }
+  };
 
   handleGoBack = () => {
     this.props.push('/admin/faq-cat-manage');
@@ -75,16 +77,28 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one } = this.props;
+   
+    const { classes, one, match } = this.props;
     return (
       <div>
-        <div class="flex justify-between mt-1 mb-1">
-        <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Faq Category'
+              : 'Add Faq Category'}
+          </title>
+        </Helmet>
+   <div class="flex justify-between mt-1 mb-1">
+     <PageHeader>
+  <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
-        </IconButton></PageHeader>
-        </div>
+        </IconButton>  {match && match.params && match.params.id
+            ? 'Edit Faq Category'
+            : 'Add Faq Category'}
+            </PageHeader>
+</div>
         <PageContent>
+         
           <div class="w-full md:w-1/2 pb-4">
       <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
         Title
@@ -110,11 +124,12 @@ class AddEdit extends React.PureComponent {
                 />
               }
               label="Is Active"
-            />
-            </div>
+            />   
+            </div>       
 
             <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
               onClick={this.handleSave}
+           
               >
                 Save</button>
            
@@ -126,7 +141,10 @@ class AddEdit extends React.PureComponent {
 
 const withStyle = withStyles(styles);
 
-const withReducer = injectReducer({ key: 'adminFaqCategoryManagePage', reducer });
+const withReducer = injectReducer({
+  key: 'adminFaqCategoryManagePage',
+  reducer,
+});
 const withSaga = injectSaga({ key: 'adminFaqCategoryManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({

@@ -96,13 +96,13 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
 
-           <div class="w-full md:w-1/2 pb-4">
-      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      <div class="w-full md:w-1/2 pb-4">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
         Content Title
-      </label>
-      <input class="Waftinputbox" id="grid-last-name" type="text" value= {one.name}
+        </label>
+        <input class="Waftinputbox" id="grid-last-name" type="text" value= {one.name}
                     onChange= {this.handleChange('name')} />
-    </div>
+      </div>
 
                <div class="w-full md:w-1/2 pb-4">
       <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
@@ -182,10 +182,9 @@ class AddEdit extends React.PureComponent {
                 />
 
 <br/>
-             <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
-              onClick={this.handleSave}
-              >
-                Save</button>
+             <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+              Save
+              </button>
              
         </PageContent>
       </div>

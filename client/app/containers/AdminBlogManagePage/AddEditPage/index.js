@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
+import Helmet from 'react-helmet';
+
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -60,6 +62,7 @@ const styles = theme => ({
     marginBottom: '3px',
     textDecoration: 'none',
   },
+ 
  
 });
 
@@ -178,18 +181,34 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, category, tempTag } = this.props;
+  
+    const { classes, one, category, tempTag, match} = this.props;
     const { tempImage } = this.state;
     return (
       <React.Fragment>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Blog'
+              : 'Add Blog'}
+          </title>
+        </Helmet>
        <div class="flex justify-between mt-1 mb-1">
         <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
-          <BackIcon />
-        </IconButton></PageHeader>
-        </div>
+         <IconButton
+            className="cursor-pointer"
+            onClick={this.handleGoBack}
+            aria-label="Back"
+          >
+            <BackIcon />
+          </IconButton>
+          {match && match.params && match.params.id
+            ? 'Edit Blog'
+            : 'Add Blog'}
+        </PageHeader>
+     </div>
         <PageContent>
-
+        
         <div class="w-full md:w-1/2 pb-4">
       <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
         Title
@@ -203,6 +222,7 @@ class AddEdit extends React.PureComponent {
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
               htmlFor="category"
             >
+           
               Category
             </label>
             <select class="Waftinputbox"  value={one.category}
@@ -216,9 +236,12 @@ class AddEdit extends React.PureComponent {
                   {category.map(each => (
                 <option key={each._id} name={each.title} value={each._id}>
                   {each.title}
+              
                 </option>
               ))}
+       
 
+      
                   </select>
             </div>
 
@@ -241,6 +264,7 @@ class AddEdit extends React.PureComponent {
                 <input {...getInputProps()} />
                 <img
                   className=""
+               
                   height="200px"
                   src={tempImage}
                   alt="Blogimage"
@@ -248,6 +272,7 @@ class AddEdit extends React.PureComponent {
               </div>
             )}
           </Dropzone>
+        
           </div>
 <div className="w-full md:w-1/2 pb-4">
       <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
@@ -257,6 +282,7 @@ class AddEdit extends React.PureComponent {
               (one.published_on &&
                 moment(one.published_on).format('YYYY-MM-DD')) ||
               null
+         
             }  name="published_on"
                     onChange= {this.handlePublishedOn} />
     </div>
@@ -285,8 +311,10 @@ class AddEdit extends React.PureComponent {
               );
             })}
           </Paper>
+        
           </div>
 
+       
           <div className="w-full md:w-1/2 pb-4">
     <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
       Meta Description
@@ -348,6 +376,7 @@ class AddEdit extends React.PureComponent {
             }
             label="Is Published"
           />
+        
 <br/>
 <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
               onClick={this.handleSave}

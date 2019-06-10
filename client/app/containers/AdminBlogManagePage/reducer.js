@@ -54,13 +54,19 @@ const reducer = (state = initialState, action) =>
         draft.loading = false;
         draft.all = action.payload;
         break;
-
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;
         break;
-
       case types.LOAD_CATEGORY_SUCCESS:
         draft.category = action.payload.data;
+        break;
+      case types.DELETE_ONE_SUCCESS:
+        draft.all = {
+          ...draft.all,
+          data: draft.all.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
         break;
       case types.SET_TAG_VALUE:
         draft.tempTag = action.payload;

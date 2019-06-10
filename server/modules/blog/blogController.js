@@ -123,7 +123,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
       searchq = {
         title: {
           $regex: req.query.find_title,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -132,7 +132,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
       searchq = {
         published_on: {
           $regex: req.query.find_published_on,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -175,12 +175,13 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
         sortq = '';
       }
     }
-    selectq = 'title slug_url added_by added_at';
+    selectq = 'title slug_url is_active added_by added_at is_deleted';
+    searchq = { is_deleted: false };
     if (req.query.find_title) {
       searchq = {
         title: {
           $regex: req.query.find_title,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -453,6 +454,16 @@ blogcontroller.DeleteBlog = async (req, res, next) => {
     },
   });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.delete, null);
+};
+blogcontroller.DeleteBlogCat = async (req, res, next) => {
+  const id = req.params.id;
+  const blogCat = await blogCatSch.findByIdAndUpdate(objectId(id), {
+    $set: {
+      is_deleted: true,
+      deleted_at: new Date(),
+    },
+  });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, blogCat, null, blogConfig.deleteCat, null);
 };
 
 module.exports = blogcontroller;

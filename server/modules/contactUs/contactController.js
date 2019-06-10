@@ -84,7 +84,7 @@ contactController.GetContact = async (req, res, next) => {
   if (req.query.find_added_at) {
     searchq = { added_at: { $regex: req.query.find_added_at, $options: 'i' }, ...searchq };
   }
-  selectq = ('name email message subject added_at');
+  selectq = 'name email message subject added_at is_deleted';
   let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortquery, searchq, selectq, next, '');
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totaldata);
 };
@@ -92,5 +92,14 @@ contactController.GetContactById = async (req, res, next) => {
   const id = req.params.id;
   let contact = await contactSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, contact, null, contactConfig.get, null);
+};
+contactController.DeleteContact = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const delContact = await contactSch.findByIdAndUpdate(id, { $set: { is_deleted: true, deleted_at: new Date() } });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, delContact, null, 'contact delete success!!', null);
+  } catch (err) {
+    next(err);
+  }
 };
 module.exports = contactController;

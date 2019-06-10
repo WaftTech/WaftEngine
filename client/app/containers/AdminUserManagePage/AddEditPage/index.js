@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -91,15 +92,18 @@ class AddEdit extends React.PureComponent {
     } = this.props;
     return (
       <>
-        {/* <PageHeader>{id ? 'Edit' : 'Add'} User</PageHeader> */}
-        <div class="flex justify-between mt-1 mb-1">
+
+       <Helmet>
+          <title>{id ? 'Edit User' : 'Add User'}</title>
+        </Helmet>
+ <div class="flex justify-between mt-1 mb-1">
         <PageHeader>
         <IconButton className="cursor-pointer"	 onClick={this.handleBack} aria-label="Back">
           <BackIcon />
-        </IconButton></PageHeader>
+        </IconButton>{id ? 'Edit' : 'Add'} User</PageHeader>
         </div>
         <PageContent>
-
+         
         <div class="w-full md:w-1/2 pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
           Email
@@ -141,6 +145,7 @@ class AddEdit extends React.PureComponent {
                   label={each.role_title}
                 />
               ))}
+         
               <br/>
 
           <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>

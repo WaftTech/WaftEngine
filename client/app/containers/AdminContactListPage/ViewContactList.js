@@ -6,6 +6,8 @@ import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import moment from 'moment';
+import Helmet from 'react-helmet';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import blue from '@material-ui/core/colors/blue';
@@ -17,11 +19,11 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import * as mapDispatchToProps from './actions';
 import saga from './saga';
-import { makeSelectOne } from './selectors';
+import { makeSelectOne, makeSelectLoading } from './selectors';
 import PageContent from '../../components/PageContent/PageContent';
 import PageHeader from '../../components/PageHeader/PageHeader';
 
-export class TenderDetails extends React.Component {
+export class ViewContacts extends React.Component {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -38,21 +40,19 @@ export class TenderDetails extends React.Component {
     }
   }
 
-  // handleCheckedChange = name => event => {
-  //   event.persist();
-  //   const tempUser = { ...this.props.one.users };
-  //   tempUser[name] = event.target.checked;
-  //   this.props.setOneValue({ key: 'users', value: tempUser });
-  // };
-
   handleBack = () => {
     this.props.push('/admin/contact-manage');
   };
 
   render() {
-    const { classes, one } = this.props;
-    return (
+    const { classes, one, loading } = this.props;
+    return loading && loading == true ? (
+      <div>loading</div>
+    ) : (
       <React.Fragment>
+        <Helmet>
+          <title> Contact Details </title>
+        </Helmet>
         <PageHeader>Contact Details</PageHeader>
 
         <PageContent>
@@ -106,6 +106,7 @@ export class TenderDetails extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
@@ -113,8 +114,8 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const withReducer = injectReducer({ key: 'adminUserManagePage', reducer });
-const withSaga = injectSaga({ key: 'adminUserManagePage', saga });
+const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
+const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
 const styles = theme => ({
   button: {
@@ -169,4 +170,4 @@ export default compose(
   withSaga,
   withConnect,
   withStyle,
-)(TenderDetails);
+)(ViewContacts);

@@ -14,6 +14,7 @@ export const initialState = {
     totaldata: 0,
   },
   query: { find_errors: '' },
+  loading: false,
 };
 
 const reducer = (state = initialState, action) =>
@@ -22,8 +23,23 @@ const reducer = (state = initialState, action) =>
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
         break;
+      case types.LOAD_ALL_REQUEST:
+        draft.loading = true;
+        break;
       case types.LOAD_ALL_SUCCESS:
+        draft.loading = false;
         draft.all = action.payload;
+        break;
+      case types.ERROR_DELETE_SUCCESS:
+        draft.all = {
+          ...draft.all,
+          data: draft.all.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
+        break;
+      case types.DELETE_All_SUCCESS:
+        draft.all = initialState.all;
         break;
     }
   });
