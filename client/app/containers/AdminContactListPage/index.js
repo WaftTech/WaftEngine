@@ -41,10 +41,28 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
+    width:'40px',
+    height:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
   },
+  tableActionButton:{
+    padding:0,
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
+  },
+  waftsrch:{
+    padding:0,
+    position:'absolute',
+    borderLeft:'1px solid #d9e3e9',
+    borderRadius:0,
+      '&:hover':{
+        background : 'transparent',
+        color: '#404040',
+      },
+    },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -84,6 +102,11 @@ export class AdminContactListPage extends React.Component {
     this.props.push(`/admin/contact-manage/view/${id}`);
   };
 
+  handleAdd = () => {
+    this.props.clearOne();
+    this.props.push('/admin/contact-manage/add');
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -118,31 +141,9 @@ export class AdminContactListPage extends React.Component {
     ]);
     return (
       <>
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Contact List</PageHeader>
-        <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-            <CustomInput
-              name="find_name"
-              id="contact-name"
-              placeholder="Search Contacts"
-              fullWidth
-              value={query.find_name}
-              onChange={this.handleQueryChange}
-            />
-            <Divider style={{ width: 1, height: 40, margin: 4 }} />
-            <IconButton aria-label="Search" onClick={this.handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <br />
-
-          <Table
-            tableHead={['Name', 'Email', 'Subject', 'Added at', 'Actions']}
-            tableData={tableData}
-            pagination={tablePagination}
-            handlePagination={this.handlePagination}
-          />
-          <Fab
+        <Fab
             color="primary"
             aria-label="Add"
             className={classes.fab}
@@ -152,6 +153,32 @@ export class AdminContactListPage extends React.Component {
           >
             <AddIcon />
           </Fab>
+      </div>
+        <PageContent>
+          <div className="flex justify-end">
+                  <div className="waftformgroup flex relative mr-2">
+                  <input type="text"
+                    name="find_name"
+                    id="contact-name"
+                    placeholder="Search Contacts"
+                    className="m-auto Waftinputbox"
+                    value={query.find_name}
+                    onChange={this.handleQueryChange}
+                  />
+                  <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                    <SearchIcon />
+                  </IconButton>
+                </div>
+          </div>
+        
+
+          <Table
+            tableHead={['Name', 'Email', 'Subject', 'Added at', 'Actions']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+        
         </PageContent>
       </>
     );
