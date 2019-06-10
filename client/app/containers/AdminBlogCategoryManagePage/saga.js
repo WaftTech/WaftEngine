@@ -55,7 +55,7 @@ function* addEdit() {
   const data = yield select(makeSelectOne());
   yield fork(
     Api.post(
-      `blog/category`,
+      'blog/category',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
@@ -65,6 +65,17 @@ function* addEdit() {
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
   yield cancel(sucessWatcher);
 }
+
+function* addEditFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while updating!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 function* deleteCat(action) {
   const token = yield select(makeSelectToken());
   yield call(
@@ -104,4 +115,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.DELETE_CAT_REQUEST, deleteCat);
   yield takeLatest(types.DELETE_CAT_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_CAT_FAILURE, deleteFailureFunc);
+  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
 }

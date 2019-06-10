@@ -8,6 +8,7 @@ export const DEFAULT_ACTION = 'app/AdminModuleManage/DEFAULT_ACTION';
 
 export const SET_ONE_VALUE = 'app/AdminModuleManage/SET_ONE_VALUE';
 export const SET_ACCESS_VALUE = 'app/AdminModuleManage/SET_ACCESS_VALUE';
+export const SET_QUERY_VALUE = 'app/AdminModuleManage/SET_QUERY_VALUE';
 export const CLEAR_ONE = 'app/AdminModuleManage/CLEAR_ONE';
 
 export const LOAD_ALL_REQUEST = 'app/AdminModuleManage/LOAD_ALL_REQUEST';

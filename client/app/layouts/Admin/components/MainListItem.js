@@ -73,9 +73,9 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
       }
     }
     setAccesses(accesses);
+    // console.log(accesses);
   };
-  console.log(accesses);
-  const hasAccess = key => false;//!accesses.includes(key);
+  const hasAccess = key => !accesses.includes(key);
 
   return (
     <div>

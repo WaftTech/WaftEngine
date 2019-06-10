@@ -30,6 +30,17 @@ export const makeSelectAccess = () =>
     substate => substate.access,
   );
 
+export const makeSelectLoading = () =>
+  createSelector(
+    selectAdminModuleManageDomain,
+    substate => substate.loading,
+  );
+
+export const makeSelectQuery = () =>
+  createSelector(
+    selectAdminModuleManageDomain,
+    substate => substate.query,
+  );
 /**
  * Default selector used by AdminModuleManage
  */
