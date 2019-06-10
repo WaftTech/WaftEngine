@@ -32,3 +32,9 @@ export const makeSelectOne = () =>
     selectAdminFaqCategoryManagePageDomain,
     substate => substate.one,
   );
+
+export const makeSelectLoading = () =>
+  createSelector(
+    selectAdminFaqCategoryManagePageDomain,
+    substate => substate.loading,
+  );

@@ -36,6 +36,12 @@ export const makeSelectCategory = () =>
     state => state.category,
   );
 
+export const makeSelectLoading = () =>
+  createSelector(
+    selectFaqManagePageDomain,
+    state => state.loading,
+  );
+
 /**
  * Default selector used by FaqManagePage
  */

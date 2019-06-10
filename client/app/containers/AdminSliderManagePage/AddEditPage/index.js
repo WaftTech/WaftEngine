@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -66,6 +67,7 @@ const SortableImageItem = SortableElement(({value, index, _this}) => <div class=
         }`}
       />
     ) : (
+    
 <button class="bg-grey-light py-2 px-4 rounded text-grey-darker hover:bg-grey-lightest border"
  onClick={_this.handleSetImage(index)}
 >
@@ -82,16 +84,19 @@ const SortableImageItem = SortableElement(({value, index, _this}) => <div class=
     >
       <DeleteIcon />
     </IconButton>
+  
     </div>
   </div>
   );
 
 const SortableImageList = SortableContainer(({items, _this}) => {
   return (
+ 
     <div className="rounded mt-4">
       {items.map((value, index) => (
         <SortableImageItem key={`${value._id}-item-image-${index}`} index={index} value={value} _this={_this}/>
       ))}
+  
     </div>
   );
 });
@@ -189,7 +194,8 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'images', value: arrayMove(this.props.one.images, oldIndex, newIndex)})
   };
   render() {
-    const { one, classes, media } = this.props;
+ 
+    const { one, classes, media, match } = this.props;
     const { subheader } = this.state;
 
     // media next prev logic
@@ -260,7 +266,15 @@ class AddEdit extends React.PureComponent {
             ))}
           </DialogContent>
         </Dialog>
-        <PageContent>
+         
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </title>
+        </Helmet>
+  <PageContent>
             <div class="w-full md:w-1/2 pb-4">
       <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
       Slider Name
@@ -282,6 +296,7 @@ class AddEdit extends React.PureComponent {
       Slider Settings
       </label>
                 <textarea
+               
                   name="slider settings"
                   id="slider_setting"
                   className="Waftinputbox"
@@ -291,19 +306,24 @@ class AddEdit extends React.PureComponent {
                   value={one.settings || ''}
                 />
               </div>
+             
               <button class="text-white py-2 px-4 rounded btn-waft"
               onClick={this.handleAddSlide}
               >
+            
                 Add Slide</button>
               <div
+            
              >
                 <SortableImageList items={one.images} _this={this} onSortEnd={this.onImageSortEnd}/>
               </div>
+        
 
             
               <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
               onClick={this.handleSave}
               >
+             
                 Save</button>
          </PageContent>
       </>

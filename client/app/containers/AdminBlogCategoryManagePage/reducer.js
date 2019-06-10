@@ -35,6 +35,13 @@ const reducer = (state = initialState, action) =>
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;
         break;
+      case types.DELETE_CAT_SUCCESS:
+        draft.all = {
+          ...draft.all,
+          data: draft.all.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         break;

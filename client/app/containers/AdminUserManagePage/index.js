@@ -6,12 +6,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Edit from '@material-ui/icons/Edit';
 import Paper from '@material-ui/core/Paper';
-import { Fab, IconButton } from '@material-ui/core';
+import { Fab, IconButton, Input, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -24,7 +28,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll } from './selectors';
+
+import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -35,6 +40,7 @@ export class AdminUserManagePage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
+    setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     all: PropTypes.shape({
@@ -58,6 +64,15 @@ export class AdminUserManagePage extends React.PureComponent {
     this.props.push(`/admin/user-manage/edit/${id}`);
   };
 
+  handleQueryChange = e => {
+    e.persist();
+    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+  };
+
+  handleSearch = () => {
+    this.props.loadAllRequest(this.props.query);
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -66,6 +81,8 @@ export class AdminUserManagePage extends React.PureComponent {
     const {
       classes,
       all: { data, page, size, totaldata },
+      loading,
+      query,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -76,6 +93,7 @@ export class AdminUserManagePage extends React.PureComponent {
         `${email_verified}`,
         <>
           <Tooltip id="tooltip-left" title="Edit User" placement="left">
+      
             <IconButton className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
               <CreateIcon />
             </IconButton>
@@ -83,9 +101,17 @@ export class AdminUserManagePage extends React.PureComponent {
         </>,
       ],
     );
-    return (
+
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
+        <Helmet>
+          <title>User Listing</title>
+        </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+
+
         <PageHeader>User Manage</PageHeader>
         <Fab
             color="primary"
@@ -97,13 +123,31 @@ export class AdminUserManagePage extends React.PureComponent {
           </Fab>
           </div>
         <PageContent>
-          <Table
-            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
-            tableData={tableData}
-            pagination={tablePagination}
-            handlePagination={this.handlePagination}
-          />
-        
+
+        <div className="flex justify-end">
+                <div className="waftformgroup flex relative mr-2">
+                <input type="text"
+                  name="find_name"
+                  id="user-name"
+                  placeholder="Search User"
+                  className="m-auto Waftinputbox"
+                  value={query.find_name}
+                  onChange={this.handleQueryChange}
+                />
+                <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </div>
+       
+        </div>
+      
+            <Table
+              tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
+              tableData={tableData}
+              pagination={tablePagination}
+              handlePagination={this.handlePagination}
+            />
+          
         </PageContent>
       </>
     );
@@ -112,6 +156,8 @@ export class AdminUserManagePage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
+  query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
@@ -121,6 +167,7 @@ const withConnect = connect(
 
 const styles = theme => ({
   fab: {
+ 
     width:'40px',
     height:'40px',
     marginTop:'auto',

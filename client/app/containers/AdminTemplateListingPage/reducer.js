@@ -18,6 +18,7 @@ export const initialState = {
     subject: '',
     body: '',
   },
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -33,7 +34,11 @@ const adminTemplateListingPageReducer = (state = initialState, action) =>
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         break;
+      case types.LOAD_ALL_REQUEST:
+        draft.loading = true;
+        break;
       case types.LOAD_ALL_SUCCESS:
+        draft.loading = false;
         draft.all = action.payload.data;
         break;
       case types.LOAD_ONE_SUCCESS:

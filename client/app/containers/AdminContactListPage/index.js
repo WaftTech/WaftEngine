@@ -11,19 +11,20 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Close from '@material-ui/icons/Close';
 import View from '@material-ui/icons/RemoveRedEyeOutlined';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
 import CustomInput from '@material-ui/core/Input';
 import { Paper, Divider } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table/Table';
 
 import injectSaga from '../../utils/injectSaga';
@@ -31,7 +32,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -41,6 +42,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
+   
     width:'40px',
     height:'40px',
     marginTop:'auto',
@@ -102,16 +104,17 @@ export class AdminContactListPage extends React.Component {
     this.props.push(`/admin/contact-manage/view/${id}`);
   };
 
+
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/contact-manage/add');
   };
-
   render() {
     const { classes } = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ name, email, subject, added_at, _id }) => [
@@ -137,22 +140,35 @@ export class AdminContactListPage extends React.Component {
             />
           </IconButton>
         </Tooltip>
+        <Tooltip
+          id="tooltip-top-start"
+          title="Remove"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Close"
+            className={classes.tableActionButton}
+            onClick={() => this.handleDelete(_id)}
+          >
+            <Close
+              className={`${classes.tableActionButtonIcon} ${classes.close}`}
+            />
+          </IconButton>
+        </Tooltip>
       </React.Fragment>,
     ]);
-    return (
+  
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <>
-        <div className="flex justify-between mt-3 mb-3">
+        <Helmet>
+          <title>Contact List</title>
+        </Helmet>
+ <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Contact List</PageHeader>
-        <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+      
       </div>
         <PageContent>
           <div className="flex justify-end">
@@ -188,6 +204,7 @@ export class AdminContactListPage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

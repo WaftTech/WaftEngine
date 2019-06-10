@@ -22,7 +22,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -78,7 +78,6 @@ export class AdminMediaManagePage extends React.Component {
   };
 
   handleDelete = id => {
-    confirm('Are you sure you want to delete this item??');
     this.props.deleteOneRequest(id);
   };
 
@@ -87,8 +86,11 @@ export class AdminMediaManagePage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
-    return (
+    return loading ? (
+      <div>Loading</div>
+    ) : (
       <>
          <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Media Manage</PageHeader>
@@ -158,6 +160,7 @@ export class AdminMediaManagePage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

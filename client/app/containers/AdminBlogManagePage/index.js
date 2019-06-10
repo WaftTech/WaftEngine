@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import moment from 'moment';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
@@ -36,6 +37,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
+   
     width:'40px',
     height:'40px',
     marginTop:'auto',
@@ -88,6 +90,7 @@ export class BlogManagePage extends React.Component {
     this.props.push(`/admin/blog-manage/edit/${_id}`);
   };
   handleDelete = id => {
+    this.props.deleteOneRequest(id);
   };
 
   handleQueryChange = e => {
@@ -137,7 +140,10 @@ export class BlogManagePage extends React.Component {
     return (
       loading && loading == true ? <div>loading</div> : 
       <>
-      <div className="flex justify-between mt-3 mb-3">
+<Helmet>
+          <title>Blog Category Listing</title>
+        </Helmet>
+ <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Blog Manage</PageHeader>
         <Fab
               color="primary"
@@ -151,6 +157,7 @@ export class BlogManagePage extends React.Component {
             </Fab>
             </div>
         <PageContent>
+       
 
         <div className="flex justify-end">
           <div className="waftformgroup flex relative">
@@ -169,9 +176,7 @@ export class BlogManagePage extends React.Component {
                 </div>
         
          
-          <Paper
-            elevation={0}
-          />
+         
             <Table
               tableHead={[
                 'Title',
@@ -190,6 +195,7 @@ export class BlogManagePage extends React.Component {
               pagination={tablePagination}
               handlePagination={this.handlePagination}
             />
+          
         </PageContent>
       </>
     );

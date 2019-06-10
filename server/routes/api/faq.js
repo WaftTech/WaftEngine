@@ -13,5 +13,6 @@ router.get('/cat/:id', authorization, faqModule.GetFaqCatById);
 router.get('/bycat/:id', faqModule.GetFaqByCat);
 router.post('/', authorization, authentication, validations.Sanitize, validations.Validation, faqModule.PostFaq);
 router.post('/cat', authorization, authentication, validations.Sanitize, validations.Validation, faqModule.PostFaqCat);
+router.delete('/cat/:id', authorization, faqModule.DeleteFaqCat);
 router.delete('/:id', authorization, authentication, faqModule.DeleteFaq);
 module.exports = router;

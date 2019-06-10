@@ -23,6 +23,8 @@ import ContactViewPage from '../containers/AdminContactListPage/ViewContactList'
 import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
 import ErrorManagePage from '../containers/AdminErrorManagePage/Loadable';
 import FaqCatAddEditPage from '../containers/AdminFaqCategoryManagePage/AddEdit/Loadable';
+import BlogCatManagePage from '../containers/AdminBlogCategoryManagePage/Loadable';
+import BlogCatAddEditPage from '../containers/AdminBlogCategoryManagePage/AddEdit/Loadable';
 import AdminReportPage from '../containers/AdminReportPage/Loadable';
 import AdminIntegrationPage from '../containers/AdminIntegrationPage/Loadable';
 
@@ -163,6 +165,22 @@ const routes = [
   {
     path: '/admin/blog-manage',
     component: BlogManagePage,
+    exact: true,
+  },
+
+  {
+    path: '/admin/blog-cat-manage/edit/:id',
+    component: BlogCatAddEditPage,
+    exact: true,
+  },
+  {
+    path: '/admin/blog-cat-manage/add',
+    component: BlogCatAddEditPage,
+    exact: true,
+  },
+  {
+    path: '/admin/blog-cat-manage',
+    component: BlogCatManagePage,
     exact: true,
   },
   {

@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
@@ -26,7 +27,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
- 
+  
 });
 
 class AddEdit extends React.PureComponent {
@@ -70,17 +71,25 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, category, one } = this.props;
+
+    const { classes, category, one, match } = this.props;
     return (
-      <div>
-        <div class="flex justify-between mt-1 mb-1">
+      <>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
+          </title>
+        </Helmet>
+  <div class="flex justify-between mt-1 mb-1">
         <PageHeader>
+        
         <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
         </IconButton>
         </PageHeader>
         </div>
         <PageContent>
+       
           <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -89,12 +98,14 @@ class AddEdit extends React.PureComponent {
               Question
             </label>
             <input
+           
               className="Waftinputbox"
               name="Question"
               id="faq"
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
+         
             </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -108,9 +119,10 @@ class AddEdit extends React.PureComponent {
               rows="5"
               name="Answer"
               id="faq-answer"
+          
               value={one.title || ''}
-              onChange={this.handleChange('title')}
-            />
+              onChange={this.handleChange('title')}></textarea>
+           
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -125,27 +137,33 @@ class AddEdit extends React.PureComponent {
                   inputProps={{
                     name: 'category',
                     id: 'category-title',
+               
                   }}>
 
                     {category &&
                     category.length &&
                     category.map(each => (
+                  
                       <option key={each._id} value={each._id}>
                         {each.title}
+                     
                       </option>
                     ))}
+          
 
                   </select>
             </div>
             
 
+          
             <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
               onClick={this.handleSave}
+         
               >
                 Save</button>
           
         </PageContent>
-      </div>
+   </>
     );
   }
 }
