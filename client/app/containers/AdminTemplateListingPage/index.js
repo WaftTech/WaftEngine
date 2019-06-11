@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -92,6 +93,7 @@ export function AdminTemplateListingPage({
       </div>
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
+       
         <div class="w-full md:w-1/2 pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
           Template Name
@@ -104,6 +106,7 @@ export function AdminTemplateListingPage({
             value={one.template_name || ''}
             onChange={handleChange}
             />
+        
         </div>
 
         <div class="w-full md:w-1/2 pb-4">
@@ -119,18 +122,23 @@ export function AdminTemplateListingPage({
               onChange={handleTemplateChange}
             >
               {all.map(each => (
+             
                 <option value={each.template_key} key={each._id}>
                   {each.template_key}
+             
                 </option>
               ))}
+         
             </select>
           </div>
 
+         
           <div class="w-full md:w-1/2 pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
           Informations
           </label>
             <input
+           
               className="Waftinputbox"
               type="text"
               id="informations"
@@ -139,6 +147,7 @@ export function AdminTemplateListingPage({
             />
           </div>
 
+        
           <div class="w-full md:w-1/2 pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
           Variables
@@ -151,13 +160,16 @@ export function AdminTemplateListingPage({
               // input={<Input id="select-multiple" />}
             >
               {one.variables.map(name => (
+            
                 <option key={name} value={name}>
                   {name}
+             
                 </option>
               ))}
+        
             </select>
           </div>
-
+        
           <div class="w-full md:w-1/2 pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
           From
@@ -172,6 +184,7 @@ export function AdminTemplateListingPage({
             />
           </div>
 
+       
           <div class="w-full md:w-1/2 pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
           Subject
@@ -202,6 +215,7 @@ export function AdminTemplateListingPage({
 
           <div dangerouslySetInnerHTML={{ __html: one.body }} />
 
+        
           <div class="w-full pb-4">
           <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
          Body
@@ -216,6 +230,7 @@ export function AdminTemplateListingPage({
             />
           </div>
 
+       
           <button class="text-white py-2 px-4 rounded mt-4 btn-waft" >
                 Save</button>   
         </form>
