@@ -145,8 +145,8 @@ const styles = theme => ({
   },
 });
 
-const AdminLayout = ({ classes, logoutRequest: logout, roles }) => {
-  const [open, setOpen] = useState(true);
+const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
+  // const [open, setOpen] = useState(true);
   const [anchorel, setAnchorel] = useState(null);
   const anchorOpen = Boolean(anchorel);
   const handleMenu = event => {
@@ -161,12 +161,14 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles }) => {
     setAnchorel(null);
     push('/login-admin');
   };
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDashboard = () => {
+    setAnchorel(null);
+    push('/admin/dashboard');
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleProfile = () => {
+    setAnchorel(null);
+    push('/user/profile');
   };
 
   return (
@@ -190,17 +192,42 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles }) => {
         </div>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
           <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
-            <span className="m-auto mr-1">Hi, Ishwor</span><AccountCircle onClick={handleMenu} />
-            <div
-              className="hidden"
+            <button onClick={handleMenu}>
+              <span className="m-auto mr-1">{users.name}</span>
+              <AccountCircle />
+            </button>
+            <Menu
               id="menu-appbar"
-              anchorel={anchorel}
+              anchorEl={anchorel}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
               open={anchorOpen}
               onClose={handleClose}
             >
-              <div onClick={handleClose}>Dashboard</div>
-              <div onClick={handleLogout}>Logout</div>
-            </div>
+              <MenuItem onClick={handleClose}>
+                <Link
+                  to="/admin/dashboard"
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  Dashboard
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link
+                  to="/user/profile"
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  Profile
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+            </Menu>
           </div>
           {switchRoutes(roles)}
         </main>
@@ -213,10 +240,12 @@ AdminLayout.propTypes = {
   classes: PropTypes.object.isRequired,
   logoutRequest: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ({ global }) => ({
   roles: global.user.roles,
+  users: global.user,
 });
 
 const withConnect = connect(

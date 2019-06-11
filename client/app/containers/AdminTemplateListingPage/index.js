@@ -60,6 +60,7 @@ export function AdminTemplateListingPage({
   one,
   loading,
 }) {
+  console.log(all);
   const [data, setData] = useState('');
   useEffect(() => {
     loadAllRequest();
@@ -85,96 +86,78 @@ export function AdminTemplateListingPage({
     <CircularProgress color="primary" disableShrink />
   ) : (
     <>
-      <Helmet>
-          <title>Template Manage</title>
-        </Helmet>
       <div className="flex justify-between mt-3 mb-3">
-      <PageHeader>Email Template Manage</PageHeader>
+        <PageHeader>Email Template Manage</PageHeader>
       </div>
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
-       
-        <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Template Name
-          </label>
-            <input type="text"
-            className="Waftinputbox"
-            readOnly="rea"
-            id="template-name"
-            name="template-name"
-            value={one.template_name || ''}
-            onChange={handleChange}
-            />
-        
-        </div>
-
-        <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Template Key
-          </label>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Template Key
+            </label>
             <select
               className="Waftinputbox"
               id="template-key"
               name="template_key"
               value={data || ''}
-              displayEmpty
               onChange={handleTemplateChange}
             >
               {all.map(each => (
-             
                 <option value={each.template_key} key={each._id}>
                   {each.template_key}
-             
                 </option>
               ))}
-         
             </select>
           </div>
 
-         
-          <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Informations
-          </label>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Template Name
+            </label>
             <input
-           
+              type="text"
+              className="Waftinputbox"
+              readOnly
+              id="template-name"
+              name="template-name"
+              value={one.template_name || ''}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Informations
+            </label>
+            <input
               className="Waftinputbox"
               type="text"
+              readOnly
               id="informations"
               name="informations"
               value={one.information || ''}
             />
           </div>
 
-        
-          <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Variables
-          </label>
-            <select
-              multiple
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Variables
+            </label>
+            <input
               className="Waftinputbox"
+              type="text"
+              id="variables"
+              name="variables"
+              readOnly
               value={one.variables || ''}
-              onChange={() => null}
-              // input={<Input id="select-multiple" />}
-            >
-              {one.variables.map(name => (
-            
-                <option key={name} value={name}>
-                  {name}
-             
-                </option>
-              ))}
-        
-            </select>
+              onChange={handleChange}
+            />
           </div>
-        
-          <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          From
-          </label>
-          <input
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              From
+            </label>
+            <input
               className="Waftinputbox"
               type="text"
               id="from_email"
@@ -184,12 +167,11 @@ export function AdminTemplateListingPage({
             />
           </div>
 
-       
-          <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Subject
-          </label>
-          <input
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Subject
+            </label>
+            <input
               className="Waftinputbox"
               type="text"
               id="subject_email"
@@ -199,11 +181,11 @@ export function AdminTemplateListingPage({
             />
           </div>
 
-          <div class="w-full md:w-1/2 pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Alternate Text
-          </label>
-          <input
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Alternate Text
+            </label>
+            <input
               className="Waftinputbox"
               type="text"
               id="alternate_text"
@@ -215,12 +197,11 @@ export function AdminTemplateListingPage({
 
           <div dangerouslySetInnerHTML={{ __html: one.body }} />
 
-        
-          <div class="w-full pb-4">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-         Body
-          </label>
-          <textarea
+          <div className="w-full pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Body
+            </label>
+            <textarea
               className="Waftinputbox"
               type="text"
               id="body_email"
@@ -230,9 +211,9 @@ export function AdminTemplateListingPage({
             />
           </div>
 
-       
-          <button class="text-white py-2 px-4 rounded mt-4 btn-waft" >
-                Save</button>   
+          <button className="text-white py-2 px-4 rounded mt-4 btn-waft">
+            Save
+          </button>
         </form>
       </PageContent>
     </>
