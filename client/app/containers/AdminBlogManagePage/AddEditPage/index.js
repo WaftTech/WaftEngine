@@ -62,6 +62,16 @@ const styles = theme => ({
     marginBottom: '3px',
     textDecoration: 'none',
   },
+
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
  
  
 });
@@ -193,10 +203,10 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
-       <div class="flex justify-between mt-1 mb-1">
+       <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
          <IconButton
-            className="cursor-pointer"
+           className={[classes.backbtn,'cursor-pointer']}
             onClick={this.handleGoBack}
             aria-label="Back"
           >

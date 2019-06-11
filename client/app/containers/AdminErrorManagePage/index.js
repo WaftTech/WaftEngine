@@ -36,7 +36,26 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 
-const styles = theme => ({});
+const styles = theme => ({
+
+  tableActionButton:{
+    padding:0,
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
+  },
+  waftsrch:{
+    padding:0,
+    position:'absolute',
+    borderLeft:'1px solid #d9e3e9',
+    borderRadius:0,
+      '&:hover':{
+        background : 'transparent',
+        color: '#404040',
+      },
+    },
+});
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminErrorManagePage extends React.Component {
@@ -122,47 +141,32 @@ export class AdminErrorManagePage extends React.Component {
         <Helmet>
           <title>Error Listing</title>
         </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Error Manage</PageHeader>
-        <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-            <CustomInput
-              name="find_errors"
-              id="error-message"
-              fullWidth
-              placeholder="Search Errors"
-              value={query.find_errors}
-              onChange={this.handleQueryChange}
-            />
-            <Divider
-              style={{
-                width: 1,
-                height: 40,
-                margin: 4,
-              }}
-            />
-            <IconButton aria-label="Search" onClick={this.handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <br />
-          <Button
+        <Button
             variant="contained"
             color="secondary"
             onClick={this.handleDeleteAll}
           >
             Delete All
           </Button>
-          <br />
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
-            elevation={0}
-          />
+        </div>
+        <PageContent>
+        <div className="flex justify-end">
+          <div className="waftformgroup flex relative">
+                <input type="text"
+                  name="find_errors"
+                  id="error-message"
+                  placeholder="Search Errors"
+                  className="m-auto Waftinputbox"
+                  value={query.find_errors}
+                  onChange={this.handleQueryChange}
+                />
+              <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+                </div>
+                </div>
           <Table
             tableHead={[
               'Error Message',

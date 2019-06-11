@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -34,7 +35,15 @@ import { IconButton } from '@material-ui/core';
 import { spacing, palette } from '@material-ui/system';
 
 const styles = { 
-
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 }
 
 
@@ -85,14 +94,23 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one, classes} = this.props;
+    const { one, classes, match} = this.props;
     return (
+      <>
+      <Helmet>
+      <title> {match && match.params && match.params.id
+              ? 'Edit Static Content'
+              : 'Add Static Content'}</title>
+    </Helmet>
       <div>
-         <div class="flex justify-between mt-1 mb-1">
+         <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
-        </IconButton></PageHeader>
+        </IconButton>
+        {match && match.params && match.params.id
+            ? 'Edit Static Content'
+            : 'Add Static Content'}</PageHeader>
         </div>
         <PageContent>
 
@@ -188,6 +206,7 @@ class AddEdit extends React.PureComponent {
              
         </PageContent>
       </div>
+      </>
     );
   }
 }

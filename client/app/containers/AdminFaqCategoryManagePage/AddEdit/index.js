@@ -27,16 +27,15 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
-  p20: { padding: 20 },
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: { margin: theme.spacing.unit / 2 },
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 });
 
 class AddEdit extends React.PureComponent {
@@ -88,9 +87,9 @@ class AddEdit extends React.PureComponent {
               : 'Add Faq Category'}
           </title>
         </Helmet>
-   <div class="flex justify-between mt-1 mb-1">
+   <div class="flex justify-between mt-3 mb-3">
      <PageHeader>
-  <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+  <IconButton className={[classes.backbtn,'cursor-pointer']}	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
         </IconButton>  {match && match.params && match.params.id
             ? 'Edit Faq Category'

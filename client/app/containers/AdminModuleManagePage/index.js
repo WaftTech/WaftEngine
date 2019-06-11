@@ -14,6 +14,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CreateIcon from '@material-ui/icons/Create';
 import VpnKey from '@material-ui/icons/VpnKey';
+import Helmet from 'react-helmet';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -75,14 +76,14 @@ export class AdminModuleManage extends React.PureComponent {
       module_name,
       description,
       <>
-        <button
-          className="text-blue hover:bg-grey-lighter rounded-full w-10 h-10 text-center"
+        <button className=
+          {classes.tableActionButton}
           onClick={() => this.handleEdit(_id)}
         >
           <CreateIcon />
         </button>
-        <button
-          className="text-blue hover:bg-grey-lighter rounded-full w-10 h-10 text-center"
+        <button className=
+          {classes.tableActionButton}
           onClick={() => this.handleAccessEdit(_id)}
         >
           <VpnKey />
@@ -91,14 +92,11 @@ export class AdminModuleManage extends React.PureComponent {
     ]);
     return (
       <>
-        <PageHeader>Module Manage</PageHeader>
-        <PageContent>
-          <Table
-            tableHead={['Module Name', 'Description', '']}
-            tableData={tableData}
-            pagination={tablePagination}
-            handlePagination={this.handlePagination}
-          />
+        <Helmet>
+          <title>Module Manage</title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>Module Manage</PageHeader>
           <Fab
             color="primary"
             aria-label="Add"
@@ -107,6 +105,15 @@ export class AdminModuleManage extends React.PureComponent {
           >
             <AddIcon />
           </Fab>
+          </div>
+        <PageContent>
+          <Table
+            tableHead={['Module Name', 'Description', 'Action']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
+         
         </PageContent>
       </>
     );
@@ -127,9 +134,19 @@ const withSaga = injectSaga({ key: 'adminModuleManage', saga });
 
 const styles = theme => ({
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
+  
+    width:'40px',
+    height:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+  },
+  tableActionButton:{
+    padding:0,
+    color:"#666",
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
   },
 });
 

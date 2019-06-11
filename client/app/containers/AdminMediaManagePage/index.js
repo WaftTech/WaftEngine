@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Dropzone from 'react-dropzone';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -92,6 +93,9 @@ export class AdminMediaManagePage extends React.Component {
       <div>Loading</div>
     ) : (
       <>
+       <Helmet>
+          <title>Media Manage</title>
+        </Helmet>
          <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Media Manage</PageHeader>
         <Dropzone onDrop={this.handleAdd}>

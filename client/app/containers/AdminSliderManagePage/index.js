@@ -174,14 +174,14 @@ export class SliderManagePage extends React.Component {
         </React.Fragment>,
       ],
     );
-    <Helmet>
-       <title>Slider Listing</title>
-    </Helmet>
+  
     return loading && loading == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
       <>
-    
+      <Helmet>
+       <title>Slider Listing</title>
+    </Helmet>
  <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Slider Manage</PageHeader>
         <Fab
