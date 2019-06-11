@@ -16,7 +16,7 @@ import Close from '@material-ui/icons/Close';
 import { Fab, IconButton, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-import Helmet from 'react-helmet';
+
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
