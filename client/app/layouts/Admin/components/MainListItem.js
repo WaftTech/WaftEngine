@@ -82,7 +82,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
       <ul className="list-reset">
         <li
           hidden={hasAccess('/admin/dashboard')}
-          className="pl-2 pr-2 pointer"
+          className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
           selected={pathname === '/admin/dashboard'}
         >
           <Link
