@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -162,6 +163,9 @@ export class ContentsListingPage extends React.Component {
         <div>loading</div>
       ) : ( 
       <>
+        <Helmet>
+          <title>Content Listing</title>
+        </Helmet>
       <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Content Manage</PageHeader>
         <Fab

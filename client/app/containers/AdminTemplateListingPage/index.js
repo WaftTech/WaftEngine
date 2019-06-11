@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
@@ -83,25 +84,34 @@ export function AdminTemplateListingPage({
     <CircularProgress color="primary" disableShrink />
   ) : (
     <>
+      <Helmet>
+          <title>Template Manage</title>
+        </Helmet>
+      <div className="flex justify-between mt-3 mb-3">
       <PageHeader>Email Template Manage</PageHeader>
+      </div>
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block mb-2">Template Name</label>
-            <input
-              readOnly="rea"
-              id="template-name"
-              name="template-name"
-              value={one.template_name || ''}
-              className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-              type="text"
-              onChange={handleChange}
+        <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Template Name
+          </label>
+            <input type="text"
+            className="Waftinputbox"
+            readOnly="rea"
+            id="template-name"
+            name="template-name"
+            value={one.template_name || ''}
+            onChange={handleChange}
             />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Template Key</label>
-            <Select
-              className="h-12 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey "
+        </div>
+
+        <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Template Key
+          </label>
+            <select
+              className="Waftinputbox"
               id="template-key"
               name="template_key"
               value={data || ''}
@@ -109,17 +119,19 @@ export function AdminTemplateListingPage({
               onChange={handleTemplateChange}
             >
               {all.map(each => (
-                <MenuItem value={each.template_key} key={each._id}>
+                <option value={each.template_key} key={each._id}>
                   {each.template_key}
-                </MenuItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
 
-          <div className="mb-4">
-            <label className="block mb-2">Informations</label>
+          <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Informations
+          </label>
             <input
-              className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+              className="Waftinputbox"
               type="text"
               id="informations"
               name="informations"
@@ -127,71 +139,85 @@ export function AdminTemplateListingPage({
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block mb-2">Variables</label>
-            <Select
+          <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Variables
+          </label>
+            <select
               multiple
+              className="Waftinputbox"
               value={one.variables || ''}
               onChange={() => null}
               // input={<Input id="select-multiple" />}
             >
               {one.variables.map(name => (
-                <MenuItem key={name} value={name}>
+                <option key={name} value={name}>
                   {name}
-                </MenuItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
-          <TextField
-            id="from_email"
-            label="From"
-            name="from"
-            value={one.from || ''}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange}
-            fullWidth
-          />
 
-          <TextField
-            id="subject_email"
-            label="Subject"
-            name="subject"
-            value={one.subject || ''}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange}
-            fullWidth
-          />
+          <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          From
+          </label>
+          <input
+              className="Waftinputbox"
+              type="text"
+              id="from_email"
+              name="from"
+              value={one.from || ''}
+              onChange={handleChange}
+            />
+          </div>
 
-          <TextField
-            id="alternate_text"
-            label="Alternate Text"
-            name="alternate_text"
-            value={one.alternate_text || ''}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange}
-            fullWidth
-          />
+          <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Subject
+          </label>
+          <input
+              className="Waftinputbox"
+              type="text"
+              id="subject_email"
+              name="subject"
+              value={one.subject || ''}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Alternate Text
+          </label>
+          <input
+              className="Waftinputbox"
+              type="text"
+              id="alternate_text"
+              name="alternate_text"
+              value={one.alternate_text || ''}
+              onChange={handleChange}
+            />
+          </div>
 
           <div dangerouslySetInnerHTML={{ __html: one.body }} />
 
-          <TextField
-            id="body_email"
-            label="Body"
-            name="body"
-            value={one.body || ''}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange}
-            multiline
-            fullWidth
-          />
+          <div class="w-full pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+         Body
+          </label>
+          <textarea
+              className="Waftinputbox"
+              type="text"
+              id="body_email"
+              name="body"
+              value={one.body || ''}
+              onChange={handleChange}
+            />
+          </div>
 
-          <Button variant="contained" color="primary" type="submit">
-            Save
-          </Button>
+          <button class="text-white py-2 px-4 rounded mt-4 btn-waft" >
+                Save</button>   
         </form>
       </PageContent>
     </>

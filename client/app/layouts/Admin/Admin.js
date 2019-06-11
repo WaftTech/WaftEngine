@@ -190,7 +190,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles }) => {
         </div>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
           <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
-            <AccountCircle onClick={handleMenu} />
+            <span className="m-auto mr-1">Hi, Ishwor</span><AccountCircle onClick={handleMenu} />
             <div
               className="hidden"
               id="menu-appbar"

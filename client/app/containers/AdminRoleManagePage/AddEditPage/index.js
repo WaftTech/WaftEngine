@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -65,21 +66,23 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      match: {
-        params: { id },
-      },
-      one,
-    } = this.props;
+    const { classes, one, match } = this.props;
     return (
       <React.Fragment>
-        {/* <PageHeader> {id ? 'Edit' : 'Add'} Role</PageHeader> */}
-        <div class="flex justify-between mt-1 mb-1">
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Role'
+              : 'Add Role'}
+          </title>
+        </Helmet>
+        <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleBack} aria-label="Back">
+        <IconButton className={[classes.backbtn,'cursor-pointer']}	 onClick={this.handleBack} aria-label="Back">
           <BackIcon />
-        </IconButton></PageHeader>
+        </IconButton>{match && match.params && match.params.id
+            ? 'Edit Role'
+            : 'Add Role'}</PageHeader>
         </div>
         <PageContent>
             <div class="w-full md:w-1/2 pb-4">
@@ -133,7 +136,17 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({});
+const styles = theme => ({
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
+});
 
 const withStyle = withStyles(styles);
 

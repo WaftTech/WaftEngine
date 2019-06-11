@@ -57,6 +57,15 @@ const styles = theme => ({
     display: 'inline-block',
     '& > img': { maxWidth: '100%' },
   },
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 });
 const SortableImageItem = SortableElement(({value, index, _this}) => <div class="flex mb-4 bg-grey-lighter p-2">
   <div className="w-2/5 m-auto text-center pr-5">
@@ -205,11 +214,13 @@ class AddEdit extends React.PureComponent {
     const isLastPage = media.page === lastPage;
     return (
       <>
-         <div class="flex justify-between mt-1 mb-1">
+         <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+        <IconButton className={[classes.backbtn,'cursor-pointer']}	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
-        </IconButton></PageHeader>
+        </IconButton>{match && match.params && match.params.id
+            ? 'Edit Slider'
+            : 'Add Slider'}</PageHeader>
         </div>
         <Dialog
           className={classes.modal}

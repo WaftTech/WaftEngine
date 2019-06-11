@@ -27,7 +27,15 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
-  
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 });
 
 class AddEdit extends React.PureComponent {
@@ -80,12 +88,14 @@ class AddEdit extends React.PureComponent {
             {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
           </title>
         </Helmet>
-  <div class="flex justify-between mt-1 mb-1">
+  <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
         
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+        <IconButton className={[classes.backbtn,'cursor-pointer']}	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
-        </IconButton>
+        </IconButton>{match && match.params && match.params.id
+            ? 'Edit Faq'
+            : 'Add Faq'}
         </PageHeader>
         </div>
         <PageContent>

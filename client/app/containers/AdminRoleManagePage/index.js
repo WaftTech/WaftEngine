@@ -14,6 +14,7 @@ import Close from '@material-ui/icons/Close';
 import { Fab, IconButton, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
+import Helmet from 'react-helmet';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -123,6 +124,9 @@ export class AdminRoleManage extends React.PureComponent {
     );
     return (
       <React.Fragment>
+         <Helmet>
+          <title>Role Manage</title>
+        </Helmet>
         <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Role Manage</PageHeader>
         <Fab
