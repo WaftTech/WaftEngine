@@ -174,9 +174,9 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles }) => {
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
-      <div className="flex overflow-y-hidden">
+      <div className="flex overflow-y-hidden bg-grey-lighter">
         <div
-          className="overflow-x-hidden h-screen border-r bg-grey-lightest"
+          className="overflow-x-hidden h-screen bg-white WaftSideBar"
           style={{ width: 250 }}
         >
           <Link to="/">
@@ -188,9 +188,9 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles }) => {
           </Link>
           <MainListItems />
         </div>
-        <main className="h-screen flex-1 overflow-auto">
-          <div className="flex justify-end flex1 border-b pt-2 pb-2 pl-6 pr-6">
-            <AccountCircle onClick={handleMenu} />
+        <main className="h-screen flex-1 overflow-auto px-8 py-4">
+          <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
+            <span className="m-auto mr-1">Hi, Ishwor</span><AccountCircle onClick={handleMenu} />
             <div
               className="hidden"
               id="menu-appbar"

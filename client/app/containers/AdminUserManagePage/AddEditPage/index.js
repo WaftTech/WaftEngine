@@ -25,6 +25,8 @@ import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -90,40 +92,34 @@ class AddEdit extends React.PureComponent {
     } = this.props;
     return (
       <>
+
        <Helmet>
           <title>{id ? 'Edit User' : 'Add User'}</title>
         </Helmet>
-        <PageHeader>{id ? 'Edit' : 'Add'} User</PageHeader>
+ <div class="flex justify-between mt-3 mb-3">
+        <PageHeader>
+        <IconButton className={[classes.backbtn,'cursor-pointer']}	 onClick={this.handleBack} aria-label="Back">
+          <BackIcon />
+        </IconButton>{id ? 'Edit' : 'Add'} User</PageHeader>
+        </div>
         <PageContent>
-          <Grid container spacing={24}>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="email"
-                type="email"
-                label="Email"
-                value={users.email}
-                onChange={this.handleChange('email')}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <TextField
-                required
-                id="name"
-                label="Name"
-                value={users.name}
-                onChange={this.handleChange('name')}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+         
+        <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Email
+          </label>
+          <input class="Waftinputbox" id="email" type="text" value= {users.email}
+                     onChange={this.handleChange('email')} />
+        </div>
+
+        <div class="w-full md:w-1/2 pb-4">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          Name
+          </label>
+          <input class="Waftinputbox" id="name" type="text" value= {users.name}
+                      onChange={this.handleChange('name')}/>
+        </div>
+         
               <FormControlLabel
                 control={
                   <Checkbox
@@ -149,16 +145,12 @@ class AddEdit extends React.PureComponent {
                   label={each.role_title}
                 />
               ))}
-            </Grid>
-          </Grid>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSave}
-            className={classes.button}
-          >
-            Save
-          </Button>
+         
+              <br/>
+
+          <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+           Save
+           </button>
         </PageContent>
       </>
     );
@@ -196,6 +188,15 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
   },
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 });
 
 const withStyle = withStyles(styles);

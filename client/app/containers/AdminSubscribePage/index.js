@@ -41,12 +41,24 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 
 const styles = theme => ({
-  TableButton: { padding: 8 },
-  fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
-  },
+ 
+  tableActionButton:{
+    padding:0,
+      '&:hover':{
+        background : 'transparent',
+        color: '#404040',
+      },
+    },
+  waftsrch:{
+    padding:0,
+    position:'absolute',
+    borderLeft:'1px solid #d9e3e9',
+    borderRadius:0,
+      '&:hover':{
+        background : 'transparent',
+        color: '#404040',
+      },
+    },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -91,6 +103,7 @@ export class AdminSubscribePage extends React.PureComponent {
   };
 
   render() {
+    const { classes } = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
@@ -105,7 +118,8 @@ export class AdminSubscribePage extends React.PureComponent {
 
       <React.Fragment>
         <Tooltip id="tooltip-top" title="View subscribe" placement="top">
-          <IconButton onClick={() => this.handleView(_id)}>
+    
+          <IconButton    className={classes.tableActionButton} onClick={() => this.handleView(_id)}>
             <ViewIcon />
           </IconButton>
         </Tooltip>
@@ -123,31 +137,37 @@ export class AdminSubscribePage extends React.PureComponent {
         <Helmet>
           <title>Subscriber List</title>
         </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+
+
         <PageHeader>Subscribe Manage</PageHeader>
+      </div>
         <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-            <CustomInput
-              name="find_email"
-              id="email"
-              placeholder="Search Subscriber"
-              fullWidth
-              value={query.find_email}
-              onChange={this.handleQueryChange}
-            />
-            <Divider style={{ width: 1, height: 40, margin: 4 }} />
-            <IconButton aria-label="Search" onClick={this.handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <br />
-          <Paper>
+       
+        <div className="flex justify-end">
+                <div className="waftformgroup flex relative mr-2">
+                <input type="text"
+                  name="find_email"
+                  id="email"
+                  placeholder="Search Subscriber"
+                  className="m-auto Waftinputbox"
+                  value={query.find_email}
+                  onChange={this.handleQueryChange}
+                />
+                <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </div>
+        </div>
+       
             <Table
               tableHead={['Email', 'Is Subscribed', 'Added at', 'Actions']}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}
             />
-          </Paper>
+    
+         
         </PageContent>
       </>
     );

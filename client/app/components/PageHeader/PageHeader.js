@@ -4,7 +4,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 
 const PageHeader = props => {
   const { classes, children } = props;
-  return <div className="flex justify-between items-center mt-2 ml-6 mr-6 mb-2">{children}</div>;
+  return <div className="pageheader text-2xl my-auto">{children}</div>;
 };
 
 export default PageHeader;

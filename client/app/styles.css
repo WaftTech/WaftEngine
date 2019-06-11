@@ -14,7 +14,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 30px #f4f4f4 inset !important;
 }
 
 button:focus {
@@ -27,7 +27,43 @@ button:focus {
   height: 9vh;
 }
 
-.btn-waft{
+.WaftSideBar{
+  -webkit-box-shadow: 0 0 15px 0 rgba(0,0,0,.05);
+    box-shadow: 0 0 15px 0 rgba(0,0,0,.05);
+}
+
+.Waftinputbox {
+    display: block;
+    min-width: 250px;
+    width: 100%;
+    height: 36px;
+    padding: 6px 12px;
+    background: #F4F4F4;
+    border-radius: 4px;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.Waftinputbox:focus{
+  outline: 0;
+  border:1px solid #d0d0d0;
+  background: transparent;
+}
+
+textarea.Waftinputbox{
+  height:100px;
+}
+
+table.table tbody td {
+  font-size: 15px;
+}
+
+.table tr:nth-child(even) {
+  background: #f7f7f7;
+}
+
+.btn-waft , .login-l{
   background: #ff3b30; /* Old browsers */
   background: -moz-linear-gradient(top, #ff3b30 0%, #d82929 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, #ff3b30 0%,#d82929 100%); /* Chrome10-25,Safari5.1-6 */
@@ -41,11 +77,6 @@ button:focus {
 
 .login-l{
   position: relative;
-  background: #ff3b30; /* Old browsers */
-background: -moz-linear-gradient(top, #ff3b30 0%, #d82929 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #ff3b30 0%,#d82929 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #ff3b30 0%,#d82929 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3b30', endColorstr='#d82929',GradientType=0 ); /* IE6-9 */ 
 }
 
 .waftltext , .walfRlogin{
@@ -81,6 +112,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3b30', end
 
 .fealogin li {
   font-size: 1.2rem;
+}
+
+.waftsrchstyle {
+  width: 40px;
+  text-align: center;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
 }
 
 @media screen and (max-width: 767px) {
