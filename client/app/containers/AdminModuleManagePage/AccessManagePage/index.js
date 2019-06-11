@@ -91,7 +91,7 @@ class AccessManagePage extends React.PureComponent {
           <title>Access Listing</title>
         </Helmet>
         <PageHeader className="text-sm">
-          <BackIcon />
+          <BackIcon onClick={this.handleBack} />
           {`Edit Access for ${Module.module_name}`}
         </PageHeader>
         <PageContent>

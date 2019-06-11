@@ -42,89 +42,86 @@ export class AdminDashboard extends React.PureComponent {
     const { users, info, errors, blogs } = this.props;
     return (
       <>
-        <div>
-          <PageHeader>Dashboard</PageHeader>
-          <PageContent>
-            <Paper>
-              <Grid item xs={12} sm={12}>
-                {info.map(each => (
-                  <div key={each._id}>
-                    <h4>{each.title}</h4>
-                    <div dangerouslySetInnerHTML={{ __html: each.detail }} />
-                  
-                  </div>
-                ))}
-              </Grid>
-            </Paper>
-            <Paper>
-              <Grid item xs={12} sm={12}>
-                <div>
-                  {blogs.map(each => (
-                    <LinkBoth
-                      key={each._id}
-                      to={`https://www.waftengine.org/blog/${each._id}`}
-                      target="_blank"
-                    >
-                      <div>
-                        <h4>{each.title}</h4>
-                       
-                      </div>
-                    </LinkBoth>
-                  ))}
+        <PageHeader>Dashboard</PageHeader>
+        <PageContent>
+          <Paper>
+            <Grid item xs={12} sm={12}>
+              {info.map(each => (
+                <div key={each._id}>
+                  <h4>{each.title}</h4>
+                  <div dangerouslySetInnerHTML={{ __html: each.detail }} />
                 </div>
-              </Grid>
-            </Paper>
-          
-            <Grid container>
-              <Grid item xs={12} sm={6}>
-                <div>
-                  <LinkBoth to="/admin/blog-manage/add/">Write Post</LinkBoth>
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <div>
+              ))}
+            </Grid>
+          </Paper>
+          <br />
+          <Paper>
+            <Grid item xs={12} sm={12}>
+              <div>
+                {blogs.map(each => (
                   <LinkBoth
-                    to="https://www.waftengine.org/documentation"
+                    key={each._id}
+                    to={`https://www.waftengine.org/blog/${each._id}`}
+                    // to={`localhost:5120/api/blog/${each._id}`}
                     target="_blank"
                   >
-                    Click documentation to get started
+                    <div>
+                      <h4>{each.title}</h4>
+                    </div>
                   </LinkBoth>
-                </div>
-              </Grid>
+                ))}
+              </div>
             </Grid>
-         
-            <div>
-              <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-                <Grid container>
-                  <Grid item xs={12} sm={6}>
-                    <div>Total users: {users.totaldata}</div>
-                    <div>
-                   
-                      <h3>By Roles: </h3>
-                      {users.data.map(each => (
-                        <div key={each._id}>
-                          {each.roles.role_title}: {each.count}
-                        </div>
-                      ))}
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <div>Total errors: {errors.totaldata}</div>
-                    <div>
-                      <br />
-                      <h3>By Types: </h3>
-                      {errors.data.map(each => (
-                        <div key={each._id}>
-                          {each._id}: {each.count}
-                        </div>
-                      ))}
-                    </div>
-                  </Grid>
+          </Paper>
+          <br />
+          <Grid container>
+            <Grid item xs={12} sm={6}>
+              <div>
+                <LinkBoth to="/admin/blog-manage/add/">Write Post</LinkBoth>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div>
+                <LinkBoth
+                  to="https://www.waftengine.org/documentation"
+                  target="_blank"
+                >
+                  Click documentation to get started
+                </LinkBoth>
+              </div>
+            </Grid>
+          </Grid>
+
+          <div>
+            <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+              <Grid container>
+                <Grid item xs={12} sm={6}>
+                  <div>Total users: {users.totaldata}</div>
+                  <div>
+                    <h3>By Roles: </h3>
+                    {users.data.map(each => (
+                      <div key={each._id}>
+                        {each.roles.role_title}: {each.count}
+                      </div>
+                    ))}
+                  </div>
                 </Grid>
-              </Paper>
-            </div>
-          </PageContent>
-        </div>
+                <Grid item xs={12} sm={6}>
+                  <div>Total errors: {errors.totaldata}</div>
+                  <div>
+                    <br />
+                    <h3>By Types: </h3>
+                    {errors.data.map(each => (
+                      <div key={each._id}>
+                        {each._id}: {each.count}
+                      </div>
+                    ))}
+                  </div>
+                </Grid>
+              </Grid>
+            </Paper>
+          </div>
+        </PageContent>
       </>
     );
   }

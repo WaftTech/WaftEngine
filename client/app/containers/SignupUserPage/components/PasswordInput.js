@@ -45,7 +45,7 @@ const PasswordInput = props => {
       </div>
       <div className="relative">
         <input
-          error={hasError}
+          error={hasError.toString()}
           onChange={handleChange}
           value={password}
           id="Password"
