@@ -62,15 +62,18 @@ const styles = theme => ({
     marginBottom: '3px',
     textDecoration: 'none',
   },
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: { margin: theme.spacing.unit / 2 },
+
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
+ 
+ 
 });
 
 class AddEdit extends React.PureComponent {
@@ -188,6 +191,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
+  
     const { classes, one, category, tempTag, match} = this.props;
     const { tempImage } = this.state;
     return (
@@ -199,9 +203,10 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
+       <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
-          <IconButton
-            className="cursor-pointer"
+         <IconButton
+           className={[classes.backbtn,'cursor-pointer']}
             onClick={this.handleGoBack}
             aria-label="Back"
           >
@@ -211,41 +216,48 @@ class AddEdit extends React.PureComponent {
             ? 'Edit Blog'
             : 'Add Blog'}
         </PageHeader>
+     </div>
         <PageContent>
-          <TextField
-            name="Blog Title"
-            id="blog-title"
-            fullWidth
-            label="Title"
-            inputProps={{
-              value: one.title || '',
-              onChange: this.handleChange('title'),
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
+        
+        <div class="w-full md:w-1/2 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Title
+      </label>
+      <input class="Waftinputbox" id="blog-title" type="text" value= {one.title || ''}  name="Blog Title"
+                    onChange= {this.handleChange('title')} />
+    </div>
 
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="category">Category</InputLabel>
-            <Select
-              value={one.category}
-              onChange={this.handleCategoryChange('category')}
-              inputProps={{
-                value: one.category || '',
-                name: 'category',
-              }}
+    <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="category"
             >
-              {category.map(each => (
-                <MenuItem key={each._id} name={each.title} value={each._id}>
-                  {each.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+           
+              Category
+            </label>
+            <select class="Waftinputbox"  value={one.category}
+                  onChange={this.handleCategoryChange('category')}
+                  inputProps={{
+                    value: one.category || '',
+                    name: 'category',
+                  }}
+                >
 
-          <InputLabel style={{ color: '#AAAAAA' }}>Blog Description</InputLabel>
+                  {category.map(each => (
+                <option key={each._id} name={each.title} value={each._id}>
+                  {each.title}
+              
+                </option>
+              ))}
+       
+
+      
+                  </select>
+            </div>
+
+       
+
+          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" >Blog Description</label>
           <CKEditor
             name="description"
             content={one.description}
@@ -255,14 +267,14 @@ class AddEdit extends React.PureComponent {
               value: one.description || '',
             }}
           />
-
+          <div className="w-full md:w-1/2 pb-4 mt-4">
           <Dropzone onDrop={files => this.onDrop(files, 'image')}>
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <img
                   className=""
-                  width="200px"
+               
                   height="200px"
                   src={tempImage}
                   alt="Blogimage"
@@ -270,33 +282,30 @@ class AddEdit extends React.PureComponent {
               </div>
             )}
           </Dropzone>
-
-          <TextField
-            name="published_on"
-            label="Published On"
-            type="date"
-            value={
+        
+          </div>
+<div className="w-full md:w-1/2 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      Published On
+      </label>
+      <input class="Waftinputbox" id="blog-title"  type="date" value= {
               (one.published_on &&
                 moment(one.published_on).format('YYYY-MM-DD')) ||
               null
-            }
-            onChange={this.handlePublishedOn}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          <form onSubmit={this.insertTags}>
-            <CustomInput
-              name="Tags"
-              id="blog-tags"
-              placeholder="tags"
-              inputProps={{
-                value: tempTag || '',
-                onChange: this.handleTempTag,
-              }}
-            />
-          </form>
+         
+            }  name="published_on"
+                    onChange= {this.handlePublishedOn} />
+    </div>
+    <div className="w-full md:w-1/2 pb-4">
+    <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      Tags
+      </label>
+       
+          <input class="Waftinputbox" id="blog-tags" type="text" value= {tempTag || ''}  name="Tags"
+                    onChange= {this.handleTempTag} onSubmit={this.insertTags}/>
+          
+       
+         
           <Paper>
             {one.tags.map((tag, index) => {
               const icon = null;
@@ -312,44 +321,49 @@ class AddEdit extends React.PureComponent {
               );
             })}
           </Paper>
-          <TextField
-            name="meta-description"
-            label="Meta Description"
-            value={one.meta_description || ''}
-            onChange={this.handleChange('meta_description')}
-            InputProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            name="meta-tag"
-            label="Meta Tag"
-            value={one.meta_tag || ''}
-            onChange={this.handleChange('meta_tag')}
-            InputProps={{
-              shrink: true,
-            }}
-          />
-          <CustomInput
-            name="keywords"
-            id="blog-meta-keywords"
-            placeholder="Meta Keywords"
-            inputProps={{
-              value: one.keywords || '',
-              onChange: this.handleChange('keywords'),
-            }}
-          />
-          <CustomInput
-            name="Author"
-            id="blog-author"
-            placeholder="Author"
-            inputProps={{
-              value: one.author || '',
-              onChange: this.handleChange('author'),
-            }}
-          />
+        
+          </div>
 
-          <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel>
+       
+          <div className="w-full md:w-1/2 pb-4">
+    <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      Meta Description
+      </label>
+       
+          <input class="Waftinputbox" id="blog-tags" type="text" value= {one.meta_description || ''}  name="meta-description"
+                    onChange= {this.handleChange('meta_description')}/>
+                    </div>
+
+                    <div className="w-full md:w-1/2 pb-4">
+    <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      Meta Tag
+      </label>
+       
+          <input class="Waftinputbox" type="text" value= {one.meta_tag || ''}  name="meta-tag"
+                    onChange= {this.handleChange('meta_tag')}/>
+                    </div>
+
+                    <div className="w-full md:w-1/2 pb-4">
+    <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+    Meta Keywords
+      </label>
+       
+          <input class="Waftinputbox" id="blog-meta-keywords" type="text" value= {one.keywords || ''}  name="keywords"
+                    onChange= {this.handleChange('keywords')}/>
+                    </div>
+
+                    <div className="w-full md:w-1/2 pb-4">
+    <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+    Author
+      </label>
+       
+          <input class="Waftinputbox" id="blog-author" type="text" value= {one.author || ''}  name="Author"
+                    onChange= {this.handleChange('author')}/>
+                    </div>
+  
+        
+
+          {/* <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel> */}
           <FormControlLabel
             control={
               <Checkbox
@@ -372,9 +386,13 @@ class AddEdit extends React.PureComponent {
             }
             label="Is Published"
           />
-          <Button variant="contained" color="primary" onClick={this.handleSave}>
-            Save
-          </Button>
+        
+<br/>
+<button class="text-white py-2 px-4 rounded mt-4 btn-waft"
+              onClick={this.handleSave}
+              >
+                Save</button>
+         
         </PageContent>
       </React.Fragment>
     );

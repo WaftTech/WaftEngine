@@ -10,6 +10,7 @@ import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
+import Edit from '@material-ui/icons/Edit';
 import Paper from '@material-ui/core/Paper';
 import { Fab, IconButton, Input, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -27,10 +28,12 @@ import CreateIcon from '@material-ui/icons/Create';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
+
 import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminUserManagePage extends React.PureComponent {
@@ -90,13 +93,16 @@ export class AdminUserManagePage extends React.PureComponent {
         `${email_verified}`,
         <>
           <Tooltip id="tooltip-left" title="Edit User" placement="left">
-            <IconButton color="primary" onClick={() => this.handleEdit(_id)}>
+        
+      
+            <IconButton className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
               <CreateIcon />
             </IconButton>
           </Tooltip>
         </>,
       ],
     );
+
     return loading && loading == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
@@ -104,53 +110,45 @@ export class AdminUserManagePage extends React.PureComponent {
         <Helmet>
           <title>User Listing</title>
         </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+
+
         <PageHeader>User Manage</PageHeader>
-        <PageContent>
-          <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-            <Input
-              name="find_name"
-              id="user-name"
-              fullWidth
-              placeholder="Search User by name"
-              value={query.find_name}
-              onChange={this.handleQueryChange}
-            />
-            <Divider
-              style={{
-                width: 1,
-                height: 40,
-                margin: 4,
-              }}
-            />
-            <IconButton aria-label="Search" onClick={this.handleSearch}>
-              <SearchIcon />
-            </IconButton>
-          </Paper>
-          <Paper
-            style={{
-              padding: 0,
-              overflow: 'auto',
-              borderRadius: 4,
-              boxShadow: '0 0 0 1px rgba(0,0,0,.2)',
-              display: 'flex',
-            }}
-            elevation={0}
+        <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            onClick={this.handleAdd}
           >
+            <AddIcon />
+          </Fab>
+          </div>
+        <PageContent>
+       
+        <div className="flex justify-end">
+                <div className="waftformgroup flex relative mr-2">
+                <input type="text"
+                  name="find_name"
+                  id="user-name"
+                  placeholder="Search User"
+                  className="m-auto Waftinputbox"
+                  value={query.find_name}
+                  onChange={this.handleQueryChange}
+                />
+                <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </div>
+       
+        </div>
             <Table
               tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}
             />
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              onClick={this.handleAdd}
-            >
-              <AddIcon />
-            </Fab>
-          </Paper>
+          
+          
         </PageContent>
       </>
     );
@@ -170,10 +168,30 @@ const withConnect = connect(
 
 const styles = theme => ({
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
+   
+ 
+    width:'40px',
+    height:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
   },
+  tableActionButton:{
+    padding:0,
+    '&:hover':{
+      background : 'transparent',
+      color: '#404040',
+    },
+  },
+  waftsrch:{
+    padding:0,
+    position:'absolute',
+    borderLeft:'1px solid #d9e3e9',
+    borderRadius:0,
+      '&:hover':{
+        background : 'transparent',
+        color: '#404040',
+      },
+    },
 });
 
 const withStyle = withStyles(styles);

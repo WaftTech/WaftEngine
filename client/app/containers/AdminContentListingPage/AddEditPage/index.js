@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -34,7 +35,15 @@ import { IconButton } from '@material-ui/core';
 import { spacing, palette } from '@material-ui/system';
 
 const styles = { 
-
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 }
 
 
@@ -85,31 +94,42 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one, classes} = this.props;
+    const { one, classes, match} = this.props;
     return (
+      <>
+      <Helmet>
+      <title> {match && match.params && match.params.id
+              ? 'Edit Static Content'
+              : 'Add Static Content'}</title>
+    </Helmet>
       <div>
+         <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
-        <IconButton className="cursor-pointer"	 onClick={this.handleGoBack} aria-label="Back">
+        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
-        </IconButton></PageHeader>
+        </IconButton>
+        {match && match.params && match.params.id
+            ? 'Edit Static Content'
+            : 'Add Static Content'}</PageHeader>
+        </div>
         <PageContent>
 
-           <div class="w-full md:w-1/2 px-3 pb-4">
-      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+      <div class="w-full md:w-1/2 pb-4">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
         Content Title
-      </label>
-      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.name}
+        </label>
+        <input class="Waftinputbox" id="grid-last-name" type="text" value= {one.name}
                     onChange= {this.handleChange('name')} />
-    </div>
+      </div>
 
-               <div class="w-full md:w-1/2 px-3 pb-4">
+               <div class="w-full md:w-1/2 pb-4">
       <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
         Content Key
       </label>
-      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" value= {one.key}
+      <input class="Waftinputbox" id="grid-last-name" type="text" value= {one.key}
                     onChange= {this.handleChange('key')} />
     </div>
-    <div className="mb-4 px-3">
+    <div className="pb-4">
                 <CKEditor
                   name="description"
                   content={one.description}
@@ -121,7 +141,7 @@ class AddEdit extends React.PureComponent {
                 />
                 </div>
 
-      <div class="w-full md:w-1/2 px-3 pb-4">
+      <div class="w-full md:w-1/2">
         <FormControl
           margin="normal"
           className={classes.formControl}
@@ -132,13 +152,13 @@ class AddEdit extends React.PureComponent {
           <DatePicker
             margin="normal"
             name="publish_from"
-            className={classes.textField}
+            className={[classes.textField , 'Waftinputbox']}
             value={(one.publish_from && moment(one.publish_from).format('YYYY/MM/DD')) || ''}
             onChange={this.handleDateChange('publish_from')}
           />
         </FormControl>
       </div>
-    <div class="w-full md:w-1/2 px-3 pb-4">
+    <div class="w-full md:w-1/2">
       <FormControl
         margin="normal"
         className={classes.formControl}
@@ -149,7 +169,7 @@ class AddEdit extends React.PureComponent {
         <DatePicker
           margin="normal"
           name="publish_to"
-          className={classes.textField}
+          className={[classes.textField , 'Waftinputbox']}
           value={(one.publish_to && moment(one.publish_to).format('YYYY/MM/DD')) || ''}
           onChange={this.handleDateChange('publish_to')}
         />
@@ -180,16 +200,13 @@ class AddEdit extends React.PureComponent {
                 />
 
 <br/>
-              <Button
-              
-                variant="contained"
-                color="primary"
-                onClick={this.handleSave}
-              >
-                Save
-              </Button>
+             <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+              Save
+              </button>
+             
         </PageContent>
       </div>
+      </>
     );
   }
 }

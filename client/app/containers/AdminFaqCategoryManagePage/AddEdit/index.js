@@ -21,20 +21,21 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
-  p20: { padding: 20 },
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: { margin: theme.spacing.unit / 2 },
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 });
 
 class AddEdit extends React.PureComponent {
@@ -75,6 +76,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
+   
     const { classes, one, match } = this.props;
     return (
       <div>
@@ -85,56 +87,51 @@ class AddEdit extends React.PureComponent {
               : 'Add Faq Category'}
           </title>
         </Helmet>
-        <PageHeader>
-          {match && match.params && match.params.id
+   <div class="flex justify-between mt-3 mb-3">
+     <PageHeader>
+  <IconButton className={[classes.backbtn,'cursor-pointer']}	 onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon />
+        </IconButton>  {match && match.params && match.params.id
             ? 'Edit Faq Category'
             : 'Add Faq Category'}
-        </PageHeader>
+            </PageHeader>
+</div>
         <PageContent>
-          <Paper className={classes.p20}>
-            <div>
-              <TextField
-                name="Title"
-                id="title"
-                label="Title"
-                value={one.title}
-                onChange={this.handleChange('title')}
-                margin="normal"
-                fullWidth
-              />
+         
+          <div class="w-full md:w-1/2 pb-4">
+      <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Title
+      </label>
+            <input type="text"
+            className="Waftinputbox"
+              name="Title"
+              id="title"
+              label="Title"
+              value={one.title}
+              onChange={this.handleChange('title')}
+            />
             </div>
             <div>
-              <InputLabel style={{ color: '#AAAAAA' }}>
-                Activity Type
-              </InputLabel>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_active || false}
-                    tabIndex={-1}
-                    onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Active"
-              />
-            </div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSave}
-            >
-              Save
-            </Button>
+         
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={one.is_active || false}
+                  tabIndex={-1}
+                  onClick={this.handleCheckedChange('is_active')}
+                  color="primary"
+                />
+              }
+              label="Is Active"
+            />   
+            </div>       
 
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.handleGoBack}
-            >
-              Back
-            </Button>
-          </Paper>
+            <button class="text-white py-2 px-4 rounded mt-4 btn-waft"
+              onClick={this.handleSave}
+           
+              >
+                Save</button>
+           
         </PageContent>
       </div>
     );

@@ -45,18 +45,18 @@ export class AdminDashboard extends React.PureComponent {
         <div>
           <PageHeader>Dashboard</PageHeader>
           <PageContent>
-            <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+            <Paper>
               <Grid item xs={12} sm={12}>
                 {info.map(each => (
                   <div key={each._id}>
                     <h4>{each.title}</h4>
                     <div dangerouslySetInnerHTML={{ __html: each.detail }} />
-                    <br />
+                  
                   </div>
                 ))}
               </Grid>
             </Paper>
-            <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
+            <Paper>
               <Grid item xs={12} sm={12}>
                 <div>
                   {blogs.map(each => (
@@ -67,14 +67,14 @@ export class AdminDashboard extends React.PureComponent {
                     >
                       <div>
                         <h4>{each.title}</h4>
-                        <br />
+                       
                       </div>
                     </LinkBoth>
                   ))}
                 </div>
               </Grid>
             </Paper>
-            <br />
+          
             <Grid container>
               <Grid item xs={12} sm={6}>
                 <div>
@@ -92,14 +92,14 @@ export class AdminDashboard extends React.PureComponent {
                 </div>
               </Grid>
             </Grid>
-            <br />
+         
             <div>
               <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
                 <Grid container>
                   <Grid item xs={12} sm={6}>
                     <div>Total users: {users.totaldata}</div>
                     <div>
-                      <br />
+                   
                       <h3>By Roles: </h3>
                       {users.data.map(each => (
                         <div key={each._id}>
