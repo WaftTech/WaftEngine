@@ -23,7 +23,7 @@ const GenderInput = props => {
       <FormControl
         component="fieldset"
         className={classes.formControl}
-        error={hasError}
+        error={hasError.toString()}
       >
         <FormLabel component="legend">{error || 'Gender'}</FormLabel>
         <RadioGroup
