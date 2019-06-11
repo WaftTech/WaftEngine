@@ -62,17 +62,6 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
     setOpenFourthSet(openFourthSetVal => !openFourthSetVal);
   };
 
-  // // is SuperAdmin?
-  // const isSuperAdmin = roles.includes('5bf7ae3694db051f5486f845');
-  // // is NormalUser?
-  // const isNormalUser = roles.includes('5bf7ae90736db01f8fa21a24');
-  // // is Admin?
-  // const isAdmin = roles.includes('5bf7af0a736db01f8fa21a25');
-  // // is NoticeUploadUser?
-  // const isNoticeUploadUser = roles.includes('5cbdaa39a1892e16b344d19a');
-  // // is Approval?
-  // const isApproval = roles.includes('5cbdada4a1892e16b344d1da');
-
   const route = window.localStorage.getItem('routes');
   const arr = JSON.parse(route);
   const availableRoutes = arr;
@@ -84,9 +73,9 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
       }
     }
     setAccesses(accesses);
+    // console.log(accesses);
   };
-  console.log(accesses);
-  const hasAccess = key => ! accesses.includes(key);
+  const hasAccess = key => !accesses.includes(key);
 
   return (
     <div>

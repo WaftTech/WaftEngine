@@ -6,12 +6,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
 import CreateIcon from '@material-ui/icons/Create';
 import VpnKey from '@material-ui/icons/VpnKey';
 import Helmet from 'react-helmet';
@@ -26,7 +31,8 @@ import Table from 'components/Table';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll } from './selectors';
+
+import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 
@@ -35,6 +41,7 @@ export class AdminModuleManage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
+    setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     all: PropTypes.shape({
@@ -46,7 +53,8 @@ export class AdminModuleManage extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.props.loadAllRequest();
+
+    this.props.loadAllRequest(this.props.query);
   }
 
   handleAdd = () => {
@@ -62,6 +70,15 @@ export class AdminModuleManage extends React.PureComponent {
     this.props.push(`/admin/module-manage/access/${id}`);
   };
 
+  handleQueryChange = name => e => {
+    e.persist();
+    this.props.setQueryValue({ key: name, value: e.target.value });
+  };
+
+  handleSearch = () => {
+    this.props.loadAllRequest(this.props.query);
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -70,18 +87,22 @@ export class AdminModuleManage extends React.PureComponent {
     const {
       classes,
       all: { data, page, size, totaldata },
+      query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(({ _id, module_name, description }) => [
       module_name,
       description,
       <>
+      
         <button className=
           {classes.tableActionButton}
           onClick={() => this.handleEdit(_id)}
         >
           <CreateIcon />
         </button>
+     
         <button className=
           {classes.tableActionButton}
           onClick={() => this.handleAccessEdit(_id)}
@@ -90,8 +111,12 @@ export class AdminModuleManage extends React.PureComponent {
         </button>
       </>,
     ]);
-    return (
+
+    return loading && loading == true ? (
+      <div>loading</div>
+    ) : (
       <>
+      
         <Helmet>
           <title>Module Manage</title>
         </Helmet>
@@ -122,6 +147,8 @@ export class AdminModuleManage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
+  loading: makeSelectLoading(),
+  query: makeSelectQuery(),
 });
 
 const withConnect = connect(

@@ -93,6 +93,7 @@ export class AdminUserManagePage extends React.PureComponent {
         `${email_verified}`,
         <>
           <Tooltip id="tooltip-left" title="Edit User" placement="left">
+        
       
             <IconButton className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
               <CreateIcon />
@@ -123,7 +124,7 @@ export class AdminUserManagePage extends React.PureComponent {
           </Fab>
           </div>
         <PageContent>
-
+       
         <div className="flex justify-end">
                 <div className="waftformgroup flex relative mr-2">
                 <input type="text"
@@ -140,13 +141,13 @@ export class AdminUserManagePage extends React.PureComponent {
               </div>
        
         </div>
-      
             <Table
               tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}
             />
+          
           
         </PageContent>
       </>
@@ -167,6 +168,7 @@ const withConnect = connect(
 
 const styles = theme => ({
   fab: {
+   
  
     width:'40px',
     height:'40px',

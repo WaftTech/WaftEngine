@@ -4,9 +4,11 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -22,7 +24,7 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectAccess } from '../selectors';
+import { makeSelectAccess, makeSelectLoading } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -79,9 +81,15 @@ class AccessManagePage extends React.PureComponent {
     const {
       classes,
       access: { Roles, Module, Access },
+      loading,
     } = this.props;
-    return (
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <React.Fragment>
+        <Helmet>
+          <title>Access Listing</title>
+        </Helmet>
         <PageHeader className="text-sm">
           <BackIcon />
           {`Edit Access for ${Module.module_name}`}
@@ -134,6 +142,7 @@ const withSaga = injectSaga({ key: 'adminModuleManage', saga });
 
 const mapStateToProps = createStructuredSelector({
   access: makeSelectAccess(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

@@ -13,6 +13,7 @@ import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectOne, makeSelectAccess } from './selectors';
+import { enqueueSnackbar } from '../App/actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
@@ -96,10 +97,21 @@ function* updateAccess(action) {
   yield cancel(successWatcher);
 }
 
+function* addEditFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while updating!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* adminRoleManageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.LOAD_ACCESS_REQUEST, loadAccess);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.UPDATE_ACCESS_REQUEST, updateAccess);
+  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
 }

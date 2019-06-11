@@ -6,6 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
@@ -27,7 +29,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -87,6 +89,7 @@ export class AdminRoleManage extends React.PureComponent {
       classes,
       all: { data, page, size, totaldata },
       query,
+      loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -97,6 +100,7 @@ export class AdminRoleManage extends React.PureComponent {
         <>
           <Tooltip id="tooltip-top" title="Edit Role" placement="top">
             <IconButton
+           
               className={classes.tableActionButton}
               onClick={() => this.handleEdit(_id)}
             >
@@ -122,7 +126,10 @@ export class AdminRoleManage extends React.PureComponent {
         </>,
       ],
     );
-    return (
+
+    return loading && loading == true ? (
+      <div>loading</div>
+    ) : (
       <React.Fragment>
          <Helmet>
           <title>Role Manage</title>
@@ -139,6 +146,7 @@ export class AdminRoleManage extends React.PureComponent {
           </Fab>
           </div>
         <PageContent>
+        
         <div className="flex justify-end">
                 <div className="waftformgroup flex relative mr-2">
                 <input type="text"
@@ -162,6 +170,7 @@ export class AdminRoleManage extends React.PureComponent {
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
+       
          
         </PageContent>
       </React.Fragment>
@@ -172,6 +181,7 @@ export class AdminRoleManage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
@@ -185,6 +195,7 @@ const withSaga = injectSaga({ key: 'adminRoleManage', saga });
 const styles = theme => ({
   TableButton: { padding: 8 },
   fab: {
+
     width:'40px',
     height:'40px',
     marginTop:'auto',
