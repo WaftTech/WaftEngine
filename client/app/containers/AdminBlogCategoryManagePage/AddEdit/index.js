@@ -23,18 +23,19 @@ import { makeSelectOne } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 
 const styles = theme => ({
-  p20: { padding: 20 },
-  formControl: {
-    minWidth: 120,
-    maxWidth: 300,
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
   },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: { margin: theme.spacing.unit / 2 },
 });
 
 class AddEdit extends React.PureComponent {
@@ -85,28 +86,29 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
+        <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
-          {match && match.params && match.params.id
+        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleGoBack} aria-label="Back">
+          <BackIcon />
+        </IconButton>
+        {match && match.params && match.params.id
             ? 'Edit Blog Category'
-            : 'Add Blog Category'}
-        </PageHeader>
+            : 'Add Blog Category'}</PageHeader>
+        </div>
+      
         <PageContent>
-          <Paper className={classes.p20}>
+      
+        <div class="w-full md:w-1/2 pb-4">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        Blog Title
+        </label>
+        <input class="Waftinputbox" id="title" type="text" value= {one.title || ''} name="Title"
+                    onChange={this.handleChange('title')} />
+      </div>
+
+      
             <div>
-              <TextField
-                name="Title"
-                id="title"
-                label="Title"
-                value={one.title || ''}
-                onChange={this.handleChange('title')}
-                margin="normal"
-                fullWidth
-              />
-            </div>
-            <div>
-              <InputLabel style={{ color: '#AAAAAA' }}>
-                Activity Type
-              </InputLabel>
+           
               <FormControlLabel
                 control={
                   <Checkbox
@@ -119,22 +121,13 @@ class AddEdit extends React.PureComponent {
                 label="Is Active"
               />
             </div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSave}
-            >
-              Save
-            </Button>
+        
 
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.handleGoBack}
-            >
-              Back
-            </Button>
-          </Paper>
+            <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+              Save
+              </button>
+             
+       
         </PageContent>
       </div>
     );
