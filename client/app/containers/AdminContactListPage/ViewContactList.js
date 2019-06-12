@@ -22,6 +22,8 @@ import saga from './saga';
 import { makeSelectOne, makeSelectLoading } from './selectors';
 import PageContent from '../../components/PageContent/PageContent';
 import PageHeader from '../../components/PageHeader/PageHeader';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 
 export class ViewContacts extends React.Component {
   static propTypes = {
@@ -53,51 +55,41 @@ export class ViewContacts extends React.Component {
         <Helmet>
           <title> Contact Details </title>
         </Helmet>
-        <PageHeader>Contact Details</PageHeader>
-
+        <div className="flex justify-between mt-3 mb-3">
+        <PageHeader>
+        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleBack} aria-label="Back">
+          <BackIcon />
+        </IconButton>Contact Details
+        </PageHeader>
+        </div>
         <PageContent>
-          <Paper className={classes.paper}>
-            <Grid container spacing={24}>
-              <Grid item xs={12}>
-                <div>
+         
+                <div className="mb-2 capitalize">
                   <b>Name: </b>
                   {one && one.name ? one.name : ''}
                 </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div>
+           
+                <div className="mb-2 capitalize">
                   <b>Email: </b>
                   {one && one.email ? one.email : ''}
                 </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div>
+         
+                <div className="mb-2 capitalize">
                   <b>Message: </b>
                   {one && one.message ? one.message : ''}
                 </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div>
+            
+                <div className="mb-2 capitalize">
                   <b>Subject: </b>
                   {one && one.subject ? one.subject : ''}
                 </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div>
+           
+                <div className="mb-2">
                   <b>Added At: </b>
                   {moment(one && one.added_at).format('YYYY-MM-DD')}
                 </div>
-              </Grid>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={this.handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-            </Grid>
-          </Paper>
+         
+             
         </PageContent>
       </React.Fragment>
     );
@@ -118,48 +110,14 @@ const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
 const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
-    },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
-  success: {
-    backgroundColor: blue[600],
-  },
-  paper: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginTop: theme.spacing.unit * 6,
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
-    },
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
   },
 });
 
