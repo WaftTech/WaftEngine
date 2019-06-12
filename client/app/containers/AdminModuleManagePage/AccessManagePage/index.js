@@ -16,7 +16,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import BackIcon from '@material-ui/icons/ArrowBack';
 import CheckIcon from '@material-ui/icons/Check';
 
 import injectSaga from 'utils/injectSaga';
@@ -28,6 +27,8 @@ import { makeSelectAccess, makeSelectLoading } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
@@ -90,10 +91,14 @@ class AccessManagePage extends React.PureComponent {
         <Helmet>
           <title>Access Listing</title>
         </Helmet>
-        <PageHeader className="text-sm">
+        <div class="flex justify-between mt-3 mb-3">
+        <PageHeader>
+        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleBack}>
           <BackIcon />
+        </IconButton>
           {`Edit Access for ${Module.module_name}`}
         </PageHeader>
+        </div>
         <PageContent>
           {Roles.map(role => {
             const accessFiltered = Access.filter(
@@ -104,16 +109,16 @@ class AccessManagePage extends React.PureComponent {
               accesses = [...accessFiltered[0].access_type];
             }
             return (
-              <div className="mb-4" key={role._id}>
-                <h3 className="font-normal">{role.role_title}</h3>
-                <ToggleButtonGroup
+              <div className="mb-4 border-b" key={role._id}>
+                <h3 className="font-normal mb-4">{role.role_title}</h3>
+                <ToggleButtonGroup className={classes.accesslist}
                   value={accesses}
                   onChange={(_, moduleId) =>
                     this.handleAccessUpdate(moduleId, role._id, Module._id)
                   }
                 >
                   {Module.path.map(eachPath => (
-                    <ToggleButton
+                    <ToggleButton className={classes.accessbtn}
                       key={`${eachPath._id}-${role._id}`}
                       value={eachPath._id}
                     >
@@ -126,10 +131,10 @@ class AccessManagePage extends React.PureComponent {
           })}
 
           <button
-            className="shadow w-12 h-12 rounded-full text-white bg-blue absolute pin-b pin-r mr-10 mb-10"
+            className="text-white py-2 px-4 rounded mt-4 btn-waft"
             onClick={this.handleSave}
           >
-            <CheckIcon />
+           Save
           </button>
         </PageContent>
       </React.Fragment>
@@ -151,24 +156,16 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginTop: theme.spacing.unit * 6,
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
-    },
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
   },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit,
-  },
+ 
   toggleContainer: {
     height: 56,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
@@ -178,6 +175,10 @@ const styles = theme => ({
     margin: `${theme.spacing.unit}px 0`,
     background: theme.palette.background.default,
   },
+
+  accesslist:{
+    boxShadow:'none',
+  }
 });
 
 const withStyle = withStyles(styles);

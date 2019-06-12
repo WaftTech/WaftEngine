@@ -19,28 +19,7 @@ import { Grid } from '@material-ui/core';
 const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 const styles = {
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-  box: {
-    padding: 20,
-    border: '1px solid #ccc',
-    marginBottom: 20,
-    borderRadius: 6,
-  },
+
 };
 
 const Path = props => {
@@ -59,75 +38,56 @@ const Path = props => {
     handleRemovePath,
   } = props;
   return (
-    <section className={classes.box}>
-      <Grid container spacing={24}>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            margin="normal"
-            className="mt-0"
-            label="Access Type"
-            id={`${each._id}-access-type-${pathIndex}`}
-            value={each.access_type}
-            onChange={handleAccessTypeChange(pathIndex)}
-          />
-        </Grid>
-        <Grid className="justify-end" item xs={12} md={6}>
-          <Button
-            size="sm"
-            className=""
-            aria-label="Delete"
-            onClick={handleRemovePath(pathIndex)}
-          >
-            Delete Access Type
-          </Button>
-        </Grid>
-      </Grid>
-      <Grid container spacing={24}>
-        <Grid item xs={12} md={5}>
+    <section className="rounded p-4 bg-grey-lighter mb-4">
+      <div className="w-full md:w-2/5 pb-4">
+        <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+        Access Type
+        </label>
+        <input className="Waftinputbox"  id={`${each._id}-access-type-${pathIndex}`} type="text"   value={each.access_type}
+                    onChange={handleAccessTypeChange(pathIndex)} style={{background:'#FFFFFF'}}/>
+      </div>
+     
+       
+     
+   <div className="flex justify-between mx-4">
+     <div className="clientRoute w-1/2 -ml-4 border rounded p-2">
           {(each.admin_routes || []).map((eachAdminRoute, index) => (
-            <div key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Client Route"
-                id={`${each._id}-each-admin-route-access-type-${index}`}
-                value={eachAdminRoute}
-                onChange={handleAdminRoutesChange(pathIndex, index)}
-              />
+            <div className="w-full pb-4 border-b mb-2" key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
+                <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+                Client Route
+                </label>
+                <div className="flex">
+                <input className="Waftinputbox mr-2" id={`${each._id}-each-admin-route-access-type-${index}`} type="text" value={eachAdminRoute}
+                   onChange={handleAdminRoutesChange(pathIndex, index)} style={{background:'#FFFFFF'}}/>
+               
               <IconButton
                 aria-label="Delete client route"
                 onClick={handleRemoveAdminRoute(pathIndex, index)}
               >
                 <TrashIcon fontSize="small" />
               </IconButton>
+              </div>
             </div>
           ))}
-          <Button
-            size="small"
-            aria-label="Add Client Route"
-            onClick={handleAddAdminRoute(pathIndex)}
-          >
-            Add Client Route
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={5}>
+
+        <button class="text-white py-2 px-4 rounded btn-waft"   onClick={handleAddAdminRoute(pathIndex)}>
+          Add Client Route
+        </button>
+          </div>
+    <div className="serverRoute w-1/2 -mr-4 border rounded p-2">
           {(each.server_routes || []).map((eachServerRoute, index) => (
-            <div
+            <div className="w-full pb-4 mb-2 border-b"
               key={`${each._id}-${pathIndex}-${
                 eachServerRoute._id
               }-each-server-route-${index}`}
             >
-              <FormControl className="selectbox methodInput">
-                <InputLabel
-                  htmlFor={`${each._id}-${
-                    eachServerRoute._id
-                  }-each-server-route-${index}-method`}
-                >
-                  Method
-                </InputLabel>
+              <div className="flex">
+              <div class="mr-2"> 
+                <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+                Method
+                </label>
 
-                <Select
+                <select className="Waftinputbox"
                   placeholder="Method"
                   value={eachServerRoute.method}
                   onChange={handleServerRoutesMethodChange(pathIndex, index)}
@@ -137,28 +97,29 @@ const Path = props => {
                       eachServerRoute._id
                     }-each-server-route-${index}-method`,
                   }}
+                  style={{minWidth:'80px',background:'#FFFFFF'}}
                 >
                   {methods.map(eachMethod => (
-                    <MenuItem
+                    <option
                       key={`${eachMethod._id}-${pathIndex}-${
                         eachServerRoute._id
                       }-each-server-route-method-${eachMethod}`}
                       value={eachMethod}
                     >
                       {eachMethod}
-                    </MenuItem>
+                    </option>
                   ))}
-                </Select>
-              </FormControl>
-              <TextField
-                label="Server Route"
-                id={`${each._id}-${
+                </select>
+              </div>
+              <div><label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Server Route
+                </label>
+                <div className="flex">
+              <input type="text" className="Waftinputbox mr-2" style={{background:'#FFFFFF'}} id={`${each._id}-${
                   eachServerRoute._id
-                }-each-admin-server-route-route-access-type-${index}`}
-                inputProps={{
-                  value: eachServerRoute.route,
-                  onChange: handleServerRoutesRouteChange(pathIndex, index),
-                }}
+                }-each-admin-server-route-route-access-type-${index}`} value={eachServerRoute.route}
+                  onChange= {handleServerRoutesRouteChange(pathIndex, index)}
+               
               />
               <IconButton
                 aria-label="Delete Server Route"
@@ -166,18 +127,24 @@ const Path = props => {
               >
                 <TrashIcon fontSize="small" />
               </IconButton>
+              </div>
+            </div>
+            </div>
             </div>
           ))}
 
-          <Button
-            size="small"
-            aria-label="Add Server Route"
-            onClick={handleAddServerRoute(pathIndex)}
-          >
-            Add Server Route
-          </Button>
-        </Grid>
-      </Grid>
+          <button class="text-white py-2 px-4 rounded btn-waft"     onClick={handleAddServerRoute(pathIndex)}>
+          Add Server Route
+          </button>
+          </div>
+          </div>
+<div className="mx-4 flex justify-end mt-4">
+
+          <button class="text-white py-2 px-4 rounded btn-waft"  onClick={handleRemovePath(pathIndex)}>
+            Delete Access Type
+          </button>
+          </div>
+    
     </section>
   );
 };
