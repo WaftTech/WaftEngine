@@ -192,8 +192,8 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
         </div>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
           <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
-            <button onClick={handleMenu}>
-              <span className="m-auto mr-1">{users.name}</span>
+            <button className="flex" onClick={handleMenu}>
+              <div className="m-auto mr-1">{users.name}</div>
               <AccountCircle />
             </button>
             <Menu

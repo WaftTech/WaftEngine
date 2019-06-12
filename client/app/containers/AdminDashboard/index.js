@@ -42,7 +42,9 @@ export class AdminDashboard extends React.PureComponent {
     const { users, info, errors, blogs } = this.props;
     return (
       <>
+       <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Dashboard</PageHeader>
+        </div>
         <PageContent>
           <Paper>
             <Grid item xs={12} sm={12}>

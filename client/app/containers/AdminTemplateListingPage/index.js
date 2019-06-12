@@ -208,6 +208,7 @@ export function AdminTemplateListingPage({
               name="body"
               value={one.body || ''}
               onChange={handleChange}
+              style={{height:'400px'}}
             />
           </div>
 
