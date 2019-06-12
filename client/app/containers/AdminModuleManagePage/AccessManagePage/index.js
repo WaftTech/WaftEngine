@@ -59,17 +59,20 @@ class AccessManagePage extends React.PureComponent {
     this.props.push('/admin/module-manage');
   };
 
-  handleAccessUpdate = (moduleId, roleId, ModuleId) => {
+
+  handleAccessUpdate = (module_id, roleId, ModuleId) => {
     let tempAccess = [...this.props.access.Access];
     const index = tempAccess.findIndex(
       each => each.module_id === ModuleId && each.role_id === roleId,
     );
     if (index > -1) {
-      tempAccess[index].access_type = [...moduleId];
+
+      tempAccess[index].access_type = [...module_id];
     } else {
       tempAccess = [
         ...tempAccess,
-        { access_type: [...moduleId], module_id: ModuleId, role_id: roleId },
+
+        { access_type: [...module_id], module_id: ModuleId, role_id: roleId },
       ];
     }
     this.props.setAccessValue({
@@ -91,10 +94,11 @@ class AccessManagePage extends React.PureComponent {
         <Helmet>
           <title>Access Listing</title>
         </Helmet>
+
         <div class="flex justify-between mt-3 mb-3">
         <PageHeader>
         <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleBack}>
-          <BackIcon />
+          <BackIcon onClick={this.handleBack} />
         </IconButton>
           {`Edit Access for ${Module.module_name}`}
         </PageHeader>
@@ -109,15 +113,18 @@ class AccessManagePage extends React.PureComponent {
               accesses = [...accessFiltered[0].access_type];
             }
             return (
+            
               <div className="mb-4 border-b" key={role._id}>
                 <h3 className="font-normal mb-4">{role.role_title}</h3>
                 <ToggleButtonGroup className={classes.accesslist}
                   value={accesses}
-                  onChange={(_, moduleId) =>
-                    this.handleAccessUpdate(moduleId, role._id, Module._id)
+                
+                  onChange={(_, module_id) =>
+                    this.handleAccessUpdate(module_id, role._id, Module._id)
                   }
                 >
                   {Module.path.map(eachPath => (
+                
                     <ToggleButton className={classes.accessbtn}
                       key={`${eachPath._id}-${role._id}`}
                       value={eachPath._id}
@@ -131,9 +138,11 @@ class AccessManagePage extends React.PureComponent {
           })}
 
           <button
+            
             className="text-white py-2 px-4 rounded mt-4 btn-waft"
             onClick={this.handleSave}
           >
+           
            Save
           </button>
         </PageContent>
@@ -156,6 +165,7 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
+
   backbtn:{
     padding:0,
     height:'40px',
@@ -165,6 +175,7 @@ const styles = theme => ({
     borderRadius:'50%',
     marginRight:'5px',
   },
+ 
  
   toggleContainer: {
     height: 56,

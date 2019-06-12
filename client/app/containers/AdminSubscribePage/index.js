@@ -119,7 +119,7 @@ export class AdminSubscribePage extends React.PureComponent {
       <React.Fragment>
         <Tooltip id="tooltip-top" title="View subscribe" placement="top">
     
-          <IconButton    className={classes.tableActionButton} onClick={() => this.handleView(_id)}>
+          <IconButton className={classes.tableActionButton} onClick={() => this.handleView(_id)}>
             <ViewIcon />
           </IconButton>
         </Tooltip>
