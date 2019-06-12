@@ -58,17 +58,17 @@ class AccessManagePage extends React.PureComponent {
     this.props.push('/admin/module-manage');
   };
 
-  handleAccessUpdate = (moduleId, roleId, ModuleId) => {
+  handleAccessUpdate = (module_id, roleId, ModuleId) => {
     let tempAccess = [...this.props.access.Access];
     const index = tempAccess.findIndex(
       each => each.module_id === ModuleId && each.role_id === roleId,
     );
     if (index > -1) {
-      tempAccess[index].access_type = [...moduleId];
+      tempAccess[index].access_type = [...module_id];
     } else {
       tempAccess = [
         ...tempAccess,
-        { access_type: [...moduleId], module_id: ModuleId, role_id: roleId },
+        { access_type: [...module_id], module_id: ModuleId, role_id: roleId },
       ];
     }
     this.props.setAccessValue({
@@ -108,8 +108,8 @@ class AccessManagePage extends React.PureComponent {
                 <h3 className="font-normal">{role.role_title}</h3>
                 <ToggleButtonGroup
                   value={accesses}
-                  onChange={(_, moduleId) =>
-                    this.handleAccessUpdate(moduleId, role._id, Module._id)
+                  onChange={(_, module_id) =>
+                    this.handleAccessUpdate(module_id, role._id, Module._id)
                   }
                 >
                   {Module.path.map(eachPath => (
