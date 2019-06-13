@@ -40,31 +40,29 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
-  
-    width:'40px',
-    height:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
-  tableActionButton:{
-    padding:0,
-    '&:hover':{
-      background : 'transparent',
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
       color: '#404040',
     },
   },
 
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -114,7 +112,7 @@ export class SliderManagePage extends React.Component {
   };
 
   handleDelete = id => {
-      this.props.deleteOneRequest(id);
+    this.props.deleteOneRequest(id);
   };
 
   handleToggle = () => {
@@ -174,44 +172,49 @@ export class SliderManagePage extends React.Component {
         </React.Fragment>,
       ],
     );
-  
+
     return loading && loading == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
       <>
-      <Helmet>
-       <title>Slider Listing</title>
-    </Helmet>
- <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>Slider Manage</PageHeader>
-        <Fab
+        <Helmet>
+          <title>Slider Listing</title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>Slider Manage</PageHeader>
+          <Fab
             color="primary"
             aria-label="Add"
             className={classes.fab}
             round="true"
             onClick={this.handleAdd}
-            elevation={0}          >
-         
+            elevation={0}
+          >
             <AddIcon />
           </Fab>
-          </div>
+        </div>
 
-          <PageContent>
-              <div className="flex justify-end">
+        <PageContent>
+          <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
-                <input type="text"
-                  name="find_slider_name"
-                  id="slider-name"
-                  placeholder="Search Slider"
-                  className="m-auto Waftinputbox"
-                  value={query.find_slider_name}
-                  onChange={this.handleQueryChange}
-                />
-              <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
-                  <SearchIcon />
-                </IconButton>
-                </div>
-                </div>
+              <input
+                type="text"
+                name="find_slider_name"
+                id="slider-name"
+                placeholder="Search Slider"
+                className="m-auto Waftinputbox"
+                value={query.find_slider_name}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </div>
 
           <Table
             tableHead={[
@@ -225,9 +228,7 @@ export class SliderManagePage extends React.Component {
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
-       
-     
-           </PageContent>
+        </PageContent>
       </>
     );
   }

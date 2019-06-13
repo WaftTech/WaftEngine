@@ -135,7 +135,7 @@ export class AdminUserManagePage extends React.PureComponent {
                   value={query.find_name}
                   onChange={this.handleQueryChange}
                 />
-                <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                <IconButton aria-label="Search" className={`${classes.waftsrch} waftsrchstyle`} onClick={this.handleSearch}>
                   <SearchIcon />
                 </IconButton>
               </div>

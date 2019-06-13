@@ -80,7 +80,7 @@ faqController.GetFaq = async (req, res, next) => {
       searchq = {
         title: {
           $regex: req.query.find_title,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -89,7 +89,7 @@ faqController.GetFaq = async (req, res, next) => {
       searchq = {
         category: {
           $regex: req.query.find_category,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -98,7 +98,7 @@ faqController.GetFaq = async (req, res, next) => {
       searchq = {
         question: {
           $regex: req.query.find_question,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
