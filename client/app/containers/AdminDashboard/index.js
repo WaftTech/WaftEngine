@@ -86,18 +86,25 @@ export class AdminDashboard extends React.PureComponent {
          
 
           <div>
+
         
           <div className="flex justify-between mx-4 my-4">
                   <div className="w-1/2 -ml-4 bg-white rounded pb-4">
                     <h3 className="p-4 border-b border-grey-lighter">By Roles </h3>
                     <div className="flex flex-wrap justify-between mx-4">
-                    {users.data.map(each => (
-                     
-                      <div key={each._id} className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded">
-                        <div className="flex justify-center text-center h-10"><span className="m-auto w-24">{each.roles.role_title} </span><span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">{each.count}</span></div>
-                      </div>
-                     
-                    ))}
+                    {users &&
+                      users.data &&
+                      users.data.role &&
+                      users.data.role.map(each => (
+                        <div key={each._id}  className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded">
+                          <div className="flex justify-center text-center h-10"><span className="m-auto w-24">{each.role_title}:{' '}</span><span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
+                          {users.data &&
+                            users.data.user &&
+                            users.data.user.filter(e =>
+                              e.roles.includes(each._id),
+                            ).length}</span></div>
+                        </div>
+                      ))}
                      </div>
                   </div>
                
