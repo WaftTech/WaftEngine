@@ -53,12 +53,13 @@ userController.CheckMail = async (req, res) => {
 
 userController.GetAllUserGRBY = async (req, res, next) => {
   try {
-    const user = await users.aggregate([{ $group: { _id: '$roles', count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $unwind: '$_id' }, { $lookup: { from: 'roles', localField: '_id', foreignField: '_id', as: 'roles' } }, { $unwind: '$roles' }]);
-    let totaldata = 0;
-    user.forEach(each => {
-      totaldata = totaldata + each.count;
-    });
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, user, 'users by group by get success!!', 1, 1, totaldata);
+    // const user = await users.aggregate([{ $group: { _id: '$roles', count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $unwind: '$_id' }, { $lookup: { from: 'roles', localField: '_id', foreignField: '_id', as: 'roles' } }, { $unwind: '$roles' }]);
+    // console.log('users', user);
+
+    const role = await roles.find({ is_deleted: false }).select('role_title');
+    let user = await users.find({ is_deleted: false });
+    let totaldata = await users.count({ is_deleted: false });
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role, user }, 'users by group by get success!!', 1, 1, totaldata);
   } catch (err) {
     next(err);
   }

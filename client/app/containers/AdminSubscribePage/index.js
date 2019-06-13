@@ -41,24 +41,23 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 
 const styles = theme => ({
- 
-  tableActionButton:{
-    padding:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -118,8 +117,10 @@ export class AdminSubscribePage extends React.PureComponent {
 
       <React.Fragment>
         <Tooltip id="tooltip-top" title="View subscribe" placement="top">
-    
-          <IconButton className={classes.tableActionButton} onClick={() => this.handleView(_id)}>
+          <IconButton
+            className={classes.tableActionButton}
+            onClick={() => this.handleView(_id)}
+          >
             <ViewIcon />
           </IconButton>
         </Tooltip>
@@ -138,36 +139,36 @@ export class AdminSubscribePage extends React.PureComponent {
           <title>Subscriber List</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-
-
-        <PageHeader>Subscribe Manage</PageHeader>
-      </div>
-        <PageContent>
-       
-        <div className="flex justify-end">
-                <div className="waftformgroup flex relative mr-2">
-                <input type="text"
-                  name="find_email"
-                  id="email"
-                  placeholder="Search Subscriber"
-                  className="m-auto Waftinputbox"
-                  value={query.find_email}
-                  onChange={this.handleQueryChange}
-                />
-                <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
-                  <SearchIcon />
-                </IconButton>
-              </div>
+          <PageHeader>Subscribe Manage</PageHeader>
         </div>
-       
-            <Table
-              tableHead={['Email', 'Is Subscribed', 'Added at', 'Actions']}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-    
-         
+        <PageContent>
+          <div className="flex justify-end">
+            <div className="waftformgroup flex relative mr-2">
+              <input
+                type="text"
+                name="find_email"
+                id="email"
+                placeholder="Search Subscriber"
+                className="m-auto Waftinputbox"
+                value={query.find_email}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </div>
+
+          <Table
+            tableHead={['Email', 'Is Subscribed', 'Added at', 'Actions']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
         </PageContent>
       </>
     );

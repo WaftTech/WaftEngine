@@ -37,24 +37,23 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 
 const styles = theme => ({
-
-  tableActionButton:{
-    padding:0,
-    '&:hover':{
-      background : 'transparent',
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
       color: '#404040',
     },
   },
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -142,8 +141,8 @@ export class AdminErrorManagePage extends React.Component {
           <title>Error Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>Error Manage</PageHeader>
-        <Button
+          <PageHeader>Error Manage</PageHeader>
+          <Button
             variant="contained"
             color="secondary"
             onClick={this.handleDeleteAll}
@@ -152,21 +151,26 @@ export class AdminErrorManagePage extends React.Component {
           </Button>
         </div>
         <PageContent>
-        <div className="flex justify-end">
-          <div className="waftformgroup flex relative">
-                <input type="text"
-                  name="find_errors"
-                  id="error-message"
-                  placeholder="Search Errors"
-                  className="m-auto Waftinputbox"
-                  value={query.find_errors}
-                  onChange={this.handleQueryChange}
-                />
-              <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
-                  <SearchIcon />
-                </IconButton>
-                </div>
-                </div>
+          <div className="flex justify-end">
+            <div className="waftformgroup flex relative">
+              <input
+                type="text"
+                name="find_errors"
+                id="error-message"
+                placeholder="Search Errors"
+                className="m-auto Waftinputbox"
+                value={query.find_errors}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </div>
           <Table
             tableHead={[
               'Error Message',
