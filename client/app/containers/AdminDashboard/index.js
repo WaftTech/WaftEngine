@@ -42,21 +42,18 @@ export class AdminDashboard extends React.PureComponent {
     const { users, info, errors, blogs } = this.props;
     return (
       <>
+       <div className="flex justify-between mt-3 mb-3">
         <PageHeader>Dashboard</PageHeader>
-        <PageContent>
-          <Paper>
-            <Grid item xs={12} sm={12}>
+        </div>
+      
+        
               {info.map(each => (
                 <div key={each._id}>
                   <h4>{each.title}</h4>
                   <div dangerouslySetInnerHTML={{ __html: each.detail }} />
                 </div>
               ))}
-            </Grid>
-          </Paper>
-          <br />
-          <Paper>
-            <Grid item xs={12} sm={12}>
+         
               <div>
                 {blogs.map(each => (
                   <LinkBoth
@@ -71,65 +68,55 @@ export class AdminDashboard extends React.PureComponent {
                   </LinkBoth>
                 ))}
               </div>
-            </Grid>
-          </Paper>
-          <br />
-          <Grid container>
-            <Grid item xs={12} sm={6}>
-              <div>
-                <LinkBoth to="/admin/blog-manage/add/">Write Post</LinkBoth>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <div>
-                <LinkBoth
+         
+        
+              <div className="flex justify-between mx-8">
+                <div className="w-1/4 -ml-8 bg-white rounded p-10">
+                <LinkBoth to="/admin/blog-manage/add/">Write Post</LinkBoth></div>
+                <div className="w-1/4 -ml-4 bg-white rounded p-10"><LinkBoth
                   to="https://www.waftengine.org/documentation"
                   target="_blank"
                 >
                   Click documentation to get started
                 </LinkBoth>
+                </div>
+                <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-10 flex justify-between"><span className="m-auto w-24">Total users </span><span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">{users.totaldata}</span></div>
+                <div className="w-1/4 -mr-8 bg-white rounded p-10 flex justify-between"><span className="m-auto w-24">Total errors</span> <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">{errors.totaldata}</span></div>
               </div>
-            </Grid>
-          </Grid>
+         
 
           <div>
-            <Paper style={{ padding: 20, overflow: 'auto', display: 'flex' }}>
-              <Grid container>
-                <Grid item xs={12} sm={6}>
-                  <div>Total users: {users.totaldata}</div>
-                  <div>
-                    <h3>By Roles: </h3>
-                    {users &&
-                      users.data &&
-                      users.data.role &&
-                      users.data.role.map(each => (
-                        <div key={each._id}>
-                          {each.role_title}:{' '}
-                          {users.data &&
-                            users.data.user &&
-                            users.data.user.filter(e =>
-                              e.roles.includes(each._id),
-                            ).length}
-                        </div>
-                      ))}
+        
+          <div className="flex justify-between mx-4 my-4">
+                  <div className="w-1/2 -ml-4 bg-white rounded pb-4">
+                    <h3 className="p-4 border-b border-grey-lighter">By Roles </h3>
+                    <div className="flex flex-wrap justify-between mx-4">
+                    {users.data.map(each => (
+                     
+                      <div key={each._id} className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded">
+                        <div className="flex justify-center text-center h-10"><span className="m-auto w-24">{each.roles.role_title} </span><span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">{each.count}</span></div>
+                      </div>
+                     
+                    ))}
+                     </div>
                   </div>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <div>Total errors: {errors.totaldata}</div>
-                  <div>
-                    <br />
-                    <h3>By Types: </h3>
+               
+                
+                  <div className="w-1/2 -mr-4 bg-white rounded pb-4">
+                   
+                    <h3 className="p-4 border-b border-grey-lighter">By Types </h3>
+                    <div className="flex flex-wrap justify-between mx-4">
                     {errors.data.map(each => (
-                      <div key={each._id}>
-                        {each._id}: {each.count}
+                      <div key={each._id} className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded">
+                        <div className="flex justify-between text-center h-10"><span className="m-auto w-24">{each._id} </span><span className="m-auto inline-block text-waftprimary font-bold text-2xl text-right ml-4">{each.count}</span></div>
                       </div>
                     ))}
                   </div>
-                </Grid>
-              </Grid>
-            </Paper>
+                  </div>
+                  </div>
+            
           </div>
-        </PageContent>
+       
       </>
     );
   }

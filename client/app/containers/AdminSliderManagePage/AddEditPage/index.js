@@ -318,7 +318,7 @@ class AddEdit extends React.PureComponent {
                 />
               </div>
              
-              <button class="text-white py-2 px-4 rounded btn-waft"
+              <button class="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
               onClick={this.handleAddSlide}
               >
             

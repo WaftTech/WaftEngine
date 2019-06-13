@@ -204,9 +204,10 @@ class AddEdit extends React.PureComponent {
          <Helmet>
           <title>{id ? 'Edit' : 'Add'} Module</title>
         </Helmet>
-        <PageHeader className="text-sm">
+        <div class="flex justify-between mt-3 mb-3">
+        <PageHeader>
           <IconButton
-            className="mr-4"
+          className={[classes.backbtn, "cursor-pointer"]}	
             onClick={this.handleBack}
             aria-label="Back"
           >
@@ -214,30 +215,27 @@ class AddEdit extends React.PureComponent {
           </IconButton>{' '}
           {id ? `Edit for ${one.module_name}` : 'Add Module'}
         </PageHeader>
+        </div>
         <PageContent>
-          <Paper className={classes.paper}>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="module_name"
-                  label="Module Name"
-                  value={one.module_name}
-                  onChange={this.handleChange('module_name')}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="description"
-                  label="Descrition"
-                  value={one.description}
-                  onChange={this.handleChange('description')}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
+
+        <div class="w-full md:w-1/2 pb-4">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+        Module Name
+        </label>
+        <input class="Waftinputbox" id="module_name" type="text" value= {one.module_name}
+                    onChange={this.handleChange('module_name')} />
+      </div>
+
+      <div class="w-full md:w-1/2 pb-4">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+        Descrition
+        </label>
+        <textarea class="Waftinputbox" id="description" type="text"   value={one.description}
+                      onChange={this.handleChange('description')}/>
+      </div>
+         
+            
+           
                 {one.path.map((each, pathIndex) => (
                   <PathComponent
                     key={`${each._id}-${pathIndex}`}
@@ -258,29 +256,25 @@ class AddEdit extends React.PureComponent {
                     handleRemovePath={this.handleRemovePath}
                   />
                 ))}
-              </Grid>
-            </Grid>
-            <Button onClick={this.handleAddPath}>Add Access Type</Button>
-            <div className={classes.buttons}>
-              <Fab
-                color="primary"
-                aria-label="Save"
-                className={classes.fab}
-                onClick={this.handleSave}
-              >
-                <CheckIcon />
-              </Fab>
+           
+          
+            <div className="inline-block">
 
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleSave}
-                className={classes.button}
-              >
-                Save
-              </Button>
+            <button
+            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary mr-2"
+            onClick={this.handleAddPath}
+          >
+         Add Access Type
+          </button>
+
+          <button
+            className="text-white py-2 px-4 rounded mt-4 btn-waft"
+            onClick={this.handleSave}
+          >
+           Save
+          </button>
             </div>
-          </Paper>
+       
         </PageContent>
       </React.Fragment>
     );
@@ -300,11 +294,16 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
-  fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 4,
-  },
+ 
+  backbtn:{
+    padding:0,
+    height:'40px',
+    width:'40px',
+    marginTop:'auto',
+    marginBottom:'auto',
+    borderRadius:'50%',
+    marginRight:'5px',
+  }
 });
 
 const withStyle = withStyles(styles);
