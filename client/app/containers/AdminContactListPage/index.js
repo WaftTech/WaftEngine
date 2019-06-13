@@ -181,7 +181,7 @@ export class AdminContactListPage extends React.Component {
                     value={query.find_name}
                     onChange={this.handleQueryChange}
                   />
-                  <IconButton aria-label="Search" className={[classes.waftsrch, 'waftsrchstyle']} onClick={this.handleSearch}>
+                  <IconButton aria-label="Search" className={`${classes.waftsrch} waftsrchstyle`} onClick={this.handleSearch}>
                     <SearchIcon />
                   </IconButton>
                 </div>

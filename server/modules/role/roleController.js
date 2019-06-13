@@ -197,20 +197,24 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
   try {
     const moduleid = req.params.moduleid;
     const access = req.body.Access;
-    console.log(access);
+    let d = [];
     if (access.length) {
       for (let i = 0; i < access.length; i++) {
         if (access[i]._id) {
-          const update = await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
-          return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'Access update success!!', null);
+          access[i].module_id = moduleid;
+          const newAccess = await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
+          d.push(newAccess);
         } else {
           access[i].module_id = moduleid;
           access[i].added_by = req.user.id;
           const newAccess = new accessSch(access[i]);
-          await newAccess.save();
-          return otherHelper.sendResponse(res, httpStatus.OK, true, newAccess, null, roleConfig.accessSave, null);
+          const data = await newAccess.save();
+          d.push(data);
         }
       }
+      return otherHelper.sendResponse(res, httpStatus.OK, true, d, null, 'Access update success!!', null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, true, update, null, '', null);
     }
   } catch (err) {
     next(err);
@@ -233,7 +237,7 @@ roleController.GetAccessListForModule = async (req, res, next) => {
     const moduleid = req.params.moduleid;
     const AccessForModule = await accessSch.find({ module_id: moduleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
     const ModulesForRole = await moduleSch.findOne({ _id: moduleid }, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
-    const Roles = await roleSch.find({}, { _id: 1, role_title: 1, is_active: 1 });
+    const Roles = await roleSch.find({ is_deleted: false }, { _id: 1, role_title: 1, is_active: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForModule, Module: ModulesForRole, Roles: Roles }, null, roleConfig.accessGet, null);
   } catch (err) {
     next(err);
