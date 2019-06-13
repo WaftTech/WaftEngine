@@ -64,15 +64,19 @@ table.table tbody td {
 }
 
 .btn-waft , .login-l{
+  min-width: 100px;
+  font-weight: bold;
   background: #ff3b30; /* Old browsers */
   background: -moz-linear-gradient(top, #ff3b30 0%, #d82929 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, #ff3b30 0%,#d82929 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, #ff3b30 0%,#d82929 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3b30', endColorstr='#d82929',GradientType=0 ); /* IE6-9 */ 
+  border: 2px solid #ec322c;
 }
 
 .btn-waft:hover{
  background:#ff3b30;
+ border-color:#ff3b30;
 }
 
 .login-l{
