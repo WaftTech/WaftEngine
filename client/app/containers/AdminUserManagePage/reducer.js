@@ -50,13 +50,18 @@ const adminUserManagePageReducer = (state = initialState, action) =>
         draft.all = action.payload;
         break;
       case types.LOAD_ONE_SUCCESS:
+        draft.loading = false;
         action.payload.data.roles.map(each => {
           normalizedData[each._id] = each;
           return null;
         });
         draft.one = { ...action.payload.data, rolesNormalized: normalizedData };
         break;
-      case types.DEFAULT_ACTION:
+      case types.LOAD_ONE_REQUEST:
+        draft.loading = true;
+        break;
+      case types.LOAD_ONE_FAILURE:
+        draft.loading = false;
         break;
     }
   });
