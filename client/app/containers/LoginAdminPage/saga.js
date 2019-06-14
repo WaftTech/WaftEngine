@@ -12,6 +12,7 @@ import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectEmail, makeSelectPassword } from './selectors';
 import { setUser, setToken } from '../App/actions';
+import { enqueueSnackbar } from '../App/actions';
 
 // Individual exports for testing
 export const validate = data => {
@@ -50,6 +51,28 @@ export function* loginAction(action) {
   }
 }
 
+function* loginFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Error while login!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* loginSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'login success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* loginAdminPageSaga() {
   yield takeLatest(types.LOGIN_REQUEST, loginAction);
+  yield takeLatest(types.LOGIN_FAILURE, loginFailureFunc);
+  yield takeLatest(types.LOGIN_SUCCESS, loginSuccessFunc);
 }

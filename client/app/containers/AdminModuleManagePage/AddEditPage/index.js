@@ -9,6 +9,7 @@ import Helmet from 'react-helmet';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,18 +20,16 @@ import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
 import BackIcon from '@material-ui/icons/ArrowBack';
 
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne } from '../selectors';
+import { makeSelectOne, makeSelectLoading } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
-
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -198,83 +197,88 @@ class AddEdit extends React.PureComponent {
         params: { id },
       },
       one,
+      loading,
     } = this.props;
-    return (
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <React.Fragment>
-         <Helmet>
+        <Helmet>
           <title>{id ? 'Edit' : 'Add'} Module</title>
         </Helmet>
-        <div class="flex justify-between mt-3 mb-3">
-        <PageHeader>
-          <IconButton
-          className={[classes.backbtn, "cursor-pointer"]}	
-            onClick={this.handleBack}
-            aria-label="Back"
-          >
-            <BackIcon />
-          </IconButton>{' '}
-          {id ? `Edit for ${one.module_name}` : 'Add Module'}
-        </PageHeader>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>{' '}
+            {id ? `Edit for ${one.module_name}` : 'Add Module'}
+          </PageHeader>
         </div>
         <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Module Name
+            </label>
+            <input
+              className="Waftinputbox"
+              id="module_name"
+              type="text"
+              value={one.module_name}
+              onChange={this.handleChange('module_name')}
+            />
+          </div>
 
-        <div class="w-full md:w-1/2 pb-4">
-        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-        Module Name
-        </label>
-        <input class="Waftinputbox" id="module_name" type="text" value= {one.module_name}
-                    onChange={this.handleChange('module_name')} />
-      </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Descrition
+            </label>
+            <textarea
+              className="Waftinputbox"
+              id="description"
+              type="text"
+              value={one.description}
+              onChange={this.handleChange('description')}
+            />
+          </div>
 
-      <div class="w-full md:w-1/2 pb-4">
-        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-        Descrition
-        </label>
-        <textarea class="Waftinputbox" id="description" type="text"   value={one.description}
-                      onChange={this.handleChange('description')}/>
-      </div>
-         
-            
-           
-                {one.path.map((each, pathIndex) => (
-                  <PathComponent
-                    key={`${each._id}-${pathIndex}`}
-                    each={each}
-                    pathIndex={pathIndex}
-                    handleAccessTypeChange={this.handleAccessTypeChange}
-                    handleAdminRoutesChange={this.handleAdminRoutesChange}
-                    handleRemoveAdminRoute={this.handleRemoveAdminRoute}
-                    handleAddAdminRoute={this.handleAddAdminRoute}
-                    handleServerRoutesMethodChange={
-                      this.handleServerRoutesMethodChange
-                    }
-                    handleServerRoutesRouteChange={
-                      this.handleServerRoutesRouteChange
-                    }
-                    handleRemoveServerRoute={this.handleRemoveServerRoute}
-                    handleAddServerRoute={this.handleAddServerRoute}
-                    handleRemovePath={this.handleRemovePath}
-                  />
-                ))}
-           
-          
-            <div className="inline-block">
+          {one.path.map((each, pathIndex) => (
+            <PathComponent
+              key={`${each._id}-${pathIndex}`}
+              each={each}
+              pathIndex={pathIndex}
+              handleAccessTypeChange={this.handleAccessTypeChange}
+              handleAdminRoutesChange={this.handleAdminRoutesChange}
+              handleRemoveAdminRoute={this.handleRemoveAdminRoute}
+              handleAddAdminRoute={this.handleAddAdminRoute}
+              handleServerRoutesMethodChange={
+                this.handleServerRoutesMethodChange
+              }
+              handleServerRoutesRouteChange={this.handleServerRoutesRouteChange}
+              handleRemoveServerRoute={this.handleRemoveServerRoute}
+              handleAddServerRoute={this.handleAddServerRoute}
+              handleRemovePath={this.handleRemovePath}
+            />
+          ))}
+
+          <div className="inline-block">
+            <button
+              className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary mr-2"
+              onClick={this.handleAddPath}
+            >
+              Add Access Type
+            </button>
 
             <button
-            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary mr-2"
-            onClick={this.handleAddPath}
-          >
-         Add Access Type
-          </button>
-
-          <button
-            className="text-white py-2 px-4 rounded mt-4 btn-waft"
-            onClick={this.handleSave}
-          >
-           Save
-          </button>
-            </div>
-       
+              className="text-white py-2 px-4 rounded mt-4 btn-waft"
+              onClick={this.handleSave}
+            >
+              Save
+            </button>
+          </div>
         </PageContent>
       </React.Fragment>
     );
@@ -286,6 +290,7 @@ const withSaga = injectSaga({ key: 'adminModuleManage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
@@ -294,16 +299,15 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
- 
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
-  }
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
+  },
 });
 
 const withStyle = withStyles(styles);

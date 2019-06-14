@@ -47,7 +47,14 @@ const reducer = (state = initialState, action) =>
       case types.LOAD_MEDIA_SUCCESS:
         draft.media = action.payload;
         break;
+      case types.LOAD_ONE_REQUEST:
+        draft.loading = true;
+        break;
+      case types.LOAD_ONE_FAILURE:
+        draft.loading = false;
+        break;
       case types.LOAD_ONE_SUCCESS:
+        draft.loading = false;
         draft.one = action.payload.data;
         break;
       case types.DELETE_ONE_SUCCESS:

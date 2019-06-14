@@ -106,6 +106,16 @@ function* addEditFailureFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* addEditSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Update success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 // Individual exports for testing
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
@@ -115,4 +125,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.DELETE_CAT_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_CAT_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
+  yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
 }
