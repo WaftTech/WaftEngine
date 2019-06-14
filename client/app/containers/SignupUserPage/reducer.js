@@ -10,7 +10,6 @@ export const initialState = {
   name: '',
   email: '',
   password: '',
-  gender: '',
   errors: {},
   loading: true,
 };

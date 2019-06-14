@@ -132,6 +132,16 @@ function* addEditFailureFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* addEditSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Slider update success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
@@ -141,4 +151,6 @@ export default function* defaultSaga() {
   yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
+  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
+  yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
 }

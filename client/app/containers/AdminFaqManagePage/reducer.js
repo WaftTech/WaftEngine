@@ -46,7 +46,18 @@ const reducer = (state = initialState, action) =>
         draft.loading = false;
         draft.all = action.payload;
         break;
+
+      case types.LOAD_ALL_FAILURE:
+        draft.loading = false;
+        break;
+      case types.LOAD_ONE_REQUEST:
+        draft.loading = true;
+        break;
+      case types.LOAD_ONE_FAILURE:
+        draft.loading = false;
+        break;
       case types.LOAD_ONE_SUCCESS:
+        draft.loading = false;
         draft.one = action.payload.data;
         break;
       case types.LOAD_CATEGORY_SUCCESS:

@@ -117,6 +117,26 @@ function* addEditSuccessFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* updateFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while updating!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* updateSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Module update success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* adminRoleManageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
@@ -125,4 +145,6 @@ export default function* adminRoleManageSaga() {
   yield takeLatest(types.UPDATE_ACCESS_REQUEST, updateAccess);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
+  yield takeLatest(types.UPDATE_ACCESS_SUCCESS, updateSuccessFunc);
+  yield takeLatest(types.UPDATE_ACCESS_FAILURE, updateFailureFunc);
 }
