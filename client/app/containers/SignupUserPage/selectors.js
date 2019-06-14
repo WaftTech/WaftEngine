@@ -27,11 +27,6 @@ export const makeSelectPassword = () =>
     selectSignupUserPageDomain,
     state => state.password,
   );
-export const makeSelectGender = () =>
-  createSelector(
-    selectSignupUserPageDomain,
-    state => state.gender,
-  );
 export const makeSelectName = () =>
   createSelector(
     selectSignupUserPageDomain,
