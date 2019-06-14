@@ -18,9 +18,7 @@ import { Grid } from '@material-ui/core';
 
 const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
-const styles = {
-
-};
+const styles = {};
 
 const Path = props => {
   const {
@@ -41,110 +39,137 @@ const Path = props => {
     <section className="rounded p-4 bg-grey-lighter mb-4">
       <div className="w-full md:w-2/5 pb-4">
         <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-        Access Type
+          Access Type
         </label>
-        <input className="Waftinputbox"  id={`${each._id}-access-type-${pathIndex}`} type="text"   value={each.access_type}
-                    onChange={handleAccessTypeChange(pathIndex)} style={{background:'#FFFFFF'}}/>
+        <input
+          className="Waftinputbox"
+          id={`${each._id}-access-type-${pathIndex}`}
+          type="text"
+          value={each.access_type}
+          onChange={handleAccessTypeChange(pathIndex)}
+          style={{ background: '#FFFFFF' }}
+        />
       </div>
-     
-       
-     
-   <div className="flex justify-between mx-4">
-     <div className="clientRoute w-1/2 -ml-4 border rounded p-2">
+
+      <div className="flex justify-between mx-4">
+        <div className="clientRoute w-1/2 -ml-4 border rounded p-2">
           {(each.admin_routes || []).map((eachAdminRoute, index) => (
-            <div className="w-full pb-4 border-b mb-2" key={`${each._id}-${pathIndex}-each-admin-route-${index}`}>
-                <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <div
+              className="w-full pb-4 border-b mb-2"
+              key={`${each._id}-${pathIndex}-each-admin-route-${index}`}
+            >
+              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
                 Client Route
-                </label>
-                <div className="flex">
-                <input className="Waftinputbox mr-2" id={`${each._id}-each-admin-route-access-type-${index}`} type="text" value={eachAdminRoute}
-                   onChange={handleAdminRoutesChange(pathIndex, index)} style={{background:'#FFFFFF'}}/>
-               
-              <IconButton
-                aria-label="Delete client route"
-                onClick={handleRemoveAdminRoute(pathIndex, index)}
-              >
-                <TrashIcon fontSize="small" />
-              </IconButton>
+              </label>
+              <div className="flex">
+                <input
+                  className="Waftinputbox mr-2"
+                  id={`${each._id}-each-admin-route-access-type-${index}`}
+                  type="text"
+                  value={eachAdminRoute}
+                  onChange={handleAdminRoutesChange(pathIndex, index)}
+                  style={{ background: '#FFFFFF' }}
+                />
+
+                <IconButton
+                  aria-label="Delete client route"
+                  onClick={handleRemoveAdminRoute(pathIndex, index)}
+                >
+                  <TrashIcon fontSize="small" />
+                </IconButton>
               </div>
             </div>
           ))}
 
-        <button class="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"   onClick={handleAddAdminRoute(pathIndex)}>
-          Add Client Route
-        </button>
-          </div>
-    <div className="serverRoute w-1/2 -mr-4 border rounded p-2">
+          <button
+            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
+            onClick={handleAddAdminRoute(pathIndex)}
+          >
+            Add Client Route
+          </button>
+        </div>
+        <div className="serverRoute w-1/2 -mr-4 border rounded p-2">
           {(each.server_routes || []).map((eachServerRoute, index) => (
-            <div className="w-full pb-4 mb-2 border-b"
+            <div
+              className="w-full pb-4 mb-2 border-b"
               key={`${each._id}-${pathIndex}-${
                 eachServerRoute._id
               }-each-server-route-${index}`}
             >
               <div className="flex">
-              <div class="mr-2"> 
-                <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-                Method
-                </label>
+                <div className="mr-2">
+                  <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+                    Method
+                  </label>
 
-                <select className="Waftinputbox"
-                  placeholder="Method"
-                  value={eachServerRoute.method}
-                  onChange={handleServerRoutesMethodChange(pathIndex, index)}
-                  inputProps={{
-                    name: 'Method',
-                    id: `${each._id}-${
-                      eachServerRoute._id
-                    }-each-server-route-${index}-method`,
-                  }}
-                  style={{minWidth:'80px',background:'#FFFFFF'}}
-                >
-                  {methods.map(eachMethod => (
-                    <option
-                      key={`${eachMethod._id}-${pathIndex}-${
+                  <select
+                    className="Waftinputbox"
+                    placeholder="Method"
+                    value={eachServerRoute.method}
+                    onChange={handleServerRoutesMethodChange(pathIndex, index)}
+                    inputprops={{
+                      name: 'Method',
+                      id: `${each._id}-${
                         eachServerRoute._id
-                      }-each-server-route-method-${eachMethod}`}
-                      value={eachMethod}
+                      }-each-server-route-${index}-method`,
+                    }}
+                    style={{ minWidth: '80px', background: '#FFFFFF' }}
+                  >
+                    {methods.map(eachMethod => (
+                      <option
+                        key={`${eachMethod._id}-${pathIndex}-${
+                          eachServerRoute._id
+                        }-each-server-route-method-${eachMethod}`}
+                        value={eachMethod}
+                      >
+                        {eachMethod}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+                    Server Route
+                  </label>
+                  <div className="flex">
+                    <input
+                      type="text"
+                      className="Waftinputbox mr-2"
+                      style={{ background: '#FFFFFF' }}
+                      id={`${each._id}-${
+                        eachServerRoute._id
+                      }-each-admin-server-route-route-access-type-${index}`}
+                      value={eachServerRoute.route}
+                      onChange={handleServerRoutesRouteChange(pathIndex, index)}
+                    />
+                    <IconButton
+                      aria-label="Delete Server Route"
+                      onClick={handleRemoveServerRoute(pathIndex, index)}
                     >
-                      {eachMethod}
-                    </option>
-                  ))}
-                </select>
+                      <TrashIcon fontSize="small" />
+                    </IconButton>
+                  </div>
+                </div>
               </div>
-              <div><label class="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-              Server Route
-                </label>
-                <div className="flex">
-              <input type="text" className="Waftinputbox mr-2" style={{background:'#FFFFFF'}} id={`${each._id}-${
-                  eachServerRoute._id
-                }-each-admin-server-route-route-access-type-${index}`} value={eachServerRoute.route}
-                  onChange= {handleServerRoutesRouteChange(pathIndex, index)}
-               
-              />
-              <IconButton
-                aria-label="Delete Server Route"
-                onClick={handleRemoveServerRoute(pathIndex, index)}
-              >
-                <TrashIcon fontSize="small" />
-              </IconButton>
-              </div>
-            </div>
-            </div>
             </div>
           ))}
 
-          <button class="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"     onClick={handleAddServerRoute(pathIndex)}>
-          Add Server Route
+          <button
+            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
+            onClick={handleAddServerRoute(pathIndex)}
+          >
+            Add Server Route
           </button>
-          </div>
-          </div>
-<div className="mx-4 flex justify-end mt-4">
-
-          <button class="text-white py-2 px-4 rounded btn-waft"  onClick={handleRemovePath(pathIndex)}>
-            Delete Access Type
-          </button>
-          </div>
-    
+        </div>
+      </div>
+      <div className="mx-4 flex justify-end mt-4">
+        <button
+          className="text-white py-2 px-4 rounded btn-waft"
+          onClick={handleRemovePath(pathIndex)}
+        >
+          Delete Access Type
+        </button>
+      </div>
     </section>
   );
 };

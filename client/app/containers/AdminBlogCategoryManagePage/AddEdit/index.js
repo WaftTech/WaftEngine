@@ -11,15 +11,17 @@ import injectReducer from 'utils/injectReducer';
 // core components
 
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import { Paper } from '@material-ui/core';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne } from '../selectors';
+import { makeSelectOne, makeSelectLoading} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -76,8 +78,10 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, match } = this.props;
-    return (
+    const { classes, one, match, loading} = this.props;
+    return loading && loading == true ? (
+      <CircularProgress color="primary" disableShrink />
+    ) : (
       <div>
         <Helmet>
           <title>
@@ -86,9 +90,9 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
-        <div class="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>
-        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleGoBack} aria-label="Back">
+        <IconButton className={`${classes.backbtn} cursor-pointer`}	 onClick={this.handleGoBack} aria-label="Back">
           <BackIcon />
         </IconButton>
         {match && match.params && match.params.id
@@ -98,11 +102,11 @@ class AddEdit extends React.PureComponent {
       
         <PageContent>
       
-        <div class="w-full md:w-1/2 pb-4">
-        <label class="block uppercase tracking-wide text-grey-darker text-xs mb-2" for="grid-last-name">
+        <div className="w-full md:w-1/2 pb-4">
+        <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
         Blog Title
         </label>
-        <input class="Waftinputbox" id="title" type="text" value= {one.title || ''} name="Title"
+        <input className="Waftinputbox" id="title" type="text" value= {one.title || ''} name="Title"
                     onChange={this.handleChange('title')} />
       </div>
 
@@ -123,7 +127,7 @@ class AddEdit extends React.PureComponent {
             </div>
         
 
-            <button class="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+            <button className="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
               Save
               </button>
              
@@ -144,6 +148,7 @@ const withSaga = injectSaga({ key: 'adminBlogCategoryManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
