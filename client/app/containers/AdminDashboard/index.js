@@ -13,6 +13,7 @@ import { compose } from 'redux';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -28,6 +29,20 @@ import saga from './saga';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import LinkBoth from '../../components/LinkBoth';
+import AccountBox from '@material-ui/icons/AccountBox';
+import Error from '@material-ui/icons/Error';
+import NoteAdd from '@material-ui/icons/NoteAdd';
+import Note from '@material-ui/icons/Note';
+
+const styles = theme => ({
+  dashicon: {
+    fontSize :'50px',
+    display :'block',
+    width : '100%',
+    marginBottom: '10px',
+    color : '#363636',
+  },
+});
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminDashboard extends React.PureComponent {
@@ -39,7 +54,7 @@ export class AdminDashboard extends React.PureComponent {
   }
 
   render() {
-    const { users, info, errors, blogs } = this.props;
+    const {classes, users, info, errors, blogs } = this.props;
     return (
       <>
        <div className="flex justify-between mt-3 mb-3">
@@ -71,17 +86,23 @@ export class AdminDashboard extends React.PureComponent {
          
         
               <div className="flex justify-between mx-8">
-                <div className="w-1/4 -ml-8 bg-white rounded p-10">
-                <LinkBoth to="/admin/blog-manage/add/">Write Post</LinkBoth></div>
-                <div className="w-1/4 -ml-4 bg-white rounded p-10"><LinkBoth
+                <div className="w-1/4 -ml-8 bg-white rounded p-10 text-center">
+                <LinkBoth to="/admin/blog-manage/add/" className="no-underline hover:text-waftprimary"><NoteAdd className={classes.dashicon}/>Write Post</LinkBoth></div>
+                <div className="w-1/4 -ml-4 bg-white rounded p-10 text-center"><LinkBoth className="no-underline hover:text-waftprimary"
                   to="https://www.waftengine.org/documentation"
                   target="_blank"
                 >
-                  Click documentation to get started
+                  <Note className={classes.dashicon}/>View documentation
                 </LinkBoth>
                 </div>
-                <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-10 flex justify-between"><span className="m-auto w-24">Total users </span><span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">{users.totaldata}</span></div>
-                <div className="w-1/4 -mr-8 bg-white rounded p-10 flex justify-between"><span className="m-auto w-24">Total errors</span> <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">{errors.totaldata}</span></div>
+                <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-10 flex justify-between">
+                  <span className="m-auto w-24 text-center"><AccountBox className={classes.dashicon}/>Total users </span>
+                  <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
+                  {users.totaldata}</span></div>
+                <div className="w-1/4 -mr-8 bg-white rounded p-10 flex justify-between">
+                  <span className="m-auto w-24 text-center"><Error className={classes.dashicon}/>Total errors</span> 
+                  <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
+                  {errors.totaldata}</span></div>
               </div>
          
 
@@ -152,8 +173,10 @@ const withConnect = connect(
 
 const withReducer = injectReducer({ key: 'adminDashboard', reducer });
 const withSaga = injectSaga({ key: 'adminDashboard', saga });
+const withStyle = withStyles(styles);
 
 export default compose(
+  withStyle,
   withReducer,
   withSaga,
   withConnect,
