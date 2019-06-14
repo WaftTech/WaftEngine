@@ -79,9 +79,20 @@ function* addEditFail(action) {
   yield put(enqueueSnackbar(defaultError));
 }
 
+function* addEditSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'update success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* adminUserManagePageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFail);
+  yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
 }

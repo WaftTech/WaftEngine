@@ -95,10 +95,10 @@ class AccessManagePage extends React.PureComponent {
           <title>Access Listing</title>
         </Helmet>
 
-        <div class="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between mt-3 mb-3">
         <PageHeader>
-        <IconButton className={[classes.backbtn, "cursor-pointer"]}	 onClick={this.handleBack}>
-          <BackIcon onClick={this.handleBack} />
+        <IconButton className={`${classes.backbtn} cursor-pointer`}	 onClick={this.handleBack}>
+          <BackIcon />
         </IconButton>
           {`Edit Access for ${Module.module_name}`}
         </PageHeader>
@@ -138,11 +138,9 @@ class AccessManagePage extends React.PureComponent {
           })}
 
           <button
-            
             className="text-white py-2 px-4 rounded mt-4 btn-waft"
             onClick={this.handleSave}
           >
-           
            Save
           </button>
         </PageContent>
