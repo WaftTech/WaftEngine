@@ -49,7 +49,7 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
 
       <div className="login-R w-full md:w-2/5 relative block">
         <div className="walfRlogin px-10 md:px-12 lg:px-16 xl:px-24 w-full"> 
-          <img src={logo} alt="WaftEngine"/>
+          <img src={logo} alt="WaftEngine" className="w-2/3"/>
           <form className="mt-4" onSubmit={handleSubmit}>
             <UsernameInput />
             <PasswordInput />

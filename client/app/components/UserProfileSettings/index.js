@@ -22,15 +22,11 @@ export class UserProfileSettingsPage extends React.PureComponent {
               {/* <li>Password set a minute ago</li> */}
             </ul>
           </div>
-          <div style={{ padding: '5px 20px' }}>
-            <Button
-              color="secondary"
-              variant="outlined"
-              onClick={() => this.props.logoutRequest()}
-            >
-              <b>Logout</b>
-            </Button>
-          </div>
+
+          <button className="text-white py-2 px-4 rounded mt-4 btn-waft"   onClick={() => this.props.logoutRequest()}>
+             LogOut
+              </button>
+         
         </React.Fragment>
       </div>
     );

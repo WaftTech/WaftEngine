@@ -29,24 +29,18 @@ export class UserProfilePage extends React.Component {
         <Helmet>
           <title>Profile Page</title>
         </Helmet>
-        <PageHeader style={{ paddingTop: 24 }}>
-          <div className="container">
+        
+        <div className="container m-auto flex justify-between">
+      
+              <div className="w-1/3 m-auto"> <div className="p-5 mb-5">
             <b>{user.name}</b>
             <br />
             <b style={{ fontSize: 16 }}>{user.email}</b>
-          </div>
-        </PageHeader>
-        <br />
-        <br />
-        <div className="container">
-          <Grid container spacing={8}>
-            <Grid item xs={12} sm={3}>
-              <UserProfileSettingsPage />
-            </Grid>
-            <Grid item xs={12} sm={9}>
-              <UserPersonalInformationPage />
-            </Grid>
-          </Grid>
+          </div><UserProfileSettingsPage /></div>
+         
+           
+              <div className="w-2/3 m-auto"><UserPersonalInformationPage /></div>
+           
         </div>
       </div>
     );
