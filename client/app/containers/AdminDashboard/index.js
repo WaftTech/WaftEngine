@@ -86,22 +86,22 @@ export class AdminDashboard extends React.PureComponent {
          
         
               <div className="flex justify-between mx-8">
-                <div className="w-1/4 -ml-8 bg-white rounded p-10 text-center">
+                <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center">
                 <LinkBoth to="/admin/blog-manage/add/" className="no-underline hover:text-waftprimary"><NoteAdd className={classes.dashicon}/>Write Post</LinkBoth></div>
-                <div className="w-1/4 -ml-4 bg-white rounded p-10 text-center"><LinkBoth className="no-underline hover:text-waftprimary"
+                <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center"><LinkBoth className="no-underline hover:text-waftprimary"
                   to="https://www.waftengine.org/documentation"
                   target="_blank"
                 >
                   <Note className={classes.dashicon}/>View documentation
                 </LinkBoth>
                 </div>
-                <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-10 flex justify-between">
+                <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between">
                   <span className="m-auto w-24 text-center"><AccountBox className={classes.dashicon}/>Total users </span>
-                  <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
+                  <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
                   {users.totaldata}</span></div>
-                <div className="w-1/4 -mr-8 bg-white rounded p-10 flex justify-between">
+                <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between">
                   <span className="m-auto w-24 text-center"><Error className={classes.dashicon}/>Total errors</span> 
-                  <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
+                  <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
                   {errors.totaldata}</span></div>
               </div>
          
