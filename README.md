@@ -1,27 +1,51 @@
-This is an open source platform for developers to create enterprise level MERN application. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
+# WaftEngine (MERN Stack Engine)
 
-**Contribute**
+[WaftEngine](https://www.wafttengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
+
 [![Gitter](https://badges.gitter.im/waftengine/community.svg)](https://gitter.im/waftengine/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-**To Start Server PORT:- 5050**
+## Features
 
-- cd server
-- npm install
-- npm start
+WaftEngine core features include:
 
-**To Start Client PORT:- 5051**
+- User Manage and Login flow
+- Role Manage
+- Module Manage with Access level Defination
+- Access Management accociated with roles
+- Email Template and settings
+- Media Manage and server side proccessing
+- Error handeling and log Management
+- Authentication and Authorization
+- Content Management
+- State Management using redux
+- Development ready setup
+- Production ready setup
 
-- cd client
-- npm install
-- npm start
+Since anything in our codebase can be extended, overwritten, or installed as a package, you may also develop, scale, and customize anything on our platform.
 
-<!-- /********************************************************* -->
+## Getting started
 
-- While coding using this engine, please remember these points:\*
+Follow the documentation to run WaftEngine for all operating systems.
 
-* For const:- write like this:- waftEngine
-* For function:- write like this:- WaftEngine
-* For let:- write like this:- waftengine
-* For schema field:- write like this:- waft_engine
+- [Linux]()
+- [Windows]()
+- [OS X]()
 
-  <!-- **********************************************************/ -->
+# Get involved
+
+Read documentation & tutorials
+
+- [Developer Documentation]()
+- [Architecture]()
+
+## Get help & contact the team
+
+- [WaftEngine Gitter Chat](https://gitter.im/waftengine/community)
+- Report security vulnerabilities to <mailto:hello@wafttech.com>.
+- [Bug Post and Feature Request](https://github.com/WaftTech/WaftEngine/issues)
+
+## Contribute
+
+:star: Star us on GitHub — it helps!
+
+We love your pull requests! Check our our [`Good First Issue`](https://github.com/WaftTech/WaftEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) and [`Help Wanted`](https://github.com/WaftTech/WaftEngine/issues?q=label%3A%22help+wanted%22) tags for good issues to tackle.
