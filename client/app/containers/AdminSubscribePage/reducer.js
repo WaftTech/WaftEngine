@@ -29,6 +29,9 @@ const adminSubscribePageReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.all = action.payload;
         break;
+      case types.LOAD_SUBSCRIBER_FAILURE:
+        draft.loading = false;
+        break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
         break;
