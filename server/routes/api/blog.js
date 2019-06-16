@@ -12,7 +12,7 @@ router.get('/', blogModule.GetBlogUnauthorize);
 router.get('/category', blogModule.GetBlogCategory);
 router.get('/category/:id', authorization, authentication, blogModule.GetBlogCatById);
 router.get('/:id', authorization, authentication, blogModule.GetBlogDetail);
-router.get('/blog/:slug', blogModule.GetBlogBySlug);
+router.get('/blog/:slug_url', blogModule.GetBlogBySlug);
 router.get('/blogbycat/:id', blogModule.GetBlogByCat);
 router.get('/blogbytag/:tag', blogModule.GetBlogByTag);
 router.get('/blogbytime/:time', blogModule.GetBlogByDate);

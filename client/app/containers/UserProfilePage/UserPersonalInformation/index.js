@@ -134,7 +134,7 @@ class UserPersonalInformationPage extends React.PureComponent {
          
           
 
-            <button class="text-white py-2 px-4 rounded mt-4 btn-waft"  onClick={this.handleSave}>Save</button>
+            <button className="text-white py-2 px-4 rounded mt-4 btn-waft"  onClick={this.handleSave}>Save</button>
              
        
      
