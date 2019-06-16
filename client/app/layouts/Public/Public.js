@@ -18,18 +18,31 @@ const switchRoutes = (
   </Switch>
 );
 
-const PublicLayout = ({location}) => {
-  const { pathname }= location;
+const checkPathname = pathname => {
+  switch (pathname) {
+    case '/login-admin':
+    case '/login-user':
+    case '/login-admin/':
+    case '/login-user/':
+      return false;
+    default:
+      break;
+  }
+  return true;
+};
+const PublicLayout = ({ location }) => {
+  const { pathname } = location;
+  const showHeaderAndFooter = checkPathname(pathname);
   return (
     <>
-      {pathname !== '/login-admin' && pathname !== '/login-admin/' && <Header />}
+      {showHeaderAndFooter && <Header />}
       <main className="flex-1">{switchRoutes}</main>
-      {pathname !== '/login-admin'&& pathname !== '/login-admin/' && <Footer />}
+      {showHeaderAndFooter && <Footer />}
     </>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-})
+});
 export default connect(mapStateToProps)(PublicLayout);
