@@ -38,6 +38,7 @@ import saga from './saga';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import DeleteDialog from '../../components/DeleteDialog';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   button: {
@@ -180,7 +181,7 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
     );
 
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading />
     ) : (
       <>
         <DeleteDialog

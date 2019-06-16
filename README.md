@@ -14,7 +14,7 @@ WaftEngine core features include:
 - Access Management accociated with roles
 - Email Template and settings
 - Media Manage and server side proccessing
-- Error handeling and log Management
+- Error handling and log Management
 - Authentication and Authorization
 - Content Management
 - State Management using redux
@@ -48,4 +48,4 @@ Read documentation & tutorials
 
 :star: Star us on GitHub — it helps!
 
-We love your pull requests! Check our our [`Good First Issue`](https://github.com/WaftTech/WaftEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) and [`Help Wanted`](https://github.com/WaftTech/WaftEngine/issues?q=label%3A%22help+wanted%22) tags for good issues to tackle.
+We love your pull requests! Check out our [`Good First Issue`](https://github.com/WaftTech/WaftEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) and [`Help Wanted`](https://github.com/WaftTech/WaftEngine/issues?q=label%3A%22help+wanted%22) tags for good issues to tackle.

@@ -29,17 +29,18 @@ const ForgotPasswordUser = ({ classes, forgotPasswordRequest }) => {
   return (
     <div className={classes.container}>
       <div className={classes.card}>
-        <img className={classes.logo} src={logo} alt="logo" />
+        <img className={classes.logo} src={logo} alt="logo" style={{width:'60%',marginBottom:'10px'}}/>
         <h3>FORGOT PASSWORD</h3>
+        <br/>
         <form className={classes.form} onSubmit={handleSubmit}>
           <UsernameInput />
-          <br />
-          <Button variant="contained" color="primary" type="submit">
+        
+          <Button className="text-white py-2 px-4 rounded mt-4 btn-waft" variant="contained" color="primary" type="submit">
             SUBMIT
           </Button>
+    
         </form>
-        <br />
-        <br />
+      
         <Link className={classes.smallFont} to="/login-user">
           LOGIN?
         </Link>

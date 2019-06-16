@@ -23,23 +23,19 @@ export class UserChangePasswordPage extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <div>
-        <PageHeader>
-          <div className="container">
-            <b>{user.name}</b>
-            <br />
-            <b>{user.email}</b>
+      <div className="container mx-auto mb-10">
+      
+   
+      <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Change Password</h1>
+          <div className="container mx-auto px-5">
+            <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>{user.name}</b></div>
+            <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>{user.email}</b></div>
           </div>
-        </PageHeader>
 
-        <br />
-        <br />
-        <div className="container">
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={9}>
+        <div className="container mx-auto px-5 mt-5">
+         
               <ChangePasswordPage />
-            </Grid>
-          </Grid>
+           
         </div>
       </div>
     );

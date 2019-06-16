@@ -37,6 +37,7 @@ import {
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import Loading from '../../components/loading';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
@@ -181,7 +182,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
       ],
     );
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink/>
+      <Loading />
     ) : (
       <>
 

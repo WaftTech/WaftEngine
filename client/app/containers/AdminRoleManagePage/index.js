@@ -17,7 +17,6 @@ import { Fab, IconButton, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 
-
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -34,6 +33,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import DeleteDialog from '../../components/DeleteDialog';
+import Loading from '../../components/loading';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRoleManage extends React.PureComponent {
@@ -56,7 +56,6 @@ export class AdminRoleManage extends React.PureComponent {
     open: false,
     deleteId: '',
   };
-
 
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
@@ -100,7 +99,6 @@ export class AdminRoleManage extends React.PureComponent {
     this.setState({ open: false });
   };
 
-
   render() {
     const {
       classes,
@@ -117,7 +115,6 @@ export class AdminRoleManage extends React.PureComponent {
         <>
           <Tooltip id="tooltip-top" title="Edit Role" placement="top">
             <IconButton
-           
               className={classes.tableActionButton}
               onClick={() => this.handleEdit(_id)}
             >
@@ -145,7 +142,7 @@ export class AdminRoleManage extends React.PureComponent {
     );
 
     return loading && loading == true ? (
-      <div>loading</div>
+      <Loading />
     ) : (
       <React.Fragment>
         <DeleteDialog
@@ -153,12 +150,12 @@ export class AdminRoleManage extends React.PureComponent {
           doClose={this.handleClose}
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
-         <Helmet>
+        <Helmet>
           <title>Role Manage</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>Role Manage</PageHeader>
-        <Fab
+          <PageHeader>Role Manage</PageHeader>
+          <Fab
             color="primary"
             aria-label="Add"
             className={classes.fab}
@@ -166,34 +163,35 @@ export class AdminRoleManage extends React.PureComponent {
           >
             <AddIcon />
           </Fab>
-          </div>
+        </div>
         <PageContent>
-        
-        <div className="flex justify-end">
-                <div className="waftformgroup flex relative mr-2">
-                <input type="text"
-                  name="find_role_title"
-                  id="role-title"
-                  placeholder="Search roles by title"
-                  className="m-auto Waftinputbox"
-                  value={query.find_role_title}
-                  onChange={this.handleQueryChange}
-                />
-                <IconButton aria-label="Search" className={`${classes.waftsrch} waftsrchstyle`} onClick={this.handleSearch}>
-                  <SearchIcon />
-                </IconButton>
-              </div>
+          <div className="flex justify-end">
+            <div className="waftformgroup flex relative mr-2">
+              <input
+                type="text"
+                name="find_role_title"
+                id="role-title"
+                placeholder="Search roles by title"
+                className="m-auto Waftinputbox"
+                value={query.find_role_title}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
             </div>
-        
-        
+          </div>
+
           <Table
             tableHead={['Title', 'Description', 'Is Active', 'Action']}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
-       
-         
         </PageContent>
       </React.Fragment>
     );
@@ -217,30 +215,29 @@ const withSaga = injectSaga({ key: 'adminRoleManage', saga });
 const styles = theme => ({
   TableButton: { padding: 8 },
   fab: {
-
-    width:'40px',
-    height:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
-  tableActionButton:{
-    padding:0,
-    '&:hover':{
-      background : 'transparent',
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
       color: '#404040',
     },
   },
 
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 const withStyle = withStyles(styles);

@@ -31,6 +31,7 @@ import * as mapDispatchToProps from './actions';
 
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import DeleteDialog from '../../components/DeleteDialog';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   fab: {
@@ -164,7 +165,7 @@ export class FAQManagePage extends React.PureComponent {
     );
 
     return loading && loading == true ? (
-      <div>loading</div>
+      <Loading />
     ) : (
       <>
         <DeleteDialog

@@ -35,6 +35,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import DeleteDialog from '../../components/DeleteDialog';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   button: {
@@ -186,7 +187,7 @@ export class SliderManagePage extends React.Component {
     );
 
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading />
     ) : (
       <>
         <DeleteDialog
