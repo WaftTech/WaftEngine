@@ -20,25 +20,18 @@ import ViewIcon from '@material-ui/icons/RemoveRedEye';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import CustomInput from '@material-ui/core/Input';
-import { Paper, Divider } from '@material-ui/core';
 import Table from 'components/Table/Table';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {
-  makeSelectAll,
-  makeSelectOne,
-  makeSelectQuery,
-  makeSelectLoading,
-} from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import DeleteDialog from '../../components/DeleteDialog';
 
 const styles = theme => ({
   tableActionButton: {
@@ -76,6 +69,11 @@ export class AdminSubscribePage extends React.PureComponent {
     }),
   };
 
+  state = {
+    open: false,
+    deleteId: '',
+  };
+
   componentDidMount() {
     this.props.loadSubscriberRequest(this.props.query);
   }
@@ -93,8 +91,17 @@ export class AdminSubscribePage extends React.PureComponent {
     this.props.loadSubscriberRequest(this.props.query);
   };
 
+  handleOpen = id => {
+    this.setState({ open: true, deleteId: id });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleDelete = id => {
     this.props.deleteOneRequest(id);
+    this.setState({ open: false });
   };
 
   handlePagination = paging => {
@@ -106,7 +113,6 @@ export class AdminSubscribePage extends React.PureComponent {
     const {
       all: { data, page, size, totaldata },
       query,
-      one,
       loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
@@ -127,7 +133,7 @@ export class AdminSubscribePage extends React.PureComponent {
         <Tooltip id="tooltip-top" title="Remove" placement="top">
           <IconButton
             className={classes.tableActionButton}
-            onClick={() => this.handleDelete(_id)}
+            onClick={() => this.handleOpen(_id)}
           >
             <Close />
           </IconButton>
@@ -138,6 +144,11 @@ export class AdminSubscribePage extends React.PureComponent {
       <CircularProgress color="primary" disableShrink />
     ) : (
       <>
+        <DeleteDialog
+          open={this.state.open}
+          doClose={this.handleClose}
+          doDelete={() => this.handleDelete(this.state.deleteId)}
+        />
         <Helmet>
           <title>Subscriber List</title>
         </Helmet>
