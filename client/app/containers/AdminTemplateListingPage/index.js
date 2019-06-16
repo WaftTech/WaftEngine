@@ -32,6 +32,7 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   root: {
@@ -83,7 +84,7 @@ export function AdminTemplateListingPage({
     setOneValue({ key: e.target.name, value: e.target.value });
   };
   return loading && loading == true ? (
-    <CircularProgress color="primary" disableShrink />
+    <Loading/>
   ) : (
     <>
       <div className="flex justify-between mt-3 mb-3">

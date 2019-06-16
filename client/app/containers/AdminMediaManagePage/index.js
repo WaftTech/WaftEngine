@@ -29,6 +29,7 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../App/constants';
 import { enqueueSnackbar } from '../App/actions';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   button: {
@@ -90,7 +91,7 @@ export class AdminMediaManagePage extends React.Component {
       loading,
     } = this.props;
     return loading ? (
-      <div>Loading</div>
+     <Loading/>
     ) : (
       <>
        <Helmet>
