@@ -30,6 +30,7 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import DeleteDialog from '../../components/DeleteDialog';
 
 const styles = theme => ({
   fab: {
@@ -65,6 +66,11 @@ export class FAQManagePage extends React.PureComponent {
     }),
   };
 
+  state = {
+    open: false,
+    deleteId: '',
+  };
+
   componentDidMount() {
     this.props.clearQuery();
     this.props.loadAllRequest(this.props.query);
@@ -88,8 +94,17 @@ export class FAQManagePage extends React.PureComponent {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleOpen = id => {
+    this.setState({ open: true, deleteId: id });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleDelete = id => {
     this.props.deleteOneRequest(id);
+    this.setState({ open: false });
   };
 
   handlePagination = paging => {
@@ -137,7 +152,7 @@ export class FAQManagePage extends React.PureComponent {
             <IconButton
               aria-label="Close"
               className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
+              onClick={() => this.handleOpen(_id)}
             >
               <Close
                 className={`${classes.tableActionButtonIcon} ${classes.close}`}
@@ -152,6 +167,11 @@ export class FAQManagePage extends React.PureComponent {
       <div>loading</div>
     ) : (
       <>
+        <DeleteDialog
+          open={this.state.open}
+          doClose={this.handleClose}
+          doDelete={() => this.handleDelete(this.state.deleteId)}
+        />
         <Helmet>
           <title>FAQ Listing</title>
         </Helmet>

@@ -33,6 +33,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import DeleteDialog from '../../components/DeleteDialog';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRoleManage extends React.PureComponent {
@@ -50,6 +51,12 @@ export class AdminRoleManage extends React.PureComponent {
       totaldata: PropTypes.number.isRequired,
     }),
   };
+
+  state = {
+    open: false,
+    deleteId: '',
+  };
+
 
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
@@ -80,9 +87,19 @@ export class AdminRoleManage extends React.PureComponent {
     this.props.loadAllRequest(paging);
   };
 
+  handleOpen = id => {
+    this.setState({ open: true, deleteId: id });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleDelete = id => {
     this.props.deleteOneRequest(id);
+    this.setState({ open: false });
   };
+
 
   render() {
     const {
@@ -116,7 +133,7 @@ export class AdminRoleManage extends React.PureComponent {
             <IconButton
               aria-label="Close"
               className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
+              onClick={() => this.handleOpen(_id)}
             >
               <Close
                 className={`${classes.tableActionButtonIcon} ${classes.close}`}
@@ -131,6 +148,11 @@ export class AdminRoleManage extends React.PureComponent {
       <div>loading</div>
     ) : (
       <React.Fragment>
+        <DeleteDialog
+          open={this.state.open}
+          doClose={this.handleClose}
+          doDelete={() => this.handleDelete(this.state.deleteId)}
+        />
          <Helmet>
           <title>Role Manage</title>
         </Helmet>

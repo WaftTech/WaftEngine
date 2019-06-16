@@ -37,36 +37,36 @@ import saga from './saga';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import DeleteDialog from '../../components/DeleteDialog';
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
   fab: {
-  
-    width:'40px',
-    height:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
-  tableActionButton:{
-    padding:0,
-    '&:hover':{
-      background : 'transparent',
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
       color: '#404040',
     },
   },
 
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -83,6 +83,11 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
     }),
   };
 
+  state = {
+    open: false,
+    deleteId: '',
+  };
+
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
   }
@@ -94,15 +99,23 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
-  
   };
 
   handleEdit = id => {
     this.props.push(`/admin/faq-cat-manage/edit/${id}`);
   };
 
+  handleOpen = id => {
+    this.setState({ open: true, deleteId: id });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleDelete = id => {
     this.props.deleteCatRequest(id);
+    this.setState({ open: false });
   };
 
   handlePagination = paging => {
@@ -125,7 +138,7 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
     const tableData = data.map(
       ({ title, is_active, added_at, updated_at, _id }) => [
         title,
-      
+
         `${is_active}`,
         moment(added_at).format('MMM Do YY'),
         moment(updated_at).format('MMM Do YY'),
@@ -155,7 +168,7 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
             <IconButton
               aria-label="Close"
               className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
+              onClick={() => this.handleOpen(_id)}
             >
               <Close
                 className={`${classes.tableActionButtonIcon} ${classes.close}`}
@@ -165,57 +178,66 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
         </>,
       ],
     );
-  
+
     return loading && loading == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
       <>
+        <DeleteDialog
+          open={this.state.open}
+          doClose={this.handleClose}
+          doDelete={() => this.handleDelete(this.state.deleteId)}
+        />
         <Helmet>
           <title>FAQ Listing</title>
         </Helmet>
-    <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>FAQ Category Manage</PageHeader>
-        <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              round="true"
-              onClick={this.handleAdd}
-              elevation={0}
-            >
-              <AddIcon />
-            </Fab>
-            </div>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>FAQ Category Manage</PageHeader>
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            round="true"
+            onClick={this.handleAdd}
+            elevation={0}
+          >
+            <AddIcon />
+          </Fab>
+        </div>
         <PageContent>
-          
           <div className="flex justify-end">
-          <div className="waftformgroup flex relative">
-                <input type="text"
-                  name="find_title"
-                  id="faq-title"
-                  placeholder="Search Category"
-                  className="m-auto Waftinputbox"
-                  value={query.find_title}
-                  onChange={this.handleQueryChange}
-                />
-              <IconButton aria-label="Search" className={`${classes.waftsrch} waftsrchstyle`} onClick={this.handleSearch}>
-                  <SearchIcon />
-                </IconButton>
-                </div>
-                </div>
-                
-            <Table
-              tableHead={[
-                'Title',
-                'Is Active',
-                'Added At',
-                'Updated At',
-                'Actions',
-              ]}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
+            <div className="waftformgroup flex relative">
+              <input
+                type="text"
+                name="find_title"
+                id="faq-title"
+                placeholder="Search Category"
+                className="m-auto Waftinputbox"
+                value={query.find_title}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </div>
+
+          <Table
+            tableHead={[
+              'Title',
+              'Is Active',
+              'Added At',
+              'Updated At',
+              'Actions',
+            ]}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
         </PageContent>
       </>
     );
