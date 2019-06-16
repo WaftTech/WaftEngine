@@ -58,6 +58,7 @@ export class AdminDashboard extends React.PureComponent {
 
   render() {
     const {classes, users, info, errors, blogs } = this.props;
+    console.log(errors);
     return (
       <>
        <div className="flex justify-between mt-3 mb-3">
@@ -137,11 +138,11 @@ export class AdminDashboard extends React.PureComponent {
                    
                     <h3 className="p-4 border-b border-grey-lighter">By Types </h3>
                     <div className="flex flex-wrap justify-between mx-4">
-                    {errors.data.map(each => (
+                    {errors.data && errors.data.length ? errors.data.map(each => (
                       <div key={each._id} className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded">
-                        <div className="flex justify-between text-center h-10"><span className="m-auto w-24">{each._id} </span><span className="m-auto inline-block text-waftprimary font-bold text-2xl text-right ml-4">{each.count}</span></div>
+                        <div className="flex justify-between text-center h-10"><span className="m-auto w-24">{each._id}</span><span className="m-auto inline-block text-waftprimary font-bold text-2xl text-right ml-4">{each.count}</span></div>
                       </div>
-                    ))}
+                    )) : <div className="flex justify-between text-center"><h2 className="w-full m-auto h-full">No Errors</h2></div>}
                   </div>
                   </div>
                   </div>
