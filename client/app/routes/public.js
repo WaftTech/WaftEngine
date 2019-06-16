@@ -67,7 +67,7 @@ const publicRoutes = [
   },
   {
     exact: true,
-    path: '/blog/:id',
+    path: '/blog/:slug_url',
     component: BlogDetailPage,
   },
   {

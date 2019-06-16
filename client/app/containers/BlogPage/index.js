@@ -22,7 +22,7 @@ import Loading from '../../components/loading';
 
 export class BlogPage extends React.Component {
   componentDidMount() {
-    this.props.loadBlogRequest(this.props.match.params.id);
+    this.props.loadBlogRequest(this.props.match.params.slug_url);
     (function() {
       // DON'T EDIT BELOW THIS LINE
       const d = document;
@@ -34,8 +34,8 @@ export class BlogPage extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id !== this.props.match.params.id) {
-      this.props.loadBlogRequest(this.props.match.params.id);
+    if (nextProps.match.params.slug_url !== this.props.match.params.slug_url) {
+      this.props.loadBlogRequest(this.props.match.params.slug_url);
       (function() {
         // DON'T EDIT BELOW THIS LINE
         const d = document;
@@ -49,45 +49,37 @@ export class BlogPage extends React.Component {
 
   render() {
     const { blog, loading } = this.props;
-    return loading && loading == true ? (
-    <Loading/>
-    ) : (
-      <div className="container">
-        <div className="justify-center">
-          <Helmet>
-            <title>{blog.title}</title>
-          </Helmet>
 
-          <h1 className="pageTitle">
-            <span>{blog.title}</span>
-          </h1>
-          <br />
-          <div className="img">
+    return loading && loading == true ? (
+      <Loading />
+    ) : (
+      <div className="container mx-auto">
+        <Helmet>
+          <title>{blog.title}</title>
+        </Helmet>
+        <h1 className="mt-5 mb-2 font-light uppercase">
+          <span>{blog.title}</span>
+        </h1>
+        <br />
+        <div>
+          {(blog.image && blog.image.fieldname && (
             <img
-              src={
-                blog.image &&
-                blog.image.filename &&
-                `${IMAGE_BASE}${blog.image.path}`
-              }
+              src={`${IMAGE_BASE}${blog.image.path}`}
               className=""
-              alt="image"
-              height="534"
-              width="493"
+              alt={`${blog.title}`}
+              width="auto"
+              height="628"
             />
-          </div>
-          <br />
-          <div dangerouslySetInnerHTML={{ __html: blog.description }} />
-          <br />
-          <div>
-            tags:{' '}
-            {(blog.tags && blog.tags.length && blog.tags.join(',')) ||
-              `no tags`}
-          </div>
-          <br />
-          <div>
-            {' '}
-            <div id="disqus_thread" />{' '}
-          </div>
+          )) ||
+            null}
+        </div>
+        <br />
+        <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+        <br />
+        <div>Tags: {blog.tags && blog.tags.length && blog.tags.join(' ,')}</div>
+        <div>
+          {' '}
+          <div id="disqus_thread" />{' '}
         </div>
       </div>
     );
