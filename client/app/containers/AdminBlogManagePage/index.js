@@ -31,6 +31,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   button: {
@@ -138,7 +139,7 @@ export class BlogManagePage extends React.Component {
       </React.Fragment>,
     ]);
     return (
-      loading && loading == true ? <div>loading</div> : 
+      loading && loading == true ? <Loading/>: 
       <>
 <Helmet>
           <title>Blog Category Listing</title>
