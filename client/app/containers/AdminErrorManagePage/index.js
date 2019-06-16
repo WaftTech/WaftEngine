@@ -35,6 +35,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import DeleteDialog from '../../components/DeleteDialog';
 
 const styles = theme => ({
   tableActionButton: {
@@ -74,16 +75,39 @@ export class AdminErrorManagePage extends React.Component {
     }),
   };
 
+  state = {
+    open: false,
+    deleteId: '',
+  };
+
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
   }
 
+  handleOpen = id => {
+    this.setState({ open: true, deleteId: id });
+  };
+
+  handleOpenAll = id => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleCloseAll = () => {
+    this.setState({ open: false });
+  };
+
   handleDelete = id => {
     this.props.errorDeleteRequest(id);
+    this.setState({ open: false, deleteId: '' });
   };
 
   handleDeleteAll = () => {
     this.props.deleteAllRequest();
+    this.setState({ open: false });
   };
 
   handleQueryChange = e => {
@@ -123,7 +147,7 @@ export class AdminErrorManagePage extends React.Component {
             <IconButton
               aria-label="Close"
               className={classes.tableActionButton}
-              onClick={() => this.handleDelete(_id)}
+              onClick={() => this.handleOpen(_id)}
             >
               <Close
                 className={`${classes.tableActionButtonIcon} ${classes.close}`}
@@ -137,6 +161,15 @@ export class AdminErrorManagePage extends React.Component {
       <CircularProgress color="primary" disableShrink />
     ) : (
       <>
+        <DeleteDialog
+          open={this.state.open}
+          doClose={this.handleClose}
+          doDelete={() =>
+            this.state.deleteId && this.state.deleteId != ''
+              ? this.handleDelete(this.state.deleteId)
+              : this.handleDeleteAll()
+          }
+        />
         <Helmet>
           <title>Error Listing</title>
         </Helmet>
@@ -145,7 +178,7 @@ export class AdminErrorManagePage extends React.Component {
           <Button
             variant="contained"
             color="secondary"
-            onClick={this.handleDeleteAll}
+            onClick={this.handleOpenAll}
           >
             Delete All
           </Button>
