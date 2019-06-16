@@ -38,27 +38,12 @@ const SignupUserPage = ({
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="hidden md:block md:w-3/5 login-l">
-        <div className="waftltext px-5 text-white lg:px-32">
-          <h1>Waft Engine</h1>
-          <p>A Powerful Mern Engine</p>
-          <ul className="fealogin mt-10">
-            <li>Quick Scaffolding</li>
-            <li>Instant feedback</li>
-            <li>Predictable state management</li>
-            <li>Next generation javascript</li>
-            <li>Next generation CSS</li>
-            <li>Industry-stand routing</li>
-            <li>Industry-standard internationalization support</li>
-            <li>Offline first</li>
-            <li>Static code analysis</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="login-R w-full md:w-2/5 relative block">
-        <div className="walfRlogin px-10 md:px-12 lg:px-16 xl:px-24 w-full">
+    <div className="container mx-auto mb-10">
+      
+   
+      <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Registration</h1>
+      <div className="w-full md:w-1/2 px-5 md:px-16">
+        <div className="w-full">
           <h1 className="font-light">SIGN UP</h1>
           <form className="mt-4" onSubmit={handleSubmit}>
             <NameInput />
@@ -107,7 +92,7 @@ const SignupUserPage = ({
                 icon="fa-facebook"
               />
               <GoogleLogin
-                className="flex jusitify-center flex-1 shadow-none"
+                 className={`${classes.googbtn} flex jusitify-center flex-1`}
                 clientId={GOOGLE_CLIENT_ID}
                 buttonText="Google"
                 onSuccess={signupWithGoogleRequest}
@@ -115,8 +100,6 @@ const SignupUserPage = ({
                   console.log('something went wrong!', err);
                 }}
                 cookiePolicy="single_host_origin"
-                containerStyle={{ boxShadow: 'none', border: '1px solid #ccc' }}
-                buttonStyle={{ boxShadow: 'none', border: '1px solid #ccc' }}
               />
             </div>
           </form>
@@ -142,63 +125,11 @@ const withReducer = injectReducer({ key: 'signupUserPage', reducer });
 const withSaga = injectSaga({ key: 'signupUserPage', saga });
 
 const styles = {
-  container: {
-    zIndex: '2',
-    position: 'relative',
-    paddingTop: '20vh',
-    background: '#EFEFF4',
-    minHeight: '100vh',
-  },
-  card: {
-    background: '#fff',
-    padding: 40,
-    width: 350,
-    margin: '0 auto',
-  },
-  smallFont: {
-    fontSize: 12,
-    textDecoration: 'none',
-  },
-  cardHeader: {
-    width: 'auto',
-    textAlign: 'center',
-    marginLeft: '20px',
-    marginRight: '20px',
-    marginTop: '-40px',
-    padding: '20px 0',
-    marginBottom: '15px',
-  },
-  socialIcons: {
-    maxWidth: '24px',
-    marginTop: '0',
-    width: '100%',
-    transform: 'none',
-    left: '0',
-    top: '0',
-    height: '100%',
-    lineHeight: '41px',
-    fontSize: '20px',
-  },
-  divider: {
-    marginTop: '30px',
-    marginBottom: '0px',
-    textAlign: 'center',
-  },
-  cardFooter: {
-    paddingTop: '0rem',
-    border: '0',
-    borderRadius: '6px',
-    justifyContent: 'center !important',
-  },
-  socialLine: {
-    marginTop: '1rem',
-    textAlign: 'center',
-    padding: '0',
-  },
-  inputIconsColor: {
-    color: '#495057',
-  },
-  logo: { maxWidth: '100%' },
+  googbtn:{
+    boxShadow : 'none!important',
+    border:'1px solid gainsboro!important',
+    borderLeft:'none!important',
+  }
 };
 
 const withStyle = withStyles(styles);

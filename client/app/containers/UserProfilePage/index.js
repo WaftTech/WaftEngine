@@ -30,19 +30,25 @@ export class UserProfilePage extends React.Component {
           <title>Profile Page</title>
         </Helmet>
         
-        <div className="container m-auto flex justify-between">
-      
-              <div className="w-1/3 m-auto"> <div className="p-5 mb-5">
-            <b>{user.name}</b>
-            <br />
-            <b style={{ fontSize: 16 }}>{user.email}</b>
-          </div><UserProfileSettingsPage /></div>
+        <div class="container mx-auto mb-10">
+          <h1 class="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Personal Information</h1>
+
+          <div class="flex flex-wrap justify-between">
+            <div className="w-full md:w-1/2 px-5 md:px-16"> 
+            <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>Name : {user.name}</b></div>
+            <div className="w-full pb-4 text-base md:text-lg xl:text-xl"><b> E-mail : {user.email}</b></div>
+            <UserProfileSettingsPage />
+          </div>
+        
+       
          
            
-              <div className="w-2/3 m-auto"><UserPersonalInformationPage /></div>
+          <div className="w-full md:w-1/2 px-5 md:px-16 mt-10 md:mt-0"><UserPersonalInformationPage /></div>
+          </div>
+          </div>
            
         </div>
-      </div>
+      
     );
   }
 }
