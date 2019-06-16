@@ -45,61 +45,84 @@ const Header = props => {
 
   return (
     <header className="WaftHeader border-b lg:border-b">
-      <div className="px-4 pt-2 flex justify-between flex-wrap relative lg:pb-2">
+      <div className="container mx-auto pt-2 flex justify-between flex-wrap relative lg:pb-2">
         <div className="px-5 w-full logo mt-2 md:w-1/2 lg:w-auto">
+          {' '}
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
           </Link>
         </div>
         <div className="w-full nav-bar lg:w-auto lg:m-auto xl:w-3/5">
-          <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
-            <NavLink
-              className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-              to="/technology"
-              onClick={handleToggle}
+          <div
+            className="block-mobile"
+            // style={{ justifyContent: 'flex-end', display: 'flex' }}
+          >
+            <input
+              className="ham"
+              type="checkbox"
+              checked={checked}
+              onChange={handleToggle}
+            />
+            <svg
+              className="icon icon-menu-toggle hamIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
             >
-              Technology
-            </NavLink>
-            <NavLink
-              className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-              to="/architecture"
-              onClick={handleToggle}
-            >
-              Architecture
-            </NavLink>
-            <NavLink
-              className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-              to="/features"
-              onClick={handleToggle}
-            >
-              Features
-            </NavLink>
-            <NavLink
-              className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-              to="/blog-list"
-              onClick={handleToggle}
-            >
-              Blogs
-            </NavLink>
-            <NavLink
-              className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-              to="/faq"
-              onClick={handleToggle}
-            >
-              FAQs
-            </NavLink>
-            <NavLink
-              className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-              to="/contact-us"
-              onClick={handleToggle}
-            >
-              Contact US
-            </NavLink>
+              <g className="svg-menu-toggle">
+                <path className="line line-1" d="M5 13h90v14H5z" />
+                <path className="line line-2" d="M5 43h90v14H5z" />
+                <path className="line line-3" d="M5 73h90v14H5z" />
+              </g>
+            </svg>
+            <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
+              <NavLink
+                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                to="/technology"
+                onClick={handleToggle}
+              >
+                Technology
+              </NavLink>
+              <NavLink
+                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                to="/architecture"
+                onClick={handleToggle}
+              >
+                Architecture
+              </NavLink>
+              <NavLink
+                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                to="/documentation"
+                onClick={handleToggle}
+              >
+                Documentation
+              </NavLink>
+              <NavLink
+                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                to="/features"
+                onClick={handleToggle}
+              >
+                Features
+              </NavLink>
+              <NavLink
+                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                to="/blog-list"
+                onClick={handleToggle}
+              >
+                Blogs
+              </NavLink>
+              <NavLink
+                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                to="/faq"
+                onClick={handleToggle}
+              >
+                FAQs
+              </NavLink>
+            </div>
           </div>
         </div>
         {!token ? (
           <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
-            <button
+             <button
               onClick={redirectToRegister}
               className="items-center hover:text-primary"
             >
@@ -114,10 +137,12 @@ const Header = props => {
           </div>
         ) : (
           <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
-            <button className={classes.dropDown} onClick={handleMenu}>
-              <span className="ml-2 mr-2">{user.name}</span>
+          <button className={classes.dropDown} onClick={handleMenu}>
+            <div className="text-base flex">
+              <span className="ml-2 mr-2">{user.name} | </span>
               <AccountCircle />
-            </button>
+            </div>
+          </button>
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
