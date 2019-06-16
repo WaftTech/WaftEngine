@@ -77,31 +77,10 @@ const Header = props => {
             <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
               <NavLink
                 className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/technology"
+                to="/"
                 onClick={handleToggle}
               >
-                Technology
-              </NavLink>
-              <NavLink
-                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/architecture"
-                onClick={handleToggle}
-              >
-                Architecture
-              </NavLink>
-              <NavLink
-                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/documentation"
-                onClick={handleToggle}
-              >
-                Documentation
-              </NavLink>
-              <NavLink
-                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/features"
-                onClick={handleToggle}
-              >
-                Features
+                Home
               </NavLink>
               <NavLink
                 className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
@@ -122,7 +101,7 @@ const Header = props => {
         </div>
         {!token ? (
           <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
-             <button
+            <button
               onClick={redirectToRegister}
               className="items-center hover:text-primary"
             >
@@ -137,12 +116,12 @@ const Header = props => {
           </div>
         ) : (
           <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
-          <button className={classes.dropDown} onClick={handleMenu}>
-            <div className="text-base flex">
-              <span className="ml-2 mr-2">{user.name} | </span>
-              <AccountCircle />
-            </div>
-          </button>
+            <button className={classes.dropDown} onClick={handleMenu}>
+              <div className="text-base flex">
+                <span className="ml-2 mr-2">{user.name} | </span>
+                <AccountCircle />
+              </div>
+            </button>
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}

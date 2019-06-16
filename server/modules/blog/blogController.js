@@ -288,7 +288,7 @@ blogcontroller.GetBlogDetail = async (req, res, next) => {
 };
 
 blogcontroller.GetBlogBySlug = async (req, res, next) => {
-  const slug = req.params.slug;
+  const slug = req.params.slug_url;
   const blogs = await blogSch.findOne(
     {
       slug_url: slug,
@@ -296,7 +296,7 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
       is_published: true,
     },
     {
-      IsPublished: 0,
+      is_published: 0,
     },
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
