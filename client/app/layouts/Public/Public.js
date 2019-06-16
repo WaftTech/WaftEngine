@@ -21,9 +21,9 @@ const switchRoutes = (
 const checkPathname = pathname => {
   switch (pathname) {
     case '/login-admin':
-    case '/login-user':
+    // case '/login-user':
     case '/login-admin/':
-    case '/login-user/':
+    // case '/login-user/':
       return false;
     default:
       break;
