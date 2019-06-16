@@ -186,6 +186,12 @@ table.table tbody td {
     }
 }
 
+/* sidemenu */
+
+.list-reset li a.active {
+  color: #ff3b30;
+}
+
 /* footer */
 
 .newsletter_wrapper {
