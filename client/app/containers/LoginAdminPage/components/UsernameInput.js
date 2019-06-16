@@ -20,7 +20,7 @@ const EmailInput = props => {
         error={hasError.toString()}
         onChange={handleChange}
         value={email}
-        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow focus:border-grey"
+        className="Waftinputbox"
         id="username"
         type="text"
         placeholder="Username"

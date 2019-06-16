@@ -29,6 +29,7 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../App/constants';
 import { enqueueSnackbar } from '../App/actions';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   button: {
@@ -90,7 +91,7 @@ export class AdminMediaManagePage extends React.Component {
       loading,
     } = this.props;
     return loading ? (
-      <div>Loading</div>
+     <Loading/>
     ) : (
       <>
        <Helmet>
@@ -120,13 +121,13 @@ export class AdminMediaManagePage extends React.Component {
           {data.map(each => (
            <div className="w-full sm:w-1/3 md:1/4 xl:w-1/5 mr-2 border mb-4 rounded">
                     <div>
-                      <img
+                      <img className="w-full object-cover h-32"
                         src={each.path && `${IMAGE_BASE}${each.path}`}
                         alt="image"
                       />
                     </div>
                     <CardContent>
-                      <Typography component="p">
+                      <Typography component="p" style={{minHeight:'40px'}}>
                         {each.encoding} | {each.mimetype} | {each.size}
                       </Typography>
                     </CardContent>

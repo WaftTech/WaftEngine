@@ -15,6 +15,7 @@ import { makeSelectBlogList, makeSelectLoading } from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
+import Loading from '../../components/loading';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogListPage extends React.Component {
@@ -31,7 +32,7 @@ export class BlogListPage extends React.Component {
     const { blogList, loading } = this.props;
 
     return loading && loading == true ? (
-      <div>loading</div>
+     <Loading/>
     ) : (
       <div>
         <div>

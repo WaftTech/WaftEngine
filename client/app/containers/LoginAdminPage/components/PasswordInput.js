@@ -44,7 +44,7 @@ const PasswordInput = props => {
           id="Password"
           type={isSecure ? 'text' : 'password'}
           placeholder="Enter Password"
-          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow focus:border-grey"
+          className="Waftinputbox"
         />
         <span
           className={classes.EyeIcon}

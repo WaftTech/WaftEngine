@@ -37,6 +37,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import DeleteDialog from '../../components/DeleteDialog';
+import Loading from '../../components/loading';
 
 const styles = theme => ({
   button: {
@@ -178,10 +179,10 @@ export class AdminContactListPage extends React.Component {
     ]);
 
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading />
     ) : (
       <>
-      <DeleteDialog
+        <DeleteDialog
           open={this.state.open}
           doClose={this.handleClose}
           doDelete={() => this.handleDelete(this.state.deleteId)}
