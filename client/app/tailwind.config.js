@@ -128,6 +128,7 @@ const colors = {
   // 'pink-lightest': '#ffebef',
 
   waftprimary :'#FF3B30',
+  'waftprimary-light':'rgba(255, 59, 48, 0.10980392156862745)',
 };
 
 module.exports = {
