@@ -30,6 +30,7 @@ import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
+import Loading from '../../../components/loading';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -200,7 +201,7 @@ class AddEdit extends React.PureComponent {
       loading,
     } = this.props;
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading/>
     ) : (
       <React.Fragment>
         <Helmet>

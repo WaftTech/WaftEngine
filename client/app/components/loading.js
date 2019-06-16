@@ -4,13 +4,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 
 const Loading = props => {
   const { classes, children } = props;
-  return  <div className="load_wrap">
-  <div className="loading">
-    <div className="loading-line"></div>
-    <div className="loading-line"></div>
-    <div className="loading-line"></div>
-  </div>
-</div>
+  return  <div class="waft-gradient"></div>
 };
 
 export default Loading;

@@ -27,6 +27,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
+import Loading from '../../../components/loading';
 
 const styles = theme => ({
   backbtn:{
@@ -80,7 +81,7 @@ class AddEdit extends React.PureComponent {
   render() {
     const { classes, one, match, loading} = this.props;
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading/>
     ) : (
       <div>
         <Helmet>

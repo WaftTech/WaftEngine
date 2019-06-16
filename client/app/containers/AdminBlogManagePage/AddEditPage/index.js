@@ -46,6 +46,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
 import defaultImage from '../../../assets/img/logo.svg';
+import Loading from '../../../components/loading';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -197,7 +198,7 @@ class AddEdit extends React.PureComponent {
     const { classes, one, category, tempTag, match, loading} = this.props;
     const { tempImage } = this.state;
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading/>
     ) : (
       <React.Fragment>
         <Helmet>
@@ -272,16 +273,22 @@ class AddEdit extends React.PureComponent {
             }}
           />
           <div className="w-full md:w-1/2 pb-4 mt-4">
+          <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="Image"
+            >
+           
+              Image
+            </label>
           <Dropzone onDrop={files => this.onDrop(files, 'image')}>
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <img
-                  className=""
-               
-                  height="200px"
+                  className="Waftinputbox cursor-pointer"
                   src={tempImage}
                   alt="Blogimage"
+                  style={{height:'120px',width:'60%'}}
                 />
               </div>
             )}
