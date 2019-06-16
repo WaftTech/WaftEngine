@@ -133,57 +133,30 @@ table.table tbody td {
   display: none;
 }
 
-.load_wrap {
-  position: fixed;
+.waft-gradient {
+  position:fixed;
   top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  left:250px;
+  right: 0;
+  height:4px;
+  background: repeating-linear-gradient(to right, #ff3b30 0%, #d82929 25%, #ff3b30 50%, #5A5387 75%, #ff3b30 100%);
   width: 100%;
-  height: 100vh;
-  margin: 0 10px 10px 0;
-  padding: 20px 20px 20px;
-  border-radius: 5px;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.3607843137254902);
-  z-index: 99999;
+  background-size: 200% auto;
+  background-position: 0 100%;
+  animation: gradient 2s infinite;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
 }
 
-.loading{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  -webkit-transform:translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
+@keyframes gradient { 
+  0%   { background-position: 0 0; }
+  100% { background-position: -200% 0; }
 }
 
-.loading-line {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right:5px;
-  border-radius: 15px;
-  background-color: #FFFFFF;
-}
+/* sidemenu */
 
-
-
-.loading .loading-line:nth-last-child(1) {animation: loadingB 1.5s 1s infinite;}
-.loading .loading-line:nth-last-child(2) {animation: loadingB 1.5s .5s infinite;}
-.loading .loading-line:nth-last-child(3) {animation: loadingB 1.5s 0s infinite;}
-
-@keyframes loadingB {
-    0% {
-      width: 15px;
-    }
-    50% {
-      width: 35px;
-    }
-    100% 
-    {
-      width: 15px;
-    }
+.list-reset li a.active {
+  color: #ff3b30;
 }
 
 /* footer */
