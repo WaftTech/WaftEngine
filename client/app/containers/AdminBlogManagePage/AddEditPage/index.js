@@ -46,6 +46,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
 import defaultImage from '../../../assets/img/logo.svg';
+import Loading from '../../../components/loading';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -197,7 +198,7 @@ class AddEdit extends React.PureComponent {
     const { classes, one, category, tempTag, match, loading} = this.props;
     const { tempImage } = this.state;
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <Loading/>
     ) : (
       <React.Fragment>
         <Helmet>
