@@ -44,6 +44,7 @@ import { IMAGE_BASE } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
+import Loading from '../../../components/loading';
 
 const styles = theme => ({
   modal: { backgroundColor: '#fff', padding: '20' },
@@ -215,7 +216,7 @@ class AddEdit extends React.PureComponent {
     const isLastPage = media.page === lastPage;
 
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+     <Loading/>
     ) : (
       <>
          <div className="flex justify-between mt-3 mb-3">

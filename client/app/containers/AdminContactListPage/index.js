@@ -36,6 +36,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
+import DeleteDialog from '../../components/DeleteDialog';
 import Loading from '../../components/loading';
 
 const styles = theme => ({
@@ -43,29 +44,28 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
-   
-    width:'40px',
-    height:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
-  tableActionButton:{
-    padding:0,
-    '&:hover':{
-      background : 'transparent',
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
       color: '#404040',
     },
   },
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -82,6 +82,11 @@ export class AdminContactListPage extends React.Component {
       size: PropTypes.number.isRequired,
       totaldata: PropTypes.number.isRequired,
     }),
+  };
+
+  state = {
+    open: false,
+    deleteId: '',
   };
 
   componentDidMount() {
@@ -105,11 +110,24 @@ export class AdminContactListPage extends React.Component {
     this.props.push(`/admin/contact-manage/view/${id}`);
   };
 
-
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/contact-manage/add');
   };
+
+  handleOpen = id => {
+    this.setState({ open: true, deleteId: id });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleDelete = id => {
+    this.props.deleteOneRequest(id);
+    this.setState({ open: false });
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -150,7 +168,7 @@ export class AdminContactListPage extends React.Component {
           <IconButton
             aria-label="Close"
             className={classes.tableActionButton}
-            onClick={() => this.handleDelete(_id)}
+            onClick={() => this.handleOpen(_id)}
           >
             <Close
               className={`${classes.tableActionButtonIcon} ${classes.close}`}
@@ -159,35 +177,43 @@ export class AdminContactListPage extends React.Component {
         </Tooltip>
       </React.Fragment>,
     ]);
-  
+
     return loading && loading == true ? (
-     <Loading/>
+      <Loading />
     ) : (
       <>
+        <DeleteDialog
+          open={this.state.open}
+          doClose={this.handleClose}
+          doDelete={() => this.handleDelete(this.state.deleteId)}
+        />
         <Helmet>
           <title>Contact List</title>
         </Helmet>
- <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>Contact List</PageHeader>
-      
-      </div>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>Contact List</PageHeader>
+        </div>
         <PageContent>
           <div className="flex justify-end">
-                  <div className="waftformgroup flex relative mr-2">
-                  <input type="text"
-                    name="find_name"
-                    id="contact-name"
-                    placeholder="Search Contacts"
-                    className="m-auto Waftinputbox"
-                    value={query.find_name}
-                    onChange={this.handleQueryChange}
-                  />
-                  <IconButton aria-label="Search" className={`${classes.waftsrch} waftsrchstyle`} onClick={this.handleSearch}>
-                    <SearchIcon />
-                  </IconButton>
-                </div>
+            <div className="waftformgroup flex relative mr-2">
+              <input
+                type="text"
+                name="find_name"
+                id="contact-name"
+                placeholder="Search Contacts"
+                className="m-auto Waftinputbox"
+                value={query.find_name}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
           </div>
-        
 
           <Table
             tableHead={['Name', 'Email', 'Subject', 'Added at', 'Actions']}
@@ -195,7 +221,6 @@ export class AdminContactListPage extends React.Component {
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />
-        
         </PageContent>
       </>
     );

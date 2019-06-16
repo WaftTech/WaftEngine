@@ -6,7 +6,14 @@ import * as actions from './actions';
 
 function* loadBlog({ payload }) {
   const token = yield select(makeSelectToken());
-  yield call(Api.get(`blog/${payload}`, actions.loadBlogSuccess, actions.loadBlogFailure, token));
+  yield call(
+    Api.get(
+      `blog/blog/${payload}`,
+      actions.loadBlogSuccess,
+      actions.loadBlogFailure,
+      token,
+    ),
+  );
 }
 
 export default function* defaultSaga() {
