@@ -272,16 +272,22 @@ class AddEdit extends React.PureComponent {
             }}
           />
           <div className="w-full md:w-1/2 pb-4 mt-4">
+          <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="Image"
+            >
+           
+              Image
+            </label>
           <Dropzone onDrop={files => this.onDrop(files, 'image')}>
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <img
-                  className=""
-               
-                  height="200px"
+                  className="Waftinputbox cursor-pointer"
                   src={tempImage}
                   alt="Blogimage"
+                  style={{height:'120px',width:'60%'}}
                 />
               </div>
             )}
