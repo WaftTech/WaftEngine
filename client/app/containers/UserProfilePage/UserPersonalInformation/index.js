@@ -65,13 +65,8 @@ class UserPersonalInformationPage extends React.PureComponent {
     const { classes, one, errors } = this.props;
     return (
       <React.Fragment>
-        <PageContent>
-       
-            <div className="py-4 mb-2 text-3xl">
-              <b> Personal Information </b>
-            </div>
-
-      <div className="w-full pb-4">
+     
+  <div className="w-full pb-4">
         <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
         Name
         </label>
@@ -133,7 +128,7 @@ class UserPersonalInformationPage extends React.PureComponent {
                 label="Email Verified"
               />
          
-              <div className="w-full pb-4">Roles: {one.roles.map(each => `${each.role_title} `)}</div>
+              <div className="w-full pb-2">Roles: {one.roles.map(each => `${each.role_title} `)}</div>
         
               <div className="w-full  pb-4">Added Date: {moment(one.added_at).format('YYYY-MM-DD')}</div>
          
@@ -143,7 +138,7 @@ class UserPersonalInformationPage extends React.PureComponent {
              
        
      
-        </PageContent>
+       
       </React.Fragment>
     );
   }

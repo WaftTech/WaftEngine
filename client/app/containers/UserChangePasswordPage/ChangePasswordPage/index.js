@@ -21,54 +21,6 @@ import * as mapDispatchToProps from './actions';
 import PageContent from '../../../components/PageContent/PageContent';
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-    justifyContent: 'flex-end',
-    marginTop: 20,
-    marginBottom: 20,
-    color: '#fff',
-    boxShadow: 'none',
-    background: 'rgba(0,0,0,.2)',
-    '&:hover': {
-      background: '#204E07',
-      color: '#fff',
-    },
-  },
-  cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
-    },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
-  paper: {
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
-    },
-  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -140,79 +92,50 @@ export class ChangePassword extends React.Component {
 
     return (
       <React.Fragment>
-        <PageContent>
-          <Paper className={classes.paper}>
-            <div>
-              <h3> Change Password </h3>
-            </div>
-            <br />
-            <div>
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12}>
-                  <label htmlFor="oldPassword" />
-                  <TextField
-                    fullWidth
-                    id="oldPassword"
-                    name="oldPassword"
-                    className="form-control"
-                    placeholder="Confirm Current Password"
+       
+           
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="oldPassword">
+              Old Password
+              </label>
+              <input className="Waftinputbox" id="oldPassword" type="text"    name="oldPassword"   
                     value={oldPassword}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
                     onChange={this.handleChange}
-                    type={showPassword ? 'text' : 'password'}
-                  />
-                  {errors.oldPassword && <span>{errors.oldPassword}</span>}
-                </Grid>
-                <br />
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    fullWidth
-                    id="newPassword"
-                    name="newPassword"
-                    className="form-control"
-                    placeholder="New Password"
+                    type={showPassword ? 'text' : 'password'} />
+                    {errors.oldPassword && <span>{errors.oldPassword}</span>}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="newPassword">
+              New Password
+              </label>
+              <input className="Waftinputbox" id="newPassword" type="text"    name="newPassword"   
                     value={newPassword}
                     onChange={this.handleChange}
-                    type={showPassword ? 'text' : 'password'}
-                  />
-                  {errors.newPassword && <span>{errors.newPassword}</span>}
-                </Grid>
-                <br />
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    fullWidth
-                    id="newPassword2"
-                    name="newPassword2"
-                    className="form-control"
-                    placeholder={
-                      errors.newPassword2
-                        ? errors.newPassword2
-                        : 'Confirm New Password'
-                    }
+                    type={showPassword ? 'text' : 'password'} />
+                    {errors.newPassword && <span>{errors.newPassword}</span>}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="newPassword">
+              Confirm New Password
+              </label>
+              <input className="Waftinputbox" id="newPassword2" type="text"    name="newPassword2"   
                     value={newPassword2}
                     onChange={this.handleChange}
-                    type={showPassword ? 'text' : 'password'}
-                  />
-                  {errors.newPassword2 && <span>{errors.newPassword2}</span>}
-                </Grid>
-                <br />
-                <div className={classes.buttons}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    onClick={this.handleSave}
-                    className={classes.button}
-                  >
-                    Save
-                  </Button>
-                </div>
-              </Grid>
+                    type={showPassword ? 'text' : 'password'} />
+                    {errors.newPassword2 && <span>{errors.newPassword2}</span>}
             </div>
-          </Paper>
-        </PageContent>
+
+                
+             <button className="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+              Save
+              </button>
+             
+             
+           
+         
+      
       </React.Fragment>
     );
   }
