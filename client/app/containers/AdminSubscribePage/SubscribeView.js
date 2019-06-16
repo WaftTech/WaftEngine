@@ -24,6 +24,7 @@ import PageContent from '../../components/PageContent/PageContent';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
+import Loading from '../../components/loading';
 
 
 export class ViewSubscriber extends React.Component {
@@ -50,7 +51,7 @@ export class ViewSubscriber extends React.Component {
   render() {
     const { classes, one, loading} = this.props;
     return loading && loading == true ? (
-        <div>loading</div>
+        <Loading/>
        ) : (
       <React.Fragment>
 

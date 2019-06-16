@@ -128,7 +128,7 @@ class AddEdit extends React.PureComponent {
               <FormControlLabel
                 control={
                   <Checkbox
-                    color="secondary"
+                    color="primary"
                     name="email_verified"
                     checked={users.email_verified || false}
                     onChange={this.handleChecked('email_verified')}
