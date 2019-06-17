@@ -35,8 +35,8 @@ Follow the documentation to run WaftEngine for all operating systems.
 
 Read documentation & tutorials
 
-- [Developer Documentation]()
-- [Architecture]()
+- [Developer Documentation](https://www.waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
+- [Architecture](https://www.waftengine.org/architecture)
 
 ## Get help & contact the team
 
