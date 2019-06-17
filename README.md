@@ -1,6 +1,6 @@
 # WaftEngine (MERN Stack Engine)
 
-[WaftEngine](https://www.wafttengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
+[WaftEngine](https://www.waftengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
 
 [![Gitter](https://badges.gitter.im/waftengine/community.svg)](https://gitter.im/waftengine/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
