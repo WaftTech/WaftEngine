@@ -49,3 +49,7 @@ Read documentation & tutorials
 :star: Star us on GitHub — it helps!
 
 We love your pull requests! Check out our [`Good First Issue`](https://github.com/WaftTech/WaftEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) and [`Help Wanted`](https://github.com/WaftTech/WaftEngine/issues?q=label%3A%22help+wanted%22) tags for good issues to tackle.
+
+### License
+
+Copyright © [The MIT License (MIT)](./LICENSE.md)
