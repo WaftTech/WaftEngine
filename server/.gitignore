@@ -9,6 +9,7 @@ stats.json
 npm-debug.log
 .idea
 public
+config
 
 package-lock.json
 yarn.lock
