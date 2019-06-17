@@ -16,7 +16,7 @@ export const GOOGLE_CLIENT_ID =
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://www.waftengine.org/api/'
+    ? 'http://www.waftengine.com/api/'
     // : 'http://localhost:5050/api/';
 : 'http://192.168.100.174:5050/api/';
 
@@ -28,7 +28,7 @@ export const API_BASE1 =
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://www.waftengine.org/'
+    ? 'http://www.waftengine.com/'
     // : 'http://localhost:5050/';
 : 'http://192.168.100.174:5050/';
 
