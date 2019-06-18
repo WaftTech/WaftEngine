@@ -39,7 +39,7 @@ import {
   makeSelectCategory,
   makeSelectChip,
   makeSelectTag,
-  makeSelectLoading
+  makeSelectLoading,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -66,17 +66,15 @@ const styles = theme => ({
     textDecoration: 'none',
   },
 
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
-  }
- 
- 
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
+  },
 });
 
 class AddEdit extends React.PureComponent {
@@ -194,11 +192,10 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-  
-    const { classes, one, category, tempTag, match, loading} = this.props;
+    const { classes, one, category, tempTag, match, loading } = this.props;
     const { tempImage } = this.state;
     return loading && loading == true ? (
-      <Loading/>
+      <Loading />
     ) : (
       <React.Fragment>
         <Helmet>
@@ -208,61 +205,66 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
-       <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-         <IconButton
-           className={`${classes.backbtn} cursor-pointer`}
-            onClick={this.handleGoBack}
-            aria-label="Back"
-          >
-            <BackIcon />
-          </IconButton>
-          {match && match.params && match.params.id
-            ? 'Edit Blog'
-            : 'Add Blog'}
-        </PageHeader>
-     </div>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleGoBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
+            {match && match.params && match.params.id
+              ? 'Edit Blog'
+              : 'Add Blog'}
+          </PageHeader>
+        </div>
         <PageContent>
-        
-        <div className="w-full md:w-1/2 pb-4">
-      <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-        Title
-      </label>
-      <input className="Waftinputbox" id="blog-title" type="text" value= {one.title || ''}  name="Blog Title"
-                    onChange= {this.handleChange('title')} />
-    </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Title
+            </label>
+            <input
+              className="Waftinputbox"
+              id="blog-title"
+              type="text"
+              value={one.title || ''}
+              name="Blog Title"
+              onChange={this.handleChange('title')}
+            />
+          </div>
 
-    <div className="w-full md:w-1/2 pb-4">
+          <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
               htmlFor="category"
             >
-           
               Category
             </label>
-            <select className="Waftinputbox"  value={one.category}
-                  onChange={this.handleCategoryChange('category')}
-                  inputprops={{
-                    value: one.category || '',
-                    name: 'category',
-                  }}
-                >
-
-                  {category.map(each => (
+            <select
+              className="Waftinputbox"
+              native
+              value={one.category}
+              onChange={this.handleCategoryChange('category')}
+              inputprops={{
+                value: one.category || '',
+                name: 'category',
+              }}
+            >
+              {category.map(each => (
                 <option key={each._id} name={each.title} value={each._id}>
                   {each.title}
-              
                 </option>
               ))}
-       
+            </select>
+          </div>
 
-      
-                  </select>
-            </div>
-
-       
-
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" >Blog Description</label>
+          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            Blog Description
+          </label>
           <CKEditor
             name="description"
             content={one.description}
@@ -273,106 +275,151 @@ class AddEdit extends React.PureComponent {
             }}
           />
           <div className="w-full md:w-1/2 pb-4 mt-4">
-          <label
+            <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
               htmlFor="Image"
             >
-           
               Image
             </label>
-          <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-            {({ getRootProps, getInputProps }) => (
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <img
-                  className="Waftinputbox cursor-pointer"
-                  src={tempImage}
-                  alt="Blogimage"
-                  style={{height:'120px',width:'60%'}}
-                />
-              </div>
-            )}
-          </Dropzone>
-        
+            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <img
+                    className="Waftinputbox cursor-pointer"
+                    src={tempImage}
+                    alt="Blogimage"
+                    style={{ height: '120px', width: '60%' }}
+                  />
+                </div>
+              )}
+            </Dropzone>
           </div>
-<div className="w-full md:w-1/2 pb-4">
-      <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-      Published On
-      </label>
-      <input className="Waftinputbox" id="blog-title"  type="date" value= {
-              (one.published_on &&
-                moment(one.published_on).format('YYYY-MM-DD')) ||
-              ''
-         
-            }  name="published_on"
-                    onChange= {this.handlePublishedOn} />
-    </div>
-    <div className="w-full md:w-1/2 pb-4">
-    <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-      Tags
-      </label>
-       
-          <input className="Waftinputbox" id="blog-tags" type="text" value= {tempTag || ''}  name="Tags"
-                    onChange= {this.handleTempTag} onSubmit={this.insertTags}/>
-          
-       
-         
-          <Paper>
-            {one.tags.map((tag, index) => {
-              const icon = null;
-
-              return (
-                <Chip
-                  key={`${tag}-${index}`}
-                  icon={icon}
-                  label={tag}
-                  onDelete={this.handleDelete(index)}
-                  className={classes.chip}
-                />
-              );
-            })}
-          </Paper>
-        
-          </div>
-
-       
           <div className="w-full md:w-1/2 pb-4">
-    <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-      Meta Description
-      </label>
-       
-          <input className="Waftinputbox" id="blog-tags" type="text" value= {one.meta_description || ''}  name="meta-description"
-                    onChange= {this.handleChange('meta_description')}/>
-                    </div>
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Published On
+            </label>
+            <input
+              className="Waftinputbox"
+              id="blog-title"
+              type="date"
+              value={
+                (one.published_on &&
+                  moment(one.published_on).format('YYYY-MM-DD')) ||
+                moment(Date.now()).format('YYYY-MM-DD')
+              }
+              name="published_on"
+              onChange={this.handlePublishedOn}
+            />
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Tags
+            </label>
 
-                    <div className="w-full md:w-1/2 pb-4">
-    <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-      Meta Tag
-      </label>
-       
-          <input className="Waftinputbox" type="text" value= {one.meta_tag || ''}  name="meta-tag"
-                    onChange= {this.handleChange('meta_tag')}/>
-                    </div>
+            <input
+              className="Waftinputbox"
+              id="blog-tags"
+              type="text"
+              value={tempTag || ''}
+              name="Tags"
+              onChange={this.handleTempTag}
+              onSubmit={this.insertTags}
+            />
 
-                    <div className="w-full md:w-1/2 pb-4">
-    <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-    Meta Keywords
-      </label>
-       
-          <input className="Waftinputbox" id="blog-meta-keywords" type="text" value= {one.keywords || ''}  name="keywords"
-                    onChange= {this.handleChange('keywords')}/>
-                    </div>
+            <Paper>
+              {one.tags.map((tag, index) => {
+                const icon = null;
 
-                    <div className="w-full md:w-1/2 pb-4">
-    <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="grid-last-name">
-    Author
-      </label>
-       
-          <input className="Waftinputbox" id="blog-author" type="text" value= {one.author || ''}  name="Author"
-                    onChange= {this.handleChange('author')}/>
-                    </div>
-  
-        
+                return (
+                  <Chip
+                    key={`${tag}-${index}`}
+                    icon={icon}
+                    label={tag}
+                    onDelete={this.handleDelete(index)}
+                    className={classes.chip}
+                  />
+                );
+              })}
+            </Paper>
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Meta Description
+            </label>
+
+            <input
+              className="Waftinputbox"
+              id="blog-tags"
+              type="text"
+              value={one.meta_description || ''}
+              name="meta-description"
+              onChange={this.handleChange('meta_description')}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Meta Tag
+            </label>
+
+            <input
+              className="Waftinputbox"
+              type="text"
+              value={one.meta_tag || ''}
+              name="meta-tag"
+              onChange={this.handleChange('meta_tag')}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Meta Keywords
+            </label>
+
+            <input
+              className="Waftinputbox"
+              id="blog-meta-keywords"
+              type="text"
+              value={one.keywords || ''}
+              name="keywords"
+              onChange={this.handleChange('keywords')}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Author
+            </label>
+
+            <input
+              className="Waftinputbox"
+              id="blog-author"
+              type="text"
+              value={one.author || ''}
+              name="Author"
+              onChange={this.handleChange('author')}
+            />
+          </div>
 
           {/* <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel> */}
           <FormControlLabel
@@ -397,13 +444,14 @@ class AddEdit extends React.PureComponent {
             }
             label="Is Published"
           />
-        
-<br/>
-<button className="text-white py-2 px-4 rounded mt-4 btn-waft"
-              onClick={this.handleSave}
-              >
-                Save</button>
-         
+
+          <br />
+          <button
+            className="text-white py-2 px-4 rounded mt-4 btn-waft"
+            onClick={this.handleSave}
+          >
+            Save
+          </button>
         </PageContent>
       </React.Fragment>
     );
