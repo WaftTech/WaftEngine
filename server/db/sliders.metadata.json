@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"waft-engine.sliders"},{"v":2,"unique":true,"key":{"slider_key":1},"name":"slider_key_1","ns":"waft-engine.sliders","background":true}],"uuid":"2a1638b23c96428ebe19fec2080af94e"}

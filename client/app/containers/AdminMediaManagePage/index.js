@@ -36,11 +36,10 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   fab: {
-    width:'40px',
-    height:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
 });
 
@@ -84,11 +83,10 @@ export class AdminMediaManagePage extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
-      loading,
+      loading,classes
     } = this.props;
     return loading ? (
      <Loading/>
@@ -115,47 +113,51 @@ export class AdminMediaManagePage extends React.Component {
               </div>
             )}
           </Dropzone>
-          </div>
+        </div>
         <PageContent>
           <div className="flex flex-wrap">
-          {data.map(each => (
-           <div className="w-full sm:w-1/3 md:1/4 xl:w-1/5 mr-2 border mb-4 rounded">
-                    <div>
-                      <img className="w-full object-cover h-32"
-                        src={each.path && `${IMAGE_BASE}${each.path}`}
-                        alt="image"
-                      />
-                    </div>
-                    <CardContent>
-                      <Typography component="p" style={{minHeight:'40px'}}>
-                        {each.encoding} | {each.mimetype} | {each.size}
-                      </Typography>
-                    </CardContent>
-               
-                  <CardActions>
-                    <div>
-                      <Button
-                        size="small"
-                        color="primary"
-                        onClick={() =>
-                          this.copyToClipboard(`${IMAGE_BASE}${each.path}`)
-                        }
-                      >
-                        Copy Path
-                      </Button>
-                    </div>
+            {data.map(each => (
+              <div
+                key={each._id}
+                className="w-full sm:w-1/3 md:1/4 xl:w-1/5 mr-2 border mb-4 rounded"
+              >
+                <div>
+                  <img
+                    className="w-full object-cover h-32"
+                    src={each.path && `${IMAGE_BASE}${each.path}`}
+                    alt="image"
+                  />
+                </div>
+                <CardContent>
+                  <Typography component="p" style={{ minHeight: '40px' }}>
+                    {each.encoding} | {each.mimetype} | {each.size}
+                  </Typography>
+                </CardContent>
 
+                <CardActions>
+                  <div>
                     <Button
                       size="small"
                       color="primary"
-                      onClick={() => this.handleDelete(each._id)}
+                      onClick={() =>
+                        this.copyToClipboard(`${IMAGE_BASE}${each.path}`)
+                      }
                     >
-                      Delete
+                      Copy Path
                     </Button>
-                  </CardActions>
                   </div>
-          ))}
-        </div>
+
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => this.handleDelete(each._id)}
+                  >
+                    Delete
+                  </Button>
+                </CardActions>
+              </div>
+            ))}
+          </div>
         </PageContent>
       </>
     );
