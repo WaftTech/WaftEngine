@@ -254,6 +254,9 @@ class AddEdit extends React.PureComponent {
                 name: 'category',
               }}
             >
+            <option name='none' value='' disabled>
+                  None
+                </option>
               {category.map(each => (
                 <option key={each._id} name={each.title} value={each._id}>
                   {each.title}
