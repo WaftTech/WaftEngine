@@ -26,25 +26,25 @@ const menu = [
       {
         key: '2.4',
         name: 'Media',
-        icon: 'question_answer',
+        icon: 'perm_media',
         link: '/admin/media-manage',
       },
       {
         key: '2.5',
         name: 'Slider',
-        icon: 'question_answer',
+        icon: 'slideshow',
         link: '/admin/slider-manage',
       },
       {
         key: '2.6',
         name: 'Blog',
-        icon: 'question_answer',
+        icon: 'note_add',
         link: '/admin/blog-manage',
       },
       {
         key: '2.7',
         name: 'Blog Category',
-        icon: 'question_answer',
+        icon: 'note_add',
         link: '/admin/blog-cat-manage',
       },
     ],
@@ -52,13 +52,69 @@ const menu = [
   {
     key: '3',
     name: 'Access Manage',
-    icon: 'format_size',
+    icon: 'nature_people',
     menu: [
       {
         key: '3.1',
         name: 'Users',
         icon: 'account_circle',
         link: '/admin/user-manage',
+      },
+      {
+        key: '3.2',
+        name: 'Roles',
+        icon: 'people',
+        link: '/admin/role-manage',
+      },
+      {
+        key: '3.3',
+        name: 'Modules',
+        icon: 'extension',
+        link: '/admin/module-manage',
+      },
+    ],
+  },
+  {
+    key: '4',
+    name: 'Settings',
+    icon: 'settings',
+    menu: [
+      {
+        key: '4.1',
+        name: 'Email Template',
+        icon: 'email',
+        link: '/admin/template-manage',
+      },
+    ],
+  },
+  {
+    key: '5',
+    name: 'Reports',
+    icon: 'format_size',
+    menu: [
+      {
+        key: '5.1',
+        name: 'Contacts',
+        icon: 'contact_phone',
+        link: '/admin/contact-manage',
+      },
+      {
+        key: '5.2',
+        name: 'Subscribes',
+        icon: 'subscriptions',
+        link: '/admin/subscribe-manage',
+      },
+      {
+        key: '5.3',
+        name: 'Reports',
+        icon: 'insert_chart',
+        link: '/admin/reports',
+      },
+      {
+        key: '5.4',
+        name: 'Errors',
+        icon: 'error_outline',
+        link: '/admin/errors',
       },
     ],
   },
