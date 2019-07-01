@@ -83,11 +83,10 @@ export function AdminTemplateListingPage({
   const handleChange = e => {
     setOneValue({ key: e.target.name, value: e.target.value });
   };
-  return loading && loading == true ? (
-    <Loading/>
-  ) : (
+  return (
     <>
       <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Email Template Manage</PageHeader>
       </div>
       <PageContent>
@@ -209,7 +208,7 @@ export function AdminTemplateListingPage({
               name="body"
               value={one.body || ''}
               onChange={handleChange}
-              style={{height:'400px'}}
+              style={{ height: '400px' }}
             />
           </div>
 

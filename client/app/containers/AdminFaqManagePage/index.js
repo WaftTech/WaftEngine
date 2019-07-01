@@ -164,9 +164,7 @@ export class FAQManagePage extends React.PureComponent {
       ],
     );
 
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return(
       <>
         <DeleteDialog
           open={this.state.open}
@@ -177,6 +175,7 @@ export class FAQManagePage extends React.PureComponent {
           <title>FAQ Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>FAQ Manage</PageHeader>
           <Fab
             color="primary"

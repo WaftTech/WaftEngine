@@ -186,9 +186,7 @@ export class SliderManagePage extends React.Component {
       ],
     );
 
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return (
       <>
         <DeleteDialog
           open={this.state.open}
@@ -199,6 +197,7 @@ export class SliderManagePage extends React.Component {
           <title>Slider Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Slider Manage</PageHeader>
           <Fab
             color="primary"

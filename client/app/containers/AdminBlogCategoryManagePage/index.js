@@ -181,9 +181,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
         </>,
       ],
     );
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return(
       <>
 
 <DeleteDialog
@@ -195,6 +193,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
           <title>Blog Category Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Blog Category Manage</PageHeader>
         <Fab
               color="primary"
