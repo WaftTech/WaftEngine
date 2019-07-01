@@ -86,18 +86,18 @@ export class AdminMediaManagePage extends React.Component {
     const {
       all: { data, page, size, totaldata },
       query,
-      loading,classes
+      loading,
+      classes,
     } = this.props;
-    return loading ? (
-     <Loading/>
-    ) : (
+    return (
       <>
-       <Helmet>
+        <Helmet>
           <title>Media Manage</title>
         </Helmet>
-         <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>Media Manage</PageHeader>
-        <Dropzone onDrop={this.handleAdd}>
+        <div className="flex justify-between mt-3 mb-3">
+          {loading && loading == true ? <Loading /> : <></>}
+          <PageHeader>Media Manage</PageHeader>
+          <Dropzone onDrop={this.handleAdd}>
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />

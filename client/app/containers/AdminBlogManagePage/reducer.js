@@ -16,7 +16,7 @@ export const initialState = {
   one: {
     title: '',
     category: '',
-    published_on: '',
+    published_on: Date.now(),
     image: {},
     is_published: true,
     is_active: false,

@@ -141,9 +141,7 @@ export class AdminSubscribePage extends React.PureComponent {
         </Tooltip>
       </React.Fragment>,
     ]);
-    return loading && loading == true ? (
-      <Loading/>
-    ) : (
+    return(
       <>
         <DeleteDialog
           open={this.state.open}
@@ -154,6 +152,7 @@ export class AdminSubscribePage extends React.PureComponent {
           <title>Subscriber List</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Subscribe Manage</PageHeader>
         </div>
         <PageContent>

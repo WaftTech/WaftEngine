@@ -104,15 +104,15 @@ export class AdminUserManagePage extends React.PureComponent {
       ],
     );
 
-    return loading && loading == true ? (
-     <Loading/>
-    ) : (
+    return (
       <>
         <Helmet>
           <title>User Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-
+        {loading && loading == true ? (
+          <Loading/>
+            ) :<></>}
 
         <PageHeader>User Manage</PageHeader>
         <Fab

@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { withStyles } from '@material-ui/core/styles';
 // import CssBaseline from '@material-ui/core/CssBaseline';
@@ -27,6 +28,7 @@ import Logo from '../../assets/img/logo.svg';
 import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
+import ColoredScrollbars from '../../components/ColoredScrollbars';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -177,9 +179,17 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
         <title>Admin Dashboard</title>
       </Helmet>
       <div className="flex overflow-y-hidden bg-grey-lighter">
-        <div
-          className="overflow-x-hidden h-screen bg-white WaftSideBar"
-          style={{ width: 250 }}
+        <ColoredScrollbars
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+          style={{
+            width: 250,
+            height: '100vh',
+            overflow: 'auto',
+            overflowX: 'hidden',
+          }}
+          className="bg-white WaftSideBar"
         >
           <Link to="/">
             <img
@@ -189,7 +199,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
             />
           </Link>
           <MainListItems />
-        </div>
+        </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
           <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
             <button className="flex" onClick={handleMenu}>

@@ -178,9 +178,7 @@ export class AdminContactListPage extends React.Component {
       </React.Fragment>,
     ]);
 
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return (
       <>
         <DeleteDialog
           open={this.state.open}
@@ -191,6 +189,7 @@ export class AdminContactListPage extends React.Component {
           <title>Contact List</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+          {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Contact List</PageHeader>
         </div>
         <PageContent>
