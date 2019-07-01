@@ -26,6 +26,7 @@ import Phone from '@material-ui/icons/Phone';
 import NoteAdd from '@material-ui/icons/NoteAdd';
 import ViewQuilt from '@material-ui/icons/ViewQuilt';
 import MailOutline from '@material-ui/icons/MailOutline';
+import menus from './sidemenu';
 
 import {
   makeSelectLocation,
@@ -44,6 +45,8 @@ const styles = theme => ({
 });
 
 const Mainlis = ({ classes, location: { pathname }, roles }) => {
+  let [openSet, setOpenSet] = useState({});
+  // let openSet =[];
   const [openFirstSet, setOpenFirstSet] = useState(false);
   const [openSecondSet, setOpenSecondSet] = useState(false);
   const [openThirdSet, setOpenThirdSet] = useState(false);
@@ -55,7 +58,10 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
   useEffect(() => {
     loadCheckRoutes();
   }, []);
+  const handleSetClick = key => {
+    setOpenSet({...openSet, [key]:!openSet[key]});
 
+  };
   const handleFirstSetClick = () => {
     setOpenFirstSet(openFirstSetVal => !openFirstSetVal);
   };
@@ -82,10 +88,57 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
     setAccesses(accesses);
     // console.log(accesses);
   };
-  const hasAccess = key => !accesses.includes(key);
-
+  const hasAccess = key => false; //! accesses.includes(key);
+  const menuFunctn = e => {
+    return( <li
+      key={e.key}
+      hidden={hasAccess(e.link)}
+      selected={pathname === e.link}
+      className={e.key.split('.').length ===1?'pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm':''}
+    ><Link
+      to={`${e.link}`}
+      className={`text-grey-darker hover:text-black text-sm no-underline flex items-center ${e.key.split('.').length >1?"pt-2 pb-2 pl-6 pr-6":'' }`}//pt-2 pb-2 pl-6 pr-6
+    >
+      <i key={e} className="material-icons mr-3">
+        {e.icon}
+      </i>
+      {e.name}
+  </Link></li>);
+  };
   return (
     <div>
+      <ul className="list-reset">
+        {menus.map(e =>
+        
+        <div key={e.key}>{
+          e.link ? (
+              menuFunctn(e)
+          ) : (
+            <>
+              <li
+                key={e.key}
+                className="pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm"
+                onClick={() => handleSetClick(e.key)}
+              >
+                <div className="flex items-center">
+                  <i key={e} className="material-icons mr-3">
+                    {e.icon}
+                  </i>
+                  <span className="dropdown-title">{e.name}</span>
+                </div>
+                {openSet[e.key] ? <ExpandLess /> : <ExpandMore />}
+              </li>
+              <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
+                <ul className="list-reset">
+                  {e.menu.map(ei => (
+                       menuFunctn(ei)
+                  ))}
+                </ul>
+              </Collapse>
+            </>
+          )}</div>,
+        )}
+      </ul>
       <ul className="list-reset">
         <li
           hidden={hasAccess('/admin/dashboard')}
@@ -156,7 +209,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
                 to="/admin/media-manage"
                 className="text-grey-darker hover:text-black text-sm no-underline flex items-center  pt-2 pb-2 pl-6 pr-6"
               >
-                  <PermMedia className="mr-3" />
+                <PermMedia className="mr-3" />
                 Media
               </Link>
             </li>
@@ -217,7 +270,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
               to="/admin/user-manage"
               className="text-grey-darker hover:text-black text-sm no-underline flex items-center pt-2 pb-2 pl-6 pr-6"
             >
-               <AccountCircle className="mr-3" />
+              <AccountCircle className="mr-3" />
               Users
             </Link>
           </li>
@@ -330,6 +383,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
           </li>
         </Collapse>
       </ul>
+    
     </div>
   );
 };
