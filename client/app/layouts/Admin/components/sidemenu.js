@@ -90,7 +90,7 @@ const menu = [
   {
     key: '5',
     name: 'Reports',
-    icon: 'format_size',
+    icon: 'insert_chart',
     menu: [
       {
         key: '5.1',
