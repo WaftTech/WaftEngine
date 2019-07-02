@@ -5,27 +5,9 @@ import Link from 'react-router-dom/NavLink';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import List from '@material-ui/core/List';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ExtensionIcon from '@material-ui/icons/Extension';
-import FormatSizeIcon from '@material-ui/icons/FormatSize';
-import PeopleIcon from '@material-ui/icons/People';
-import InsertChartIcon from '@material-ui/icons/InsertChart';
-import ErrorIcon from '@material-ui/icons/Error';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import SliderIcon from '@material-ui/icons/Slideshow';
-import LayersIcon from '@material-ui/icons/Layers';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import Settings from '@material-ui/icons/Settings';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import PermMedia from '@material-ui/icons/PermMedia';
-import Phone from '@material-ui/icons/Phone';
-import NoteAdd from '@material-ui/icons/NoteAdd';
-import ViewQuilt from '@material-ui/icons/ViewQuilt';
-import MailOutline from '@material-ui/icons/MailOutline';
 import menus from './sidemenu';
 
 import {
@@ -46,11 +28,6 @@ const styles = theme => ({
 
 const Mainlis = ({ classes, location: { pathname }, roles }) => {
   let [openSet, setOpenSet] = useState({});
-  // let openSet =[];
-  const [openFirstSet, setOpenFirstSet] = useState(false);
-  const [openSecondSet, setOpenSecondSet] = useState(false);
-  const [openThirdSet, setOpenThirdSet] = useState(false);
-  const [openFourthSet, setOpenFourthSet] = useState(false);
   const [hidden, setHidden] = useState(false);
 
   const [accesses, setAccesses] = useState([]);
@@ -62,18 +39,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
     setOpenSet({...openSet, [key]:!openSet[key]});
 
   };
-  const handleFirstSetClick = () => {
-    setOpenFirstSet(openFirstSetVal => !openFirstSetVal);
-  };
-  const handleSecondSetClick = () => {
-    setOpenSecondSet(openSecondSetVal => !openSecondSetVal);
-  };
-  const handleThirdSetClick = () => {
-    setOpenThirdSet(openThirdSetVal => !openThirdSetVal);
-  };
-  const handleFourthSetClick = () => {
-    setOpenFourthSet(openFourthSetVal => !openFourthSetVal);
-  };
+  
 
   const route = window.localStorage.getItem('routes');
   const arr = JSON.parse(route);
