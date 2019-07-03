@@ -18,12 +18,14 @@ export const initialState = {
     users: {
       email: '',
       name: '',
+      password: '',
       email_verified: false,
       roles: [],
     },
     roles: [],
     rolesNormalized: {},
   },
+  roles: [],
   query: { find_name: '' },
   loading: false,
 };
@@ -48,6 +50,12 @@ const adminUserManagePageReducer = (state = initialState, action) =>
       case types.LOAD_ALL_SUCCESS:
         draft.loading = false;
         draft.all = action.payload;
+        break;
+      case types.LOAD_ALL_FAILURE:
+        draft.loading = false;
+        break;
+      case types.LOAD_ALL_ROLES_SUCCESS:
+        draft.roles = action.payload.data;
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;

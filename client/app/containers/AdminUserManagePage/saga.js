@@ -46,8 +46,25 @@ function* loadOne(action) {
   );
 }
 
+function* loadAllRoles() {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `role/role`,
+      actions.loadAllRolesSuccess,
+      actions.loadAllRolesFailure,
+      token,
+    ),
+  );
+}
+
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
+  yield put(push('/admin/user-manage'));
+}
+
+function* redirectOnPwReset() {
+  yield take(types.UPDATE_PASSWORD_SUCCESS);
   yield put(push('/admin/user-manage'));
 }
 
@@ -65,6 +82,23 @@ function* addEdit() {
     ),
   );
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
+  yield cancel(successWatcher);
+}
+
+function* updatePassword() {
+  const successWatcher = yield fork(redirectOnPwReset);
+  const token = yield select(makeSelectToken());
+  const { users } = yield select(makeSelectOne());
+  yield fork(
+    Api.post(
+      'user/changepw',
+      actions.updatePasswordSuccess,
+      actions.updatePasswordFailure,
+      users,
+      token,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.UPDATE_PASSWORD_FAILURE]);
   yield cancel(successWatcher);
 }
 
@@ -88,11 +122,35 @@ function* addEditSuccessFunc(action) {
   };
   yield put(enqueueSnackbar(snackbarData));
 }
+function* updateFail(action) {
+  const defaultError = {
+    message: action.payload.msg || 'something went wrong',
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultError));
+}
+
+function* updateSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'password update success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
 
 export default function* adminUserManagePageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
+  yield takeLatest(types.LOAD_ALL_ROLES_REQUEST, loadAllRoles);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
+  yield takeLatest(types.UPDATE_PASSWORD_REQUEST, updatePassword);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFail);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
+  yield takeLatest(types.UPDATE_PASSWORD_FAILURE, updateFail);
+  yield takeLatest(types.UPDATE_PASSWORD_SUCCESS, updateSuccessFunc);
 }

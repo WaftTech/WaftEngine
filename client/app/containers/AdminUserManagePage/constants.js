@@ -14,9 +14,23 @@ export const LOAD_ALL_REQUEST = 'app/AdminUserManagePage/LOAD_ALL_REQUEST';
 export const LOAD_ALL_SUCCESS = 'app/AdminUserManagePage/LOAD_ALL_SUCCESS';
 export const LOAD_ALL_FAILURE = 'app/AdminUserManagePage/LOAD_ALL_FAILURE';
 
+export const LOAD_ALL_ROLES_REQUEST =
+  'app/AdminUserManagePage/LOAD_ALL_ROLES_REQUEST';
+export const LOAD_ALL_ROLES_SUCCESS =
+  'app/AdminUserManagePage/LOAD_ALL_ROLES_SUCCESS';
+export const LOAD_ALL_ROLES_FAILURE =
+  'app/AdminUserManagePage/LOAD_ALL_ROLES_FAILURE';
+
 export const LOAD_ONE_REQUEST = 'app/AdminUserManagePage/LOAD_ONE_REQUEST';
 export const LOAD_ONE_SUCCESS = 'app/AdminUserManagePage/LOAD_ONE_SUCCESS';
 export const LOAD_ONE_FAILURE = 'app/AdminUserManagePage/LOAD_ONE_FAILURE';
+
+export const UPDATE_PASSWORD_REQUEST =
+  'app/AdminUserManagePage/UPDATE_PASSWORD_REQUEST';
+export const UPDATE_PASSWORD_SUCCESS =
+  'app/AdminUserManagePage/UPDATE_PASSWORD_SUCCESS';
+export const UPDATE_PASSWORD_FAILURE =
+  'app/AdminUserManagePage/UPDATE_PASSWORD_FAILURE';
 
 export const ADD_EDIT_REQUEST = 'app/AdminUserManagePage/ADD_EDIT_REQUEST';
 export const ADD_EDIT_SUCCESS = 'app/AdminUserManagePage/ADD_EDIT_SUCCESS';

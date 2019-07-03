@@ -192,7 +192,7 @@ export class AdminContactListPage extends React.Component {
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Contact List</PageHeader>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input

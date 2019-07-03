@@ -8,12 +8,8 @@ import Helmet from 'react-helmet';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -22,7 +18,11 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading } from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectLoading,
+  makeSelectRoles,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -43,10 +43,15 @@ class AddEdit extends React.PureComponent {
     push: PropTypes.func.isRequired,
   };
 
+  state = {
+    isSecure: false,
+  };
+
   componentDidMount() {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
+    this.props.loadAllRolesRequest();
   }
 
   handleChange = name => event => {
@@ -74,11 +79,19 @@ class AddEdit extends React.PureComponent {
       tempUser.roles = [...tempUser.roles, roleid];
     }
     this.props.setOneValue({ key: 'users', value: tempUser });
-  }
+  };
+
+  handleTogglePassword = () => {
+    this.setState({isSecure: !this.state.isSecure});
+  };
 
   handleSave = () => {
     this.props.addEditRequest();
   };
+
+  handleUpdate = () => {
+    this.props.updatePasswordRequest();
+  }
 
   handleBack = () => {
     this.props.push('/admin/user-manage');
@@ -90,72 +103,129 @@ class AddEdit extends React.PureComponent {
       match: {
         params: { id },
       },
-      one: { users, rolesNormalized, roles},
-      loading
+      one: { users, rolesNormalized, roles },
+      roless,
+      loading,
     } = this.props;
     return loading && loading == true ? (
-      <Loading/>
+      <Loading />
     ) : (
       <>
-
-       <Helmet>
+        <Helmet>
           <title>{id ? 'Edit User' : 'Add User'}</title>
         </Helmet>
- <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-        <IconButton className={`${classes.backbtn} cursor-pointer`}	 onClick={this.handleBack} aria-label="Back">
-          <BackIcon />
-        </IconButton>{id ? 'Edit' : 'Add'} User</PageHeader>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
+            {id ? 'Edit' : 'Add'} User
+          </PageHeader>
         </div>
         <PageContent>
-         
-        <div className="w-full md:w-1/2 pb-4">
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Email
-          </label>
-          <input className="Waftinputbox" id="email" type="text" value= {users.email}
-                     onChange={this.handleChange('email')} />
-        </div>
+          <div className="w-full md:w-1/2 pb-4">
+          <h2>Basic Information</h2>
+          <br/>
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Email
+            </label>
+            <input
+              className="Waftinputbox"
+              readOnly={id ? true : false}
+              id="email"
+              type="text"
+              value={users.email || ''}
+              onChange={this.handleChange('email')}
+            />
+          </div>
 
-        <div className="w-full md:w-1/2 pb-4">
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-          Name
-          </label>
-          <input className="Waftinputbox" id="name" type="text" value= {users.name}
-                      onChange={this.handleChange('name')}/>
-        </div>
-         
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="secondary"
-                    name="email_verified"
-                    checked={users.email_verified || false}
-                    onChange={this.handleChecked('email_verified')}
-                  />
-                }
-                label="Email Verified"
-              />
-              {roles.map(each => (
-                <FormControlLabel
-                  key={each._id}
-                  control={
-                    <Checkbox
-                      key={each}
-                      color="secondary"
-                      checked={users.roles.includes(each._id)}
-                      onChange={() => this.handleRolesChecked(each._id)}
-                    />
-                  }
-                  label={each.role_title}
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Name
+            </label>
+            
+            <input
+              className="Waftinputbox"
+              id="name"
+              type="text"
+              value={users.name || ''}
+              onChange={this.handleChange('name')}
+            />
+          </div>
+          
+          {roless.map(each => (
+            <FormControlLabel
+              key={each._id}
+              control={
+                <Checkbox
+                  key={each}
+                  color="secondary"
+                  checked={users.roles.includes(each._id)}
+                  onChange={() => this.handleRolesChecked(each._id)}
                 />
-              ))}
-         
-              <br/>
+              }
+              label={each.role_title}
+            />
+          ))}
 
-          <button className="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
-           Save
-           </button>
+          <br />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="secondary"
+                disabled
+                name="email_verified"
+                checked={users.email_verified || false}
+                onChange={this.handleChecked('email_verified')}
+              />
+            }
+            label="Email Verified"
+          />
+          <br/>
+{ id ? (
+          <button
+            className="text-white py-2 px-4 rounded mt-4 btn-waft"
+            onClick={this.handleSave}
+          >
+            Save
+          </button>
+) : <></>
+}
+          <br/>
+          <br/>
+          <h3>Reset Password</h3>
+          <br/>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Password
+            </label>
+            <div className="relative">
+            <input
+              className="Waftinputbox"
+              id="password"
+              type={this.state.isSecure ? "password" : "text"}
+              value={users.password || ''}
+              onChange={this.handleChange('password')}
+            />
+            <span
+              className={classes.EyeIcon}
+              aria-label="Toggle password visibility"
+              onClick={this.handleTogglePassword}
+            >
+            {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
+            </span>
+            </div>
+          </div>
+          <button
+            className="text-white py-2 px-4 rounded mt-4 btn-waft"
+            onClick={this.handleUpdate}
+          >
+            {id ? 'Update Password' : 'Set Password'}
+          </button>
         </PageContent>
       </>
     );
@@ -167,6 +237,7 @@ const withSaga = injectSaga({ key: 'adminUserManagePage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
+  roless: makeSelectRoles(),
   loading: makeSelectLoading(),
 });
 
@@ -194,15 +265,16 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
   },
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
-  }
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
+  },
+  EyeIcon: { position: 'absolute', right: 12, top: 6 },
 });
 
 const withStyle = withStyles(styles);
