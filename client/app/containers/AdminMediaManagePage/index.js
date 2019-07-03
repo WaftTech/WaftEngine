@@ -114,7 +114,7 @@ export class AdminMediaManagePage extends React.Component {
             )}
           </Dropzone>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex flex-wrap">
             {data.map(each => (
               <div

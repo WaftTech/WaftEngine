@@ -179,9 +179,7 @@ export class BlogManagePage extends React.Component {
               <AddIcon />
             </Fab>
             </div>
-        <PageContent>
-       
-
+        <PageContent loading={loading}>
         <div className="flex justify-end">
           <div className="waftformgroup flex relative">
                 <input type="text"

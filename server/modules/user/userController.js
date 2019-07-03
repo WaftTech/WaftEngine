@@ -19,19 +19,45 @@ const loginlogs = require('./loginlogs/loginlogController').internal;
 const baseurl = require('./../../config//keys').baseURl;
 
 const userController = {};
+
 userController.PostUser = async (req, res, next) => {
   try {
     const user = req.body;
     if (user && user._id) {
       const update = await users.findByIdAndUpdate(user._id, {
         $set: user,
+        updated_at: Date.now(),
       });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!!', null);
     } else {
-      // user.added_by = req.user.id;
       const newUser = new users(user);
       const usersave = await newUser.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, usersave, null, 'user add success', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, usersave, null, 'user add success!!', null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+userController.PostUserPw = async (req, res, next) => {
+  try {
+    let user = {};
+    const { email, name, email_verified, roles } = req.body;
+    user = { email, name, email_verified, roles };
+    let salt = await bcrypt.genSalt(10);
+    let hashpw = await bcrypt.hash(req.body.password, salt);
+    if (req.body && req.body._id) {
+      const update = await users.findByIdAndUpdate(req.body._id, {
+        $set: { password: hashpw, 
+          last_password_change_date: new Date()}
+      });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!!', null);
+    } else {
+      user.password = hashpw;
+      user.last_password_change_date = new Date();
+      const newUser = new users(user);
+      const usersave = await newUser.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, usersave, null, 'user add success!!', null);
     }
   } catch (err) {
     next(err);
@@ -58,7 +84,7 @@ userController.GetAllUserGRBY = async (req, res, next) => {
 
     const role = await roles.find({ is_deleted: false }).select('role_title');
     let user = await users.find({ is_deleted: false });
-    let totaldata = await users.count({ is_deleted: false });
+    let totaldata = await users.countDocuments({ is_deleted: false });
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role, user }, 'users by group by get success!!', 1, 1, totaldata);
   } catch (err) {
     next(err);
@@ -105,12 +131,12 @@ userController.GetAllUser = async (req, res, next) => {
   searchq = { is_deleted: false };
 
   if (req.query.find_name) {
-    searchq = { name: { $regex: req.query.find_name, $options: 'i x' }, ...searchq };
+    searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
   }
   if (req.query.find_email) {
-    searchq = { email: { $regex: req.query.find_email, $options: 'i x' }, ...searchq };
+    searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
   }
-  selectq = 'name email avatar email_verified roles';
+  selectq = 'name email password avatar email_verified roles';
 
   populate = [{ path: 'roles', select: 'role_title' }];
 
