@@ -192,7 +192,7 @@ export class AdminContactListPage extends React.Component {
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Contact List</PageHeader>
         </div>
-        <PageContent loading={loading}>
+        <PageContent>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input
@@ -215,6 +215,7 @@ export class AdminContactListPage extends React.Component {
           </div>
 
           <Table
+            loading={loading}
             tableHead={['Name', 'Email', 'Subject', 'Added at', 'Actions']}
             tableData={tableData}
             pagination={tablePagination}

@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 class LinkBoth extends React.PureComponent {
   render() {
     return isExternal(this.props.to) ? (
-      <a href={this.props.to} {...this.props} />
+      <a target="_blank" href={this.props.to} {...this.props} />
     ) : (
       <Link {...this.props} />
     );

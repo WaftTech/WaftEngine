@@ -206,7 +206,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
               <AddIcon />
             </Fab>
       </div>
-        <PageContent loading={loading}>
+        <PageContent>
         <div className="flex justify-end">
                 <div className="waftformgroup flex relative mr-2">
                 <input type="text"
@@ -232,6 +232,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
                 'Updated At',
                 'Actions',
               ]}
+              loading={loading}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}

@@ -35,7 +35,6 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import PageContent from '../../components/PageContent/PageContent';
 import Loading from '../../components/loading';
 
-
 /* eslint-disable react/prefer-stateless-function */
 export class AdminUserManagePage extends React.PureComponent {
   static propTypes = {
@@ -94,9 +93,10 @@ export class AdminUserManagePage extends React.PureComponent {
         `${email_verified}`,
         <>
           <Tooltip id="tooltip-left" title="Edit User" placement="left">
-        
-      
-            <IconButton className={classes.tableActionButton} onClick={() => this.handleEdit(_id)}>
+            <IconButton
+              className={classes.tableActionButton}
+              onClick={() => this.handleEdit(_id)}
+            >
               <CreateIcon />
             </IconButton>
           </Tooltip>
@@ -110,12 +110,10 @@ export class AdminUserManagePage extends React.PureComponent {
           <title>User Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-        {loading && loading == true ? (
-          <Loading/>
-            ) :<></>}
+          {loading && loading == true ? <Loading /> : <></>}
 
-        <PageHeader>User Manage</PageHeader>
-        <Fab
+          <PageHeader>User Manage</PageHeader>
+          <Fab
             color="primary"
             aria-label="Add"
             className={classes.fab}
@@ -123,33 +121,35 @@ export class AdminUserManagePage extends React.PureComponent {
           >
             <AddIcon />
           </Fab>
-          </div>
-        <PageContent loading={loading}>
-       
-        <div className="flex justify-end">
-                <div className="waftformgroup flex relative mr-2">
-                <input type="text"
-                  name="find_name"
-                  id="user-name"
-                  placeholder="Search User"
-                  className="m-auto Waftinputbox"
-                  value={query.find_name}
-                  onChange={this.handleQueryChange}
-                />
-                <IconButton aria-label="Search" className={`${classes.waftsrch} waftsrchstyle`} onClick={this.handleSearch}>
-                  <SearchIcon />
-                </IconButton>
-              </div>
-       
         </div>
-            <Table
-              tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
-              tableData={tableData}
-              pagination={tablePagination}
-              handlePagination={this.handlePagination}
-            />
-          
-          
+        <PageContent>
+          <div className="flex justify-end">
+            <div className="waftformgroup flex relative mr-2">
+              <input
+                type="text"
+                name="find_name"
+                id="user-name"
+                placeholder="Search User"
+                className="m-auto Waftinputbox"
+                value={query.find_name}
+                onChange={this.handleQueryChange}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </div>
+          <Table
+            loading={loading}
+            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
+            tableData={tableData}
+            pagination={tablePagination}
+            handlePagination={this.handlePagination}
+          />
         </PageContent>
       </>
     );
@@ -169,30 +169,28 @@ const withConnect = connect(
 
 const styles = theme => ({
   fab: {
-   
- 
-    width:'40px',
-    height:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
-  tableActionButton:{
-    padding:0,
-    '&:hover':{
-      background : 'transparent',
+  tableActionButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
       color: '#404040',
     },
   },
-  waftsrch:{
-    padding:0,
-    position:'absolute',
-    borderLeft:'1px solid #d9e3e9',
-    borderRadius:0,
-      '&:hover':{
-        background : 'transparent',
-        color: '#404040',
-      },
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
     },
+  },
 });
 
 const withStyle = withStyles(styles);

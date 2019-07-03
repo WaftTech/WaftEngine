@@ -126,7 +126,7 @@ export class AdminModuleManage extends React.PureComponent {
           </Fab>
         </div>
 
-        <PageContent loading={loading}>
+        <PageContent>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input
@@ -148,6 +148,7 @@ export class AdminModuleManage extends React.PureComponent {
             </div>
           </div>
           <Table
+            loading={loading}
             tableHead={['Module Name', 'Description', 'Action']}
             tableData={tableData}
             pagination={tablePagination}

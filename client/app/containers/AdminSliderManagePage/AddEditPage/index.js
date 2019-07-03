@@ -70,7 +70,7 @@ const styles = theme => ({
   }
 });
 const SortableImageItem = SortableElement(({value, index, _this}) => <div className="flex mb-4 bg-grey-lighter p-2">
-  <div className="w-2/5 m-auto text-center pr-5">
+  <div className="w-1.5/5 m-auto text-center pr-5">
     {value.image ? (
       <img className="rounded w-full"
         src={`${IMAGE_BASE}public/300-300/media/${
@@ -86,9 +86,12 @@ const SortableImageItem = SortableElement(({value, index, _this}) => <div classN
     )}</div>
 
 
-<div className="w-2/5 m-auto text-center"><input className="Waftinputbox" id={`slider-caption-${index}`} type="text" value= {value.caption} placeholder="Caption"
-                    onChange={_this.handleImageCaptionChange(index)} style={{background:'#FFF',height:'100%'}}/></div>
-                    <div className="w-1/5 m-auto text-center">
+    <div className="w-1.5/5 m-auto text-center">
+      <input className="Waftinputbox" id=  {`slider-link-${index}`} type="text" value= {value.link || ''} placeholder="Link" onChange={_this.handleImageLinkChange(index)} style={{background:'#FFF',height:'100%'}} />
+    </div>
+    <div className="w-1.5/5 m-auto text-center"><textarea className="Waftinputbox" id={`slider-caption-${index}`} type="text" value= {value.caption || ''} placeholder="Caption"          onChange={_this.handleImageCaptionChange(index)} style={{background:'#FFF',height:'100%'}} />
+    </div>
+    <div className="w-0.5/5 m-auto text-center">
     <IconButton
       color="secondary"
       onClick={() => _this.handleRemoveSlide(index)}
@@ -161,6 +164,13 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'images', value: tempImages });
   };
 
+  handleImageLinkChange = index => event => {
+    event.persist();
+    const tempImages = [...this.props.one.images];
+    tempImages[index].link = event.target.value;
+    this.props.setOneValue({ key: 'images', value: tempImages });
+  };
+
   handleImageImageChange = id => {
     const tempImages = [...this.props.one.images];
     tempImages[this.state.index].image = id;
@@ -170,7 +180,7 @@ class AddEdit extends React.PureComponent {
 
   handleAddSlide = () => {
     const tempImages = [...this.props.one.images];
-    const newSlide = { image: '', caption: '' };
+    const newSlide = { image: '', link: '', caption: '' };
     this.props.setOneValue({
       key: 'images',
       value: [newSlide, ...tempImages],
