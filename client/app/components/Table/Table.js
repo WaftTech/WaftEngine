@@ -14,6 +14,7 @@ function CustomTable({ ...props }) {
     tableHeaderColor,
     pagination,
     handlePagination,
+    loading,
   } = props;
   return (
     <div className="bg-white rounded mt-5">
@@ -33,18 +34,28 @@ function CustomTable({ ...props }) {
           </thead>
         ) : null}
         <tbody>
-          {tableData.map((prop, key) => (
-            <tr key={key}>
-              {prop.map((each, index) => (
-                <td
-                  className="px-2 py-2  text-base border-grey-lighter text-grey-darker"
-                  key={index}
-                >
-                  {each}
-                </td>
-              ))}
+          {tableData && tableData.length ? (
+            tableData.map((prop, key) => (
+              <tr key={key}>
+                {prop.map((each, index) => (
+                  <td
+                    className={`px-2 py-2  text-base border-grey-lighter text-grey-darker ${
+                      loading ? 'opacity-50' : ''
+                    }`}
+                    key={index}
+                  >
+                    {each}
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td className="px-2 py-2  text-base border-grey-lighter text-grey-darker">
+                {loading ? 'loading...' : 'No Data Found'}
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       <table className="w-full border-t border-grey-lighter">
@@ -109,7 +120,6 @@ CustomTable.propTypes = {
 };
 const styles = {
   tableResponsive: { width: '100%' },
- 
 };
 
 export default withStyles(styles)(CustomTable);

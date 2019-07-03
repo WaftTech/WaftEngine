@@ -179,7 +179,7 @@ export class BlogManagePage extends React.Component {
               <AddIcon />
             </Fab>
             </div>
-        <PageContent loading={loading}>
+        <PageContent>
         <div className="flex justify-end">
           <div className="waftformgroup flex relative">
                 <input type="text"
@@ -212,6 +212,7 @@ export class BlogManagePage extends React.Component {
                 'Actions',
                 ''
               ]}
+              loading={loading}
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}

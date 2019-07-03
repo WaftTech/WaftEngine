@@ -211,7 +211,7 @@ export class SliderManagePage extends React.Component {
           </Fab>
         </div>
 
-        <PageContent loading={loading}>
+        <PageContent>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input
@@ -242,6 +242,7 @@ export class SliderManagePage extends React.Component {
               'Actions',
             ]}
             tableData={tableData}
+            loading={loading}
             pagination={tablePagination}
             handlePagination={this.handlePagination}
           />

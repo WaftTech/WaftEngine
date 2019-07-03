@@ -163,7 +163,7 @@ export class AdminRoleManage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent loading={loading}>
+        <PageContent>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input
@@ -186,6 +186,7 @@ export class AdminRoleManage extends React.PureComponent {
           </div>
 
           <Table
+            loading={loading}
             tableHead={['Title', 'Description', 'Is Active', 'Action']}
             tableData={tableData}
             pagination={tablePagination}

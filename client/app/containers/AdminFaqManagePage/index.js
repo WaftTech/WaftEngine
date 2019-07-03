@@ -188,7 +188,7 @@ export class FAQManagePage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent loading={loading}>
+        <PageContent>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input
@@ -217,6 +217,7 @@ export class FAQManagePage extends React.PureComponent {
               'Updated At',
               'Actions',
             ]}
+            loading={loading}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

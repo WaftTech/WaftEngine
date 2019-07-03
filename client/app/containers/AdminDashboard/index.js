@@ -79,7 +79,6 @@ export class AdminDashboard extends React.PureComponent {
                     key={each._id}
                     to={`https://www.waftengine.org/blog/${each._id}`}
                     // to={`localhost:5120/api/blog/${each._id}`}
-                    target="_blank"
                   >
                     <div>
                       <h4>{each.title}</h4>

@@ -198,7 +198,7 @@ export class ContentsListingPage extends React.Component {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent loading={loading}>
+        <PageContent>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input
@@ -251,6 +251,7 @@ export class ContentsListingPage extends React.Component {
               'Added On',
               'Action',
             ]}
+            loading={loading}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}
