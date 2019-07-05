@@ -38,3 +38,8 @@ export const makeSelectLoading = () =>
     selectAdminFaqCategoryManagePageDomain,
     substate => substate.loading,
   );
+export const makeSelectErrors = () =>
+  createSelector(
+    selectAdminFaqCategoryManagePageDomain,
+    state => state.errors,
+  );

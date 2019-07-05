@@ -39,3 +39,5 @@ export const ADD_EDIT_FAILURE = 'app/AdminUserManagePage/ADD_EDIT_FAILURE';
 export const DELETE_ONE_REQUEST = 'app/AdminUserManagePage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/AdminUserManagePage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/AdminUserManagePage/DELETE_ONE_FAILURE';
+
+export const CLEAR_ERRORS = 'app/AdminUserManagePage/CLEAR_ERRORS';

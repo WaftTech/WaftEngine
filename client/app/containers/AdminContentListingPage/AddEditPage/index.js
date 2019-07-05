@@ -27,7 +27,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading } from '../selectors';
+import { makeSelectOne, makeSelectLoading, makeSelectErrors} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -59,10 +59,12 @@ class AddEdit extends React.PureComponent {
     }),
     // classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -96,7 +98,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one, classes, match, loading} = this.props;
+    const { one, classes, match, loading, errors} = this.props;
     return loading && loading == true ? (
      <Loading/>
     ) : (
@@ -125,6 +127,9 @@ class AddEdit extends React.PureComponent {
         </label>
         <input className="Waftinputbox" id="grid-last-name" type="text" value= {one.name}
                     onChange= {this.handleChange('name')} />
+                   <div id="component-error-text">
+            {errors.name }
+          </div>
       </div>
 
                <div className="w-full md:w-1/2 pb-4">
@@ -133,6 +138,9 @@ class AddEdit extends React.PureComponent {
       </label>
       <input className="Waftinputbox" id="grid-last-name" type="text" value= {one.key}
                     onChange= {this.handleChange('key')} />
+                    <div id="component-error-text">
+            {errors.key }
+          </div>
     </div>
     <div className="pb-4">
                 <CKEditor
@@ -144,6 +152,9 @@ class AddEdit extends React.PureComponent {
                     value: one.description,
                   }}
                 />
+                <div id="component-error-text">
+            {errors.description }
+          </div>
                 </div>
 
       <div className="w-full md:w-1/2">
@@ -223,6 +234,7 @@ const withSaga = injectSaga({ key: 'contentsListingPage', saga });
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

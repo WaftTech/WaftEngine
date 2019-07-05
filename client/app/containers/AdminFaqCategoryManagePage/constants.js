@@ -32,3 +32,4 @@ export const DELETE_CAT_FAILURE =
 export const CLEAR_QUERY = 'app/AdminFaqCategoryManagePage/CLEAR_QUERY';
 export const SET_ONE_VALUE = 'app/AdminFaqCategoryManagePage/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/AdminFaqCategoryManagePage/CLEAR_ONE';
+export const CLEAR_ERRORS = 'app/AdminFaqCategoryManagePage/CLEAR_ERRORS';

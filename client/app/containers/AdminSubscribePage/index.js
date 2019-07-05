@@ -155,7 +155,7 @@ export class AdminSubscribePage extends React.PureComponent {
         {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Subscribe Manage</PageHeader>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input
@@ -178,7 +178,6 @@ export class AdminSubscribePage extends React.PureComponent {
           </div>
 
           <Table
-            loading={loading}
             tableHead={['Email', 'Is Subscribed', 'Added at', 'Actions']}
             tableData={tableData}
             pagination={tablePagination}

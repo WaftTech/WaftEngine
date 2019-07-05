@@ -107,3 +107,6 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
+export const clearErrors = () => ({
+  type: types.CLEAR_ERRORS,
+});

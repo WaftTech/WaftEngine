@@ -28,3 +28,5 @@ export const CLEAR_QUERY = 'app/SliderManagePage/CLEAR_QUERY';
 export const DELETE_ONE_REQUEST = 'app/SliderManagePage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/SliderManagePage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/SliderManagePage/DELETE_ONE_FAILURE';
+
+export const CLEAR_ERRORS = 'app/SliderManagePage/CLEAR_ERRORS';

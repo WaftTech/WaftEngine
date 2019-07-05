@@ -151,6 +151,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
-  yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
 }

@@ -21,7 +21,11 @@ export const makeSelectAll = () =>
     selectAdminBlogCategoryManagePageDomain,
     substate => substate.all,
   );
-
+export const makeSelectErrors = () =>
+  createSelector(
+    selectAdminBlogCategoryManagePageDomain,
+    state => state.errors,
+  );
 export const makeSelectQuery = () =>
   createSelector(
     selectAdminBlogCategoryManagePageDomain,

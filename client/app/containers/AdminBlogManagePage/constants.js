@@ -29,3 +29,5 @@ export const SET_TAG_VALUE = 'app/BlogManagePage/SET_TAG_VALUE';
 export const LOAD_CATEGORY_REQUEST = 'app/BlogManagePage/LOAD_CATEGORY_REQUEST';
 export const LOAD_CATEGORY_SUCCESS = 'app/BlogManagePage/LOAD_CATEGORY_SUCCESS';
 export const LOAD_CATEGORY_FAILURE = 'app/BlogManagePage/LOAD_CATEGORY_FAILURE';
+
+export const CLEAR_ERRORS = 'app/BlogManagePage/CLEAR_ERRORS';

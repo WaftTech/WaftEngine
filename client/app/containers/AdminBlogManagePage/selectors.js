@@ -42,3 +42,9 @@ export const makeSelectLoading = () =>
     selectDomain,
     state => state.loading,
   );
+
+export const makeSelectErrors = () =>
+  createSelector(
+    selectDomain,
+    state => state.errors,
+  );

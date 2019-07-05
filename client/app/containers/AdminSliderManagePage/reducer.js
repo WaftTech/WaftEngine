@@ -22,6 +22,7 @@ export const initialState = {
   },
   query: { find_slider_name: '', size: 10 },
   loading: false,
+  errors: { slider_name: '', slider_key: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -36,6 +37,7 @@ const reducer = (state = initialState, action) =>
         break;
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = ' ';
         break;
       case types.LOAD_ALL_REQUEST:
         draft.loading = true;
@@ -66,6 +68,13 @@ const reducer = (state = initialState, action) =>
         };
       case types.CLEAR_ONE:
         draft.one = initialState.one;
+        break;
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
+
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
         break;
     }
   });

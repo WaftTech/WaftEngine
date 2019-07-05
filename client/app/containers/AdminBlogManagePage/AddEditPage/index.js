@@ -40,6 +40,7 @@ import {
   makeSelectChip,
   makeSelectTag,
   makeSelectLoading,
+  makeSelectErrors
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -99,6 +100,7 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearOne();
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -192,7 +194,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, category, tempTag, match, loading } = this.props;
+    const { classes, one, category, tempTag, match, loading, errors } = this.props;
     const { tempImage } = this.state;
     return loading && loading == true ? (
       <Loading />
@@ -235,6 +237,9 @@ class AddEdit extends React.PureComponent {
               name="Blog Title"
               onChange={this.handleChange('title')}
             />
+            <div id="component-error-text">
+            {errors.title }
+            </div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -246,7 +251,7 @@ class AddEdit extends React.PureComponent {
             </label>
             <select
               className="Waftinputbox"
-              native
+              native="true"
               value={one.category}
               onChange={this.handleCategoryChange('category')}
               inputprops={{
@@ -264,19 +269,23 @@ class AddEdit extends React.PureComponent {
               ))}
             </select>
           </div>
-
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-            Blog Description
-          </label>
-          <CKEditor
-            name="description"
-            content={one.description}
-            config={{ allowedContent: true }}
-            events={{
-              change: e => this.handleEditorChange(e, 'description'),
-              value: one.description || '',
-            }}
-          />
+          <div className="pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Blog Description
+            </label>
+            <CKEditor
+              name="description"
+              content={one.description}
+              config={{ allowedContent: true }}
+              events={{
+                change: e => this.handleEditorChange(e, 'description'),
+                value: one.description || '',
+              }}
+            />
+            <div id="component-error-text">
+            {errors.description }
+          </div>
+          </div>
           <div className="w-full md:w-1/2 pb-4 mt-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
@@ -471,6 +480,7 @@ const mapStateToProps = createStructuredSelector({
   chip: makeSelectChip(),
   tempTag: makeSelectTag(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors()
 });
 
 const withConnect = connect(

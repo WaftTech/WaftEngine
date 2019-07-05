@@ -118,7 +118,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
   };
 
   handleDelete = id => {
-    this.props.deleteOneRequest(id);
+    this.props.deleteCatRequest(id);
     this.setState({ open: false });
   };
 
@@ -206,7 +206,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
               <AddIcon />
             </Fab>
       </div>
-        <PageContent>
+        <PageContent loading={loading}>
         <div className="flex justify-end">
                 <div className="waftformgroup flex relative mr-2">
                 <input type="text"
@@ -232,7 +232,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
                 'Updated At',
                 'Actions',
               ]}
-              loading={loading}
+              
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}

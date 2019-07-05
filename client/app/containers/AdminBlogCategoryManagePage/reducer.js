@@ -19,6 +19,7 @@ export const initialState = {
   },
   query: { find_title: '', size: 10 },
   loading: false,
+  errors: { title: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -42,6 +43,9 @@ const reducer = (state = initialState, action) =>
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
         break;
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
       case types.DELETE_CAT_SUCCESS:
         draft.all = {
           ...draft.all,
@@ -51,6 +55,7 @@ const reducer = (state = initialState, action) =>
         };
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = '';
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
@@ -60,6 +65,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.CLEAR_QUERY:
         draft.query = initialState.query;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
         break;
     }
   });

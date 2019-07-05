@@ -89,3 +89,6 @@ export const loadCategoryFailure = payload => ({
   type: types.LOAD_CATEGORY_FAILURE,
   payload,
 });
+export const clearErrors = () => ({
+  type: types.CLEAR_ERRORS,
+});
