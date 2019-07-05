@@ -20,7 +20,7 @@ import injectReducer from 'utils/injectReducer';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectCategory, makeSelectLoading } from '../selectors';
+import { makeSelectOne, makeSelectCategory, makeSelectLoading, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
@@ -56,6 +56,7 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -81,8 +82,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-
-    const { classes, category, one, match, loading} = this.props;
+    const { classes, category, one, match, loading, errors} = this.props;
     return loading && loading == true ? (
      <Loading/>
     ) : (
@@ -120,7 +120,7 @@ class AddEdit extends React.PureComponent {
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
-         
+         <div id="component-error-text">{errors.question}</div>
             </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -137,7 +137,7 @@ class AddEdit extends React.PureComponent {
           
               value={one.title || ''}
               onChange={this.handleChange('title')}></textarea>
-           
+            <div id="component-error-text">{errors.title}</div>           
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -192,6 +192,7 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   category: makeSelectCategory(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

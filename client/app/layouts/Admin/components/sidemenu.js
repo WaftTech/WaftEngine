@@ -1,4 +1,4 @@
-//https://material.io/tools/icons
+// https://material.io/tools/icons
 const menu = [
   { key: '1', name: 'Dashboard', icon: 'dashboard', link: '/admin/dashboard' },
   {
@@ -14,39 +14,53 @@ const menu = [
       },
       {
         key: '2.2',
-        name: 'FAQ',
+        name: 'FAQ Manage',
         icon: 'question_answer',
-        link: '/admin/faq-manage',
+        menu: [
+          {
+            key: '2.2.1',
+            name: '---FAQ List',
+            icon: 'question_answer',
+            link: '/admin/faq-manage',
+          },
+          {
+            key: '2.2.2',
+            name: '---FAQ Category List',
+            icon: 'question_answer',
+            link: '/admin/faq-cat-manage',
+          },
+        ],
       },
       {
         key: '2.3',
-        name: 'FAQ Category',
-        icon: 'question_answer',
-        link: '/admin/faq-cat-manage',
-      },
-      {
-        key: '2.4',
         name: 'Media',
         icon: 'perm_media',
         link: '/admin/media-manage',
       },
       {
-        key: '2.5',
+        key: '2.4',
         name: 'Slider',
         icon: 'slideshow',
         link: '/admin/slider-manage',
       },
       {
-        key: '2.6',
-        name: 'Blog',
+        key: '2.5',
+        name: 'Blog Manage',
         icon: 'note_add',
-        link: '/admin/blog-manage',
-      },
-      {
-        key: '2.7',
-        name: 'Blog Category',
-        icon: 'note_add',
-        link: '/admin/blog-cat-manage',
+        menu: [
+          {
+            key: '2.5.1',
+            name: '---Blog List',
+            link: '/admin/blog-manage',
+            icon: 'note_add',
+          },
+          {
+            key: '2.5.2',
+            name: '---Blog Category List',
+            icon: 'note_add',
+            link: '/admin/blog-cat-manage',
+          },
+        ],
       },
     ],
   },

@@ -122,7 +122,7 @@ export class AdminUserManagePage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input
@@ -144,7 +144,6 @@ export class AdminUserManagePage extends React.PureComponent {
             </div>
           </div>
           <Table
-            loading={loading}
             tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
             tableData={tableData}
             pagination={tablePagination}

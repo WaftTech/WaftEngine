@@ -72,14 +72,14 @@ router.post('/', userModule.CheckMail);
  * @description update basic information of user
  * @access Public
  */
-router.post('/change', userModule.PostUser);
+router.post('/change', authorization, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateEdit, userModule.PostUser);
 
 /**
  * @route POST api/user/changepw
  * @description Update user is returning user or new
  * @access Public
  */
-router.post('/changepw', userModule.PostUserPw);
+router.post('/changepw', authorization, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateAdd, userModule.PostUserPw);
 
 /**
  * @route POST api/user/register

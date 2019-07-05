@@ -25,7 +25,7 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading } from '../selectors';
+import { makeSelectOne, makeSelectLoading, makeSelectErrors} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -42,10 +42,12 @@ class AddEdit extends React.PureComponent {
     }),
     classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -199,6 +201,7 @@ class AddEdit extends React.PureComponent {
       },
       one,
       loading,
+      errors,
     } = this.props;
     return loading && loading == true ? (
       <Loading/>
@@ -231,6 +234,9 @@ class AddEdit extends React.PureComponent {
               value={one.module_name}
               onChange={this.handleChange('module_name')}
             />
+            <div id="component-error-text">
+            {errors.module_name }
+          </div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -244,6 +250,9 @@ class AddEdit extends React.PureComponent {
               value={one.description}
               onChange={this.handleChange('description')}
             />
+            <div id="component-error-text">
+            {errors.description }
+          </div>
           </div>
 
           {one.path.map((each, pathIndex) => (
@@ -292,6 +301,7 @@ const withSaga = injectSaga({ key: 'adminModuleManage', saga });
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

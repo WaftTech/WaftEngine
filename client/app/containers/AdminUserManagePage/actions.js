@@ -101,3 +101,6 @@ export const updatePasswordFailure = payload => ({
   type: types.UPDATE_PASSWORD_FAILURE,
   payload,
 });
+export const clearErrors = () => ({
+  type: types.CLEAR_ERRORS,
+});

@@ -22,6 +22,7 @@ import {
   makeSelectOne,
   makeSelectLoading,
   makeSelectRoles,
+  makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -40,6 +41,7 @@ class AddEdit extends React.PureComponent {
     }),
     classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
 
@@ -48,6 +50,7 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -106,6 +109,7 @@ class AddEdit extends React.PureComponent {
       one: { users, rolesNormalized, roles },
       roless,
       loading,
+      errors,
     } = this.props;
     return loading && loading == true ? (
       <Loading />
@@ -155,8 +159,10 @@ class AddEdit extends React.PureComponent {
               value={users.name || ''}
               onChange={this.handleChange('name')}
             />
+            <div id="component-error-text">
+            {errors.name || '' }
+            </div>
           </div>
-          
           {roless.map(each => (
             <FormControlLabel
               key={each._id}
@@ -168,9 +174,12 @@ class AddEdit extends React.PureComponent {
                   onChange={() => this.handleRolesChecked(each._id)}
                 />
               }
-              label={each.role_title}
+              label={each.role_title || ''}
             />
           ))}
+           <div id="component-error-text">
+            {errors.roles || ''}
+            </div>
 
           <br />
           <FormControlLabel
@@ -219,6 +228,9 @@ class AddEdit extends React.PureComponent {
             {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
             </span>
             </div>
+            <div id="component-error-text">
+              {errors.password || ''}
+            </div>
           </div>
           <button
             className="text-white py-2 px-4 rounded mt-4 btn-waft"
@@ -239,6 +251,7 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   roless: makeSelectRoles(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

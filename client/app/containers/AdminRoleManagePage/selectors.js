@@ -36,6 +36,12 @@ export const makeSelectLoading = () =>
     substate => substate.loading,
   );
 
+export const makeSelectErrors = () =>
+  createSelector(
+    selectAdminRoleManageDomain,
+    state => state.errors,
+  );
+
 /**
  * Default selector used by AdminRoleManage
  */

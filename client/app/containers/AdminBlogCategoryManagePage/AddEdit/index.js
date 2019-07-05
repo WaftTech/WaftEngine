@@ -21,7 +21,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Paper } from '@material-ui/core';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading} from '../selectors';
+import { makeSelectOne, makeSelectLoading, makeSelectErrors} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -55,6 +55,7 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -79,7 +80,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, match, loading} = this.props;
+    const { classes, one, match, loading, errors } = this.props;
     return loading && loading == true ? (
       <Loading/>
     ) : (
@@ -108,12 +109,12 @@ class AddEdit extends React.PureComponent {
         Blog Title
         </label>
         <input className="Waftinputbox" id="title" type="text" value= {one.title || ''} name="Title"
-                    onChange={this.handleChange('title')} />
-      </div>
-
-      
+          onChange={this.handleChange('title')} />
+          <div id="component-error-text">
+            {errors.title }
+          </div>
+        </div>
             <div>
-           
               <FormControlLabel
                 control={
                   <Checkbox
@@ -150,6 +151,7 @@ const withSaga = injectSaga({ key: 'adminBlogCategoryManagePage', saga });
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

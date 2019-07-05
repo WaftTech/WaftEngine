@@ -29,7 +29,7 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
-import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading} from './selectors';
 import DeleteDialog from '../../components/DeleteDialog';
 import Loading from '../../components/loading';
 
@@ -118,7 +118,6 @@ export class FAQManagePage extends React.PureComponent {
       all: { data, page, size, totaldata },
       query,
       loading,
-      match,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -188,7 +187,7 @@ export class FAQManagePage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input
@@ -217,7 +216,6 @@ export class FAQManagePage extends React.PureComponent {
               'Updated At',
               'Actions',
             ]}
-            loading={loading}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

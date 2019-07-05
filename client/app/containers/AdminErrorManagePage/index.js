@@ -183,7 +183,7 @@ export class AdminErrorManagePage extends React.Component {
             Delete All
           </Button>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input
@@ -213,7 +213,6 @@ export class AdminErrorManagePage extends React.Component {
               'Actions',
               '',
             ]}
-            loading={loading}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

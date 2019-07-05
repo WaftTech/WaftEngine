@@ -21,6 +21,7 @@ export const initialState = {
   category: [],
   query: { find_question: '', size: 10 },
   loading: false,
+  errors: { title: '', question: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -29,6 +30,7 @@ const reducer = (state = initialState, action) =>
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = '';
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
@@ -71,6 +73,13 @@ const reducer = (state = initialState, action) =>
             each => each._id != action.payload.data._id,
           ),
         };
+
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
+        break;
     }
   });
 
