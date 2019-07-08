@@ -16,7 +16,7 @@ export const initialState = {
   one: {
     title: '',
     category: '',
-    published_on: '',
+    published_on: Date.now(),
     image: {},
     is_published: true,
     is_active: false,
@@ -30,6 +30,7 @@ export const initialState = {
   category: [],
   tempTag: '',
   loading: false,
+  errors: { title: '', description: '' },
 };
 
 const reducer = (state = initialState, action) =>
@@ -37,6 +38,7 @@ const reducer = (state = initialState, action) =>
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = '';
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
@@ -77,6 +79,12 @@ const reducer = (state = initialState, action) =>
         break;
       case types.SET_TAG_VALUE:
         draft.tempTag = action.payload;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
+        break;
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
         break;
     }
   });

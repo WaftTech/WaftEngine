@@ -75,3 +75,32 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
+
+export const loadAllRolesRequest = payload => ({
+  type: types.LOAD_ALL_ROLES_REQUEST,
+  payload,
+});
+export const loadAllRolesSuccess = payload => ({
+  type: types.LOAD_ALL_ROLES_SUCCESS,
+  payload,
+});
+export const loadAllRolesFailure = payload => ({
+  type: types.LOAD_ALL_ROLES_FAILURE,
+  payload,
+});
+
+export const updatePasswordRequest = payload => ({
+  type: types.UPDATE_PASSWORD_REQUEST,
+  payload,
+});
+export const updatePasswordSuccess = payload => ({
+  type: types.UPDATE_PASSWORD_SUCCESS,
+  payload,
+});
+export const updatePasswordFailure = payload => ({
+  type: types.UPDATE_PASSWORD_FAILURE,
+  payload,
+});
+export const clearErrors = () => ({
+  type: types.CLEAR_ERRORS,
+});

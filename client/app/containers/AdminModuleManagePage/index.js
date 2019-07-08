@@ -108,14 +108,13 @@ export class AdminModuleManage extends React.PureComponent {
       </>,
     ]);
 
-    return loading && loading == true ? (
-     <Loading/>
-    ) : (
+    return(
       <>
         <Helmet>
           <title>Module Manage</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Module Manage</PageHeader>
           <Fab
             color="primary"
@@ -127,7 +126,7 @@ export class AdminModuleManage extends React.PureComponent {
           </Fab>
         </div>
 
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input

@@ -18,15 +18,19 @@ export const initialState = {
     users: {
       email: '',
       name: '',
+      password: '',
       email_verified: false,
       roles: [],
     },
     roles: [],
     rolesNormalized: {},
   },
+  roles: [],
   query: { find_name: '' },
   loading: false,
+  errors: { name: '', roles: '', password: '' },
 };
+// Object.keys(action.payload.value).filter(e => {draft.one.users[e] !== ''})
 
 /* eslint-disable default-case, no-param-reassign */
 const adminUserManagePageReducer = (state = initialState, action) =>
@@ -35,9 +39,30 @@ const adminUserManagePageReducer = (state = initialState, action) =>
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        Object.keys(action.payload.value).map(each => {
+          if(typeof(draft.one.users[each])==='string'){
+            if (draft.one.users[each] !== '') {
+              draft.errors[each] = '';
+            }
+          }
+          else{
+            if (draft.one.users[each].length>0) {
+              draft.errors[each] = '';
+            }
+          }
+        });
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
+        break;
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
+      case types.UPDATE_PASSWORD_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
@@ -48,6 +73,12 @@ const adminUserManagePageReducer = (state = initialState, action) =>
       case types.LOAD_ALL_SUCCESS:
         draft.loading = false;
         draft.all = action.payload;
+        break;
+      case types.LOAD_ALL_FAILURE:
+        draft.loading = false;
+        break;
+      case types.LOAD_ALL_ROLES_SUCCESS:
+        draft.roles = action.payload.data;
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;

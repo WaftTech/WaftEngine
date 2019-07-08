@@ -41,3 +41,8 @@ export const makeSelectLoading = () =>
     selectSliderManagePageDomain,
     substate => substate.loading,
   );
+export const makeSelectErrors = () =>
+  createSelector(
+    selectSliderManagePageDomain,
+    state => state.errors,
+  );

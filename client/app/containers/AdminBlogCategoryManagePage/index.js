@@ -118,7 +118,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
   };
 
   handleDelete = id => {
-    this.props.deleteOneRequest(id);
+    this.props.deleteCatRequest(id);
     this.setState({ open: false });
   };
 
@@ -181,9 +181,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
         </>,
       ],
     );
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return(
       <>
 
 <DeleteDialog
@@ -195,6 +193,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
           <title>Blog Category Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Blog Category Manage</PageHeader>
         <Fab
               color="primary"
@@ -207,7 +206,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
               <AddIcon />
             </Fab>
       </div>
-        <PageContent>
+        <PageContent loading={loading}>
         <div className="flex justify-end">
                 <div className="waftformgroup flex relative mr-2">
                 <input type="text"
@@ -233,6 +232,7 @@ export class AdminBlogCategoryManagePage extends React.PureComponent {
                 'Updated At',
                 'Actions',
               ]}
+              
               tableData={tableData}
               pagination={tablePagination}
               handlePagination={this.handlePagination}

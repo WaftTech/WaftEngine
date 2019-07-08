@@ -30,10 +30,10 @@ export class UserProfilePage extends React.Component {
           <title>Profile Page</title>
         </Helmet>
         
-        <div class="container mx-auto mb-10">
-          <h1 class="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Personal Information</h1>
+        <div className="container mx-auto mb-10">
+          <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Personal Information</h1>
 
-          <div class="flex flex-wrap justify-between">
+          <div className="flex flex-wrap justify-between">
             <div className="w-full md:w-1/2 px-5 md:px-16"> 
             <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>Name : {user.name}</b></div>
             <div className="w-full pb-4 text-base md:text-lg xl:text-xl"><b> E-mail : {user.email}</b></div>

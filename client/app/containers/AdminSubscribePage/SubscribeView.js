@@ -26,7 +26,6 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../components/loading';
 
-
 export class ViewSubscriber extends React.Component {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -51,7 +50,8 @@ export class ViewSubscriber extends React.Component {
   render() {
     const { classes, one, loading} = this.props;
     return loading && loading == true ? (
-        <Loading/>
+      
+        <Loading />
        ) : (
       <React.Fragment>
 

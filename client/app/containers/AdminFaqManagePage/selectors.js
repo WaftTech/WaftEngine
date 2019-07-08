@@ -42,6 +42,12 @@ export const makeSelectLoading = () =>
     state => state.loading,
   );
 
+export const makeSelectErrors = () =>
+  createSelector(
+    selectFaqManagePageDomain,
+    state => state.errors,
+  );
+
 /**
  * Default selector used by FaqManagePage
  */

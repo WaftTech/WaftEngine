@@ -1,6 +1,6 @@
 # WaftEngine (MERN Stack Engine)
 
-[WaftEngine](https://www.wafttengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
+[WaftEngine](https://www.waftengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
 
 [![Gitter](https://badges.gitter.im/waftengine/community.svg)](https://gitter.im/waftengine/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -35,8 +35,8 @@ Follow the documentation to run WaftEngine for all operating systems.
 
 Read documentation & tutorials
 
-- [Developer Documentation]()
-- [Architecture]()
+- [Developer Documentation](https://www.waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
+- [Architecture](https://www.waftengine.org/architecture)
 
 ## Get help & contact the team
 
@@ -49,3 +49,7 @@ Read documentation & tutorials
 :star: Star us on GitHub — it helps!
 
 We love your pull requests! Check out our [`Good First Issue`](https://github.com/WaftTech/WaftEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) and [`Help Wanted`](https://github.com/WaftTech/WaftEngine/issues?q=label%3A%22help+wanted%22) tags for good issues to tackle.
+
+### License
+
+Copyright © [The MIT License (MIT)](./LICENSE.md)

@@ -29,3 +29,4 @@ export const CLEAR_ONE = 'app/ContentsListingPage/CLEAR_ONE';
 
 export const SET_QUERY_VALUE = 'app/ContentsListingPage/SET_QUERY_VALUE';
 export const CLEAR_QUERY = 'app/ContentsListingPage/CLEAR_QUERY';
+export const CLEAR_ERRORS = 'app/ContentsListingPage/CLEAR_ERRORS';

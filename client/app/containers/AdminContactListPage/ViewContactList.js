@@ -50,7 +50,8 @@ export class ViewContacts extends React.Component {
   render() {
     const { classes, one, loading } = this.props;
     return loading && loading == true ? (
-    <Loading/>
+    
+      <Loading />
     ) : (
       <React.Fragment>
         <Helmet>

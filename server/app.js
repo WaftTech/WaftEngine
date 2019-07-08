@@ -84,7 +84,7 @@ async function LoadDefaults(app) {
 app.use(passport.initialize());
 
 // Passport Config
-require('./config/passport')(passport);
+require('./helper/passport')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

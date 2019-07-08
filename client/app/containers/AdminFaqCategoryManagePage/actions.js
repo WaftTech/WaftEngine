@@ -68,3 +68,6 @@ export const clearOne = () => ({
 export const clearQuery = () => ({
   type: types.CLEAR_QUERY,
 });
+export const clearErrors = () => ({
+  type: types.CLEAR_ERRORS,
+});

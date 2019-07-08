@@ -38,7 +38,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MediaElement from '../../../components/MediaElement';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectMedia, makeSelectLoading } from '../selectors';
+import { makeSelectOne, makeSelectMedia, makeSelectLoading, makeSelectErrors} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import { IMAGE_BASE } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -70,7 +70,7 @@ const styles = theme => ({
   }
 });
 const SortableImageItem = SortableElement(({value, index, _this}) => <div className="flex mb-4 bg-grey-lighter p-2">
-  <div className="w-2/5 m-auto text-center pr-5">
+  <div className="w-1.5/5 m-auto text-center pr-5">
     {value.image ? (
       <img className="rounded w-full"
         src={`${IMAGE_BASE}public/300-300/media/${
@@ -86,9 +86,12 @@ const SortableImageItem = SortableElement(({value, index, _this}) => <div classN
     )}</div>
 
 
-<div className="w-2/5 m-auto text-center"><input className="Waftinputbox" id={`slider-caption-${index}`} type="text" value= {value.caption} placeholder="Caption"
-                    onChange={_this.handleImageCaptionChange(index)} style={{background:'#FFF',height:'100%'}}/></div>
-                    <div className="w-1/5 m-auto text-center">
+    <div className="w-1.5/5 m-auto text-center">
+      <input className="Waftinputbox" id=  {`slider-link-${index}`} type="text" value= {value.link || ''} placeholder="Link" onChange={_this.handleImageLinkChange(index)} style={{background:'#FFF',height:'100%'}} />
+    </div>
+    <div className="w-1.5/5 m-auto text-center"><textarea className="Waftinputbox" id={`slider-caption-${index}`} type="text" value= {value.caption || ''} placeholder="Caption"          onChange={_this.handleImageCaptionChange(index)} style={{background:'#FFF',height:'100%'}} />
+    </div>
+    <div className="w-0.5/5 m-auto text-center">
     <IconButton
       color="secondary"
       onClick={() => _this.handleRemoveSlide(index)}
@@ -122,6 +125,7 @@ class AddEdit extends React.PureComponent {
     }),
     classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     media: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -134,6 +138,7 @@ class AddEdit extends React.PureComponent {
   state = { open: false, index: -1, subheader: 'Slider Add'};
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
       this.setState({ subheader: 'Slider Edit' });
@@ -161,6 +166,13 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'images', value: tempImages });
   };
 
+  handleImageLinkChange = index => event => {
+    event.persist();
+    const tempImages = [...this.props.one.images];
+    tempImages[index].link = event.target.value;
+    this.props.setOneValue({ key: 'images', value: tempImages });
+  };
+
   handleImageImageChange = id => {
     const tempImages = [...this.props.one.images];
     tempImages[this.state.index].image = id;
@@ -170,7 +182,7 @@ class AddEdit extends React.PureComponent {
 
   handleAddSlide = () => {
     const tempImages = [...this.props.one.images];
-    const newSlide = { image: '', caption: '' };
+    const newSlide = { image: '', link: '', caption: '' };
     this.props.setOneValue({
       key: 'images',
       value: [newSlide, ...tempImages],
@@ -206,7 +218,7 @@ class AddEdit extends React.PureComponent {
   };
   render() {
  
-    const { one, classes, media, match, loading } = this.props;
+    const { one, classes, media, match, loading, errors} = this.props;
     const { subheader } = this.state;
 
     // media next prev logic
@@ -297,6 +309,9 @@ class AddEdit extends React.PureComponent {
       </label>
       <input className="Waftinputbox" id="slider-name" type="text" value= {one.slider_name} name="slider_name"
                     onChange= {this.handleChange('slider_name')} />
+                    <div id="component-error-text">
+            {errors.slider_name }
+          </div>
     </div>
 
     <div className="w-full md:w-1/2 pb-4">
@@ -305,6 +320,9 @@ class AddEdit extends React.PureComponent {
       </label>
       <input className="Waftinputbox" id="slider-key" type="text" value= {one.slider_key} name="slider_key"
                     onChange= {this.handleChange('slider_key')} />
+          <div id="component-error-text">
+            {errors.slider_key }
+          </div> 
     </div>
               
     <div className="w-full md:w-1/2 pb-4">
@@ -356,6 +374,7 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   media: makeSelectMedia(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

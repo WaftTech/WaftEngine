@@ -41,6 +41,11 @@ export const makeSelectQuery = () =>
     selectAdminModuleManageDomain,
     substate => substate.query,
   );
+export const makeSelectErrors = () =>
+  createSelector(
+    selectAdminModuleManageDomain,
+    state => state.errors,
+  );
 /**
  * Default selector used by AdminModuleManage
  */

@@ -25,6 +25,7 @@ export const initialState = {
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,
+  errors: { name: '', key: '', description: ''},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -33,6 +34,13 @@ const reducer = (state = initialState, action) =>
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = ' ';
+        break;
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;

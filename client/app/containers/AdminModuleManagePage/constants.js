@@ -37,3 +37,4 @@ export const ADD_EDIT_FAILURE = 'app/AdminModuleManage/ADD_EDIT_FAILURE';
 export const DELETE_ONE_REQUEST = 'app/AdminModuleManage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/AdminModuleManage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/AdminModuleManage/DELETE_ONE_FAILURE';
+export const CLEAR_ERRORS = 'app/AdminModuleManage/CLEAR_ERRORS';

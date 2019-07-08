@@ -36,6 +36,18 @@ export const makeSelectQuery = () =>
     state => state.query,
   );
 
+export const makeSelectRoles = () =>
+  createSelector(
+    selectAdminUserManagePageDomain,
+    state => state.roles,
+  );
+
+export const makeSelectErrors = () =>
+  createSelector(
+    selectAdminUserManagePageDomain,
+    state => state.errors,
+  );
+
 /**
  * Default selector used by AdminUserManagePage
  */

@@ -18,8 +18,6 @@ module.exports = passport => {
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
-  
-
   passport.use(
     new GoogleTokenStrategy(
       {

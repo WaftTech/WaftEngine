@@ -156,9 +156,7 @@ export class BlogManagePage extends React.Component {
       </React.Fragment>,
     ]);
     return (
-      loading && loading == true ? <Loading/>: 
       <>
-
         <DeleteDialog
           open={this.state.open}
           doClose={this.handleClose}
@@ -168,6 +166,7 @@ export class BlogManagePage extends React.Component {
           <title>Blog Category Listing</title>
         </Helmet>
  <div className="flex justify-between mt-3 mb-3">
+ {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Blog Manage</PageHeader>
         <Fab
               color="primary"
@@ -180,9 +179,7 @@ export class BlogManagePage extends React.Component {
               <AddIcon />
             </Fab>
             </div>
-        <PageContent>
-       
-
+        <PageContent loading={loading}>
         <div className="flex justify-end">
           <div className="waftformgroup flex relative">
                 <input type="text"

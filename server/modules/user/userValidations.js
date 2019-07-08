@@ -88,34 +88,11 @@ validations.sanitizeUserScan = (req, res, next) => {
   otherHelper.sanitize(req, sanitizeArray);
   next();
 };
-validations.sanitizeBio = (req, res, next) => {
+
+validations.sanitizeAdd = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'bio',
-      sanitize: {
-        trim: true,
-      },
-    },
-  ];
-  otherHelper.sanitize(req, sanitizeArray);
-  next();
-};
-validations.sanitizeSkill = (req, res, next) => {
-  const sanitizeArray = [
-    {
-      field: 'skill',
-      sanitize: {
-        trim: true,
-      },
-    },
-  ];
-  otherHelper.sanitize(req, sanitizeArray);
-  next();
-};
-validations.sanitizeDescribe = (req, res, next) => {
-  const sanitizeArray = [
-    {
-      field: 'describe',
+      field: 'name',
       sanitize: {
         trim: true,
       },
@@ -397,11 +374,12 @@ validations.validateUserScanInput = (req, res, next) => {
     next();
   }
 };
-validations.validateBio = (req, res, next) => {
+
+validations.validateAdd = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: 'bio',
+      field: 'name',
       validate: [
         {
           condition: 'IsEmpty',
@@ -409,7 +387,31 @@ validations.validateBio = (req, res, next) => {
         },
         {
           condition: 'IsLength',
-          msg: config.validate.bioLength,
+          msg: config.validate.nameLength,
+          option: { min: 2, max: 100 },
+        },
+      ],
+    },
+    {
+      field: 'roles',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+      ],
+    },
+    {
+      field: 'password',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.pwLength,
+          option: { min: 6, max: 100 },
         },
       ],
     },
@@ -421,11 +423,11 @@ validations.validateBio = (req, res, next) => {
     next();
   }
 };
-validations.validateSkill = (req, res, next) => {
+validations.validateEdit = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
-      field: 'skill',
+      field: 'name',
       validate: [
         {
           condition: 'IsEmpty',
@@ -433,31 +435,17 @@ validations.validateSkill = (req, res, next) => {
         },
         {
           condition: 'IsLength',
-          msg: config.validate.skillLength,
+          msg: config.validate.nameLength,
+          option: { min: 2, max: 100 },
         },
       ],
     },
-  ];
-  const errors = otherHelper.validation(data, validateArray);
-  if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
-  } else {
-    next();
-  }
-};
-validations.validateDescribe = (req, res, next) => {
-  const data = req.body;
-  const validateArray = [
     {
-      field: 'describe',
+      field: 'roles',
       validate: [
         {
           condition: 'IsEmpty',
           msg: config.validate.empty,
-        },
-        {
-          condition: 'IsLength',
-          msg: config.validate.describeLength,
         },
       ],
     },

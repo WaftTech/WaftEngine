@@ -21,6 +21,7 @@ export const initialState = {
   },
   query: { find_role_title: '' },
   loading: false,
+  errors: { role_title: '', description: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -29,9 +30,16 @@ const adminRoleManageReducer = (state = initialState, action) =>
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = '';
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
+        break;
+      case types.ADD_EDIT_FAILURE:
+        draft.errors = action.payload.errors;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
         break;
       case types.CLEAR_QUERY:
         draft.query = initialState.query;

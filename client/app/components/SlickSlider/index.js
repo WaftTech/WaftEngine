@@ -34,7 +34,8 @@ class SlickSlider extends React.PureComponent {
 
   render() {
     const { slideObj } = this.props;
-    const settings = {
+    const slide = slideObj[this.props.slideKey];
+    let settings = {
       slidesToShow: 2,
       slidesToScroll: 1,
       dots: true,
@@ -44,13 +45,24 @@ class SlickSlider extends React.PureComponent {
       autoplaySpeed: 2000,
       focusOnSelect: true,
     };
+    try {
+      if (slide.settings && typeof slide.settings === 'string') {
+        settings = JSON.parse(slide.settings);
+      }
+    } catch (err) {
+      console.log(err);
+    }
 
-    if (!slideObj[this.props.slideKey]) return null; // maybe add a loader here
+    if (!slide) return null; // maybe add a loader here
     return (
       <div className="slider">
         <Slider {...settings}>
-          {slideObj[this.props.slideKey].images.map(image => (
-            <MediaElement mediaKey={image.image} key={image._id} />
+          {slide.images.map(image => (
+            <MediaElement
+              mediaKey={image.image}
+              key={image._id}
+              link={image.link}
+            />
           ))}
         </Slider>
       </div>

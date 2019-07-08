@@ -174,9 +174,7 @@ export class ContentsListingPage extends React.Component {
         </Tooltip>
       </>,
     ]);
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return (
       <>
         <DeleteDialog
           open={this.state.open}
@@ -187,6 +185,7 @@ export class ContentsListingPage extends React.Component {
           <title>Content Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+          {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Content Manage</PageHeader>
           <Fab
             color="primary"
@@ -199,7 +198,7 @@ export class ContentsListingPage extends React.Component {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input

@@ -22,7 +22,7 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading} from '../selectors';
+import { makeSelectOne, makeSelectLoading, makeSelectErrors} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -44,6 +44,7 @@ class AddEdit extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
@@ -68,7 +69,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, match, loading} = this.props;
+    const { classes, one, match, loading, errors} = this.props;
     return loading && loading == true ? (
      <Loading/>
     ) : (
@@ -95,6 +96,9 @@ class AddEdit extends React.PureComponent {
             </label>
             <input className="Waftinputbox" id="role_title" type="text"  value={one.role_title}
                        onChange={this.handleChange('role_title')} required/>
+                       <div id="component-error-text">
+              {errors.role_title }
+            </div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -103,6 +107,9 @@ class AddEdit extends React.PureComponent {
             </label>
             <textarea className="Waftinputbox" id="description" type="text"   value={one.description}
                        onChange={this.handleChange('description')} required/>
+                       <div id="component-error-text">
+            {errors.description }
+          </div>
           </div>
              
               <FormControlLabel
@@ -134,6 +141,7 @@ const withSaga = injectSaga({ key: 'adminRoleManage', saga });
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
+  errors: makeSelectErrors(),
 });
 
 const withConnect = connect(

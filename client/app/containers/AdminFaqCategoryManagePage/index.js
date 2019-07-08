@@ -180,9 +180,7 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
       ],
     );
 
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return(
       <>
         <DeleteDialog
           open={this.state.open}
@@ -193,6 +191,7 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
           <title>FAQ Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>FAQ Category Manage</PageHeader>
           <Fab
             color="primary"
@@ -205,7 +204,7 @@ export class AdminFaqCategoryManagePage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input

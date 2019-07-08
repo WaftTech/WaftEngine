@@ -141,9 +141,7 @@ export class AdminRoleManage extends React.PureComponent {
       ],
     );
 
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return (
       <React.Fragment>
         <DeleteDialog
           open={this.state.open}
@@ -154,6 +152,7 @@ export class AdminRoleManage extends React.PureComponent {
           <title>Role Manage</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+          {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Role Manage</PageHeader>
           <Fab
             color="primary"
@@ -164,7 +163,7 @@ export class AdminRoleManage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative mr-2">
               <input

@@ -109,7 +109,6 @@ CustomTable.propTypes = {
 };
 const styles = {
   tableResponsive: { width: '100%' },
- 
 };
 
 export default withStyles(styles)(CustomTable);

@@ -29,7 +29,7 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
-import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import { makeSelectAll, makeSelectQuery, makeSelectLoading} from './selectors';
 import DeleteDialog from '../../components/DeleteDialog';
 import Loading from '../../components/loading';
 
@@ -118,7 +118,6 @@ export class FAQManagePage extends React.PureComponent {
       all: { data, page, size, totaldata },
       query,
       loading,
-      match,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -164,9 +163,7 @@ export class FAQManagePage extends React.PureComponent {
       ],
     );
 
-    return loading && loading == true ? (
-      <Loading />
-    ) : (
+    return(
       <>
         <DeleteDialog
           open={this.state.open}
@@ -177,6 +174,7 @@ export class FAQManagePage extends React.PureComponent {
           <title>FAQ Listing</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
+        {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>FAQ Manage</PageHeader>
           <Fab
             color="primary"
@@ -189,7 +187,7 @@ export class FAQManagePage extends React.PureComponent {
             <AddIcon />
           </Fab>
         </div>
-        <PageContent>
+        <PageContent loading={loading}>
           <div className="flex justify-end">
             <div className="waftformgroup flex relative">
               <input

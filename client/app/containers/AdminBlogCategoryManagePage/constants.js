@@ -33,3 +33,4 @@ export const DELETE_CAT_FAILURE =
 export const CLEAR_QUERY = 'app/AdminBlogCategoryManagePage/CLEAR_QUERY';
 export const SET_ONE_VALUE = 'app/AdminBlogCategoryManagePage/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/AdminBlogCategoryManagePage/CLEAR_ONE';
+export const CLEAR_ERRORS = 'app/AdminBlogCategoryManagePage/CLEAR_ERRORS';
