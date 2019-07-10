@@ -16,7 +16,7 @@ import Helmet from 'react-helmet';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import ViewIcon from '@material-ui/icons/RemoveRedEye';
+import View from '@material-ui/icons/RemoveRedEyeOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -128,7 +128,7 @@ export class AdminSubscribePage extends React.PureComponent {
             className={classes.tableActionButton}
             onClick={() => this.handleView(_id)}
           >
-            <ViewIcon />
+            <View />
           </IconButton>
         </Tooltip>
         <Tooltip id="tooltip-top" title="Remove" placement="top">

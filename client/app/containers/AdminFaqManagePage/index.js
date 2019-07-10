@@ -48,6 +48,17 @@ const styles = theme => ({
       color: '#404040',
     },
   },
+
+  waftsrch: {
+    padding: 0,
+    position: 'absolute',
+    borderLeft: '1px solid #d9e3e9',
+    borderRadius: 0,
+    '&:hover': {
+      background: 'transparent',
+      color: '#404040',
+    },
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */

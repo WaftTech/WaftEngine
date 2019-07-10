@@ -34,6 +34,7 @@ button:focus {
 .WaftSideBar{
   -webkit-box-shadow: 0 0 15px 0 rgba(0,0,0,.05);
     box-shadow: 0 0 15px 0 rgba(0,0,0,.05);
+    overflow:hidden!important;
 }
 
 .Waftinputbox {

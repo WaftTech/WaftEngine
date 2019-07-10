@@ -106,18 +106,22 @@ class AddEdit extends React.PureComponent {
       match: {
         params: { id },
       },
+    
       one: { users, rolesNormalized, roles },
       roless,
       loading,
       errors,
     } = this.props;
     return loading && loading == true ? (
+   
       <Loading />
     ) : (
       <>
+      
         <Helmet>
           <title>{id ? 'Edit User' : 'Add User'}</title>
         </Helmet>
+
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
             <IconButton
@@ -131,6 +135,7 @@ class AddEdit extends React.PureComponent {
           </PageHeader>
         </div>
         <PageContent>
+    
           <div className="w-full md:w-1/2 pb-4">
           <h2>Basic Information</h2>
           <br/>
@@ -147,6 +152,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
 
+      
           <div className="w-full md:w-1/2 pb-4">
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Name
@@ -173,6 +179,7 @@ class AddEdit extends React.PureComponent {
                   checked={users.roles.includes(each._id)}
                   onChange={() => this.handleRolesChecked(each._id)}
                 />
+           
               }
               label={each.role_title || ''}
             />
@@ -181,6 +188,7 @@ class AddEdit extends React.PureComponent {
             {errors.roles || ''}
             </div>
 
+        
           <br />
           <FormControlLabel
             control={
@@ -278,6 +286,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
   },
+
   backbtn: {
     padding: 0,
     height: '40px',
