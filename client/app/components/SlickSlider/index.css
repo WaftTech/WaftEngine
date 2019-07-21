@@ -6,7 +6,7 @@
   background: #419be0;
 }
 
-h3 {
+/* h3 {
   background: blue;
   color: #fff;
   font-size: 36px;
@@ -15,7 +15,7 @@ h3 {
   padding: 2%;
   position: relative;
   text-align: center;
-}
+} */
 .variable-width .slick-slide p {
   background: blue;
   height: 100px;

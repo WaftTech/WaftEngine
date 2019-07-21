@@ -3,7 +3,10 @@ const objectId = require('mongoose').ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const contactConfig = require('./contactConfig');
 const contactSch = require('./contactSchema');
-const emailTemplate = require('../../helper/email-render-template');
+// const emailTemplate = require('../../helper/email-render-template');
+const renderMail = require('./../template/templateController').internal;
+const emailHelper = require('./../../helper/email.helper');
+
 const contactController = {};
 
 contactController.PostContact = async (req, res, next) => {
@@ -32,8 +35,21 @@ contactController.PostContact = async (req, res, next) => {
         subject: 'Contact Successful', // Subject line
         text: `Dear ${newUser.name} ${contactConfig.usermsg}<br/>`,
       };
-      emailTemplate.render(templatePathToAdmin, data, mailOptionsAdmin);
-      emailTemplate.render(templatePathToUser, data, mailOptionsUser);
+      const renderedMail = await renderMail.renderTemplate('contact_to_admin', data, contactConfig.admin);
+      if (renderMail.error) {
+        console.log('render mail error: ', renderMail.error);
+      } else {
+        emailHelper.send(renderedMail);
+      }
+      const renderedMailforAdmin = await renderMail.renderTemplate('contact_to_user', data, user.email);
+      if (renderMail.error) {
+        console.log('render mail error: ', renderMail.error);
+      } else {
+        emailHelper.send(renderedMailforAdmin);
+      }
+
+      // emailTemplate.render(templatePathToAdmin, data, mailOptionsAdmin);
+      // emailTemplate.render(templatePathToUser, data, mailOptionsUser);
 
       return otherHelper.sendResponse(res, httpStatus.OK, true, user, null, contactConfig.save, null);
     } else {

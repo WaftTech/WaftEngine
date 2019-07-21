@@ -7,6 +7,7 @@ module.exports = {
     msgEmp: 'This field is required',
     msgLen: 'This field should be between 5 to 300',
   },
+  admin: 'hello@wafttech.com',
   save: 'Contact is saved successfully!!',
   delete: 'Contact is deleted successfully!!',
   gets: 'Contacts are obtained successfully!!',
