@@ -10,6 +10,7 @@ const { catSanitize, catValidate, sanitize, validate } = require('../../modules/
 router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
 router.get('/', blogModule.GetBlogUnauthorize);
 router.get('/latest', blogModule.getLatestBlog);
+router.get('/related/:slug_url', blogModule.getRealtedBlog);
 router.get('/category', blogModule.GetBlogCategory);
 router.get('/category/:id', authorization, authentication, blogModule.GetBlogCatById);
 router.get('/:id', authorization, authentication, blogModule.GetBlogDetail);

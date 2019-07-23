@@ -85,6 +85,23 @@ blogcontroller.getLatestBlog = async (req, res, next) => {
     next(err);
   }
 };
+blogcontroller.getRealtedBlog = async (req, res, next) => {
+  try {
+    const tages = await blogSch.findOne({ is_active: true, is_deleted: false, slug_url: req.params.slug_url }).select('tags meta_tag category keywords');
+    // .lean();
+    const d = [...tages.meta_tag, ...tages.keywords, ...tages.tags];
+
+    const data = await blogSch
+      .find({ is_active: true, is_deleted: false, slug_url: { $ne: req.params.slug_url }, tags: { $elemMatch: { $in: d } } })
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
+      .sort({ _id: -1 })
+      .skip(0)
+      .limit(5);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog', null);
+  } catch (err) {
+    next(err);
+  }
+};
 blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
   try {
     const size_default = 10;
