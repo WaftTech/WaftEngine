@@ -6,16 +6,7 @@
   background: #419be0;
 }
 
-h3 {
-  background: blue;
-  color: #fff;
-  font-size: 36px;
-  line-height: 100px;
-  margin: 10px;
-  padding: 2%;
-  position: relative;
-  text-align: center;
-}
+
 .variable-width .slick-slide p {
   background: blue;
   height: 100px;

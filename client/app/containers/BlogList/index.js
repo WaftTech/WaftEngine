@@ -42,7 +42,7 @@ export class BlogListPage extends React.Component {
         <div>
           <div className="banner relative">
             <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
-            <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-primary waft-title">
+            <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
               Blogs
             </h1>
           </div>

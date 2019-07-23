@@ -36,7 +36,7 @@ export default class HomePage extends React.PureComponent {
             <a
               className="text-blue"
               target="_blank"
-              href="http://www.waftengine.org/documentation"
+              href="https://waftengine.org/documentation"
             >
               https://www.waftengine.org/documentation
             </a>

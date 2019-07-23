@@ -60,7 +60,7 @@ const Mainlis = ({ classes, location: { pathname }, roles }) => {
         <>
           <li
             key={e.key}
-            className={`pt-2 pb-2 pr-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm pl-${e.key.split(
+            className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm pl-${e.key.split(
               '.',
             ).length * 3}`}
             onClick={() => handleSetClick(e.key)}
