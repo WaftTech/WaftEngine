@@ -20,7 +20,7 @@ function* loadRecentBlogs() {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `blog/blog/latest`,
+      `blog/latest`,
       actions.loadRecentBlogsSuccess,
       actions.loadRecentBlogsFailure,
       token,

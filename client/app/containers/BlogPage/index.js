@@ -26,6 +26,7 @@ export class BlogPage extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     loadBlogRequest: PropTypes.func.isRequired,
+    loadRecentBlogsRequest: PropTypes.func.isRequired,
     blog: PropTypes.shape({}).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -35,6 +36,7 @@ export class BlogPage extends React.Component {
   };
 
   componentDidMount() {
+    this.props.loadRecentBlogsRequest();
     this.props.loadBlogRequest(this.props.match.params.slug_url);
     (function() {
       // DON'T EDIT BELOW THIS LINE
@@ -104,7 +106,7 @@ export class BlogPage extends React.Component {
           </div>
           <div className="w-1/4 bg-gray-400">
             <RecentBlogs />
-            <RelatedBlogs />
+            {/* <RelatedBlogs /> */}
           </div>
         </div>
       </>

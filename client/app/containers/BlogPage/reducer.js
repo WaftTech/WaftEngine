@@ -38,6 +38,7 @@ const blogPageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_RECENT_BLOGS_SUCCESS:
         draft.recentBlogsIsLoading = false;
+        draft.recentBlogs = action.payload.data;
         break;
       case types.LOAD_RECENT_BLOGS_FAILURE:
         draft.recentBlogsIsLoading = false;
