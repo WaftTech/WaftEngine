@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+// import Disqus from 'disqus-react';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -20,7 +21,7 @@ import saga from './saga';
 import { IMAGE_BASE } from '../App/constants';
 import Loading from '../../components/loading';
 import RecentBlogs from './components/RecentBlogs';
-import RelatedBlogs from './components/RelatedBlogs';
+// import RelatedBlogs from './components/RelatedBlogs';
 
 export class BlogPage extends React.Component {
   static propTypes = {
@@ -40,7 +41,7 @@ export class BlogPage extends React.Component {
     this.props.loadBlogRequest(this.props.match.params.slug_url);
     (function() {
       // DON'T EDIT BELOW THIS LINE
-      const d = document;
+      const d = window.document;
       const s = d.createElement('script');
       s.src = 'https://nepaloffers.disqus.com/embed.js';
       s.setAttribute('data-timestamp', +new Date());
@@ -53,7 +54,7 @@ export class BlogPage extends React.Component {
       this.props.loadBlogRequest(this.props.match.params.slug_url);
       (function() {
         // DON'T EDIT BELOW THIS LINE
-        const d = document;
+        const d = window.document;
         const s = d.createElement('script');
         s.src = 'https://nepaloffers.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
@@ -62,12 +63,22 @@ export class BlogPage extends React.Component {
     }
   }
 
+  handleNewComment = () => {
+    console.log('new comment recieved');
+  };
+
   render() {
-    const { blog, loading } = this.props;
+    const { blog, loading, location, match } = this.props;
     if (loading) {
       return <Loading />;
     }
-
+    // const disqusShortname = blog.title;
+    // const disqusConfig = {
+    //   url: `http://localhost:5051/${location.pathname}`,
+    //   identifier: match.params.slug_url,
+    //   onNewComment: this.handleNewComment,
+    //   title: blog.title,
+    // };
     return (
       <>
         <Helmet>
@@ -79,6 +90,12 @@ export class BlogPage extends React.Component {
               <h1 className="mt-5 mb-2 font-light uppercase">
                 <span>{blog.title}</span>
               </h1>
+              {/* <Disqus.CommentCount
+                shortname={disqusShortname}
+                config={disqusConfig}
+              >
+                Comments
+              </Disqus.CommentCount> */}
               <br />
               <div>
                 {blog.image && blog.image.fieldname ? (
@@ -100,6 +117,12 @@ export class BlogPage extends React.Component {
                   `Tags: ${blog.tags.join(', ')}`}
               </div>
               <div>
+                {/* <Disqus.CommentEmbed showMedia={true} height={160} />
+
+                <Disqus.DiscussionEmbed
+                  shortname={disqusShortname}
+                  config={disqusConfig}
+                /> */}
                 <div id="disqus_thread" />
               </div>
             </div>

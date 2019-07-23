@@ -76,6 +76,7 @@
     "compression": "1.7.3",
     "connected-react-router": "6.3.2",
     "cross-env": "5.2.0",
+    "disqus-react": "^1.0.6",
     "express": "4.16.4",
     "fontfaceobserver": "2.1.0",
     "google": "^2.1.0",
