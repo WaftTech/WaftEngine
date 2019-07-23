@@ -67,18 +67,19 @@ export class AdminDashboard extends React.PureComponent {
       
         
               {info.map(each => (
-                <div key={each._id}>
-                  <h4>{each.title}</h4>
-                  <div dangerouslySetInnerHTML={{ __html: each.detail }} />
+                <div key={each._id} className="p-4 bg-white rounded">
+                  <h3 className="border-b border-grey-lighter pb-2">{each.title}</h3>
+                  <div className="mt-2 bg-grey-lighter flex flex-wrap justify-between p-4 rounded" dangerouslySetInnerHTML={{ __html: each.detail }} />
                 </div>
               ))}
          
-              <div>
+              <div className="bg-white rounded my-4 p-4 ">
+                
+              <h3 className="border-b border-grey-lighter  pb-2">Latest Blogs</h3>
                 {blogs.map(each => (
-                  <LinkBoth
+                  <LinkBoth className="mt-2 bg-grey-lighter flex flex-wrap justify-between p-2 rounded" 
                     key={each._id}
-                    to={`https://www.waftengine.org/blog/${each._id}`}
-                    // to={`localhost:5120/api/blog/${each._id}`}
+                    to={`https://www.waftengine.org/blog/${each.slug_url}`}
                   >
                     <div>
                       <h4>{each.title}</h4>

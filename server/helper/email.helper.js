@@ -1,8 +1,15 @@
 'use strict';
 const nodemailer = require('nodemailer');
 const emailConf = require('../config/email');
-const mailgun = require('mailgun-js')({ apiKey: emailConf.mailgun.api_key, domain: emailConf.mailgun.domain });
-const sgMail = require('@sendgrid/mail');
+const apiCall = require('./apicall.helper');
+let mailgun;
+if (emailConf.channel === 'mailgun') {
+  mailgun = require('mailgun-js')({ apiKey: emailConf.mailgun.api_key, domain: emailConf.mailgun.domain });
+}
+let sgMail;
+if (emailConf.channel === 'sendgrid') {
+  sgMail = require('@sendgrid/mail');
+}
 
 const sendMail = {};
 
@@ -19,11 +26,9 @@ const transporter = nodemailer.createTransport({
 
 // send mail with defined transport object
 sendMail.send = mailOptions => {
-  console.log('MailView', mailOptions);
   if (emailConf.channel === 'mailgun') {
     mailgun.messages().send(mailOptions, function(error, info) {
       if (error) {
-        console.log(error);
         return error;
       }
       return info;
@@ -39,6 +44,15 @@ sendMail.send = mailOptions => {
       }
       return info;
     });
+  } else if (emailConf.channel === 'waft') {
+    apiCall.requestThirdPartyApi1(
+      'https://www.waftengine.org/api/mail',
+      {
+        'content-type': 'application/json',
+      },
+      mailOptions,
+      'POST',
+    );
   }
 };
 module.exports = sendMail;

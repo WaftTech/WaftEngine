@@ -19,6 +19,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { IMAGE_BASE } from '../App/constants';
 import Loading from '../../components/loading';
+import BlogList from '../BlogList/index';
 
 export class BlogPage extends React.Component {
   componentDidMount() {
@@ -50,13 +51,15 @@ export class BlogPage extends React.Component {
   render() {
     const { blog, loading } = this.props;
 
+
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div className="container mx-auto">
-        <Helmet>
+      <div class="flex mb-4"><div class="w-3/4"><Helmet>
           <title>{blog.title}</title>
         </Helmet>
+      <div className="container mx-auto "> 
+        
         <h1 className="mt-5 mb-2 font-light uppercase">
           <span>{blog.title}</span>
         </h1>
@@ -76,13 +79,13 @@ export class BlogPage extends React.Component {
         <br />
         <div dangerouslySetInnerHTML={{ __html: blog.description }} />
         <br />
-        <div>Tags: {blog.tags && blog.tags.length && blog.tags.join(' ,')}</div>
+        <div>{blog.tags && blog.tags.length >0 && `Tags: ${blog.tags.join(' ,')}`}</div>
         <div>
-          {' '}
-          <div id="disqus_thread" />{' '}
+          <div id="disqus_thread" />
         </div>
       </div>
-    );
+    </div>
+  <div class="w-1/4 bg-gray-400"><BlogList></BlogList></div></div>);
   }
 }
 

@@ -64,7 +64,7 @@ export class BlogListPage extends React.Component {
                     className="blog_sec flex flex-wrap border-b py-5"
                     key={slug_url}
                   >
-                    <div className="md:w-2/5 w-full">
+                    <div className="sm:w-1/2 lg:w-1/4 xl:w-1/6 md:w-2/5 w-full">
                       <Link to={`/blog/${slug_url}`}>
                         <div className="img blog-img">
                           <img

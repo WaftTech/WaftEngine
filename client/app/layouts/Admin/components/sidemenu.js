@@ -14,19 +14,19 @@ const menu = [
       },
       {
         key: '2.2',
-        name: 'FAQ Manage',
+        name: 'FAQ',
         icon: 'question_answer',
         menu: [
           {
             key: '2.2.1',
-            name: '---FAQ List',
-            icon: 'question_answer',
+            name: 'Faq',
+            icon: 'remove',
             link: '/admin/faq-manage',
           },
           {
             key: '2.2.2',
-            name: '---FAQ Category List',
-            icon: 'question_answer',
+            name: 'Category',
+            icon: 'remove',
             link: '/admin/faq-cat-manage',
           },
         ],
@@ -45,19 +45,19 @@ const menu = [
       },
       {
         key: '2.5',
-        name: 'Blog Manage',
-        icon: 'note_add',
+        name: 'Blog',
+        icon: 'library_books',
         menu: [
           {
             key: '2.5.1',
-            name: '---Blog List',
+            name: 'Blog',
             link: '/admin/blog-manage',
-            icon: 'note_add',
+            icon: 'remove',
           },
           {
             key: '2.5.2',
-            name: '---Blog Category List',
-            icon: 'note_add',
+            name: 'Category',
+            icon: 'remove',
             link: '/admin/blog-cat-manage',
           },
         ],
