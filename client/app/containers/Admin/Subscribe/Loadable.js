@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for Faq
+ * Asynchronously loads the component for Subscribe
  *
  */
 
