@@ -72,7 +72,19 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
     next(err);
   }
 };
-
+blogcontroller.getLatestBlog = async (req, res, next) => {
+  try {
+    const data = await blogSch
+      .find({ is_active: true, is_deleted: false })
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
+      .sort({ _id: -1 })
+      .skip(0)
+      .limit(5);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog', null);
+  } catch (err) {
+    next(err);
+  }
+};
 blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
   try {
     const size_default = 10;
