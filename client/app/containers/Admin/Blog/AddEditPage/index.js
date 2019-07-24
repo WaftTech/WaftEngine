@@ -50,7 +50,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/loading';
-import Input from '../../../components/customComponents/Input';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   cardCategoryWhite: {

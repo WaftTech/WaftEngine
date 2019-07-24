@@ -28,69 +28,116 @@ class CategoryDetailPage extends React.Component {
   render() {
     const { blog } = this.props;
     return (
-      <div className="container">
+      <React.Fragment>
         <Helmet>
           <title>{blog[0].category ? blog[0].category.title : ''}</title>
         </Helmet>
-        <Grid container spacing={8}>
-          <Grid item lg={12}>
-            <div className="companyHeader">
-              <h1 className="pageTitle">
+        <div className="container mx-auto my-10">
+        <h2 className="mb-5">
                 <span>
                   Blogs related to{' '}
                   {blog[0].category ? blog[0].category.title : ''}
                 </span>
-              </h1>
-            </div>
+              </h2>
+     
+  <div className="flex flex-wrap w-full md:w-3/4 -mx-5">
 
-            <Grid container spacing={8}>
+          
               {blog.map(each => {
-                const { image, title, description, added_at, category } = each;
-                const blogImage =
-                  (image &&
-                    image.length &&
-                    image[0].path &&
-                    `${IMAGE_BASE}${image[0].path}`) ||
-                  defaultImage;
-                ``;
+                const {
+                  image,
+                  title,
+                  slug_url,
+                  description,
+                  added_at,
+                  category,
+                  tags,
+                } = each;
 
                 return (
-                  <Grid key={`blogcat-${each._id}`} item xs={6} md={3}>
-                    <Link className="blockLink" to={`/blog/${each._id}`}>
-                      <div className="companyItem">
-                        <div>{title}</div>
+                  <div
+                    className="blog_sec w-1/2 px-5 mb-5"
+                    key={slug_url}
+                  >
+                    <div className="w-full h-64 object-cover overflow-hidden">
+                      <Link to={`/blog/${slug_url}`}>
+                        <div className="img blog-img h-full">
+                          <img
+                            src={image && `${IMAGE_BASE}${image.path}`}
+                            className="rounded"
+                            alt={`${title}`}
+                          />
+                        </div>
+                      </Link>
+                    </div>
+                    <div className="">
+
+                    <Link
+                        className="text-black no-underline capitalize mb-2 bold block mt-4"
+                        to={`/blog/${slug_url}`}
+                      >
+                        <h2>{title}</h2>
+                      </Link>
+                      <div className="border-t-1 flex flex-wrap font-bold">
+                        <Link
+                          className="mr-2 text-black hover:text-waftprimary leading-normal text-base no-underline"
+                          to={`/blog-category/${category ? category._id : ''}`}
+                        >
+                          <div className="mr-2">
+                            <span className="text-grey-dark">By</span>  {category ? category.title : ''}
+                            {' '}
+                          </div>
+                        </Link>
+                        <p className="text-grey-dark leading-normal text-base mr-2">
+                          {moment(added_at).format('MMM Do YY')}
+                          
+                        </p>
+                        <Link
+                          className="text-grey-darkleading-normal text-base no-underline"
+                          to={`/blog/${each.slug_url}`}
+                        >
+                          <div> {tags.join(', ') || ''} </div>
+                        </Link>{' '}
                       </div>
-                    </Link>
-                    <div>{moment(added_at).format('MMM Do YY')}</div>
-                    <Link to={`/blog-category/${each.slug_url}`}>
-                      <div className="companyItem">
-                        <div>{category ? category.title : 'NO'}</div>
-                      </div>
-                    </Link>
-                    <Link to={`/blog/${each._id}`}>
-                      <div className="companyItem">
+                   
+
+                      <Link
+                        className="text-grey-darker text-base no-underline"
+                        to={`/blog/${slug_url}`}
+                      >
                         <div
+                          className="leading-normal text-base text-left"
+                          style={{ height: '95px', overflow: 'hidden' }}
                           dangerouslySetInnerHTML={{ __html: description }}
                         />
+                      </Link>
+
+                      <div className="flex justify-end readmore mt-2">
+                        {' '}
+                        <Link
+                          className="no-underline hover:text-waftprimary"
+                          to={`/blog/${slug_url}`}
+                        >
+                          Continue Reading <span className="rdanim">>>></span>
+                        </Link>
                       </div>
-                    </Link>
-                    <Link to={`/blog/${each._id}`}>
-                      <div className="img">
-                        <img src={blogImage} width="200px" />
-                      </div>
-                    </Link>
-                  </Grid>
+                    </div>
+                  </div>
                 );
               })}
-            </Grid>
-          </Grid>
-        </Grid>
+            
+          
+        
 
         {/* {showModal && <OfferDetailPage />} */}
       </div>
+      </div>
+      </React.Fragment>
     );
+    
   }
 }
+
 
 CategoryDetailPage.propTypes = {
   loadCategoryRequest: PropTypes.func.isRequired,

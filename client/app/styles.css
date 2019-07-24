@@ -176,6 +176,12 @@ div#component-error-text {
   color: #ff3b30;
 }
 
+/* blog */
+
+.blog-det:last-child{
+  border-bottom: none;
+}
+
 /* footer */
 
 .newsletter_wrapper {
