@@ -15,13 +15,17 @@ function RecentBlogs(props) {
   }
   return (
     <div>
-      <h4>Recent Blogs</h4>
+      <h2 className="text-center pb-3 border-b">Recent Blogs</h2>
       {props.blogs.map(blog => (
-        <div key={`recents-${blog._id}`}>
-          <h6>
-            <Link to={`/blog/${blog.slug_url}`}>{blog.title}</Link>
-          </h6>
-          <time>{moment(blog.added_at).format('ll')}</time>
+        <div key={`recents-${blog._id}`} className="blog-det flex py-3 border-b border-dashed">
+          <img src="http://localhost:5050/public/blog/B10CB9F80382C17-lorem-ipsum.jpg" alt="blog image" className="mr-4"
+            style={{width:'80px',height:'80px',objectFit:'cover'}}/>
+          <div>
+          <h4 className="font-bold">
+            <Link className="text-black no-underline hover:text-waftprimary" to={`/blog/${blog.slug_url}`}>{blog.title}</Link>
+          </h4>
+          <time className="text-sm">{moment(blog.added_at).format('ll')}</time>
+          </div>
         </div>
       ))}
     </div>

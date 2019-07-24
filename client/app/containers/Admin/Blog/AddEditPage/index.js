@@ -40,14 +40,17 @@ import {
   makeSelectChip,
   makeSelectTag,
   makeSelectLoading,
+
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/loading';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -194,6 +197,7 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
+ 
     const {
       classes,
       one,
@@ -231,22 +235,17 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Title
-            </label>
-            <input
-              className="Waftinputbox"
-              id="blog-title"
-              type="text"
+         
+            <Input
+              label ="title"
+              inputClassName="Waftinputbox"
+              inputId="blog-title"
               value={one.title || ''}
               name="Blog Title"
               onChange={this.handleChange('title')}
+              error={errors.title}
             />
-            <div id="component-error-text">{errors.title}</div>
-          </div>
+                    </div>
 
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -265,6 +264,7 @@ class AddEdit extends React.PureComponent {
                 name: 'category',
               }}
             >
+           
               <option name="none" value="" disabled>
                 None
               </option>
@@ -288,8 +288,10 @@ class AddEdit extends React.PureComponent {
                 value: one.description || '',
               }}
             />
+           
             <div id="component-error-text">{errors.description}</div>
           </div>
+         
           <div className="w-full md:w-1/2 pb-4 mt-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
@@ -484,6 +486,7 @@ const mapStateToProps = createStructuredSelector({
   chip: makeSelectChip(),
   tempTag: makeSelectTag(),
   loading: makeSelectLoading(),
+
   errors: makeSelectErrors(),
 });
 

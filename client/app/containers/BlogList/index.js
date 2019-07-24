@@ -42,12 +42,12 @@ export class BlogListPage extends React.Component {
         <div>
           <div className="banner relative">
             <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
-            <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-primary waft-title">
+            <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
               Blogs
             </h1>
           </div>
-          <div className="container mx-auto">
-            <div className="mt-10">
+          <div className="container mx-auto my-10">
+            <div className="flex flex-wrap w-full md:w-3/4 -mx-5">
               {blogList.map(each => {
                 const {
                   image,
@@ -61,12 +61,12 @@ export class BlogListPage extends React.Component {
 
                 return (
                   <div
-                    className="blog_sec flex flex-wrap border-b py-5"
+                    className="blog_sec w-1/2 px-5 mb-5"
                     key={slug_url}
                   >
-                    <div className="sm:w-1/2 lg:w-1/4 xl:w-1/6 md:w-2/5 w-full">
+                    <div className="w-full h-64 object-cover overflow-hidden">
                       <Link to={`/blog/${slug_url}`}>
-                        <div className="img blog-img">
+                        <div className="img blog-img h-full">
                           <img
                             src={image && `${IMAGE_BASE}${image.path}`}
                             className="rounded"
@@ -75,34 +75,36 @@ export class BlogListPage extends React.Component {
                         </div>
                       </Link>
                     </div>
-                    <div className="md:w-3/5 w-full md:pl-10">
+                    <div className="">
+
+                    <Link
+                        className="text-black no-underline capitalize mb-2 bold block mt-4"
+                        to={`/blog/${slug_url}`}
+                      >
+                        <h2>{title}</h2>
+                      </Link>
                       <div className="border-t-1 flex flex-wrap font-bold">
                         <Link
-                          className="ml-1 text-black leading-normal text-base no-underline"
+                          className="mr-2 text-black hover:text-waftprimary leading-normal text-base no-underline"
                           to={`/blog-category/${category ? category._id : ''}`}
                         >
-                          <div className="mr-1">
-                            By : {category ? category.title : ''}
-                            <span> / </span>{' '}
+                          <div className="mr-2">
+                            <span className="text-grey-dark">By</span>  {category ? category.title : ''}
+                            {' '}
                           </div>
                         </Link>
-                        <p className="text-black leading-normal text-base mr-1">
+                        <p className="text-grey-dark leading-normal text-base mr-2">
                           {moment(added_at).format('MMM Do YY')}
-                          <span> / </span>
+                          
                         </p>
                         <Link
-                          className="text-black leading-normal text-base no-underline"
+                          className="text-grey-darkleading-normal text-base no-underline"
                           to={`/blog/${each.slug_url}`}
                         >
                           <div> {tags.join(', ') || ''} </div>
                         </Link>{' '}
                       </div>
-                      <Link
-                        className="text-black no-underline capitalize mb-2 bold block"
-                        to={`/blog/${slug_url}`}
-                      >
-                        <h2>{title}</h2>
-                      </Link>
+                   
 
                       <Link
                         className="text-grey-darker text-base no-underline"
@@ -110,15 +112,15 @@ export class BlogListPage extends React.Component {
                       >
                         <div
                           className="leading-normal text-base text-left"
-                          style={{ height: '148px', overflow: 'hidden' }}
+                          style={{ height: '95px', overflow: 'hidden' }}
                           dangerouslySetInnerHTML={{ __html: description }}
                         />
                       </Link>
 
-                      <div className="block readmore mt-5">
+                      <div className="flex justify-end readmore mt-2">
                         {' '}
                         <Link
-                          className="no-underline px-6 py-2 border rounded text-black hover:text-primary leading-normal text-base"
+                          className="no-underline hover:text-waftprimary"
                           to={`/blog/${slug_url}`}
                         >
                           Continue Reading <span className="rdanim">>>></span>

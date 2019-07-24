@@ -84,12 +84,12 @@ export class BlogPage extends React.Component {
         <Helmet>
           <title>{blog.title}</title>
         </Helmet>
-        <div className="flex mb-4">
-          <div className="w-3/4">
-            <div className="container mx-auto ">
-              <h1 className="mt-5 mb-2 font-light uppercase">
+            <div className="container mx-auto my-10">
+              <div className="flex flex-wrap w-full -mx-5">
+              <div className="md:w-3/4 px-5">
+              <h2>
                 <span>{blog.title}</span>
-              </h1>
+              </h2>
               {/* <Disqus.CommentCount
                 shortname={disqusShortname}
                 config={disqusConfig}
@@ -101,10 +101,9 @@ export class BlogPage extends React.Component {
                 {blog.image && blog.image.fieldname ? (
                   <img
                     src={`${IMAGE_BASE}${blog.image.path}`}
-                    className=""
+                    className="object-cover"
                     alt={`${blog.title}`}
-                    width="auto"
-                    height="628"
+                    style={{width:'100%',height:'400px',objectFit:'cover'}}
                   />
                 ) : null}
               </div>
@@ -126,12 +125,14 @@ export class BlogPage extends React.Component {
                 <div id="disqus_thread" />
               </div>
             </div>
-          </div>
-          <div className="w-1/4 bg-gray-400">
+      
+          <div className="w-full md:w-1/4 bg-gray-400 p-3 border rounded">
             <RecentBlogs />
             {/* <RelatedBlogs /> */}
           </div>
-        </div>
+          </div>
+          </div>
+        
       </>
     );
   }

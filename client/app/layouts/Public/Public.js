@@ -36,7 +36,7 @@ const PublicLayout = ({ location }) => {
   return (
     <>
       {showHeaderAndFooter && <Header />}
-      <div className="container mx-auto pt-12 pb-12">{switchRoutes}</div>
+      <div className="flex-1">{switchRoutes}</div>
       {showHeaderAndFooter && <Footer />}
     </>
   );

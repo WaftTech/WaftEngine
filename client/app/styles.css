@@ -84,6 +84,12 @@ table.table tbody td {
  border-color:#ff3b30;
 }
 
+.waft-title {
+  left: 0;
+  right: 0;
+  bottom: 20px;
+}
+
 .login-l{
   position: relative;
 }
@@ -147,7 +153,7 @@ div#component-error-text {
 .waft-gradient {
   position:fixed;
   top:0;
-  left:250px;
+  left:0;
   right: 0;
   height:4px;
   background: repeating-linear-gradient(to right, #ff3b30 0%, #d82929 25%, #ff3b30 50%, #5A5387 75%, #ff3b30 100%);
@@ -168,6 +174,12 @@ div#component-error-text {
 
 .list-reset li a.active {
   color: #ff3b30;
+}
+
+/* blog */
+
+.blog-det:last-child{
+  border-bottom: none;
 }
 
 /* footer */
