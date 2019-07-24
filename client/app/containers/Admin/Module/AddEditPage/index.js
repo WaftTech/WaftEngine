@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
+import SwapIcon from '@material-ui/icons/SwapHoriz';
 import BackIcon from '@material-ui/icons/ArrowBack';
 
 import injectSaga from 'utils/injectSaga';
@@ -156,7 +157,10 @@ class AddEdit extends React.PureComponent {
       value: tempPath,
     });
   };
-
+  handleChangeAccess= () => {
+    this.props.clearOne();
+    this.props.push(`/admin/module-manage/access/${this.props.match.params.id}`);
+  };
   handleAddServerRoute = index => event => {
     event.persist();
     const { path } = this.props.one;
@@ -221,6 +225,14 @@ class AddEdit extends React.PureComponent {
             </IconButton>{' '}
             {id ? `Edit for ${one.module_name}` : 'Add Module'}
           </PageHeader>
+          <Fab
+            color="primary"
+            aria-label="Change Access"
+            className={classes.fab}
+            onClick={this.handleChangeAccess}
+          >
+            <SwapIcon />
+          </Fab>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
@@ -309,7 +321,12 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({
+const styles = theme => ({  fab: {
+  width: '40px',
+  height: '40px',
+  marginTop: 'auto',
+  marginBottom: 'auto',
+},
   backbtn: {
     padding: 0,
     height: '40px',

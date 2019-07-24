@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import Helmet from 'react-helmet';
 
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -58,7 +60,10 @@ class AccessManagePage extends React.PureComponent {
   handleBack = () => {
     this.props.push('/admin/module-manage');
   };
-
+  handleEditAccess= () => {
+    this.props.clearOne();
+    this.props.push(`/admin/module-manage/edit/${this.props.match.params.id}`);
+  };
 
   handleAccessUpdate = (module_id, roleId, ModuleId) => {
     let tempAccess = [...this.props.access.Access];
@@ -102,6 +107,14 @@ class AccessManagePage extends React.PureComponent {
         </IconButton>
           {`Edit Access for ${Module.module_name}`}
         </PageHeader>
+        <Fab
+            color="primary"
+            aria-label="Edit Access"
+            className={classes.fab}
+            onClick={this.handleEditAccess}
+          >
+            <EditIcon />
+          </Fab>
         </div>
         <PageContent>
           {Roles.map(role => {
@@ -173,7 +186,12 @@ const styles = theme => ({
     borderRadius:'50%',
     marginRight:'5px',
   },
- 
+  fab: {
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
  
   toggleContainer: {
     height: 56,
