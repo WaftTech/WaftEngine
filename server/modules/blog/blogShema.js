@@ -15,7 +15,7 @@ const blogSchema = new schema({
     type: String,
   },
   meta_tag: {
-    type: String,
+    type: [String],
   },
   meta_description: {
     type: String,
@@ -30,7 +30,7 @@ const blogSchema = new schema({
     type: String,
   },
   keywords: {
-    type: String,
+    type: [String],
   },
   slug_url: {
     type: String,

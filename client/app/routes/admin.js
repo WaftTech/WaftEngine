@@ -1,32 +1,32 @@
-import DashboardPage from '../containers/AdminDashboard/Loadable';
-import RoleManagePage from '../containers/AdminRoleManagePage/Loadable';
-import RoleManageEditPage from '../containers/AdminRoleManagePage/AddEditPage/Loadable';
-import ModuleManagePage from '../containers/AdminModuleManagePage/Loadable';
-import ModuleManageEditPage from '../containers/AdminModuleManagePage/AddEditPage/Loadable';
-import ModuleAccessManagePage from '../containers/AdminModuleManagePage/AccessManagePage/Loadable';
-import UserManagePage from '../containers/AdminUserManagePage/Loadable';
-import UserManageEditPage from '../containers/AdminUserManagePage/AddEditPage/Loadable';
-import ContentManagePage from '../containers/AdminContentListingPage/Loadable';
-import ContentManageAddEdit from '../containers/AdminContentListingPage/AddEditPage/Loadable';
-import FaqManagePage from '../containers/AdminFaqManagePage/Loadable';
-import FaqCatManagePage from '../containers/AdminFaqCategoryManagePage/Loadable';
-import FaqManageAddEdit from '../containers/AdminFaqManagePage/AddEditPage/Loadable';
-import MediaManagePage from '../containers/AdminMediaManagePage/Loadable';
-import SliderManagePage from '../containers/AdminSliderManagePage/Loadable';
-import SliderManageAddEdit from '../containers/AdminSliderManagePage/AddEditPage/Loadable';
-import BlogManagePage from '../containers/AdminBlogManagePage/Loadable';
-import BlogManageAddEdit from '../containers/AdminBlogManagePage/AddEditPage/Loadable';
-import SubscribePage from '../containers/AdminSubscribePage/Loadable';
-import SubscribeViewPage from '../containers/AdminSubscribePage/SubscribeView';
-import ContactListPage from '../containers/AdminContactListPage/Loadable';
-import ContactViewPage from '../containers/AdminContactListPage/ViewContactList';
-import TemplateListingPage from '../containers/AdminTemplateListingPage/Loadable';
-import ErrorManagePage from '../containers/AdminErrorManagePage/Loadable';
-import FaqCatAddEditPage from '../containers/AdminFaqCategoryManagePage/AddEdit/Loadable';
-import BlogCatManagePage from '../containers/AdminBlogCategoryManagePage/Loadable';
-import BlogCatAddEditPage from '../containers/AdminBlogCategoryManagePage/AddEdit/Loadable';
-import AdminReportPage from '../containers/AdminReportPage/Loadable';
-import AdminIntegrationPage from '../containers/AdminIntegrationPage/Loadable';
+import DashboardPage from '../containers/Admin/Dashboard/Loadable';
+import RolePage from '../containers/Admin/Role/Loadable';
+import RoleEditPage from '../containers/Admin/Role/AddEditPage/Loadable';
+import ModuleManagePage from '../containers/Admin/Module/Loadable';
+import ModuleManageEditPage from '../containers/Admin/Module/AddEditPage/Loadable';
+import ModuleAccessManagePage from '../containers/Admin/Module/AccessManagePage/Loadable';
+import UserManagePage from '../containers/Admin/User/Loadable';
+import UserManageEditPage from '../containers/Admin/User/AddEditPage/Loadable';
+import ContentManagePage from '../containers/Admin/Content/Loadable';
+import ContentManageAddEdit from '../containers/Admin/Content/AddEditPage/Loadable';
+import FaqPage from '../containers/Admin/Faq/Loadable';
+import FaqCatManagePage from '../containers/Admin/FaqCategory/Loadable';
+import FaqAddEdit from '../containers/Admin/Faq/AddEditPage/Loadable';
+import MediaPage from '../containers/Admin/Media/Loadable';
+import SliderPage from '../containers/Admin/Slider/Loadable';
+import SliderAddEdit from '../containers/Admin/Slider/AddEditPage/Loadable';
+import BlogManagePage from '../containers/Admin/Blog/Loadable';
+import BlogManageAddEdit from '../containers/Admin/Blog/AddEditPage/Loadable';
+import SubscribePage from '../containers/Admin/Subscribe/Loadable';
+import SubscribeViewPage from '../containers/Admin/Subscribe/SubscribeView';
+import ContactListPage from '../containers/Admin/Contact/Loadable';
+import ContactViewPage from '../containers/Admin/Contact/ViewContactList';
+import TemplateListingPage from '../containers/Admin/Template/Loadable';
+import ErrorManagePage from '../containers/Admin/Error/Loadable';
+import FaqCatAddEditPage from '../containers/Admin/FaqCategory';
+import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
+import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadable';
+import Report from '../containers/Admin/Report/Loadable';
+import Integration from '../containers/Admin/Integration/Loadable';
 
 const routes = [
   {
@@ -36,17 +36,17 @@ const routes = [
   },
   {
     path: '/admin/role-manage',
-    component: RoleManagePage,
+    component: RolePage,
     exact: true,
   },
   {
     path: '/admin/role-manage/edit/:id',
-    component: RoleManageEditPage,
+    component: RoleEditPage,
     exact: true,
   },
   {
     path: '/admin/role-manage/add',
-    component: RoleManageEditPage,
+    component: RoleEditPage,
     exact: true,
   },
   {
@@ -102,19 +102,19 @@ const routes = [
   {
     path: '/admin/faq-manage/edit/:id',
     name: 'FAQ Manage',
-    component: FaqManageAddEdit,
+    component: FaqAddEdit,
     exact: true,
   },
   {
     path: '/admin/faq-manage/add',
     name: 'FAQ Manage',
-    component: FaqManageAddEdit,
+    component: FaqAddEdit,
     exact: true,
   },
   {
     path: '/admin/faq-manage',
     name: 'FAQ Manage',
-    component: FaqManagePage,
+    component: FaqPage,
     exact: true,
   },
   {
@@ -134,22 +134,22 @@ const routes = [
   },
   {
     path: '/admin/media-manage',
-    component: MediaManagePage,
+    component: MediaPage,
     exact: true,
   },
   {
     path: '/admin/slider-manage/edit/:id',
-    component: SliderManageAddEdit,
+    component: SliderAddEdit,
     exact: true,
   },
   {
     path: '/admin/slider-manage/add',
-    component: SliderManageAddEdit,
+    component: SliderAddEdit,
     exact: true,
   },
   {
     path: '/admin/slider-manage',
-    component: SliderManagePage,
+    component: SliderPage,
     exact: true,
   },
   {
@@ -215,12 +215,12 @@ const routes = [
   },
   {
     path: '/admin/reports',
-    component: AdminReportPage,
+    component: Report,
     exact: true,
   },
   {
     path: '/admin/integration',
-    component: AdminIntegrationPage,
+    component: Integration,
     exact: true,
   },
 ];

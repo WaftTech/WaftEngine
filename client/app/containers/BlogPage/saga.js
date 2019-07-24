@@ -16,6 +16,19 @@ function* loadBlog({ payload }) {
   );
 }
 
+function* loadRecentBlogs() {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/latest`,
+      actions.loadRecentBlogsSuccess,
+      actions.loadRecentBlogsFailure,
+      token,
+    ),
+  );
+}
+
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_BLOG_REQUEST, loadBlog);
+  yield takeLatest(types.LOAD_RECENT_BLOGS_REQUEST, loadRecentBlogs);
 }
