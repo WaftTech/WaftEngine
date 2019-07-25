@@ -28,7 +28,20 @@ function* loadRecentBlogs() {
   );
 }
 
+function* loadRelatedBlogs(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/related/${action.payload}`,
+      actions.loadRelatedBlogsSuccess,
+      actions.loadRelatedBlogsFailure,
+      token,
+    ),
+  );
+}
+
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_BLOG_REQUEST, loadBlog);
   yield takeLatest(types.LOAD_RECENT_BLOGS_REQUEST, loadRecentBlogs);
+  yield takeLatest(types.LOAD_RELATED_BLOGS_REQUEST, loadRelatedBlogs);
 }

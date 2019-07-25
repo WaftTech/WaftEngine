@@ -8,10 +8,14 @@ import {
   makeSelectRelatedBlogsIsLoading,
   makeSelectRelatedBlogs,
 } from '../selectors';
+import { IMAGE_BASE } from '../../App/constants';
 
 function RelatedBlogs(props) {
   if (props.loading) {
     return <div>Loading...</div>;
+  }
+  if (props.blogs.length === 0) {
+    return <div>No related Blogs...</div>;
   }
   return (
     <div className="mb-4">
