@@ -275,6 +275,23 @@ class AddEdit extends React.PureComponent {
               ))}
             </select>
           </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="short_description"
+            >
+              Short Description
+            </label>
+
+            <textarea
+              className="Waftinputbox"
+              id="short_description"
+              type="text"
+              value={one.short_description || ''}
+              name="short_description"
+              onChange={this.handleChange('short_description')}
+            />
+          </div>
           <div className="pb-4">
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Blog Description

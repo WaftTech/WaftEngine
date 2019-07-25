@@ -38,6 +38,7 @@ export class BlogPage extends React.Component {
 
   componentDidMount() {
     this.props.loadRecentBlogsRequest();
+    this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
     this.props.loadBlogRequest(this.props.match.params.slug_url);
     (function() {
       // DON'T EDIT BELOW THIS LINE
@@ -51,6 +52,7 @@ export class BlogPage extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.slug_url !== this.props.match.params.slug_url) {
+      this.props.loadRelatedBlogsRequest(nextProps.match.params.slug_url);
       this.props.loadBlogRequest(nextProps.match.params.slug_url);
       (function() {
         // DON'T EDIT BELOW THIS LINE
