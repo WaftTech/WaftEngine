@@ -9,6 +9,9 @@ html{
   font-family: 'Roboto Condensed', sans-serif;
 }
 
+p{
+  font-family: 'Roboto', sans-serif;
+}
 /* Remove autofill bg color */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

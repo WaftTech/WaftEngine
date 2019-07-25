@@ -21,7 +21,7 @@ import saga from './saga';
 import { IMAGE_BASE } from '../App/constants';
 import Loading from '../../components/loading';
 import RecentBlogs from './components/RecentBlogs';
-// import RelatedBlogs from './components/RelatedBlogs';
+import RelatedBlogs from './components/RelatedBlogs';
 
 export class BlogPage extends React.Component {
   static propTypes = {
@@ -51,7 +51,7 @@ export class BlogPage extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.slug_url !== this.props.match.params.slug_url) {
-      this.props.loadBlogRequest(this.props.match.params.slug_url);
+      this.props.loadBlogRequest(nextProps.match.params.slug_url);
       (function() {
         // DON'T EDIT BELOW THIS LINE
         const d = window.document;
@@ -127,8 +127,8 @@ export class BlogPage extends React.Component {
             </div>
       
           <div className="w-full md:w-1/4 bg-gray-400 p-3 border rounded">
-            <RecentBlogs />
-            {/* <RelatedBlogs /> */}
+            <RecentBlogs/>
+            <RelatedBlogs/>
           </div>
           </div>
           </div>
