@@ -15,20 +15,25 @@ function RecentBlogs(props) {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div className="mb-4">
       <h2 className="text-center pb-3 border-b">Recent Blogs</h2>
       {props.blogs.map(blog => (
         <div
           key={`recents-${blog._id}`}
           className="blog-det flex py-3 border-b border-dashed"
         >
+          <div  style={{ width: '80px', height: '80px' }}>
+          <Link
+           to={`/blog/${blog.slug_url}`}
+           >
           <img
             src={`${IMAGE_BASE}${blog.image.path}`}
             alt="blog image"
-            className="mr-4"
-            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
-          <div>
+            </Link>
+            </div>
+          <div className="flex-1 ml-4">
             <h4 className="font-bold">
               <Link
                 className="text-black no-underline hover:text-waftprimary"
