@@ -15,7 +15,9 @@ function RelatedBlogs(props) {
     return <div>Loading...</div>;
   }
   if (props.blogs.length === 0) {
-    return <div>No related Blogs...</div>;
+    return <div className="mb-4">
+       <h2 className="text-center pb-3 border-b">Related Blogs</h2>
+       <p className="text-center mt-3">No Related Blogs...</p></div>;
   }
   return (
     <div className="mb-4">
