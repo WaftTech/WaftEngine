@@ -1,6 +1,22 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { takeLatest, call, select } from 'redux-saga/effects';
+import Api from 'utils/Api';
+import { makeSelectToken } from '../App/selectors';
+import * as types from './constants';
+import * as actions from './actions';
+
+function* defaultAction(action) {
+  const token = yield select(makeSelectToken());
+  //  yield call(
+  //    Api.get(
+  //      `someroute/${action.payload}`,
+  //      actions.defaultActionSuccess,
+  //      actions.defaultActionFailure,
+  //      token,
+  //    ),
+  //  );
+}
 
 // Individual exports for testing
 export default function* {{ camelCase name }}Saga() {
-  // See example in containers/HomePage/saga.js
+  yield takeLatest(types.DEFAULT_ACTION_REQUEST, defaultAction);
 }
