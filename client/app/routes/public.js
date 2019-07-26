@@ -10,9 +10,6 @@ import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
 import BlogDetailPage from '../containers/BlogPage/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
 import SubscribePage from '../containers/SubscriberPage/Loadable';
-// import TechnologyPage from '../containers/TechnologyPage';
-// import ArchitecturePage from '../containers/ArchitecturePage';
-import FeaturesPage from '../containers/FeaturesPage/Loadable';
 import AboutUsPage from '../containers/AboutUsPage/Loadable';
 
 const publicRoutes = [
@@ -85,21 +82,6 @@ const publicRoutes = [
     exact: true,
     path: '/contact-us',
     component: ContactUsPage,
-  },
-  // {
-  //   exact: true,
-  //   path: '/technology',
-  //   component: TechnologyPage,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/architecture',
-  //   component: ArchitecturePage,
-  // },
-  {
-    exact: true,
-    path: '/features',
-    component: FeaturesPage,
   },
   {
     exact: true,

@@ -77,27 +77,27 @@ class Footer extends React.Component {
               </p>
             </div>
             <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">
-              <Link
+              <a
                 className="block no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
-                to="/about-us"
+                href="https://waftengine.org/about-us"
                 target="_blank"
               >
                 About Us
-              </Link>
-              <Link
+              </a>
+              <a
                 className="block no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
-                to="/features"
+                href="https://waftengine.org/features"
                 target="_blank"
               >
                 Features
-              </Link>
-              <Link
+              </a>
+              <a
                 className="display-block  no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
-                to="/contact-us"
+                href="https://waftengine.org/contact-us"
                 target="_blank"
               >
                 Contact Us
-              </Link>
+              </a>
             </div>
             <div className="w-full lg:w-1/3 mb-4 lg:flex lg:justify-end">
               <ul className="flex list-none p-0">
