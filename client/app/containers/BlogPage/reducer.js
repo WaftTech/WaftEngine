@@ -29,6 +29,7 @@ const blogPageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_RELATED_BLOGS_SUCCESS:
         draft.relatedBlogsIsLoading = false;
+        draft.relatedBlogs = action.payload.data;
         break;
       case types.LOAD_RELATED_BLOGS_FAILURE:
         draft.relatedBlogsIsLoading = false;
