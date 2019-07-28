@@ -1,9 +1,9 @@
 ## For Development :
 
 * Code Editor like Visual Studio Code
-* Node for Windows or macOS. https://nodejs.org/en/download
-* MongoDB Server Installation (https://www.mongodb.com/)
-* Browser with dev tools :- Chrome with extension React Developer Tools and Redux DevTools
+* Node js and npm for Windows, linux or macOS. https://nodejs.org/en/download
+* MongoDB Server Installation (https://www.mongodb.com/) or a hosted mongo server instance like mongodb atlas, mlab, or similar.
+* Browser with dev tools :- Chrome/firefox with extension React Developer Tools and Redux DevTools
 
 ## For Production :
 
