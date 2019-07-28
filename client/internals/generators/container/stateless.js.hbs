@@ -23,7 +23,8 @@ import injectSaga from 'utils/injectSaga';
 {{/if}}
 {{#if wantActionsAndReducer}}
 import injectReducer from 'utils/injectReducer';
-import makeSelect{{properCase name}} from './selectors';
+import * as mapDispatchToProps from './actions';
+import { makeSelectDefaultData } from './selectors';
 import reducer from './reducer';
 {{/if}}
 {{#if wantSaga}}
@@ -33,7 +34,8 @@ import saga from './saga';
 import messages from './messages';
 {{/if}}
 
-export function {{ properCase name }}() {
+export const {{ properCase name }} = props => {
+  const { } = props;
   return (
     <div>
     {{#if wantHeaders}}
@@ -50,20 +52,17 @@ export function {{ properCase name }}() {
 }
 
 {{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+{{#if wantActionsAndReducer}}
+  defaultActionRequest: PropTypes.func.isRequired,
+  defaultData: PropTypes.string.isRequired,
+{{/if}}
 };
 
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
-  {{ camelCase name }}: makeSelect{{properCase name}}(),
+  defaultData: makeSelectDefaultData(),
 });
 {{/if}}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
 
 {{#if wantActionsAndReducer}}
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

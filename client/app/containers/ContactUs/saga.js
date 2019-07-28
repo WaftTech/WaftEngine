@@ -1,13 +1,4 @@
-import { delay } from 'redux-saga';
-import {
-  takeLatest,
-  fork,
-  put,
-  cancel,
-  take,
-  select,
-  call,
-} from 'redux-saga/effects';
+import { takeLatest, put, select, call } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
@@ -26,7 +17,7 @@ function* saveContact(action) {
     ),
   );
 }
-function* loadContactDetail(action) {
+function* loadContactDetail() {
   yield call(
     Api.get(
       `contents/key/contactdetail`,
@@ -35,6 +26,7 @@ function* loadContactDetail(action) {
     ),
   );
 }
+
 function* saveSuccessfunc(action) {
   const snackbarData = {
     message: action.payload.msg || 'Contact Save success!!',

@@ -4,10 +4,17 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as types from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+export const defaultActionRequest = payload => ({
+  type: types.DEFAULT_ACTION_REQUEST,
+  payload,
+});
+export const defaultActionSuccess = payload => ({
+  type: types.DEFAULT_ACTION_SUCCESS,
+  payload,
+});
+export const defaultActionFailure = payload => ({
+  type: types.DEFAULT_ACTION_FAILURE,
+  payload,
+});
