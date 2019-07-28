@@ -1,34 +1,21 @@
- First visit the waftengine github link and clone the project at a local   computer
+1. Make sure that you have Node.js v8.15.1 and npm v5 or above installed.
+2. Visit the waftengine github link and clone the mono repo using `git clone --depth=1 https://github.com/WaftTech/WaftEngine.git <YOUR_PROJECT_NAME>`
+3. After the completion of clone, take the clone folder into interface of command `cd <YOUR_PROJECT_NAME>.`
+4. Open the project on your faviorate IDE or Code editor. We use VS code, currently the most popular in js community. 
+5. Open the terminal/command shell.
+6. Change directory to the server folder inside the cloned project.
+7. Install the dependencies for server. `npm install` or `yarn install`
+8. Change directory to the client folder inside the cloned project.
+9. Install the dependencies for client. `npm install` or `yarn install`
+10. Now, rename the folder name `config.bak` to `config`
+11. Set the mongo db URL and other configuration which was on the `config/key.js` file (you can find the example for key.js, email.js) in the description
+12. Import/ transfer the data of server database folder to your mongodb server folder
+13. The base configuration of client is located in `client/app/containers/App/constants.js` 
+14. For the configuration of email, go to `server/config/email.js`
+15. Start the server; `npm start` or `yarn start` from appropriate directory in your terminal.
+16. Start the client on another shell; `npm start` or `yarn start` from appropriate directory in your terminal.
+17. The client runs on [http://localhost:5051/](http://localhost:5051/)
+18. The server runs on [http://localhost:5050/](http://localhost:5050/)
 
- After the completion of clone, take the clone folder into interface of command
 
- On the next step open the code editor on (visual studio) code 
-
- Open the command cell
-
- Entry the command on the server folder file
-
- Open the next command and register it on the client folder
-
- Install NPM on the client folder 
-
- Again install the NPM on the server folder
-
- Now, rename the folder name config.bak to config
-
-Set the mongo db URL and other configuration which was on the config key.js file( you can download example file, key.js, email.js) in the description
-
-Import/ transfer the data of server database folder to your mongodb server folder
-
- The configuration of client is located inside the client app where there is   another folder inside it i.e container app and inside it there is constant.js folder
-
- For the configuration of email, go to email.js which is located inside the server configuration
-
- Start NPM run on the server command which help you to start the server
-
- Start NPM run on the client command as well
-
-When the client command starts on local host(5051), go to the browser and open the file local host(5051)
-
- WaftEngine will be opened on the browser
-
+Congratulations You just setup Waft Engine.
