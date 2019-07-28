@@ -26,12 +26,16 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading, makeSelectErrors} from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectLoading,
+  makeSelectErrors,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import Loading from '../../../../components/loading';
+import Loading from '../../../../components/Loading';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -157,9 +161,11 @@ class AddEdit extends React.PureComponent {
       value: tempPath,
     });
   };
-  handleChangeAccess= () => {
+  handleChangeAccess = () => {
     this.props.clearOne();
-    this.props.push(`/admin/module-manage/access/${this.props.match.params.id}`);
+    this.props.push(
+      `/admin/module-manage/access/${this.props.match.params.id}`,
+    );
   };
   handleAddServerRoute = index => event => {
     event.persist();
@@ -208,7 +214,7 @@ class AddEdit extends React.PureComponent {
       errors,
     } = this.props;
     return loading && loading == true ? (
-      <Loading/>
+      <Loading />
     ) : (
       <React.Fragment>
         <Helmet>
@@ -246,9 +252,7 @@ class AddEdit extends React.PureComponent {
               value={one.module_name}
               onChange={this.handleChange('module_name')}
             />
-            <div id="component-error-text">
-            {errors.module_name }
-          </div>
+            <div id="component-error-text">{errors.module_name}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -262,9 +266,7 @@ class AddEdit extends React.PureComponent {
               value={one.description}
               onChange={this.handleChange('description')}
             />
-            <div id="component-error-text">
-            {errors.description }
-          </div>
+            <div id="component-error-text">{errors.description}</div>
           </div>
 
           {one.path.map((each, pathIndex) => (
@@ -321,12 +323,13 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({  fab: {
-  width: '40px',
-  height: '40px',
-  marginTop: 'auto',
-  marginBottom: 'auto',
-},
+const styles = theme => ({
+  fab: {
+    width: '40px',
+    height: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
   backbtn: {
     padding: 0,
     height: '40px',

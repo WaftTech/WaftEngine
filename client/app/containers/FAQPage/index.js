@@ -24,7 +24,7 @@ import { makeSelectFAQ, makeSelectLoading } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import Loading from '../../components/loading';
+import Loading from '../../components/Loading';
 
 const styles = {
   FAQParent: {

@@ -19,7 +19,7 @@ import { makeSelectBlog, makeSelectLoading } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { IMAGE_BASE } from '../App/constants';
-import Loading from '../../components/loading';
+import Loading from '../../components/Loading';
 import RecentBlogs from './components/RecentBlogs';
 import RelatedBlogs from './components/RelatedBlogs';
 

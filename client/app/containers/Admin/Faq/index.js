@@ -31,7 +31,7 @@ import * as mapDispatchToProps from './actions';
 
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import DeleteDialog from '../../../components/DeleteDialog';
-import Loading from '../../../components/loading';
+import Loading from '../../../components/Loading';
 
 const styles = theme => ({
   fab: {

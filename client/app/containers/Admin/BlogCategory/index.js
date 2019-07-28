@@ -33,7 +33,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import Loading from '../../../components/loading';
+import Loading from '../../../components/Loading';
 
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';

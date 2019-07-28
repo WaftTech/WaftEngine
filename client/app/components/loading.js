@@ -1,10 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import BackIcon from '@material-ui/icons/ArrowBack';
+import React from 'react';
 
-const Loading = props => {
-  const { classes, children } = props;
-  return  <div className="waft-gradient"></div>
-};
+const Loading = () => <div className="waft-gradient" />;
 
 export default Loading;
