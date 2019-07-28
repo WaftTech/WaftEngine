@@ -46,8 +46,8 @@ export class BlogListPage extends React.Component {
               Blogs
             </h1>
           </div>
-          <div className="container mx-auto my-10">
-            <div className="flex flex-wrap w-full md:w-3/4 -mx-5">
+          <div className="container mx-auto my-10 px-5">
+            <div className="flex flex-wrap w-full md:w-3/4 md:-mx-5">
               {blogList.map(each => {
                 const {
                   image,
@@ -61,10 +61,10 @@ export class BlogListPage extends React.Component {
 
                 return (
                   <div
-                    className="blog_sec w-1/2 px-5 mb-5"
+                    className="blog_sec w-full md:w-1/2 md:px-5 mb-5"
                     key={slug_url}
                   >
-                    <div className="w-full h-64 object-cover overflow-hidden">
+                    <div className="w-full h-48 md:h-64 object-cover overflow-hidden">
                       <Link to={`/blog/${slug_url}`}>
                         <div className="img blog-img h-full">
                           <img

@@ -301,4 +301,8 @@ div#component-error-text {
     order:inherit;
   }
 
+  .blog_img img{
+    height:400px!important;
+  }
+
 }

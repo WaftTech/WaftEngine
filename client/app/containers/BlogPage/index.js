@@ -86,10 +86,10 @@ export class BlogPage extends React.Component {
         <Helmet>
           <title>{blog.title}</title>
         </Helmet>
-            <div className="container mx-auto my-10">
-              <div className="flex flex-wrap w-full -mx-5">
-              <div className="md:w-3/4 px-5">
-              <h2>
+            <div className="container mx-auto my-10 px-5">
+              <div className="flex flex-wrap w-full lg:-mx-5">
+              <div className="w-full lg:w-3/4 lg:px-5">
+              <h2 className="capitalize">
                 <span>{blog.title}</span>
               </h2>
               {/* <Disqus.CommentCount
@@ -99,13 +99,13 @@ export class BlogPage extends React.Component {
                 Comments
               </Disqus.CommentCount> */}
               <br />
-              <div>
+              <div className="blog_img">
                 {blog.image && blog.image.fieldname ? (
                   <img
                     src={`${IMAGE_BASE}${blog.image.path}`}
                     className="object-cover"
                     alt={`${blog.title}`}
-                    style={{width:'100%',height:'400px',objectFit:'cover'}}
+                    style={{width:'100%',height:'250px',objectFit:'cover'}}
                   />
                 ) : null}
               </div>
@@ -128,7 +128,7 @@ export class BlogPage extends React.Component {
               </div>
             </div>
       
-          <div className="w-full md:w-1/4 bg-gray-400 p-3 border rounded">
+          <div className="w-full mt-4 lg:mt-0 lg:w-1/4 bg-gray-400 p-3 border rounded">
             <RecentBlogs/>
             <RelatedBlogs/>
           </div>
