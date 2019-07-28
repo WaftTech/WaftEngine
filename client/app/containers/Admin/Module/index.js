@@ -32,7 +32,7 @@ import * as mapDispatchToProps from './actions';
 import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
-import Loading from '../../../components/loading';
+import Loading from '../../../components/Loading';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminModuleManage extends React.PureComponent {
@@ -108,13 +108,13 @@ export class AdminModuleManage extends React.PureComponent {
       </>,
     ]);
 
-    return(
+    return (
       <>
         <Helmet>
           <title>Module Manage</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-        {loading && loading == true ? <Loading /> : <></>}
+          {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Module Manage</PageHeader>
           <Fab
             color="primary"

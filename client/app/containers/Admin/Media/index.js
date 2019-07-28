@@ -29,7 +29,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
 import { enqueueSnackbar } from '../../App/actions';
-import Loading from '../../../components/loading';
+import Loading from '../../../components/Loading';
 
 const styles = theme => ({
   button: {

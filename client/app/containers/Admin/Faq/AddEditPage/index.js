@@ -20,24 +20,29 @@ import injectReducer from 'utils/injectReducer';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectCategory, makeSelectLoading, makeSelectErrors } from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectCategory,
+  makeSelectLoading,
+  makeSelectErrors,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import Loading from '../../../../components/loading';
+import Loading from '../../../../components/Loading';
 
 const styles = theme => ({
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
-  }
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
+  },
 });
 
 class AddEdit extends React.PureComponent {
@@ -82,29 +87,29 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, category, one, match, loading, errors} = this.props;
+    const { classes, category, one, match, loading, errors } = this.props;
     return loading && loading == true ? (
-     <Loading/>
+      <Loading />
     ) : (
-
       <>
         <Helmet>
           <title>
             {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
           </title>
         </Helmet>
-  <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-        
-        <IconButton className={`${classes.backbtn} cursor-pointer`}	 onClick={this.handleGoBack} aria-label="Back">
-          <BackIcon />
-        </IconButton>{match && match.params && match.params.id
-            ? 'Edit Faq'
-            : 'Add Faq'}
-        </PageHeader>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleGoBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
+            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
+          </PageHeader>
         </div>
         <PageContent>
-       
           <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -113,15 +118,14 @@ class AddEdit extends React.PureComponent {
               Question
             </label>
             <input
-           
               className="Waftinputbox"
               name="Question"
               id="faq"
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
-         <div id="component-error-text">{errors.question}</div>
-            </div>
+            <div id="component-error-text">{errors.question}</div>
+          </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -129,56 +133,52 @@ class AddEdit extends React.PureComponent {
             >
               Answer
             </label>
-            <textarea className="Waftinputbox"
-              multiline = "true"
+            <textarea
+              className="Waftinputbox"
+              multiline="true"
               rows="5"
               name="Answer"
               id="faq-answer"
-          
               value={one.title || ''}
-              onChange={this.handleChange('title')}></textarea>
-            <div id="component-error-text">{errors.title}</div>           
-            </div>
+              onChange={this.handleChange('title')}
+            />
+            <div id="component-error-text">{errors.title}</div>
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
+          <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
               htmlFor="category"
             >
               Category
             </label>
-            <select className="Waftinputbox"  value={one.category}
-                  onChange={this.handleChange('category')}
-                  inputprops={{
-                    name: 'category',
-                    id: 'category-title',
-               
-                  }}>
+            <select
+              className="Waftinputbox"
+              value={one.category}
+              onChange={this.handleChange('category')}
+              inputprops={{
+                name: 'category',
+                id: 'category-title',
+              }}
+            >
+              {category &&
+                category.length &&
+                category.map(each => (
+                  <option key={each._id} value={each._id}>
+                    {each.title}
+                  </option>
+                ))}
+            </select>
+          </div>
 
-                    {category &&
-                    category.length &&
-                    category.map(each => (
-                  
-                      <option key={each._id} value={each._id}>
-                        {each.title}
-                     
-                      </option>
-                    ))}
-          
-
-                  </select>
-            </div>
-            
-
-          
-            <button className="text-white py-2 px-4 rounded mt-4 btn-waft"
-              onClick={this.handleSave}
-         
-              >
-                Save</button>
-          
+          <button
+            className="text-white py-2 px-4 rounded mt-4 btn-waft"
+            onClick={this.handleSave}
+          >
+            Save
+          </button>
         </PageContent>
-   </>
+      </>
     );
   }
 }

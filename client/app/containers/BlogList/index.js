@@ -16,7 +16,7 @@ import { makeSelectBlogList, makeSelectLoading } from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
-import Loading from '../../components/loading';
+import Loading from '../../components/Loading';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogListPage extends React.Component {

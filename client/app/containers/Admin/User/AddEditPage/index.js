@@ -29,7 +29,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
-import Loading from '../../../../components/loading';
+import Loading from '../../../../components/Loading';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {

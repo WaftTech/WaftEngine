@@ -32,7 +32,7 @@ import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
-import Loading from '../../../components/loading';
+import Loading from '../../../components/Loading';
 
 const styles = theme => ({
   tableActionButton: {

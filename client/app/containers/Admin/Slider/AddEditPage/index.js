@@ -49,7 +49,7 @@ import { IMAGE_BASE } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
-import Loading from '../../../../components/loading';
+import Loading from '../../../../components/Loading';
 
 const styles = theme => ({
   modal: { backgroundColor: '#fff', padding: '20' },
