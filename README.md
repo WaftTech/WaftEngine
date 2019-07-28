@@ -27,9 +27,9 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
 
 Follow the documentation to run WaftEngine for all operating systems.
 
-- [Linux]()
-- [Windows]()
-- [OS X]()
+- [Linux](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
+- [Windows](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
+- [OS X](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
 
 # Get involved
 
