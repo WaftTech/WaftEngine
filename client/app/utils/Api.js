@@ -37,7 +37,7 @@ class Api {
 
   static dataLoader1(apiUri, onSuccess, onError, data, token, metaData) {
     return function* commonApiSetup() {
-      const baseUrl = 'http://www.waftengine.org/api/';
+      const baseUrl = 'https://www.waftengine.org/api/';
       const requestURL = `${baseUrl}${apiUri}`;
       try {
         const options = {
