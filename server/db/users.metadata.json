@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"waft-engine.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"waft-engine.users","background":true}],"uuid":"898f6fca2b85475da4c2ea3d744077a2"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"waft-engine.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"waft-engine.users","background":true}],"uuid":"fab9572504c94d20957e25d81803e48a"}
