@@ -26,7 +26,7 @@ loginlogController.logout = async (req, res, next) => {
     if (deactivelog) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'Logged out', null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, null, 'Login First', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, false, null, null, 'Logged out', null);
     }
   } catch (err) {
     next(err);
