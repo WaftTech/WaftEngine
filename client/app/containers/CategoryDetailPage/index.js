@@ -30,20 +30,20 @@ class CategoryDetailPage extends React.Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>{blog[0].category ? blog[0].category.title : ''}</title>
+          <title>{blog && blog[0] ? (blog[0].category ? blog[0].category.title : '') : 'Blog Not Found'}</title>
         </Helmet>
         <div className="container mx-auto my-10">
         <h2 className="mb-5">
                 <span>
                   Blogs related to{' '}
-                  {blog[0].category ? blog[0].category.title : ''}
+                  {blog && blog[0]  && blog[0].category ? blog[0].category.title : ''}
                 </span>
               </h2>
      
   <div className="flex flex-wrap w-full md:w-3/4 -mx-5">
 
           
-              {blog.map(each => {
+              {blog && blog.map(each => {
                 const {
                   image,
                   title,
@@ -96,7 +96,7 @@ class CategoryDetailPage extends React.Component {
                           className="text-grey-darkleading-normal text-base no-underline"
                           to={`/blog/${each.slug_url}`}
                         >
-                          <div> {tags.join(', ') || ''} </div>
+                          <div> {tags && tags.join(', ') || ''} </div>
                         </Link>{' '}
                       </div>
                    

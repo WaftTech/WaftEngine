@@ -17,6 +17,7 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import Loading from '../../components/Loading';
+import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogListPage extends React.Component {
@@ -132,6 +133,7 @@ export class BlogListPage extends React.Component {
               })}
             </div>
           </div>
+          <CategoryListing></CategoryListing>
         </div>
       </React.Fragment>
     );
