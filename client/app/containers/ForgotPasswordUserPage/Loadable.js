@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'utils/loadable';
+import React from 'react';
 import loadable from 'utils/loadable';
 import Loading from 'components/Loading';
 
