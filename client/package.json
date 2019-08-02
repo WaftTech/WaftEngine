@@ -99,7 +99,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-datepicker": "^2.8.0",
     "react-dom": "16.8.4",
-    "react-dropzone": "^10.1.6",
+    "react-dropzone": "^10.1.7",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.4",
     "react-google-recaptcha": "^1.1.0",

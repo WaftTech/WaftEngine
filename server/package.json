@@ -27,7 +27,7 @@
     "jimp": "^0.6.0",
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.3.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",
     "moment": "^2.23.0",
     "mongoose": "^5.6.3",
