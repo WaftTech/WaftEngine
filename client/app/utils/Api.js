@@ -76,25 +76,13 @@ class Api {
       const requestURL = `${API_BASE}${apiUri}`;
       let multipartData = new FormData();
       multipartData = objectToFormData(data, multipartData);
-      // if (Object.prototype.toString.call(document) === "[object Array]") {
-      //   for (let i = 0; i < document.length; i++) {
-      //     multipartData.append("file", document[i]);
-      //   }
-      // } else {
-      //   multipartData.append("file", document);
-      // }
-      // case for multiple files on same key
       Object.keys(document).map(each => {
-        if (Object.prototype.toString.call(document) === '[object Array]') {
-          document.map(fileObj =>
-            multipartData.append(
-              [Object.keys(fileObj)[0]],
-              Object.values(fileObj)[0],
-            ),
-          );
+        if (Array.isArray(document[each])) {
+          document[each].map(fileObj => multipartData.append([each], fileObj));
         } else {
           multipartData.append([each], document[each]);
         }
+        return null;
       });
       try {
         const options = {
@@ -106,16 +94,14 @@ class Api {
         };
         const response = yield call(request, requestURL, options);
         yield put(onSuccess(response));
-        // if (response.success) {
-        //   yield put(onSuccess(response));
-        // } else {
-        //   yield put(onError(response));
-        // }
       } catch (err) {
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {}
+        } catch (e) {
+          // unexpected error
+          console.log(e, 'error in api call');
+        }
         yield put(onError(error));
       }
     };
