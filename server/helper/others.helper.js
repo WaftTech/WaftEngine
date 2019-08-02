@@ -19,7 +19,6 @@ otherHelper.generateRandomNumberString = len => {
 otherHelper.parsePhoneNo = (phone, RegionCode) => {
   try {
     var pn = new PhoneNumber(phone, RegionCode);
-    console.log(pn);
     if (!pn.isValid()) {
       return {
         status: false,
@@ -42,7 +41,6 @@ otherHelper.parsePhoneNo = (phone, RegionCode) => {
       };
     }
   } catch (err) {
-    console.log(err);
     return err;
   }
 };
@@ -205,7 +203,6 @@ otherHelper.validation = (data, validationArray) => {
           break;
         case 'IsPhone':
           let pn = new PhoneNumber(value);
-          console.log(JSON.stringify(pn, null, 4));
           if (pn.isValid()) {
             if (val.option) {
               if (val.option.isMobile) {

@@ -10,7 +10,6 @@ internal.ValidateEmail = email => {
   return re.test(String(email).toLowerCase());
 };
 internal.CheckField = (res, k, v) => {
-  console.log('Field', k, '-', v);
   const fieldTypes = Object.keys(moduleConfig.fieldType);
   if (!v.label) {
     return otherHelper.sendResponse(res, httpStatus.FAILED_DEPENDENCY, false, null, `'${k}' must have 'label'`);
@@ -34,7 +33,6 @@ internal.CheckField = (res, k, v) => {
         }
         break;
       case 'AutoNumberField':
-        console.log('v.startingNumber', v.startingNumber);
         if ('' + v.startingNumber && !isNaN(parseInt(v.startingNumber))) {
           v.startingNumber = parseInt(v.startingNumber);
         } else {
@@ -122,7 +120,6 @@ internal.CheckField = (res, k, v) => {
   }
 };
 internal.CheckSection = (res, k, v) => {
-  console.log('Section', k, '-', v);
   if (!v.name) {
     return otherHelper.sendResponse(res, httpStatus.FAILED_DEPENDENCY, false, null, `Section must have label name`);
   }
@@ -161,9 +158,7 @@ moduleController.ValidateModuleConfig = async (req, res, next) => {
       }
     });
     return next();
-    console.log(1);
   } catch (err) {
-    console.log(err);
     next(err);
     return err;
   }

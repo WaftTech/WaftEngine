@@ -48,8 +48,7 @@ userController.PostUserPw = async (req, res, next) => {
     let hashpw = await bcrypt.hash(req.body.password, salt);
     if (req.body && req.body._id) {
       const update = await users.findByIdAndUpdate(req.body._id, {
-        $set: { password: hashpw, 
-          last_password_change_date: new Date()}
+        $set: { password: hashpw, last_password_change_date: new Date() },
       });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!!', null);
     } else {
@@ -80,7 +79,6 @@ userController.CheckMail = async (req, res) => {
 userController.GetAllUserGRBY = async (req, res, next) => {
   try {
     // const user = await users.aggregate([{ $group: { _id: '$roles', count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $unwind: '$_id' }, { $lookup: { from: 'roles', localField: '_id', foreignField: '_id', as: 'roles' } }, { $unwind: '$roles' }]);
-    // console.log('users', user);
 
     const role = await roles.find({ is_deleted: false }).select('role_title');
     let user = await users.find({ is_deleted: false });
@@ -117,7 +115,6 @@ userController.GetAllUser = async (req, res, next) => {
   if (req.query.sort) {
     let sortfield = req.query.sort.slice(1);
     let sortby = req.query.sort.charAt(0);
-    console.log(sortfield);
     if (sortby == 1 && !isNaN(sortby) && sortfield) {
       //one is ascending
       sortq = sortfield;
@@ -340,7 +337,6 @@ userController.Verifymail = async (req, res) => {
     } = req;
     const user = await users.findOne({ email, email_verification_code: code });
     const data = { email };
-    console.log(user);
     if (!user) {
       errors.email = 'Invalid Verification Code';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
@@ -545,7 +541,6 @@ userController.Login = async (req, res, next) => {
               (err, token) => {
                 loginlogs.addloginlog(req, token, next);
                 token = `Bearer ${token}`;
-                console.log(token);
                 payload.routes = routes;
                 return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
               },
@@ -625,11 +620,9 @@ userController.changePassword = async (req, res, next) => {
 userController.GithubLogin = (req, res, next) => {};
 
 userController.GoogleLogin = async (req, res, next) => {
-  // console.log(req.params);
   if (req.params.access_token) {
     const dataObj = await userController.requestSocialOAuthApiDataHelper(req, next, oauthConfig.googleAuth.google_exchange_oauth_for_token_url, oauthConfig.googleAuth.google_scope_permissions, 'google');
 
-    console.log(dataObj);
     if (dataObj && Object.keys(dataObj).length > 0) {
       otherHelper.sendResponse(res, httpStatus.OK, true, dataObj, null, 'Success', 'token');
     } else {
@@ -694,15 +687,11 @@ userController.RequestSocialOAuthApiDataHelper = async (req, next, request_url, 
           const timestamp = Math.round(Date.now() / 1000);
           const oAuthSignature = _p.generateOAuthSignature(randomToken, timestamp, req.params.access_token);
           headers = {
-            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${
-              req.params.access_token
-            }", oauth_version="1.0"`,
+            Authorization: `OAuth oauth_consumer_key="${moduleConfig.oauthConfig.twitter.app_id}", oauth_nonce="${moduleConfig.oauthConfig.twitter.app_id}_${randomToken}", oauth_signature="${oAuthSignature}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${timestamp}", oauth_token="${req.params.access_token}", oauth_version="1.0"`,
           };
           break;
       }
-      console.log(request_url);
       const dataObj = await thirdPartyApiRequesterHelper.requestThirdPartyApi(req, request_url, headers, next, null);
-      console.log(dataObj);
       return dataObj && dataObj.error && Object.keys(dataObj.error).length > 0 ? null : dataObj && Object.keys(dataObj).length > 0 ? dataObj : null;
     }
     return null;

@@ -113,7 +113,6 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
       const mediaSave = await newMedia.save();
       medias.push(mediaSave);
     }
-    console.log(medias);
     return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Saved Success !!', null);
   } catch (err) {
     next(err);

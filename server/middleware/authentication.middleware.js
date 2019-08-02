@@ -113,7 +113,6 @@ authMiddleware.getClientInfo = async (req, res, next) => {
   // or ::1, ::ffff:127.0.0.1 if you're using IPv6
 
   req.clinfo = info;
-  // console.log(req.clinfo);
   return next();
 };
 module.exports = authMiddleware;

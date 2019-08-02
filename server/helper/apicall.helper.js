@@ -18,9 +18,7 @@
             uri: request_url,
             json: true, // Automatically stringifies the body to JSON
           };
-      // console.log("options",options);
       const response = await request(options);
-      // console.log("response",response);
       return response;
     } catch (err) {
       return next(err);
@@ -45,7 +43,6 @@
       return new Promise((resolve, reject) => {
         rp(options)
           .then(response => {
-            console.log('++++++', response);
             resolve(response);
           })
           .catch(err => {

@@ -39,7 +39,6 @@ sendMail.send = mailOptions => {
   } else if (emailConf.channel === 'smtp') {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error);
         return error;
       }
       return info;
