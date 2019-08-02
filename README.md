@@ -38,6 +38,8 @@ Read documentation & tutorials
 - [Developer Documentation](https://www.waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
 - [Architecture](https://www.waftengine.org/architecture)
 
+- Defalult Credentials : Email : admin+we@wafttechcom , Password : Test@1234
+
 ## Get help & contact the team
 
 - [WaftEngine Gitter Chat](https://gitter.im/waftengine/community)
