@@ -92,6 +92,33 @@ mediaController.SaveMedia = async (req, res, next) => {
     next(err);
   }
 };
+
+mediaController.SaveMultipleMedia = async (req, res, next) => {
+  try {
+    let medias = [];
+    for (let i = 0; i < req.files.length; i++) {
+      let media = req.files[i];
+      media.added_by = req.user.id;
+      media.destination =
+        media.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      media.path = media.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
+      media.type = req.params.type;
+      const newMedia = new mediaSch(media);
+      const mediaSave = await newMedia.save();
+      medias.push(mediaSave);
+    }
+    console.log(medias);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Saved Success !!', null);
+  } catch (err) {
+    next(err);
+  }
+};
 mediaController.GetMediaDetail = async (req, res, next) => {
   const id = req.params.id;
   const media = await mediaSch.findOne({ _id: objectId(id), is_deleted: false });

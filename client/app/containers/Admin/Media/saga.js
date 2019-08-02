@@ -40,11 +40,11 @@ function* addMedia(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.multipartPost(
-      'media/single/media',
+      'media/multiple/media',
       actions.addMediaSuccess,
       actions.addMediaFailure,
       {},
-      { file: action.payload[0] },
+      { file: action.payload },
       token,
     ),
   );
