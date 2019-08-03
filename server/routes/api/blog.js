@@ -21,6 +21,6 @@ router.get('/blogbytime/:time', blogModule.GetBlogByDate);
 router.post('/', authorization, authentication, uploader.single('file'), sanitize, validate, blogModule.SaveBlog);
 router.post('/category', authorization, authentication, catSanitize, catValidate, blogModule.SaveBlogCategory);
 router.delete('/:id', authorization, authentication, blogModule.DeleteBlog);
-router.delete('/category/:id', authorization, blogModule.DeleteBlogCat);
+router.delete('/category/:id', authorization, authentication, blogModule.DeleteBlogCat);
 
 module.exports = router;

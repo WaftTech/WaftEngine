@@ -8,6 +8,6 @@ const { sanitize, validate } = require('../../modules/contactUs/contactValidate'
 router.get('/', authorization, authentication, contModule.GetContact);
 router.get('/:id', authorization, authentication, contModule.GetContactById);
 router.post('/', sanitize, validate, contModule.PostContact);
-router.delete('/:id', authorization, contModule.DeleteContact);
+router.delete('/:id', authorization, authentication, contModule.DeleteContact);
 
 module.exports = router;

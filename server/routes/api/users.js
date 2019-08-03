@@ -7,21 +7,6 @@ const loginlogs = require('../../modules/user/loginlogs/loginlogController').log
 
 const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
-// const path = require('path');
-// const multer = require('multer');
-// const upload = multer({
-//   fileFilter: function(req, file, cb) {
-//     var filetypes = /jpeg|jpg|png/;
-//     var mimetype = filetypes.test(file.mimetype);
-//     var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-//     if (mimetype && extname) {
-//       return cb(null, true);
-//     }
-//     cb('Error: File upload only supports the following filetypes - ' + filetypes);
-//   },
-// });
-
 const userModule = require('../../modules/user/userController');
 const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
 /**
@@ -47,7 +32,7 @@ router.get('/', authorization, authentication, userModule.GetAllUser);
  * @description Check user is returning user group by or new  || for admin
  * @access Public
  */
-router.get('/grby', authorization, userModule.GetAllUserGRBY);
+router.get('/grby', authorization, authentication, userModule.GetAllUserGRBY);
 
 /**
  * @route GET api/user
@@ -170,7 +155,7 @@ router.get('/info', authorization, userModule.Info);
  * @description returns the loginlogs
  * @access Private
  */
-router.get('/loginlogs', authorization, loginlogs.getLogList);
+router.get('/loginlogs', authorization, authentication, loginlogs.getLogList);
 
 /**
  * @route POST api/user/loginlogs/logout

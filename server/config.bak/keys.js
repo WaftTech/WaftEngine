@@ -1,6 +1,5 @@
 module.exports = {
   mongoURI: '',
-
   recaptcha: { secretKey: '', siteKey: '' },
   secretOrKey: 'jwtsecret',
   tokenExpireTime: 360000,
