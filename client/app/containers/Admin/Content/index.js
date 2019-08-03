@@ -16,12 +16,10 @@ import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import Close from '@material-ui/icons/Close';
-import { Paper, InputBase, Divider, Grid } from '@material-ui/core';
 
 // core components
 import Table from 'components/Table';
 
-import shadows from '@material-ui/core/styles/shadows';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import reducer from './reducer';

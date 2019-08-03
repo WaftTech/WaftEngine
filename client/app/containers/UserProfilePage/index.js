@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Grid } from '@material-ui/core';
 import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import green from '@material-ui/core/colors/green';
 import { makeSelectUser } from '../App/selectors';
-import PageHeader from '../../components/PageHeader/PageHeader';
 import UserProfileSettingsPage from '../../components/UserProfileSettings';
 import UserPersonalInformationPage from './UserPersonalInformation';
 
@@ -29,26 +27,29 @@ export class UserProfilePage extends React.Component {
         <Helmet>
           <title>Profile Page</title>
         </Helmet>
-        
+
         <div className="container mx-auto mb-10">
-          <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Personal Information</h1>
+          <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">
+            Personal Information
+          </h1>
 
           <div className="flex flex-wrap justify-between">
-            <div className="w-full md:w-1/2 px-5 md:px-16"> 
-            <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>Name : {user.name}</b></div>
-            <div className="w-full pb-4 text-base md:text-lg xl:text-xl"><b> E-mail : {user.email}</b></div>
-            <UserProfileSettingsPage />
+            <div className="w-full md:w-1/2 px-5 md:px-16">
+              <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
+                <b>Name : {user.name}</b>
+              </div>
+              <div className="w-full pb-4 text-base md:text-lg xl:text-xl">
+                <b> E-mail : {user.email}</b>
+              </div>
+              <UserProfileSettingsPage />
+            </div>
+
+            <div className="w-full md:w-1/2 px-5 md:px-16 mt-10 md:mt-0">
+              <UserPersonalInformationPage />
+            </div>
           </div>
-        
-       
-         
-           
-          <div className="w-full md:w-1/2 px-5 md:px-16 mt-10 md:mt-0"><UserPersonalInformationPage /></div>
-          </div>
-          </div>
-           
         </div>
-      
+      </div>
     );
   }
 }

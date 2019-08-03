@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import TextField from '@material-ui/core/TextField';
 import { makeSelectName, makeSelectNameError } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 

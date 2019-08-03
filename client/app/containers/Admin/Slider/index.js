@@ -16,11 +16,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
-import CustomInput from '@material-ui/core/Input';
-import { Paper, Divider } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table/Table';
 

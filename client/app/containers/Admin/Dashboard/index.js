@@ -11,8 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import injectSaga from 'utils/injectSaga';
@@ -27,7 +25,6 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
-import PageContent from '../../../components/PageContent/PageContent';
 import LinkBoth from '../../../components/LinkBoth';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Error from '@material-ui/icons/Error';

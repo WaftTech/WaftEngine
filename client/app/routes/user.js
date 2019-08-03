@@ -1,10 +1,4 @@
 import UserProfilePage from '../containers/UserProfilePage';
-// import UserWishListsPage from '../containers/UserWishListsPage';
-// import UserParticipatedTendersPage from '../containers/UserParticipatedTendersPage';
-// import UserAwardedTendersPage from '../containers/UserAwardedTendersPage';
-// import UserMyNotesPage from '../containers/UserMyNotesPage';
-// import UserBillPaymentPage from '../containers/UserBillPaymentPage';
-// import UserLoginLogsPage from '../containers/UserLoginLogsPage';
 import UserChangePasswordPage from '../containers/UserChangePasswordPage';
 
 const userRoutes = [

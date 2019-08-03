@@ -10,12 +10,9 @@ import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import Edit from '@material-ui/icons/Edit';
-import Paper from '@material-ui/core/Paper';
-import { Fab, IconButton, Input, Divider } from '@material-ui/core';
+import { Fab, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';

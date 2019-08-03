@@ -16,8 +16,6 @@ import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import Fab from '@material-ui/core/Fab';
-import { Paper, Divider } from '@material-ui/core';
-import CustomInput from '@material-ui/core/Input';
 
 // core components
 import Table from 'components/Table';

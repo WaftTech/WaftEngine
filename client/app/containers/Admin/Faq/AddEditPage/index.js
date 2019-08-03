@@ -7,17 +7,9 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
