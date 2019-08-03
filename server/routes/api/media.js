@@ -9,7 +9,7 @@ const { authentication, authorization } = require('../../middleware/authenticati
 // router.get('/:page', authorization, dModule.GetMedia);
 router.get('/', authorization, authentication, dModule.GetMediaPagination);
 router.post('/single/:type', authorization, authentication, uploader.single('file'), dModule.SaveMedia);
-router.post('/multiple/:type', authorization, uploader.any('file'), dModule.SaveMultipleMedia);
+router.post('/multiple/:type', authorization, authentication, uploader.any('file'), dModule.SaveMultipleMedia);
 router.get('/:id', dModule.GetMediaDetail);
 router.delete('/:id', authorization, authentication, dModule.DeleteMedia);
 

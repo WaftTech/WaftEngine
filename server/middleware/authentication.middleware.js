@@ -53,7 +53,6 @@ authMiddleware.authorizationForLogout = async (req, res, next) => {
 
 authMiddleware.authentication = async (req, res, next) => {
   try {
-    // return next();
     const user = req.user;
     const role = await rolesSch.find({ _id: { $in: user.roles } }, { _id: 1 });
     let path = req.baseUrl + req.route.path;

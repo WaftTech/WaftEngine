@@ -1,9 +1,7 @@
 const httpStatus = require('http-status');
-const objectId = require('mongoose').ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const contactConfig = require('./contactConfig');
 const contactSch = require('./contactSchema');
-// const emailTemplate = require('../../helper/email-render-template');
 const renderMail = require('./../template/templateController').internal;
 const emailHelper = require('./../../helper/email.helper');
 
@@ -15,25 +13,11 @@ contactController.PostContact = async (req, res, next) => {
     const newUser = new contactSch({ name, email, message, subject });
     const user = await newUser.save();
     if (user) {
-      const templatePathToAdmin = `${__dirname}/../../email/template/contactToAdmin.pug`;
-      const templatePathToUser = `${__dirname}/../../email/template/contactToUser.pug`;
       const data = {
         name: user.name,
         email: user.email,
         msg: user.message,
         sub: user.subject,
-      };
-      let mailOptionsAdmin = {
-        from: '"Waft Engine Team" <test@mkmpvtltd.tk>', // sender address
-        to: 'navinmishra1717@gmail.com', // list of receivers
-        subject: 'User Contacts are here', // Subject line
-        text: 'Dear "navinmishra1717@gmail.com" <br/> Some people have contacted us.',
-      };
-      let mailOptionsUser = {
-        from: '"Waft Engine Team" <test@mkmpvtltd.tk>', // sender address
-        to: user.email, // list of receivers
-        subject: 'Contact Successful', // Subject line
-        text: `Dear ${newUser.name} ${contactConfig.usermsg}<br/>`,
       };
       const renderedMail = await renderMail.renderTemplate('contact_to_admin', data, contactConfig.admin);
       if (renderMail.error) {
@@ -47,10 +31,6 @@ contactController.PostContact = async (req, res, next) => {
       } else {
         emailHelper.send(renderedMailforAdmin);
       }
-
-      // emailTemplate.render(templatePathToAdmin, data, mailOptionsAdmin);
-      // emailTemplate.render(templatePathToUser, data, mailOptionsUser);
-
       return otherHelper.sendResponse(res, httpStatus.OK, true, user, null, contactConfig.save, null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, contactConfig.err, null, null);

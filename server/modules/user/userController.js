@@ -5,18 +5,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('./userConfig');
 const httpStatus = require('http-status');
-const emailTemplate = require('../../helper/email-render-template');
 const emailHelper = require('./../../helper/email.helper');
 const renderMail = require('./../template/templateController').internal;
-const auth = require('../../helper/auth.helper');
 const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessShema');
 const moduleSch = require('../role/moduleShema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
-// const mailSender = require('./userMail');
 const loginlogs = require('./loginlogs/loginlogController').internal;
-const baseurl = require('./../../config//keys').baseURl;
 
 const userController = {};
 
@@ -193,14 +189,6 @@ userController.Register = async (req, res, next) => {
         } else {
           emailHelper.send(renderedMail);
         }
-
-        // mailSender.SendMailAtRegistration({
-        //   email: newUser.email,
-        //   name: newUser.name,
-        //   gender: newUser.gender,
-        //   _id: user._id,
-        //   email_verification_code: newUser.email_verification_code,
-        // });
 
         // Create JWT payload
         const payload = {
@@ -408,15 +396,6 @@ userController.ForgotPassword = async (req, res, next) => {
     }
     user.password_reset_code = otherHelper.generateRandomHexString(6);
     user.password_reset_request_date = new Date();
-    // let mailOptions = {
-    //   from: '"Waft Engine"  <test@mkmpvtltd.tk>', // sender address
-    //   to: email, // list of receivers
-    //   subject: 'Password reset request', // Subject line
-    //   text: `Dear ${user.name} . use ${user.password_reset_code} code to reset password`,
-    // };
-    // const tempalte_path = `${__dirname}/../../email/template/passwordreset.pug`;
-    // const dataTemplate = { name: user.name, email: user.email, code: user.password_reset_code };
-    // emailTemplate.render(tempalte_path, dataTemplate, mailOptions);
     const update = await users.findByIdAndUpdate(
       user._id,
       {

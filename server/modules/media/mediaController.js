@@ -3,7 +3,6 @@ var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const mediaSch = require('./mediaShema');
 const mediaController = {};
-const internal = {};
 
 mediaController.GetMediaPagination = async (req, res, next) => {
   try {
