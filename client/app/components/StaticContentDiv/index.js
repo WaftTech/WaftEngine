@@ -23,7 +23,6 @@ class StaticContent extends React.PureComponent {
 
   render() {
     const { contentObj } = this.props;
-    console.log(contentObj);
 
     if (!contentObj[this.props.contentKey]) return null; // maybe add a loader here
     return (

@@ -61,7 +61,6 @@ export function Template({
   one,
   loading,
 }) {
-  console.log(all);
   const [data, setData] = useState('');
   useEffect(() => {
     loadAllRequest();
@@ -69,7 +68,6 @@ export function Template({
   const handleSubmit = e => {
     e.preventDefault();
     if (data) {
-      console.log('submit');
       addEditRequest();
     }
   };

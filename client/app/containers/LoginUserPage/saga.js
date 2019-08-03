@@ -58,7 +58,6 @@ export function* loginAction(action) {
 
 export function* loginFbAction(action) {
   const body = { access_token: action.payload.accessToken };
-  console.log(body);
   const successWatcher = yield fork(redirectOnSuccess, action.redirect);
 
   yield fork(
@@ -74,7 +73,6 @@ export function* loginFbAction(action) {
 }
 
 export function* loginGoogleAction(action) {
-  console.log(action);
   const body = { access_token: action.payload.accessToken };
   const successWatcher = yield fork(redirectOnSuccess, action.redirect);
 

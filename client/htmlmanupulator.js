@@ -87,7 +87,6 @@ internal.createHtml = (res, data, next) => {
     const htmlContent = `${head}${html_replacer}${body}`;
     return res.send(htmlContent);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
