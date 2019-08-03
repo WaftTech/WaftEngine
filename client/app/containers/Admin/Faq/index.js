@@ -16,10 +16,7 @@ import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import Fab from '@material-ui/core/Fab';
-import CustomInput from '@material-ui/core/Input';
 import Table from 'components/Table';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';

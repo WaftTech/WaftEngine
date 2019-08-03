@@ -9,10 +9,6 @@ import moment from 'moment';
 import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-import blue from '@material-ui/core/colors/blue';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';

@@ -12,17 +12,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import CircularProgress from '@material-ui/core/CircularProgress';
 // core components
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardBody from '@material-ui/core/CardContent';
-import CardFooter from '@material-ui/core/CardActions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
@@ -37,7 +30,6 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
-import { spacing, palette } from '@material-ui/system';
 import Loading from '../../../../components/Loading';
 
 const styles = {

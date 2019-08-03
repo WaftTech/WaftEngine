@@ -12,7 +12,6 @@ import Link from 'react-router-dom/Link';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -23,7 +22,6 @@ import * as mapDispatchToProps from './actions';
 import NameInput from './components/NameInput';
 import EmailInput from './components/EmailInput';
 import PasswordInput from './components/PasswordInput';
-import logo from '../../images/logo.png';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
 
 const SignupUserPage = ({

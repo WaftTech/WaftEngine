@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import TextField from '@material-ui/core/TextField';
 import { makeSelectEmail, makeSelectEmailError } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
@@ -13,10 +12,16 @@ const EmailInput = props => {
   const hasError = Boolean(error);
   return (
     <div className="w-full md:w-1/2 pb-4">
-       <input className="Waftinputbox" id="grid-last-name" type="text"   value={email}  error={hasError}
-                    placeholder="Your Email" onChange= {handleChange} />
-      </div>
-   
+      <input
+        className="Waftinputbox"
+        id="grid-last-name"
+        type="text"
+        value={email}
+        error={hasError}
+        placeholder="Your Email"
+        onChange={handleChange}
+      />
+    </div>
   );
 };
 

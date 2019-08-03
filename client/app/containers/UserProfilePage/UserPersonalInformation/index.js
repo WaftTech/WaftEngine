@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -11,14 +11,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import CheckBox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import TextField from '@material-ui/core/TextField';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -26,7 +22,6 @@ import reducer from './reducer';
 import saga from './saga';
 import { makeSelectOne, makeSelectErrors } from './selectors';
 import * as mapDispatchToProps from './actions';
-import PageContent from '../../../components/PageContent/PageContent';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {

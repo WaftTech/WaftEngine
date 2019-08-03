@@ -7,21 +7,15 @@ import { push } from 'connected-react-router';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 // core components
-import { TextField } from '@material-ui/core';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-import PageContent from '../../../components/PageContent/PageContent';
 
-const styles = theme => ({
-});
+const styles = theme => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 export class ChangePassword extends React.Component {
@@ -92,50 +86,69 @@ export class ChangePassword extends React.Component {
 
     return (
       <React.Fragment>
-       
-           
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="oldPassword">
-              Old Password
-              </label>
-              <input className="Waftinputbox" id="oldPassword" type="text"    name="oldPassword"   
-                    value={oldPassword}
-                    onChange={this.handleChange}
-                    type={showPassword ? 'text' : 'password'} />
-                    {errors.oldPassword && <span>{errors.oldPassword}</span>}
-            </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label
+            className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+            htmlFor="oldPassword"
+          >
+            Old Password
+          </label>
+          <input
+            className="Waftinputbox"
+            id="oldPassword"
+            type="text"
+            name="oldPassword"
+            value={oldPassword}
+            onChange={this.handleChange}
+            type={showPassword ? 'text' : 'password'}
+          />
+          {errors.oldPassword && <span>{errors.oldPassword}</span>}
+        </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="newPassword">
-              New Password
-              </label>
-              <input className="Waftinputbox" id="newPassword" type="text"    name="newPassword"   
-                    value={newPassword}
-                    onChange={this.handleChange}
-                    type={showPassword ? 'text' : 'password'} />
-                    {errors.newPassword && <span>{errors.newPassword}</span>}
-            </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label
+            className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+            htmlFor="newPassword"
+          >
+            New Password
+          </label>
+          <input
+            className="Waftinputbox"
+            id="newPassword"
+            type="text"
+            name="newPassword"
+            value={newPassword}
+            onChange={this.handleChange}
+            type={showPassword ? 'text' : 'password'}
+          />
+          {errors.newPassword && <span>{errors.newPassword}</span>}
+        </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2" htmlFor="newPassword">
-              Confirm New Password
-              </label>
-              <input className="Waftinputbox" id="newPassword2" type="text"    name="newPassword2"   
-                    value={newPassword2}
-                    onChange={this.handleChange}
-                    type={showPassword ? 'text' : 'password'} />
-                    {errors.newPassword2 && <span>{errors.newPassword2}</span>}
-            </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label
+            className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+            htmlFor="newPassword"
+          >
+            Confirm New Password
+          </label>
+          <input
+            className="Waftinputbox"
+            id="newPassword2"
+            type="text"
+            name="newPassword2"
+            value={newPassword2}
+            onChange={this.handleChange}
+            type={showPassword ? 'text' : 'password'}
+          />
+          {errors.newPassword2 && <span>{errors.newPassword2}</span>}
+        </div>
 
-                
-             <button className="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
-              Save
-              </button>
-             
-             
-           
-         
-      
+        <button
+          className="text-white py-2 px-4 rounded mt-4 btn-waft"
+          onClick={this.handleSave}
+        >
+          Save
+        </button>
       </React.Fragment>
     );
   }

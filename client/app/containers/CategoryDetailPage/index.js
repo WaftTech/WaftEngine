@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Grid } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { IMAGE_BASE } from 'containers/App/constants';
-import defaultImage from 'assets/img/logo.svg';
 import * as mapDispatchToProps from './actions';
 import { makeSelectCategory, makeSelectBlog } from './selectors';
 import reducer from './reducer';

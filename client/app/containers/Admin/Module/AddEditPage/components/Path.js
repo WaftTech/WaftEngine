@@ -5,16 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import TrashIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import { Grid } from '@material-ui/core';
 
 const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 

@@ -19,9 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
-import { Paper, Divider, Button } from '@material-ui/core';
-import CustomInput from '@material-ui/core/Input';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Button } from '@material-ui/core';
 
 // core components
 import Table from 'components/Table';

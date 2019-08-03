@@ -11,14 +11,8 @@ import EditIcon from '@material-ui/icons/Edit';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import CheckIcon from '@material-ui/icons/Check';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';

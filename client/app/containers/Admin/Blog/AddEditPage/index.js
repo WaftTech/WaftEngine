@@ -12,21 +12,8 @@ import Helmet from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputLabel from '@material-ui/core/InputLabel';
 import { Checkbox, IconButton } from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import FormControl from '@material-ui/core/FormControl';
-
-// core components
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardBody from '@material-ui/core/CardContent';
-import CardFooter from '@material-ui/core/CardActions';
-import CustomInput from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import injectSaga from 'utils/injectSaga';

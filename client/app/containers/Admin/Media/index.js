@@ -10,9 +10,6 @@ import Helmet from 'react-helmet';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
-import { Grid, Input } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -28,7 +25,6 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
-import { enqueueSnackbar } from '../../App/actions';
 import Loading from '../../../components/Loading';
 
 const styles = theme => ({

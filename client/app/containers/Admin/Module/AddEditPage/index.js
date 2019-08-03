@@ -9,14 +9,7 @@ import Helmet from 'react-helmet';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import CheckIcon from '@material-ui/icons/Check';
 import Fab from '@material-ui/core/Fab';
 import SwapIcon from '@material-ui/icons/SwapHoriz';
 import BackIcon from '@material-ui/icons/ArrowBack';

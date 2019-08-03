@@ -26,9 +26,8 @@ const styles = theme => ({
   },
 });
 
-const Mainlis = ({ classes, location: { pathname }, roles }) => {
+const Mainlis = ({  location: { pathname } }) => {
   let [openSet, setOpenSet] = useState({});
-  const [hidden, setHidden] = useState(false);
 
   const [accesses, setAccesses] = useState([]);
 
