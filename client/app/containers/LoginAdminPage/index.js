@@ -9,9 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-
-import Link from 'react-router-dom/Link';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';

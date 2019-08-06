@@ -2,8 +2,6 @@ const {
   oauthConfig: { googleAuth, facebookAuth },
   isOauthConfig: { isGoogleAuth, isFacebookAuth },
 } = require('../config/keys');
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const FacebookStrategy = require('passport-facebook').Strategy;
 
 const randomHexGenerator = require('./../helper/others.helper').generateRandomHexString;
 const bcrypt = require('bcryptjs');

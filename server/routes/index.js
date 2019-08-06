@@ -34,14 +34,9 @@ router.use('/faq', faqRoutes);
 // All route of Dynamic Module
 const dmodule = require('./api/module');
 router.use('/module', dmodule);
-// All route of videos
-const vidRoutes = require('./api/video');
-router.use('/video', vidRoutes);
+// All route of Subscribe
 const subscribeRoutes = require('./api/subscribe');
 router.use('/subscribe', subscribeRoutes);
-// All route of Static Data from DB Module
-const staticRoutes = require('./api/static');
-router.use('/static', staticRoutes);
 // All route of templates (email)
 const template = require('./api/template');
 router.use('/template', template);

@@ -19,7 +19,6 @@ import IconButton from '@material-ui/core/IconButton';
 import View from '@material-ui/icons/RemoveRedEyeOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Table from 'components/Table/Table';
 
 import injectSaga from 'utils/injectSaga';

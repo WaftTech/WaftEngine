@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Grid } from '@material-ui/core';
 import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import green from '@material-ui/core/colors/green';
 import { makeSelectUser } from '../App/selectors';
-import PageHeader from '../../components/PageHeader/PageHeader';
 import ChangePasswordPage from './ChangePasswordPage';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -24,18 +22,20 @@ export class UserChangePasswordPage extends React.Component {
     const { user } = this.props;
     return (
       <div className="container mx-auto mb-10">
-      
-   
-      <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Change Password</h1>
-          <div className="container mx-auto px-5">
-            <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>{user.name}</b></div>
-            <div className="w-full pb-2 text-base md:text-lg  xl:text-xl"><b>{user.email}</b></div>
+        <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">
+          Change Password
+        </h1>
+        <div className="container mx-auto px-5">
+          <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
+            <b>{user.name}</b>
           </div>
+          <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
+            <b>{user.email}</b>
+          </div>
+        </div>
 
         <div className="container mx-auto px-5 mt-5">
-         
-              <ChangePasswordPage />
-           
+          <ChangePasswordPage />
         </div>
       </div>
     );

@@ -10,7 +10,7 @@ const validations = require('./../../modules/meta/metavalidation');
 router.get('/', authorization, metaModule.getAllMeta);
 router.get('/:id', authorization, metaModule.getDetail);
 router.get('/route/*', metaModule.getByRoute);
-router.post('/', authorization, uploader.single('file'), validations.Santize, validations.Validate, metaModule.saveMeta);
-router.delete('/:id', authorization, metaModule.delete);
+router.post('/', authorization, authentication, uploader.single('file'), validations.Santize, validations.Validate, metaModule.saveMeta);
+router.delete('/:id', authorization, authentication, metaModule.delete);
 
 module.exports = router;

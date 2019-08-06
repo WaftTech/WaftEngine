@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectCategory, makeSelectTotalData } from './selectors';
+import { makeSelectCategory } from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';

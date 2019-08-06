@@ -21,11 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
-import CustomInput from '@material-ui/core/Input';
 import Table from 'components/Table';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';

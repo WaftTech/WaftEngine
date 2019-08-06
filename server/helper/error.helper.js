@@ -1,6 +1,5 @@
 'use strict';
 const errorHelper = {};
-const errorSave = require('../modules/bug/bugController');
 errorHelper.formatErrorObj = err => {
   const formatError = err.toString();
   const obj = JSON.parse(JSON.stringify(formatError.substring(formatError.indexOf('{'))));

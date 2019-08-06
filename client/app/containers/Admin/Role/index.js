@@ -10,10 +10,8 @@ import Helmet from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
 import Close from '@material-ui/icons/Close';
-import { Fab, IconButton, Divider } from '@material-ui/core';
+import { Fab, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 

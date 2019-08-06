@@ -4,12 +4,10 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
 import moment from 'moment';
 import Helmet from 'react-helmet';
 
 import { IMAGE_BASE } from 'containers/App/constants';
-import defaultImage from 'assets/img/placeholder.jpg';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectBlogList, makeSelectLoading } from './selectors';

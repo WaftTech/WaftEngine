@@ -3,7 +3,6 @@ const crypto = require('crypto');
 const Validator = require('validator');
 const isEmpty = require('../validation/isEmpty');
 const PhoneNumber = require('awesome-phonenumber');
-const httpStatus = require('http-status');
 const otherHelper = {};
 
 otherHelper.generateRandomHexString = len => {

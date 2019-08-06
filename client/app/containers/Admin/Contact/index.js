@@ -20,11 +20,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 // core components
-import CustomInput from '@material-ui/core/Input';
-import { Paper, Divider } from '@material-ui/core';
 import Table from 'components/Table/Table';
 
 import injectSaga from '../../../utils/injectSaga';
