@@ -18,6 +18,14 @@ export const setTagValue = payload => ({
   type: types.SET_TAG_VALUE,
   payload,
 });
+export const setMetaTagValue = payload => ({
+  type: types.SET_META_TAG_VALUE,
+  payload,
+});
+export const setMetaKeywordValue = payload => ({
+  type: types.SET_META_KEYWORD_VALUE,
+  payload,
+});
 export const clearOne = payload => ({
   type: types.CLEAR_ONE,
   payload,
@@ -77,6 +85,7 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
+
 export const loadCategoryRequest = payload => ({
   type: types.LOAD_CATEGORY_REQUEST,
   payload,

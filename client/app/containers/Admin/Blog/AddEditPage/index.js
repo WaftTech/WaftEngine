@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CKEditor from 'react-ckeditor-component';
-import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -26,6 +25,8 @@ import {
   makeSelectCategory,
   makeSelectChip,
   makeSelectTag,
+  makeSelectMetaTag,
+  makeSelectMetaKeyword,
   makeSelectLoading,
   makeSelectErrors,
 } from '../selectors';
@@ -68,9 +69,6 @@ const styles = theme => ({
 });
 
 class AddEdit extends React.PureComponent {
-  state = {
-    tempImage: defaultImage,
-  };
 
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -85,6 +83,10 @@ class AddEdit extends React.PureComponent {
     category: PropTypes.array,
     tempTag: PropTypes.string,
     push: PropTypes.func.isRequired,
+  };
+
+  state = {
+    tempImage: defaultImage,
   };
 
   componentDidMount() {
@@ -127,6 +129,16 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: e.target.value });
   };
 
+  handleTempMetaKeyword = e => {
+    e.persist();
+    this.props.setMetaKeywordValue(e.target.value);
+  };
+
+  handleTempMetaTag = e => {
+    e.persist();
+    this.props.setMetaTagValue(e.target.value);
+  };
+
   handleTempTag = e => {
     e.persist();
     this.props.setTagValue(e.target.value);
@@ -163,6 +175,20 @@ class AddEdit extends React.PureComponent {
     this.props.addEditRequest();
   };
 
+  handleMetaKeywordDelete = index => () => {
+    const chipData = [...this.props.one.keywords];
+
+    chipData.splice(index, 1);
+    this.props.setOneValue({ key: 'keywords', value: chipData });
+  };
+
+  handleMetaTagDelete = index => () => {
+    const chipData = [...this.props.one.meta_tag];
+
+    chipData.splice(index, 1);
+    this.props.setOneValue({ key: 'meta_tag', value: chipData });
+  };
+
   handleDelete = index => () => {
     const chipData = [...this.props.one.tags];
 
@@ -182,12 +208,38 @@ class AddEdit extends React.PureComponent {
     return { tempTag: this.props.setTagValue('') };
   };
 
+  insertMetaTags = event => {
+    event.preventDefault();
+    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+      this.props.setOneValue({
+        key: 'meta_tag',
+        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+      });
+      this.props.setMetaTagValue('');
+    }
+    return { tempMetaTag: this.props.setMetaTagValue('') };
+  };
+
+  insertMetaKeywords = event => {
+    event.preventDefault();
+    if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
+      this.props.setOneValue({
+        key: 'keywords',
+        value: [...this.props.one.keywords, this.props.tempMetaKeyword],
+      });
+      this.props.setMetaKeywordValue('');
+    }
+    return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
+  };
+
   render() {
     const {
       classes,
       one,
       category,
       tempTag,
+      tempMetaTag,
+      tempMetaKeyword,
       match,
       loading,
       errors,
@@ -340,21 +392,19 @@ class AddEdit extends React.PureComponent {
             >
               Tags
             </label>
-
-            <input
-              className="Waftinputbox"
-              id="blog-tags"
-              type="text"
-              value={tempTag || ''}
-              name="Tags"
-              onChange={this.handleTempTag}
-              onSubmit={this.insertTags}
-            />
-
+            <form onSubmit={this.insertTags}>
+              <input
+                className="Waftinputbox"
+                id="blog-tags"
+                type="text"
+                value={tempTag || ''}
+                name="Tags"
+                onChange={this.handleTempTag}
+              />
+            </form>
             <Paper>
               {one.tags.map((tag, index) => {
                 const icon = null;
-
                 return (
                   <Chip
                     key={`${tag}-${index}`}
@@ -367,7 +417,6 @@ class AddEdit extends React.PureComponent {
               })}
             </Paper>
           </div>
-
           <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
@@ -391,18 +440,34 @@ class AddEdit extends React.PureComponent {
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
               htmlFor="grid-last-name"
             >
-              Meta Tag
+              Meta Tags
             </label>
+            <form onSubmit={this.insertMetaTags}>
+              <input
+                className="Waftinputbox"
+                id="blog-meta-tags"
+                type="text"
+                value={tempMetaTag || ''}
+                name="Tags"
+                onChange={this.handleTempMetaTag}
+              />
+            </form>
+            <Paper>
+              {one.meta_tag.map((tag, index) => {
+                const icon = null;
 
-            <input
-              className="Waftinputbox"
-              type="text"
-              value={one.meta_tag || ''}
-              name="meta-tag"
-              onChange={this.handleChange('meta_tag')}
-            />
+                return (
+                  <Chip
+                    key={`meta-${tag}-${index}`}
+                    icon={icon}
+                    label={tag}
+                    onDelete={this.handleMetaTagDelete(index)}
+                    className={classes.chip}
+                  />
+                );
+              })}
+            </Paper>
           </div>
-
           <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
@@ -411,14 +476,41 @@ class AddEdit extends React.PureComponent {
               Meta Keywords
             </label>
 
-            <input
+
+            <form onSubmit={this.insertMetaKeywords}>
+
+              <input
+                className="Waftinputbox"
+                id="blog-meta-keyword"
+                type="text"
+                value={tempMetaKeyword || ''}
+                name="Tags"
+                onChange={this.handleTempMetaKeyword}
+              />
+            </form>
+            <Paper>
+              {one.keywords.map((tag, index) => {
+                const icon = null;
+
+                return (
+                  <Chip
+                    key={`metakeywords-${tag}-${index}`}
+                    icon={icon}
+                    label={tag}
+                    onDelete={this.handleMetaKeywordDelete(index)}
+                    className={classes.chip}
+                  />
+                );
+              })}
+            </Paper>
+            {/* <input
               className="Waftinputbox"
               id="blog-meta-keywords"
               type="text"
               value={one.keywords || ''}
               name="keywords"
               onChange={this.handleChange('keywords')}
-            />
+            /> */}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -485,6 +577,8 @@ const mapStateToProps = createStructuredSelector({
   category: makeSelectCategory(),
   chip: makeSelectChip(),
   tempTag: makeSelectTag(),
+  tempMetaTag: makeSelectMetaTag(),
+  tempMetaKeyword: makeSelectMetaKeyword(),
   loading: makeSelectLoading(),
 
   errors: makeSelectErrors(),
@@ -496,7 +590,6 @@ const withConnect = connect(
 );
 
 export default compose(
-  withRouter,
   withStyle,
   withReducer,
   withSaga,

@@ -37,6 +37,16 @@ export const makeSelectTag = () =>
     selectDomain,
     state => state.tempTag,
   );
+export const makeSelectMetaTag = () =>
+  createSelector(
+    selectDomain,
+    state => state.tempMetaTag,
+  );
+export const makeSelectMetaKeyword = () =>
+  createSelector(
+    selectDomain,
+    state => state.tempMetaKeyword,
+  );
 export const makeSelectLoading = () =>
   createSelector(
     selectDomain,
