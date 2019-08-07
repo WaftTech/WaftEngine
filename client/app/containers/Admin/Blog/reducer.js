@@ -7,6 +7,14 @@ import produce from 'immer';
 import * as types from './constants';
 
 export const initialState = {
+  chipData: [
+    { key: 0, label: 'Angular' },
+    { key: 1, label: 'jQuery' },
+    { key: 2, label: 'Polymer' },
+    { key: 3, label: 'React' },
+    { key: 4, label: 'Vue.js' },
+  ],
+
   all: {
     data: [],
     page: 1,
@@ -16,21 +24,25 @@ export const initialState = {
   one: {
     title: '',
     category: '',
+    description: '',
+    summary: '',
     published_on: Date.now(),
-    image: {},
+    image: null,
     is_published: true,
     is_active: false,
-    tags: [],
     description: '',
     short_description: '',
     meta_description: '',
-    meta_tag: '',
-    keywords: '',
+    meta_tag: [],
+    keywords: [],
+    tags: [],
     author: '',
   },
   query: { find_title: '' },
   category: [],
   tempTag: '',
+  tempMetaTag: '',
+  tempMetaKeyword: '',
   loading: false,
   errors: { title: '', description: '' },
 };
@@ -78,6 +90,12 @@ const reducer = (state = initialState, action) =>
             each => each._id != action.payload.data._id,
           ),
         };
+        break;
+      case types.SET_META_TAG_VALUE:
+        draft.tempMetaTag = action.payload;
+        break;
+      case types.SET_META_KEYWORD_VALUE:
+        draft.tempMetaKeyword = action.payload;
         break;
       case types.SET_TAG_VALUE:
         draft.tempTag = action.payload;
