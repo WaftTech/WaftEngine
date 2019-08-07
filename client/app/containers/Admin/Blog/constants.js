@@ -25,6 +25,9 @@ export const DELETE_ONE_SUCCESS = 'app/BlogManagePage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/BlogManagePage/DELETE_ONE_FAILURE';
 
 export const SET_TAG_VALUE = 'app/BlogManagePage/SET_TAG_VALUE';
+export const SET_META_TAG_VALUE = 'app/BlogManagePage/SET_META_TAG_VALUE';
+export const SET_META_KEYWORD_VALUE =
+  'app/BlogManagePage/SET_META_KEYWORD_VALUE';
 
 export const LOAD_CATEGORY_REQUEST = 'app/BlogManagePage/LOAD_CATEGORY_REQUEST';
 export const LOAD_CATEGORY_SUCCESS = 'app/BlogManagePage/LOAD_CATEGORY_SUCCESS';
