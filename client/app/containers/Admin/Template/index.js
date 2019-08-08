@@ -50,12 +50,14 @@ export function Template({
   loadOneRequest,
   addEditRequest,
   setOneValue,
+  clearOne,
   all,
   one,
   loading,
 }) {
   const [data, setData] = useState('');
   useEffect(() => {
+    clearOne();
     loadAllRequest();
   }, []);
   const handleSubmit = e => {
@@ -93,6 +95,9 @@ export function Template({
               value={data || ''}
               onChange={handleTemplateChange}
             >
+              <option value="" name="none" disabled>
+                None
+              </option>
               {all.map(each => (
                 <option value={each.template_key} key={each._id}>
                   {each.template_key}
@@ -219,6 +224,8 @@ Template.propTypes = {
   addEditRequest: PropTypes.func.isRequired,
   loadAllRequest: PropTypes.func.isRequired,
   loadOneRequest: PropTypes.func.isRequired,
+  setOneValue: PropTypes.func.isRequired,
+  clearOne: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
