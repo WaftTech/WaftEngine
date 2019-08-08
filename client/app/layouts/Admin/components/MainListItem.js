@@ -12,7 +12,8 @@ import menus from './sidemenu';
 
 import {
   makeSelectLocation,
-  makeSelectRoles,
+  // makeSelectRoles,
+  makeSelectAccess,
 } from '../../../containers/App/selectors';
 
 const styles = theme => ({
@@ -26,89 +27,83 @@ const styles = theme => ({
   },
 });
 
-const Mainlis = ({  location: { pathname } }) => {
-  let [openSet, setOpenSet] = useState({});
+const Mainlis = ({ location: { pathname }, access }) => {
+  const [openSet, setOpenSet] = useState({});
 
-  const [accesses, setAccesses] = useState([]);
-
-  useEffect(() => {
-    loadCheckRoutes();
-  }, []);
   const handleSetClick = key => {
-    setOpenSet({...openSet, [key]:!openSet[key]});
-
+    setOpenSet({ ...openSet, [key]: !openSet[key] });
   };
-  
 
-  const route = window.localStorage.getItem('routes');
-  const arr = JSON.parse(route);
-  const availableRoutes = arr;
+  const hasAccess = link => Object.keys(access).includes(link);
 
-  const loadCheckRoutes = () => {
-    for (let i = 0; i < availableRoutes.length; i++) {
-      for (let j = 0; j < availableRoutes[i].admin_routes.length; j++) {
-        accesses.push(availableRoutes[i].admin_routes[j]);
-      }
+  const menuFunctn = e => {
+    let showChildren = false;
+    if (e.menu) {
+      // TODO: can be optimized to break when if condition is fulfilled
+      e.menu.map(each => {
+        if (hasAccess(each.link)) {
+          showChildren = true;
+        }
+      });
     }
-    setAccesses(accesses);
-  };
-  const hasAccess = key => false; //! accesses.includes(key);
-  const menuFunctn = e => (
-    <div key={e.key}>
-      {e.menu ? (
-        <>
+    const isVisible = e.menu ? showChildren : hasAccess(e.link);
+    if (!isVisible) return null;
+    return (
+      <div key={e.key}>
+        {e.menu ? (
+          <>
+            <li
+              key={e.key}
+              className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm pl-${e.key.split(
+                '.',
+              ).length * 3}`}
+              onClick={() => handleSetClick(e.key)}
+            >
+              <div className="flex items-center">
+                <i key={e} className="material-icons mr-3">
+                  {e.icon}
+                </i>
+                <span className="dropdown-title">{e.name}</span>
+              </div>
+              {openSet[e.key] ? <ExpandLess /> : <ExpandMore />}
+            </li>
+            <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
+              <ul className={`list-reset ml-${e.key.split('.').length * 2}`}>
+                {e.menu.map(el => (
+                  <div key={el.key}>{menuFunctn(el)}</div>
+                ))}
+              </ul>
+            </Collapse>
+          </>
+        ) : (
           <li
-            key={e.key}
-            className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm pl-${e.key.split(
-              '.',
-            ).length * 3}`}
-            onClick={() => handleSetClick(e.key)}
+            selected={pathname === e.link}
+            className={
+              e.key.split('.').length === 1
+                ? 'pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm'
+                : ''
+            }
           >
-            <div className="flex items-center">
+            <Link
+              to={`${e.link}`}
+              className={`text-grey-darker hover:text-black text-sm no-underline flex items-center ${
+                e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-6 pr-6' : ''
+              }`} // pt-2 pb-2 pl-6 pr-6
+            >
               <i key={e} className="material-icons mr-3">
                 {e.icon}
               </i>
-              <span className="dropdown-title">{e.name}</span>
-            </div>
-            {openSet[e.key] ? <ExpandLess /> : <ExpandMore />}
+              {e.name}
+            </Link>
           </li>
-          <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
-            <ul className={`list-reset ml-${e.key.split('.').length * 2}`}>
-              {e.menu.map(el => (
-                <div key={el.key}>{menuFunctn(el)}</div>
-              ))}
-            </ul>
-          </Collapse>
-        </>
-      ) : (
-        <li
-          hidden={hasAccess(e.link)}
-          selected={pathname === e.link}
-          className={
-            e.key.split('.').length === 1
-              ? 'pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm'
-              : ''
-          }
-        >
-          <Link
-            to={`${e.link}`}
-            className={`text-grey-darker hover:text-black text-sm no-underline flex items-center ${
-              e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-6 pr-6' : ''
-            }`} // pt-2 pb-2 pl-6 pr-6
-          >
-            <i key={e} className="material-icons mr-3">
-              {e.icon}
-            </i>
-            {e.name}
-          </Link>
-        </li>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
+  };
   return (
     <div>
       <ul className="list-reset">
-      {menus.map(e => (
+        {menus.map(e => (
           <div key={e.key}>{menuFunctn(e)}</div>
         ))}
       </ul>
@@ -119,11 +114,13 @@ const Mainlis = ({  location: { pathname } }) => {
 Mainlis.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  access: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  roles: makeSelectRoles(),
+  // roles: makeSelectRoles(),
+  access: makeSelectAccess(),
 });
 
 const withConnect = connect(mapStateToProps);

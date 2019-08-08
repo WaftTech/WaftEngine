@@ -21,11 +21,14 @@ export const initialState = {
   media: {},
   slide: {},
   notifications: [],
+  access: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const appReducer = (state = initialState, action = { type: '' }) =>
   produce(state, draft => {
+    const access = {};
+    let isAdmin = false;
     switch (action.type) {
       case types.SET_USER:
         localStorage.setItem(
@@ -34,15 +37,19 @@ const appReducer = (state = initialState, action = { type: '' }) =>
             ? JSON.stringify(action.payload.routes)
             : localStorage.routes,
         );
+        (action.payload.routes || []).map(each => {
+          if (each.admin_routes.includes('/admin/dashboard')) {
+            isAdmin = true;
+          }
+          each.admin_routes.map(route => {
+            access[route] = [...(access[route] || []), each.access_type];
+          });
+        });
         draft.user = {
           ...action.payload,
-          isAdmin:
-            (action.payload.roles &&
-              action.payload.roles.includes(
-                '5bf7ae3694db051f5486f845' || '5bf7af0a736db01f8fa21a25',
-              )) ||
-            false,
+          isAdmin,
         };
+        draft.access = access;
         break;
       case types.SET_TOKEN:
         localStorage.setItem('token', action.payload);

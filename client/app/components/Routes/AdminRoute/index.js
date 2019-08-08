@@ -13,7 +13,7 @@ import NotFoundPage from '../../../containers/NotFoundPage';
 const AdminRoute = ({ token, isAdmin, ...rest }) => {
   if (token && isAdmin) return <Route {...rest} />;
   delete rest.component; // eslint-disable-line no-param-reassign
-  if (token && isAdmin == false) return <Route component={NotFoundPage} />;
+  if (token && isAdmin === false) return <Route component={NotFoundPage} />;
   return (
     <Route
       {...rest}
@@ -33,6 +33,10 @@ AdminRoute.propTypes = {
   token: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
+};
+
+AdminRoute.defaultProps = {
+  isAdmin: false,
 };
 
 const mapStateToProps = createStructuredSelector({
