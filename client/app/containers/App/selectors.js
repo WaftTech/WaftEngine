@@ -64,3 +64,9 @@ export const makeSelectNotifications = () =>
     selectGlobal,
     state => state.notifications,
   );
+
+export const makeSelectAccess = () =>
+  createSelector(
+    selectGlobal,
+    state => state.access,
+  );
