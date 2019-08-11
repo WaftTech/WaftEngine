@@ -10,10 +10,10 @@ WaftEngine core features include:
 
 - User Manage and Login flow
 - Role Manage
-- Module Manage with Access level Defination
-- Access Management accociated with roles
+- Module Manage with Access level Definition
+- Access Management associated with roles
 - Email Template and settings
-- Media Manage and server side proccessing
+- Media Manage and server side processing
 - Error handling and log Management
 - Authentication and Authorization
 - Content Management
@@ -23,13 +23,25 @@ WaftEngine core features include:
 
 Since anything in our codebase can be extended, overwritten, or installed as a package, you may also develop, scale, and customize anything on our platform.
 
-## Getting started
+## Installation
 
-Follow the documentation to run WaftEngine for all operating systems.
-
-- [Linux](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
-- [Windows](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
-- [OS X](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
+- `git clone <this_url> && cd <repo_name>`
+- install npm on client and server
+  - `cd client`
+  - `npm install`
+  - `cd ../server`
+  - `npm install`
+- Import Default data into MongoDB server from `db` folder
+  - `cd db`
+  - `mongorestore -h <server>:<port> -d <dbname> -u <user> -p <password> ./`
+- Configure Server
+  - Rename `config.bak` folder to `config`
+  - Update `keys.js` file in `mongoURI` section as your `MongoDB credential`
+- Running the application in development mode
+  - Development Mode (Client only): `npm run dev` then open `http://localhost:5051` in a browser
+  - Standalone (Client+Server): `npm start` then open `http://localhost:5050` in a browser
+- Default Credentials : Email : admin+we@wafttech.com , Password : Test@1234
+- For more [Getting started](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
 
 # Get involved
 
@@ -38,7 +50,6 @@ Read documentation & tutorials
 - [Developer Documentation](https://www.waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
 - [Architecture](https://www.waftengine.org/architecture)
 
-- Defalult Credentials : Email : admin+we@wafttechcom , Password : Test@1234
 
 ## Get help & contact the team
 
