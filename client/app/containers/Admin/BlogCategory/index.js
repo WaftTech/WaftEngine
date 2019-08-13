@@ -96,8 +96,8 @@ export class BlogCategory extends React.PureComponent {
     this.props.loadAllRequest(this.props.query);
   };
 
-  handleEdit = id => {
-    this.props.push(`/admin/blog-cat-manage/edit/${id}`);
+  handleEdit = slug => {
+    this.props.push(`/admin/blog-cat-manage/edit/${slug}`);
   };
 
   handleOpen = id => {
@@ -131,8 +131,9 @@ export class BlogCategory extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ title, is_active, added_at, updated_at, _id }) => [
+      ({ title, image, slug_url, is_active, added_at, updated_at, _id }) => [
         title,
+        image && image.fieldname || '',
         '' + is_active,
         moment(added_at).format('MMM Do YY'),
         moment(updated_at).format('MMM Do YY'),
@@ -146,7 +147,7 @@ export class BlogCategory extends React.PureComponent {
             <IconButton
               aria-label="Edit"
               className={classes.tableActionButton}
-              onClick={() => this.handleEdit(_id)}
+              onClick={() => this.handleEdit(slug_url)}
             >
               <Edit
                 className={`${classes.tableActionButtonIcon} ${classes.edit}`}
@@ -221,6 +222,7 @@ export class BlogCategory extends React.PureComponent {
           <Table
             tableHead={[
               'Title',
+              'Image',
               'Is Active',
               'Added At',
               'Updated At',

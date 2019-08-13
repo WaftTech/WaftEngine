@@ -55,7 +55,6 @@ export class Dashboard extends React.PureComponent {
 
   render() {
     const { classes, users, info, errors, blogs } = this.props;
-    console.log(errors);
     return (
       <>
         <div className="flex justify-between mt-3 mb-3">

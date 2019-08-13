@@ -5,6 +5,8 @@ import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import Dropzone from 'react-dropzone';
+import CKEditor from 'react-ckeditor-component';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -27,6 +29,8 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
+import { IMAGE_BASE } from '../../../App/constants';
+import defaultImage from '../../../../assets/img/logo.svg';
 
 const styles = theme => ({
   backbtn: {
@@ -53,21 +57,70 @@ class AddEdit extends React.PureComponent {
     push: PropTypes.func.isRequired,
   };
 
+  state = {
+    tempImage: defaultImage,
+  };
+
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOneRequest(this.props.match.params.id);
+    if (this.props.match.params && this.props.match.params.slug) {
+      this.props.loadOneRequest(this.props.match.params.slug);
     }
   }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.one !== nextProps.one) {
+      const { one } = nextProps;
+      if (one && one.image && one.image.fieldname) {
+        const tempImage =
+          one && one.image && one.image.path && `${IMAGE_BASE}${one.image.path}`;
+        this.setState({ ...one, tempImage });
+      }
+    }
+  }
+
+  slugify = text => {
+    return text
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+      .replace(/\-\-+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, ''); // Trim - from end of text
+  };
 
   handleChange = name => event => {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.value });
+    if(name === 'title'){
+      const slug = this.slugify(event.target.value);
+      this.props.setOneValue({key: 'slug_url', value: slug});
+    }
   };
 
   handleCheckedChange = name => event => {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.checked });
+  };
+
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.props.setOneValue({ key: name, value: newContent });
+  };
+
+  onDrop = (files, name) => {
+    const file = files[0];
+    this.props.setOneValue({ key: [name], value: file });
+    const reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.setState({ tempImage: reader.result });
+      },
+      false,
+    );
+    reader.readAsDataURL(file);
   };
 
   handleGoBack = () => {
@@ -80,13 +133,14 @@ class AddEdit extends React.PureComponent {
 
   render() {
     const { classes, one, match, loading, errors } = this.props;
+    const { tempImage } = this.state;
     return loading && loading == true ? (
       <Loading />
     ) : (
       <div>
         <Helmet>
           <title>
-            {match && match.params && match.params.id
+            {match && match.params && match.params.slug
               ? 'Edit Blog'
               : 'Add Blog'}
           </title>
@@ -100,7 +154,7 @@ class AddEdit extends React.PureComponent {
             >
               <BackIcon />
             </IconButton>
-            {match && match.params && match.params.id
+            {match && match.params && match.params.slug
               ? 'Edit Blog Category'
               : 'Add Blog Category'}
           </PageHeader>
@@ -110,7 +164,7 @@ class AddEdit extends React.PureComponent {
           <div className="w-full md:w-1/2 pb-4">
             <label
               className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-last-name"
+              htmlFor="grid-blog-title"
             >
               Blog Title
             </label>
@@ -118,17 +172,69 @@ class AddEdit extends React.PureComponent {
               className="Waftinputbox"
               id="title"
               type="text"
-              value={one.title || ''}
+              value={one && one.title || ''}
               name="Title"
               onChange={this.handleChange('title')}
             />
-            <div id="component-error-text">{errors.title}</div>
+            <div id="component-error-text">{errors && errors.title}</div>
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-slug"
+            >
+              Slug
+            </label>
+            <input
+              className="Waftinputbox"
+              id="slug"
+              type="text"
+              value={one && one.slug_url || ''}
+              name="slug"
+              onChange={this.handleChange('slug_url')}
+            />
+            <div id="component-error-text">{errors && errors.slug_url}</div>
+          </div>
+          <div className="pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Blog Category Description
+            </label>
+            <CKEditor
+              name="cat-description"
+              content={one && one.description}
+              config={{ allowedContent: true }}
+              events={{
+                change: e => this.handleEditorChange(e, 'description'),
+                value: one && one.description || '',
+              }}
+            />
+          </div>
+          <div className="w-full md:w-1/2 pb-4 mt-4">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="Image"
+            >
+              Image
+            </label>
+            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <img
+                    className="Waftinputbox cursor-pointer"
+                    src={tempImage}
+                    alt="BlogCategoryImage"
+                    style={{ height: '120px', width: '60%' }}
+                  />
+                </div>
+              )}
+            </Dropzone>
           </div>
           <div>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={one.is_active || false}
+                  checked={one && one.is_active || false}
                   tabIndex={-1}
                   onClick={this.handleCheckedChange('is_active')}
                   color="primary"

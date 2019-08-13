@@ -33,4 +33,10 @@ export const LOAD_CATEGORY_REQUEST = 'app/BlogManagePage/LOAD_CATEGORY_REQUEST';
 export const LOAD_CATEGORY_SUCCESS = 'app/BlogManagePage/LOAD_CATEGORY_SUCCESS';
 export const LOAD_CATEGORY_FAILURE = 'app/BlogManagePage/LOAD_CATEGORY_FAILURE';
 
+export const LOAD_USERS_REQUEST = 'app/BlogManagePage/LOAD_USERS_REQUEST';
+export const LOAD_USERS_SUCCESS = 'app/BlogManagePage/LOAD_USERS_SUCCESS';
+export const LOAD_USERS_FAILURE = 'app/BlogManagePage/LOAD_USERS_FAILURE';
+
 export const CLEAR_ERRORS = 'app/BlogManagePage/CLEAR_ERRORS';
+export const SET_ERROR_VALUE = 'app/BlogManagePage/SET_ERROR_VALUE';
+export const SET_CATEGORY_VALUE = 'app/BlogManagePage/SET_CATEGORY_VALUE';

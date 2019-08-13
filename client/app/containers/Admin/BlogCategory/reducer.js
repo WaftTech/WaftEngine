@@ -15,11 +15,14 @@ export const initialState = {
   },
   one: {
     title: '',
+    description: '',
+    image: {},
+    slug_url: '',
     is_active: false,
   },
   query: { find_title: '', size: 10 },
   loading: false,
-  errors: { title: '' },
+  errors: { title: '', slug_url: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -68,6 +71,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
+        break;
+      case types.SET_ERROR_VALUE:
+        draft.errors = action.payload;
         break;
     }
   });

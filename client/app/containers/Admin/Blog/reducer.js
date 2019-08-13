@@ -23,7 +23,8 @@ export const initialState = {
   },
   one: {
     title: '',
-    category: '',
+    slug_url: '',
+    category: [],
     description: '',
     summary: '',
     published_on: Date.now(),
@@ -40,11 +41,12 @@ export const initialState = {
   },
   query: { find_title: '' },
   category: [],
+  users: [],
   tempTag: '',
   tempMetaTag: '',
   tempMetaKeyword: '',
   loading: false,
-  errors: { title: '', description: '' },
+  errors: { title: '', slug_url: '', description: '' },
 };
 
 const reducer = (state = initialState, action) =>
@@ -83,6 +85,9 @@ const reducer = (state = initialState, action) =>
       case types.LOAD_CATEGORY_SUCCESS:
         draft.category = action.payload.data;
         break;
+      case types.LOAD_USERS_SUCCESS:
+        draft.users = action.payload.data;
+        break;
       case types.DELETE_ONE_SUCCESS:
         draft.all = {
           ...draft.all,
@@ -100,8 +105,14 @@ const reducer = (state = initialState, action) =>
       case types.SET_TAG_VALUE:
         draft.tempTag = action.payload;
         break;
+      case types.SET_CATEGORY_VALUE:
+        draft.one.category = action.payload;
+        break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
+        break;
+      case types.SET_ERROR_VALUE:
+        draft.errors = action.payload;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;

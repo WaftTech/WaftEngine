@@ -11,6 +11,7 @@
 
 export const FB_APP_ID = '308391736756480';
 export const FB_APP_FIELDS = 'id,email,name';
+export const RECAPTCHA_SITE_KEY = '6LftqoQUAAAAAOnGULHOWhdUACVQYeHFggJdRojU';
 export const GOOGLE_CLIENT_ID =
   '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com';
 
