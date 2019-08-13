@@ -26,6 +26,10 @@ export const setMetaKeywordValue = payload => ({
   type: types.SET_META_KEYWORD_VALUE,
   payload,
 });
+export const setCategoryValue = payload => ({
+  type: types.SET_CATEGORY_VALUE,
+  payload,
+});
 export const clearOne = payload => ({
   type: types.CLEAR_ONE,
   payload,
@@ -98,6 +102,24 @@ export const loadCategoryFailure = payload => ({
   type: types.LOAD_CATEGORY_FAILURE,
   payload,
 });
+
+export const loadUsersRequest = payload => ({
+  type: types.LOAD_USERS_REQUEST,
+  payload,
+});
+export const loadUserSuccess = payload => ({
+  type: types.LOAD_USERS_SUCCESS,
+  payload,
+});
+export const loadUserFailure = payload => ({
+  type: types.LOAD_USERS_FAILURE,
+  payload,
+});
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
+});
+
+export const setErrorValue = payload => ({
+  type: types.SET_ERROR_VALUE,
+  payload,
 });

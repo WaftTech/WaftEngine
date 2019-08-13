@@ -127,6 +127,7 @@ export class BlogManagePage extends React.Component {
       query,
       loading,
     } = this.props;
+    console.log(data, 'data');
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({
@@ -149,7 +150,7 @@ export class BlogManagePage extends React.Component {
         '' + is_published,
         '' + is_active,
         tags.join(','),
-        author || '',
+        author && author.name || '',
         <React.Fragment>
           <Tooltip
             id="tooltip-top"

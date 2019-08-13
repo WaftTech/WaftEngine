@@ -18,6 +18,7 @@ export const initialState = {
     users: {
       email: '',
       name: '',
+      bio: '',
       password: '',
       email_verified: false,
       roles: [],

@@ -26,6 +26,7 @@ import {
   makeSelectContactDetail,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
+import { RECAPTCHA_SITE_KEY } from '../App/constants';
 
 const styles = {
   cardCategoryWhite: {
@@ -160,7 +161,7 @@ class ContactUs extends React.Component {
                       <form onSubmit={this.onSubmit}>
                         <ReCAPTCHA
                           ref={recaptchaRef}
-                          sitekey="6LftqoQUAAAAAOnGULHOWhdUACVQYeHFggJdRojU"
+                          sitekey={RECAPTCHA_SITE_KEY}
                           onChange={this.onChange}
                         />
                       </form>

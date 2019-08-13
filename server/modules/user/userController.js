@@ -129,7 +129,7 @@ userController.GetAllUser = async (req, res, next) => {
   if (req.query.find_email) {
     searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
   }
-  selectq = 'name email password avatar email_verified roles';
+  selectq = 'name email password avatar bio email_verified roles';
 
   populate = [{ path: 'roles', select: 'role_title' }];
 
@@ -146,6 +146,7 @@ userController.GetUserDetail = async (req, res, next) => {
       name: 1,
       email: 1,
       avatar: 1,
+      bio: 1,
       updated_at: 1,
     });
     const role = await roles.find({ is_deleted: false }, { role_title: 1, _id: 1 });
