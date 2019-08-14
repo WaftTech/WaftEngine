@@ -19,18 +19,25 @@ class CategoryListingPage extends React.Component {
   }
 
   render() {
-    const { category } = this.props;
+    const { category, blogs } = this.props;
     return (
       <React.Fragment>
         {category.map(each => {
           const { title } = each;
-          return (
+          let show = false;
+          blogs.length > 0 &&
+            blogs.map(blog => {
+              blog.category.map(el => {
+                if (el._id === each._id) show = true;
+              });
+            });
+          return show ? (
             <li key={each._id} className="info ">
               <Link to={`/blog-category/${each._id}`}>
                 <h3> {`${title}`}</h3>
               </Link>
             </li>
-          );
+          ) : null;
         })}
       </React.Fragment>
     );

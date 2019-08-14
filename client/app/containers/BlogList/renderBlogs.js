@@ -7,12 +7,12 @@ import { compose } from 'redux';
 import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
-import {  } from './selectors';
 import * as mapDispatchToProps from './actions';
 import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 
 const RenderBlogs = props => {
-  const { currentBlogs} = props;
+  const { currentBlogs } = props;
+  // console.log(currentBlogs, 'blogs');
 
   return (
     <>
@@ -107,7 +107,7 @@ const RenderBlogs = props => {
             </div>
           </div>
           <ul className="w-1/4">
-            <CategoryListing />
+            <CategoryListing blogs={currentBlogs}/>
         </ul>
       </div>
     </>
