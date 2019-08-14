@@ -141,9 +141,11 @@ export class BlogManagePage extends React.Component {
         tags,
         author,
         _id,
-      }) => [
+      }) => {
+        // console.log(category);
+        return [
         title,
-        (category && category.title) || 'No',
+        category && category.map(each => each.title).join(', ') || 'No',
         (image && image.fieldname) || null,
         moment(published_on).format('MMM Do YY'),
         moment(added_at).format('MMM Do YY'),
@@ -185,7 +187,7 @@ export class BlogManagePage extends React.Component {
             </IconButton>
           </Tooltip>
         </React.Fragment>,
-      ],
+      ]},
     );
     return (
       <>

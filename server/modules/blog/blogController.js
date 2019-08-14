@@ -56,7 +56,7 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
       searchq = {
         title: {
           $regex: req.query.find_title,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };
@@ -65,7 +65,7 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
       searchq = {
         published_on: {
           $regex: req.query.find_published_on,
-          $options: 'i x',
+          $options: 'i',
         },
         ...searchq,
       };

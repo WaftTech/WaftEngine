@@ -340,11 +340,12 @@ class AddEdit extends React.PureComponent {
               multiple
               value={one.category || []}
               onChange={this.handleMultipleSelectChange}
+              // renderValue={selected => selected.map(s => category.find(cat => cat._id === s).title).join(', ')}
             >
               {category.map(each => (
                 <MenuItem key={each._id} value={each._id}>
-                <input type="checkbox" checked={one.category.includes(each._id) ? 'checked' : ''}
-                onChange={() => null}/>
+                {/* <input type="checkbox" checked={one.category.includes(each._id) ? 'checked' : ''}
+                onChange={() => null}/> */}
                   {each.title}
                 </MenuItem>
               ))}
