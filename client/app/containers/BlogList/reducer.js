@@ -3,8 +3,13 @@ import * as types from './constants';
 
 // The initial state of the App
 export const initialState = {
-  blogList: [],
-  loading: false,
+  blogList: {
+    data: [],
+    page: 1,
+    size: 10,
+    totaldata: 0,
+  },
+  loading: true,
 };
 
 const reducer = (state = initialState, action) =>
@@ -15,11 +20,21 @@ const reducer = (state = initialState, action) =>
         break;
 
       case types.LOAD_BLOG_LIST_SUCCESS:
-        draft.blogList = action.payload.data;
+        draft.blogList = action.payload;
         draft.loading = false;
+        break;
 
       case types.LOAD_BLOG_LIST_FAILURE:
         draft.loading = false;
+        break;
+
+      case types.SET_PAGES_VALUE:
+        draft.blogList[action.payload.key] = action.payload.value;
+        break;
+
+      case types.SET_SIZE_VALUE:
+        draft.blogList.size = action.payload;
+        break;
     }
   });
 
