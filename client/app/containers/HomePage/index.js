@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 import SlickSlider from '../../components/SlickSlider';
 
 /* eslint-disable react/prefer-stateless-function */

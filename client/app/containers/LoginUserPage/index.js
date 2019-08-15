@@ -12,7 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 
-import Link from 'react-router-dom/Link';
+import { Link }  from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
