@@ -151,8 +151,6 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('email')}
             />
           </div>
-
-      
           <div className="w-full md:w-1/2 pb-4">
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Name
@@ -166,8 +164,21 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('name')}
             />
             <div id="component-error-text">
-            {errors.name || '' }
+            {errors && errors.name || '' }
             </div>
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              Bio
+            </label>
+            
+            <textarea
+              className="Waftinputbox"
+              id="bio"
+              type="text"
+              value={users && users.bio || ''}
+              onChange={this.handleChange('bio')}
+            />
           </div>
           {roless.map(each => (
             <FormControlLabel
@@ -185,7 +196,7 @@ class AddEdit extends React.PureComponent {
             />
           ))}
            <div id="component-error-text">
-            {errors.roles || ''}
+            {errors && errors.roles || ''}
             </div>
 
         

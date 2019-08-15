@@ -127,6 +127,7 @@ export class BlogManagePage extends React.Component {
       query,
       loading,
     } = this.props;
+    console.log(data, 'data');
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({
@@ -140,16 +141,18 @@ export class BlogManagePage extends React.Component {
         tags,
         author,
         _id,
-      }) => [
+      }) => {
+        // console.log(category);
+        return [
         title,
-        (category && category.title) || 'No',
+        category && category.map(each => each.title).join(', ') || 'No',
         (image && image.fieldname) || null,
         moment(published_on).format('MMM Do YY'),
         moment(added_at).format('MMM Do YY'),
         '' + is_published,
         '' + is_active,
         tags.join(','),
-        author || '',
+        author && author.name || '',
         <React.Fragment>
           <Tooltip
             id="tooltip-top"
@@ -184,7 +187,7 @@ export class BlogManagePage extends React.Component {
             </IconButton>
           </Tooltip>
         </React.Fragment>,
-      ],
+      ]},
     );
     return (
       <>

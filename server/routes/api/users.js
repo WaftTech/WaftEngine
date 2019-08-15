@@ -32,7 +32,7 @@ router.get('/', authorization, authentication, userModule.GetAllUser);
  * @description Check user is returning user group by or new  || for admin
  * @access Public
  */
-router.get('/grby', authorization, authentication, userModule.GetAllUserGRBY);
+router.get('/grby', authorization, userModule.GetAllUserGRBY);
 
 /**
  * @route GET api/user

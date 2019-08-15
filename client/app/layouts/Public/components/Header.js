@@ -14,6 +14,7 @@ import {
 } from '../../../containers/App/selectors';
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
+import HeaderMenu from './HeaderMenu';
 
 const styles = theme => ({});
 
@@ -75,27 +76,16 @@ const Header = props => {
               </g>
             </svg>
             <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
-              <NavLink
-                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/"
-                onClick={handleToggle}
-              >
-                Home
-              </NavLink>
-              <NavLink
-                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/blog-list"
-                onClick={handleToggle}
-              >
-                Blogs
-              </NavLink>
-              <NavLink
-                className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                to="/faq"
-                onClick={handleToggle}
-              >
-                FAQs
-              </NavLink>
+              {HeaderMenu.map(each => (
+                <NavLink
+                  key={each.key}
+                  className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                  to={each.link}
+                  onClick={handleToggle}
+                >
+                  {each.name}
+                </NavLink>
+              ))}
             </div>
           </div>
         </div>

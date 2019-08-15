@@ -19,30 +19,27 @@ class CategoryListingPage extends React.Component {
   }
 
   render() {
-    const { category } = this.props;
+    const { category, blogs } = this.props;
     return (
-      <div>
-        <React.Fragment>
-          <div className="container">
-            <Grid container spacing={24}>
-              {category.map(each => {
-                const { title } = each;
-                return (
-                  <Grid key={each._id} item xs={12} lg={2}>
-                    <Link to={`/blog-category/${each._id}`}>
-                      <div>
-                        <div className="info">
-                          <h1> {`${title}`}</h1>
-                        </div>
-                      </div>
-                    </Link>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </div>
-        </React.Fragment>
-      </div>
+      <React.Fragment>
+        {category.map(each => {
+          const { title } = each;
+          let show = false;
+          blogs.length > 0 &&
+            blogs.map(blog => {
+              blog.category.map(el => {
+                if (el._id === each._id) show = true;
+              });
+            });
+          return show ? (
+            <li key={each._id} className="info ">
+              <Link to={`/blog-category/${each._id}`}>
+                <h3> {`${title}`}</h3>
+              </Link>
+            </li>
+          ) : null;
+        })}
+      </React.Fragment>
     );
   }
 }

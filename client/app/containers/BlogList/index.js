@@ -1,13 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
+// import { Link } from 'react-router-dom';
+// import moment from 'moment';
 import Helmet from 'react-helmet';
 
-import { IMAGE_BASE } from 'containers/App/constants';
+// import { IMAGE_BASE } from 'containers/App/constants';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectBlogList, makeSelectLoading } from './selectors';
@@ -15,23 +15,74 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import Loading from '../../components/Loading';
-import CategoryListing from '../../containers/CategoryListingPage/Loadable';
+// import CategoryListing from '../../containers/CategoryListingPage/Loadable';
+import RenderBlogs from './renderBlogs';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogListPage extends React.Component {
   static propTypes = {
     loadBlogListRequest: PropTypes.func.isRequired,
-    blogList: PropTypes.array,
+    blogList: PropTypes.object,
   };
 
   componentDidMount() {
     this.props.loadBlogListRequest();
   }
+  
+  handleClick = name => e => {
+    e.persist();
+    this.props.setPagesValue({key: name, value: Number(e.target.id)});
+  };
+
+  handleBlogsPerPage = e => {
+    e.persist();
+    this.props.setSizeValue(e.target.value);
+  };
+
+  handleBackPage = e => {
+    e.persist();
+    const nextPage = this.props.blogList.page;
+    const prevPage = nextPage - 1;
+    this.props.setPagesValue({key: 'page', value: prevPage});
+  };
+
+  handleNextPage = e => {
+    e.persist();
+    const prevPage  = this.props.blogList.page;
+    const nextPage = prevPage + 1;
+    this.props.setPagesValue({key: 'page', value: nextPage});
+  };
 
   render() {
-    const { blogList, loading } = this.props;
+    const {
+      blogList: { data, page, size, totaldata },
+      loading,
+    } = this.props;
 
-    return loading && loading == true ? (
+    const BlogsPerPage = ['1', '5', '10', '20', '50', '100'];
+    const indexOfLastBlog = page * size;
+    const indexOfFirstBlog = indexOfLastBlog - size;
+    const currentBlogs = data.slice(indexOfFirstBlog, indexOfLastBlog);
+
+    const maxPage = Math.ceil(totaldata/size);
+    const pagenumber = [];
+    for (let i = 1; i <= Math.ceil(totaldata/size); i++) {
+      pagenumber.push(i);
+    }
+    const renderPageNumbers = pagenumber.map(each => {
+      return (
+        <button
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+          key={each}
+          id={each}
+          onClick={this.handleClick('page')}
+        >
+          {each}
+        </button>
+      )
+    })
+
+    return loading ? (
       <Loading />
     ) : (
       <React.Fragment>
@@ -39,99 +90,45 @@ export class BlogListPage extends React.Component {
           <title>Blog List</title>
         </Helmet>
         <div>
-          <div className="banner relative">
-            <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
-            <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
-              Blogs
-            </h1>
+          <div>
+            <RenderBlogs currentBlogs={currentBlogs}/>
           </div>
-          <div className="container mx-auto my-10 px-5">
-            <div className="flex flex-wrap w-full md:w-3/4 md:-mx-5">
-              {blogList.map(each => {
-                const {
-                  image,
-                  title,
-                  slug_url,
-                  description,
-                  added_at,
-                  category,
-                  tags,
-                } = each;
-
-                return (
-                  <div
-                    className="blog_sec w-full md:w-1/2 md:px-5 mb-5"
-                    key={slug_url}
-                  >
-                    <div className="w-full h-48 md:h-64 object-cover overflow-hidden">
-                      <Link to={`/blog/${slug_url}`}>
-                        <div className="img blog-img h-full">
-                          <img
-                            src={image && `${IMAGE_BASE}${image.path}`}
-                            className="rounded"
-                            alt={`${title}`}
-                          />
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="">
-
-                    <Link
-                        className="text-black no-underline capitalize mb-2 bold block mt-4"
-                        to={`/blog/${slug_url}`}
-                      >
-                        <h2>{title}</h2>
-                      </Link>
-                      <div className="border-t-1 flex flex-wrap font-bold">
-                        <Link
-                          className="mr-2 text-black hover:text-waftprimary leading-normal text-base no-underline"
-                          to={`/blog-category/${category ? category._id : ''}`}
-                        >
-                          <div className="mr-2">
-                            <span className="text-grey-dark">By</span>  {category ? category.title : ''}
-                            {' '}
-                          </div>
-                        </Link>
-                        <p className="text-grey-dark leading-normal text-base mr-2">
-                          {moment(added_at).format('MMM Do YY')}
-                          
-                        </p>
-                        <Link
-                          className="text-grey-darkleading-normal text-base no-underline"
-                          to={`/blog/${each.slug_url}`}
-                        >
-                          <div> {tags.join(', ') || ''} </div>
-                        </Link>{' '}
-                      </div>
-                   
-
-                      <Link
-                        className="text-grey-darker text-base no-underline"
-                        to={`/blog/${slug_url}`}
-                      >
-                        <div
-                          className="leading-normal text-base text-left"
-                          style={{ height: '95px', overflow: 'hidden' }}
-                          dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                      </Link>
-
-                      <div className="flex justify-end readmore mt-2">
-                        {' '}
-                        <Link
-                          className="no-underline hover:text-waftprimary"
-                          to={`/blog/${slug_url}`}
-                        >
-                          Continue Reading <span className="rdanim">>>></span>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+          <div className="flex">
+            <div className="w-1/3  ml-8">
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="select-blogs-per-page"
+              >
+                Blogs Per Page
+              </label>
+              <select
+                native="true"
+                value={size || ''}
+                onChange={this.handleBlogsPerPage}
+              >
+              {BlogsPerPage.map(each => (
+                <option key={each} value={each}>{each}</option>
+              ))}
+              </select>
+            </div>
+            <div className="w-2/3 ml-4">
+              <button
+                className="font-bold"
+                disabled={page===1}
+                onClick={this.handleBackPage}
+              >
+                {"<<"}
+              </button>
+              {renderPageNumbers}
+              <button
+                className="font-bold"
+                disabled={page===maxPage}
+                onClick={this.handleNextPage}
+              >
+              {">>"}
+              </button>
             </div>
           </div>
-          <CategoryListing></CategoryListing>
         </div>
       </React.Fragment>
     );
