@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 /**
- * Direct selector to the offerManagePage state domain
+ * Direct selector to the BlogManagePage state domain
  */
 
 const selectDomain = state => state.blogManagePage || initialState;
