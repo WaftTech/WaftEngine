@@ -44,7 +44,7 @@ export class BlogPage extends React.Component {
       // DON'T EDIT BELOW THIS LINE
       const d = window.document;
       const s = d.createElement('script');
-      s.src = 'https://nepaloffers.disqus.com/embed.js';
+      s.src = 'https://waftengine.disqus.com/embed.js';
       s.setAttribute('data-timestamp', +new Date());
       (d.head || d.body).appendChild(s);
     })();
@@ -58,7 +58,7 @@ export class BlogPage extends React.Component {
         // DON'T EDIT BELOW THIS LINE
         const d = window.document;
         const s = d.createElement('script');
-        s.src = 'https://nepaloffers.disqus.com/embed.js';
+        s.src = 'https://waftengine.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
       })();
