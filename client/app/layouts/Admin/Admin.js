@@ -195,7 +195,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
             <img
               className="mt-3 mb-6 ml-4 mx-auto flex grayscale1"
               src={Logo}
-              alt="waft engine"
+              alt="waftengine"
             />
           </Link>
           <MainListItems />

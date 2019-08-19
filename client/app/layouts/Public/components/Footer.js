@@ -26,14 +26,15 @@ class Footer extends React.Component {
     const { email } = this.state;
 
     return (
-      <footer className="footer">
+      <footer className="footer bg-lightest">
         <div className="w-full newsletter_wrapper p-10 text-center">
           <div className="widget-ft style1 widget-lastest">
-            <h1 className="text-white mb-2">Newsletter</h1>
+            <h1 className="text-white mb-2">Give Star, Show Your Love</h1>
             <p className="mb-5 text-white">
-              Subscribe to our newsletter and stay updated.
+              You don't have to donate always. A Github star is enough to grow
+              WaftEngine.
             </p>
-            <form onSubmit={this.handleSave}>
+            {/* <form onSubmit={this.handleSave}>
               <input
                 type="text"
                 className="appearance-none rounded py-2 px-3 text-grey-darker leading-tight md:1/2 lg:w-1/4 rounded-r-none"
@@ -50,37 +51,26 @@ class Footer extends React.Component {
               >
                 Submit
               </Button>
-            </form>
+            </form> */}
+
+            <button className="text-white py-2 px-4 rounded mt-4 btn-waft hover:bg-black">
+              Star WaftEngine
+            </button>
           </div>
         </div>
         <div className="container mx-auto">
           <div className="flex flex-wrap p-5">
             <div className="w-full lg:w-1/3 mb-2 crorder">
               <Link to="/">
-                <img src={logo} alt="WaftEngine" />
+                <img className="grayscale" src={logo} alt="WaftEngine" />
               </Link>
-              <p className="mt-2">
-                © WaftEngine 2019.{' '}
-                <span>
-                  By{' '}
-                  <a
-                    className="no-underline"
-                    href="https://www.wafttech.com"
-                    target="_blank"
-                  >
-                    WaftTech
-                  </a>{' '}
-                  For Developers.
-                </span>
-                <br />
-                All rights reserved.
-              </p>
             </div>
             <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">
               <a
                 className="block no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
                 href="https://www.waftengine.org/about-us"
                 target="_blank"
+                rel="noopener"
               >
                 About Us
               </a>
@@ -88,6 +78,7 @@ class Footer extends React.Component {
                 className="block no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
                 href="https://www.waftengine.org/features"
                 target="_blank"
+                rel="noopener"
               >
                 Features
               </a>
@@ -95,6 +86,7 @@ class Footer extends React.Component {
                 className="display-block  no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
                 href="https://www.waftengine.org/contact-us"
                 target="_blank"
+                rel="noopener"
               >
                 Contact Us
               </a>
@@ -105,6 +97,7 @@ class Footer extends React.Component {
                   <a
                     href="https://www.facebook.com/waftengine/?__tn__=%2Cd%2CP-R&eid=ARAX_40QP9563fc6KG5lw6J6gUpVNZYGxmuY-DGkVQv4ZDHe_P40ZA3eBvyrqpM0Q17rniO7GpVujCKW"
                     target="_blank"
+                    rel="noopener"
                     title="Facebook"
                   >
                     <img src={fb} alt="facebook" />
@@ -113,17 +106,6 @@ class Footer extends React.Component {
                 <li className="pr-2 lg:m-auto lg:pr-2">
                   <a href="mailto:info@waftengine.com" title="E-mail">
                     <img src={mail} alt="email" />
-                  </a>
-                </li>
-                <li className="pr-2 lg:m-auto lg:pr-2">
-                  <a href="#" target="_blank" title="Twitter">
-                    <img src={tw} alt="twitter" />
-                  </a>{' '}
-                </li>
-                <li className="pr-2 lg:m-auto lg:pr-2">
-                  {' '}
-                  <a href="#" target="_blank" title="Instagram">
-                    <img src={instagram} alt="instagram" />
                   </a>
                 </li>
               </ul>
