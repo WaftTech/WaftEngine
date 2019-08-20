@@ -29,6 +29,9 @@ export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
 export const LOGOUT = 'app/App/LOGOUT';
 
+export const SESSION_EXPIRED = 'app/App/SESSION_EXPIRED';
+export const NETWORK_ERROR = 'app/App/NETWORK_ERROR';
+
 export const ENQUEUE_SNACKBAR = 'app/App/ENQUEUE_SNACKBAR';
 export const REMOVE_SNACKBAR = 'app/App/REMOVE_SNACKBAR';
 
