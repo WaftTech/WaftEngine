@@ -8,3 +8,9 @@ export const makeSelectCategory = () =>
     selectDomain,
     state => state.category,
   );
+
+export const makeSelectBlogs = () =>
+  createSelector(
+    selectDomain,
+    state => state.blogs,
+  );
