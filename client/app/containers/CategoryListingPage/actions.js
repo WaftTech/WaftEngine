@@ -12,3 +12,16 @@ export const loadCategoryFailure = payload => ({
   type: types.LOAD_CATEGORY_FAILURE,
   payload,
 });
+
+export const loadBlogsRequest = payload => ({
+  type: types.LOAD_BLOGS_REQUEST,
+  payload,
+});
+export const loadBlogsSuccess = payload => ({
+  type: types.LOAD_BLOGS_SUCCESS,
+  payload,
+});
+export const loadBlogsFailure = payload => ({
+  type: types.LOAD_BLOGS_FAILURE,
+  payload,
+});
