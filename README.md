@@ -43,7 +43,7 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
 - Default Credentials : Email : admin+we@wafttech.com , Password : Test@1234
 - For more [Getting started](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
 
-# Get involved
+## Get involved
 
 Read documentation & tutorials
 
