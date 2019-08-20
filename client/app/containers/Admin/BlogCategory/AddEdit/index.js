@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import Dropzone from 'react-dropzone';
 import CKEditor from 'react-ckeditor-component';
 

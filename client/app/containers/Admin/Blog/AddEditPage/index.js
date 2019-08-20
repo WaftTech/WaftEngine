@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';

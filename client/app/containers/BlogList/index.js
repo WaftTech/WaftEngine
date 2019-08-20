@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 // import moment from 'moment';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 // import { IMAGE_BASE } from 'containers/App/constants';
 import injectSaga from 'utils/injectSaga';

@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import moment from 'moment';
 import { push } from 'connected-react-router';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';

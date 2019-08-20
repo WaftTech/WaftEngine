@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
