@@ -13,7 +13,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import messages from './messages';
-import logo from './../../assets/img/logo-icon.svg';
+import logo from '../../assets/img/logo-icon.svg';
 import './404.css';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -24,8 +24,8 @@ export default class NotFound extends React.PureComponent {
         <h1 className="font-light">
           <FormattedMessage {...messages.header} />
         </h1>
-        <div class="logo-swing">
-          <img src={logo} class="logo opacity-25 b/w" />
+        <div className="logo-swing">
+          <img src={logo} className="logo opacity-25 b/w" />
           <img
             id="hinge"
             src={logo}

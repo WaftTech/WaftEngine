@@ -17,6 +17,7 @@ router.get('/:id', authorization, blogModule.GetBlogDetail);
 router.get('/blog/:slug_url', blogModule.GetBlogBySlug);
 router.get('/blogbycat/:id', blogModule.GetBlogByCat);
 router.get('/blogbytag/:tag', blogModule.GetBlogByTag);
+router.get('/blogbyauthor/:author', blogModule.GetBlogByAuthor);
 router.get('/blogbytime/:time', blogModule.GetBlogByDate);
 router.post('/', authorization, authentication, uploader.single('file'), sanitize, validate, blogModule.SaveBlog);
 router.post('/category', authorization, authentication, uploader.single('file'), catSanitize, catValidate, blogModule.SaveBlogCategory);
