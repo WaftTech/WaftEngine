@@ -27,6 +27,12 @@ export class BlogListPage extends React.Component {
 
   componentDidMount() {
     this.props.loadBlogListRequest();
+    if (this.props.match.params.author) {
+      this.props.loadBlogByAuthorRequest(this.props.match.params.author);
+    }
+    if (this.props.match.params.tag) {
+      this.props.loadBlogByTagRequest(this.props.match.params.tag);
+    }
   }
   
   handleClick = name => e => {

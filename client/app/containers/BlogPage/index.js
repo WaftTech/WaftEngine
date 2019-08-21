@@ -22,6 +22,7 @@ import { IMAGE_BASE } from '../App/constants';
 import Loading from '../../components/Loading';
 import RecentBlogs from './components/RecentBlogs';
 import RelatedBlogs from './components/RelatedBlogs';
+import LinkBoth from '../../components/LinkBoth';
 
 export class BlogPage extends React.Component {
   static propTypes = {
@@ -38,8 +39,8 @@ export class BlogPage extends React.Component {
 
   componentDidMount() {
     this.props.loadRecentBlogsRequest();
-    this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
-    this.props.loadBlogRequest(this.props.match.params.slug_url);
+      this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
+      this.props.loadBlogRequest(this.props.match.params.slug_url);
     (function() {
       // DON'T EDIT BELOW THIS LINE
       const d = window.document;
@@ -71,6 +72,7 @@ export class BlogPage extends React.Component {
 
   render() {
     const { blog, loading, location, match } = this.props;
+    console.log(blog, 'blog');
     if (loading) {
       return <Loading />;
     }
@@ -80,15 +82,17 @@ export class BlogPage extends React.Component {
     //   identifier: match.params.slug_url,
     //   onNewComment: this.handleNewComment,
     //   title: blog.title,
+    // return <Loading />;
+
     // };
     return (
       <>
         <Helmet>
           <title>{blog.title}</title>
         </Helmet>
-            <div className="container mx-auto my-10 px-5">
-              <div className="flex flex-wrap w-full lg:-mx-5">
-              <div className="w-full lg:w-3/4 lg:px-5">
+        <div className="container mx-auto my-10 px-5">
+          <div className="flex flex-wrap w-full lg:-mx-5">
+            <div className="w-full lg:w-3/4 lg:px-5">
               <h2 className="capitalize">
                 <span>{blog.title}</span>
               </h2>
@@ -100,23 +104,41 @@ export class BlogPage extends React.Component {
               </Disqus.CommentCount> */}
               <br />
               <div className="blog_img">
-                {blog.image && blog.image.fieldname ? (
+                {blog && blog.image && blog.image.fieldname ? (
                   <img
                     src={`${IMAGE_BASE}${blog.image.path}`}
                     className="object-cover"
                     alt={`${blog.title}`}
-                    style={{width:'100%',height:'250px',objectFit:'cover'}}
+                    style={{
+                      width: '100%',
+                      height: '250px',
+                      objectFit: 'cover',
+                    }}
                   />
                 ) : null}
               </div>
               <br />
               <div dangerouslySetInnerHTML={{ __html: blog.description }} />
               <br />
-              <div>
-                {blog.tags &&
-                  blog.tags.length > 0 &&
-                  `Tags: ${blog.tags.join(', ')}`}
-              </div>
+              {blog && blog.tags && blog.tags.length > 0 && (
+                <div>
+                  Tags:{' '}
+                  {blog.tags.map((each, index) => (
+                    <LinkBoth key={index} to={`/blog/tag/${each}`}>{`${
+                      index === 0 ? '' : ', '
+                    }${each}`}</LinkBoth>
+                  ))}
+                </div>
+              )}
+              <br />
+              {blog && blog.author && (
+                <div>
+                  Authored By:{' '}
+                  <LinkBoth to={`/blog/author/${blog.author._id}`}>
+                    {blog.author.name}
+                  </LinkBoth>
+                </div>
+              )}
               <div>
                 {/* <Disqus.CommentEmbed showMedia={true} height={160} />
 
@@ -127,14 +149,13 @@ export class BlogPage extends React.Component {
                 <div id="disqus_thread" />
               </div>
             </div>
-      
-          <div className="w-full mt-4 lg:mt-0 lg:w-1/4 bg-gray-400 p-3 border rounded">
-            <RecentBlogs/>
-            <RelatedBlogs/>
+
+            <div className="w-full mt-4 lg:mt-0 lg:w-1/4 bg-gray-400 p-3 border rounded">
+              <RecentBlogs />
+              <RelatedBlogs />
+            </div>
           </div>
-          </div>
-          </div>
-        
+        </div>
       </>
     );
   }
