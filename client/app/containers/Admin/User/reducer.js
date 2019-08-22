@@ -41,20 +41,24 @@ const adminUserManagePageReducer = (state = initialState, action) =>
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         Object.keys(action.payload.value).map(each => {
-          if(typeof(draft.one.users[each])==='string'){
+          if (typeof draft.one.users[each] === 'string') {
             if (draft.one.users[each] !== '') {
               draft.errors[each] = '';
             }
+          } else if (draft.one.users[each].length > 0) {
+            draft.errors[each] = '';
           }
-          else{
-            if (draft.one.users[each].length>0) {
-              draft.errors[each] = '';
-            }
-          }
+          return null;
         });
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
+        break;
+      case types.SET_QUERY_OBJ:
+        draft.query = action.payload;
+        break;
+      case types.CLEAR_QUERY:
+        draft.query = initialState.query;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
