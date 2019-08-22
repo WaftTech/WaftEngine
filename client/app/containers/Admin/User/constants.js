@@ -4,8 +4,6 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/User/DEFAULT_ACTION';
-
 export const SET_ONE_VALUE = 'app/User/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/User/CLEAR_ONE';
 

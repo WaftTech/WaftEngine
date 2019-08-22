@@ -32,6 +32,9 @@ const reducer = (state = initialState, action) =>
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
         break;
+      case types.SET_QUERY_OBJ:
+        draft.query = action.payload;
+        break;
       case types.CLEAR_QUERY:
         draft.query = initialState.query;
         break;
@@ -63,16 +66,16 @@ const reducer = (state = initialState, action) =>
         draft.all = {
           ...draft.all,
           data: draft.all.data.filter(
-            each => each._id != action.payload.data._id,
+            each => each._id !== action.payload.data._id,
           ),
         };
+        break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
         break;
-
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
         break;
