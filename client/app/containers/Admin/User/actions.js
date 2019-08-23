@@ -6,22 +6,25 @@
 
 import * as types from './constants';
 
-export function defaultAction() {
-  return {
-    type: types.DEFAULT_ACTION,
-  };
-}
-
 export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
 });
+export const clearOne = () => ({
+  type: types.CLEAR_ONE,
+});
+
 export const setQueryValue = payload => ({
   type: types.SET_QUERY_VALUE,
   payload,
 });
-export const clearOne = () => ({
-  type: types.CLEAR_ONE,
+export const setQueryObj = payload => ({
+  type: types.SET_QUERY_OBJ,
+  payload,
+});
+export const clearQuery = payload => ({
+  type: types.CLEAR_QUERY,
+  payload,
 });
 
 export const loadAllRequest = payload => ({
