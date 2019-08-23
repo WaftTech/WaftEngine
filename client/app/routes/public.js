@@ -45,7 +45,7 @@ const publicRoutes = [
   },
   {
     exact: true,
-    path: '/blog-list',
+    path: '/blog',
     component: BlogListPage,
   },
   {
@@ -57,6 +57,16 @@ const publicRoutes = [
     exact: true,
     path: '/blog-category/:id',
     component: CategoryDetailPage,
+  },
+  {
+    exact: true,
+    path: '/blog/tag/:tag',
+    component: BlogListPage,
+  },
+  {
+    exact: true,
+    path: '/blog/author/:author',
+    component: BlogListPage,
   },
   {
     exact: true,

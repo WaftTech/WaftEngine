@@ -6,18 +6,22 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Fab, IconButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
+import { Helmet } from 'react-helmet';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
+import qs from 'query-string';
+
+// @material-ui/core components
+import withStyles from '@material-ui/core/styles/withStyles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Table from 'components/Table';
@@ -49,7 +53,19 @@ export class User extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.props.loadAllRequest();
+    const {
+      loadAllRequest,
+      query,
+      location: { search },
+      setQueryObj,
+    } = this.props;
+    let queryObj = { ...query };
+    if (search) {
+      queryObj = qs.parse(search);
+      setQueryObj(queryObj);
+    }
+
+    loadAllRequest(queryObj);
   }
 
   handleAdd = () => {
@@ -64,14 +80,26 @@ export class User extends React.PureComponent {
   handleQueryChange = e => {
     e.persist();
     this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    const queryString = qs.stringify({
+      ...this.props.query,
+      [e.target.name]: e.target.value,
+    });
+    this.props.push({
+      search: queryString,
+    });
   };
 
-  handleSearch = () => {
+  handleSearch = e => {
+    e.preventDefault();
     this.props.loadAllRequest(this.props.query);
   };
 
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
+    const queryString = qs.stringify(paging);
+    this.props.push({
+      search: queryString,
+    });
   };
 
   render() {

@@ -3,11 +3,10 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectCategory } from './selectors';
+import { makeSelectCategory, makeSelectBlogs } from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
@@ -16,6 +15,7 @@ import reducer from './reducer';
 class CategoryListingPage extends React.Component {
   componentDidMount() {
     this.props.loadCategoryRequest();
+    this.props.loadBlogsRequest();
   }
 
   render() {
@@ -49,6 +49,7 @@ const withSaga = injectSaga({ key: 'categoryListingPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   category: makeSelectCategory(),
+  blogs: makeSelectBlogs(),
 });
 
 const withConnect = connect(

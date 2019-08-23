@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects';
-import { API_BASE } from 'containers/App/constants';
+import { API_BASE } from '../containers/App/constants';
+import { sessionExpired, networkError } from '../containers/App/actions';
 import objectToFormData from './objectToFormData';
 import request from './request';
 
@@ -28,9 +29,17 @@ class Api {
       } catch (err) {
         let error = null;
         try {
-          error = yield call(() => err.response.json());
-        } catch (e) {}
-        yield put(onError(error));
+          const errorPromise = err.response.json();
+          error = yield call(() => errorPromise);
+          if (error.errors.name === 'JsonWebTokenError') {
+            yield put(sessionExpired(error));
+          } else {
+            yield put(onError(error));
+          }
+        } catch (e) {
+          yield put(networkError(e));
+          yield put(onError());
+        }
       }
     };
   }
@@ -57,8 +66,15 @@ class Api {
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {}
-        yield put(onError(error));
+          if (error.errors.name === 'JsonWebTokenError') {
+            yield put(sessionExpired(error));
+          } else {
+            yield put(onError(error));
+          }
+        } catch (e) {
+          yield put(networkError(e));
+          yield put(onError());
+        }
       }
     };
   }
@@ -98,11 +114,14 @@ class Api {
         let error = null;
         try {
           error = yield call(() => err.response.json());
+          if (error.errors.name === 'JsonWebTokenError') {
+            yield put(sessionExpired(error));
+          } else {
+            yield put(onError(error));
+          }
         } catch (e) {
-          // unexpected error
-          console.log(e, 'error in api call');
+          yield put(onError(error));
         }
-        yield put(onError(error));
       }
     };
   }
@@ -149,17 +168,19 @@ class Api {
         };
         const response = yield call(request, requestURL, options);
         yield put(onSuccess(response));
-        // if (response.success) {
-        //   yield put(onSuccess(response));
-        // } else {
-        //   yield put(onError(response));
-        // }
       } catch (err) {
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {}
-        yield put(onError(error));
+          if (error.errors.name === 'JsonWebTokenError') {
+            yield put(sessionExpired(error));
+          } else {
+            yield put(onError(error));
+          }
+        } catch (e) {
+          yield put(networkError(e));
+          yield put(onError());
+        }
       }
     };
   }
@@ -190,8 +211,15 @@ class Api {
         let error = null;
         try {
           error = yield call(() => err.response.json());
-        } catch (e) {}
-        yield put(onError(error));
+          if (error.errors.name === 'JsonWebTokenError') {
+            yield put(sessionExpired(error));
+          } else {
+            yield put(onError(error));
+          }
+        } catch (e) {
+          yield put(networkError(e));
+          yield put(onError());
+        }
       }
     };
   }

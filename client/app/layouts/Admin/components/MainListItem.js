@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Link from 'react-router-dom/NavLink';
+import { NavLink as Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -12,7 +12,6 @@ import menus from './sidemenu';
 
 import {
   makeSelectLocation,
-  // makeSelectRoles,
   makeSelectAccess,
 } from '../../../containers/App/selectors';
 
@@ -27,7 +26,7 @@ const styles = theme => ({
   },
 });
 
-const Mainlis = ({ location: { pathname }, access }) => {
+const MainlistItem = ({ location: { pathname }, access }) => {
   const [openSet, setOpenSet] = useState({});
 
   const handleSetClick = key => {
@@ -111,15 +110,13 @@ const Mainlis = ({ location: { pathname }, access }) => {
   );
 };
 
-Mainlis.propTypes = {
-  classes: PropTypes.object.isRequired,
+MainlistItem.propTypes = {
   location: PropTypes.object.isRequired,
   access: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  // roles: makeSelectRoles(),
   access: makeSelectAccess(),
 });
 
@@ -129,4 +126,4 @@ const withStyle = withStyles(styles);
 export default compose(
   withConnect,
   withStyle,
-)(Mainlis);
+)(MainlistItem);

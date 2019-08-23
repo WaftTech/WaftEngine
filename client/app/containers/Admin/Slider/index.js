@@ -6,7 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import moment from 'moment';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
+import qs from 'query-string';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -87,6 +88,18 @@ export class SliderPage extends React.Component {
   };
 
   componentDidMount() {
+    const {
+      loadAllRequest,
+      query,
+      location: { search },
+      setQueryObj,
+    } = this.props;
+    let queryObj = { ...query };
+    if (search) {
+      queryObj = qs.parse(search);
+      setQueryObj(queryObj);
+    }
+
     this.props.loadAllRequest(this.props.query);
   }
 
@@ -102,14 +115,26 @@ export class SliderPage extends React.Component {
   handleQueryChange = e => {
     e.persist();
     this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    const queryString = qs.stringify({
+      ...this.props.query,
+      [e.target.name]: e.target.value,
+    });
+    this.props.push({
+      search: queryString,
+    });
   };
 
-  handleSearch = () => {
+  handleSearch = e => {
+    e.preventDefault();
     this.props.loadAllRequest(this.props.query);
   };
 
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
+    const queryString = qs.stringify(paging);
+    this.props.push({
+      search: queryString,
+    });
   };
 
   handleOpen = id => {
@@ -130,10 +155,10 @@ export class SliderPage extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { display } = this.state;
 
     const {
+      classes,
       all: { data, page, size, totaldata },
       query,
       loading,

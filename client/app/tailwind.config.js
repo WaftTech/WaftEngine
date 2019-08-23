@@ -97,7 +97,7 @@ const colors = {
 
   // 'blue-darkest': '#12283a',
   // 'blue-darker': '#1c3d5a',
-  'blue-dark': '#0291DD',
+  'blue-dark': '#3f51b5',
   blue: '#007AFF',
   'blue-light': '#02b7dd',
   // 'blue-lighter': '#bcdefa',
@@ -127,8 +127,8 @@ const colors = {
   // 'pink-lighter': '#ffbbca',
   // 'pink-lightest': '#ffebef',
 
-  waftprimary :'#FF3B30',
-  'waftprimary-light':'rgba(255, 59, 48, 0.10980392156862745)',
+  waftprimary: '#FF3B30',
+  'waftprimary-light': 'rgba(255, 59, 48, 0.10980392156862745)',
 };
 
 module.exports = {

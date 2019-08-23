@@ -12,7 +12,6 @@ import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 
 const RenderBlogs = props => {
   const { currentBlogs } = props;
-  // console.log(currentBlogs, 'blogs');
 
   return (
     <>
@@ -107,7 +106,7 @@ const RenderBlogs = props => {
             </div>
           </div>
           <ul className="w-1/4">
-            <CategoryListing blogs={currentBlogs}/>
+            <CategoryListing />
         </ul>
       </div>
     </>

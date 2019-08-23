@@ -15,6 +15,17 @@ export const setToken = token => ({
   type: types.SET_TOKEN,
   payload: token,
 });
+
+export const sessionExpired = token => ({
+  type: types.SESSION_EXPIRED,
+  payload: token,
+});
+
+export const networkError = token => ({
+  type: types.NETWORK_ERROR,
+  payload: token,
+});
+
 export const enqueueSnackbar = notification => ({
   type: types.ENQUEUE_SNACKBAR,
   payload: {

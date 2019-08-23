@@ -9,7 +9,9 @@ app.set('PORT_NUMBER', port);
 
 //  Start the app on the specific interface (and port).
 server.listen(port, () => {
-  console.log(`WAFT ENGINE Client started on port ${port} at Date ${new Date()}`);
+  console.log(
+    `WaftEngine Client started on port ${port} at Date ${new Date()}`,
+  );
 });
 
 process.on('SIGTERM', () => {

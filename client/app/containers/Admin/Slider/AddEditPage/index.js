@@ -8,19 +8,20 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-// core components
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import BackIcon from '@material-ui/icons/ArrowBack';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -33,10 +34,9 @@ import * as mapDispatchToProps from '../actions';
 import { IMAGE_BASE } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
 import Loading from '../../../../components/Loading';
 
-const styles = theme => ({
+const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
   media: {
     width: '100px',
@@ -212,11 +212,11 @@ class AddEdit extends React.PureComponent {
   };
 
   handleGoBack = () => {
-    this.props.push('/admin/slider-manage');
+    this.props.history.goBack();
   };
 
   handleSave = () => {
-    this.props.addEditRequest();
+    this.props.addEditRequest(this.props.history.goBack);
   };
 
   handleImagePagination = query => {

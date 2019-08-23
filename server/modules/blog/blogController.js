@@ -328,16 +328,18 @@ blogcontroller.GetBlogDetail = async (req, res, next) => {
 };
 blogcontroller.GetBlogBySlug = async (req, res, next) => {
   const slug = req.params.slug_url;
-  const blogs = await blogSch.findOne(
-    {
-      slug_url: slug,
-      is_deleted: false,
-      is_published: true,
-    },
-    {
-      is_published: 0,
-    },
-  );
+  const blogs = await blogSch
+    .findOne(
+      {
+        slug_url: slug,
+        is_deleted: false,
+        is_published: true,
+      },
+      {
+        is_published: 0,
+      },
+    )
+    .populate([{ path: 'author', select: '_id name' }]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
 blogcontroller.GetBlogByCat = async (req, res, next) => {
@@ -437,6 +439,15 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
     const tagBlog = await blogSch.find(searchq);
     const totaldata = await blogSch.countDocuments(searchq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog, blogConfig.get, page, size, totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
+blogcontroller.GetBlogByAuthor = async (req, res, next) => {
+  try {
+    const authorId = req.params.author;
+    const blogByAuthor = await blogSch.find({ is_deleted: false, is_active: true, author: authorId });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, blogByAuthor, null, 'blogs by author get success!!', null);
   } catch (err) {
     next(err);
   }
