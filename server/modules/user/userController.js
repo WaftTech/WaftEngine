@@ -1,5 +1,5 @@
-const users = require('./userShema');
-const roles = require('../role/roleShema');
+const users = require('./userSchema');
+const roles = require('../role/roleSchema');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -9,8 +9,8 @@ const emailHelper = require('./../../helper/email.helper');
 const renderMail = require('./../template/templateController').internal;
 const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
-const accessSch = require('../role/accessShema');
-const moduleSch = require('../role/moduleShema');
+const accessSch = require('../role/accessSchema');
+const moduleSch = require('../role/moduleSchema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginlogs = require('./loginlogs/loginlogController').internal;
 

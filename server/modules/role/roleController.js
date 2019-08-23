@@ -1,8 +1,8 @@
 const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
-const roleSch = require('./roleShema');
-const moduleSch = require('./moduleShema');
-const accessSch = require('./accessShema');
+const roleSch = require('./roleSchema');
+const moduleSch = require('./moduleSchema');
+const accessSch = require('./accessSchema');
 const roleConfig = require('./roleConfig');
 const roleController = {};
 
