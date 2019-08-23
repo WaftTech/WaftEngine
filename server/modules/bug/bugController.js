@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const bugSch = require('./bugShema');
+const bugSch = require('./bugSchema');
 const bugHelper = require('../../helper/error.helper');
 const otherHelper = require('../../helper/others.helper');
 const bugController = {};
