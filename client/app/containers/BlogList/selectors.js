@@ -13,3 +13,15 @@ export const makeSelectLoading = () =>
     selectDomain,
     state => state.loading,
   );
+
+export const makeSelectBlogByAuthor = () =>
+  createSelector(
+    selectDomain,
+    state => state.blogByAuthor,
+  );
+
+export const makeSelectBlogByTag = () =>
+  createSelector(
+    selectDomain,
+    state => state.blogByTag,
+  );
