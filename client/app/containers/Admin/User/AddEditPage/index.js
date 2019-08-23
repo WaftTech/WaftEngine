@@ -12,6 +12,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -27,8 +29,6 @@ import {
 import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 
 class AddEdit extends React.PureComponent {
@@ -70,6 +70,7 @@ class AddEdit extends React.PureComponent {
     tempUser[name] = event.target.checked;
     this.props.setOneValue({ key: 'users', value: tempUser });
   };
+
   handleRolesChecked = roleid => {
     const tempUser = { ...this.props.one.users };
     if (tempUser.roles.includes(roleid)) {
@@ -85,19 +86,19 @@ class AddEdit extends React.PureComponent {
   };
 
   handleTogglePassword = () => {
-    this.setState({isSecure: !this.state.isSecure});
+    this.setState({ isSecure: !this.state.isSecure });
   };
 
   handleSave = () => {
-    this.props.addEditRequest();
+    this.props.addEditRequest(this.props.history.goBack);
   };
 
   handleUpdate = () => {
     this.props.updatePasswordRequest();
-  }
+  };
 
   handleBack = () => {
-    this.props.push('/admin/user-manage');
+    this.props.history.goBack();
   };
 
   render() {
@@ -106,18 +107,15 @@ class AddEdit extends React.PureComponent {
       match: {
         params: { id },
       },
-    
       one: { users, rolesNormalized, roles },
       roless,
       loading,
       errors,
     } = this.props;
     return loading && loading == true ? (
-   
       <Loading />
     ) : (
       <>
-      
         <Helmet>
           <title>{id ? 'Edit User' : 'Add User'}</title>
         </Helmet>
@@ -135,10 +133,9 @@ class AddEdit extends React.PureComponent {
           </PageHeader>
         </div>
         <PageContent>
-    
           <div className="w-full md:w-1/2 pb-4">
-          <h2>Basic Information</h2>
-          <br/>
+            <h2>Basic Information</h2>
+            <br />
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Email
             </label>
@@ -155,7 +152,7 @@ class AddEdit extends React.PureComponent {
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Name
             </label>
-            
+
             <input
               className="Waftinputbox"
               id="name"
@@ -163,20 +160,18 @@ class AddEdit extends React.PureComponent {
               value={users.name || ''}
               onChange={this.handleChange('name')}
             />
-            <div id="component-error-text">
-            {errors && errors.name || '' }
-            </div>
+            <div id="component-error-text">{(errors && errors.name) || ''}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Bio
             </label>
-            
+
             <textarea
               className="Waftinputbox"
               id="bio"
               type="text"
-              value={users && users.bio || ''}
+              value={(users && users.bio) || ''}
               onChange={this.handleChange('bio')}
             />
           </div>
@@ -190,16 +185,12 @@ class AddEdit extends React.PureComponent {
                   checked={users.roles.includes(each._id)}
                   onChange={() => this.handleRolesChecked(each._id)}
                 />
-           
               }
               label={each.role_title || ''}
             />
           ))}
-           <div id="component-error-text">
-            {errors && errors.roles || ''}
-            </div>
+          <div id="component-error-text">{(errors && errors.roles) || ''}</div>
 
-        
           <br />
           <FormControlLabel
             control={
@@ -213,43 +204,42 @@ class AddEdit extends React.PureComponent {
             }
             label="Email Verified"
           />
-          <br/>
-{ id ? (
-          <button
-            className="text-white py-2 px-4 rounded mt-4 btn-waft"
-            onClick={this.handleSave}
-          >
-            Save
-          </button>
-) : <></>
-}
-          <br/>
-          <br/>
+          <br />
+          {id ? (
+            <button
+              className="text-white py-2 px-4 rounded mt-4 btn-waft"
+              onClick={this.handleSave}
+            >
+              Save
+            </button>
+          ) : (
+            <></>
+          )}
+          <br />
+          <br />
           <h3>Reset Password</h3>
-          <br/>
+          <br />
           <div className="w-full md:w-1/2 pb-4">
             <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
               Password
             </label>
             <div className="relative">
-            <input
-              className="Waftinputbox"
-              id="password"
-              type={this.state.isSecure ? "password" : "text"}
-              value={users.password || ''}
-              onChange={this.handleChange('password')}
-            />
-            <span
-              className={classes.EyeIcon}
-              aria-label="Toggle password visibility"
-              onClick={this.handleTogglePassword}
-            >
-            {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
-            </span>
+              <input
+                className="Waftinputbox"
+                id="password"
+                type={this.state.isSecure ? 'password' : 'text'}
+                value={users.password || ''}
+                onChange={this.handleChange('password')}
+              />
+              <span
+                className={classes.EyeIcon}
+                aria-label="Toggle password visibility"
+                onClick={this.handleTogglePassword}
+              >
+                {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
+              </span>
             </div>
-            <div id="component-error-text">
-              {errors.password || ''}
-            </div>
+            <div id="component-error-text">{errors.password || ''}</div>
           </div>
           <button
             className="text-white py-2 px-4 rounded mt-4 btn-waft"

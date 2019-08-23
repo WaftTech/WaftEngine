@@ -4,13 +4,13 @@ const HttpStatus = require('http-status');
 
 const useragent = require('useragent');
 const requestIp = require('request-ip');
-const loginlogs = require('./../modules/user/loginlogs/loginlogs');
+const loginlogs = require('../modules/user/loginlogs/loginlogSchema');
 
 const otherHelper = require('../helper/others.helper');
 const { secretOrKey } = require('../config/keys');
-const accessSch = require('../modules/role/accessShema');
-const modulesSch = require('../modules/role/moduleShema');
-const rolesSch = require('../modules/role/roleShema');
+const accessSch = require('../modules/role/accessSchema');
+const modulesSch = require('../modules/role/moduleSchema');
+const rolesSch = require('../modules/role/roleSchema');
 const authMiddleware = {};
 const mongoose = require('mongoose');
 
