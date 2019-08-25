@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { makeSelectMedia } from '../../containers/App/selectors';
 import { loadMediaRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
-import LinkBoth from '../../components/LinkBoth';
+import LinkBoth from '../LinkBoth';
 
 // assumsions media is always image. todo handle case for media not image
 
@@ -26,18 +26,16 @@ class MediaElement extends React.PureComponent {
   }
 
   render() {
-    const { mediaObj, link} = this.props;
+    const { mediaObj } = this.props;
 
     if (!mediaObj[this.props.mediaKey]) return null; // maybe add a loader here
     const media = mediaObj[this.props.mediaKey];
     return (
-      <LinkBoth to={link}>
       <img
         src={`${IMAGE_BASE}${media.path}`}
         style={{ maxWidth: 200, maxHeight: 200 }}
         alt="slider media"
       />
-      </LinkBoth>
     );
   }
 }

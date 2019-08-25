@@ -8,8 +8,6 @@ export const initialState = {
   relatedBlogsIsLoading: false,
   recentBlogs: [],
   recentBlogsIsLoading: false,
-  blogByAuthor: [],
-  blogByTag: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -45,12 +43,6 @@ const blogPageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_RECENT_BLOGS_FAILURE:
         draft.recentBlogsIsLoading = false;
-        break;
-      case types.LOAD_BLOG_BY_AUTHOR_SUCCESS:
-        draft.blogByAuthor = action.payload.data;
-        break;
-      case types.LOAD_BLOG_BY_TAG_SUCCESS:
-        draft.blogByTag = action.payload.data;
         break;
     }
   });

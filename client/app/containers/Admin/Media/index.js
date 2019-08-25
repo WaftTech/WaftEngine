@@ -49,9 +49,9 @@ export class Media extends React.Component {
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
-      page: PropTypes.number.isRequired,
-      size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      page: PropTypes.number,
+      size: PropTypes.number,
+      totaldata: PropTypes.number,
     }),
   };
 
@@ -60,7 +60,7 @@ export class Media extends React.Component {
   }
 
   handleAdd = files => {
-    this.props.addMediaRequest(files);
+    this.props.addMediaRequest(files)
   };
 
   copyToClipboard = textField => {
@@ -112,47 +112,47 @@ export class Media extends React.Component {
         </div>
         <PageContent loading={loading}>
           <div className="flex flex-wrap">
-            {data.map(each => (
-              <div
-                key={each._id}
-                className="w-full sm:w-1/3 md:1/4 xl:w-1/5 mr-2 border mb-4 rounded"
-              >
-                <div>
-                  <img
-                    className="w-full object-cover h-32"
-                    src={each.path && `${IMAGE_BASE}${each.path}`}
-                    alt="image"
-                  />
-                </div>
-                <CardContent>
-                  <Typography component="p" style={{ minHeight: '40px' }}>
-                    {each.encoding} | {each.mimetype} | {each.size}
-                  </Typography>
-                </CardContent>
-
-                <CardActions>
+            {data &&
+              data.map(each => (
+                <div
+                  key={each._id}
+                  className="w-full sm:w-1/3 md:1/4 xl:w-1/5 mr-2 border mb-4 rounded"
+                >
                   <div>
+                    <img
+                      className="w-full object-cover h-32"
+                      src={`${IMAGE_BASE}${each.path}`}
+                      alt="image"
+                    />
+                  </div>
+                  <CardContent>
+                    <Typography component="p" style={{ minHeight: '40px' }}>
+                      {each.encoding} | {each.mimetype} | {each.size}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <div>
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() =>
+                          this.copyToClipboard(`${IMAGE_BASE}${each.path}`)
+                        }
+                      >
+                        Copy Path
+                      </Button>
+                    </div>
+
                     <Button
                       size="small"
                       color="primary"
-                      onClick={() =>
-                        this.copyToClipboard(`${IMAGE_BASE}${each.path}`)
-                      }
+                      onClick={() => this.handleDelete(each._id)}
                     >
-                      Copy Path
+                      Delete
                     </Button>
-                  </div>
-
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() => this.handleDelete(each._id)}
-                  >
-                    Delete
-                  </Button>
-                </CardActions>
-              </div>
-            ))}
+                  </CardActions>
+                </div>
+              ))}
           </div>
         </PageContent>
       </>

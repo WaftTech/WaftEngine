@@ -12,7 +12,7 @@ import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 
 const RenderBlogs = props => {
   const { currentBlogs } = props;
-
+  console.log(currentBlogs, 'cuurr');
   return (
     <>
       <div className="banner relative">
@@ -58,16 +58,21 @@ const RenderBlogs = props => {
                       >
                         <h2>{title}</h2>
                       </Link>
-                      <div className="border-t-1 flex flex-wrap font-bold">
-                        <Link
-                          className="mr-2 text-black hover:text-waftprimary leading-normal text-base no-underline"
-                          to={`/blog-category/${category ? category._id : ''}`}
-                        >
+                      <div className="text-grey-darker text-base no-underline">
                           <div className="mr-2">
-                            <span className="text-grey-dark">By</span>{' '}
-                            {category ? category.title : ''}{' '}
+                            <span className="text-grey-dark">Category: </span>
+                            {category && category.length > 0 && category.map((each, index) => (
+                              <Link
+                                key={index}
+                                className="text-black hover:text-waftprimary leading-normal text-base no-underline"
+                                to={`/blog-category/${each._id}`}
+                              >
+                                {`${index === 0 ? '' : ', '}${each.title}`}
+                              </Link>
+                              ))}
                           </div>
-                        </Link>
+                      </div>
+                      <div className="border-t-1 flex flex-wrap font-bold">
                         <p className="text-grey-dark leading-normal text-base mr-2">
                           {moment(added_at).format('MMM Do YY')}
                         </p>

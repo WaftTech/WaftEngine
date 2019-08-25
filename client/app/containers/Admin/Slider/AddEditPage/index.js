@@ -35,6 +35,7 @@ import { IMAGE_BASE } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
+import MediaElement from '../../../../components/MediaElement';
 
 const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
@@ -63,10 +64,7 @@ const SortableImageItem = SortableElement(({ value, index, _this }) => (
   <div className="flex mb-4 bg-grey-lighter p-2">
     <div className="w-1.5/5 m-auto text-center pr-5">
       {value.image ? (
-        <img
-          className="rounded w-full"
-          src={`${IMAGE_BASE}public/300-300/media/${value.image.filename}`}
-        />
+        <MediaElement mediaKey={typeof value.image === 'string' ? value.image : value.image._id}/>
       ) : (
         <button
           className="bg-grey-light py-2 px-4 rounded text-grey-darker hover:bg-grey-lightest border"
@@ -77,7 +75,7 @@ const SortableImageItem = SortableElement(({ value, index, _this }) => (
       )}
     </div>
 
-    <div className="w-1.5/5 m-auto text-center">
+    <div className="w-1.5/5 m-auto text-center mr-2">
       <input
         className="Waftinputbox"
         id={`slider-link-${index}`}
@@ -231,7 +229,6 @@ class AddEdit extends React.PureComponent {
   };
   render() {
     const { one, classes, media, match, loading, errors } = this.props;
-    const { subheader } = this.state;
 
     // media next prev logic
     const lastPage = Math.ceil(media.totaldata / media.size);

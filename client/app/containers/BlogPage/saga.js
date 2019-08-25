@@ -40,34 +40,8 @@ function* loadRelatedBlogs(action) {
   );
 }
 
-function* loadBlogByAuthor(action) {
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.get(
-      `blog/blogbyauthor/${action.payload}`,
-      actions.loadBlogByAuthorSuccess,
-      actions.loadBlogByAuthorFailure,
-      token,
-    ),
-  );
-}
-
-function* loadBlogByTag(action) {
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.get(
-      `blog/blogbytag/${action.payload}`,
-      actions.loadBlogByTagSuccess,
-      actions.loadBlogByTagFailure,
-      token,
-    ),
-  );
-}
-
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_BLOG_REQUEST, loadBlog);
   yield takeLatest(types.LOAD_RECENT_BLOGS_REQUEST, loadRecentBlogs);
   yield takeLatest(types.LOAD_RELATED_BLOGS_REQUEST, loadRelatedBlogs);
-  yield takeLatest(types.LOAD_BLOG_BY_AUTHOR_REQUEST, loadBlogByAuthor);
-  yield takeLatest(types.LOAD_BLOG_BY_TAG_REQUEST, loadBlogByTag);
 }

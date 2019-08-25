@@ -1,4 +1,12 @@
-import { call, takeEvery, takeLatest, select, put } from 'redux-saga/effects';
+import {
+  call,
+  takeEvery,
+  takeLatest,
+  select,
+  put,
+  takeLeading,
+  delay,
+} from 'redux-saga/effects';
 import Api from 'utils/Api';
 import * as types from './constants';
 import * as actions from './actions';
@@ -49,6 +57,7 @@ function* sessionExpired() {
     },
   };
   yield put(actions.enqueueSnackbar(snackbarData));
+  yield delay(2000);
   // alert('User Session expired. please login again');
 }
 
@@ -62,6 +71,7 @@ function* networkError() {
     },
   };
   yield put(actions.enqueueSnackbar(snackbarData));
+  yield delay(2000);
   // alert('User Session expired. please login again');
 }
 
@@ -70,6 +80,6 @@ export default function* defaultSaga() {
   yield takeEvery(types.LOAD_MEDIA_REQUEST, loadMedia);
   yield takeEvery(types.LOAD_SLIDE_REQUEST, loadSlide);
   yield takeLatest(types.LOGOUT_REQUEST, logOut);
-  yield takeLatest(types.SESSION_EXPIRED, sessionExpired);
-  yield takeLatest(types.NETWORK_ERROR, networkError);
+  yield takeLeading(types.SESSION_EXPIRED, sessionExpired);
+  yield takeLeading(types.NETWORK_ERROR, networkError);
 }

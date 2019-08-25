@@ -124,9 +124,13 @@ export class BlogPage extends React.Component {
                 <div>
                   Tags:{' '}
                   {blog.tags.map((each, index) => (
-                    <LinkBoth key={index} to={`/blog/tag/${each}`}>{`${
-                      index === 0 ? '' : ', '
-                    }${each}`}</LinkBoth>
+                    <LinkBoth
+                      className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
+                      key={index}
+                      to={`/blog/tag/${each}`}
+                    >
+                      {`${index === 0 ? '' : ', '}${each}`}
+                    </LinkBoth>
                   ))}
                 </div>
               )}
@@ -134,11 +138,29 @@ export class BlogPage extends React.Component {
               {blog && blog.author && (
                 <div>
                   Authored By:{' '}
-                  <LinkBoth to={`/blog/author/${blog.author._id}`}>
+                  <LinkBoth
+                    className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
+                    to={`/blog/author/${blog.author._id}`}
+                  >
                     {blog.author.name}
                   </LinkBoth>
                 </div>
               )}
+              <br/>
+              {blog && blog.category && blog.category.length > 0 &&
+                <div>
+                  Categorized By:{' '}
+                  {blog.category.map((each, index) => (
+                    <LinkBoth
+                      className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
+                      key={index}
+                      to={`/blog-category/${each._id}`}
+                    >
+                      {`${index === 0 ? '' : ', '}${each.title}`}
+                    </LinkBoth>
+                  ))}
+                </div>
+              }
               <div>
                 {/* <Disqus.CommentEmbed showMedia={true} height={160} />
 
