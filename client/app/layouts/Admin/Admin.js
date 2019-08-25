@@ -29,6 +29,7 @@ import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
+import Breadcrumb from '../../components/Breadcrumb';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -202,6 +203,10 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
           <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
+            <div className="flex">
+              <Breadcrumb />
+            </div>
+
             <button className="flex" onClick={handleMenu}>
               <div className="m-auto mr-1">{users.name}</div>
               <AccountCircle />
