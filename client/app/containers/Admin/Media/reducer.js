@@ -59,7 +59,7 @@ const reducer = (state = initialState, action) =>
       case types.ADD_MEDIA_SUCCESS:
         draft.all = {
           ...draft.all,
-          data: [...draft.all.data, action.payload.data],
+          data: [...draft.all.data, ...action.payload.data],
         };
         draft.loading = false;
         break;
