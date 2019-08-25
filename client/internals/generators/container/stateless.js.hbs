@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 {{#if wantHeaders}}
@@ -19,10 +19,10 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 {{#if wantSaga}}
-import injectSaga from 'utils/injectSaga';
+import { useInjectSaga } from 'utils/injectSaga';
 {{/if}}
 {{#if wantActionsAndReducer}}
-import injectReducer from 'utils/injectReducer';
+import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
 import { makeSelectDefaultData } from './selectors';
 import reducer from './reducer';
@@ -34,8 +34,17 @@ import saga from './saga';
 import messages from './messages';
 {{/if}}
 
+const key = {{ camelCase name }};
+
 export const {{ properCase name }} = props => {
   const { } = props;
+  {{#if wantActionsAndReducer}}
+  useInjectReducer({ key, saga });
+  {{/if}}
+  {{#if wantSaga}}
+  useInjectSaga({ key, saga });
+  {{/if}}
+
   return (
     <div>
     {{#if wantHeaders}}
@@ -66,21 +75,10 @@ const mapStateToProps = createStructuredSelector({
 
 {{#if wantActionsAndReducer}}
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
-const withReducer = injectReducer({ key: '{{ camelCase name }}', reducer });
 {{else}}
 const withConnect = connect(null, mapDispatchToProps);
 {{/if}}
-{{#if wantSaga}}
-const withSaga = injectSaga({ key: '{{ camelCase name }}', saga });
-{{/if}}
-
 export default compose(
-{{#if wantActionsAndReducer}}
-  withReducer,
-{{/if}}
-{{#if wantSaga}}
-  withSaga,
-{{/if}}
   withConnect,
+  memo,
 )({{ properCase name }});
