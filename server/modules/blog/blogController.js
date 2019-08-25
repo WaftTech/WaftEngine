@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const blogConfig = require('./blogConfig');
-const blogSch = require('./blogShema');
+const blogSch = require('./blogSchema');
 const blogCatSch = require('./categorySchema');
 const blogcontroller = {};
 

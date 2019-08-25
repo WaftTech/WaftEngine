@@ -3,7 +3,7 @@ const router = express.Router();
 
 const contModule = require('../../modules/contactUs/contactController');
 const { authentication, authorization } = require('../../middleware/authentication.middleware');
-const { sanitize, validate } = require('../../modules/contactUs/contactValidate');
+const { sanitize, validate } = require('../../modules/contactUs/contactValidation');
 
 router.get('/', authorization, authentication, contModule.GetContact);
 router.get('/:id', authorization, authentication, contModule.GetContactById);
