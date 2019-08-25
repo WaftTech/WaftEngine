@@ -1,4 +1,4 @@
-const loginlogs = require('./loginlogs');
+const loginlogs = require('./loginlogSchema');
 const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
 const otherHelper = require('../../../helper/others.helper');
