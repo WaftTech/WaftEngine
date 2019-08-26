@@ -24,18 +24,23 @@ const Breadcrumb = ({ location: { pathname } }) => {
     })
     .reverse();
   return (
-    <ul>
-      {breadcrumbs.map(link => {
-        if (link.path === '/admin') return <Crumb key={link.path}>Home</Crumb>;
-        if (link.path.endsWith('edit') || link.path.endsWith('access'))
-          return null;
-        return (
-          <Crumb key={link.path}>
-            <Link to={link.path}>{link.label}</Link>
-          </Crumb>
-        );
-      })}
-    </ul>
+    <nav className="bg-grey-light p-2 rounded font-sans w-full my-1">
+      <ol className="list-reset flex text-grey-dark">
+        {breadcrumbs.map((link, index) => {
+          if (link.path === '/admin')
+            return <Crumb key={link.path}>Home</Crumb>;
+          if (link.path.endsWith('edit') || link.path.endsWith('access'))
+            return null;
+          return (
+            <Crumb key={link.path} isLast={index === breadcrumbs.length - 1}>
+              <Link className="text-blue font-bold" to={link.path}>
+                {link.label}
+              </Link>
+            </Crumb>
+          );
+        })}
+      </ol>
+    </nav>
   );
 };
 
