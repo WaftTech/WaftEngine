@@ -67,7 +67,7 @@ async function MongoDBConnection(app) {
   await mongoose
     .connect(mongoURI, {
       useNewUrlParser: true,
-      useCreateIndex: false,
+      useCreateIndex: true,
     })
     .then(() => console.log('MongoDB Connected'));
 
