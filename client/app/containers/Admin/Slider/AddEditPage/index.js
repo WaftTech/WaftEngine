@@ -16,6 +16,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BackIcon from '@material-ui/icons/ArrowBack';
@@ -98,12 +99,15 @@ const SortableImageItem = SortableElement(({ value, index, _this }) => (
       />
     </div>
     <div className="w-0.5/5 m-auto text-center">
-      <IconButton
+      <Fab
         color="secondary"
+        aria-label="Remove"
+        round="true"
         onClick={() => _this.handleRemoveSlide(index)}
+        elevation={0}
       >
         <DeleteIcon />
-      </IconButton>
+      </Fab>
     </div>
   </div>
 ));
