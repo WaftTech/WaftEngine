@@ -89,6 +89,25 @@ blogcontroller.getLatestBlog = async (req, res, next) => {
     next(err);
   }
 };
+
+blogcontroller.getLatestBlogByCat = async (req, res, next) => {
+  try {
+    const cat_id = req.params.cat_id;
+    const category = await blogCatSch.findById(cat_id).select({ title: 1 });
+    const blogs = await blogSch
+      .find({ is_active: true, is_deleted: false, category: cat_id })
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1, category: 1 })
+      .populate([{ path: 'category', select: 'title' }])
+      .sort({ _id: -1 })
+      .skip(0)
+      .limit(5);
+    const totaldata = blogs.length;
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { blogs, category, totaldata }, null, 'Latest blogs by category', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
 blogcontroller.getRealtedBlog = async (req, res, next) => {
   try {
     const tages = await blogSch.findOne({ is_active: true, is_deleted: false, slug_url: req.params.slug_url }).select('tags meta_tag category keywords');
