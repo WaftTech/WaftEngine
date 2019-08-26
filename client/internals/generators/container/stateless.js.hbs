@@ -39,7 +39,7 @@ const key = '{{ camelCase name }}';
 export const {{ properCase name }} = props => {
   const { } = props;
   {{#if wantActionsAndReducer}}
-  useInjectReducer({ key, saga });
+  useInjectReducer({ key, reducer });
   {{/if}}
   {{#if wantSaga}}
   useInjectSaga({ key, saga });
