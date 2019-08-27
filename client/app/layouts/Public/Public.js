@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -8,7 +9,6 @@ import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import { makeSelectLocation } from '../../containers/App/selectors';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Breadcrumb from '../../components/Breadcrumb';
 
 const switchRoutes = (
   <Switch>
@@ -22,7 +22,8 @@ const switchRoutes = (
 const checkPathname = pathname => {
   switch (pathname) {
     case '/login-admin':
-    // case '/login-user':
+      // case '/login-user':
+      return false;
     case '/login-admin/':
       // case '/login-user/':
       return false;
@@ -37,14 +38,18 @@ const PublicLayout = ({ location }) => {
   return (
     <>
       {showHeaderAndFooter && <Header />}
-      <Breadcrumb />
       <div className="flex-1">{switchRoutes}</div>
       {showHeaderAndFooter && <Footer />}
     </>
   );
 };
 
+PublicLayout.propTypes = {
+  location: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
 });
+
 export default connect(mapStateToProps)(PublicLayout);
