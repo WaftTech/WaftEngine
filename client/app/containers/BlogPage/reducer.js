@@ -8,6 +8,10 @@ export const initialState = {
   relatedBlogsIsLoading: false,
   recentBlogs: [],
   recentBlogsIsLoading: false,
+  one: {
+    comment: '',
+  },
+  comments: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -43,6 +47,12 @@ const blogPageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_RECENT_BLOGS_FAILURE:
         draft.recentBlogsIsLoading = false;
+        break;
+      case types.SET_ONE_VALUE:
+        draft.one[action.payload.key] = action.payload.value;
+        break;
+      case types.LOAD_COMMENT_SUCCESS:
+        draft.comments = action.payload.data;
         break;
     }
   });

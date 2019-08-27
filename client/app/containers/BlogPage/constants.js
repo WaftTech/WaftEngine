@@ -2,6 +2,14 @@ export const LOAD_BLOG_REQUEST = 'app/BlogPage/LOAD_BLOG_REQUEST';
 export const LOAD_BLOG_SUCCESS = 'app/BlogPage/LOAD_BLOG_SUCCESS';
 export const LOAD_BLOG_FAILURE = 'app/BlogPage/LOAD_BLOG_FAILURE';
 
+export const LOAD_COMMENT_REQUEST = 'app/BlogPage/LOAD_COMMENT_REQUEST';
+export const LOAD_COMMENT_SUCCESS = 'app/BlogPage/LOAD_COMMENT_SUCCESS';
+export const LOAD_COMMENT_FAILURE = 'app/BlogPage/LOAD_COMMENT_FAILURE';
+
+export const POST_COMMENT_REQUEST = 'app/BlogPage/POST_COMMENT_REQUEST';
+export const POST_COMMENT_SUCCESS = 'app/BlogPage/POST_COMMENT_SUCCESS';
+export const POST_COMMENT_FAILURE = 'app/BlogPage/POST_COMMENT_FAILURE';
+
 export const LOAD_RELATED_BLOGS_REQUEST =
   'app/BlogPage/LOAD_RELATED_BLOGS_REQUEST';
 export const LOAD_RELATED_BLOGS_SUCCESS =
@@ -15,3 +23,5 @@ export const LOAD_RECENT_BLOGS_SUCCESS =
   'app/BlogPage/LOAD_RECENT_BLOGS_SUCCESS';
 export const LOAD_RECENT_BLOGS_FAILURE =
   'app/BlogPage/LOAD_RECENT_BLOGS_FAILURE';
+
+export const SET_ONE_VALUE = 'app/BlogPage/SET_ONE_VALUE';

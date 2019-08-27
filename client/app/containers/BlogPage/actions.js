@@ -38,3 +38,31 @@ export const loadRecentBlogsFailure = payload => ({
   type: types.LOAD_RECENT_BLOGS_FAILURE,
   payload,
 });
+export const setOneValue = payload => ({
+  type: types.SET_ONE_VALUE,
+  payload,
+});
+export const loadCommentRequest = payload => ({
+  type: types.LOAD_COMMENT_REQUEST,
+  payload,
+});
+export const loadCommentSuccess = payload => ({
+  type: types.LOAD_COMMENT_SUCCESS,
+  payload,
+});
+export const loadCommentFailure = payload => ({
+  type: types.LOAD_COMMENT_FAILURE,
+  payload,
+});
+export const postCommentRequest = payload => ({
+  type: types.POST_COMMENT_REQUEST,
+  payload,
+});
+export const postCommentSuccess = payload => ({
+  type: types.POST_COMMENT_SUCCESS,
+  payload,
+});
+export const postCommentFailure = payload => ({
+  type: types.POST_COMMENT_FAILURE,
+  payload,
+});
