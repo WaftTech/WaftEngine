@@ -70,7 +70,18 @@ const blogPageReducer = (state = initialState, action) =>
           comment: [...draft.comments.comment, action.payload.data],
           totaldata: draft.comments.totaldata + 1,
         };
-        draft.one = initialState.one;
+        draft.one = { ...initialState.one, blog_id: state.one.blog_id };
+        break;
+      case types.EDIT_COMMENT_SUCCESS:
+        draft.comments = {
+          ...state.comments,
+          comment: state.comments.comment.map(each => {
+            if (action.payload.data._id === each._id)
+              return action.payload.data;
+            return each;
+          }),
+        };
+        draft.one = { ...initialState.one, blog_id: state.one.blog_id };
         break;
       case types.DELETE_COMMENT_SUCCESS:
         draft.comments = {
