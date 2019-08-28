@@ -37,3 +37,15 @@ export const makeSelectRecentBlogsIsLoading = () =>
     selectDomain,
     state => state.recentBlogsIsLoading,
   );
+
+export const makeSelectOne = () =>
+  createSelector(
+    selectDomain,
+    state => state.one,
+  );
+
+export const makeSelectComment = () =>
+  createSelector(
+    selectDomain,
+    state => state.comments,
+  );

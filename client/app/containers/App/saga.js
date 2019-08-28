@@ -46,6 +46,18 @@ function* logOut() {
   );
 }
 
+function* loadLatestBlog(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/latest/${action.payload}`,
+      actions.loadLatestBlogsSuccess,
+      actions.loadLatestBlogsFailure,
+      token,
+    ),
+  );
+}
+
 function* sessionExpired() {
   // token expired case, logout user and show alert that relogin is required
   yield put(actions.logoutSuccess());
@@ -79,6 +91,7 @@ export default function* defaultSaga() {
   yield takeEvery(types.LOAD_CONTENT_REQUEST, loadContent);
   yield takeEvery(types.LOAD_MEDIA_REQUEST, loadMedia);
   yield takeEvery(types.LOAD_SLIDE_REQUEST, loadSlide);
+  yield takeEvery(types.LOAD_LATEST_BLOGS_REQUEST, loadLatestBlog);
   yield takeLatest(types.LOGOUT_REQUEST, logOut);
   yield takeLeading(types.SESSION_EXPIRED, sessionExpired);
   yield takeLeading(types.NETWORK_ERROR, networkError);

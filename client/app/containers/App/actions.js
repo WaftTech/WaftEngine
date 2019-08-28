@@ -101,3 +101,15 @@ export const availableFailure = payload => ({
   type: types.LOAD_AVAILABLE_FAILURE,
   payload,
 });
+export const loadLatestBlogsRequest = payload => ({
+  type: types.LOAD_LATEST_BLOGS_REQUEST,
+  payload,
+});
+export const loadLatestBlogsSuccess = payload => ({
+  type: types.LOAD_LATEST_BLOGS_SUCCESS,
+  payload,
+});
+export const loadLatestBlogsFailure = payload => ({
+  type: types.LOAD_LATEST_BLOGS_FAILURE,
+  payload,
+});

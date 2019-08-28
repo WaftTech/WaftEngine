@@ -22,6 +22,7 @@ export const initialState = {
   slide: {},
   notifications: [],
   access: {},
+  latestBlogs: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -82,6 +83,9 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           ...draft.slide,
           [action.payload.data.slider_key]: action.payload.data,
         };
+        break;
+      case types.LOAD_LATEST_BLOGS_SUCCESS:
+        draft.latestBlogs = action.payload.data;
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];
