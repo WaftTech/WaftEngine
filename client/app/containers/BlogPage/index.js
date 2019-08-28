@@ -98,6 +98,8 @@ export class BlogPage extends React.Component {
 
   render() {
     const { blog, loading, location, match, one, comments, user } = this.props;
+    console.log(comments);
+    console.log(user);
     if (loading) {
       return <Loading />;
     }
@@ -178,10 +180,10 @@ export class BlogPage extends React.Component {
                   comments.comment &&
                   comments.comment.map(each => (
                     <div key={each._id}>
-                      <div className="font-bold mt-4">{user && user.name}</div>
+                      <div className="font-bold mt-4">{typeof each.added_by === 'string' && each.added_by === user.id ? user.name : each.added_by.name}</div>
                       <div className="flex">
                         <div>{each.title}</div>
-                        {user.id === each.added_by ? (
+                        {(typeof each.added_by === 'string' && each.added_by === user.id || each.added_by._id === user.id) ? (
                           <div>
                             <button
                               className="ml-8 text-gray"
