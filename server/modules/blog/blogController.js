@@ -634,7 +634,7 @@ blogcontroller.GetBlogComment = async (req, res, next) => {
 blogcontroller.GetBlogCommentByBlog = async (req, res, next) => {
   try {
     const id = req.params.blog;
-    const comment = await commentSch.find({ blog_id: id, is_deleted: false });
+    const comment = await commentSch.find({ blog_id: id, is_deleted: false }).populate([{path: 'added_by', select: 'name'}]);
     const totaldata = comment.length;
     return otherHelper.sendResponse(res, httpStatus.OK, true, { comment, totaldata }, null, blogConfig.commentGet, null);
   } catch (err) {

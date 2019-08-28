@@ -66,6 +66,11 @@ export const postCommentFailure = payload => ({
   type: types.POST_COMMENT_FAILURE,
   payload,
 });
+export const editCommentSuccess = payload => ({
+  type: types.EDIT_COMMENT_SUCCESS,
+  payload,
+});
+
 export const deleteCommentRequest = payload => ({
   type: types.DELETE_COMMENT_REQUEST,
   payload,

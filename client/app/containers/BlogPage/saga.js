@@ -77,14 +77,16 @@ function* loadOne(action) {
   );
 }
 
-function* postComment() {
+function* postComment(action) {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
-  console.log(data, 'data');
+  const onSuccess = data._id
+    ? actions.editCommentSuccess
+    : actions.postCommentSuccess;
   yield call(
     Api.post(
       'blog/comment',
-      actions.postCommentSuccess,
+      onSuccess,
       actions.postCommentFailure,
       data,
       token,

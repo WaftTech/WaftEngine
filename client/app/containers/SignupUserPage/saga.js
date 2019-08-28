@@ -49,7 +49,7 @@ export function* signupAction(action) {
   const email = yield select(makeSelectEmail());
   const password = yield select(makeSelectPassword());
   const name = yield select(makeSelectName());
-  const data = { email, password, password2: password, name };
+  const data = { email, password, name };
   const errors = validate(data);
   if (errors.isValid) {
     const successWatcher = yield fork(redirectOnSuccess, action.redirect);
