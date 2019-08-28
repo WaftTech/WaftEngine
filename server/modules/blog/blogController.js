@@ -634,7 +634,7 @@ blogcontroller.GetBlogComment = async (req, res, next) => {
 blogcontroller.GetBlogCommentByBlog = async (req, res, next) => {
   try {
     const id = req.params.blog;
-    const comment = await commentSch.find({ blog_id: id, is_deleted: false }).populate([{ path: 'added_by', select: 'name' }]);
+    const comment = await commentSch.find({ blog_id: id, is_deleted: false });
     const totaldata = comment.length;
     return otherHelper.sendResponse(res, httpStatus.OK, true, { comment, totaldata }, null, blogConfig.commentGet, null);
   } catch (err) {
@@ -646,6 +646,15 @@ blogcontroller.DeleteBlogComment = async (req, res, next) => {
     const id = req.params.id;
     const comment = await commentSch.findOneAndUpdate({ _id: id, is_deleted: false }, { $set: { is_deleted: true, deleted_at: Date.now() } }, { new: true });
     return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, blogConfig.commentDelete, null);
+  } catch (err) {
+    next(err);
+  }
+};
+blogcontroller.GetBlogCommentById = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const comment = await commentSch.findOne({ _id: id, is_deleted: false });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment get success!!', null);
   } catch (err) {
     next(err);
   }

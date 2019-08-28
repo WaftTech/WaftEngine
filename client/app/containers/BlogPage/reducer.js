@@ -9,9 +9,13 @@ export const initialState = {
   recentBlogs: [],
   recentBlogsIsLoading: false,
   one: {
-    comment: '',
+    title: '',
+    blog_id: '',
   },
-  comments: {},
+  comments: {
+    comment: [],
+    totaldata: 0,
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -54,6 +58,28 @@ const blogPageReducer = (state = initialState, action) =>
       case types.LOAD_COMMENT_SUCCESS:
         draft.comments = action.payload.data;
         break;
+      case types.LOAD_ONE_SUCCESS:
+        draft.one = action.payload.data;
+        break;
+      case types.CLEAR_ONE:
+        draft.one = initialState.one;
+        break;
+      case types.POST_COMMENT_SUCCESS:
+        draft.comments = {
+          ...draft.comments,
+          comment: [...draft.comments.comment, action.payload.data],
+          totaldata: draft.comments.totaldata + 1,
+        };
+        draft.one = initialState.one;
+        break;
+      case types.DELETE_COMMENT_SUCCESS:
+        draft.comments = {
+          ...draft.comments,
+          comment: draft.comments.comment.filter(
+            each => each._id !== action.payload.data._id,
+          ),
+          totaldata: draft.comments.totaldata - 1,
+        };
     }
   });
 

@@ -53,10 +53,34 @@ function* loadComment(action) {
   );
 }
 
-function* postComment(action) {
+function* deleteComment(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(
+      `blog/comment/${action.payload}`,
+      actions.deleteCommentSuccess,
+      actions.deleteCommentFailure,
+      token,
+    ),
+  );
+}
+
+function* loadOne(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/comment/one/${action.payload}`,
+      actions.loadOneSuccess,
+      actions.loadOneFailure,
+      token,
+    ),
+  );
+}
+
+function* postComment() {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
-  data.blog_id = action.payload;
+  console.log(data, 'data');
   yield call(
     Api.post(
       'blog/comment',
@@ -74,4 +98,6 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_RELATED_BLOGS_REQUEST, loadRelatedBlogs);
   yield takeLatest(types.LOAD_COMMENT_REQUEST, loadComment);
   yield takeLatest(types.POST_COMMENT_REQUEST, postComment);
+  yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
+  yield takeLatest(types.DELETE_COMMENT_REQUEST, deleteComment);
 }

@@ -11,6 +11,10 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
+//@material
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import * as mapDispatchToProps from './actions';
@@ -42,11 +46,15 @@ export class BlogPage extends React.Component {
     }).isRequired,
   };
 
+  state = {
+    open: false,
+  };
+
   componentDidMount() {
+    this.props.clearOne();
     this.props.loadRecentBlogsRequest();
     this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
     this.props.loadBlogRequest(this.props.match.params.slug_url);
-    this.props.loadCommentRequest('5d0a0843f305de105c4fc676');
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -54,9 +62,10 @@ export class BlogPage extends React.Component {
       this.props.loadRelatedBlogsRequest(nextProps.match.params.slug_url);
       this.props.loadBlogRequest(nextProps.match.params.slug_url);
     }
-    // if (nextProps && nextProps.blog) {
-    //   nextProps.loadCommentRequest(nextProps.blog._id);
-    // }
+    if (nextProps.blog._id !== this.props.blog._id) {
+      nextProps.loadCommentRequest(nextProps.blog._id);
+      nextProps.setOneValue({key: 'blog_id', value: nextProps.blog._id});
+    }
   }
 
   handleNewComment = () => {
@@ -68,13 +77,27 @@ export class BlogPage extends React.Component {
     this.props.setOneValue({ key: name, value: e.target.value });
   };
 
-  handlePostComment = id => {
-    this.props.postCommentRequest(id);
+  handlePostComment = () => {
+    this.props.postCommentRequest();
+    this.setState({ open: false });
+  };
+
+  handleEditComment = id => {
+    this.setState({ open: true});
+    this.props.loadOneRequest(id);
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+    this.props.clearOne();
+  };
+
+  handleDeleteComment = (id) => {
+    this.props.deleteCommentRequest(id);
   };
 
   render() {
     const { blog, loading, location, match, one, comments, user } = this.props;
-    console.log(user, 'user');
     if (loading) {
       return <Loading />;
     }
@@ -155,10 +178,56 @@ export class BlogPage extends React.Component {
                   comments.comment &&
                   comments.comment.map(each => (
                     <div key={each._id}>
-                      <div className="font-bold mt-4">{each.added_by.name}</div>
-                      <div>{each.title}</div>
+                      <div className="font-bold mt-4">{user && user.name}</div>
+                      <div className="flex">
+                        <div>{each.title}</div>
+                        {user.id === each.added_by ? (
+                          <div>
+                            <button
+                              className="ml-8 text-gray"
+                              onClick={() => this.handleEditComment(each._id)}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="ml-2 text-gray"
+                              onClick={() => this.handleDeleteComment(each._id)}
+                            >
+                            Delete
+                          </button>
+                        </div>
+                        ) : (
+                          ''
+                        )}
+                      </div>
                     </div>
                   ))}
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  aria-labelledby="comment-edit-dialog"
+                >
+                  <DialogTitle
+                    id="comment-edit-dialog"
+                  >
+                  <div>
+                    <textarea
+                      name="edit-comment"
+                      id="edit_comments"
+                      cols="45"
+                      rows="5"
+                      value={one.title}
+                      onChange={this.handleComment('title')}
+                    />
+                    <button
+                      className="text-white py-2 px-4 rounded mt-4 btn-waft"
+                      onClick={this.handlePostComment}
+                    >
+                      Save
+                    </button>
+                  </div>
+                  </DialogTitle>
+                </Dialog>
                 <div className="mt-2">
                   <textarea
                     name="comment"
@@ -166,13 +235,13 @@ export class BlogPage extends React.Component {
                     cols="45"
                     rows="5"
                     placeholder="Your comment here"
-                    value={one.comment}
-                    onChange={this.handleComment('comment')}
+                    value={this.state.open ? '' : one.title}
+                    onChange={this.handleComment('title')}
                   />
                 </div>
                 <button
                   className="text-white py-2 px-4 rounded mt-4 btn-waft"
-                  onClick={() => this.handlePostComment(blog._id)}
+                  onClick={this.handlePostComment}
                 >
                   post
                 </button>

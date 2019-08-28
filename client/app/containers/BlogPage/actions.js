@@ -66,3 +66,33 @@ export const postCommentFailure = payload => ({
   type: types.POST_COMMENT_FAILURE,
   payload,
 });
+export const deleteCommentRequest = payload => ({
+  type: types.DELETE_COMMENT_REQUEST,
+  payload,
+});
+export const deleteCommentSuccess = payload => ({
+  type: types.DELETE_COMMENT_SUCCESS,
+  payload,
+});
+export const deleteCommentFailure = payload => ({
+  type: types.DELETE_COMMENT_FAILURE,
+  payload,
+});
+
+export const loadOneRequest = payload => ({
+  type: types.LOAD_ONE_REQUEST,
+  payload,
+});
+export const loadOneSuccess = payload => ({
+  type: types.LOAD_ONE_SUCCESS,
+  payload,
+});
+export const loadOneFailure = payload => ({
+  type: types.LOAD_ONE_FAILURE,
+  payload,
+});
+
+export const clearOne = payload => ({
+  type: types.CLEAR_ONE,
+  payload,
+});
