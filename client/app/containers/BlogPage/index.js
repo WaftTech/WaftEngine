@@ -39,9 +39,9 @@ export class BlogPage extends React.Component {
 
   componentDidMount() {
     this.props.loadRecentBlogsRequest();
-      this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
-      this.props.loadBlogRequest(this.props.match.params.slug_url);
-    (function() {
+    this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
+    this.props.loadBlogRequest(this.props.match.params.slug_url);
+    (function () {
       // DON'T EDIT BELOW THIS LINE
       const d = window.document;
       const s = d.createElement('script');
@@ -55,7 +55,7 @@ export class BlogPage extends React.Component {
     if (nextProps.match.params.slug_url !== this.props.match.params.slug_url) {
       this.props.loadRelatedBlogsRequest(nextProps.match.params.slug_url);
       this.props.loadBlogRequest(nextProps.match.params.slug_url);
-      (function() {
+      (function () {
         // DON'T EDIT BELOW THIS LINE
         const d = window.document;
         const s = d.createElement('script');
@@ -118,7 +118,7 @@ export class BlogPage extends React.Component {
                 ) : null}
               </div>
               <br />
-              <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+              <div className="leading-relaxed serif" dangerouslySetInnerHTML={{ __html: blog.description }} />
               <br />
               {blog && blog.tags && blog.tags.length > 0 && (
                 <div>
@@ -146,7 +146,7 @@ export class BlogPage extends React.Component {
                   </LinkBoth>
                 </div>
               )}
-              <br/>
+              <br />
               {blog && blog.category && blog.category.length > 0 &&
                 <div>
                   Categorized By:{' '}
