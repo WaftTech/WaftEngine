@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -44,12 +43,7 @@ const PublicLayout = ({ location }) => {
   );
 };
 
-PublicLayout.propTypes = {
-  location: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
 });
-
 export default connect(mapStateToProps)(PublicLayout);

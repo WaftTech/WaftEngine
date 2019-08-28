@@ -4,11 +4,21 @@ import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { withStyles } from '@material-ui/core/styles';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import MainListItems from './components/MainListItem';
@@ -19,8 +29,9 @@ import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
+import Breadcrumb from '../../components/Breadcrumb';
 
-const switchRoutes = () => {
+const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
   const arr = JSON.parse(route);
   const availableRoutes = arr;
@@ -137,7 +148,7 @@ const styles = theme => ({
   },
 });
 
-const AdminLayout = ({ logoutRequest: logout, roles, users }) => {
+const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
   // const [open, setOpen] = useState(true);
   const [anchorel, setAnchorel] = useState(null);
   const anchorOpen = Boolean(anchorel);
@@ -152,6 +163,15 @@ const AdminLayout = ({ logoutRequest: logout, roles, users }) => {
     logout();
     setAnchorel(null);
     push('/login-admin');
+  };
+  const handleDashboard = () => {
+    setAnchorel(null);
+    push('/admin/dashboard');
+  };
+
+  const handleProfile = () => {
+    setAnchorel(null);
+    push('/user/profile');
   };
 
   return (
@@ -183,7 +203,11 @@ const AdminLayout = ({ logoutRequest: logout, roles, users }) => {
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
           <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
-            <button type="button" className="flex" onClick={handleMenu}>
+            <div className="flex">
+              <Breadcrumb />
+            </div>
+
+            <button className="flex" onClick={handleMenu}>
               <div className="m-auto mr-1">{users.name}</div>
               <AccountCircle />
             </button>
@@ -228,6 +252,7 @@ const AdminLayout = ({ logoutRequest: logout, roles, users }) => {
 };
 
 AdminLayout.propTypes = {
+  classes: PropTypes.object.isRequired,
   logoutRequest: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,
