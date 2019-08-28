@@ -8,14 +8,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-// import Disqus from 'disqus-react';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+
+//@material
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import * as mapDispatchToProps from './actions';
-import { makeSelectBlog, makeSelectLoading } from './selectors';
+import {
+  makeSelectBlog,
+  makeSelectLoading,
+  makeSelectOne,
+  makeSelectComment,
+} from './selectors';
+import { makeSelectUser } from '../App/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { IMAGE_BASE } from '../App/constants';
@@ -37,32 +46,25 @@ export class BlogPage extends React.Component {
     }).isRequired,
   };
 
+  state = {
+    open: false,
+  };
+
   componentDidMount() {
+    this.props.clearOne();
     this.props.loadRecentBlogsRequest();
     this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
     this.props.loadBlogRequest(this.props.match.params.slug_url);
-    (function () {
-      // DON'T EDIT BELOW THIS LINE
-      const d = window.document;
-      const s = d.createElement('script');
-      s.src = 'https://waftengine.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.slug_url !== this.props.match.params.slug_url) {
       this.props.loadRelatedBlogsRequest(nextProps.match.params.slug_url);
       this.props.loadBlogRequest(nextProps.match.params.slug_url);
-      (function () {
-        // DON'T EDIT BELOW THIS LINE
-        const d = window.document;
-        const s = d.createElement('script');
-        s.src = 'https://waftengine.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-      })();
+    }
+    if (nextProps.blog._id !== this.props.blog._id) {
+      nextProps.loadCommentRequest(nextProps.blog._id);
+      nextProps.setOneValue({ key: 'blog_id', value: nextProps.blog._id });
     }
   }
 
@@ -70,21 +72,35 @@ export class BlogPage extends React.Component {
     console.log('new comment recieved');
   };
 
+  handleComment = name => e => {
+    e.persist();
+    this.props.setOneValue({ key: name, value: e.target.value });
+  };
+
+  handlePostComment = () => {
+    this.props.postCommentRequest();
+    this.setState({ open: false });
+  };
+
+  handleEditComment = id => {
+    this.setState({ open: true });
+    this.props.loadOneRequest(id);
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+    this.props.clearOne();
+  };
+
+  handleDeleteComment = (id) => {
+    this.props.deleteCommentRequest(id);
+  };
+
   render() {
-    const { blog, loading, location, match } = this.props;
-    console.log(blog, 'blog');
+    const { blog, loading, location, match, one, comments, user } = this.props;
     if (loading) {
       return <Loading />;
     }
-    // const disqusShortname = blog.title;
-    // const disqusConfig = {
-    //   url: `http://localhost:5051/${location.pathname}`,
-    //   identifier: match.params.slug_url,
-    //   onNewComment: this.handleNewComment,
-    //   title: blog.title,
-    // return <Loading />;
-
-    // };
     return (
       <>
         <Helmet>
@@ -96,12 +112,6 @@ export class BlogPage extends React.Component {
               <h2 className="capitalize">
                 <span>{blog.title}</span>
               </h2>
-              {/* <Disqus.CommentCount
-                shortname={disqusShortname}
-                config={disqusConfig}
-              >
-                Comments
-              </Disqus.CommentCount> */}
               <br />
               <div className="blog_img">
                 {blog && blog.image && blog.image.fieldname ? (
@@ -147,7 +157,7 @@ export class BlogPage extends React.Component {
                 </div>
               )}
               <br />
-              {blog && blog.category && blog.category.length > 0 &&
+              {blog && blog.category && blog.category.length > 0 && (
                 <div>
                   Categorized By:{' '}
                   {blog.category.map((each, index) => (
@@ -160,15 +170,81 @@ export class BlogPage extends React.Component {
                     </LinkBoth>
                   ))}
                 </div>
-              }
+              )}
+              <br />
               <div>
-                {/* <Disqus.CommentEmbed showMedia={true} height={160} />
-
-                <Disqus.DiscussionEmbed
-                  shortname={disqusShortname}
-                  config={disqusConfig}
-                /> */}
-                <div id="disqus_thread" />
+                <label htmlFor="comment">Comments({comments.totaldata})</label>
+                {comments &&
+                  comments.comment &&
+                  comments.comment.map(each => (
+                    <div key={each._id}>
+                      <div className="font-bold mt-4">{user && user.name}</div>
+                      <div className="flex">
+                        <div>{each.title}</div>
+                        {user.id === each.added_by ? (
+                          <div>
+                            <button
+                              className="ml-8 text-gray"
+                              onClick={() => this.handleEditComment(each._id)}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="ml-2 text-gray"
+                              onClick={() => this.handleDeleteComment(each._id)}
+                            >
+                              Delete
+                          </button>
+                          </div>
+                        ) : (
+                            ''
+                          )}
+                      </div>
+                    </div>
+                  ))}
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  aria-labelledby="comment-edit-dialog"
+                >
+                  <DialogTitle
+                    id="comment-edit-dialog"
+                  >
+                    <div>
+                      <textarea
+                        name="edit-comment"
+                        id="edit_comments"
+                        cols="45"
+                        rows="5"
+                        value={one.title}
+                        onChange={this.handleComment('title')}
+                      />
+                      <button
+                        className="text-white py-2 px-4 rounded mt-4 btn-waft"
+                        onClick={this.handlePostComment}
+                      >
+                        Save
+                    </button>
+                    </div>
+                  </DialogTitle>
+                </Dialog>
+                <div className="mt-2">
+                  <textarea
+                    name="comment"
+                    id="comments"
+                    cols="45"
+                    rows="5"
+                    placeholder="Your comment here"
+                    value={this.state.open ? '' : one.title}
+                    onChange={this.handleComment('title')}
+                  />
+                </div>
+                <button
+                  className="text-white py-2 px-4 rounded mt-4 btn-waft"
+                  onClick={this.handlePostComment}
+                >
+                  post
+                </button>
               </div>
             </div>
 
@@ -189,6 +265,9 @@ const withSaga = injectSaga({ key: 'blogPage', saga });
 const mapStateToProps = createStructuredSelector({
   blog: makeSelectBlog(),
   loading: makeSelectLoading(),
+  one: makeSelectOne(),
+  comments: makeSelectComment(),
+  user: makeSelectUser(),
 });
 
 const withConnect = connect(

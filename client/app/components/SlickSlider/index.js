@@ -79,8 +79,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const withConnect = connect(
-  mapStateToProps,
   mapDispatchToProps,
+  mapStateToProps,
 );
 
 export default compose(withConnect)(SlickSlider);

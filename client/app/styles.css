@@ -336,3 +336,14 @@ div#component-error-text {
     height: 400px !important;
   }
 }
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0
+  }
+}
+
+.v3 {
+stroke-dasharray: 100 150;
+stroke-dashoffset: 2700;
+animation: draw 1s linear 1; }
