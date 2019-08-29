@@ -36,6 +36,11 @@ const CategoryElement = props => {
             >
               <div className="font-bold text-blue hover:text-waftprimary">
                 {each.title}
+
+                <Link to="/author">author name</Link>
+
+
+
               </div>
               <LinkBoth to={`/blog/${each.slug_url}`}>
                 <img

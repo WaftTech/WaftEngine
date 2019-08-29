@@ -344,6 +344,8 @@ div#component-error-text {
 }
 
 .v3 {
-stroke-dasharray: 100 150;
+stroke-dasharray: 2000 1000;
 stroke-dashoffset: 2700;
-animation: draw 1s linear 1; }
+animation: draw 3s ease-in-out 1; 
+
+}
