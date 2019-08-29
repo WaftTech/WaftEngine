@@ -19,6 +19,10 @@ export const LOAD_ONE_REQUEST = 'app/BlogPage/LOAD_ONE_REQUEST';
 export const LOAD_ONE_SUCCESS = 'app/BlogPage/LOAD_ONE_SUCCESS';
 export const LOAD_ONE_FAILURE = 'app/BlogPage/LOAD_ONE_FAILURE';
 
+export const LOAD_ARCHIVES_REQUEST = 'app/BlogPage/LOAD_ARCHIVES_REQUEST';
+export const LOAD_ARCHIVES_SUCCESS = 'app/BlogPage/LOAD_ARCHIVES_SUCCESS';
+export const LOAD_ARCHIVES_FAILURE = 'app/BlogPage/LOAD_ARCHIVES_FAILURE';
+
 export const LOAD_RELATED_BLOGS_REQUEST =
   'app/BlogPage/LOAD_RELATED_BLOGS_REQUEST';
 export const LOAD_RELATED_BLOGS_SUCCESS =

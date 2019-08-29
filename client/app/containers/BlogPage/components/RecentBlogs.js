@@ -22,17 +22,15 @@ function RecentBlogs(props) {
           key={`recents-${blog._id}`}
           className="blog-det flex py-3 border-b border-dashed"
         >
-          <div  style={{ width: '80px', height: '80px' }}>
-          <Link
-           to={`/blog/${blog.slug_url}`}
-           >
-          <img
-            src={`${IMAGE_BASE}${blog.image.path}`}
-            alt="blog image"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
+          <div style={{ width: '80px', height: '80px' }}>
+            <Link to={`/blog/${blog.slug_url}`}>
+              <img
+                src={`${IMAGE_BASE}${blog && blog.image && blog.image.path}`}
+                alt="blog image"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </Link>
-            </div>
+          </div>
           <div className="flex-1 ml-4">
             <h4 className="font-bold">
               <Link

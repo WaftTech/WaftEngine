@@ -22,6 +22,8 @@ export const initialState = {
     size: 10,
     totaldata: 0,
   },
+  blogDate: [],
+  dateLoading: false,
 };
 
 const reducer = (state = initialState, action) =>
@@ -29,6 +31,15 @@ const reducer = (state = initialState, action) =>
     switch (action.type) {
       case types.LOAD_BLOG_LIST_REQUEST:
         draft.loading = true;
+        break;
+
+      case types.LOAD_BLOG_DATE_REQUEST:
+        draft.dateLoading = true;
+        break;
+
+      case types.LOAD_BLOG_DATE_SUCCESS:
+        draft.dateLoading = false;
+        draft.blogDate = action.payload.data;
         break;
 
       case types.LOAD_BLOG_LIST_SUCCESS:

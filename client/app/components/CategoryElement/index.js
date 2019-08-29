@@ -44,7 +44,7 @@ const CategoryElement = props => {
               </div>
               <LinkBoth to={`/blog/${each.slug_url}`}>
                 <img
-                  src={`${IMAGE_BASE}${each.image.path}`}
+                  src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
                   style={{ maxWidth: 200, maxHeight: 200 }}
                   alt={`${each.title}-image`}
                 />

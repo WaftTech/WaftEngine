@@ -25,3 +25,15 @@ export const makeSelectBlogByTag = () =>
     selectDomain,
     state => state.blogByTag,
   );
+
+export const makeSelectBlogDate = () =>
+  createSelector(
+    selectDomain,
+    state => state.blogDate,
+  );
+
+export const makeSelectDateLoading = () =>
+  createSelector(
+    selectDomain,
+    state => state.dateLoading,
+  );

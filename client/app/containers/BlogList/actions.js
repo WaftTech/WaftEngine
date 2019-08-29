@@ -46,3 +46,15 @@ export const loadBlogByTagFailure = payload => ({
   type: types.LOAD_BLOG_BY_TAG_FAILURE,
   payload,
 });
+export const loadBlogDateRequest = payload => ({
+  type: types.LOAD_BLOG_DATE_REQUEST,
+  payload,
+});
+export const loadBlogDateSuccess = payload => ({
+  type: types.LOAD_BLOG_DATE_SUCCESS,
+  payload,
+});
+export const loadBlogDateFailure = payload => ({
+  type: types.LOAD_BLOG_DATE_FAILURE,
+  payload,
+});

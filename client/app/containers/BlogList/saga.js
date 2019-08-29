@@ -40,8 +40,21 @@ function* loadBlogByTag(action) {
   );
 }
 
+function* loadBlogDate(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/blogbytime/${action.payload}`,
+      actions.loadBlogDateSuccess,
+      actions.loadBlogDateFailure,
+      token,
+    ),
+  );
+}
+
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_BLOG_LIST_REQUEST, loadBlogList);
   yield takeLatest(types.LOAD_BLOG_BY_AUTHOR_REQUEST, loadBlogByAuthor);
   yield takeLatest(types.LOAD_BLOG_BY_TAG_REQUEST, loadBlogByTag);
+  yield takeLatest(types.LOAD_BLOG_DATE_REQUEST, loadBlogDate);
 }
