@@ -12,7 +12,6 @@ import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 
 const RenderBlogs = props => {
   const { currentBlogs } = props;
-  console.log(currentBlogs, 'cuurr');
   return (
     <>
       <div className="banner relative">

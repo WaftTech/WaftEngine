@@ -13,6 +13,18 @@ export const loadBlogFailure = payload => ({
   payload,
 });
 
+export const loadArchivesRequest = payload => ({
+  type: types.LOAD_ARCHIVES_REQUEST,
+  payload,
+});
+export const loadArchivesSuccess = payload => ({
+  type: types.LOAD_ARCHIVES_SUCCESS,
+  payload,
+});
+export const loadArchivesFailure = payload => ({
+  type: types.LOAD_ARCHIVES_FAILURE,
+  payload,
+});
 export const loadRelatedBlogsRequest = payload => ({
   type: types.LOAD_RELATED_BLOGS_REQUEST,
   payload,

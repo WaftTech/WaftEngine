@@ -77,6 +77,18 @@ function* loadOne(action) {
   );
 }
 
+function* loadArchives(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      'blog/blogbytime',
+      actions.loadArchivesSuccess,
+      actions.loadArchivesFailure,
+      token,
+    ),
+  );
+}
+
 function* postComment(action) {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
@@ -98,6 +110,7 @@ export default function* defaultSaga() {
   yield takeLatest(types.LOAD_BLOG_REQUEST, loadBlog);
   yield takeLatest(types.LOAD_RECENT_BLOGS_REQUEST, loadRecentBlogs);
   yield takeLatest(types.LOAD_RELATED_BLOGS_REQUEST, loadRelatedBlogs);
+  yield takeLatest(types.LOAD_ARCHIVES_REQUEST, loadArchives);
   yield takeLatest(types.LOAD_COMMENT_REQUEST, loadComment);
   yield takeLatest(types.POST_COMMENT_REQUEST, postComment);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);

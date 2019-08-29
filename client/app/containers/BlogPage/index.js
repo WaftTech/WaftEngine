@@ -31,6 +31,7 @@ import { IMAGE_BASE } from '../App/constants';
 import Loading from '../../components/Loading';
 import RecentBlogs from './components/RecentBlogs';
 import RelatedBlogs from './components/RelatedBlogs';
+import Archives from './components/Archives';
 import LinkBoth from '../../components/LinkBoth';
 
 export class BlogPage extends React.Component {
@@ -53,6 +54,7 @@ export class BlogPage extends React.Component {
   componentDidMount() {
     this.props.clearOne();
     this.props.loadRecentBlogsRequest();
+    this.props.loadArchivesRequest();
     this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
     this.props.loadBlogRequest(this.props.match.params.slug_url);
   }
@@ -253,6 +255,7 @@ export class BlogPage extends React.Component {
             <div className="w-full mt-4 lg:mt-0 lg:w-1/4 bg-gray-400 p-3 border rounded">
               <RecentBlogs />
               <RelatedBlogs />
+              <Archives />
             </div>
           </div>
         </div>

@@ -124,6 +124,31 @@ blogcontroller.getRealtedBlog = async (req, res, next) => {
     next(err);
   }
 };
+
+blogcontroller.GetBlogArchives = async (req, res, next) => {
+  try {
+    const blogArchives = await blogSch
+      .find({ is_deleted: false, is_active: true })
+      .select({ added_at: 1, published_on: 1 })
+      .sort({ added_at: -1 })
+      .skip(0)
+      .limit(10);
+    const month = [];
+    const months = blogArchives.map(each => {
+      if (month.includes(each.added_at.getMonth())) {
+        return null;
+      } else {
+        month.push(each.added_at.getMonth());
+        return each.added_at;
+      }
+    });
+    console.log(months, 'montrhs');
+    return otherHelper.sendResponse(res, httpStatus.OK, true, months, null, 'archives get success!!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
 blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
   try {
     const size_default = 10;
@@ -489,6 +514,7 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
     let page;
     let size;
     let searchq;
+    let populateq;
     const size_default = 10;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
@@ -516,8 +542,9 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
         ...searchq,
       };
     }
-    const tagBlog = await blogSch.find(searchq);
-    const totaldata = await blogSch.countDocuments(searchq);
+    populateq = [{ path: 'category', select: 'title' }];
+    const tagBlog = await blogSch.find(searchq).populate(populateq);
+    const totaldata = tagBlog.length;
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog, blogConfig.get, page, size, totaldata);
   } catch (err) {
     next(err);
@@ -634,7 +661,7 @@ blogcontroller.GetBlogComment = async (req, res, next) => {
 blogcontroller.GetBlogCommentByBlog = async (req, res, next) => {
   try {
     const id = req.params.blog;
-    const comment = await commentSch.find({ blog_id: id, is_deleted: false }).populate([{path: 'added_by', select: 'name'}]);
+    const comment = await commentSch.find({ blog_id: id, is_deleted: false }).populate([{ path: 'added_by', select: 'name' }]);
     const totaldata = comment.length;
     return otherHelper.sendResponse(res, httpStatus.OK, true, { comment, totaldata }, null, blogConfig.commentGet, null);
   } catch (err) {
