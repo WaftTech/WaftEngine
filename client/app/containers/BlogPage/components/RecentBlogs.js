@@ -16,11 +16,11 @@ function RecentBlogs(props) {
   }
   return (
     <div className="mb-4">
-      <h2 className="text-center pb-3 border-b">Recent Blogs</h2>
+      <h3 className="uppercase">Recent Blogs</h3>
       {props.blogs.map(blog => (
         <div
           key={`recents-${blog._id}`}
-          className="blog-det flex py-3 border-b border-dashed"
+          className="blog-det flex py-3 border-b border-dotted"
         >
           <div style={{ width: '80px', height: '80px' }}>
             <Link to={`/blog/${blog.slug_url}`}>
@@ -32,7 +32,10 @@ function RecentBlogs(props) {
             </Link>
           </div>
           <div className="flex-1 ml-4">
-            <h4 className="font-bold">
+            <time className="text-xs text-grey-dark">
+              {moment(blog.added_at).format('ll')}
+            </time>
+            <h4 className="font-normal sans-serif text-sm">
               <Link
                 className="text-black no-underline hover:text-waftprimary"
                 to={`/blog/${blog.slug_url}`}
@@ -40,9 +43,7 @@ function RecentBlogs(props) {
                 {blog.title}
               </Link>
             </h4>
-            <time className="text-sm">
-              {moment(blog.added_at).format('ll')}
-            </time>
+
           </div>
         </div>
       ))}

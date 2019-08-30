@@ -15,6 +15,7 @@ import LinkBoth from '../LinkBoth';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import * as mapDispatchToProps from '../../containers/App/actions';
 import { makeSelectLatestBlogs } from '../../containers/App/selectors';
+import './style.css';
 
 const CategoryElement = props => {
   const { cat_id, latestBlogs } = props;
@@ -34,18 +35,13 @@ const CategoryElement = props => {
               key={each._id}
               className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
             >
-              <div className="font-bold text-blue hover:text-waftprimary">
+              <div className="font-bold text-blue hover:text-waftprimary heading">
                 {each.title}
-
-                <Link to="/author">author name</Link>
-
-
-
               </div>
               <LinkBoth to={`/blog/${each.slug_url}`}>
                 <img
                   src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
-                  style={{ maxWidth: 200, maxHeight: 200 }}
+                  style={{ maxWidth: 200 }}
                   alt={`${each.title}-image`}
                 />
               </LinkBoth>

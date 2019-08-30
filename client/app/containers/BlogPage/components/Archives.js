@@ -13,23 +13,23 @@ function Archives(props) {
   }
   console.log(props.archives, 'archives');
   return (
-    <div className="mb-4">
-      <h2 className="text-center pb-3 border-b">Archives</h2>
+    <div className="pt-10">
+      <h3 className="uppercase">Archives</h3>
       {props.archives.map(each =>
         each != null ? (
           <div
             key={`recents-${each}`}
-            className="flex py-3 border-b border-dashed"
+            className="border-b border-dotted border-grey"
           >
-            <Link to={`/blog/date/${moment(each).format('YYYY-MM')}`}>
-              <time className="text-sm">
+            <Link className="block py-3 no-underline text-grey-dark hover:text-black" to={`/blog/date/${moment(each).format('YYYY-MM')}`}>
+              <time>
                 {moment(each).format('MMMM YYYY')}
               </time>
             </Link>
           </div>
         ) : (
-          ''
-        ),
+            ''
+          ),
       )}
     </div>
   );

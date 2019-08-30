@@ -32,11 +32,14 @@ class CategoryListingPage extends React.Component {
               });
             });
           return show ? (
-            <li key={each._id} className="info ">
-              <Link to={`/blog-category/${each._id}`}>
-                <h3> {`${title}`}</h3>
-              </Link>
-            </li>
+
+            <div>
+              <li key={each._id} className="border-b border-dotted border-grey">
+                <Link className="block py-3 no-underline text-grey-dark hover:text-black" to={`/blog-category/${each._id}`}>
+                  {`${title}`}
+                </Link>
+              </li>
+            </div>
           ) : null;
         })}
       </React.Fragment>

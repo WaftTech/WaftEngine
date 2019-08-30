@@ -48,15 +48,14 @@ const Header = props => {
     <header className="WaftHeader border-b lg:border-b">
       <div className="container mx-auto pt-2 flex justify-between flex-wrap relative lg:pb-2">
         <div className="px-5 w-full logo mt-2 md:w-1/2 lg:w-auto">
-          {' '}
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
           </Link>
         </div>
-        <div className="w-full nav-bar lg:w-auto lg:m-auto xl:w-3/5">
+        <div className="w-full nav-bar lg:w-auto lg:m-auto xl:w-3/5 pl-10">
           <div
             className="block-mobile"
-            // style={{ justifyContent: 'flex-end', display: 'flex' }}
+          // style={{ justifyContent: 'flex-end', display: 'flex' }}
           >
             <input
               className="ham"
@@ -105,49 +104,49 @@ const Header = props => {
             </button>
           </div>
         ) : (
-          <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
-            <button className={classes.dropDown} onClick={handleMenu}>
-              <div className="text-base flex">
-                <span className="ml-2 mr-2">{user.name} | </span>
-                <AccountCircle />
-              </div>
-            </button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              {user.isAdmin && (
+            <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
+              <button className={classes.dropDown} onClick={handleMenu}>
+                <div className="text-base flex">
+                  <span className="ml-2 mr-2">{user.name} | </span>
+                  <AccountCircle />
+                </div>
+              </button>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                {user.isAdmin && (
+                  <MenuItem onClick={handleClose}>
+                    <Link
+                      to="/admin/dashboard"
+                      style={{ textDecoration: 'none', color: 'black' }}
+                    >
+                      Dashboard
+                  </Link>
+                  </MenuItem>
+                )}
                 <MenuItem onClick={handleClose}>
                   <Link
-                    to="/admin/dashboard"
+                    to="/user/profile"
                     style={{ textDecoration: 'none', color: 'black' }}
                   >
-                    Dashboard
-                  </Link>
-                </MenuItem>
-              )}
-              <MenuItem onClick={handleClose}>
-                <Link
-                  to="/user/profile"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                >
-                  Profile
+                    Profile
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleLogout}>LogOut</MenuItem>
-            </Menu>
-          </div>
-        )}
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+              </Menu>
+            </div>
+          )}
       </div>
     </header>
   );

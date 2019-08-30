@@ -9,6 +9,8 @@ import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import * as mapDispatchToProps from './actions';
 import CategoryListing from '../../containers/CategoryListingPage/Loadable';
+import Archives from '../BlogPage/components/Archives.js';
+
 
 const RenderBlogs = props => {
   const { currentBlogs } = props;
@@ -20,81 +22,73 @@ const RenderBlogs = props => {
           Blogs
         </h1>
       </div>
-      <div className="flex">
-        <div className="w-3/4 container mx-auto my-10 px-5">
-            <div className="flex flex-wrap w-full md:w-3/4 md:-mx-5">
-              {currentBlogs.map(each => {
-                const {
-                  image,
-                  title,
-                  slug_url,
-                  description,
-                  added_at,
-                  category,
-                  tags,
-                } = each;
+      <div className="container mx-auto flex">
+        <div className="w-3/4">
+          <div className="flex flex-wrap">
+            {currentBlogs.map(each => {
+              const {
+                image,
+                title,
+                slug_url,
+                description,
+                added_at,
+                category,
+                tags,
+              } = each;
 
-                return (
-                  <div
-                    className="blog_sec w-full md:w-1/2 md:px-5 mb-5"
-                    key={slug_url}
-                  >
-                    <div className="w-full h-48 md:h-64 object-cover overflow-hidden">
-                      <Link to={`/blog/${slug_url}`}>
-                        <div className="img blog-img h-full">
-                          <img
-                            src={image && `${IMAGE_BASE}${image.path}`}
-                            className="rounded"
-                            alt={`${title}`}
-                          />
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="">
-                      <Link
-                        className="text-black no-underline capitalize mb-2 bold block mt-4"
-                        to={`/blog/${slug_url}`}
-                      >
-                        <h2>{title}</h2>
-                      </Link>
-                      <div className="text-grey-darker text-base no-underline">
-                          <div className="mr-2">
-                            <span className="text-grey-dark">Category: </span>
-                            {category && category.length > 0 && category.map((each, index) => (
-                              <Link
-                                key={index}
-                                className="text-black hover:text-waftprimary leading-normal text-base no-underline"
-                                to={`/blog-category/${each._id}`}
-                              >
-                                {`${index === 0 ? '' : ', '}${each.title}`}
-                              </Link>
-                              ))}
-                          </div>
+              return (
+                <div
+                  className="border-b border-dotted py-5 flex"
+                  key={slug_url}
+                >
+
+                  <div className="w-1/4">
+                    <Link
+                      className="text-black no-underline capitalize mb-2 bold block mt-4"
+                      to={`/blog/${slug_url}`}
+                    >
+                      <h2>{title}</h2>
+                    </Link>
+                    <span className="mt-2">by <a className="text-red font-bold no-underline" href="#">Author Name</a></span>
+                  </div>
+
+                  {/* <div className="text-grey-darker text-base no-underline">
+                      <div className="mr-2">
+                        <span className="text-grey-dark">Category: </span>
+                        {category && category.length > 0 && category.map((each, index) => (
+                          <Link
+                            key={index}
+                            className="text-black hover:text-waftprimary leading-normal text-base no-underline"
+                            to={`/blog-category/${each._id}`}
+                          >
+                            {`${index === 0 ? '' : ', '}${each.title}`}
+                          </Link>
+                        ))}
                       </div>
-                      <div className="border-t-1 flex flex-wrap font-bold">
-                        <p className="text-grey-dark leading-normal text-base mr-2">
-                          {moment(added_at).format('MMM Do YY')}
-                        </p>
-                        <Link
-                          className="text-grey-darkleading-normal text-base no-underline"
-                          to={`/blog/${each.slug_url}`}
-                        >
-                          <div> {tags.join(', ') || ''} </div>
-                        </Link>{' '}
-                      </div>
+                    </div> */}
+                  <div className="w-1/2 p-4">
+                    <span className="text-grey-dark mr-2">
+                      {moment(added_at).format('MMM Do YY')}
+                    </span>
+                    <Link
+                      className="text-grey-dark text-blue no-underline"
+                      to={`/blog/${each.slug_url}`}
+                    >
+                      <span> {tags.join(', ') || ''} </span>
+                    </Link>{' '}
 
-                      <Link
-                        className="text-grey-darker text-base no-underline"
-                        to={`/blog/${slug_url}`}
-                      >
-                        <div
-                          className="leading-normal text-base text-left"
-                          style={{ height: '95px', overflow: 'hidden' }}
-                          dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                      </Link>
+                    <Link
+                      className="text-grey-darker text-base no-underline"
+                      to={`/blog/${slug_url}`}
+                    >
+                      <div
+                        className="leading-normal text-base text-left"
+                        style={{ height: '95px', overflow: 'hidden' }}
+                        dangerouslySetInnerHTML={{ __html: description }}
+                      />
+                    </Link>
 
-                      <div className="flex justify-end readmore mt-2">
+                    {/* <div className="flex justify-end readmore mt-2">
                         {' '}
                         <Link
                           className="no-underline hover:text-waftprimary"
@@ -102,15 +96,29 @@ const RenderBlogs = props => {
                         >
                           Continue Reading <span className="rdanim">>>></span>
                         </Link>
-                      </div>
-                    </div>
+                      </div> */}
                   </div>
-                );
-              })}
-            </div>
+
+                  <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
+                    <Link to={`/blog/${slug_url}`}>
+                      <img
+                        src={image && `${IMAGE_BASE}${image.path}`}
+                        className="rounded "
+                        alt={`${title}`}
+                      />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <ul className="w-1/4">
+        </div>
+        <ul className="w-1/4 pt-10">
+          <h3 className="uppercase">Categories</h3>
+          <ul className="list-none pl-0">
             <CategoryListing />
+          </ul>
+          <Archives />
         </ul>
       </div>
     </>
