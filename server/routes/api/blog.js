@@ -15,7 +15,7 @@ router.get('/related/:slug_url', blogModule.getRealtedBlog);
 router.get('/category', blogModule.GetBlogCategory);
 router.get('/category/:slug', blogModule.GetBlogCatBySlug);
 router.get('/blog/:slug_url', blogModule.GetBlogBySlug);
-router.get('/blogbycat/:id', blogModule.GetBlogByCat);
+router.get('/blogbycat/:slug_url', blogModule.GetBlogByCat);
 router.get('/blogbytag/:tag', blogModule.GetBlogByTag);
 router.get('/blogbyauthor/:author', blogModule.GetBlogByAuthor);
 router.get('/blogbytime', blogModule.GetBlogArchives);

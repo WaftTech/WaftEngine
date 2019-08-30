@@ -33,7 +33,7 @@ class CategoryListingPage extends React.Component {
             });
           return show ? (
             <li key={each._id} className="info ">
-              <Link to={`/blog-category/${each._id}`}>
+              <Link to={`/blog-category/${each.slug_url}`}>
                 <h3> {`${title}`}</h3>
               </Link>
             </li>

@@ -100,8 +100,7 @@ export class BlogPage extends React.Component {
 
   render() {
     const { blog, loading, location, match, one, comments, user } = this.props;
-    console.log(comments);
-    console.log(user);
+    console.log(blog, 'blog');
     if (loading) {
       return <Loading />;
     }
@@ -168,7 +167,7 @@ export class BlogPage extends React.Component {
                     <LinkBoth
                       className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
                       key={index}
-                      to={`/blog-category/${each._id}`}
+                      to={`/blog-category/${each.slug_url}`}
                     >
                       {`${index === 0 ? '' : ', '}${each.title}`}
                     </LinkBoth>

@@ -11,7 +11,6 @@ function Archives(props) {
   if (props.loading) {
     return <div>Loading...</div>;
   }
-  console.log(props.archives, 'archives');
   return (
     <div className="mb-4">
       <h2 className="text-center pb-3 border-b">Archives</h2>
