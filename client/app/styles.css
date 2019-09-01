@@ -337,17 +337,11 @@ div#component-error-text {
   }
 }
 
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0
-  }
+/* .leftHand { transform: translate(-50px,50px); 
 }
+.rightHand { transform:translate(50px,50px)  } */
 
-.v3 {
-stroke-dasharray: 2000 1000;
-stroke-dashoffset: 2700;
-animation: draw 3s ease-in-out 1; 
-}
+.leftHand, .rightHand {transition:transform 1s ease-out 2s;}
 
 .blog * {font-size:18px; line-height:1.6;}
 .sans-serif { font-family: sans-serif;}

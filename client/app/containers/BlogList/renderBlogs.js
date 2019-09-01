@@ -14,6 +14,7 @@ import Archives from '../BlogPage/components/Archives.js';
 
 const RenderBlogs = props => {
   const { currentBlogs } = props;
+  console.log(currentBlogs);
   return (
     <>
       <div className="banner relative">
@@ -29,6 +30,7 @@ const RenderBlogs = props => {
               const {
                 image,
                 title,
+                author,
                 slug_url,
                 description,
                 added_at,
@@ -49,7 +51,7 @@ const RenderBlogs = props => {
                     >
                       <h2>{title}</h2>
                     </Link>
-                    <span className="mt-2">by <a className="text-red font-bold no-underline" href="#">Author Name</a></span>
+                    <span className="mt-2">by <Link to={`/blog/author/${author._id}`} className="text-red font-bold no-underline">{author.name}</Link></span>
                   </div>
 
                   {/* <div className="text-grey-darker text-base no-underline">

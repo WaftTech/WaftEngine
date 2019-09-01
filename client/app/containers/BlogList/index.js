@@ -34,10 +34,10 @@ export class BlogListPage extends React.Component {
     }
     this.props.loadBlogListRequest();
   }
-  
+
   handleClick = name => e => {
     e.persist();
-    this.props.setPagesValue({key: name, value: Number(e.target.id)});
+    this.props.setPagesValue({ key: name, value: Number(e.target.id) });
   };
 
   handleBlogsPerPage = e => {
@@ -49,14 +49,14 @@ export class BlogListPage extends React.Component {
     e.persist();
     const nextPage = this.props.blogList.page;
     const prevPage = nextPage - 1;
-    this.props.setPagesValue({key: 'page', value: prevPage});
+    this.props.setPagesValue({ key: 'page', value: prevPage });
   };
 
   handleNextPage = e => {
     e.persist();
-    const prevPage  = this.props.blogList.page;
+    const prevPage = this.props.blogList.page;
     const nextPage = prevPage + 1;
-    this.props.setPagesValue({key: 'page', value: nextPage});
+    this.props.setPagesValue({ key: 'page', value: nextPage });
   };
 
   render() {
@@ -79,9 +79,9 @@ export class BlogListPage extends React.Component {
     const currentBlogsByAuthor = blogByAuthor && blogByAuthor.data.slice(indexOfFirstBlogAuthor, indexOfLastBlogAuthor);
     const currentBlogsByTag = blogByTag && blogByTag.data.slice(indexOfFirstBlogTag, indexOfLastBlogTag);
 
-    const maxPage = Math.ceil(totaldata/size);
+    const maxPage = Math.ceil(totaldata / size);
     const pagenumber = [];
-    for (let i = 1; i <= Math.ceil(totaldata/size); i++) {
+    for (let i = 1; i <= Math.ceil(totaldata / size); i++) {
       pagenumber.push(i);
     }
     const renderPageNumbers = pagenumber.map(each => {
@@ -100,53 +100,57 @@ export class BlogListPage extends React.Component {
     return loading ? (
       <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>{require && this.props.match.params.tag ? 'Blog By Tag' : require && this.props.match.params.author ? 'Blog By Author' : 'Blog List'}</title>
-        </Helmet>
-        <div>
+        <React.Fragment>
+          <Helmet>
+            <title>{require && this.props.match.params.tag ? 'Blog By Tag' : require && this.props.match.params.author ? 'Blog By Author' : 'Blog List'}</title>
+          </Helmet>
           <div>
-            <RenderBlogs currentBlogs={require && this.props.match.params.author ? currentBlogsByAuthor : require && this.props.match.params.tag ? currentBlogsByTag : currentBlogs}/>
-          </div>
-          <div className="flex">
-            <div className="w-1/3  ml-8">
-              <label
-                className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="select-blogs-per-page"
-              >
-                Blogs Per Page
+            <div>
+              <RenderBlogs currentBlogs={require && this.props.match.params.author ? currentBlogsByAuthor : require && this.props.match.params.tag ? currentBlogsByTag : currentBlogs} />
+            </div>
+            <div className="container mx-auto my-5">
+              <div className="w-3/4 flex">
+                <div className="w-1/3">
+                  <label
+                    className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
+                    htmlFor="select-blogs-per-page"
+                  >
+                    Blogs Per Page
               </label>
-              <select
-                native="true"
-                value={size || ''}
-                onChange={this.handleBlogsPerPage}
-              >
-              {BlogsPerPage.map(each => (
-                <option key={each} value={each}>{each}</option>
-              ))}
-              </select>
-            </div>
-            <div className="w-2/3 ml-4">
-              <button
-                className="font-bold"
-                disabled={page===1}
-                onClick={this.handleBackPage}
-              >
-                {"<<"}
-              </button>
-              {renderPageNumbers}
-              <button
-                className="font-bold"
-                disabled={page===maxPage}
-                onClick={this.handleNextPage}
-              >
-              {">>"}
-              </button>
+                  <select
+                    className="Waftinputbox"
+                    native="true"
+                    value={size || ''}
+                    onChange={this.handleBlogsPerPage}
+                    style={{ width: 50, minWidth: 'auto' }}
+                  >
+                    {BlogsPerPage.map(each => (
+                      <option key={each} value={each}>{each}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="w-2/3 flex justify-end">
+                  <button
+                    className="font-bold"
+                    disabled={page === 1}
+                    onClick={this.handleBackPage}
+                  >
+                    {"<<"}
+                  </button>
+                  {renderPageNumbers}
+                  <button
+                    className="font-bold"
+                    disabled={page === maxPage}
+                    onClick={this.handleNextPage}
+                  >
+                    {">>"}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </React.Fragment>
-    );
+        </React.Fragment>
+      );
   }
 }
 

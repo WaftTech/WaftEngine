@@ -113,14 +113,21 @@ export class BlogPage extends React.Component {
         </Helmet>
         <div className="container mx-auto my-10 px-5">
           <div className="flex flex-wrap w-full lg:-mx-5">
+            <div className="w-full flex-1 lg:px-5">
+              <p className="sans-serif text-grey-dark">{blog && moment(blog.added_at).format('MMM DD, YYYY')}</p>
+              <h2 className="capitalize text-4xl sans-serif mb-2">
+                {blog.title}
+              </h2>
 
-            <div className="w-1/6">
+
+
+
               {blog && blog.author && (
-                <div>
-                  Authored By:{' '}
-                  <img src={`${blog.author.avatar}`} alt={`${blog.author.name}`} />
+                <div className="inline-block">
+                  <span>Written by </span>
+                  {/* <img src={`${blog.author.avatar}`} alt={`${blog.author.name}`} /> */}
                   <LinkBoth
-                    className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
+                    className="text-waftprimary leading-normal text-sm capitalize"
                     to={`/blog/author/${blog.author._id}`}
                   >
                     {blog.author.name}
@@ -128,29 +135,12 @@ export class BlogPage extends React.Component {
                 </div>
               )}
 
-              <br />
-              {blog && blog.tags && blog.tags.length > 0 && (
-                <div>
-                  {blog.tags.map((each, index) => (
-                    <LinkBoth
-                      className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
-                      key={index}
-                      to={`/blog/tag/${each}`}
-                    >
-                      {`${index === 0 ? '' : ', '}${each}`}
-                    </LinkBoth>
-                  ))}
-                </div>
-              )}
-              <br />
 
-              <br />
               {blog && blog.category && blog.category.length > 0 && (
-                <div>
-                  Categorized By:{' '}
+                <div className="inline-block border-l border-grey ml-2 pl-2">
                   {blog.category.map((each, index) => (
                     <LinkBoth
-                      className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
+                      className="text-black hover:text-waftprimary leading-normal text-sm no-underline capitalize"
                       key={index}
                       to={`/blog-category/${each._id}`}
                     >
@@ -159,15 +149,10 @@ export class BlogPage extends React.Component {
                   ))}
                 </div>
               )}
-              <br />
 
-            </div>
 
-            <div className="w-full flex-1 lg:px-5">
-              <p className="sans-serif text-grey-dark">{blog && moment(blog.added_at).format('MMM DD, YYYY')}</p>
-              <h2 className="capitalize text-4xl sans-serif">
-                {blog.title}
-              </h2>
+
+
               <div className="blog_img mt-5">
                 {blog && blog.image && blog.image.fieldname ? (
                   <img
@@ -183,6 +168,21 @@ export class BlogPage extends React.Component {
                 ) : null}
               </div>
               <div className="blog py-5" dangerouslySetInnerHTML={{ __html: blog.description }} />
+
+              {blog && blog.tags && blog.tags.length > 0 && (
+                <div className="inline-block mb-5">
+                  {blog.tags.map((each, index) => (
+                    <LinkBoth
+                      className="text-black bg-grey-light hover:bg-blue hover:text-white leading-normal text-sm no-underline sans-serif rounded px-2 py-1 mr-2"
+                      key={index}
+                      to={`/blog/tag/${each}`}
+                    >
+                      {`${index === 0 ? '' : ''}${each}`}
+                    </LinkBoth>
+                  ))}
+                </div>
+              )}
+
               <div>
                 <h2 className="mt-4" htmlFor="comment">Comments({comments.totaldata})</h2>
 

@@ -29,7 +29,7 @@ const CategoryElement = props => {
   return (
 
     <>
-      {/* <h2>{latestBlogs.category && latestBlogs.category.title}</h2> */}
+      <h2 className="pt-5 pb-5">{latestBlogs.category && latestBlogs.category.title}</h2>
       {latestBlogs.blogs &&
         latestBlogs.blogs.map((each, index) => (
           <div
@@ -37,16 +37,16 @@ const CategoryElement = props => {
             className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
           >
             <div className="flex max-w-sm mb-5">
-              <img
+              <Link to={`/blog/${each.slug_url}`}><img
                 src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
                 style={{ maxWidth: 100 }}
                 alt={`${each.title}-image`}
-              />
+              /></Link>
 
               <div className="pl-5">
-                <span className="text-grey-dark">{moment(each.added_at).format('MMM DD, YYYY')}</span>
+                <span className="text-grey-dark text-sm sans-serif">{moment(each.added_at).format('MMM DD, YYYY')}</span>
                 <Link className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline" to={`/blog/${each.slug_url}`}> {each.title}  </Link>
-                <span className="text-grey-dark">{each.author.name}</span>
+                <span className="text-grey-dark text-sm sans-serif">{each.author.name}</span>
 
               </div>
             </div>

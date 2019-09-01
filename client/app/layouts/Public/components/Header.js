@@ -47,7 +47,7 @@ const Header = props => {
   return (
     <header className="WaftHeader border-b lg:border-b">
       <div className="container mx-auto pt-2 flex justify-between flex-wrap relative lg:pb-2">
-        <div className="px-5 w-full logo mt-2 md:w-1/2 lg:w-auto">
+        <div className="w-full logo mt-2 md:w-1/2 lg:w-auto">
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
           </Link>
