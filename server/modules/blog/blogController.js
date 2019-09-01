@@ -96,8 +96,8 @@ blogcontroller.getLatestBlogByCat = async (req, res, next) => {
     const category = await blogCatSch.findById(cat_id).select({ title: 1 });
     const blogs = await blogSch
       .find({ is_active: true, is_deleted: false, category: cat_id })
-      .select({ slug_url: 1, title: 1, added_at: 1, image: 1, category: 1 })
-      .populate([{ path: 'category', select: 'title' }])
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1, category: 1, author: 1 })
+      .populate([{ path: 'category', select: 'title' }, { path: 'author', select: 'name' }])
       .sort({ _id: -1 })
       .skip(0)
       .limit(5);
@@ -381,8 +381,8 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
       {
         is_published: 0,
       },
-    )
-    .populate([{ path: 'author', select: '_id name' }, { path: 'category', select: '_id title slug_url' }]);
+  )
+    .populate([{ path: 'author', select: '_id name avatar image' }, { path: 'category', select: '_id title slug_url' }]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
 blogcontroller.GetBlogByCat = async (req, res, next) => {

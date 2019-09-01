@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import moment from 'moment';
 
 //@material
 import Dialog from '@material-ui/core/Dialog';
@@ -101,8 +102,7 @@ export class BlogPage extends React.Component {
 
   render() {
     const { blog, loading, location, match, one, comments, user } = this.props;
-    console.log(comments);
-    console.log(user);
+    console.log(blog, 'test');
     if (loading) {
       return <Loading />;
     }
@@ -118,6 +118,7 @@ export class BlogPage extends React.Component {
               {blog && blog.author && (
                 <div>
                   Authored By:{' '}
+                  <img src={`${blog.author.avatar}`} alt={`${blog.author.name}`} />
                   <LinkBoth
                     className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
                     to={`/blog/author/${blog.author._id}`}
@@ -130,7 +131,6 @@ export class BlogPage extends React.Component {
               <br />
               {blog && blog.tags && blog.tags.length > 0 && (
                 <div>
-                  Tags:{' '}
                   {blog.tags.map((each, index) => (
                     <LinkBoth
                       className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
@@ -164,7 +164,7 @@ export class BlogPage extends React.Component {
             </div>
 
             <div className="w-full flex-1 lg:px-5">
-              <p className="sans-serif text-grey-dark">24th Jan, 2025</p>
+              <p className="sans-serif text-grey-dark">{blog && moment(blog.added_at).format('MMM DD, YYYY')}</p>
               <h2 className="capitalize text-4xl sans-serif">
                 {blog.title}
               </h2>
