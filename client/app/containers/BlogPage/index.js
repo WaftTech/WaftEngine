@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import moment from 'moment';
 
 //@material
 import Dialog from '@material-ui/core/Dialog';
@@ -33,6 +34,7 @@ import RecentBlogs from './components/RecentBlogs';
 import RelatedBlogs from './components/RelatedBlogs';
 import Archives from './components/Archives';
 import LinkBoth from '../../components/LinkBoth';
+import user from '../../assets/img/user.svg';
 
 export class BlogPage extends React.Component {
   static propTypes = {
@@ -66,7 +68,7 @@ export class BlogPage extends React.Component {
     }
     if (nextProps.blog._id !== this.props.blog._id) {
       nextProps.loadCommentRequest(nextProps.blog._id);
-      nextProps.setOneValue({key: 'blog_id', value: nextProps.blog._id});
+      nextProps.setOneValue({ key: 'blog_id', value: nextProps.blog._id });
     }
   }
 
@@ -85,7 +87,7 @@ export class BlogPage extends React.Component {
   };
 
   handleEditComment = id => {
-    this.setState({ open: true});
+    this.setState({ open: true });
     this.props.loadOneRequest(id);
   };
 
@@ -111,12 +113,47 @@ export class BlogPage extends React.Component {
         </Helmet>
         <div className="container mx-auto my-10 px-5">
           <div className="flex flex-wrap w-full lg:-mx-5">
-            <div className="w-full lg:w-3/4 lg:px-5">
-              <h2 className="capitalize">
-                <span>{blog.title}</span>
+            <div className="w-full flex-1 lg:px-5">
+              <p className="sans-serif text-grey-dark">{blog && moment(blog.added_at).format('MMM DD, YYYY')}</p>
+              <h2 className="capitalize text-4xl sans-serif mb-2">
+                {blog.title}
               </h2>
-              <br />
-              <div className="blog_img">
+
+
+
+
+              {blog && blog.author && (
+                <div className="inline-block">
+                  <span>Written by </span>
+                  {/* <img src={`${blog.author.avatar}`} alt={`${blog.author.name}`} /> */}
+                  <LinkBoth
+                    className="text-waftprimary leading-normal text-sm capitalize"
+                    to={`/blog/author/${blog.author._id}`}
+                  >
+                    {blog.author.name}
+                  </LinkBoth>
+                </div>
+              )}
+
+
+              {blog && blog.category && blog.category.length > 0 && (
+                <div className="inline-block border-l border-grey ml-2 pl-2">
+                  {blog.category.map((each, index) => (
+                    <LinkBoth
+                      className="text-black hover:text-waftprimary leading-normal text-sm no-underline capitalize"
+                      key={index}
+                      to={`/blog-category/${each._id}`}
+                    >
+                      {`${index === 0 ? '' : ', '}${each.title}`}
+                    </LinkBoth>
+                  ))}
+                </div>
+              )}
+
+
+
+
+              <div className="blog_img mt-5">
                 {blog && blog.image && blog.image.fieldname ? (
                   <img
                     src={`${IMAGE_BASE}${blog.image.path}`}
@@ -130,78 +167,72 @@ export class BlogPage extends React.Component {
                   />
                 ) : null}
               </div>
-              <br />
-              <div dangerouslySetInnerHTML={{ __html: blog.description }} />
-              <br />
+              <div className="blog py-5" dangerouslySetInnerHTML={{ __html: blog.description }} />
+
               {blog && blog.tags && blog.tags.length > 0 && (
-                <div>
-                  Tags:{' '}
+                <div className="inline-block mb-5">
                   {blog.tags.map((each, index) => (
                     <LinkBoth
-                      className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
+                      className="text-black bg-grey-light hover:bg-blue hover:text-white leading-normal text-sm no-underline sans-serif rounded px-2 py-1 mr-2"
                       key={index}
                       to={`/blog/tag/${each}`}
                     >
-                      {`${index === 0 ? '' : ', '}${each}`}
+                      {`${index === 0 ? '' : ''}${each}`}
                     </LinkBoth>
                   ))}
                 </div>
               )}
-              <br />
-              {blog && blog.author && (
-                <div>
-                  Authored By:{' '}
-                  <LinkBoth
-                    className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
-                    to={`/blog/author/${blog.author._id}`}
-                  >
-                    {blog.author.name}
-                  </LinkBoth>
-                </div>
-              )}
-              <br />
-              {blog && blog.category && blog.category.length > 0 && (
-                <div>
-                  Categorized By:{' '}
-                  {blog.category.map((each, index) => (
-                    <LinkBoth
-                      className="text-blue hover:text-waftprimary leading-normal text-base no-underline"
-                      key={index}
-                      to={`/blog-category/${each.slug_url}`}
-                    >
-                      {`${index === 0 ? '' : ', '}${each.title}`}
-                    </LinkBoth>
-                  ))}
-                </div>
-              )}
-              <br />
+
               <div>
-                <label htmlFor="comment">Comments({comments.totaldata})</label>
+                <h2 className="mt-4" htmlFor="comment">Comments({comments.totaldata})</h2>
+
+                <div className="mt-2 p-4 shadow relative rounded pb-10 border border-grey-light mb-10">
+                  <textarea
+                    className="appearance-none w-full outline-none resize-none"
+                    name="comment"
+                    id="comments"
+                    rows="5"
+                    placeholder="Write your comment"
+                    value={this.state.open ? '' : one.title}
+                    onChange={this.handleComment('title')}
+                  />
+                  <button
+                    className="absolute right-0 bottom-0 mr-1 mb-1 text-white py-2 px-4 rounded mt-4 btn-waft"
+                    onClick={this.handlePostComment}
+                  >
+                    Submit
+                </button>
+                </div>
+
+
                 {comments &&
                   comments.comment &&
                   comments.comment.map(each => (
                     <div key={each._id}>
-                      <div className="font-bold mt-4">{typeof each.added_by === 'string' && each.added_by === user.id ? user.name : each.added_by.name}</div>
-                      <div className="flex">
-                        <div>{each.title}</div>
-                        {(typeof each.added_by === 'string' && each.added_by === user.id || each.added_by._id === user.id) ? (
-                          <div>
-                            <button
-                              className="ml-8 text-gray"
-                              onClick={() => this.handleEditComment(each._id)}
-                            >
-                              Edit
+                      <div className="flex py-4 border-b border-dotted sans-serif">
+                        <img src={user} alt="username" />
+                        <div className="pl-4 flex1">
+                          <h5 className="font-bold">{typeof each.added_by === 'string' && each.added_by === user.id ? user.name : each.added_by.name}</h5>
+                          <p>{each.title}</p>
+                          {(typeof each.added_by === 'string' && each.added_by === user.id || each.added_by._id === user.id) ? (
+                            <div>
+                              <button
+                                className="ml-8 text-gray"
+                                onClick={() => this.handleEditComment(each._id)}
+                              >
+                                Edit
                             </button>
-                            <button
-                              className="ml-2 text-gray"
-                              onClick={() => this.handleDeleteComment(each._id)}
-                            >
-                            Delete
+                              <button
+                                className="ml-2 text-gray"
+                                onClick={() => this.handleDeleteComment(each._id)}
+                              >
+                                Delete
                           </button>
+                            </div>
+                          ) : (
+                              ''
+                            )}
                         </div>
-                        ) : (
-                          ''
-                        )}
                       </div>
                     </div>
                   ))}
@@ -213,45 +244,29 @@ export class BlogPage extends React.Component {
                   <DialogTitle
                     id="comment-edit-dialog"
                   >
-                  <div>
-                    <textarea
-                      name="edit-comment"
-                      id="edit_comments"
-                      cols="45"
-                      rows="5"
-                      value={one.title}
-                      onChange={this.handleComment('title')}
-                    />
-                    <button
-                      className="text-white py-2 px-4 rounded mt-4 btn-waft"
-                      onClick={this.handlePostComment}
-                    >
-                      Save
+                    <div>
+                      <textarea
+                        name="edit-comment"
+                        id="edit_comments"
+                        cols="45"
+                        rows="5"
+                        value={one.title}
+                        onChange={this.handleComment('title')}
+                      />
+                      <button
+                        className="text-white py-2 px-4 rounded mt-4 btn-waft"
+                        onClick={this.handlePostComment}
+                      >
+                        Save
                     </button>
-                  </div>
+                    </div>
                   </DialogTitle>
                 </Dialog>
-                <div className="mt-2">
-                  <textarea
-                    name="comment"
-                    id="comments"
-                    cols="45"
-                    rows="5"
-                    placeholder="Your comment here"
-                    value={this.state.open ? '' : one.title}
-                    onChange={this.handleComment('title')}
-                  />
-                </div>
-                <button
-                  className="text-white py-2 px-4 rounded mt-4 btn-waft"
-                  onClick={this.handlePostComment}
-                >
-                  post
-                </button>
+
               </div>
             </div>
 
-            <div className="w-full mt-4 lg:mt-0 lg:w-1/4 bg-gray-400 p-3 border rounded">
+            <div className="w-full mt-4 lg:mt-0 lg:w-1/4 p-3">
               <RecentBlogs />
               <RelatedBlogs />
               <Archives />

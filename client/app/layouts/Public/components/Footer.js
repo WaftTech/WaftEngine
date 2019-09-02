@@ -29,12 +29,11 @@ class Footer extends React.Component {
       <footer className="footer bg-lightest">
         <div className="w-full newsletter_wrapper p-10 text-center">
           <div className="widget-ft style1 widget-lastest">
-            <h1 className="text-white mb-2">Give Star, Show Your Love</h1>
+            <h1 className="text-white mb-2 uppercase">Get updates</h1>
             <p className="mb-5 text-white">
-              You don't have to donate always. A Github star is enough to grow
-              WaftEngine.
+              Never miss any updates from WaftEngine. Subcribe newsletter now.
             </p>
-            {/* <form onSubmit={this.handleSave}>
+            <form onSubmit={this.handleSave}>
               <input
                 type="text"
                 className="appearance-none rounded py-2 px-3 text-grey-darker leading-tight md:1/2 lg:w-1/4 rounded-r-none"
@@ -49,13 +48,9 @@ class Footer extends React.Component {
                 variant="contained"
                 color="primary"
               >
-                Submit
+                Subscribe
               </Button>
-            </form> */}
-
-            <button className="text-white py-2 px-4 rounded mt-4 btn-waft hover:bg-black">
-              Star WaftEngine
-            </button>
+            </form>
           </div>
         </div>
         <div className="container mx-auto">

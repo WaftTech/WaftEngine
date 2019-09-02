@@ -336,3 +336,73 @@ div#component-error-text {
     height: 400px !important;
   }
 }
+
+/* .leftHand { transform: translate(-50px,50px); 
+}
+.rightHand { transform:translate(50px,50px)  } */
+
+.leftHand, .rightHand {transition:transform 1s ease-out 2s;}
+
+.blog * {font-size:18px; line-height:1.6;}
+.sans-serif { font-family: sans-serif;}
+
+
+.pin-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.pin-y-0 {
+  top: 0;
+  bottom: 0;
+}
+.pin-x-0 {
+  right: 0;
+  left: 0;
+}
+.top-0 {
+  top: 0;
+}
+.right-0 {
+  right: 0;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
+}
+.pin-auto {
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+}
+.pin-y-auto {
+  top: auto;
+  bottom: auto;
+}
+.pin-x-auto {
+  left: auto;
+  right: auto;
+}
+.top-auto {
+  top: auto;
+}
+.bottom-auto {
+  bottom: auto;
+}
+.left-auto {
+  left: auto;
+}
+.right-auto {
+  right: auto;
+}
+
+.leading-none	{line-height: 1;}
+.leading-tight	{line-height: 1.25;}
+.leading-snug	{line-height: 1.375;}
+.leading-normal	{line-height: 1.5;}
+.leading-relaxed	{line-height: 1.625;}
+.leading-loose	{line-height: 2;}

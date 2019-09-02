@@ -10,11 +10,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
+import moment from 'moment';
 
-import LinkBoth from '../LinkBoth';
+import { Link } from 'react-router-dom';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import * as mapDispatchToProps from '../../containers/App/actions';
 import { makeSelectLatestBlogs } from '../../containers/App/selectors';
+import Skeleton from './skeleton';
+import './style.css';
 
 const CategoryElement = props => {
   const { cat_id, latestBlogs } = props;
@@ -25,28 +28,43 @@ const CategoryElement = props => {
 
   return (
     <>
-      <h2>{latestBlogs.category && latestBlogs.category.title}</h2>
-      <br />
-      <div className="flex">
-        {latestBlogs.blogs &&
-          latestBlogs.blogs.map((each, index) => (
-            <div
-              key={each._id}
-              className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
-            >
-              <div className="font-bold text-blue hover:text-waftprimary">
-                {each.title}
-              </div>
-              <LinkBoth to={`/blog/${each.slug_url}`}>
+      <Skeleton />
+      <h2 className="pt-5 pb-5">
+        {latestBlogs.category && latestBlogs.category.title}
+      </h2>
+      {latestBlogs.blogs &&
+        latestBlogs.blogs.map((each, index) => (
+          <div
+            key={each._id}
+            className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
+          >
+            <div className="flex mb-5">
+              <Link to={`/blog/${each.slug_url}`}>
                 <img
                   src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
-                  style={{ maxWidth: 200, maxHeight: 200 }}
-                  alt={`${each.title}-image`}
+                  style={{ maxWidth: 100 }}
+                  alt={`${each.title}`}
                 />
-              </LinkBoth>
+              </Link>
+
+              <div className="pl-5">
+                <span className="text-grey-dark text-sm sans-serif">
+                  {moment(each.added_at).format('MMM DD, YYYY')}
+                </span>
+                <Link
+                  className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline"
+                  to={`/blog/${each.slug_url}`}
+                >
+                  {' '}
+                  {each.title}{' '}
+                </Link>
+                <span className="text-grey-dark text-sm sans-serif">
+                  {each.author.name}
+                </span>
+              </div>
             </div>
-          ))}
-      </div>
+          </div>
+        ))}
     </>
   );
 };

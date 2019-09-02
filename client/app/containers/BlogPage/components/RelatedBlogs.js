@@ -16,15 +16,12 @@ function RelatedBlogs(props) {
   }
   if (props.blogs.length === 0) {
     return (
-      <div className="mb-4">
-        <h2 className="text-center pb-3 border-b">Related Blogs</h2>
-        <p className="text-center mt-3">No Related Blogs...</p>
-      </div>
+      null
     );
   }
   return (
     <div className="mb-4">
-      <h2 className="text-center pb-3 border-b">Related Blogs</h2>
+      <h3 className="uppercase">Related Blogs</h3>
       {props.blogs.map(blog => (
         <div
           key={`relateds-${blog._id}`}
