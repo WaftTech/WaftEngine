@@ -15,6 +15,8 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 
+import CategoryListingSkeleton from '../../components/Skeleton/CategoryListing';
+
 /* eslint-disable react/prefer-stateless-function */
 class CategoryListingPage extends React.Component {
   componentDidMount() {
@@ -25,26 +27,27 @@ class CategoryListingPage extends React.Component {
   render() {
     const { category, blogs, loading } = this.props;
     return loading ? (
-      <div>Loading category listing...</div>
+      <CategoryListingSkeleton />
     ) : (
       <React.Fragment>
-        {category.map(each => {
-          const { title } = each;
-          let show = false;
-          blogs.length > 0 &&
-            blogs.map(blog => {
-              blog.category.map(el => {
-                if (el._id === each._id) show = true;
+        {category &&
+          category.map(each => {
+            const { title } = each;
+            let show = false;
+            blogs.length > 0 &&
+              blogs.map(blog => {
+                blog.category.map(el => {
+                  if (el._id === each._id) show = true;
+                });
               });
-            });
-          return show ? (
-            <li key={each._id} className="info ">
-              <Link to={`/blog-category/${each.slug_url}`}>
-                <h3> {`${title}`}</h3>
-              </Link>
-            </li>
-          ) : null;
-        })}
+            return show ? (
+              <li key={each._id} className="info ">
+                <Link to={`/blog-category/${each.slug_url}`}>
+                  <h3> {`${title}`}</h3>
+                </Link>
+              </li>
+            ) : null;
+          })}
       </React.Fragment>
     );
   }

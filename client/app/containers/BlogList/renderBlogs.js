@@ -8,11 +8,14 @@ import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import * as mapDispatchToProps from './actions';
+import BlogListSkeleton from '../../components/Skeleton/BlogList';
 
 const RenderBlogs = props => {
   const { currentBlogs, loading } = props;
   return loading ? (
-    <div>Loading blog lists...</div>
+    <>
+      <BlogListSkeleton />
+    </>
   ) : (
     <>
       {currentBlogs.map(each => {

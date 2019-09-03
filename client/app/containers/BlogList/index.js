@@ -19,7 +19,7 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 // import Loading from '../../components/Loading';
 import RenderBlogs from './renderBlogs';
-import CategoryListing from '../../containers/CategoryListingPage/Loadable';
+import CategoryListing from '../CategoryListingPage/Loadable';
 import Archives from '../BlogPage/components/Archives';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -104,18 +104,16 @@ export class BlogListPage extends React.Component {
     for (let i = 1; i <= Math.ceil(totaldata / size); i++) {
       pagenumber.push(i);
     }
-    const renderPageNumbers = pagenumber.map(each => {
-      return (
-        <button
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-          key={each}
-          id={each}
-          onClick={this.handleClick('page')}
-        >
-          {each}
-        </button>
-      );
-    });
+    const renderPageNumbers = pagenumber.map(each => (
+      <button
+        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+        key={each}
+        id={each}
+        onClick={this.handleClick('page')}
+      >
+        {each}
+      </button>
+    ));
 
     return (
       <React.Fragment>
@@ -124,8 +122,8 @@ export class BlogListPage extends React.Component {
             {require && this.props.match.params.tag
               ? 'Blog By Tag'
               : require && this.props.match.params.author
-              ? 'Blog By Author'
-              : 'Blog List'}
+                ? 'Blog By Author'
+                : 'Blog List'}
           </title>
         </Helmet>
         <div className="banner relative">
@@ -142,8 +140,8 @@ export class BlogListPage extends React.Component {
                 require && this.props.match.params.author
                   ? currentBlogsByAuthor
                   : require && this.props.match.params.tag
-                  ? currentBlogsByTag
-                  : currentBlogs
+                    ? currentBlogsByTag
+                    : currentBlogs
               }
             />
             <div className="flex">
