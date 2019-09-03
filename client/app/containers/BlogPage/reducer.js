@@ -9,7 +9,7 @@ export const initialState = {
   recentBlogs: [],
   recentBlogsIsLoading: false,
   archives: [],
-  archivesIsLoading: false,
+  archiveLoading: false,
   one: {
     title: '',
     blog_id: '',
@@ -54,18 +54,23 @@ const blogPageReducer = (state = initialState, action) =>
       case types.LOAD_RECENT_BLOGS_FAILURE:
         draft.recentBlogsIsLoading = false;
         break;
-      case types.LOAD_ARCHIVES_REQUEST:
-        draft.archivesIsLoading = true;
-        break;
-      case types.LOAD_ARCHIVES_SUCCESS:
-        draft.archivesIsLoading = false;
-        draft.archives = action.payload.data;
-        break;
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         break;
       case types.LOAD_COMMENT_SUCCESS:
         draft.comments = action.payload.data;
+        break;
+
+      case types.LOAD_ARCHIVES_REQUEST:
+        draft.archiveLoading = true;
+        break;
+      case types.LOAD_ARCHIVES_SUCCESS:
+        draft.archiveLoading = false;
+        draft.archives = action.payload.data;
+        break;
+
+      case types.LOAD_ARCHIVES_FAILURE:
+        draft.archiveLoading = false;
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.one = action.payload.data;

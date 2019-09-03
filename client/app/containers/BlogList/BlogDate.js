@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import moment from 'moment';
 
 // @material
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectBlogDate, makeSelectDateLoading } from './selectors';
@@ -17,6 +17,7 @@ import reducer from './reducer';
 import Loading from '../../components/Loading';
 import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 import { IMAGE_BASE } from '../App/constants';
+import Archives from '../BlogPage/components/Archives';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogDatePage extends React.Component {
@@ -32,7 +33,7 @@ export class BlogDatePage extends React.Component {
     const { blogDate, loading } = this.props;
 
     return loading ? (
-      <Loading />
+      <div>Blog by date loading</div>
     ) : (
       <React.Fragment>
         <Helmet>
@@ -134,6 +135,8 @@ export class BlogDatePage extends React.Component {
           </div>
           <ul className="w-1/4">
             <CategoryListing />
+            <br />
+            <Archives />
           </ul>
         </div>
       </React.Fragment>

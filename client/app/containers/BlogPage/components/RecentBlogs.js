@@ -12,7 +12,7 @@ import { IMAGE_BASE } from '../../App/constants';
 
 function RecentBlogs(props) {
   if (props.loading) {
-    return <div>Loading...</div>;
+    return <div>Loading recent blogs...</div>;
   }
   return (
     <div className="mb-4">
@@ -43,7 +43,6 @@ function RecentBlogs(props) {
                 {blog.title}
               </Link>
             </h4>
-
           </div>
         </div>
       ))}

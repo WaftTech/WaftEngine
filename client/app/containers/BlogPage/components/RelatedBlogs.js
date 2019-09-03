@@ -12,12 +12,10 @@ import { IMAGE_BASE } from '../../App/constants';
 
 function RelatedBlogs(props) {
   if (props.loading) {
-    return <div>Loading...</div>;
+    return <div>Loading related blogs...</div>;
   }
   if (props.blogs.length === 0) {
-    return (
-      null
-    );
+    return null;
   }
   return (
     <div className="mb-4">

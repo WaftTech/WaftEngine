@@ -37,3 +37,9 @@ export const makeSelectDateLoading = () =>
     selectDomain,
     state => state.dateLoading,
   );
+  
+  export const makeSelectQuery = () =>
+    createSelector(
+      selectDomain,
+      state => state.query,
+    );

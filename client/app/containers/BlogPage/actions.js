@@ -12,19 +12,6 @@ export const loadBlogFailure = payload => ({
   type: types.LOAD_BLOG_FAILURE,
   payload,
 });
-
-export const loadArchivesRequest = payload => ({
-  type: types.LOAD_ARCHIVES_REQUEST,
-  payload,
-});
-export const loadArchivesSuccess = payload => ({
-  type: types.LOAD_ARCHIVES_SUCCESS,
-  payload,
-});
-export const loadArchivesFailure = payload => ({
-  type: types.LOAD_ARCHIVES_FAILURE,
-  payload,
-});
 export const loadRelatedBlogsRequest = payload => ({
   type: types.LOAD_RELATED_BLOGS_REQUEST,
   payload,
@@ -111,5 +98,18 @@ export const loadOneFailure = payload => ({
 
 export const clearOne = payload => ({
   type: types.CLEAR_ONE,
+  payload,
+});
+
+export const loadArchivesRequest = payload => ({
+  type: types.LOAD_ARCHIVES_REQUEST,
+  payload,
+});
+export const loadArchivesSuccess = payload => ({
+  type: types.LOAD_ARCHIVES_SUCCESS,
+  payload,
+});
+export const loadArchivesFailure = payload => ({
+  type: types.LOAD_ARCHIVES_FAILURE,
   payload,
 });

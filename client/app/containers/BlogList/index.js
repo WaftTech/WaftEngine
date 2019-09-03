@@ -7,12 +7,20 @@ import { Helmet } from 'react-helmet';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectBlogList, makeSelectLoading, makeSelectBlogByAuthor, makeSelectBlogByTag } from './selectors';
+import {
+  makeSelectBlogList,
+  makeSelectLoading,
+  makeSelectBlogByAuthor,
+  makeSelectBlogByTag,
+  makeSelectQuery,
+} from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
-import Loading from '../../components/Loading';
+// import Loading from '../../components/Loading';
 import RenderBlogs from './renderBlogs';
+import CategoryListing from '../../containers/CategoryListingPage/Loadable';
+import Archives from '../BlogPage/components/Archives';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogListPage extends React.Component {
@@ -37,12 +45,16 @@ export class BlogListPage extends React.Component {
 
   handleClick = name => e => {
     e.persist();
+    // this.props.setQueryValue({ key: name, value: Number(e.target.id) });
+    // this.props.loadBlogListRequest(this.props.query);
     this.props.setPagesValue({ key: name, value: Number(e.target.id) });
   };
 
-  handleBlogsPerPage = e => {
+  handleBlogsPerPage = name => e => {
     e.persist();
+    // this.props.setQueryValue({ key: name, value: Number(e.target.value) });
     this.props.setSizeValue(e.target.value);
+    // this.props.loadBlogListRequest(this.props.query);
   };
 
   handleBackPage = e => {
@@ -71,13 +83,21 @@ export class BlogListPage extends React.Component {
     const BlogsPerPage = ['1', '5', '10', '20', '50', '100'];
     const indexOfLastBlog = page * size;
     const indexOfFirstBlog = indexOfLastBlog - size;
-    const indexOfLastBlogAuthor = (blogByAuthor && blogByAuthor.page) * (blogByAuthor && blogByAuthor.size);
-    const indexOfFirstBlogAuthor = indexOfLastBlogAuthor - (blogByAuthor && blogByAuthor.size);
-    const indexOfLastBlogTag = (blogByTag && blogByTag.page) * (blogByTag && blogByTag.size);
-    const indexOfFirstBlogTag = indexOfLastBlogTag - (blogByTag && blogByTag.size);
+    const indexOfLastBlogAuthor =
+      (blogByAuthor && blogByAuthor.page) * (blogByAuthor && blogByAuthor.size);
+    const indexOfFirstBlogAuthor =
+      indexOfLastBlogAuthor - (blogByAuthor && blogByAuthor.size);
+    const indexOfLastBlogTag =
+      (blogByTag && blogByTag.page) * (blogByTag && blogByTag.size);
+    const indexOfFirstBlogTag =
+      indexOfLastBlogTag - (blogByTag && blogByTag.size);
     const currentBlogs = data.slice(indexOfFirstBlog, indexOfLastBlog);
-    const currentBlogsByAuthor = blogByAuthor && blogByAuthor.data.slice(indexOfFirstBlogAuthor, indexOfLastBlogAuthor);
-    const currentBlogsByTag = blogByTag && blogByTag.data.slice(indexOfFirstBlogTag, indexOfLastBlogTag);
+    const currentBlogsByAuthor =
+      blogByAuthor &&
+      blogByAuthor.data.slice(indexOfFirstBlogAuthor, indexOfLastBlogAuthor);
+    const currentBlogsByTag =
+      blogByTag &&
+      blogByTag.data.slice(indexOfFirstBlogTag, indexOfLastBlogTag);
 
     const maxPage = Math.ceil(totaldata / size);
     const pagenumber = [];
@@ -94,63 +114,90 @@ export class BlogListPage extends React.Component {
         >
           {each}
         </button>
-      )
-    })
+      );
+    });
 
-    return loading ? (
-      <Loading />
-    ) : (
-        <React.Fragment>
-          <Helmet>
-            <title>{require && this.props.match.params.tag ? 'Blog By Tag' : require && this.props.match.params.author ? 'Blog By Author' : 'Blog List'}</title>
-          </Helmet>
-          <div>
-            <div>
-              <RenderBlogs currentBlogs={require && this.props.match.params.author ? currentBlogsByAuthor : require && this.props.match.params.tag ? currentBlogsByTag : currentBlogs} />
-            </div>
-            <div className="container mx-auto my-5">
-              <div className="w-3/4 flex">
-                <div className="w-1/3">
-                  <label
-                    className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
-                    htmlFor="select-blogs-per-page"
-                  >
-                    Blogs Per Page
-              </label>
-                  <select
-                    className="Waftinputbox"
-                    native="true"
-                    value={size || ''}
-                    onChange={this.handleBlogsPerPage}
-                    style={{ width: 50, minWidth: 'auto' }}
-                  >
-                    {BlogsPerPage.map(each => (
-                      <option key={each} value={each}>{each}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="w-2/3 flex justify-end">
-                  <button
-                    className="font-bold"
-                    disabled={page === 1}
-                    onClick={this.handleBackPage}
-                  >
-                    {"<<"}
-                  </button>
-                  {renderPageNumbers}
-                  <button
-                    className="font-bold"
-                    disabled={page === maxPage}
-                    onClick={this.handleNextPage}
-                  >
-                    {">>"}
-                  </button>
-                </div>
+    return (
+      <React.Fragment>
+        <Helmet>
+          <title>
+            {require && this.props.match.params.tag
+              ? 'Blog By Tag'
+              : require && this.props.match.params.author
+              ? 'Blog By Author'
+              : 'Blog List'}
+          </title>
+        </Helmet>
+        <div className="banner relative">
+          <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
+          <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
+            Blogs
+          </h1>
+        </div>
+        <div className="container mx-auto flex">
+          <div className="w-3/4">
+            <RenderBlogs
+              loading={loading}
+              currentBlogs={
+                require && this.props.match.params.author
+                  ? currentBlogsByAuthor
+                  : require && this.props.match.params.tag
+                  ? currentBlogsByTag
+                  : currentBlogs
+              }
+            />
+            <div className="flex">
+              <div className="w-1/3">
+                <label
+                  className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
+                  htmlFor="select-blogs-per-page"
+                >
+                  Blogs Per Page
+                </label>
+                <select
+                  // className="Waftinputbox"
+                  native="true"
+                  value={size || ''}
+                  onChange={this.handleBlogsPerPage('size')}
+                  style={{ width: 50, minWidth: 'auto' }}
+                >
+                  {BlogsPerPage.map(each => (
+                    <option key={each} value={each}>
+                      {each}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="w-2/3 flex justify-end">
+                <button
+                  className="font-bold"
+                  disabled={page === 1}
+                  onClick={this.handleBackPage}
+                >
+                  {'<<'}
+                </button>
+                {renderPageNumbers}
+                <button
+                  className="font-bold"
+                  disabled={page === maxPage}
+                  onClick={this.handleNextPage}
+                >
+                  {'>>'}
+                </button>
               </div>
             </div>
           </div>
-        </React.Fragment>
-      );
+          <div className="w-1/4 pt-10">
+            <h3 className="uppercase">Categories</h3>
+            <ul className="list-none pl-0">
+              <CategoryListing />
+            </ul>
+            <br />
+            <Archives />
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 }
 
@@ -162,6 +209,7 @@ const mapStateToProps = createStructuredSelector({
   blogByAuthor: makeSelectBlogByAuthor(),
   blogByTag: makeSelectBlogByTag(),
   loading: makeSelectLoading(),
+  query: makeSelectQuery(),
 });
 
 const withConnect = connect(

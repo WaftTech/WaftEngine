@@ -14,3 +14,9 @@ export const makeSelectBlogs = () =>
     selectDomain,
     state => state.blogs,
   );
+
+export const makeSelectLoading = () =>
+  createSelector(
+    selectDomain,
+    state => state.catLoading,
+  );

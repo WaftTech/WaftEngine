@@ -1,36 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectArchivesIsLoading, makeSelectArchives } from '../selectors';
+import moment from 'moment';
+
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import reducer from '../reducer';
+import saga from '../saga';
+import { loadArchivesRequest } from '../actions';
+import { makeSelectArchives, makeSelectArchiveLoading } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 
 function Archives(props) {
-  if (props.loading) {
-    return <div>Loading...</div>;
-  }
-  return (
-    <div className="pt-10">
+  const { loading, archives, loadArchive } = props;
+  useEffect(() => {
+    loadArchive();
+  }, []);
+  return loading ? (
+    <div>Loading archives hai...</div>
+  ) : (
+    <>
       <h3 className="uppercase">Archives</h3>
-      {props.archives.map(each =>
-        each != null ? (
-          <div
-            key={`recents-${each}`}
-            className="border-b border-dotted border-grey"
-          >
-            <Link className="block py-3 no-underline text-grey-dark hover:text-black" to={`/blog/date/${moment(each).format('YYYY-MM')}`}>
-              <time>
-                {moment(each).format('MMMM YYYY')}
-              </time>
-            </Link>
-          </div>
-        ) : (
-            ''
-          ),
-      )}
-    </div>
+      <div className="pt-4">
+        {archives &&
+          archives.map(each =>
+            each != null ? (
+              <div
+                key={`recents-${each}`}
+                className="border-b border-dotted border-grey"
+              >
+                <Link
+                  className="block py-3 no-underline text-grey-dark hover:text-black"
+                  to={`/blog/date/${moment(each).format('YYYY-MM')}`}
+                >
+                  <time>{moment(each).format('MMMM YYYY')}</time>
+                </Link>
+              </div>
+            ) : (
+              ''
+            ),
+          )}
+      </div>
+    </>
   );
 }
 
@@ -39,9 +53,25 @@ Archives.propTypes = {
   archives: PropTypes.array.isRequired,
 };
 
+const withReducer = injectReducer({ key: 'blogPage', reducer });
+const withSaga = injectSaga({ key: 'blogPage', saga });
+
 const mapStateToProps = createStructuredSelector({
-  loading: makeSelectArchivesIsLoading(),
   archives: makeSelectArchives(),
+  loading: makeSelectArchiveLoading(),
 });
 
-export default connect(mapStateToProps)(Archives);
+const mapDispatchToProps = dispatch => ({
+  loadArchive: payload => dispatch(loadArchivesRequest(payload)),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(Archives);

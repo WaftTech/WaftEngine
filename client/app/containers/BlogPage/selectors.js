@@ -56,8 +56,8 @@ export const makeSelectComment = () =>
     state => state.comments,
   );
 
-export const makeSelectArchivesIsLoading = () =>
+export const makeSelectArchiveLoading = () =>
   createSelector(
     selectDomain,
-    state => state.archivesIsLoading,
+    state => state.archiveLoading,
   );

@@ -4,11 +4,17 @@ import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
 
-function* loadBlogList({ action }) {
+function* loadBlogList(action) {
+  let query = '';
+  if (action.payload) {
+    Object.keys(action.payload).map(each => {
+      query = `${query}&${each}=${action.payload[each]}`;
+    });
+  }
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      'blog',
+      `blog?${query}`,
       actions.loadBlogListSuccess,
       actions.loadBlogListFailure,
       token,

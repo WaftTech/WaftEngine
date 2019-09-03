@@ -77,18 +77,6 @@ function* loadOne(action) {
   );
 }
 
-function* loadArchives(action) {
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.get(
-      'blog/blogbytime',
-      actions.loadArchivesSuccess,
-      actions.loadArchivesFailure,
-      token,
-    ),
-  );
-}
-
 function* postComment(action) {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
@@ -101,6 +89,18 @@ function* postComment(action) {
       onSuccess,
       actions.postCommentFailure,
       data,
+      token,
+    ),
+  );
+}
+
+function* loadArchives(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/blogbytime`,
+      actions.loadArchivesSuccess,
+      actions.loadArchivesFailure,
       token,
     ),
   );

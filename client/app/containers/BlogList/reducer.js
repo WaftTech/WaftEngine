@@ -24,6 +24,7 @@ export const initialState = {
   },
   blogDate: [],
   dateLoading: false,
+  query: { size: 10, page: 1 },
 };
 
 const reducer = (state = initialState, action) =>
@@ -42,6 +43,10 @@ const reducer = (state = initialState, action) =>
         draft.blogDate = action.payload.data;
         break;
 
+      case types.LOAD_BLOG_DATE_FAILURE:
+        draft.dateLoading = false;
+        break;
+
       case types.LOAD_BLOG_LIST_SUCCESS:
         draft.blogList = action.payload;
         draft.loading = false;
@@ -55,8 +60,13 @@ const reducer = (state = initialState, action) =>
         draft.blogList[action.payload.key] = action.payload.value;
         break;
 
+      case types.SET_QUERY_VALUE:
+        draft.query[action.payload.key] = action.payload.value;
+        break;
+
       case types.SET_SIZE_VALUE:
         draft.blogList.size = action.payload;
+        draft.blogList.page = 1;
         break;
       case types.LOAD_BLOG_BY_AUTHOR_SUCCESS:
         draft.blogByAuthor = action.payload;
