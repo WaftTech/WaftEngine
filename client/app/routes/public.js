@@ -50,41 +50,11 @@ const publicRoutes = [
     path: '/blog',
     component: BlogPages,
   },
-  // {
-  //   exact: false,
-  //   path: '/blog-category',
-  //   component: CategoryListingPage,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/blog-category/:slug_url',
-  //   component: CategoryDetailPage,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/blog/tag/:tag',
-  //   component: BlogListPage,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/blog/author/:author',
-  //   component: BlogListPage,
-  // },
-  // {
-  //   exact: true,
-  //   path: '/blog/date/:date',
-  //   component: BlogListDatePage,
-  // },
   {
     exact: true,
     path: '/subscribe',
     component: SubscribePage,
   },
-  // {
-  //   exact: true,
-  //   path: '/blog/:slug_url',
-  //   component: BlogDetailPage,
-  // },
   {
     exact: true,
     path: '/contact-us',

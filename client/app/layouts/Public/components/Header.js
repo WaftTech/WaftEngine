@@ -46,8 +46,8 @@ const Header = props => {
 
   return (
     <header className="WaftHeader border-b lg:border-b">
-      <div className="container mx-auto pt-2 flex justify-between flex-wrap relative lg:pb-2">
-        <div className="w-full logo mt-2 md:w-1/2 lg:w-auto">
+      <div className="container mx-auto flex justify-between flex-wrap relative">
+        <div className="w-full logo mt-2 py-2 md:w-1/2 lg:w-auto">
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
           </Link>
@@ -78,7 +78,7 @@ const Header = props => {
               {HeaderMenu.map(each => (
                 <NavLink
                   key={each.key}
-                  className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
+                  className="text-white text-center block no-underline p-5 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
                   to={each.link}
                   onClick={handleToggle}
                 >

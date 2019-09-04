@@ -121,14 +121,13 @@ export class BlogListPage extends React.Component {
               : 'Blog List'}
           </title>
         </Helmet>
-        <div className="banner relative">
-          <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
-          <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
-            Blogs
+        <div className="bg-star h-48 relative text-center py-12">
+          <h1 className="mb-4 text-grey-darkest">
+            Blog
           </h1>
         </div>
-        <div className="container mx-auto flex">
-          <div className="w-3/4">
+        <div className="container mx-auto block md:block p-4">
+          <div className="w-full md:w-3/4">
             <RenderBlogs
               loading={loading}
               currentBlogs={
@@ -140,7 +139,7 @@ export class BlogListPage extends React.Component {
               }
             />
             <div className="flex">
-              <div className="w-1/3">
+              <div className="w-full md:w-1/3">
                 <label
                   className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
                   htmlFor="select-blogs-per-page"

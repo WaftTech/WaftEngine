@@ -37,71 +37,66 @@ const SignupUserPage = ({
 
   return (
     <div className="container mx-auto mb-10">
-      <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">
-        Registration
-      </h1>
-      <div className="w-full md:w-1/2 px-5 md:px-16">
-        <div className="w-full">
-          <h1 className="font-light">SIGN UP</h1>
-          <form className="mt-4" onSubmit={handleSubmit}>
-            <NameInput />
-            <EmailInput />
-            <PasswordInput />
-            <button
-              className="text-white py-2 px-4 rounded mt-4 w-full btn-waft"
-              type="submit"
-            >
-              SIGN UP
+      <div className="mx-auto max-w-sm p-5 md:p-16">
+        <h1 className="font-light">SIGN UP</h1>
+        <form className="mt-4" onSubmit={handleSubmit}>
+          <NameInput />
+          <EmailInput />
+          <PasswordInput />
+          <button
+            className="text-white py-2 px-4 rounded mt-4 w-full btn-waft"
+            type="submit"
+          >
+            SIGN UP
             </button>
-            <Link
-              className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
-              to="/login-user"
-            >
-              Already Have Account? Login
+          <Link
+            className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+            to="/login-user"
+          >
+            Already Have Account? Login
             </Link>
 
-            <p className="text-muted text-center mt-10 mb-4 text-xs">
-              OR REGISTER WITH
+          <p className="text-muted text-center mt-10 mb-4 text-xs">
+            OR REGISTER WITH
             </p>
 
-            <div className="mt-5 mb-5 flex space-around">
-              <FacebookLogin
-                appId={FB_APP_ID}
-                textButton="Facebook"
-                autoLoad={false}
-                fields={FB_APP_FIELDS}
-                callback={signupWithFbRequest}
-                containerStyle={{
-                  textAlign: 'center',
-                  backgroundColor: '#3b5998',
-                  borderColor: '#3b5998',
-                  flex: 1,
-                  color: '#fff',
-                  cursor: 'pointer',
-                }}
-                buttonStyle={{
-                  flex: 1,
-                  textTransform: 'none',
-                  padding: '12px',
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '13px',
-                }}
-                icon="fa-facebook"
-              />
-              <GoogleLogin
-                className={`${classes.googbtn} flex jusitify-center flex-1`}
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Google"
-                onSuccess={signupWithGoogleRequest}
-                onFailure={err => {
-                  console.log('something went wrong!', err);
-                }}
-                cookiePolicy="single_host_origin"
-              />
-            </div>
-          </form>
-        </div>
+          <div className="mt-5 mb-5 flex space-around">
+            <FacebookLogin
+              appId={FB_APP_ID}
+              textButton="Facebook"
+              autoLoad={false}
+              fields={FB_APP_FIELDS}
+              callback={signupWithFbRequest}
+              containerStyle={{
+                textAlign: 'center',
+                backgroundColor: '#3b5998',
+                borderColor: '#3b5998',
+                flex: 1,
+                color: '#fff',
+                cursor: 'pointer',
+              }}
+              buttonStyle={{
+                flex: 1,
+                textTransform: 'none',
+                padding: '12px',
+                background: 'none',
+                border: 'none',
+                fontSize: '13px',
+              }}
+              icon="fa-facebook"
+            />
+            <GoogleLogin
+              className={`${classes.googbtn} flex jusitify-center flex-1`}
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Google"
+              onSuccess={signupWithGoogleRequest}
+              onFailure={err => {
+                console.log('something went wrong!', err);
+              }}
+              cookiePolicy="single_host_origin"
+            />
+          </div>
+        </form>
       </div>
     </div>
   );

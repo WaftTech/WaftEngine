@@ -194,7 +194,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
         >
           <Link to="/">
             <img
-              className="mt-3 mb-6 ml-4 mx-auto flex grayscale1"
+              className="mt-3 mb-6 ml-4 mx-auto flex grayscale"
               src={Logo}
               alt="waftengine"
             />
@@ -202,10 +202,8 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           <MainListItems />
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
-          <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
-            <div className="flex">
-              <Breadcrumb />
-            </div>
+          <div className="flex justify-between flex1 py-3 px-3 bg-white rounded">
+            <Breadcrumb />
 
             <button className="flex" onClick={handleMenu}>
               <div className="m-auto mr-1">{users.name}</div>
