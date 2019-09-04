@@ -28,23 +28,18 @@ export class UserProfilePage extends React.Component {
           <title>Profile Page</title>
         </Helmet>
 
-        <div className="container mx-auto mb-10">
-          <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">
-            Personal Information
+        <div className="bg-star h-48 relative text-center py-12">
+          <h1 className="mb-4 text-grey-darkest">
+            Profile
           </h1>
+        </div>
 
+        <div className="container mx-auto mb-10">
           <div className="flex flex-wrap justify-between">
-            <div className="w-full md:w-1/2 px-5 md:px-16">
-              <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
-                <b>Name : {user.name}</b>
-              </div>
-              <div className="w-full pb-4 text-base md:text-lg xl:text-xl">
-                <b> E-mail : {user.email}</b>
-              </div>
-              <UserProfileSettingsPage />
-            </div>
 
-            <div className="w-full md:w-1/2 px-5 md:px-16 mt-10 md:mt-0">
+
+            <div className="w-full md:w-1/2 px-5 md:px-16">
+
               <UserPersonalInformationPage />
             </div>
           </div>

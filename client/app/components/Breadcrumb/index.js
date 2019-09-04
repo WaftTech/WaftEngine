@@ -30,7 +30,7 @@ const Breadcrumb = ({ location: { pathname }, routeList }) => {
   }
 
   return (
-    <nav className="bg-grey-light p-2 rounded font-sans w-full my-1">
+    <nav className="bg-grey-lightest p-2 rounded font-sans w-full my-1">
       <ol className="list-reset flex text-grey-dark">
         {breadcrumbs.map((link, index) => {
           if (link.path === '/admin')
@@ -39,7 +39,7 @@ const Breadcrumb = ({ location: { pathname }, routeList }) => {
             return null;
           return (
             <Crumb key={link.path} isLast={index === breadcrumbs.length - 1}>
-              <Link className="text-blue font-bold" to={link.path}>
+              <Link className="text-blue no-underline hover:underline" to={link.path}>
                 {link.label}
               </Link>
             </Crumb>

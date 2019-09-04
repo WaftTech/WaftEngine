@@ -28,9 +28,10 @@ const CategoryElement = props => {
 
   return (
     <>
-      <Skeleton />
+      {/* <Skeleton /> */}
       <h2 className="pt-5 pb-5">
-        {latestBlogs.category && latestBlogs.category.title}
+        Recent News
+        {/* {latestBlogs.category && latestBlogs.category.title} */}
       </h2>
       {latestBlogs.blogs &&
         latestBlogs.blogs.map((each, index) => (

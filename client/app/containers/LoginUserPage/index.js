@@ -12,7 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 
-import { Link }  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -35,23 +35,7 @@ const LoginUserPage = ({
   };
   return (
     <div className="container mx-auto mb-10">
-   
-<h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">Welcome, Please Sign In</h1>
-<div className="flex flex-wrap justify-between">
-  <div className="w-full md:w-1/2 px-5 md:px-16">
-    <h1 className="font-light">New User</h1>
-    <div className="block mt-4 bg-grey-lighter px-3 py-5 rounded" style={{height:'153px'}}>
-      <p>By creating an account on our waftengine, you will be able to use our different modules presented hereby.</p>
-    </div>
-    <Link
-          className="inline-block text-white py-2 px-4 rounded mt-8 w-full btn-waft text-center no-underline"
-          to="/signup-user"
-        >
-         REGISTER
-        </Link>
-  </div>
-  <div className="w-full md:w-1/2 px-5 md:px-16 mt-10 md:mt-0">
-   
+      <div className="mx-auto max-w-sm p-5 md:p-16">
         <h1 className="font-light">LOGIN</h1>        <form className="mt-4" onSubmit={handleSubmit}>
           <UsernameInput />
           <PasswordInput />
@@ -63,12 +47,12 @@ const LoginUserPage = ({
           </button>
         </form>
 
-        {/* <Link
+        <Link
           className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
           to="/signup-user"
         >
           Don't Have Account? Register
-        </Link> */}
+        </Link>
 
         <p className="text-muted text-center mt-4 mb-4 text-xs">
           OR LOGIN WITH
@@ -118,17 +102,14 @@ const LoginUserPage = ({
               background: 'none',
               border: 'none',
               fontSize: '13px',
-              boxShadow : 'none',
+              boxShadow: 'none',
             }}
-            
-           
+
+
           />
         </div>
-        </div>
-        </div>
-        </div>
-    
-     
+      </div>
+    </div>
   );
 };
 
@@ -150,10 +131,10 @@ const withReducer = injectReducer({ key: 'loginUserPage', reducer });
 const withSaga = injectSaga({ key: 'loginUserPage', saga });
 
 const styles = {
-  googbtn:{
-    boxShadow : 'none!important',
-    border:'1px solid gainsboro!important',
-    borderLeft:'none!important',
+  googbtn: {
+    boxShadow: 'none!important',
+    border: '1px solid gainsboro!important',
+    borderLeft: 'none!important',
   }
 };
 

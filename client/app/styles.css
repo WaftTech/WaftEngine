@@ -50,6 +50,7 @@ button:focus {
   padding: 6px 12px;
   background: #f4f4f4;
   border-radius: 4px;
+  font-family:sans-serif;
   -webkit-transition: border-color ease-in-out 0.15s,
     -webkit-box-shadow ease-in-out 0.15s;
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -216,8 +217,7 @@ div#component-error-text {
 /* footer */
 
 .newsletter_wrapper {
-  background: #ff3b30 url('./assets/img/newsletterpattern.png') no-repeat center
-    center;
+  background: #777;
 }
 
 @media screen and (max-width: 767px) {
@@ -406,3 +406,20 @@ div#component-error-text {
 .leading-normal	{line-height: 1.5;}
 .leading-relaxed	{line-height: 1.625;}
 .leading-loose	{line-height: 2;}
+
+
+.bg-star { background:url(./assets/img/ptn.jpg) 0 32px; background-size:75px 75px; }
+
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 2s linear forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.nav-link.active { box-shadow:0 1px 0 #d82929;}

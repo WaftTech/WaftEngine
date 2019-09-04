@@ -17,40 +17,40 @@ const RenderBlogs = props => {
       <BlogListSkeleton />
     </>
   ) : (
-    <>
-      {currentBlogs.map(each => {
-        const {
-          image,
-          title,
-          author,
-          slug_url,
-          description,
-          added_at,
-          category,
-          tags,
-        } = each;
+      <>
+        {currentBlogs.map(each => {
+          const {
+            image,
+            title,
+            author,
+            slug_url,
+            description,
+            added_at,
+            category,
+            tags,
+          } = each;
 
-        return (
-          <div className="border-b border-dotted py-5 flex" key={slug_url}>
-            <div className="w-1/4">
-              <Link
-                className="text-black no-underline capitalize mb-2 bold block mt-4"
-                to={`/blog/${slug_url}`}
-              >
-                <h2>{title}</h2>
-              </Link>
-              <span className="mt-2">
-                by{' '}
+          return (
+            <div className="border-b border-dotted py-5 block md:flex" key={slug_url}>
+              <div className="w-full md:w-1/4">
                 <Link
-                  to={`/blog/author/${author._id}`}
-                  className="text-red font-bold no-underline"
+                  className="text-black no-underline capitalize mb-2 bold block mt-4"
+                  to={`/blog/${slug_url}`}
                 >
-                  {author.name}
+                  <h2>{title}</h2>
                 </Link>
-              </span>
-            </div>
+                <span className="mt-2">
+                  by{' '}
+                  <Link
+                    to={`/blog/author/${author._id}`}
+                    className="text-red font-bold no-underline"
+                  >
+                    {author.name}
+                  </Link>
+                </span>
+              </div>
 
-            {/* <div className="text-grey-darker text-base no-underline">
+              {/* <div className="text-grey-darker text-base no-underline">
                       <div className="mr-2">
                         <span className="text-grey-dark">Category: </span>
                         {category && category.length > 0 && category.map((each, index) => (
@@ -64,27 +64,27 @@ const RenderBlogs = props => {
                         ))}
                       </div>
                     </div> */}
-            <div className="w-1/2 p-4">
-              <span className="text-grey-dark mr-2">
-                {moment(added_at).format('MMM Do YY')}
-              </span>
-              <Link
-                className="text-grey-dark text-blue no-underline"
-                to={`/blog/${each.slug_url}`}
-              >
-                <span> {tags.join(', ') || ''} </span>
-              </Link>{' '}
-              <Link
-                className="text-grey-darker text-base no-underline"
-                to={`/blog/${slug_url}`}
-              >
-                <div
-                  className="leading-normal text-base text-left"
-                  style={{ height: '95px', overflow: 'hidden' }}
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </Link>
-              {/* <div className="flex justify-end readmore mt-2">
+              <div className="w-full md:w-1/2 p-4">
+                <span className="text-grey-dark mr-2">
+                  {moment(added_at).format('MMM Do YY')}
+                </span>
+                <Link
+                  className="text-grey-dark text-blue no-underline"
+                  to={`/blog/${each.slug_url}`}
+                >
+                  <span> {tags.join(', ') || ''} </span>
+                </Link>{' '}
+                <Link
+                  className="text-grey-darker text-base no-underline"
+                  to={`/blog/${slug_url}`}
+                >
+                  <div
+                    className="leading-normal text-base text-left"
+                    style={{ height: '95px', overflow: 'hidden' }}
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                </Link>
+                {/* <div className="flex justify-end readmore mt-2">
                         {' '}
                         <Link
                           className="no-underline hover:text-waftprimary"
@@ -93,22 +93,22 @@ const RenderBlogs = props => {
                           Continue Reading <span className="rdanim">>>></span>
                         </Link>
                       </div> */}
-            </div>
+              </div>
 
-            <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
-              <Link to={`/blog/${slug_url}`}>
-                <img
-                  src={image && `${IMAGE_BASE}${image.path}`}
-                  className="rounded "
-                  alt={`${title}`}
-                />
-              </Link>
+              <div className="w-full md:w-1/4 h-48 object-cover overflow-hidden p-8">
+                <Link to={`/blog/${slug_url}`}>
+                  <img
+                    src={image && `${IMAGE_BASE}${image.path}`}
+                    className="rounded "
+                    alt={`${title}`}
+                  />
+                </Link>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </>
-  );
+          );
+        })}
+      </>
+    );
 };
 
 RenderBlogs.propTypes = {
