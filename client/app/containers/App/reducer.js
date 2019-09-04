@@ -23,6 +23,7 @@ export const initialState = {
   notifications: [],
   access: {},
   latestBlogs: {},
+  blogLoading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -86,6 +87,13 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
       case types.LOAD_LATEST_BLOGS_SUCCESS:
         draft.latestBlogs = action.payload.data;
+        draft.blogLoading = false;
+        break;
+      case types.LOAD_LATEST_BLOGS_REQUEST:
+        draft.blogLoading = true;
+        break;
+      case types.LOAD_LATEST_BLOGS_FAILURE:
+        draft.blogLoading = false;
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];

@@ -14,7 +14,6 @@ import { makeSelectBlogDate, makeSelectDateLoading } from './selectors';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
-import Loading from '../../components/Loading';
 import CategoryListing from '../../containers/CategoryListingPage/Loadable';
 import { IMAGE_BASE } from '../App/constants';
 import Archives from '../BlogPage/components/Archives';
@@ -27,6 +26,12 @@ export class BlogDatePage extends React.Component {
 
   componentDidMount() {
     this.props.loadBlogDateRequest(this.props.match.params.date);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.date !== this.props.match.params.date) {
+      this.props.loadBlogDateRequest(nextProps.match.params.date);
+    }
   }
 
   render() {

@@ -138,7 +138,7 @@ export class BlogPage extends React.Component {
                       <LinkBoth
                         className="text-black hover:text-waftprimary leading-normal text-sm no-underline capitalize"
                         key={index}
-                        to={`/blog-category/${each._id}`}
+                        to={`/blog-category/${each.slug_url}`}
                       >
                         {`${index === 0 ? '' : ', '}${each.title}`}
                       </LinkBoth>

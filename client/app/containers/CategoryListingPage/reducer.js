@@ -20,9 +20,6 @@ const reducer = (state = initialState, action) =>
       case types.LOAD_CATEGORY_FAILURE:
         draft.catLoading = false;
         break;
-      case types.LOAD_BLOGS_SUCCESS:
-        draft.blogs = action.payload.data;
-        break;
     }
   });
 

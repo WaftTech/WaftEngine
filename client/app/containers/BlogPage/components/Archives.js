@@ -16,9 +16,11 @@ import { IMAGE_BASE } from '../../App/constants';
 
 function Archives(props) {
   const { loading, archives, loadArchive } = props;
+
   useEffect(() => {
     loadArchive();
   }, []);
+
   return loading ? (
     <div>Loading archives hai...</div>
   ) : (
