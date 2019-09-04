@@ -4,14 +4,15 @@ import LoginUserPage from '../containers/LoginUserPage/Loadable';
 import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadable';
 import SignupUserPage from '../containers/SignupUserPage/Loadable';
 import FaqPage from '../containers/FAQPage/Loadable';
-import BlogListPage from '../containers/BlogList/Loadable';
-import CategoryListingPage from '../containers/CategoryListingPage/Loadable';
-import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
-import BlogDetailPage from '../containers/BlogPage/Loadable';
+// import BlogListPage from '../containers/BlogList/Loadable';
+// import CategoryListingPage from '../containers/CategoryListingPage/Loadable';
+// import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
+// import BlogDetailPage from '../containers/Blog/Pages/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
 import SubscribePage from '../containers/SubscriberPage/Loadable';
 import AboutUsPage from '../containers/AboutUsPage/Loadable';
-import BlogListDatePage from '../containers/BlogList/BlogDate';
+// import BlogListDatePage from '../containers/BlogList/BlogDate';
+import BlogPages from '../containers/Blog';
 
 const publicRoutes = [
   {
@@ -45,45 +46,45 @@ const publicRoutes = [
     component: FaqPage,
   },
   {
-    exact: true,
+    exact: false,
     path: '/blog',
-    component: BlogListPage,
+    component: BlogPages,
   },
-  {
-    exact: true,
-    path: '/blog-category',
-    component: CategoryListingPage,
-  },
-  {
-    exact: true,
-    path: '/blog-category/:slug_url',
-    component: CategoryDetailPage,
-  },
-  {
-    exact: true,
-    path: '/blog/tag/:tag',
-    component: BlogListPage,
-  },
-  {
-    exact: true,
-    path: '/blog/author/:author',
-    component: BlogListPage,
-  },
-  {
-    exact: true,
-    path: '/blog/date/:date',
-    component: BlogListDatePage,
-  },
+  // {
+  //   exact: false,
+  //   path: '/blog-category',
+  //   component: CategoryListingPage,
+  // },
+  // {
+  //   exact: true,
+  //   path: '/blog-category/:slug_url',
+  //   component: CategoryDetailPage,
+  // },
+  // {
+  //   exact: true,
+  //   path: '/blog/tag/:tag',
+  //   component: BlogListPage,
+  // },
+  // {
+  //   exact: true,
+  //   path: '/blog/author/:author',
+  //   component: BlogListPage,
+  // },
+  // {
+  //   exact: true,
+  //   path: '/blog/date/:date',
+  //   component: BlogListDatePage,
+  // },
   {
     exact: true,
     path: '/subscribe',
     component: SubscribePage,
   },
-  {
-    exact: true,
-    path: '/blog/:slug_url',
-    component: BlogDetailPage,
-  },
+  // {
+  //   exact: true,
+  //   path: '/blog/:slug_url',
+  //   component: BlogDetailPage,
+  // },
   {
     exact: true,
     path: '/contact-us',

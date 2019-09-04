@@ -381,7 +381,7 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
       {
         is_published: 0,
       },
-  )
+    )
     .populate([{ path: 'author', select: '_id name avatar image' }, { path: 'category', select: '_id title slug_url' }]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
@@ -418,8 +418,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
       }
     }
     const slug = req.params.slug_url;
-    const cat = await blogCatSch.find({ slug_url: slug, is_deleted: false });
-    const cats = cat.map(each => each._id);
+    const cat = await blogCatSch.findOne({ slug_url: slug, is_deleted: false }, { _id: 1, title: 1 });
     populate = [
       {
         path: 'category',
@@ -433,7 +432,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
     searchq = {
       is_published: true,
       is_deleted: false,
-      category: { $in: cats },
+      category: cat._id,
       ...searchq,
     };
     if (req.query.find_title) {
@@ -455,7 +454,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
       };
     }
     let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, cat.title, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
   }
