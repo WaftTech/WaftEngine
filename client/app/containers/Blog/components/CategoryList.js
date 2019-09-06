@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { makeSelectCategory, makeSelectCategoryLoading } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-
-import CategoryListingSkeleton from '../Skeleton/CategoryListing';
+import ArchiveSkeleton from '../Skeleton/Archive';
 
 /* eslint-disable react/prefer-stateless-function */
 class CategoryListingPage extends React.Component {
@@ -18,25 +17,25 @@ class CategoryListingPage extends React.Component {
   render() {
     const { category, loading } = this.props;
     return loading ? (
-      <CategoryListingSkeleton />
+      <ArchiveSkeleton />
     ) : (
-      <>
-        <h3 className="uppercase">Categories</h3>
-        {category ? (
-          <ul className="list-none pl-0">
-            {category.map(each => (
-              <li key={each._id} className="info ">
-                <Link to={`/blog/category/${each.slug_url}`}>
-                  <h3> {`${each.title}`}</h3>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div>No Categories</div>
-        )}
-      </>
-    );
+        <>
+          <h3 className="font-medium text-xl uppercase">Categories</h3>
+          {category ? (
+            <div className="pt-4">
+              {category.map(each => (
+                <div key={each._id} className="border-b border-dotted border-gray-600">
+                  <Link className="block py-3 no-underline text-gray-700 hover:text-black" to={`/blog/category/${each.slug_url}`}>
+                    {each.title}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+              <div>No Categories</div>
+            )}
+        </>
+      );
   }
 }
 

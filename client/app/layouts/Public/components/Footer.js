@@ -26,17 +26,17 @@ class Footer extends React.Component {
     const { email } = this.state;
 
     return (
-      <footer className="footer bg-grey-darkest">
-        <div className="w-full bg-grey-darkest border-b border-grey-darker p-10 text-center">
-          <div className="widget-ft style1 widget-lastest">
-            <h1 className="text-grey mb-2 uppercase font-light">Get updates</h1>
-            <p className="mb-5 text-grey-dark">
-              Never miss any updates from WaftEngine. Subcribe newsletter now.
+      <footer className="footer bg-gray-900">
+        <div className="w-full bg-gray-900 border-b border-gray-800 p-2 text-center">
+          <div className="py-10">
+            <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">Get updates</h1>
+            <p className="mb-5 text-gray-700">
+              Never miss any updates from WaftEngine.
             </p>
             <form onSubmit={this.handleSave}>
               <input
                 type="text"
-                className="appearance-none outline-none shadow text-white bg-grey-darkest font-sans border border-grey rounded rounded-r-none py-2 px-3 text-grey-darker leading-tight md:1/2 lg:w-1/4"
+                className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded rounded-r-none py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
                 placeholder="Enter Your Email"
                 value={email}
                 onChange={this.handleChange('email')}
@@ -44,7 +44,7 @@ class Footer extends React.Component {
 
               <button
                 type="submit" style={{ paddingBottom: '0.45rem', marginLeft: '-1px' }}
-                className="text-white py-2 px-4 rounded rounded-l-none border border-grey font-bold shadow font-sans leading-normal text-sm"
+                className="text-white py-2 px-4 rounded rounded-l-none border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
               >
                 Subscribe
               </button>
@@ -60,7 +60,7 @@ class Footer extends React.Component {
             </div>
             <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">
               <a
-                className="block no-underline  text-grey hover:text-white pr-2 lg:m-auto font-sans"
+                className="block no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
                 href="https://www.waftengine.org/about-us"
                 target="_blank"
                 rel="noopener"
@@ -68,7 +68,7 @@ class Footer extends React.Component {
                 About Us
               </a>
               <a
-                className="block no-underline  text-grey hover:text-white pr-2 lg:m-auto font-sans"
+                className="block no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
                 href="https://www.waftengine.org/features"
                 target="_blank"
                 rel="noopener"
@@ -76,7 +76,7 @@ class Footer extends React.Component {
                 Features
               </a>
               <a
-                className="display-block  no-underline  text-grey hover:text-white pr-2 lg:m-auto font-sans"
+                className="display-block  no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
                 href="https://www.waftengine.org/contact-us"
                 target="_blank"
                 rel="noopener"

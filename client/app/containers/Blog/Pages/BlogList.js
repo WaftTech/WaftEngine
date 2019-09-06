@@ -66,9 +66,9 @@ export class BlogListPage extends React.Component {
           <title>Blog List</title>
         </Helmet>
         <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-grey-darkest">Blog</h1>
+          <h1 className="mb-4 text-gray-700 text-4xl font-bold">Blog</h1>
         </div>
-        <div className="container mx-auto block md:block p-4">
+        <div className="container mx-auto block md:flex p-4 mb-10">
           <div className="w-full md:w-3/4">
             <RenderBlogs
               loading={loading}
@@ -91,9 +91,8 @@ export class BlogListPage extends React.Component {
               handlePagination={this.handlePagination}
             />
           </div>
-          <div className="w-1/4 pt-10">
+          <div className="w-full md:w-1/4 pt-10 pl-10">
             <CategoryList />
-            <br />
             <Archives />
           </div>
         </div>

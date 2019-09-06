@@ -63,19 +63,19 @@ export class Dashboard extends React.PureComponent {
 
         {info.map(each => (
           <div key={each._id} className="p-4 bg-white rounded">
-            <h3 className="border-b border-grey-lighter pb-2">{each.title}</h3>
+            <h3 className="border-b border-gray-300 pb-2">{each.title}</h3>
             <div
-              className="mt-2 bg-grey-lighter flex flex-wrap justify-between p-4 rounded"
+              className="mt-2 bg-gray-200 flex flex-wrap justify-between p-4 rounded"
               dangerouslySetInnerHTML={{ __html: each.detail }}
             />
           </div>
         ))}
 
         <div className="bg-white rounded my-4 p-4 ">
-          <h3 className="border-b border-grey-lighter  pb-2">Latest Blogs</h3>
+          <h3 className="border-b border-gray-300  pb-2">Latest Blogs</h3>
           {blogs.map(each => (
             <LinkBoth
-              className="mt-2 bg-grey-lighter flex flex-wrap justify-between p-2 rounded"
+              className="mt-2 bg-gray-200 flex flex-wrap justify-between p-2 rounded"
               key={each._id}
               to={`https://www.waftengine.org/blog/${each.slug_url}`}
             >
@@ -90,7 +90,7 @@ export class Dashboard extends React.PureComponent {
           <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black">
             <LinkBoth
               to="/admin/blog-manage/add/"
-              className="text-grey-darker no-underline hover:text-black font-bold"
+              className="text-gray-800 no-underline hover:text-black font-bold"
             >
               <NoteAdd className={classes.dashicon} />
               Write Post
@@ -98,7 +98,7 @@ export class Dashboard extends React.PureComponent {
           </div>
           <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black">
             <LinkBoth
-              className="text-grey-darker no-underline hover:text-black font-bold"
+              className="text-gray-800 no-underline hover:text-black font-bold"
               to="https://www.waftengine.org/documentation"
               target="_blank"
             >
@@ -107,7 +107,7 @@ export class Dashboard extends React.PureComponent {
             </LinkBoth>
           </div>
           <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black">
-            <span className="text-grey-darker m-auto w-24 text-center font-bold">
+            <span className="text-gray-800 m-auto w-24 text-center font-bold">
               <AccountBox className={classes.dashicon} />
               Total users{' '}
             </span>
@@ -116,7 +116,7 @@ export class Dashboard extends React.PureComponent {
             </span>
           </div>
           <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
-            <span className="text-grey-darker m-auto w-24 text-center font-bold">
+            <span className="text-gray-800 m-auto w-24 text-center font-bold">
               <Error className={classes.dashicon} />
               Total errors
             </span>
@@ -129,7 +129,7 @@ export class Dashboard extends React.PureComponent {
         <div>
           <div className="flex justify-between mx-4 my-4">
             <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 border-b border-grey-lighter">By Roles </h3>
+              <h3 className="p-4 border-b border-gray-300">By Roles </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {users &&
                   users.data &&
@@ -137,7 +137,7 @@ export class Dashboard extends React.PureComponent {
                   users.data.role.map(each => (
                     <div
                       key={each._id}
-                      className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded"
+                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
                       <div className="flex justify-center text-center h-10">
                         <span className="m-auto w-24">{each.role_title}: </span>
@@ -155,13 +155,13 @@ export class Dashboard extends React.PureComponent {
             </div>
 
             <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 border-b border-grey-lighter">By Types </h3>
+              <h3 className="p-4 border-b border-gray-300">By Types </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {errors.data && errors.data.length ? (
                   errors.data.map(each => (
                     <div
                       key={each._id}
-                      className="w-1/2 p-2 bg-grey-lighter my-2 -ml-2 -mr-2 rounded"
+                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
                       <div className="flex justify-between text-center h-10">
                         <span className="m-auto w-24">{each._id}</span>
@@ -172,10 +172,10 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-between text-center">
-                    <h2 className="w-full m-auto h-full">No Errors</h2>
-                  </div>
-                )}
+                    <div className="flex justify-between text-center">
+                      <h2 className="w-full m-auto h-full">No Errors</h2>
+                    </div>
+                  )}
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ export class UserProfilePage extends React.Component {
         </Helmet>
 
         <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-grey-darkest">
+          <h1 className="mb-4 text-gray-700">
             Profile
           </h1>
         </div>

@@ -59,7 +59,7 @@ const RenderBlogs = props => {
 
               {/* <div className="text-grey-darker text-base no-underline">
                       <div className="mr-2">
-                        <span className="text-grey-dark">Category: </span>
+                        <span className="text-gray-700">Category: </span>
                         {category && category.length > 0 && category.map((each, index) => (
                           <Link
                             key={index}

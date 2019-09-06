@@ -20,7 +20,6 @@ import {
   makeSelecBlogLoading,
 } from '../../containers/App/selectors';
 import Skeleton from './skeleton';
-import './style.css';
 
 const CategoryElement = props => {
   const { cat_id, latestBlogs, loading } = props;
@@ -32,46 +31,47 @@ const CategoryElement = props => {
   return loading ? (
     <Skeleton />
   ) : (
-    <>
-      <h2 className="pt-5 pb-5">
-        Recent News
+      <>
+        <h2 className="pt-5 pb-5 text-2xl">
+          Recent News
         {/* {latestBlogs.category && latestBlogs.category.title} */}
-      </h2>
-      {latestBlogs.blogs &&
-        latestBlogs.blogs.map((each, index) => (
-          <div
-            key={each._id}
-            className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
-          >
-            <div className="flex mb-5">
-              <Link to={`/blog/${each.slug_url}`}>
-                <img
-                  src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
-                  style={{ maxWidth: 100 }}
-                  alt={`${each.title}`}
-                />
-              </Link>
-
-              <div className="pl-5">
-                <span className="text-grey-dark text-sm sans-serif">
-                  {moment(each.added_at).format('MMM DD, YYYY')}
-                </span>
-                <Link
-                  className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline"
-                  to={`/blog/${each.slug_url}`}
-                >
-                  {' '}
-                  {each.title}{' '}
+        </h2>
+        {latestBlogs.blogs &&
+          latestBlogs.blogs.map((each, index) => (
+            <div
+              key={each._id}
+              className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
+            >
+              <div className="md:flex mb-5">
+                <Link to={`/blog/${each.slug_url}`}>
+                  <img
+                    src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
+                    className="max-w-full md:w-24"
+                    // style={{ maxWidth: 100 }}
+                    alt={`${each.title}`}
+                  />
                 </Link>
-                <span className="text-grey-dark text-sm sans-serif">
-                  {each.author.name}
-                </span>
+
+                <div className="md:pl-5">
+                  <span className="text-gray-700 text-sm sans-serif">
+                    {moment(each.added_at).format('MMM DD, YYYY')}
+                  </span>
+                  <Link
+                    className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline"
+                    to={`/blog/${each.slug_url}`}
+                  >
+                    {' '}
+                    {each.title}{' '}
+                  </Link>
+                  <span className="text-gray-700 text-sm sans-serif">
+                    {each.author.name}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-    </>
-  );
+          ))}
+      </>
+    );
 };
 
 CategoryElement.propTypes = {

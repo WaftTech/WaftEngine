@@ -13,6 +13,7 @@ import saga from '../saga';
 import { loadArchivesRequest } from '../actions';
 import { makeSelectArchives, makeSelectArchiveLoading } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
+import ArchiveSkeleton from '../Skeleton/Archive';
 
 function Archives(props) {
   const { loading, archives, loadArchive } = props;
@@ -22,32 +23,34 @@ function Archives(props) {
   }, []);
 
   return loading ? (
-    <div>Loading archives hai...</div>
+    <ArchiveSkeleton />
   ) : (
-    <>
-      <h3 className="uppercase">Archives</h3>
-      <div className="pt-4">
-        {archives &&
-          archives.map(each =>
-            each != null ? (
-              <div
-                key={`recents-${each}`}
-                className="border-b border-dotted border-grey"
-              >
-                <Link
-                  className="block py-3 no-underline text-grey-dark hover:text-black"
-                  to={`/blog/date/${moment(each).format('YYYY-MM')}`}
-                >
-                  <time>{moment(each).format('MMMM YYYY')}</time>
-                </Link>
-              </div>
-            ) : (
-              ''
-            ),
-          )}
-      </div>
-    </>
-  );
+      <>
+        <div className="mt-10">
+          <h3 className="font-medium text-xl uppercase">Archives</h3>
+          <div className="pt-4">
+            {archives &&
+              archives.map(each =>
+                each != null ? (
+                  <div
+                    key={`recents-${each}`}
+                    className="border-b border-dotted border-gray-600"
+                  >
+                    <Link
+                      className="block py-3 no-underline text-gray-700 hover:text-black"
+                      to={`/blog/date/${moment(each).format('YYYY-MM')}`}
+                    >
+                      <time>{moment(each).format('MMMM YYYY')}</time>
+                    </Link>
+                  </div>
+                ) : (
+                    ''
+                  ),
+              )}
+          </div>
+        </div>
+      </>
+    );
 }
 
 Archives.propTypes = {

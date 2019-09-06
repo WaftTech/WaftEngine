@@ -88,7 +88,7 @@ export class ChangePassword extends React.Component {
       <React.Fragment>
         <div className="w-full md:w-1/2 pb-4">
           <label
-            className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+            className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
             htmlFor="oldPassword"
           >
             Old Password
@@ -107,7 +107,7 @@ export class ChangePassword extends React.Component {
 
         <div className="w-full md:w-1/2 pb-4">
           <label
-            className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+            className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
             htmlFor="newPassword"
           >
             New Password
@@ -126,7 +126,7 @@ export class ChangePassword extends React.Component {
 
         <div className="w-full md:w-1/2 pb-4">
           <label
-            className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+            className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
             htmlFor="newPassword"
           >
             Confirm New Password
@@ -144,7 +144,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <button
-          className="text-white py-2 px-4 rounded mt-4 btn-waft"
+          className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
           onClick={this.handleSave}
         >
           Save
