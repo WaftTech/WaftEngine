@@ -9,10 +9,12 @@ import {
   makeSelectRelatedBlogs,
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
+import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
+
 
 function RelatedBlogs(props) {
   if (props.loading) {
-    return <div>Loading related blogs...</div>;
+    return <RecentBlogsSkeleton />;
   }
   if (props.blogs.length === 0) {
     return null;

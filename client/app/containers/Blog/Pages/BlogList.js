@@ -117,16 +117,16 @@ export class BlogListPage extends React.Component {
             {require && this.props.match.params.tag
               ? 'Blog By Tag'
               : require && this.props.match.params.author
-              ? 'Blog By Author'
-              : 'Blog List'}
+                ? 'Blog By Author'
+                : 'Blog List'}
           </title>
         </Helmet>
         <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-grey-darkest">
+          <h1 className="mb-4 text-gray-700 text-4xl font-bold">
             Blog
           </h1>
         </div>
-        <div className="container mx-auto block md:block p-4">
+        <div className="container mx-auto block md:flex p-4 mb-10">
           <div className="w-full md:w-3/4">
             <RenderBlogs
               loading={loading}
@@ -134,14 +134,14 @@ export class BlogListPage extends React.Component {
                 require && this.props.match.params.author
                   ? currentBlogsByAuthor
                   : require && this.props.match.params.tag
-                  ? currentBlogsByTag
-                  : currentBlogs
+                    ? currentBlogsByTag
+                    : currentBlogs
               }
             />
             <div className="flex">
               <div className="w-full md:w-1/3">
                 <label
-                  className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
+                  className="uppercase tracking-wide text-gray-800 text-xs mb-2 pr-4"
                   htmlFor="select-blogs-per-page"
                 >
                   Blogs Per Page
@@ -179,9 +179,8 @@ export class BlogListPage extends React.Component {
               </div>
             </div>
           </div>
-          <div className="w-1/4 pt-10">
+          <div className="w-full md:w-1/4 pt-10 pl-10">
             <CategoryList />
-            <br />
             <Archives />
           </div>
         </div>

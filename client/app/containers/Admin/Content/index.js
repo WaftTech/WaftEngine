@@ -184,11 +184,11 @@ export class ContentsListingPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>Content Listing</title>
+          <title>Static Content</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           {loading && loading == true ? <Loading /> : <></>}
-          <PageHeader>Content Manage</PageHeader>
+          <PageHeader>Static Content</PageHeader>
           <Fab
             color="primary"
             aria-label="Add"

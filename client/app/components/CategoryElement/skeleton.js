@@ -16,7 +16,7 @@ const Loading = () => (
             <div className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline">
               <Skeleton count={Math.floor(Math.random() * 2) + 1} width={500} />
             </div>
-            <span className="text-grey-dark text-sm sans-serif">
+            <span className="text-gray-700 text-sm sans-serif">
               <Skeleton height={10} width={150} />
             </span>
           </div>

@@ -85,7 +85,7 @@ export function Template({
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Template Key
             </label>
             <select
@@ -107,7 +107,7 @@ export function Template({
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Template Name
             </label>
             <input
@@ -121,7 +121,7 @@ export function Template({
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Informations
             </label>
             <input
@@ -135,7 +135,7 @@ export function Template({
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Variables
             </label>
             <input
@@ -150,7 +150,7 @@ export function Template({
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               From
             </label>
             <input
@@ -164,7 +164,7 @@ export function Template({
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Subject
             </label>
             <input
@@ -178,7 +178,7 @@ export function Template({
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Alternate Text
             </label>
             <input
@@ -194,7 +194,7 @@ export function Template({
           <div dangerouslySetInnerHTML={{ __html: one.body }} />
 
           <div className="w-full pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Body
             </label>
             <textarea
@@ -208,7 +208,7 @@ export function Template({
             />
           </div>
 
-          <button className="text-white py-2 px-4 rounded mt-4 btn-waft">
+          <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme">
             Save
           </button>
         </form>

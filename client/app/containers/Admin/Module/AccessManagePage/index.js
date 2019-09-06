@@ -54,7 +54,7 @@ class AccessManagePage extends React.PureComponent {
   handleBack = () => {
     this.props.push('/admin/module-manage');
   };
-  handleEditAccess= () => {
+  handleEditAccess = () => {
     this.props.clearOne();
     this.props.push(`/admin/module-manage/edit/${this.props.match.params.id}`);
   };
@@ -89,70 +89,70 @@ class AccessManagePage extends React.PureComponent {
     return loading && loading == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>Access Listing</title>
-        </Helmet>
+        <React.Fragment>
+          <Helmet>
+            <title>Access Listing</title>
+          </Helmet>
 
-        <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-        <IconButton className={`${classes.backbtn} cursor-pointer`}	 onClick={this.handleBack}>
-          <BackIcon />
-        </IconButton>
-          {`Edit Access for ${Module.module_name}`}
-        </PageHeader>
-        <Fab
-            color="primary"
-            aria-label="Edit Access"
-            className={classes.fab}
-            onClick={this.handleEditAccess}
-          >
-            <EditIcon />
-          </Fab>
-        </div>
-        <PageContent>
-          {Roles.map(role => {
-            const accessFiltered = Access.filter(
-              each => each.role_id === role._id,
-            );
-            let accesses = [];
-            if (accessFiltered.length > 0) {
-              accesses = [...accessFiltered[0].access_type];
-            }
-            return (
-            
-              <div className="mb-4 border-b" key={role._id}>
-                <h3 className="font-normal mb-4">{role.role_title}</h3>
-                <ToggleButtonGroup className={classes.accesslist}
-                  value={accesses}
-                
-                  onChange={(_, module_id) =>
-                    this.handleAccessUpdate(module_id, role._id, Module._id)
-                  }
-                >
-                  {Module.path.map(eachPath => (
-                
-                    <ToggleButton className={classes.accessbtn}
-                      key={`${eachPath._id}-${role._id}`}
-                      value={eachPath._id}
-                    >
-                      {eachPath.access_type}
-                    </ToggleButton>
-                  ))}
-                </ToggleButtonGroup>
-              </div>
-            );
-          })}
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton className={`${classes.backbtn} cursor-pointer`} onClick={this.handleBack}>
+                <BackIcon />
+              </IconButton>
+              {`Edit Access for ${Module.module_name}`}
+            </PageHeader>
+            <Fab
+              color="primary"
+              aria-label="Edit Access"
+              className={classes.fab}
+              onClick={this.handleEditAccess}
+            >
+              <EditIcon />
+            </Fab>
+          </div>
+          <PageContent>
+            {Roles.map(role => {
+              const accessFiltered = Access.filter(
+                each => each.role_id === role._id,
+              );
+              let accesses = [];
+              if (accessFiltered.length > 0) {
+                accesses = [...accessFiltered[0].access_type];
+              }
+              return (
 
-          <button
-            className="text-white py-2 px-4 rounded mt-4 btn-waft"
-            onClick={this.handleSave}
-          >
-           Save
+                <div className="mb-4 border-b" key={role._id}>
+                  <h3 className="font-normal mb-4">{role.role_title}</h3>
+                  <ToggleButtonGroup className={classes.accesslist}
+                    value={accesses}
+
+                    onChange={(_, module_id) =>
+                      this.handleAccessUpdate(module_id, role._id, Module._id)
+                    }
+                  >
+                    {Module.path.map(eachPath => (
+
+                      <ToggleButton className={classes.accessbtn}
+                        key={`${eachPath._id}-${role._id}`}
+                        value={eachPath._id}
+                      >
+                        {eachPath.access_type}
+                      </ToggleButton>
+                    ))}
+                  </ToggleButtonGroup>
+                </div>
+              );
+            })}
+
+            <button
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </React.Fragment>
-    );
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 
@@ -171,14 +171,14 @@ const withConnect = connect(
 
 const styles = theme => ({
 
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
   },
   fab: {
     width: '40px',
@@ -186,7 +186,7 @@ const styles = theme => ({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
- 
+
   toggleContainer: {
     height: 56,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
@@ -197,8 +197,8 @@ const styles = theme => ({
     background: theme.palette.background.default,
   },
 
-  accesslist:{
-    boxShadow:'none',
+  accesslist: {
+    boxShadow: 'none',
   }
 });
 

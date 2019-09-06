@@ -16,7 +16,7 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading, makeSelectErrors} from '../selectors';
+import { makeSelectOne, makeSelectLoading, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
@@ -63,69 +63,69 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, match, loading, errors} = this.props;
+    const { classes, one, match, loading, errors } = this.props;
     return loading && loading == true ? (
-     <Loading/>
+      <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit Role'
-              : 'Add Role'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-        <IconButton className={`${classes.backbtn} cursor-pointer`}	 onClick={this.handleBack} aria-label="Back">
-          <BackIcon />
-        </IconButton>{match && match.params && match.params.id
-            ? 'Edit Role'
-            : 'Add Role'}</PageHeader>
-        </div>
-        <PageContent>
+        <React.Fragment>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Role'
+                : 'Add Role'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton className={`${classes.backbtn} cursor-pointer`} onClick={this.handleBack} aria-label="Back">
+                <BackIcon />
+              </IconButton>{match && match.params && match.params.id
+                ? 'Edit Role'
+                : 'Add Role'}</PageHeader>
+          </div>
+          <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-            Role Title
+              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+                Role Title
             </label>
-            <input className="Waftinputbox" id="role_title" type="text"  value={one.role_title}
-                       onChange={this.handleChange('role_title')} required/>
-                       <div id="component-error-text">
-              {errors.role_title }
+              <input className="Waftinputbox" id="role_title" type="text" value={one.role_title}
+                onChange={this.handleChange('role_title')} required />
+              <div id="component-error-text">
+                {errors.role_title}
+              </div>
             </div>
-          </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-            Description
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+                Description
             </label>
-            <textarea className="Waftinputbox" id="description" type="text"   value={one.description}
-                       onChange={this.handleChange('description')} required/>
-                       <div id="component-error-text">
-            {errors.description }
-          </div>
-          </div>
-             
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    name="is_active"
-                    checked={one.is_active}
-                    onChange={this.handleChecked('is_active')}
-                  />
-                }
-                label="Is Active"
-              />
-      <br/>
-          
-              <button className="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>
+              <textarea className="Waftinputbox" id="description" type="text" value={one.description}
+                onChange={this.handleChange('description')} required />
+              <div id="component-error-text">
+                {errors.description}
+              </div>
+            </div>
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  name="is_active"
+                  checked={one.is_active}
+                  onChange={this.handleChecked('is_active')}
+                />
+              }
+              label="Is Active"
+            />
+            <br />
+
+            <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme" onClick={this.handleSave}>
               Save
               </button>
-        
-        </PageContent>
-      </React.Fragment>
-    );
+
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 
@@ -144,14 +144,14 @@ const withConnect = connect(
 );
 
 const styles = theme => ({
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
   }
 });
 

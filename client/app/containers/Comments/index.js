@@ -73,7 +73,7 @@ export const Comments = props => {
         Comments({comments.totaldata})
       </h2>
 
-      <div className="mt-2 p-4 shadow relative rounded pb-10 border border-grey-light mb-10">
+      <div className="mt-2 p-4 shadow relative rounded pb-10 border border-gray-500 mb-10">
         <textarea
           className="appearance-none w-full outline-none resize-none"
           name="comment"
@@ -84,7 +84,7 @@ export const Comments = props => {
           onChange={this.handleComment('title')}
         />
         <button
-          className="absolute right-0 bottom-0 mr-1 mb-1 text-white py-2 px-4 rounded mt-4 btn-waft"
+          className="absolute right-0 bottom-0 mr-1 mb-1 py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
           onClick={this.handlePostComment}
         >
           Submit
@@ -100,31 +100,31 @@ export const Comments = props => {
               <div className="pl-4 flex1">
                 <h5 className="font-bold">
                   {typeof each.added_by === 'string' &&
-                  each.added_by === user.id
+                    each.added_by === user.id
                     ? user.name
                     : each.added_by.name}
                 </h5>
                 <p>{each.title}</p>
                 {(typeof each.added_by === 'string' &&
                   each.added_by === user.id) ||
-                each.added_by._id === user.id ? (
-                  <div>
-                    <button
-                      className="ml-8 text-gray"
-                      onClick={() => this.handleEditComment(each._id)}
-                    >
-                      Edit
+                  each.added_by._id === user.id ? (
+                    <div>
+                      <button
+                        className="ml-8 text-gray"
+                        onClick={() => this.handleEditComment(each._id)}
+                      >
+                        Edit
                     </button>
-                    <button
-                      className="ml-2 text-gray"
-                      onClick={() => this.handleDeleteComment(each._id)}
-                    >
-                      Delete
+                      <button
+                        className="ml-2 text-gray"
+                        onClick={() => this.handleDeleteComment(each._id)}
+                      >
+                        Delete
                     </button>
-                  </div>
-                ) : (
-                  ''
-                )}
+                    </div>
+                  ) : (
+                    ''
+                  )}
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export const Comments = props => {
               onChange={this.handleComment('title')}
             />
             <button
-              className="text-white py-2 px-4 rounded mt-4 btn-waft"
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
               onClick={this.handlePostComment}
             >
               Save

@@ -31,28 +31,28 @@ const RenderBlogs = props => {
         } = each;
 
         return (
-          <div className="border-b border-dotted py-5 flex" key={slug_url}>
-            <div className="w-1/4">
+          <div className="border-b border-dashed py-5 flex flex-col md:flex-row" key={slug_url}>
+            <div className="w-full md:w-1/4 order-2 md:order-none">
               <Link
                 className="text-black no-underline capitalize mb-2 bold block mt-4"
                 to={`/blog/${slug_url}`}
               >
-                <h2>{title}</h2>
+                <h2 className="text-2xl font-medium leading-tight">{title}</h2>
               </Link>
               <span className="mt-2">
                 by{' '}
                 <Link
                   to={`/blog/author/${author._id}`}
-                  className="text-red font-bold no-underline"
+                  className="text-red-600 font-bold no-underline"
                 >
                   {author.name}
                 </Link>
               </span>
             </div>
 
-            {/* <div className="text-grey-darker text-base no-underline">
+            {/* <div className="text-gray-800 text-base no-underline">
                       <div className="mr-2">
-                        <span className="text-grey-dark">Category: </span>
+                        <span className="text-gray-700">Category: </span>
                         {category && category.length > 0 && category.map((each, index) => (
                           <Link
                             key={index}
@@ -64,23 +64,23 @@ const RenderBlogs = props => {
                         ))}
                       </div>
                     </div> */}
-            <div className="w-1/2 p-4">
-              <span className="text-grey-dark mr-2">
+            <div className="w-full md:w-1/2 py-4 order-3 md:order-none pl-5">
+              <span className="text-gray-700 mr-2">
                 {moment(added_at).format('MMM Do YY')}
               </span>
               <Link
-                className="text-grey-dark text-blue no-underline"
+                className="text-indigo-600 no-underline"
                 to={`/blog/${each.slug_url}`}
               >
                 <span> {tags.join(', ') || ''} </span>
               </Link>{' '}
               <Link
-                className="text-grey-darker text-base no-underline"
+                className="text-gray-800 text-base no-underline"
                 to={`/blog/${slug_url}`}
               >
                 <div
-                  className="leading-normal text-base text-left"
-                  style={{ height: '95px', overflow: 'hidden' }}
+                  className="leading-normal text-sm text-gray-600 font-light"
+                  style={{ height: '130px', overflow: 'hidden' }}
                   dangerouslySetInnerHTML={{ __html: description }}
                 />
               </Link>
@@ -95,7 +95,7 @@ const RenderBlogs = props => {
                       </div> */}
             </div>
 
-            <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
+            <div className="w-full md:w-1/4 h-48 object-cover overflow-hidden p-8 pt-4 order-1 md:order-none">
               <Link to={`/blog/${slug_url}`}>
                 <img
                   src={image && `${IMAGE_BASE}${image.path}`}
@@ -109,8 +109,8 @@ const RenderBlogs = props => {
       })}
     </>
   ) : (
-    <div>Blog Not Found</div>
-  );
+        <div>Blog Not Found</div>
+      );
 };
 
 RenderBlogs.propTypes = {

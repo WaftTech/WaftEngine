@@ -25,14 +25,14 @@ const PasswordInput = props => {
     <div className="mb-4">
       <div className="flex justify-between">
         <label
-          className="block text-grey-darker text-sm mb-2"
+          className="block text-gray-800 text-sm mb-2"
           htmlFor="Password"
         >
           Password
         </label>
 
         <Link
-          className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+          className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
           to="/forgot-password-user"
         >
           Forgot Password?

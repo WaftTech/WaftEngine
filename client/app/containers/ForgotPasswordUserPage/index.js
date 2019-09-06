@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
-import { Link }  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -29,18 +29,18 @@ const ForgotPasswordUser = ({ classes, forgotPasswordRequest }) => {
   return (
     <div className={classes.container}>
       <div className={classes.card}>
-        <img className={classes.logo} src={logo} alt="logo" style={{width:'60%',marginBottom:'10px'}}/>
+        <img className={classes.logo} src={logo} alt="logo" style={{ width: '60%', marginBottom: '10px' }} />
         <h3>FORGOT PASSWORD</h3>
-        <br/>
+        <br />
         <form className={classes.form} onSubmit={handleSubmit}>
           <UsernameInput />
-        
-          <Button className="text-white py-2 px-4 rounded mt-4 btn-waft" variant="contained" color="primary" type="submit">
+
+          <Button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme" variant="contained" color="primary" type="submit">
             SUBMIT
           </Button>
-    
+
         </form>
-      
+
         <Link className={classes.smallFont} to="/login-user">
           LOGIN?
         </Link>

@@ -40,7 +40,7 @@ const LoginUserPage = ({
           <UsernameInput />
           <PasswordInput />
           <button
-            className="text-white py-2 px-4 rounded mt-4 w-full btn-waft"
+            className="text-white py-2 px-4 rounded mt-4 w-full bg-red-600 hover:bg-red-800 font-bold"
             type="submit"
           >
             LOGIN
@@ -48,7 +48,7 @@ const LoginUserPage = ({
         </form>
 
         <Link
-          className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+          className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
           to="/signup-user"
         >
           Don't Have Account? Register

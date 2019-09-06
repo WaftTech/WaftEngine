@@ -1,17 +1,12 @@
-@tailwind preflight;
+@tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
 
-html {
-  font-family: 'Roboto Condensed', sans-serif;
-}
 
-p {
-  font-family: 'Roboto', sans-serif;
-}
-/* Remove autofill bg color */
+
+/* useful styles tailwind didn't cover */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -44,23 +39,21 @@ button:focus {
 
 .Waftinputbox {
   display: block;
-  min-width: 250px;
   width: 100%;
   height: 36px;
   padding: 6px 12px;
   background: #f4f4f4;
   border-radius: 4px;
   font-family:sans-serif;
-  -webkit-transition: border-color ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  border:1px solid transparent;
+  transition:all .2s ease-in-out;
 }
 
 .Waftinputbox:focus {
   outline: 0;
-  border: 1px solid #d0d0d0;
-  background: transparent;
+  border-color: #d0d0d0;
+  background: #fff;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 textarea.Waftinputbox {
@@ -75,34 +68,6 @@ table.table tbody td {
   background: #f7f7f7;
 }
 
-.btn-waft,
-.login-l {
-  min-width: 100px;
-  font-weight: bold;
-  background: #ff3b30; /* Old browsers */
-  background: -moz-linear-gradient(
-    top,
-    #ff3b30 0%,
-    #d82929 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    top,
-    #ff3b30 0%,
-    #d82929 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #ff3b30 0%,
-    #d82929 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3b30', endColorstr='#d82929',GradientType=0 ); /* IE6-9 */
-  border: 2px solid #ec322c;
-}
-
-.btn-waft:hover {
-  background: #ff3b30;
-  border-color: #ff3b30;
-}
 
 .waft-title {
   left: 0;
@@ -180,9 +145,9 @@ div#component-error-text {
   background: repeating-linear-gradient(
     to right,
     #ff3b30 0%,
-    #d82929 25%,
+    #ffcddb 25%,
     #ff3b30 50%,
-    #5a5387 75%,
+    #ffcddb 75%,
     #ff3b30 100%
   );
   width: 100%;
@@ -205,7 +170,7 @@ div#component-error-text {
 /* sidemenu */
 
 .list-reset li a.active {
-  color: #ff3b30;
+  color: #2196f3;
 }
 
 /* blog */
@@ -400,26 +365,29 @@ div#component-error-text {
   right: auto;
 }
 
-.leading-none	{line-height: 1;}
+/* .leading-none	{line-height: 1;}
 .leading-tight	{line-height: 1.25;}
 .leading-snug	{line-height: 1.375;}
 .leading-normal	{line-height: 1.5;}
 .leading-relaxed	{line-height: 1.625;}
-.leading-loose	{line-height: 2;}
+.leading-loose	{line-height: 2;} */
+
+
+/* .order-first	{order: -9999;}
+.order-last	{order: 9999;}
+.order-none	{order: 0;}
+.order-1	{order: 1;}
+.order-2	{order: 2;}
+.order-3	{order: 3;}
+.order-4	{order: 4;}
+.order-5	{order: 5;}
+.order-6	{order: 6;}
+.order-7	{order: 7;}
+.order-8	{order: 8;}
+.order-9	{order: 9;} */
+
 
 
 .bg-star { background:url(./assets/img/ptn.jpg) 0 32px; background-size:75px 75px; }
-
-.path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 2s linear forwards;
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
 
 .nav-link.active { box-shadow:0 1px 0 #d82929;}

@@ -12,7 +12,7 @@ const Loading = () => (
           </span>
         </div>
         <div className="w-full md:w-1/2 p-4">
-          <span className="text-grey-dark mr-2">
+          <span className="text-gray-700 mr-2">
             <Skeleton />
           </span>
           <div

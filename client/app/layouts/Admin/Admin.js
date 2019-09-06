@@ -179,7 +179,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
-      <div className="flex overflow-y-hidden bg-grey-lighter">
+      <div className="flex overflow-y-hidden bg-gray-200">
         <ColoredScrollbars
           autoHide
           autoHideTimeout={1000}

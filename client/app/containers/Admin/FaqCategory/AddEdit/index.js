@@ -82,70 +82,70 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit Faq Category'
-              : 'Add Faq Category'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>{' '}
-            {match && match.params && match.params.id
-              ? 'Edit Faq Category'
-              : 'Add Faq Category'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Title
+        <div>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Faq Category'
+                : 'Add Faq Category'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>{' '}
+              {match && match.params && match.params.id
+                ? 'Edit Faq Category'
+                : 'Add Faq Category'}
+            </PageHeader>
+          </div>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Title
             </label>
-            <input
-              type="text"
-              className="Waftinputbox"
-              name="Title"
-              id="title"
-              label="Title"
-              value={one.title}
-              onChange={this.handleChange('title')}
-            />
-            <div id="component-error-text">{errors.title}</div>
-          </div>
-          <div>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
-            />
-          </div>
+              <input
+                type="text"
+                className="Waftinputbox"
+                name="Title"
+                id="title"
+                label="Title"
+                value={one.title}
+                onChange={this.handleChange('title')}
+              />
+              <div id="component-error-text">{errors.title}</div>
+            </div>
+            <div>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_active || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_active')}
+                    color="primary"
+                  />
+                }
+                label="Is Active"
+              />
+            </div>
 
-          <button
-            className="text-white py-2 px-4 rounded mt-4 btn-waft"
-            onClick={this.handleSave}
-          >
-            Save
+            <button
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </div>
-    );
+          </PageContent>
+        </div>
+      );
   }
 }
 

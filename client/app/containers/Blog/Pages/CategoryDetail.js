@@ -50,9 +50,8 @@ class CategoryDetailPage extends React.Component {
         <Helmet>
           <title>{title}</title>
         </Helmet>
-        <div className="banner relative">
-          <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
-          <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
+        <div className="bg-star h-48 relative text-center py-12">
+          <h1 className="mb-4 text-gray-700 text-4xl font-bold">
             {!loading && `Blogs related to ${title}`}
           </h1>
         </div>
@@ -63,7 +62,6 @@ class CategoryDetailPage extends React.Component {
           </div>
           <div className="w-1/4 pt-10">
             <CategoryList />
-            <br />
             <Archives />
           </div>
         </div>

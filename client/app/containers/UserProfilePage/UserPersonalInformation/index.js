@@ -63,7 +63,7 @@ class UserPersonalInformationPage extends React.PureComponent {
       <React.Fragment>
 
         <div className="w-full pb-4">
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Name
         </label>
 
@@ -79,7 +79,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full pb-4">
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Email
         </label>
 
@@ -96,7 +96,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full pb-4">
-          <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Date Of Birth
         </label>
 
@@ -129,10 +129,10 @@ class UserPersonalInformationPage extends React.PureComponent {
         <div className="w-full  pb-4">Your account created at {moment(one.added_at).format('YYYY-MM-DD')}</div>
 
 
-        <NavLink className="text-grey-darker hover:text-black" to="/user/change-password">Change Password</NavLink>
+        <NavLink className="text-gray-800 hover:text-black" to="/user/change-password">Change Password</NavLink>
 
 
-        <button className="text-white py-2 px-4 rounded mt-4 btn-waft" onClick={this.handleSave}>Save</button>
+        <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme" onClick={this.handleSave}>Save</button>
 
 
 
