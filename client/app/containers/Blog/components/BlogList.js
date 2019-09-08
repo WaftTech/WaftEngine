@@ -44,13 +44,13 @@ const RenderBlogs = props => {
                   className="text-black no-underline capitalize mb-2 bold block mt-4"
                   to={`/blog/${slug_url}`}
                 >
-                  <h2>{title}</h2>
+                  <h2 className="text-2xl font-medium leading-tight">{title}</h2>
                 </Link>
                 <span className="mt-2">
                   by{' '}
                   <Link
                     to={`/blog/author/${author._id}`}
-                    className="text-red font-bold no-underline"
+                    className="text-red-600 font-bold no-underline hover:underline"
                   >
                     {author.name}
                   </Link>
@@ -72,11 +72,11 @@ const RenderBlogs = props => {
                       </div>
                     </div> */}
               <div className="w-1/2 p-4">
-                <span className="text-grey-dark mr-2">
+                <span className="text-gray-700 mr-2">
                   {moment(added_at).format('MMM Do YY')}
                 </span>
                 <Link
-                  className="text-grey-dark text-blue no-underline"
+                  className="text-indigo-600 no-underline"
                   to={`/blog/${each.slug_url}`}
                 >
                   <span> {tags.join(', ') || ''} </span>
@@ -86,8 +86,9 @@ const RenderBlogs = props => {
                   to={`/blog/${slug_url}`}
                 >
                   <div
-                    className="leading-normal text-base text-left"
-                    style={{ height: '95px', overflow: 'hidden' }}
+                    className="leading-normal text-sm text-gray-600 font-light overflow-hidden"
+                    style={{ height: '130px' }}
+
                     dangerouslySetInnerHTML={{ __html: description }}
                   />
                 </Link>
@@ -180,8 +181,8 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-    <div>Blog Not Found</div>
-  );
+        <div>Blog Not Found</div>
+      );
 };
 
 RenderBlogs.propTypes = {
