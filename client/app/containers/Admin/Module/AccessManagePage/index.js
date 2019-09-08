@@ -122,7 +122,7 @@ class AccessManagePage extends React.PureComponent {
               return (
 
                 <div className="mb-4 border-b" key={role._id}>
-                  <h3 className="font-normal mb-4">{role.role_title}</h3>
+                  <h3 className="font-normal mb-4 text-2xl">{role.role_title}</h3>
                   <ToggleButtonGroup className={classes.accesslist}
                     value={accesses}
 

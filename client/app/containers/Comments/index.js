@@ -69,7 +69,7 @@ export const Comments = props => {
 
   return (
     <div>
-      <h2 className="mt-4" htmlFor="comment">
+      <h2 className="mt-4 font-bold text-4xl" htmlFor="comment">
         Comments({comments.totaldata})
       </h2>
 

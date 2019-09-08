@@ -30,7 +30,7 @@ const ForgotPasswordUser = ({ classes, forgotPasswordRequest }) => {
     <div className={classes.container}>
       <div className={classes.card}>
         <img className={classes.logo} src={logo} alt="logo" style={{ width: '60%', marginBottom: '10px' }} />
-        <h3>FORGOT PASSWORD</h3>
+        <h3 className="text-2xl font-bold">FORGOT PASSWORD</h3>
         <br />
         <form className={classes.form} onSubmit={handleSubmit}>
           <UsernameInput />

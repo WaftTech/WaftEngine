@@ -28,7 +28,7 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
     <div className="flex h-screen">
       <div className="hidden md:block md:w-3/5 login-l">
         <div className="waftltext px-5 text-white lg:px-32">
-          <h1>WaftEngine</h1>
+          <h1 className="font-bold text-4xl">WaftEngine</h1>
           <p>A Powerful Mern Engine</p>
           <ul className="fealogin mt-10">
             <li>Quick Scaffolding</li>

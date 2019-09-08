@@ -96,7 +96,7 @@ class FAQPage extends React.Component {
             <title> FAQs </title>
           </Helmet>
           <div className="bg-star h-48 relative text-center py-12">
-            <h1 className="mb-4 text-gray-700">
+            <h1 className="text-4xl mb-4">
               Frequently Asked Questions
           </h1>
             <p className="text-gray-700">

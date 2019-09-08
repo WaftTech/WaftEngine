@@ -134,7 +134,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <h2>Basic Information</h2>
+              <h2 className="font-bold text-4xl">Basic Information</h2>
               <br />
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                 Email
@@ -217,7 +217,7 @@ class AddEdit extends React.PureComponent {
               )}
             <br />
             <br />
-            <h3>Reset Password</h3>
+            <h3 className="text-2xl font-bold">Reset Password</h3>
             <br />
             <div className="w-full md:w-1/2 pb-4">
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
