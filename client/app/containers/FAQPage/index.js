@@ -71,7 +71,7 @@ class FAQPage extends React.Component {
           <title> FAQs </title>
         </Helmet>
         <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-gray-700">Frequently Asked Questions</h1>
+          <h1 className="text-4xl mb-4">Frequently Asked Questions</h1>
           <p className="text-gray-700">
             feel free to visit answers you looking for.
           </p>
@@ -89,13 +89,8 @@ class FAQPage extends React.Component {
                     expanded={expanded === x._id}
                     onChange={this.handleChange(x._id)}
                   >
-                    <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <p className="text-lg font-bold">{x.title}</p>
-                    </ExpansionPanelSummary>
+                    <p className="text-lg font-bold">{x.title}</p>
+                    <ExpansionPanelSummary />
                     <ExpansionPanelDetails style={{ display: 'block' }}>
                       {faq.faq &&
                         faq.faq

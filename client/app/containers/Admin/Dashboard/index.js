@@ -63,7 +63,7 @@ export class Dashboard extends React.PureComponent {
 
         {info.map(each => (
           <div key={each._id} className="p-4 bg-white rounded">
-            <h3 className="border-b border-gray-300 pb-2">{each.title}</h3>
+            <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
             <div
               className="mt-2 bg-gray-200 flex flex-wrap justify-between p-4 rounded"
               dangerouslySetInnerHTML={{ __html: each.detail }}
@@ -72,7 +72,7 @@ export class Dashboard extends React.PureComponent {
         ))}
 
         <div className="bg-white rounded my-4 p-4 ">
-          <h3 className="border-b border-gray-300  pb-2">Latest Blogs</h3>
+          <h3 className="border-b text-2xl font-bold border-gray-300  pb-2">Latest Blogs</h3>
           {blogs.map(each => (
             <LinkBoth
               className="mt-2 bg-gray-200 flex flex-wrap justify-between p-2 rounded"
@@ -129,7 +129,7 @@ export class Dashboard extends React.PureComponent {
         <div>
           <div className="flex justify-between mx-4 my-4">
             <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 border-b border-gray-300">By Roles </h3>
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">By Roles </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {users &&
                   users.data &&
@@ -155,7 +155,7 @@ export class Dashboard extends React.PureComponent {
             </div>
 
             <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 border-b border-gray-300">By Types </h3>
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">By Types </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {errors.data && errors.data.length ? (
                   errors.data.map(each => (
@@ -173,7 +173,7 @@ export class Dashboard extends React.PureComponent {
                   ))
                 ) : (
                     <div className="flex justify-between text-center">
-                      <h2 className="w-full m-auto h-full">No Errors</h2>
+                      <h2 className="w-full m-auto h-full text-4xl">No Errors</h2>
                     </div>
                   )}
               </div>

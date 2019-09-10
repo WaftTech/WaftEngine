@@ -18,7 +18,7 @@ function RecentBlogs(props) {
   }
   return (
     <div className="mb-4">
-      <h3 className="uppercase">Recent Blogs</h3>
+      <h3 className="font-medium text-xl uppercase">Recent Blogs</h3>
       {props.blogs.map(blog => (
         <div
           key={`recents-${blog._id}`}

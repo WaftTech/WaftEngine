@@ -21,7 +21,7 @@ export default class NotFound extends React.PureComponent {
   render() {
     return (
       <div className="my-10 mx-auto text-center">
-        <h1 className="font-light">
+        <h1 className="font-light text-4xl">
           <FormattedMessage {...messages.header} />
         </h1>
         <div className="logo-swing">

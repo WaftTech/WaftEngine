@@ -44,107 +44,89 @@ export class BlogDatePage extends React.Component {
           <Helmet>
             <title>Blog By Date</title>
           </Helmet>
-          <div className="flex">
-            <div className="w-3/4 container mx-auto my-10 px-5">
-              <div className="flex flex-wrap w-full md:w-3/4 md:-mx-5">
-                {blogDate &&
-                  blogDate.map(each => {
-                    const {
-                      image,
-                      title,
-                      slug_url,
-                      description,
-                      added_at,
-                      category,
-                      tags,
-                    } = each;
-
-                    return (
-                      <div
-                        className="blog_sec w-full md:w-1/2 md:px-5 mb-5"
-                        key={slug_url}
-                      >
-                        <div className="w-full h-48 md:h-64 object-cover overflow-hidden">
-                          <Link to={`/blog/${slug_url}`}>
-                            <div className="img blog-img h-full">
-                              <img
-                                src={
-                                  image && `${IMAGE_BASE}${image && image.path}`
-                                }
-                                className="rounded"
-                                alt={`${title}`}
-                              />
-                            </div>
-                          </Link>
-                        </div>
-                        <div className="">
-                          <Link
-                            className="text-black no-underline capitalize mb-2 bold block mt-4"
-                            to={`/blog/${slug_url}`}
-                          >
-                            <h2>{title}</h2>
-                          </Link>
-                          <div className="text-gray-800 text-base no-underline">
-                            <div className="mr-2">
-                              <span className="text-gray-700">Category: </span>
-                              {category &&
-                                category.length > 0 &&
-                                category.map((each, index) => (
-                                  <Link
-                                    key={index}
-                                    className="text-black hover:text-waftprimary leading-normal text-base no-underline"
-                                    to={`/blog/category/${each._id}`}
-                                  >
-                                    {`${index === 0 ? '' : ', '}${each.title}`}
-                                  </Link>
-                                ))}
-                            </div>
-                          </div>
-                          <div className="border-t-1 flex flex-wrap font-bold">
-                            <p className="text-gray-700 leading-normal text-base mr-2">
-                              {moment(added_at).format('MMM Do YY')}
-                            </p>
-                            <Link
-                              className="text-gray-700leading-normal text-base no-underline"
-                              to={`/blog/${slug_url}`}
-                            >
-                              <div> {tags.join(', ') || ''} </div>
-                            </Link>{' '}
-                          </div>
-
-                          <Link
-                            className="text-gray-800 text-base no-underline"
-                            to={`/blog/${slug_url}`}
-                          >
-                            <div
-                              className="leading-normal text-base text-left"
-                              style={{ height: '95px', overflow: 'hidden' }}
-                              dangerouslySetInnerHTML={{ __html: description }}
-                            />
-                          </Link>
-
-                          <div className="flex justify-end readmore mt-2">
-                            {' '}
-                            <Link
-                              className="no-underline hover:text-waftprimary"
-                              to={`/blog/${slug_url}`}
-                            >
-                              Continue Reading <span className="rdanim">>>></span>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-            <ul className="w-1/4">
-              <CategoryList />
-              <br />
-              <Archives />
-            </ul>
+          <div className="bg-star h-48 relative text-center py-12">
+            <h1 className="mb-4 text-gray-700 text-4xl font-bold">Archives</h1>
           </div>
-        </React.Fragment>
+          <div className="container mx-auto block md:flex p-4 mb-10">
+            <div className="w-full md:w-3/4">
+              {blogDate &&
+                blogDate.map(each => {
+                  const {
+                    image,
+                    title,
+                    author,
+                    slug_url,
+                    description,
+                    added_at,
+                    category,
+                    tags,
+                  } = each;
+
+                  return (
+                    <div className="border-b border-dotted py-5 flex"
+                      key={slug_url}
+                    >
+                      <div className="w-1/4">
+                        <Link
+                          className="text-black no-underline capitalize mb-2 bold block mt-4"
+                          to={`/blog/${slug_url}`}
+                        >
+                          <h2 className="text-2xl font-medium leading-tight">{title}</h2>
+                        </Link>
+                        <span className="mt-2">
+                          by{' '}
+                          <Link
+                            to={`/blog/author/${author._id}`}
+                            className="text-red-600 font-bold no-underline hover:underline"
+                          >
+                            {author.name}
+                          </Link>
+                        </span>
+                      </div>
+
+                      <div className="w-1/2 p-4">
+                        <span className="text-gray-700 mr-2">
+                          {moment(added_at).format('MMM Do YY')}
+                        </span>
+                        <Link
+                          className="text-indigo-600 no-underline"
+                          to={`/blog/${each.slug_url}`}
+                        >
+                          <span> {tags.join(', ') || ''} </span>
+                        </Link>{' '}
+                        <Link
+                          className="text-grey-darker text-base no-underline"
+                          to={`/blog/${slug_url}`}
+                        >
+                          <div
+                            className="leading-normal text-sm text-gray-600 font-light overflow-hidden"
+                            style={{ height: '130px' }}
+
+                            dangerouslySetInnerHTML={{ __html: description }}
+                          />
+                        </Link>
+                      </div>
+
+
+                      <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
+                        <Link to={`/blog/${slug_url}`}>
+                          <img
+                            src={image && `${IMAGE_BASE}${image.path}`}
+                            className="rounded "
+                            alt={`${title}`}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+            <div className="w-full md:w-1/4 pt-10 pl-10">
+              <CategoryList />
+              <Archives />
+            </div>
+          </div>
+        </React.Fragment >
       );
   }
 }

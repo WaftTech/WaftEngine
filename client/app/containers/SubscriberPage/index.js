@@ -49,7 +49,7 @@ export class SubscriberPage extends React.PureComponent {
     return (
       <>
         <div>
-          <h3>Subscribe Page</h3>
+          <h3 className="font-bold text-2xl">Subscribe Page</h3>
         </div>
         <form>
           <div className="mb-2">
