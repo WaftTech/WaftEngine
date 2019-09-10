@@ -4,7 +4,7 @@ import moment from 'moment';
 import LinkBoth from '../../../components/LinkBoth';
 import { IMAGE_BASE } from '../../App/constants';
 import BlogDetailSkeleton from '../Skeleton/BlogDetail';
-
+import BlogComments from '../../Comments';
 
 function BlogDetail(props) {
   const { blog, loading } = props;
@@ -12,8 +12,8 @@ function BlogDetail(props) {
   return loading ? (
     <BlogDetailSkeleton />
   ) : (
-      <div className="w-full flex-1 lg:px-5">
-
+    <>
+      <div>
         <p className="sans-serif text-gray-700">
           {blog && moment(blog.added_at).format('MMM DD, YYYY')}
         </p>
@@ -79,7 +79,9 @@ function BlogDetail(props) {
           </div>
         )}
       </div>
-    );
+      {blog && <BlogComments blog_id={blog._id} />}
+    </>
+  );
 }
 
 export default BlogDetail;
