@@ -33,8 +33,7 @@ const CategoryElement = props => {
   ) : (
       <>
         <h2 className="pt-5 pb-5 text-2xl">
-          Recent News
-        {/* {latestBlogs.category && latestBlogs.category.title} */}
+          {latestBlogs.category && latestBlogs.category.title}
         </h2>
         <div className="recent_blog">
           {latestBlogs.blogs &&

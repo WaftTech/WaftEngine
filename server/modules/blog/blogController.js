@@ -381,7 +381,7 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
       {
         is_published: 0,
       },
-    )
+  )
     .populate([{ path: 'author', select: '_id name avatar image' }, { path: 'category', select: '_id title slug_url' }]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
@@ -423,6 +423,10 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
       {
         path: 'category',
         select: 'title slug_url',
+      },
+      {
+        path: 'author',
+        select: 'name',
       },
     ];
     selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
@@ -543,9 +547,9 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
         ...searchq,
       };
     }
-    populateq = [{ path: 'category', select: 'title' }];
+    populateq = [{ path: 'category', select: 'title' }, { path: 'author', select: 'name' }];
 
-    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, '');
+    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, populateq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
   } catch (err) {
     next(err);

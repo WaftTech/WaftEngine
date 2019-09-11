@@ -23,6 +23,7 @@ class CategoryDetailPage extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    window.scrollTo(0, 0)
     if (this.props.match.params.slug_url !== nextProps.match.params.slug_url) {
       this.props.loadBlogOfCatRequest({
         key: nextProps.match.params.slug_url,
@@ -33,6 +34,7 @@ class CategoryDetailPage extends React.Component {
 
   componentWillUnmount() {
     this.props.clearBlog();
+
   }
 
   handlePagination = paging => {

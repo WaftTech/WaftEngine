@@ -73,7 +73,7 @@ const RenderBlogs = props => {
                     </div> */}
               <div className="w-1/2 p-4">
                 <span className="text-gray-700 mr-2">
-                  {moment(added_at).format('MMM Do YY')}
+                  {moment(added_at).format('MMM Do YYYY')}
                 </span>
                 <Link
                   className="text-indigo-600 no-underline"
