@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
-import moment from 'moment';
-import { IMAGE_BASE } from 'containers/App/constants';
 import * as mapDispatchToProps from '../actions';
 import {
   makeSelectBlogOfCat,
   makeSelectLoadingBlogOfCat,
   makeSelectCategoryTitle,
 } from '../selectors';
-import Loading from '../../../components/Loading';
 import CategoryList from '../components/CategoryList';
 import RenderBlogs from '../components/BlogList';
 import Archives from '../components/Archives';
@@ -23,12 +19,15 @@ class CategoryDetailPage extends React.Component {
     const {
       params: { slug_url },
     } = this.props.match;
-    this.props.loadBlogOfCatRequest(slug_url);
+    this.props.loadBlogOfCatRequest({ key: slug_url, value: '' });
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.match.params.slug_url !== nextProps.match.params.slug_url) {
-      this.props.loadBlogOfCatRequest(nextProps.match.params.slug_url);
+      this.props.loadBlogOfCatRequest({
+        key: nextProps.match.params.slug_url,
+        value: '',
+      });
     }
   }
 
@@ -36,15 +35,23 @@ class CategoryDetailPage extends React.Component {
     this.props.clearBlog();
   }
 
+  handlePagination = paging => {
+    this.props.loadBlogOfCatRequest({
+      key: this.props.match.params.slug_url,
+      value: paging,
+    });
+  };
+
   render() {
     const {
-      blog,
+      blog: { data, page, size, totaldata },
       loading,
       title,
       match: {
         params: { slug_url },
       },
     } = this.props;
+    const pagination = { page, size, totaldata };
     return (
       <React.Fragment>
         <Helmet>
@@ -58,7 +65,14 @@ class CategoryDetailPage extends React.Component {
 
         <div className="container mx-auto flex">
           <div className="w-3/4">
-            <RenderBlogs loading={loading} currentBlogs={blog} />
+            {data && data.length > 0 && (
+              <RenderBlogs
+                loading={loading}
+                currentBlogs={data}
+                pagination={pagination}
+                handlePagination={this.handlePagination}
+              />
+            )}
           </div>
           <div className="w-1/4 pt-10">
             <CategoryList />
@@ -72,6 +86,7 @@ class CategoryDetailPage extends React.Component {
 
 CategoryDetailPage.propTypes = {
   loadBlogRequest: PropTypes.func.isRequired,
+  blog: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

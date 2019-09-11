@@ -60,7 +60,6 @@ function* loadBlogList(action) {
     });
   }
   const token = yield select(makeSelectToken());
-  console.log(query, 'queries');
   yield call(
     Api.get(
       `blog?${query}`,
@@ -97,9 +96,15 @@ function* loadBlogByTag(action) {
 
 function* loadBlogDate(action) {
   const token = yield select(makeSelectToken());
+  let query = '';
+  if (action.payload.value) {
+    Object.keys(action.payload.value).map(each => {
+      query = `${query}&${each}=${action.payload.value[each]}`;
+    });
+  }
   yield call(
     Api.get(
-      `blog/blogbytime/${action.payload}`,
+      `blog/blogbytime/${action.payload.key}?${query}`,
       actions.loadBlogDateSuccess,
       actions.loadBlogDateFailure,
       token,
@@ -117,11 +122,17 @@ function* loadCategory() {
     ),
   );
 }
-function* loadBlogOfCat({ payload }) {
+function* loadBlogOfCat(action) {
   const token = yield select(makeSelectToken());
+  let query = '';
+  if (action.payload.value) {
+    Object.keys(action.payload.value).map(each => {
+      query = `${query}&${each}=${action.payload.value[each]}`;
+    });
+  }
   yield call(
     Api.get(
-      `blog/blogbycat/${payload}`,
+      `blog/blogbycat/${action.payload.key}?${query}`,
       actions.loadBlogOfCatSuccess,
       actions.loadBlogOfCatFailure,
       token,
