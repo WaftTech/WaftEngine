@@ -544,9 +544,9 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
       };
     }
     populateq = [{ path: 'category', select: 'title' }];
-    const tagBlog = await blogSch.find(searchq).populate(populateq);
-    const totaldata = tagBlog.length;
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog, blogConfig.get, page, size, totaldata);
+
+    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, '');
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
   } catch (err) {
     next(err);
   }

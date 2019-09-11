@@ -62,16 +62,6 @@ const publicRoutes = [
   },
   {
     exact: true,
-    path: '/subscribe',
-    component: SubscribePage,
-  },
-  {
-    exact: true,
-    path: '/contact-us',
-    component: ContactUsPage,
-  },
-  {
-    exact: true,
     path: '/about-us',
     component: AboutUsPage,
   },

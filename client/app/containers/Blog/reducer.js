@@ -28,7 +28,12 @@ export const initialState = {
     size: 10,
     totaldata: 0,
   },
-  blogDate: [],
+  blogDate: {
+    data: [],
+    page: 1,
+    size: 10,
+    totaldata: 0,
+  },
   dateLoading: false,
   query: { size: 10, page: 1 },
   category: [],
@@ -36,7 +41,12 @@ export const initialState = {
   blogs: [],
   catLoading: false,
 
-  blogOfCat: [],
+  blogOfCat: {
+    data: [],
+    page: 1,
+    size: 10,
+    totaldata: 0,
+  },
   loadingBlogOfCat: true,
 };
 
@@ -103,7 +113,7 @@ const blogPageReducer = (state = initialState, action) =>
 
       case types.LOAD_BLOG_DATE_SUCCESS:
         draft.dateLoading = false;
-        draft.blogDate = action.payload.data;
+        draft.blogDate = action.payload;
         break;
 
       case types.LOAD_BLOG_DATE_FAILURE:
@@ -162,7 +172,7 @@ const blogPageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_BLOG_OF_CAT_SUCCESS:
         draft.categoryTitle = action.payload.msg;
-        draft.blogOfCat = action.payload.data;
+        draft.blogOfCat = action.payload;
         draft.loadingBlogOfCat = false;
         break;
 
