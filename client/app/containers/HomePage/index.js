@@ -23,11 +23,11 @@ export default class HomePage extends React.PureComponent {
     return (
       <>
         <div className="bg-star">
-          <div className="max-w-3xl mx-auto py-16 px-4 overflow-hidden relative md:flex">
+          <div className="max-w-5xl mx-auto py-16 px-4 overflow-hidden relative md:flex">
             <div className="md:w-1/2">
               <h1 className="uppercase text-4xl">Help us to grow</h1>
               <p className="my-4">
-                You don't have to donate always. A Github star is enough for
+                You don't have to donate always. A github star is enough for
                 WaftEngine.
               </p>
               <a
@@ -51,7 +51,7 @@ export default class HomePage extends React.PureComponent {
             </div>
           </div>
         </div>
-        <div className="max-w-lg mx-auto py-12 px-4 overflow-hidden">
+        <div className="max-w-5xl mx-auto py-12 px-4 overflow-hidden">
           <CategoryElement cat_id="5d09d3c5ba5fe21594e59bb4" />
         </div>
       </>

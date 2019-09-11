@@ -36,40 +36,42 @@ const CategoryElement = props => {
           Recent News
         {/* {latestBlogs.category && latestBlogs.category.title} */}
         </h2>
-        {latestBlogs.blogs &&
-          latestBlogs.blogs.map((each, index) => (
-            <div
-              key={each._id}
-              className={`mr-4 ${index === 0 ? 'first_item' : ''}`}
-            >
-              <div className="md:flex mb-5">
-                <Link to={`/blog/${each.slug_url}`}>
-                  <img
-                    src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
-                    className="max-w-full md:w-24"
-                    // style={{ maxWidth: 100 }}
-                    alt={`${each.title}`}
-                  />
-                </Link>
-
-                <div className="md:pl-5">
-                  <span className="text-gray-700 text-sm sans-serif">
-                    {moment(each.added_at).format('MMM DD, YYYY')}
-                  </span>
-                  <Link
-                    className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline"
-                    to={`/blog/${each.slug_url}`}
-                  >
-                    {' '}
-                    {each.title}{' '}
+        <div className="recent_blog">
+          {latestBlogs.blogs &&
+            latestBlogs.blogs.map((each, index) => (
+              <div
+                key={each._id}
+                className={`pr-4 ${index === 0 ? 'first_item' : ''}`}
+              >
+                <div className="block md:flex mb-5">
+                  <Link to={`/blog/${each.slug_url}`} className="imgContainer">
+                    <img
+                      src={`${IMAGE_BASE}${each && each.image && each.image.path}`}
+                      className="max-w-full md:w-48 article"
+                      // style={{ maxWidth: 100 }}
+                      alt={`${each.title}`}
+                    />
                   </Link>
-                  <span className="text-gray-700 text-sm sans-serif">
-                    {each.author.name}
-                  </span>
+
+                  <div className="md:pl-5 heading leading-tight">
+                    <span className="text-gray-700 text-sm sans-serif">
+                      {moment(each.added_at).format('MMM DD, YYYY')}
+                    </span>
+                    <Link
+                      className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline"
+                      to={`/blog/${each.slug_url}`}
+                    >
+                      {' '}
+                      {each.title}{' '}
+                    </Link>
+                    <span className="text-gray-700 text-sm sans-serif">
+                      {each.author.name}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </>
     );
 };
