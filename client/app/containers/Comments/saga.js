@@ -1,7 +1,7 @@
 import { takeLatest, call, select } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
-import { makeSelectComment } from './selectors';
+import { makeSelectOne } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
 
@@ -43,7 +43,7 @@ function* loadOne(action) {
 
 function* postComment(action) {
   const token = yield select(makeSelectToken());
-  const data = yield select(makeSelectComment());
+  const data = yield select(makeSelectOne());
   const onSuccess = data._id
     ? actions.editCommentSuccess
     : actions.postCommentSuccess;
