@@ -32,7 +32,6 @@ const RenderBlogs = props => {
           slug_url,
           description,
           added_at,
-          category,
           tags,
         } = each;
 
@@ -44,7 +43,9 @@ const RenderBlogs = props => {
                   className="text-black no-underline capitalize mb-2 bold block mt-4"
                   to={`/blog/${slug_url}`}
                 >
-                  <h2 className="text-2xl font-medium leading-tight">{title}</h2>
+                  <h2 className="text-2xl font-medium leading-tight">
+                    {title}
+                  </h2>
                 </Link>
                 <span className="mt-2">
                   by{' '}
@@ -56,21 +57,6 @@ const RenderBlogs = props => {
                   </Link>
                 </span>
               </div>
-
-              {/* <div className="text-grey-darker text-base no-underline">
-                      <div className="mr-2">
-                        <span className="text-gray-700">Category: </span>
-                        {category && category.length > 0 && category.map((each, index) => (
-                          <Link
-                            key={index}
-                            className="text-black hover:text-waftprimary leading-normal text-base no-underline"
-                            to={`/blog/category/${each._id}`}
-                          >
-                            {`${index === 0 ? '' : ', '}${each.title}`}
-                          </Link>
-                        ))}
-                      </div>
-                    </div> */}
               <div className="w-1/2 p-4">
                 <span className="text-gray-700 mr-2">
                   {moment(added_at).format('MMM Do YYYY')}
@@ -88,19 +74,9 @@ const RenderBlogs = props => {
                   <div
                     className="leading-normal text-sm text-gray-600 font-light overflow-hidden"
                     style={{ height: '130px' }}
-
                     dangerouslySetInnerHTML={{ __html: description }}
                   />
                 </Link>
-                {/* <div className="flex justify-end readmore mt-2">
-                        {' '}
-                        <Link
-                          className="no-underline hover:text-waftprimary"
-                          to={`/blog/${slug_url}`}
-                        >
-                          Continue Reading <span className="rdanim">>>></span>
-                        </Link>
-                      </div> */}
               </div>
 
               <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
@@ -181,8 +157,8 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-        <div>Blog Not Found</div>
-      );
+    <div>Blog Not Found</div>
+  );
 };
 
 RenderBlogs.propTypes = {

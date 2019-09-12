@@ -142,7 +142,6 @@ blogcontroller.GetBlogArchives = async (req, res, next) => {
         return each.added_at;
       }
     });
-    console.log(months, 'montrhs');
     return otherHelper.sendResponse(res, httpStatus.OK, true, months, null, 'archives get success!!', null);
   } catch (err) {
     next(err);
@@ -381,7 +380,7 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
       {
         is_published: 0,
       },
-  )
+    )
     .populate([{ path: 'author', select: '_id name avatar image' }, { path: 'category', select: '_id title slug_url' }]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
@@ -468,6 +467,7 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
     let page;
     let size;
     let searchq;
+    let populateq;
     const size_default = 10;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
@@ -480,11 +480,12 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
       size = size_default;
     }
     const tag = req.params.tag;
+    populateq = [{ path: 'author', select: 'name' }];
     searchq = {
       is_deleted: false,
       tags: tag,
     };
-    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, '');
+    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, populateq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
   } catch (err) {
     next(err);
@@ -496,6 +497,7 @@ blogcontroller.GetBlogByAuthor = async (req, res, next) => {
     let page;
     let size;
     let searchq;
+    let populateq;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
     } else {
@@ -507,8 +509,9 @@ blogcontroller.GetBlogByAuthor = async (req, res, next) => {
       size = size_default;
     }
     const authorId = req.params.author;
+    populateq = [{ path: 'author', select: 'name' }];
     searchq = { is_deleted: false, is_active: true, author: authorId };
-    const blogByAuthor = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, '');
+    const blogByAuthor = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, populateq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogByAuthor.data, 'blogs by author get success!!', page, size, blogByAuthor.totaldata);
   } catch (err) {
     next(err);

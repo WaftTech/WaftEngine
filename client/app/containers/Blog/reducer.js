@@ -87,7 +87,6 @@ const blogPageReducer = (state = initialState, action) =>
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         break;
-
       case types.LOAD_ARCHIVES_REQUEST:
         draft.archiveLoading = true;
         break;
@@ -95,62 +94,62 @@ const blogPageReducer = (state = initialState, action) =>
         draft.archiveLoading = false;
         draft.archives = action.payload.data;
         break;
-
       case types.LOAD_ARCHIVES_FAILURE:
         draft.archiveLoading = false;
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
         break;
-
       case types.LOAD_BLOG_LIST_REQUEST:
         draft.loading = true;
         break;
-
       case types.LOAD_BLOG_DATE_REQUEST:
         draft.dateLoading = true;
         break;
-
       case types.LOAD_BLOG_DATE_SUCCESS:
         draft.dateLoading = false;
         draft.blogDate = action.payload;
         break;
-
       case types.LOAD_BLOG_DATE_FAILURE:
         draft.dateLoading = false;
         break;
-
       case types.LOAD_BLOG_LIST_SUCCESS:
         draft.blogList = action.payload;
         draft.loading = false;
         break;
-
       case types.LOAD_BLOG_LIST_FAILURE:
         draft.loading = false;
         break;
-
       case types.SET_PAGES_VALUE:
         draft.blogList[action.payload.key] = action.payload.value;
         break;
-
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
         break;
-
       case types.SET_SIZE_VALUE:
         draft.blogList.size = action.payload;
         draft.blogList.page = 1;
+        break;
+      case types.LOAD_BLOG_BY_AUTHOR_REQUEST:
+        draft.loading = true;
         break;
       case types.LOAD_BLOG_BY_AUTHOR_SUCCESS:
         draft.blogByAuthor = action.payload;
         draft.loading = false;
         break;
-
+      case types.LOAD_BLOG_BY_AUTHOR_FAILURE:
+        draft.loading = false;
+        break;
+      case types.LOAD_BLOG_BY_TAG_REQUEST:
+        draft.loading = true;
+        break;
       case types.LOAD_BLOG_BY_TAG_SUCCESS:
         draft.blogByTag = action.payload;
         draft.loading = false;
         break;
-
+      case types.LOAD_BLOG_BY_TAG_FAILURE:
+        draft.loading = false;
+        break;
       case types.LOAD_CATEGORY_REQUEST:
         draft.catLoading = true;
         break;
@@ -161,7 +160,6 @@ const blogPageReducer = (state = initialState, action) =>
       case types.LOAD_CATEGORY_FAILURE:
         draft.catLoading = false;
         break;
-
       case types.LOAD_BLOG_OF_CAT_FAILURE:
         draft.loadingBlogOfCat = false;
         break;
@@ -175,7 +173,6 @@ const blogPageReducer = (state = initialState, action) =>
         draft.blogOfCat = action.payload;
         draft.loadingBlogOfCat = false;
         break;
-
       case types.CLEAR_BLOG:
         draft.blogOfCat = initialState.blogOfCat;
         draft.loadingBlogOfCat = true;

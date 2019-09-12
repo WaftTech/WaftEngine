@@ -6,6 +6,8 @@ import { useInjectSaga } from 'utils/injectSaga';
 import {
   BlogDetail,
   BlogList,
+  BlogsByAuthor,
+  BlogsByTag,
   BlogDate,
   CategoryDetail,
 } from './Pages/Loadable';
@@ -24,8 +26,8 @@ const Blog = () => {
       <Route exact path="/blog" component={BlogList} />
       <Route exact path="/blog/:slug_url" component={BlogDetail} />
       <Route exact path="/blog/category/:slug_url" component={CategoryDetail} />
-      <Route exact path="/blog/tag/:tag" component={BlogList} />
-      <Route exact path="/blog/author/:author" component={BlogList} />
+      <Route exact path="/blog/tag/:tag" component={BlogsByTag} />
+      <Route exact path="/blog/author/:author" component={BlogsByAuthor} />
       <Route exact path="/blog/date/:date" component={BlogDate} />
     </Switch>
   );

@@ -72,9 +72,15 @@ function* loadBlogList(action) {
 
 function* loadBlogByAuthor(action) {
   const token = yield select(makeSelectToken());
+  let query = '';
+  if (action.payload.value) {
+    Object.keys(action.payload.value).map(each => {
+      query = `${query}&${each}=${action.payload.value[each]}`;
+    });
+  }
   yield call(
     Api.get(
-      `blog/blogbyauthor/${action.payload}`,
+      `blog/blogbyauthor/${action.payload.key}?${query}`,
       actions.loadBlogByAuthorSuccess,
       actions.loadBlogByAuthorFailure,
       token,
@@ -84,9 +90,15 @@ function* loadBlogByAuthor(action) {
 
 function* loadBlogByTag(action) {
   const token = yield select(makeSelectToken());
+  let query = '';
+  if (action.payload.value) {
+    Object.keys(action.payload.value).map(each => {
+      query = `${query}&${each}=${action.payload.value[each]}`;
+    });
+  }
   yield call(
     Api.get(
-      `blog/blogbytag/${action.payload}`,
+      `blog/blogbytag/${action.payload.key}?${query}`,
       actions.loadBlogByTagSuccess,
       actions.loadBlogByTagFailure,
       token,
