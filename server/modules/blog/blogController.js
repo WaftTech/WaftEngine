@@ -150,7 +150,7 @@ blogcontroller.GetBlogArchives = async (req, res, next) => {
 
 blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
   try {
-    const size_default = 10;
+    const size_default = 2;
     let page;
     let size;
     let sortq;

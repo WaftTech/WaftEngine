@@ -7,12 +7,13 @@ import { compose } from 'redux';
 import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
+import KeyboardArrowLeft from '@material-ui/icons/keyboardArrowLeft';
 import * as mapDispatchToProps from '../actions';
 import BlogListSkeleton from '../Skeleton/BlogList';
 
 const RenderBlogs = props => {
   const { currentBlogs, loading, pagination, handlePagination } = props;
-  const BlogsPerPage = ['1', '5', '10', '20', '50', '100'];
+  const BlogsPerPage = ['12'];
   const maxPage = Math.ceil(pagination.totaldata / pagination.size);
   const pagenumber = [];
   for (let i = 1; i <= Math.ceil(pagination.totaldata / pagination.size); i++) {
@@ -94,7 +95,7 @@ const RenderBlogs = props => {
       })}
       <div className="flex">
         <div className="w-full md:w-1/4">
-          <label
+          {/* <label
             className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
             htmlFor="select-blogs-per-page"
           >
@@ -113,46 +114,53 @@ const RenderBlogs = props => {
                 {each}
               </option>
             ))}
-          </select>
+          </select> */}
         </div>
-        <div className="w-3/4 flex justify-end">
-          <button
-            className="font-bold"
-            disabled={pagination.page === 1}
-            onClick={() =>
-              handlePagination({
-                ...pagination,
-                page: pagination.page - 1,
-              })
-            }
-          >
-            {'<<'}
-          </button>
-          {pagenumber.length > 0 &&
-            pagenumber.map(each => (
+        <div className="w-3/4 flex justify-end mt-3 ">
+          {pagination.page !== 1 && (
+            <span className="inline-block pr-2">
               <button
-                key={each}
-                id={each}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                onClick={e => {
+                className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded flex items-center justify-center"
+                onClick={() =>
                   handlePagination({
                     ...pagination,
-                    page: e.target.id,
-                  });
-                }}
+                    page: pagination.page - 1,
+                  })
+                }
               >
-                {each}
+                <i className="material-icons">keyboard_arrow_left</i>
               </button>
+            </span>
+          )}
+          {pagenumber.length > 0 &&
+            pagenumber.map(each => (
+              <span className="inline-block pr-2">
+                <button
+                  key={each}
+                  id={each}
+                  className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded"
+                  onClick={e => {
+                    handlePagination({
+                      ...pagination,
+                      page: e.target.id,
+                    });
+                  }}
+                >
+                  {each}
+                </button>
+              </span>
             ))}
-          <button
-            className="font-bold"
-            disabled={pagination.page === maxPage}
-            onClick={() =>
-              handlePagination({ ...pagination, page: pagination.page + 1 })
-            }
-          >
-            {'>>'}
-          </button>
+          <span className="inline-block pr-2">
+            <button
+              className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded flex items-center justify-center"
+              disabled={pagination.page === maxPage}
+              onClick={() =>
+                handlePagination({ ...pagination, page: pagination.page + 1 })
+              }
+            >
+              <i className="material-icons">keyboard_arrow_right</i>
+            </button>
+          </span>
         </div>
       </div>
     </>
