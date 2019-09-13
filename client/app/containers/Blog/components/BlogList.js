@@ -7,13 +7,12 @@ import { compose } from 'redux';
 import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
-import KeyboardArrowLeft from '@material-ui/icons/keyboardArrowLeft';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import * as mapDispatchToProps from '../actions';
 import BlogListSkeleton from '../Skeleton/BlogList';
 
 const RenderBlogs = props => {
   const { currentBlogs, loading, pagination, handlePagination } = props;
-  const BlogsPerPage = ['12'];
   const maxPage = Math.ceil(pagination.totaldata / pagination.size);
   const pagenumber = [];
   for (let i = 1; i <= Math.ceil(pagination.totaldata / pagination.size); i++) {
@@ -37,85 +36,60 @@ const RenderBlogs = props => {
         } = each;
 
         return (
-          <div key={each._id}>
-            <div className="border-b border-dotted py-5 flex" key={slug_url}>
-              <div className="w-1/4">
+          <div className="border-b border-dotted py-5 flex" key={each._id}>
+            <div className="w-1/4">
+              <Link
+                className="text-black no-underline capitalize mb-2 bold block mt-4"
+                to={`/blog/${slug_url}`}
+              >
+                <h2 className="text-2xl font-medium leading-tight">{title}</h2>
+              </Link>
+              <span className="mt-2">
+                by{' '}
                 <Link
-                  className="text-black no-underline capitalize mb-2 bold block mt-4"
-                  to={`/blog/${slug_url}`}
+                  to={`/blog/author/${author._id}`}
+                  className="text-red-600 font-bold no-underline hover:underline"
                 >
-                  <h2 className="text-2xl font-medium leading-tight">
-                    {title}
-                  </h2>
+                  {author.name}
                 </Link>
-                <span className="mt-2">
-                  by{' '}
-                  <Link
-                    to={`/blog/author/${author._id}`}
-                    className="text-red-600 font-bold no-underline hover:underline"
-                  >
-                    {author.name}
-                  </Link>
-                </span>
-              </div>
-              <div className="w-1/2 p-4">
-                <span className="text-gray-700 mr-2">
-                  {moment(added_at).format('MMM Do YYYY')}
-                </span>
-                <Link
-                  className="text-indigo-600 no-underline"
-                  to={`/blog/${each.slug_url}`}
-                >
-                  <span> {tags.join(', ') || ''} </span>
-                </Link>{' '}
-                <Link
-                  className="text-grey-darker text-base no-underline"
-                  to={`/blog/${slug_url}`}
-                >
-                  <div
-                    className="leading-normal text-sm text-gray-600 font-light overflow-hidden"
-                    style={{ height: '130px' }}
-                    dangerouslySetInnerHTML={{ __html: description }}
-                  />
-                </Link>
-              </div>
+              </span>
+            </div>
+            <div className="w-1/2 p-4">
+              <span className="text-gray-700 mr-2">
+                {moment(added_at).format('MMM Do YYYY')}
+              </span>
+              <Link
+                className="text-indigo-600 no-underline"
+                to={`/blog/${each.slug_url}`}
+              >
+                <span> {tags.join(', ') || ''} </span>
+              </Link>{' '}
+              <Link
+                className="text-grey-darker text-base no-underline"
+                to={`/blog/${slug_url}`}
+              >
+                <div
+                  className="leading-normal text-sm text-gray-600 font-light overflow-hidden"
+                  style={{ height: '130px' }}
+                  dangerouslySetInnerHTML={{ __html: description }}
+                />
+              </Link>
+            </div>
 
-              <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
-                <Link to={`/blog/${slug_url}`}>
-                  <img
-                    src={image && `${IMAGE_BASE}${image.path}`}
-                    className="rounded "
-                    alt={`${title}`}
-                  />
-                </Link>
-              </div>
+            <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
+              <Link to={`/blog/${slug_url}`}>
+                <img
+                  src={image && `${IMAGE_BASE}${image.path}`}
+                  className="rounded "
+                  alt={`${title}`}
+                />
+              </Link>
             </div>
           </div>
         );
       })}
       <div className="flex">
-        <div className="w-full md:w-1/4">
-          {/* <label
-            className="uppercase tracking-wide text-grey-darker text-xs mb-2 pr-4"
-            htmlFor="select-blogs-per-page"
-          >
-            Blogs Per Page
-          </label>
-          <select
-            native="true"
-            value={pagination.size}
-            onChange={e =>
-              handlePagination({ ...pagination, size: e.target.value })
-            }
-            style={{ width: 50, minWidth: 'auto' }}
-          >
-            {BlogsPerPage.map(each => (
-              <option key={each} value={each}>
-                {each}
-              </option>
-            ))}
-          </select> */}
-        </div>
+        <div className="w-full md:w-1/4" />
         <div className="w-3/4 flex justify-end mt-3 ">
           {pagination.page !== 1 && (
             <span className="inline-block pr-2">

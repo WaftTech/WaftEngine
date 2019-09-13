@@ -27,8 +27,6 @@ export class BlogListPage extends React.Component {
   }
 
   handlePagination = paging => {
-    // if(this.props.blogList.page )
-    // this.props.clearData();
     this.props.loadBlogListRequest(paging);
   };
 
