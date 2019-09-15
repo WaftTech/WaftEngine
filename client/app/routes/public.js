@@ -1,3 +1,4 @@
+import React from 'react';
 import HomePage from '../containers/HomePage';
 import LoginAdminPage from '../containers/LoginAdminPage/Loadable';
 import LoginUserPage from '../containers/LoginUserPage/Loadable';
@@ -10,7 +11,8 @@ import FaqPage from '../containers/FAQPage/Loadable';
 // import BlogDetailPage from '../containers/Blog/Pages/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
 import SubscribePage from '../containers/SubscriberPage/Loadable';
-import AboutUsPage from '../containers/AboutUsPage/Loadable';
+import StaticPage from '../containers/StaticPages/Loadable';
+
 // import BlogListDatePage from '../containers/BlogList/BlogDate';
 import BlogPages from '../containers/Blog';
 
@@ -63,7 +65,30 @@ const publicRoutes = [
   {
     exact: true,
     path: '/about-us',
-    component: AboutUsPage,
+    render: props => (
+      <StaticPage contentKey="about-us" title="About Us" {...props} />
+    ),
+  },
+  {
+    exact: true,
+    path: '/term-and-condition',
+    render: props => (
+      <StaticPage contentKey="term-and-condition" title="About Us" {...props} />
+    ),
+  },
+  {
+    exact: true,
+    path: '/data-policy',
+    render: props => (
+      <StaticPage contentKey="data-policy" title="About Us" {...props} />
+    ),
+  },
+  {
+    exact: true,
+    path: '/cookies-policy',
+    render: props => (
+      <StaticPage contentKey="cookies-policy" title="About Us" {...props} />
+    ),
   },
 ];
 

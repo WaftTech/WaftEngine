@@ -52,8 +52,6 @@ class SlickSlider extends React.PureComponent {
     } catch (err) {
       console.log(err);
     }
-
-    console.log(settings);
     if (!slide) return null; // maybe add a loader here
     return (
       <div className="slider">
