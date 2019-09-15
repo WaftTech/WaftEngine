@@ -67,7 +67,7 @@ const reducer = (state = initialState, action) =>
         draft.all = {
           ...draft.all,
           data: draft.all.data.filter(
-            each => each._id != action.payload.data._id,
+            each => each._id !== action.payload.data._id,
           ),
         };
         break;

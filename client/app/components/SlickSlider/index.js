@@ -53,6 +53,7 @@ class SlickSlider extends React.PureComponent {
       console.log(err);
     }
 
+    console.log(settings);
     if (!slide) return null; // maybe add a loader here
     return (
       <div className="slider">
@@ -79,8 +80,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const withConnect = connect(
-  mapDispatchToProps,
   mapStateToProps,
+  mapDispatchToProps,
 );
 
 export default compose(withConnect)(SlickSlider);

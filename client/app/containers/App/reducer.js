@@ -12,6 +12,8 @@
 import produce from 'immer';
 
 import * as types from './constants';
+import { LOAD_ALL_SUCCESS as MEDIA_LOAD_ALL_SUCCESS } from '../Admin/Media/constants';
+import * as utils from './utils';
 
 // The initial state of the App
 export const initialState = {
@@ -32,6 +34,12 @@ const appReducer = (state = initialState, action = { type: '' }) =>
     const access = {};
     let isAdmin = false;
     switch (action.type) {
+      case MEDIA_LOAD_ALL_SUCCESS:
+        draft.media = {
+          ...state.media,
+          ...utils.normalizeMedia(action.payload.data),
+        };
+        break;
       case types.SET_USER:
         localStorage.setItem(
           'routes',
