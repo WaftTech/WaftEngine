@@ -1,0 +1,13 @@
+
+
+
+
+.layout-2 .item-1 {
+  height:400px;
+  width: 50%;
+  float: left;}
+
+  .layout-2 .item-1 .block { display: block;} 
+  .layout-2 .item-1 img { width:100%;}
+  .layout-2 .item-1 .imgContainer { height:300px; overflow: hidden; display: block;}
+  .layout-2 .item-1 .heading { padding-left:0; }

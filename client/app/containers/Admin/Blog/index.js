@@ -132,8 +132,8 @@ export class BlogManagePage extends React.Component {
       ({
         title,
         category,
-        image,
-        published_on,
+        // image,
+        // published_on,
         added_at,
         is_published,
         is_active,
@@ -145,8 +145,8 @@ export class BlogManagePage extends React.Component {
         return [
           title,
           (category && category.map(each => each.title).join(', ')) || 'No',
-          (image && image.fieldname) || null,
-          moment(published_on).format('MMM Do YY'),
+          // (image && image.fieldname) || null,
+          // moment(published_on).format('MMM Do YY'),
           moment(added_at).format('MMM Do YY'),
           '' + is_published,
           '' + is_active,
@@ -241,8 +241,8 @@ export class BlogManagePage extends React.Component {
             tableHead={[
               'Title',
               'Category',
-              'Image',
-              'Published On',
+              // 'Image',
+              // 'Published On',
               'Added At',
               'Is Published',
               'Is Active',
