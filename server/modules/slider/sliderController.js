@@ -116,10 +116,12 @@ sliderController.GetSliderById = async (req, res, next) => {
 };
 sliderController.GetSliderByKey = async (req, res, next) => {
   const id = req.params.key;
-  const slider = await sliderSch.findOne({
-    slider_key: id,
-    is_deleted: false,
-  });
+  const slider = await sliderSch
+    .findOne({
+      slider_key: id,
+      is_deleted: false,
+    })
+    .populate('images.image');
   return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
 };
 sliderController.DeleteSlider = async (req, res, next) => {
