@@ -13,3 +13,6 @@ config
 
 package-lock.json
 yarn.lock
+
+# files
+public/
