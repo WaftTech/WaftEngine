@@ -66,9 +66,9 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
   return (
     <div className="rounded mt-4">
       {items.map((value, index) => (
-        <>
+        <div
+        key={`${value._id}-item-image-${index}`}>
           <SortableImageItem
-            key={`${value._id}-item-image-${index}`}
             index={index}
             value={value}
             _this={_this}
@@ -127,7 +127,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
               </button>
             </div>
           </div>
-        </>
+        </div >
       ))}
     </div>
   );
