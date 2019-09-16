@@ -5,15 +5,10 @@ import LoginUserPage from '../containers/LoginUserPage/Loadable';
 import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadable';
 import SignupUserPage from '../containers/SignupUserPage/Loadable';
 import FaqPage from '../containers/FAQPage/Loadable';
-// import BlogListPage from '../containers/BlogList/Loadable';
-// import CategoryListingPage from '../containers/CategoryListingPage/Loadable';
-// import CategoryDetailPage from '../containers/CategoryDetailPage/Loadable';
-// import BlogDetailPage from '../containers/Blog/Pages/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
 import SubscribePage from '../containers/SubscriberPage/Loadable';
 import StaticPage from '../containers/StaticPages/Loadable';
 
-// import BlogListDatePage from '../containers/BlogList/BlogDate';
 import BlogPages from '../containers/Blog';
 
 const publicRoutes = [

@@ -131,6 +131,12 @@ const menu = [
         icon: 'error_outline',
         link: '/admin/errors',
       },
+      {
+        key: '5.5',
+        name: 'Comment',
+        icon: 'comment',
+        link: '/admin/blog-comment-manage',
+      },
     ],
   },
 ];
