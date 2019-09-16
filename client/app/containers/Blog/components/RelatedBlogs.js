@@ -11,17 +11,16 @@ import {
 import { IMAGE_BASE } from '../../App/constants';
 import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
 
-
 function RelatedBlogs(props) {
   if (props.loading) {
     return <RecentBlogsSkeleton />;
   }
-  if (props.blogs.length === 0) {
-    return null;
-  }
+  // if (props.blogs.length === 0) {
+  //   return null;
+  // }
   return (
-    <div className="mb-4">
-      <h3 className="uppercase">Related Blogs</h3>
+    <div className="mt-10 mb-4">
+      <h3 className="font-medium text-xl uppercase">Related Blogs</h3>
       {props.blogs.map(blog => (
         <div
           key={`relateds-${blog._id}`}

@@ -1,19 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  EmailIcon,
+} from 'react-share';
 
+import Dialog from '@material-ui/core/Dialog';
 import LinkBoth from '../../../components/LinkBoth';
 import { IMAGE_BASE } from '../../App/constants';
 import BlogDetailSkeleton from '../Skeleton/BlogDetail';
 import BlogComments from '../../Comments';
 
+// @material
+// import DialogTitle from '@material-ui/core/DialogTitle';
+
 function BlogDetail(props) {
   const { blog, loading } = props;
-
+  const url = window.location.href;
   return loading ? (
     <BlogDetailSkeleton />
   ) : (
     <>
       <div>
+        <div className="flex">
+          <FacebookShareButton url={url}>
+            <FacebookIcon size={50} round />
+          </FacebookShareButton>
+          <LinkedinShareButton url={url}>
+            <LinkedinIcon size={50} round />
+          </LinkedinShareButton>
+          <TwitterShareButton url={url}>
+            <TwitterIcon size={50} round />
+          </TwitterShareButton>
+          <EmailShareButton url={url}>
+            <EmailIcon size={50} round />
+          </EmailShareButton>
+          <WhatsappShareButton url={url}>
+            <WhatsappIcon size={50} round />
+          </WhatsappShareButton>
+        </div>
         <p className="sans-serif text-gray-700">
           {blog && moment(blog.added_at).format('MMM DD, YYYY')}
         </p>

@@ -100,49 +100,49 @@ const Header = props => {
             </button>
           </div>
         ) : (
-            <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
-              <button className={classes.dropDown} onClick={handleMenu}>
-                <div className="text-base flex">
-                  <span className="ml-2 mr-2">{user.name} | </span>
-                  <AccountCircle />
-                </div>
-              </button>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                {user.isAdmin && (
-                  <MenuItem onClick={handleClose}>
-                    <Link
-                      to="/admin/dashboard"
-                      style={{ textDecoration: 'none', color: 'black' }}
-                    >
-                      Dashboard
-                  </Link>
-                  </MenuItem>
-                )}
+          <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
+            <button className={classes.dropDown} onClick={handleMenu}>
+              <div className="text-base flex">
+                <span className="ml-2 mr-2">{user.name} | </span>
+                <AccountCircle />
+              </div>
+            </button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              {user.isAdmin && (
                 <MenuItem onClick={handleClose}>
                   <Link
-                    to="/user/profile"
+                    to="/admin/dashboard"
                     style={{ textDecoration: 'none', color: 'black' }}
                   >
-                    Profile
-                </Link>
+                    Dashboard
+                  </Link>
                 </MenuItem>
-                <MenuItem onClick={handleLogout}>LogOut</MenuItem>
-              </Menu>
-            </div>
-          )}
+              )}
+              <MenuItem onClick={handleClose}>
+                <Link
+                  to="/user/profile"
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  Profile
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+            </Menu>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -13,6 +13,7 @@ import BlogListSkeleton from '../Skeleton/BlogList';
 
 const RenderBlogs = props => {
   const { currentBlogs, loading, pagination, handlePagination } = props;
+  console.log(currentBlogs, 'blogs');
   const maxPage = Math.ceil(pagination.totaldata / pagination.size);
   const pagenumber = [];
   for (let i = 1; i <= Math.ceil(pagination.totaldata / pagination.size); i++) {
@@ -36,7 +37,7 @@ const RenderBlogs = props => {
         } = each;
 
         return (
-          <div className="border-b border-dotted py-5 flex" key={each._id}>
+          <div key={slug_url} className="border-b border-dotted py-5 flex">
             <div className="w-1/4">
               <Link
                 className="text-black no-underline capitalize mb-2 bold block mt-4"
@@ -108,9 +109,9 @@ const RenderBlogs = props => {
           )}
           {pagenumber.length > 0 &&
             pagenumber.map(each => (
-              <span className="inline-block pr-2">
+              <span className="inline-block pr-2"
+              key={each}>
                 <button
-                  key={each}
                   id={each}
                   className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded"
                   onClick={e => {
