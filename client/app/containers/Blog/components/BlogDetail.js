@@ -1,19 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  EmailIcon,
+} from 'react-share';
 
 import LinkBoth from '../../../components/LinkBoth';
 import { IMAGE_BASE } from '../../App/constants';
 import BlogDetailSkeleton from '../Skeleton/BlogDetail';
 import BlogComments from '../../Comments';
 
+//@material
+import Dialog from '@material-ui/core/Dialog';
+// import DialogTitle from '@material-ui/core/DialogTitle';
+
 function BlogDetail(props) {
   const { blog, loading } = props;
+
+  const [open, setOpen] = useState(false);
+
+  const handleShare = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return loading ? (
     <BlogDetailSkeleton />
   ) : (
     <>
       <div>
+        <button
+          className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+          onClick={handleShare}
+        >
+          Share
+        </button>
+        <Dialog open={open} onClose={handleClose}>
+          <div className="flex">
+            <FacebookShareButton url="www.google.com">
+              <FacebookIcon size={50} round={true} />
+            </FacebookShareButton>
+            <LinkedinShareButton url="www.google.com">
+              <LinkedinIcon size={50} round={true} />
+            </LinkedinShareButton>
+            <TwitterShareButton url="www.google.com">
+              <TwitterIcon size={50} round={true} />
+            </TwitterShareButton>
+            <EmailShareButton url="www.google.com">
+              <EmailIcon size={50} round={true} />
+            </EmailShareButton>
+            <WhatsappShareButton url="www.google.com">
+              <WhatsappIcon size={50} round={true} />
+            </WhatsappShareButton>
+          </div>
+        </Dialog>
         <p className="sans-serif text-gray-700">
           {blog && moment(blog.added_at).format('MMM DD, YYYY')}
         </p>

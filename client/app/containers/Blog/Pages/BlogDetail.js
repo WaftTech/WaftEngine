@@ -47,7 +47,11 @@ export class BlogPage extends React.Component {
   }
 
   render() {
-    const { blog, loading } = this.props;
+    const {
+      blog,
+      loading,
+      match: { url },
+    } = this.props;
     return (
       <>
         <Helmet>

@@ -109,6 +109,7 @@
     "react-loading-skeleton": "^1.1.2",
     "react-redux": "7.0.2",
     "react-router-dom": "5.0.0",
+    "react-share": "^3.0.1",
     "react-slick": "^0.23.2",
     "react-sortable-hoc": "^1.9.1",
     "redux": "4.0.1",

@@ -94,7 +94,8 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         };
         break;
       case types.LOAD_LATEST_BLOGS_SUCCESS:
-        draft.latestBlogs = action.payload.data;
+        draft.latestBlogs[action.payload.data.category._id] =
+          action.payload.data;
         draft.blogLoading = false;
         break;
       case types.LOAD_LATEST_BLOGS_REQUEST:
