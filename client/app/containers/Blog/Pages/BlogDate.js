@@ -16,9 +16,6 @@ import reducer from '../reducer';
 import CategoryList from '../components/CategoryList';
 import Archives from '../components/Archives';
 import RenderBlogs from '../components/BlogList';
-import ArchiveSkeleton from '../Skeleton/Archive';
-import BlogListSkeleton from '../Skeleton/BlogList';
-
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogDatePage extends React.Component {
@@ -34,7 +31,7 @@ export class BlogDatePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    window.scrollTo(0, 0)
+    // window.scrollTo(0, 0)
     if (nextProps.match.params.date !== this.props.match.params.date) {
       this.props.loadBlogDateRequest({
         key: nextProps.match.params.date,
@@ -55,49 +52,38 @@ export class BlogDatePage extends React.Component {
       blogDate: { data, page, size, totaldata },
       loading,
     } = this.props;
-    console.log(data);
     const pagination = { page, size, totaldata };
 
-    return loading ? (
-      <div>
-        <div className="bg-star h-48 relative text-center py-12" />
+    return (
+      <React.Fragment>
+        <Helmet>
+          <title>Blog By Date</title>
+        </Helmet>
+        <div className="bg-star h-48 relative text-center py-12">
+          <h1 className="mb-4 text-gray-700 text-4xl font-bold">
+            {data &&
+              data.length > 0 &&
+              moment(data[0].added_at).format('MMMM YYYY')}
+          </h1>
+        </div>
         <div className="container mx-auto flex">
           <div className="w-3/4">
-            <BlogListSkeleton /></div>
+            {data && data.length > 0 && (
+              <RenderBlogs
+                loading={loading}
+                currentBlogs={data}
+                pagination={pagination}
+                handlePagination={this.handlePagination}
+              />
+            )}
+          </div>
           <div className="w-1/4 pt-10">
             <CategoryList />
-            <ArchiveSkeleton />
+            <Archives />
           </div>
         </div>
-      </div>
-    ) : (
-        <React.Fragment>
-          <Helmet>
-            <title>Blog By Date</title>
-          </Helmet>
-          <div className="bg-star h-48 relative text-center py-12">
-            <h1 className="mb-4 text-gray-700 text-4xl font-bold">
-              {data && data.length > 0 && moment(data[0].added_at).format('MMMM YYYY')}
-            </h1>
-          </div>
-          <div className="container mx-auto flex">
-            <div className="w-3/4">
-              {data && data.length > 0 && (
-                <RenderBlogs
-                  loading={loading}
-                  currentBlogs={data}
-                  pagination={pagination}
-                  handlePagination={this.handlePagination}
-                />
-              )}
-            </div>
-            <div className="w-1/4 pt-10">
-              <CategoryList />
-              <Archives />
-            </div>
-          </div>
-        </React.Fragment>
-      );
+      </React.Fragment>
+    );
   }
 }
 

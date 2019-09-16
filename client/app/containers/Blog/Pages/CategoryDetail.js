@@ -53,7 +53,6 @@ class CategoryDetailPage extends React.Component {
       },
     } = this.props;
     const pagination = { page, size, totaldata };
-    console.log('loading', loading);
     return (
       <React.Fragment>
         <Helmet>
@@ -67,14 +66,12 @@ class CategoryDetailPage extends React.Component {
 
         <div className="container mx-auto flex">
           <div className="w-3/4">
-            {data && data.length > 0 && (
-              <RenderBlogs
-                loading={loading}
-                currentBlogs={data}
-                pagination={pagination}
-                handlePagination={this.handlePagination}
-              />
-            )}
+            <RenderBlogs
+              loading={loading}
+              currentBlogs={data}
+              pagination={pagination}
+              handlePagination={this.handlePagination}
+            />
           </div>
           <div className="w-1/4 pt-10">
             <CategoryList />

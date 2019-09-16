@@ -13,7 +13,6 @@ import BlogListSkeleton from '../Skeleton/BlogList';
 
 const RenderBlogs = props => {
   const { currentBlogs, loading, pagination, handlePagination } = props;
-  console.log(currentBlogs, 'blogs');
   const maxPage = Math.ceil(pagination.totaldata / pagination.size);
   const pagenumber = [];
   for (let i = 1; i <= Math.ceil(pagination.totaldata / pagination.size); i++) {
@@ -109,8 +108,7 @@ const RenderBlogs = props => {
           )}
           {pagenumber.length > 0 &&
             pagenumber.map(each => (
-              <span className="inline-block pr-2"
-              key={each}>
+              <span className="inline-block pr-2" key={each}>
                 <button
                   id={each}
                   className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded"
@@ -140,7 +138,7 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-    <div>Blog Not Found</div>
+    <div>Blogs Not Found</div>
   );
 };
 

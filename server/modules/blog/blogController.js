@@ -84,14 +84,21 @@ blogcontroller.getLatestBlog = async (req, res, next) => {
       .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
       .sort({ _id: -1 })
       .skip(0)
-      .limit(5);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog', null);
+      .limit();
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!!', null);
   } catch (err) {
     next(err);
   }
 };
 blogcontroller.getLatestBlogByCat = async (req, res, next) => {
   try {
+    const size_default = 10;
+    let size;
+    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+      size = Math.abs(req.query.size);
+    } else {
+      size = size_default;
+    }
     const cat_id = req.params.cat_id;
     const category = await blogCatSch.findById(cat_id).select({ title: 1 });
     const blogs = await blogSch
@@ -100,7 +107,7 @@ blogcontroller.getLatestBlogByCat = async (req, res, next) => {
       .populate([{ path: 'category', select: 'title' }, { path: 'author', select: 'name' }])
       .sort({ _id: -1 })
       .skip(0)
-      .limit(5);
+      .limit(size * 1);
     const totaldata = blogs.length;
     return otherHelper.sendResponse(res, httpStatus.OK, true, { blogs, category, totaldata }, null, 'Latest blogs by category', null);
   } catch (err) {
@@ -150,7 +157,7 @@ blogcontroller.GetBlogArchives = async (req, res, next) => {
 
 blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
   try {
-    const size_default = 2;
+    const size_default = 12;
     let page;
     let size;
     let sortq;
@@ -653,10 +660,11 @@ blogcontroller.GetBlogComment = async (req, res, next) => {
       };
     }
     if (req.query.find_blog_id) {
-      const blog = await blogSch.find({ title: { $regex: req.query.blog_id, $options: 'i' } }).select({ _id: 1 });
+      const blog = await blogSch.find({ title: { $regex: req.query.find_blog_id, $options: 'i' } }).select({ _id: 1 });
       const blogId = blog.map(each => each._id);
       searchq = {
         blog_id: { $in: blogId },
+        ...searchq,
       };
     }
 

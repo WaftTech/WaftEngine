@@ -48,9 +48,13 @@ function* logOut() {
 
 function* loadLatestBlog(action) {
   const token = yield select(makeSelectToken());
+  let query = '';
+  if (action.payload.value) {
+    query = `${query}&size=${action.payload.value}`;
+  }
   yield call(
     Api.get(
-      `blog/latest/${action.payload}`,
+      `blog/latest/${action.payload.key}?${query}`,
       actions.loadLatestBlogsSuccess,
       actions.loadLatestBlogsFailure,
       token,

@@ -22,10 +22,10 @@ import {
 import Skeleton from './skeleton';
 
 const CategoryElement = props => {
-  const { cat_id, latestBlogs, loading } = props;
+  const { cat_id, latestBlogs, loading, size } = props;
 
   useEffect(() => {
-    props.loadLatestBlogsRequest(cat_id);
+    props.loadLatestBlogsRequest({ key: cat_id, value: size });
   }, [cat_id]);
 
   return loading ? (
