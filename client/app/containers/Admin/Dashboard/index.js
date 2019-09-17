@@ -62,16 +62,16 @@ export class Dashboard extends React.PureComponent {
         </div>
 
         {info.map(each => (
-          <div key={each._id} className="p-4 bg-white rounded">
+          <div key={each._id}>
             <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
             <div
-              className="mt-2 bg-gray-200 flex flex-wrap justify-between p-4 rounded"
+              className="mt-2 flex flex-wrap justify-between p-4 rounded"
               dangerouslySetInnerHTML={{ __html: each.detail }}
             />
           </div>
         ))}
 
-        <div className="bg-white rounded my-4 p-4 ">
+        {/* <div className="bg-white rounded my-4 p-4 ">
           <h3 className="border-b text-2xl font-bold border-gray-300  pb-2">Latest Blogs</h3>
           {blogs.map(each => (
             <LinkBoth
@@ -84,10 +84,10 @@ export class Dashboard extends React.PureComponent {
               </div>
             </LinkBoth>
           ))}
-        </div>
+        </div> */}
 
-        <div className="flex justify-between mx-8">
-          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black">
+        <div className="flex justify-between m-8">
+          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black shadow">
             <LinkBoth
               to="/admin/blog-manage/add/"
               className="text-gray-800 no-underline hover:text-black font-bold"
@@ -96,29 +96,29 @@ export class Dashboard extends React.PureComponent {
               Write Post
             </LinkBoth>
           </div>
-          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black">
+          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black shadow">
             <LinkBoth
               className="text-gray-800 no-underline hover:text-black font-bold"
               to="https://www.waftengine.org/documentation"
               target="_blank"
             >
               <Note className={classes.dashicon} />
-              View documentation
+              View Doc
             </LinkBoth>
           </div>
-          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black">
+          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black shadow">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
               <AccountBox className={classes.dashicon} />
-              Total users{' '}
+              Total Users{' '}
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
               {users.totaldata}
             </span>
           </div>
-          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
+          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black shadow">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
               <Error className={classes.dashicon} />
-              Total errors
+              Total Errors
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
               {errors.totaldata}
@@ -139,7 +139,7 @@ export class Dashboard extends React.PureComponent {
                       key={each._id}
                       className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
-                      <div className="flex justify-center text-center h-10">
+                      <div className="flex justify-center h-10">
                         <span className="m-auto w-24">{each.role_title}: </span>
                         <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
                           {users.data &&
@@ -163,7 +163,7 @@ export class Dashboard extends React.PureComponent {
                       key={each._id}
                       className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
-                      <div className="flex justify-between text-center h-10">
+                      <div className="flex justify-between h-10">
                         <span className="m-auto w-24">{each._id}</span>
                         <span className="m-auto inline-block text-waftprimary font-bold text-2xl text-right ml-4">
                           {each.count}
@@ -172,7 +172,7 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                    <div className="flex justify-between text-center">
+                    <div className="flex justify-between">
                       <h2 className="w-full m-auto h-full text-4xl">No Errors</h2>
                     </div>
                   )}
