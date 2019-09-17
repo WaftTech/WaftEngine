@@ -58,8 +58,8 @@ export class BlogsByTag extends React.Component {
             Blogs Of {tag}
           </h1>
         </div>
-        <div className="container mx-auto block md:flex p-4 mb-10">
-          <div className="w-full md:w-3/4">
+        <div className="container mx-auto md:flex py-10">
+          <div className="md:w-3/4 px-5">
             <RenderBlogs
               loading={loading}
               currentBlogs={data}
@@ -67,7 +67,7 @@ export class BlogsByTag extends React.Component {
               handlePagination={this.handlePagination}
             />
           </div>
-          <div className="w-full md:w-1/4 pt-10 pl-10">
+          <div className="md:w-1/4 pt-10 px-5">
             <CategoryList />
             <Archives />
           </div>

@@ -66,8 +66,8 @@ export class BlogDatePage extends React.Component {
               moment(data[0].added_at).format('MMMM YYYY')}
           </h1>
         </div>
-        <div className="container mx-auto flex">
-          <div className="w-3/4">
+        <div className="container mx-auto md:flex py-10">
+          <div className="md:w-3/4 px-5">
             {data && data.length > 0 && (
               <RenderBlogs
                 loading={loading}
@@ -77,7 +77,7 @@ export class BlogDatePage extends React.Component {
               />
             )}
           </div>
-          <div className="w-1/4 pt-10">
+          <div className="md:w-1/4 pt-10 px-5">
             <CategoryList />
             <Archives />
           </div>

@@ -312,14 +312,3 @@ div#component-error-text {
 .bg-star { background:url(./assets/img/ptn.jpg) 0 32px; background-size:75px 75px; }
 
 .nav-link.active { box-shadow:0 1px 0 #d82929;}
-
-.first_item { width:50%; height:400px;}
-
-.recent_blog .first_item {
-  width: 50%;
-  float: left;}
-
-  .recent_blog .first_item .block { display: block;} 
-  .recent_blog .first_item img { width:100%;}
-  .recent_blog .first_item .imgContainer { height:300px; overflow: hidden; display: block;}
-  .recent_blog .first_item .heading { padding-left:0; }

@@ -37,7 +37,7 @@ const PublicLayout = ({ location }) => {
   return (
     <>
       {showHeaderAndFooter && <Header />}
-      <div className="min-h-screen">{switchRoutes}</div>
+      <div className="flex-1">{switchRoutes}</div>
       {showHeaderAndFooter && <Footer />}
     </>
   );
