@@ -224,9 +224,12 @@ class AddEdit extends React.PureComponent {
 
   handleDelete = index => () => {
     const chipData = [...this.props.one.tags];
-
+    // const tags = [...chipData.slice(0, index), ...chipData.slice(index + 1)];
     chipData.splice(index, 1);
-    this.props.setOneValue({ key: 'tags', value: chipData });
+    this.props.setOneValue({
+      key: 'tags',
+      value: chipData,
+    });
   };
 
   insertTags = event => {
@@ -279,7 +282,6 @@ class AddEdit extends React.PureComponent {
       errors,
     } = this.props;
     const { tempImage } = this.state;
-    console.log(category);
     return loading && loading == true ? (
       <Loading />
     ) : (
@@ -542,14 +544,6 @@ class AddEdit extends React.PureComponent {
                 );
               })}
             </Paper>
-            {/* <input
-              className="Waftinputbox"
-              id="blog-meta-keywords"
-              type="text"
-              value={one.keywords || ''}
-              name="keywords"
-              onChange={this.handleChange('keywords')}
-            /> */}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">

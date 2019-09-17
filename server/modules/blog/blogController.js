@@ -303,13 +303,14 @@ blogcontroller.SaveBlog = async (req, res, next) => {
         .join('/')
         .split('server/')[1];
     }
-    // let d = new Date();
-
-    // blogs.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${blogs.title}`);
     if (blogs && blogs._id) {
       if (req.file) {
         blogs.image = req.file;
       }
+      if (!blogs.meta_tag) blogs.meta_tag = [];
+      if (!blogs.category) blogs.category = [];
+      if (!blogs.tags) blogs.tags = [];
+      if (!blogs.keywords) blogs.keywords = [];
       const update = await blogSch.findByIdAndUpdate(
         blogs._id,
         {
