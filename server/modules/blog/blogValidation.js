@@ -92,6 +92,15 @@ validation.validate = (req, res, next) => {
         },
       ],
     },
+    {
+      field: 'author',
+      validate: [
+        {
+          condition: 'IsMongoId',
+          msg: blogConfig.validate.isMongoId,
+        },
+      ],
+    },
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {

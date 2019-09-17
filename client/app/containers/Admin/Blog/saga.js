@@ -81,6 +81,7 @@ export const validate = data => {
   if (!data.title) errors.title = 'Title field is required!!';
   if (!data.slug_url) errors.slug_url = 'Slug field is required!!';
   if (!data.description) errors.description = 'Description field is required!!';
+  if (!data.author) errors.author = 'Please select an author!!';
   return { errors, isValid: !Object.keys(errors).length };
 };
 

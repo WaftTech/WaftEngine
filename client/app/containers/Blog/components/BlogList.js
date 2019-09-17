@@ -7,7 +7,6 @@ import { compose } from 'redux';
 import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import * as mapDispatchToProps from '../actions';
 import BlogListSkeleton from '../Skeleton/BlogList';
 
@@ -46,24 +45,32 @@ const RenderBlogs = props => {
               </Link>
               <span className="mt-2">
                 by{' '}
-                <Link
-                  to={`/blog/author/${author._id}`}
-                  className="text-red-600 font-bold no-underline hover:underline"
-                >
-                  {author.name}
-                </Link>
+                {author && author.name ? (
+                  <Link
+                    to={`/blog/author/${author._id}`}
+                    className="text-red-600 font-bold no-underline hover:underline"
+                  >
+                    {author.name}
+                  </Link>
+                ) : (
+                  'unknown'
+                )}
               </span>
             </div>
             <div className="w-1/2 p-4">
               <span className="text-gray-700 mr-2">
                 {moment(added_at).format('MMM Do YYYY')}
               </span>
-              <Link
-                className="text-indigo-600 no-underline"
-                to={`/blog/${each.slug_url}`}
-              >
-                <span> {tags.join(', ') || ''} </span>
-              </Link>{' '}
+              {tags && tags.length > 0 ? (
+                <Link
+                  className="text-indigo-600 no-underline"
+                  to={`/blog/${each.slug_url}`}
+                >
+                  <span> {tags.join(', ') || ''} </span>
+                </Link>
+              ) : (
+                ''
+              )}
               <Link
                 className="text-grey-darker text-base no-underline"
                 to={`/blog/${slug_url}`}
