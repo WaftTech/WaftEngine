@@ -66,61 +66,55 @@ class FAQPage extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title> FAQs </title>
-        </Helmet>
-        <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="text-4xl mb-4">Frequently Asked Questions</h1>
-          <p className="text-gray-700">
-            feel free to visit answers you looking for.
+        <div>
+          <Helmet>
+            <title> FAQs </title>
+          </Helmet>
+          <div className="bg-star h-48 relative text-center py-12">
+            <h1 className="text-4xl mb-4">Frequently Asked Questions</h1>
+            <p className="text-gray-700">
+              feel free to visit answers you looking for.
           </p>
-        </div>
-        <div className="my-10 max-w-md mx-auto">
-          {faq.cat &&
-            faq.cat.map(
-              x =>
-                faq.faq &&
-                faq.faq.filter(z => z.category == x._id).length !== 0 && (
-                  <ExpansionPanel
-                    className="rounded mb-2"
-                    key={`cat-${x._id}`}
-                    square
-                    expanded={expanded === x._id}
-                    onChange={this.handleChange(x._id)}
-                  >
-                    <p className="text-lg font-bold">{x.title}</p>
-                    <ExpansionPanelSummary />
-                    <ExpansionPanelDetails style={{ display: 'block' }}>
-                      {faq.faq &&
-                        faq.faq
-                          .filter(z => z.category == x._id)
-                          .map(y => (
-                            <ExpansionPanel
-                              className={classes.FAQPanel}
-                              key={`faq-${y._id}`}
-                              expanded={qExpanded === y._id}
-                              onChange={this.handleQChange(y._id)}
-                            >
-                              <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
+          </div>
+          <div className="my-10 max-w-xl mx-auto">
+            {faq.cat &&
+              faq.cat.map(
+                x =>
+                  faq.faq &&
+                  faq.faq.filter(z => z.category == x._id).length !== 0 && (
+                    <div key={`cat-${x._id}`} className="mb-6">
+                      <h2 className="text-xl font-bold">{x.title}</h2>
+                      {/* <ExpansionPanelSummary /> */}
+                      <ExpansionPanelDetails style={{ display: 'block', paddingLeft: 0 }}>
+                        {faq.faq &&
+                          faq.faq
+                            .filter(z => z.category == x._id)
+                            .map(y => (
+                              <ExpansionPanel
+                                className={classes.FAQPanel}
+                                key={`faq-${y._id}`}
+                                expanded={qExpanded === y._id}
+                                onChange={this.handleQChange(y._id)}
                               >
-                                <p className="text-base">{y.question}</p>
-                              </ExpansionPanelSummary>
-                              <ExpansionPanelDetails>
-                                <p className="text-base">{y.title}</p>
-                              </ExpansionPanelDetails>
-                            </ExpansionPanel>
-                          ))}
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                ),
-            )}
+                                <ExpansionPanelSummary
+                                  expandIcon={<ExpandMoreIcon />}
+                                  aria-controls="panel2a-content"
+                                  id="panel2a-header"
+                                >
+                                  <p className="text-base">{y.question}</p>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                  <p className="text-base">{y.title}</p>
+                                </ExpansionPanelDetails>
+                              </ExpansionPanel>
+                            ))}
+                      </ExpansionPanelDetails>
+                    </div>
+                  ),
+              )}
+          </div>
         </div>
-      </div>
-    );
+      );
   }
 }
 

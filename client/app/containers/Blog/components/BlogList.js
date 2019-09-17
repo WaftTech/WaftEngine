@@ -36,8 +36,8 @@ const RenderBlogs = props => {
         } = each;
 
         return (
-          <div key={slug_url} className="border-b border-dotted py-5 flex">
-            <div className="w-1/4">
+          <div key={slug_url} className="border-b border-dotted py-5 md:flex">
+            <div className="md:w-1/4">
               <Link
                 className="text-black no-underline capitalize mb-2 bold block mt-4"
                 to={`/blog/${slug_url}`}
@@ -54,7 +54,7 @@ const RenderBlogs = props => {
                 </Link>
               </span>
             </div>
-            <div className="w-1/2 p-4">
+            <div className="md:w-1/2 py-4 md:p-4">
               <span className="text-gray-700 mr-2">
                 {moment(added_at).format('MMM Do YYYY')}
               </span>
@@ -76,7 +76,7 @@ const RenderBlogs = props => {
               </Link>
             </div>
 
-            <div className="w-1/4 h-48 object-cover overflow-hidden p-8">
+            <div className="md:w-1/4 h-48 object-cover overflow-hidden p-8">
               <Link to={`/blog/${slug_url}`}>
                 <img
                   src={image && `${IMAGE_BASE}${image.path}`}
@@ -138,8 +138,8 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-    <div>Blogs Not Found</div>
-  );
+        <div>Blogs Not Found</div>
+      );
 };
 
 RenderBlogs.propTypes = {

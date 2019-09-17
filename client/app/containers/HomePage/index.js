@@ -53,7 +53,7 @@ export default class HomePage extends React.PureComponent {
           </div>
         </div>
         <div className="max-w-5xl mx-auto py-12 px-4 overflow-hidden">
-          <h2>Slider Example</h2>
+          <h2 className="font-bold text-3xl">Slider Example</h2>
           <SlickSlider slideKey="slider-one" />
         </div>
         <div className="max-w-5xl mx-auto py-12 px-4 overflow-hidden headline titless">
