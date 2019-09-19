@@ -187,14 +187,12 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           style={{
             width: 250,
             height: '100vh',
-            overflow: 'auto',
-            overflowX: 'hidden',
           }}
-          className="bg-white WaftSideBar"
+          className="bg-white shadow-lg overflow-hidden"
         >
           <Link to="/">
             <img
-              className="mt-3 mb-6 ml-4 mx-auto flex grayscale"
+              className="mt-3 mb-6 ml-4 mx-auto flex"
               src={Logo}
               alt="waftengine"
             />
@@ -222,21 +220,21 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
               open={anchorOpen}
               onClose={handleClose}
             ><Link
-                  to="/admin/dashboard"
-                  style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-                >
+              to="/admin/dashboard"
+              style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
+            >
                 <MenuItem>
-                    Dashboard
-                </MenuItem> 
+                  Dashboard
+                </MenuItem>
               </Link>
-                <Link
-                  to="/admin/profile"
-                  style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-                >
-                  <MenuItem >
-                      Profile
+              <Link
+                to="/admin/profile"
+                style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
+              >
+                <MenuItem >
+                  Profile
                   </MenuItem>
-                </Link>
+              </Link>
               <MenuItem onClick={handleLogout}>LogOut</MenuItem>
             </Menu>
           </div>

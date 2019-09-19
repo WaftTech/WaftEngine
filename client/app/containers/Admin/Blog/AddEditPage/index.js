@@ -309,7 +309,7 @@ class AddEdit extends React.PureComponent {
             <div className="w-full md:w-1/2 pb-4">
               <Input
                 label="title"
-                inputClassName="Waftinputbox"
+                inputClassName="inputbox"
                 inputId="blog-title"
                 value={(one && one.title) || ''}
                 name="Blog Title"
@@ -320,7 +320,7 @@ class AddEdit extends React.PureComponent {
             <div className="w-full md:w-1/2 pb-4">
               <Input
                 label="slug"
-                inputClassName="Waftinputbox"
+                inputClassName="inputbox"
                 inputId="blog-slug-url"
                 value={(one && one.slug_url) || ''}
                 name="Blog Slug"
@@ -360,7 +360,7 @@ class AddEdit extends React.PureComponent {
             </label>
 
               <textarea
-                className="Waftinputbox"
+                className="inputbox"
                 id="short_description"
                 type="text"
                 value={one.short_description || ''}
@@ -397,7 +397,7 @@ class AddEdit extends React.PureComponent {
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <img
-                      className="Waftinputbox cursor-pointer"
+                      className="inputbox cursor-pointer"
                       src={tempImage}
                       alt="Blogimage"
                       style={{ height: '120px', width: '60%' }}
@@ -414,7 +414,7 @@ class AddEdit extends React.PureComponent {
                 Published On
             </label>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="blog-title"
                 type="date"
                 value={
@@ -435,7 +435,7 @@ class AddEdit extends React.PureComponent {
             </label>
               <form onSubmit={this.insertTags}>
                 <input
-                  className="Waftinputbox"
+                  className="inputbox"
                   id="blog-tags"
                   type="text"
                   value={tempTag || ''}
@@ -467,7 +467,7 @@ class AddEdit extends React.PureComponent {
             </label>
 
               <textarea
-                className="Waftinputbox"
+                className="inputbox"
                 id="blog-tags"
                 type="text"
                 value={one.meta_description || ''}
@@ -485,7 +485,7 @@ class AddEdit extends React.PureComponent {
             </label>
               <form onSubmit={this.insertMetaTags}>
                 <input
-                  className="Waftinputbox"
+                  className="inputbox"
                   id="blog-meta-tags"
                   type="text"
                   value={tempMetaTag || ''}
@@ -519,7 +519,7 @@ class AddEdit extends React.PureComponent {
 
               <form onSubmit={this.insertMetaKeywords}>
                 <input
-                  className="Waftinputbox"
+                  className="inputbox"
                   id="blog-meta-keyword"
                   type="text"
                   value={tempMetaKeyword || ''}
@@ -543,7 +543,7 @@ class AddEdit extends React.PureComponent {
                 })}
               </Paper>
               {/* <input
-              className="Waftinputbox"
+              className="inputbox"
               id="blog-meta-keywords"
               type="text"
               value={one.keywords || ''}
@@ -561,7 +561,7 @@ class AddEdit extends React.PureComponent {
             </label>
 
               <select
-                className="Waftinputbox"
+                className="inputbox"
                 native="true"
                 value={(one && one.author) || ''}
                 onChange={this.handleDropDownChange('author')}

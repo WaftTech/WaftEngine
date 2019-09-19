@@ -89,7 +89,7 @@ export function Template({
               Template Key
             </label>
             <select
-              className="Waftinputbox"
+              className="inputbox"
               id="template-key"
               name="template_key"
               value={data || ''}
@@ -112,7 +112,7 @@ export function Template({
             </label>
             <input
               type="text"
-              className="Waftinputbox"
+              className="inputbox"
               readOnly
               id="template-name"
               name="template-name"
@@ -125,7 +125,7 @@ export function Template({
               Informations
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               type="text"
               readOnly
               id="informations"
@@ -139,7 +139,7 @@ export function Template({
               Variables
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               type="text"
               id="variables"
               name="variables"
@@ -154,7 +154,7 @@ export function Template({
               From
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               type="text"
               id="from_email"
               name="from"
@@ -168,7 +168,7 @@ export function Template({
               Subject
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               type="text"
               id="subject_email"
               name="subject"
@@ -182,7 +182,7 @@ export function Template({
               Alternate Text
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               type="text"
               id="alternate_text"
               name="alternate_text"
@@ -198,7 +198,7 @@ export function Template({
               Body
             </label>
             <textarea
-              className="Waftinputbox"
+              className="inputbox"
               type="text"
               id="body_email"
               name="body"

@@ -68,7 +68,7 @@ class UserPersonalInformationPage extends React.PureComponent {
 
           <FormControl error={errors && errors.name && errors.name.length > 0}>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="name"
               type="text"
               value={one.name || ''}
@@ -89,7 +89,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             error={errors && errors.email && errors.email.length > 0}
           >
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="email"
               type="text"
               value={one.email || ''}
@@ -110,7 +110,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             margin="normal"
             fullWidth
             name="date_of_birth"
-            className="Waftinputbox"
+            className="inputbox"
             value={
               (one.date_of_birth &&
                 moment(one.date_of_birth).format('YYYY-MM-DD')) ||

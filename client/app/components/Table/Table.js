@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import TablePagination from '@material-ui/core/TablePagination';
+import style from './table.css';
+
 // core components
 
 /* eslint-disable react/no-array-index-key */
@@ -107,8 +108,5 @@ CustomTable.propTypes = {
   }),
   handlePagination: PropTypes.func,
 };
-const styles = {
-  tableResponsive: { width: '100%' },
-};
 
-export default withStyles(styles)(CustomTable);
+export default CustomTable;

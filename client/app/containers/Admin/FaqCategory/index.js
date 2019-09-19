@@ -202,13 +202,13 @@ export class FaqCategory extends React.PureComponent {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative">
+            <div className="flex relative">
               <input
                 type="text"
                 name="find_title"
                 id="faq-title"
                 placeholder="Search Category"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_title}
                 onChange={this.handleQueryChange}
               />

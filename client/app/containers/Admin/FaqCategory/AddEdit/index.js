@@ -114,7 +114,7 @@ class AddEdit extends React.PureComponent {
             </label>
               <input
                 type="text"
-                className="Waftinputbox"
+                className="inputbox"
                 name="Title"
                 id="title"
                 label="Title"

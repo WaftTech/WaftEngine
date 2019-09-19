@@ -124,13 +124,13 @@ export class AdminModuleManage extends React.PureComponent {
 
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative">
+            <div className="flex relative">
               <input
                 type="text"
                 name="find_module_name"
                 id="module-name"
                 placeholder="Search modules by name"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_module_name}
                 onChange={this.handleQueryChange}
               />

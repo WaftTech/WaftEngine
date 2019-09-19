@@ -55,7 +55,7 @@ class Footer extends React.Component {
           <div className="flex flex-wrap p-5">
             <div className="w-full lg:w-1/3 mb-2 crorder">
               <Link to="/">
-                <img className="grayscale" src={logo} alt="WaftEngine" />
+                <img style={{ filter: 'grayscale(1)' }} src={logo} alt="WaftEngine" />
               </Link>
             </div>
             <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">

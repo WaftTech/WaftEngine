@@ -169,7 +169,7 @@ class AddEdit extends React.PureComponent {
                 Blog Title
             </label>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="title"
                 type="text"
                 value={one && one.title || ''}
@@ -186,7 +186,7 @@ class AddEdit extends React.PureComponent {
                 Slug
             </label>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="slug"
                 type="text"
                 value={one && one.slug_url || ''}
@@ -221,7 +221,7 @@ class AddEdit extends React.PureComponent {
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <img
-                      className="Waftinputbox cursor-pointer"
+                      className="inputbox cursor-pointer"
                       src={tempImage}
                       alt="BlogCategoryImage"
                       style={{ height: '120px', width: '60%' }}

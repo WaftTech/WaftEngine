@@ -133,7 +133,7 @@ class AddEdit extends React.PureComponent {
                   Content Title
               </label>
                 <input
-                  className="Waftinputbox"
+                  className="inputbox"
                   id="grid-last-name"
                   type="text"
                   value={one.name}
@@ -150,7 +150,7 @@ class AddEdit extends React.PureComponent {
                   Content Key
               </label>
                 <input
-                  className="Waftinputbox"
+                  className="inputbox"
                   id="grid-last-name"
                   type="text"
                   value={one.key}
@@ -182,7 +182,7 @@ class AddEdit extends React.PureComponent {
                   <DatePicker
                     margin="normal"
                     name="publish_from"
-                    className={[classes.textField, 'Waftinputbox']}
+                    className={[classes.textField, 'inputbox']}
                     value={
                       (one.publish_from &&
                         moment(one.publish_from).format('YYYY/MM/DD')) ||
@@ -203,7 +203,7 @@ class AddEdit extends React.PureComponent {
                   <DatePicker
                     margin="normal"
                     name="publish_to"
-                    className={[classes.textField, 'Waftinputbox']}
+                    className={[classes.textField, 'inputbox']}
                     value={
                       (one.publish_to &&
                         moment(one.publish_to).format('YYYY/MM/DD')) ||

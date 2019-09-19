@@ -239,7 +239,7 @@ class AddEdit extends React.PureComponent {
                 Module Name
             </label>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="module_name"
                 type="text"
                 value={one.module_name}
@@ -253,7 +253,7 @@ class AddEdit extends React.PureComponent {
                 Descrition
             </label>
               <textarea
-                className="Waftinputbox"
+                className="inputbox"
                 id="description"
                 type="text"
                 value={one.description}

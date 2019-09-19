@@ -34,7 +34,7 @@ const Path = props => {
           Access Type
         </label>
         <input
-          className="Waftinputbox"
+          className="inputbox"
           id={`${each._id}-access-type-${pathIndex}`}
           type="text"
           value={each.access_type}
@@ -55,7 +55,7 @@ const Path = props => {
               </label>
               <div className="flex">
                 <input
-                  className="Waftinputbox mr-2"
+                  className="inputbox mr-2"
                   id={`${each._id}-each-admin-route-access-type-${index}`}
                   type="text"
                   value={eachAdminRoute}
@@ -95,7 +95,7 @@ const Path = props => {
                   </label>
 
                   <select
-                    className="Waftinputbox"
+                    className="inputbox"
                     placeholder="Method"
                     value={eachServerRoute.method}
                     onChange={handleServerRoutesMethodChange(pathIndex, index)}
@@ -126,7 +126,7 @@ const Path = props => {
                   <div className="flex">
                     <input
                       type="text"
-                      className="Waftinputbox mr-2"
+                      className="inputbox mr-2"
                       style={{ background: '#FFFFFF' }}
                       id={`${each._id}-${
                         eachServerRoute._id

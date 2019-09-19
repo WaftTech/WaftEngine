@@ -94,7 +94,7 @@ export class ChangePassword extends React.Component {
             Old Password
           </label>
           <input
-            className="Waftinputbox"
+            className="inputbox"
             id="oldPassword"
             type="text"
             name="oldPassword"
@@ -113,7 +113,7 @@ export class ChangePassword extends React.Component {
             New Password
           </label>
           <input
-            className="Waftinputbox"
+            className="inputbox"
             id="newPassword"
             type="text"
             name="newPassword"
@@ -132,7 +132,7 @@ export class ChangePassword extends React.Component {
             Confirm New Password
           </label>
           <input
-            className="Waftinputbox"
+            className="inputbox"
             id="newPassword2"
             type="text"
             name="newPassword2"

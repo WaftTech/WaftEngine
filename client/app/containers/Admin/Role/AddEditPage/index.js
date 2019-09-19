@@ -88,7 +88,7 @@ class AddEdit extends React.PureComponent {
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                 Role Title
             </label>
-              <input className="Waftinputbox" id="role_title" type="text" value={one.role_title}
+              <input className="inputbox" id="role_title" type="text" value={one.role_title}
                 onChange={this.handleChange('role_title')} required />
               <div id="component-error-text">
                 {errors.role_title}
@@ -99,7 +99,7 @@ class AddEdit extends React.PureComponent {
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                 Description
             </label>
-              <textarea className="Waftinputbox" id="description" type="text" value={one.description}
+              <textarea className="inputbox" id="description" type="text" value={one.description}
                 onChange={this.handleChange('description')} required />
               <div id="component-error-text">
                 {errors.description}
