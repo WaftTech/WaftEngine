@@ -26,7 +26,7 @@ const ForgotPasswordUser = ({ classes, forgotPasswordRequest }) => {
     forgotPasswordRequest();
   };
   return (
-    <div className="max-w-lg mx-auto py-16">
+    <div className="max-w-lg mx-auto p-16">
       <h1 className="text-2xl font-bold">Forgot your password?</h1>
       <p >Don’t worry! Just fill in your email and we’ll help you reset your password.</p>
       <form className="my-4" onSubmit={handleSubmit}>

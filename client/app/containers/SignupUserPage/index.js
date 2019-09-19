@@ -38,7 +38,7 @@ const SignupUserPage = ({
   return (
     <div className="container mx-auto mb-10">
       <div className="mx-auto max-w-md p-5 md:p-16">
-        <h1 className="font-light text-4xl">SIGN UP</h1>
+        <h1 className="font-bold text-2xl">SIGN UP</h1>
         <form className="mt-4" onSubmit={handleSubmit}>
           <NameInput />
           <EmailInput />

@@ -33,7 +33,6 @@ const PasswordInput = props => {
           value={password}
           id="Password"
           type={isSecure ? 'text' : 'password'}
-          placeholder="Enter Password"
           className="inputbox"
         />
         <span

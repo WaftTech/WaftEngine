@@ -22,7 +22,6 @@ const EmailInput = props => {
         className="inputbox"
         id="username"
         type="text"
-        placeholder="Username"
       />
     </div>
   );

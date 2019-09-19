@@ -36,7 +36,7 @@ const LoginUserPage = ({
   return (
     <div className="container mx-auto mb-10">
       <div className="mx-auto max-w-md p-5 md:p-16">
-        <h1 className="font-light text-4xl">LOGIN</h1>        <form className="mt-4" onSubmit={handleSubmit}>
+        <h1 className="font-bold text-2xl">LOGIN</h1>        <form className="mt-4" onSubmit={handleSubmit}>
           <UsernameInput />
           <PasswordInput />
           <button

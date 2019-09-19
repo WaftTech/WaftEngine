@@ -11,17 +11,15 @@ const EmailInput = props => {
     setStoreValue({ key: 'email', value: e.target.value });
   const hasError = Boolean(error);
   return (
-    <div className="w-full md:w-1/2 pb-4">
-      <input
-        className="inputbox"
-        id="grid-last-name"
-        type="text"
-        value={email}
-        error={hasError}
-        placeholder="Enter Email"
-        onChange={handleChange}
-      />
-    </div>
+    <input
+      className="inputbox w-full"
+      id="grid-last-name"
+      type="text"
+      value={email}
+      error={hasError}
+      placeholder="Enter Email"
+      onChange={handleChange}
+    />
   );
 };
 
