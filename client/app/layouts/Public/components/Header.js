@@ -122,23 +122,21 @@ const Header = props => {
               onClose={handleClose}
             >
               {user.isAdmin && (
-                <MenuItem onClick={handleClose}>
-                  <Link
-                    to="/admin/dashboard"
-                    style={{ textDecoration: 'none', color: 'black' }}
-                  >
-                    Dashboard
-                  </Link>
-                </MenuItem>
-              )}
-              <MenuItem onClick={handleClose}>
                 <Link
-                  to="/user/profile"
+                  to="/admin/dashboard"
                   style={{ textDecoration: 'none', color: 'black' }}
+                  onClick={handleClose}
                 >
-                  Profile
+                  <MenuItem>Dashboard</MenuItem>
                 </Link>
-              </MenuItem>
+              )}
+              <Link
+                to="/user/profile"
+                style={{ textDecoration: 'none', color: 'black' }}
+                onClick={handleClose}
+              >
+                <MenuItem>Profile</MenuItem>
+              </Link>
               <MenuItem onClick={handleLogout}>LogOut</MenuItem>
             </Menu>
           </div>

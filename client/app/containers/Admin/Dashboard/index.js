@@ -60,7 +60,7 @@ export class Dashboard extends React.PureComponent {
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>Dashboard</PageHeader>
         </div>
-
+        <div className="bg-white rounded p-4 shadow">
         {info.map(each => (
           <div key={each._id}>
             <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
@@ -70,6 +70,7 @@ export class Dashboard extends React.PureComponent {
             />
           </div>
         ))}
+        </div>
 
         {/* <div className="bg-white rounded my-4 p-4 ">
           <h3 className="border-b text-2xl font-bold border-gray-300  pb-2">Latest Blogs</h3>
@@ -86,7 +87,7 @@ export class Dashboard extends React.PureComponent {
           ))}
         </div> */}
 
-        <div className="flex justify-between m-8">
+        <div className="flex justify-between mx-8 my-4">
           <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black shadow">
             <LinkBoth
               to="/admin/blog-manage/add/"
@@ -139,9 +140,9 @@ export class Dashboard extends React.PureComponent {
                       key={each._id}
                       className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
-                      <div className="flex justify-center h-10">
-                        <span className="m-auto w-24">{each.role_title}: </span>
-                        <span className="m-auto inline-block text-waftprimary text-2xl text-right font-bold ml-4">
+                      <div className="flex justify-between px-2 h-10 items-center">
+                        <span>{each.role_title}: </span>
+                        <span className="inline-block text-waftprimary text-2xl text-right font-bold">
                           {users.data &&
                             users.data.user &&
                             users.data.user.filter(e =>
@@ -163,9 +164,9 @@ export class Dashboard extends React.PureComponent {
                       key={each._id}
                       className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
-                      <div className="flex justify-between h-10">
-                        <span className="m-auto w-24">{each._id}</span>
-                        <span className="m-auto inline-block text-waftprimary font-bold text-2xl text-right ml-4">
+                      <div className="flex justify-between h-10 items-center px-2">
+                        <span className="w-24">{each._id}</span>
+                        <span className="inline-block text-waftprimary font-bold text-2xl text-right ">
                           {each.count}
                         </span>
                       </div>
