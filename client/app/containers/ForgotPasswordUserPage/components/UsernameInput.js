@@ -18,7 +18,7 @@ const EmailInput = props => {
         type="text"
         value={email}
         error={hasError}
-        placeholder="Your Email"
+        placeholder="Enter Email"
         onChange={handleChange}
       />
     </div>
