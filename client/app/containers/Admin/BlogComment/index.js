@@ -146,31 +146,31 @@ export class BlogCommentManagePage extends React.PureComponent {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative mr-2">
+            <div className="flex relative mr-2">
               <input
                 type="text"
                 name="find_title"
                 id="comment-title"
                 placeholder="Search Blog Comment"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_title}
                 onChange={this.handleQueryChange}
                 onKeyDown={this.handleEnter}
               />
             </div>
-            <div className="waftformgroup flex relative mr-2">
+            <div className="flex relative mr-2">
               <input
                 type="text"
                 name="find_blog_id"
                 id="blog-of-comment"
                 placeholder="Search Blogs"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_blog_id}
                 onChange={this.handleQueryChange}
                 onKeyDown={this.handleEnter}
               />
             </div>
-            <div className="waftformgroup flex relative mr-2">
+            <div className="flex relative mr-2">
               <IconButton
                 aria-label="Search"
                 className={`${classes.waftsrch} waftsrchstyle`}

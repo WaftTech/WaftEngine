@@ -15,6 +15,7 @@ import {
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
+import style from './header.css';
 
 const styles = theme => ({});
 
@@ -100,49 +101,47 @@ const Header = props => {
             </button>
           </div>
         ) : (
-          <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
-            <button className={classes.dropDown} onClick={handleMenu}>
-              <div className="text-base flex">
-                <span className="ml-2 mr-2">{user.name} | </span>
-                <AccountCircle />
-              </div>
-            </button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              {user.isAdmin && (
-                <MenuItem onClick={handleClose}>
+            <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
+              <button className={classes.dropDown} onClick={handleMenu}>
+                <div className="text-base flex">
+                  <span className="ml-2 mr-2">{user.name} | </span>
+                  <AccountCircle />
+                </div>
+              </button>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                {user.isAdmin && (
                   <Link
                     to="/admin/dashboard"
                     style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
                   >
-                    Dashboard
+                    <MenuItem>Dashboard</MenuItem>
                   </Link>
-                </MenuItem>
-              )}
-              <MenuItem onClick={handleClose}>
+                )}
                 <Link
                   to="/user/profile"
                   style={{ textDecoration: 'none', color: 'black' }}
+                  onClick={handleClose}
                 >
-                  Profile
+                  <MenuItem>Profile</MenuItem>
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleLogout}>LogOut</MenuItem>
-            </Menu>
-          </div>
-        )}
+                <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+              </Menu>
+            </div>
+          )}
       </div>
     </header>
   );

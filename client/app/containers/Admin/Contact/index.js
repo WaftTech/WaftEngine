@@ -191,13 +191,13 @@ export class Contact extends React.Component {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative mr-2">
+            <div className="flex relative mr-2">
               <input
                 type="text"
                 name="find_name"
                 id="contact-name"
                 placeholder="Search Contacts"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_name}
                 onChange={this.handleQueryChange}
               />

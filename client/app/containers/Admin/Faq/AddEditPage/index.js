@@ -110,7 +110,7 @@ class AddEdit extends React.PureComponent {
                 Question
             </label>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 name="Question"
                 id="faq"
                 value={one.question || ''}
@@ -126,7 +126,7 @@ class AddEdit extends React.PureComponent {
                 Answer
             </label>
               <textarea
-                className="Waftinputbox"
+                className="inputbox"
                 multiline="true"
                 rows="5"
                 name="Answer"
@@ -145,7 +145,7 @@ class AddEdit extends React.PureComponent {
                 Category
             </label>
               <select
-                className="Waftinputbox"
+                className="inputbox"
                 value={one.category}
                 onChange={this.handleChange('category')}
                 inputprops={{

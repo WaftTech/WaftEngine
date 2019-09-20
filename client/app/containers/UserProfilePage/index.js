@@ -7,7 +7,6 @@ import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import green from '@material-ui/core/colors/green';
 import { makeSelectUser } from '../App/selectors';
-import UserProfileSettingsPage from '../../components/UserProfileSettings';
 import UserPersonalInformationPage from './UserPersonalInformation';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -29,17 +28,12 @@ export class UserProfilePage extends React.Component {
         </Helmet>
 
         <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-4xl">
-            Profile
-          </h1>
+          <h1 className="mb-4 text-4xl">Profile</h1>
         </div>
 
         <div className="container mx-auto mb-10">
           <div className="flex flex-wrap justify-between">
-
-
             <div className="w-full md:w-1/2 px-5 md:px-16">
-
               <UserPersonalInformationPage />
             </div>
           </div>

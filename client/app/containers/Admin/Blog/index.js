@@ -217,13 +217,13 @@ export class BlogManagePage extends React.Component {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative">
+            <div className="flex relative">
               <input
                 type="text"
                 name="find_title"
                 id="blog-title"
                 placeholder="Search Blogs"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_title}
                 onChange={this.handleQueryChange}
               />

@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
-import { NavLink } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -19,10 +18,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
-import reducer from './reducer';
-import saga from './saga';
-import { makeSelectOne, makeSelectErrors } from './selectors';
-import * as mapDispatchToProps from './actions';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne, makeSelectErrors } from '../selectors';
+import * as mapDispatchToProps from '../actions';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -38,6 +37,7 @@ class UserPersonalInformationPage extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearError();
     this.props.loadOneRequest();
   }
 
@@ -61,17 +61,19 @@ class UserPersonalInformationPage extends React.PureComponent {
     const { classes, one, errors } = this.props;
     return (
       <React.Fragment>
-
         <div className="w-full pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Name
-        </label>
+          </label>
 
-          <FormControl
-            error={errors && errors.name && errors.name.length > 0}
-          >
-            <input className="inputbox" id="name" type="text" value={one.name || ''}
-              onChange={this.handleChange('name')} />
+          <FormControl error={errors && errors.name && errors.name.length > 0}>
+            <input
+              className="inputbox"
+              id="name"
+              type="text"
+              value={one.name || ''}
+              onChange={this.handleChange('name')}
+            />
             <FormHelperText id="component-error-text">
               {errors.name}
             </FormHelperText>
@@ -81,14 +83,18 @@ class UserPersonalInformationPage extends React.PureComponent {
         <div className="w-full pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Email
-        </label>
-
+          </label>
 
           <FormControl
             error={errors && errors.email && errors.email.length > 0}
           >
-            <input className="inputbox" id="email" type="text" value={one.email || ''}
-              onChange={this.handleChange('name')} />
+            <input
+              className="inputbox"
+              id="email"
+              type="text"
+              value={one.email || ''}
+              onChange={this.handleChange('name')}
+            />
             <FormHelperText id="component-error-text">
               {errors.email}
             </FormHelperText>
@@ -98,7 +104,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         <div className="w-full pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Date Of Birth
-        </label>
+          </label>
 
           <DatePicker
             margin="normal"
@@ -116,37 +122,29 @@ class UserPersonalInformationPage extends React.PureComponent {
 
         <FormControlLabel
           control={
-            <CheckBox
-              checked={one.email_verified || false}
-              color="primary"
-            />
+            <CheckBox checked={one.email_verified || false} color="primary" />
           }
           label="Email Verified"
         />
 
-        <div className="w-full pb-2">You are one of {one.roles.map(each => `${each.role_title} `)}</div>
+        <div className="w-full pb-2">
+          You are one of {one.roles.map(each => `${each.role_title} `)}
+        </div>
 
-        <div className="w-full  pb-4">Your account created at {moment(one.added_at).format('YYYY-MM-DD')}</div>
+        <div className="w-full  pb-4">
+          Your account created at {moment(one.added_at).format('YYYY-MM-DD')}
+        </div>
 
-
-        <NavLink className="text-gray-800 hover:text-black" to="/user/change-password">Change Password</NavLink>
-
-
-        <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme" onClick={this.handleSave}>Save</button>
-
-
-
-
+        <button
+          className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+          onClick={this.handleSave}
+        >
+          Save
+        </button>
       </React.Fragment>
     );
   }
 }
-
-const withReducer = injectReducer({
-  key: 'userPersonalInformationPage',
-  reducer,
-});
-const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
@@ -158,14 +156,11 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({
-});
+const styles = theme => ({});
 
 const withStyle = withStyles(styles);
 
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
   withStyle,
 )(UserPersonalInformationPage);

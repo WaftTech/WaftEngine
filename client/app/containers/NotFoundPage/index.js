@@ -20,17 +20,17 @@ import './404.css';
 export default class NotFound extends React.PureComponent {
   render() {
     return (
-      <div className="my-10 mx-auto text-center">
+      <div className="py-10 mx-auto text-center overflow-hidden h-full">
         <h1 className="font-light text-4xl">
           <FormattedMessage {...messages.header} />
         </h1>
         <div className="logo-swing">
-          <img src={logo} className="logo opacity-25 b/w" />
+          <img src={logo} className="logo opacity-25" />
           <img
             id="hinge"
             src={logo}
             className="logo hinge"
-            style={{ display: 'none' }}
+          // style={{ display: 'none' }}
           />
         </div>
       </div>

@@ -140,7 +140,7 @@ class AddEdit extends React.PureComponent {
                 Email
             </label>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 readOnly={id ? true : false}
                 id="email"
                 type="text"
@@ -154,7 +154,7 @@ class AddEdit extends React.PureComponent {
             </label>
 
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="name"
                 type="text"
                 value={users.name || ''}
@@ -168,7 +168,7 @@ class AddEdit extends React.PureComponent {
             </label>
 
               <textarea
-                className="Waftinputbox"
+                className="inputbox"
                 id="bio"
                 type="text"
                 value={(users && users.bio) || ''}
@@ -225,7 +225,7 @@ class AddEdit extends React.PureComponent {
             </label>
               <div className="relative">
                 <input
-                  className="Waftinputbox"
+                  className="inputbox"
                   id="password"
                   type={this.state.isSecure ? 'password' : 'text'}
                   value={users.password || ''}

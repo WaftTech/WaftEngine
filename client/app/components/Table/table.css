@@ -1,0 +1,5 @@
+
+
+.table tr:nth-child(even) {
+  background: #f7f7f7;
+}

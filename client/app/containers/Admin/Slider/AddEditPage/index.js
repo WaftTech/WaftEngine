@@ -97,7 +97,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
 
             <div className="w-1.5/5 m-auto text-center mr-2">
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id={`slider-link-${index}`}
                 type="text"
                 value={value.link || ''}
@@ -108,7 +108,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
             </div>
             <div className="w-1.5/5 m-auto text-center">
               <textarea
-                className="Waftinputbox"
+                className="inputbox"
                 id={`slider-caption-${index}`}
                 type="text"
                 value={value.caption || ''}
@@ -342,7 +342,7 @@ class AddEdit extends React.PureComponent {
               Slider Name
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="slider-name"
               type="text"
               value={one.slider_name}
@@ -360,7 +360,7 @@ class AddEdit extends React.PureComponent {
               Slider Key
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="slider-key"
               type="text"
               value={one.slider_key}
@@ -380,7 +380,7 @@ class AddEdit extends React.PureComponent {
             <textarea
               name="slider settings"
               id="slider_setting"
-              className="Waftinputbox"
+              className="inputbox"
               cols="50"
               rows="8"
               onChange={this.handleChange('settings')}

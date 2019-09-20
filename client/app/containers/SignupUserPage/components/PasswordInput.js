@@ -45,7 +45,7 @@ const PasswordInput = props => {
           value={password}
           id="Password"
           type={isSecure ? 'text' : 'password'}
-          className="Waftinputbox"
+          className="inputbox"
         />
         <span
           className={classes.EyeIcon}

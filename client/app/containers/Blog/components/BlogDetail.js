@@ -32,10 +32,10 @@ function BlogDetail(props) {
       <>
         <div>
 
-          <p className="sans-serif text-gray-700">
+          <p className="text-gray-700">
             {blog && moment(blog.added_at).format('MMM DD, YYYY')}
           </p>
-          <h2 className="capitalize text-4xl sans-serif mb-2">{blog.title}</h2>
+          <h2 className="capitalize text-4xl mb-2 leading-tight">{blog.title}</h2>
 
           {blog && blog.author && (
             <div className="inline-block">
@@ -98,7 +98,7 @@ function BlogDetail(props) {
             ) : null}
           </div>
           <div
-            className="blog py-5"
+            className="text-lg leading-relaxed py-5"
             dangerouslySetInnerHTML={{ __html: blog.description }}
           />
 
@@ -106,7 +106,7 @@ function BlogDetail(props) {
             <div className="inline-block mb-5">
               {blog.tags.map((each, index) => (
                 <LinkBoth
-                  className="bg-gray-300 hover:bg-blue-500 hover:text-white leading-normal text-sm no-underline sans-serif rounded px-2 py-1 mr-2"
+                  className="bg-gray-300 hover:bg-blue-500 hover:text-white leading-normal text-sm no-underline rounded px-2 py-1 mr-2"
                   key={index}
                   to={`/blog/tag/${each}`}
                 >
