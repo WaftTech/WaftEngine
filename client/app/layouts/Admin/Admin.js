@@ -179,7 +179,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
-      <div className="flex overflow-y-hidden bg-grey-lighter">
+      <div className="flex overflow-y-hidden bg-gray-200">
         <ColoredScrollbars
           autoHide
           autoHideTimeout={1000}
@@ -187,14 +187,12 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           style={{
             width: 250,
             height: '100vh',
-            overflow: 'auto',
-            overflowX: 'hidden',
           }}
-          className="bg-white WaftSideBar"
+          className="bg-white shadow-lg overflow-hidden"
         >
           <Link to="/">
             <img
-              className="mt-3 mb-6 ml-4 mx-auto flex grayscale1"
+              className="mt-3 mb-6 ml-4 mx-auto flex"
               src={Logo}
               alt="waftengine"
             />
@@ -202,11 +200,8 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           <MainListItems />
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
-          <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
-            <div className="flex">
-              <Breadcrumb />
-            </div>
-
+          <div className="flex justify-between flex1 py-3 px-3 bg-white rounded">
+            <Breadcrumb />
             <button className="flex" onClick={handleMenu}>
               <div className="m-auto mr-1">{users.name}</div>
               <AccountCircle />
@@ -224,23 +219,22 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
               }}
               open={anchorOpen}
               onClose={handleClose}
+            ><Link
+              to="/admin/dashboard"
+              style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
             >
-              <MenuItem onClick={handleClose}>
-                <Link
-                  to="/admin/dashboard"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                >
+                <MenuItem>
                   Dashboard
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link
-                  to="/user/profile"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                >
+                </MenuItem>
+              </Link>
+              <Link
+                to="/admin/profile"
+                style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
+              >
+                <MenuItem >
                   Profile
-                </Link>
-              </MenuItem>
+                  </MenuItem>
+              </Link>
               <MenuItem onClick={handleLogout}>LogOut</MenuItem>
             </Menu>
           </div>

@@ -11,4 +11,8 @@ module.exports = {
   csave: 'Blog category saved successfully.',
   cget: 'blogs category get successfully.',
   cdelete: 'Blog category deleted successfully!!',
+  commentSave: 'comment saved successfully!!',
+  commentEdit: 'comment edited successfully!!',
+  commentGet: 'comment get successful!!',
+  commentDelete: 'comment deleted successfully!',
 };

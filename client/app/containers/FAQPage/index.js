@@ -14,7 +14,6 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -26,33 +25,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../components/Loading';
 
-const styles = {
-  FAQParent: {
-    marginBottom: '15px',
-    boxShadow: 'none',
-    background: '#f7f8f9',
-    borderRadius: '4px',
-    border: 'none',
-
-    '&:before': {
-      background: 'none',
-    },
-  },
-
-  FAQchild: {
-    fontSize: '1.5em',
-    textTransform: 'uppercase',
-    fontWeight: '700',
-    color: '#444444',
-  },
-
-  FAQPanel: {
-    marginBottom: '15px',
-    boxShadow: 'none',
-    borderRadius: '4px',
-    border: 'none',
-  },
-};
+const styles = {};
 
 class FAQPage extends React.Component {
   static propTypes = {
@@ -61,11 +34,13 @@ class FAQPage extends React.Component {
     classes: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
   };
-
-  state = {
-    expanded: 'panel1',
-    qExpanded: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: 'panel1',
+      qExpanded: '',
+    };
+  }
 
   componentDidMount() {
     this.props.loadFAQRequest();
@@ -91,73 +66,55 @@ class FAQPage extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title> FAQs </title>
-        </Helmet>
-        <div className="banner relative">
-          <img src="https://www.waftengine.org/public/media/C97CE0A29A7E4B4-banner.jpg" />
-          <h1 className="container mx-auto my-auto absolute inset-x-0 bottom-0 text-waftprimary waft-title">
-            FAQs
-          </h1>
-        </div>
-        <div className="mt-10 container mx-auto">
-          {faq.cat &&
-            faq.cat.map(
-              x =>
-                faq.faq &&
-                faq.faq.filter(z => z.category == x._id).length !== 0 && (
-                  <ExpansionPanel
-                    className={classes.FAQParent}
-                    key={`cat-${x._id}`}
-                    square
-                    expanded={expanded === x._id}
-                    onChange={this.handleChange(x._id)}
-                  >
-                    <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography variant="h4" className={classes.FAQchild}>
-                        {x.title}
-                      </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails style={{ display: 'block' }}>
-                      {faq.faq &&
-                        faq.faq
-                          .filter(z => z.category == x._id)
-                          .map(y => (
-                            <ExpansionPanel
-                              className={classes.FAQPanel}
-                              key={`faq-${y._id}`}
-                              expanded={qExpanded === y._id}
-                              onChange={this.handleQChange(y._id)}
-                            >
-                              <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
+        <div>
+          <Helmet>
+            <title> FAQs </title>
+          </Helmet>
+          <div className="bg-star h-48 relative text-center py-12">
+            <h1 className="text-4xl mb-4">Frequently Asked Questions</h1>
+            <p className="text-gray-700">
+              feel free to visit answers you looking for.
+          </p>
+          </div>
+          <div className="my-10 max-w-xl mx-auto">
+            {faq.cat &&
+              faq.cat.map(
+                x =>
+                  faq.faq &&
+                  faq.faq.filter(z => z.category == x._id).length !== 0 && (
+                    <div key={`cat-${x._id}`} className="mb-6">
+                      <h2 className="text-xl font-bold">{x.title}</h2>
+                      {/* <ExpansionPanelSummary /> */}
+                      <ExpansionPanelDetails style={{ display: 'block', paddingLeft: 0 }}>
+                        {faq.faq &&
+                          faq.faq
+                            .filter(z => z.category == x._id)
+                            .map(y => (
+                              <ExpansionPanel
+                                className={classes.FAQPanel}
+                                key={`faq-${y._id}`}
+                                expanded={qExpanded === y._id}
+                                onChange={this.handleQChange(y._id)}
                               >
-                                <Typography
-                                  variant="h5"
-                                  className={classes.FAQgrandchild}
+                                <ExpansionPanelSummary
+                                  expandIcon={<ExpandMoreIcon />}
+                                  aria-controls="panel2a-content"
+                                  id="panel2a-header"
                                 >
-                                  {y.question}
-                                </Typography>
-                              </ExpansionPanelSummary>
-                              <ExpansionPanelDetails>
-                                <Typography variant="h6">{y.title}</Typography>
-                              </ExpansionPanelDetails>
-                            </ExpansionPanel>
-                          ))}
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                ),
-            )}
+                                  <p className="text-base">{y.question}</p>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                  <p className="text-base">{y.title}</p>
+                                </ExpansionPanelDetails>
+                              </ExpansionPanel>
+                            ))}
+                      </ExpansionPanelDetails>
+                    </div>
+                  ),
+              )}
+          </div>
         </div>
-      </div>
-    );
+      );
   }
 }
 

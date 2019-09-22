@@ -22,7 +22,7 @@ export class UserChangePasswordPage extends React.Component {
     const { user } = this.props;
     return (
       <div className="container mx-auto mb-10">
-        <h1 className="text-center my-5 p-3 mb-10 bg-grey-lighter px-5">
+        <h1 className="text-center my-5 p-3 mb-10 bg-gray-200 px-5 text-4xl">
           Change Password
         </h1>
         <div className="container mx-auto px-5">

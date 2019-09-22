@@ -57,8 +57,9 @@
   animation-name: hinge;
   animation-iteration-count: 1;
   animation-delay: 1s;
+  animation-fill-mode:forwards;
 }
 
-.b/w {
+.grayscale {
   filter: grayscale(1);
 }

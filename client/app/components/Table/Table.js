@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import TablePagination from '@material-ui/core/TablePagination';
+import style from './table.css';
+
 // core components
 
 /* eslint-disable react/no-array-index-key */
@@ -23,7 +24,7 @@ function CustomTable({ ...props }) {
             <tr>
               {tableHead.map((prop, key) => (
                 <th
-                  className="py-3 px-2 font-bold text-base text-black border-b border-grey-lighter"
+                  className="py-3 px-2 font-bold text-sm text-black border-b border-gray-300"
                   key={key}
                 >
                   {prop}
@@ -37,7 +38,7 @@ function CustomTable({ ...props }) {
             <tr key={key}>
               {prop.map((each, index) => (
                 <td
-                  className="px-2 py-2  text-base border-grey-lighter text-grey-darker"
+                  className="px-2 py-2  text-sm border-gray-300 text-gray-800"
                   key={index}
                 >
                   {each}
@@ -47,7 +48,7 @@ function CustomTable({ ...props }) {
           ))}
         </tbody>
       </table>
-      <table className="w-full border-t border-grey-lighter">
+      <table className="w-full border-t border-gray-300">
         <tbody>
           <tr>
             {pagination && handlePagination && (
@@ -107,8 +108,5 @@ CustomTable.propTypes = {
   }),
   handlePagination: PropTypes.func,
 };
-const styles = {
-  tableResponsive: { width: '100%' },
-};
 
-export default withStyles(styles)(CustomTable);
+export default CustomTable;

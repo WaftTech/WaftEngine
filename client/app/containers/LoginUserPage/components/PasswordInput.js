@@ -23,7 +23,7 @@ const PasswordInput = props => {
   const hasError = Boolean(errors);
   return (
     <div className="mb-4">
-      <label className="block text-grey-darker text-sm mb-2" htmlFor="Password">
+      <label className="block text-gray-800 text-sm mb-2" htmlFor="Password">
         Password
       </label>
       <div className="relative">
@@ -34,7 +34,7 @@ const PasswordInput = props => {
           id="Password"
           type={isSecure ? 'text' : 'password'}
           placeholder="Enter Password"
-          className="Waftinputbox"
+          className="inputbox"
         />
         <span
           className={classes.EyeIcon}
@@ -45,7 +45,7 @@ const PasswordInput = props => {
         </span>
       </div>
       <Link
-        className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+        className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
         to="/forgot-password-user"
       >
         Forgot Password?

@@ -88,113 +88,113 @@ class ContactUs extends React.Component {
     return isRequesting && isRequesting == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
-      <div className="container">
-        <Helmet>
-          <title>Contact Us</title>
-        </Helmet>
-        <div>
-          <h1> Contact Us </h1>
-        </div>
-        <div>
-          <Grid container>
-            <Grid item xs={6} sm={6} md={6}>
-              <Card>
-                <CardBody>
-                  <Grid>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <CustomInput
-                        name="Name"
-                        id="name"
-                        fullWidth
-                        placeholder="Name"
-                        inputProps={{
-                          value: name || '',
-                          onChange: this.handleChange('name'),
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <CustomInput
-                        name="Email"
-                        id="email"
-                        fullWidth
-                        placeholder="Email"
-                        inputProps={{
-                          value: email || '',
-                          onChange: this.handleChange('email'),
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <CustomInput
-                        name="Subject"
-                        id="subject"
-                        fullWidth
-                        placeholder="Subject"
-                        inputProps={{
-                          value: subject || '',
-                          onChange: this.handleChange('subject'),
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <CustomInput
-                        name="Message"
-                        id="message"
-                        fullWidth
-                        placeholder="Message"
-                        inputProps={{
-                          value: message || '',
-                          onChange: this.handleChange('message'),
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <form onSubmit={this.onSubmit}>
-                        <ReCAPTCHA
-                          ref={recaptchaRef}
-                          sitekey={RECAPTCHA_SITE_KEY}
-                          onChange={this.onChange}
+        <div className="container">
+          <Helmet>
+            <title>Contact Us</title>
+          </Helmet>
+          <div>
+            <h1 className="text-4xl font-bold"> Contact Us </h1>
+          </div>
+          <div>
+            <Grid container>
+              <Grid item xs={6} sm={6} md={6}>
+                <Card>
+                  <CardBody>
+                    <Grid>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <CustomInput
+                          name="Name"
+                          id="name"
+                          fullWidth
+                          placeholder="Name"
+                          inputProps={{
+                            value: name || '',
+                            onChange: this.handleChange('name'),
+                          }}
                         />
-                      </form>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </CardBody>
-                <CardFooter>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleSave}
-                  >
-                    Save Message
+                    <Grid>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <CustomInput
+                          name="Email"
+                          id="email"
+                          fullWidth
+                          placeholder="Email"
+                          inputProps={{
+                            value: email || '',
+                            onChange: this.handleChange('email'),
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <CustomInput
+                          name="Subject"
+                          id="subject"
+                          fullWidth
+                          placeholder="Subject"
+                          inputProps={{
+                            value: subject || '',
+                            onChange: this.handleChange('subject'),
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <CustomInput
+                          name="Message"
+                          id="message"
+                          fullWidth
+                          placeholder="Message"
+                          inputProps={{
+                            value: message || '',
+                            onChange: this.handleChange('message'),
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <form onSubmit={this.onSubmit}>
+                          <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={RECAPTCHA_SITE_KEY}
+                            onChange={this.onChange}
+                          />
+                        </form>
+                      </Grid>
+                    </Grid>
+                  </CardBody>
+                  <CardFooter>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleSave}
+                    >
+                      Save Message
                   </Button>
-                  <div>
-                    <h1>{this.props.error}</h1>
-                  </div>
-                </CardFooter>
-              </Card>
+                    <div>
+                      <h1>{this.props.error}</h1>
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Grid>
+              <Grid item xs={6} sm={6} md={6}>
+                {contactDetail.description && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: contactDetail.description,
+                    }}
+                  />
+                )}
+              </Grid>
             </Grid>
-            <Grid item xs={6} sm={6} md={6}>
-              {contactDetail.description && (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: contactDetail.description,
-                  }}
-                />
-              )}
-            </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
-    );
+      );
   }
 }
 

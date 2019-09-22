@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link }  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -25,14 +25,14 @@ const PasswordInput = props => {
     <div className="mb-4">
       <div className="flex justify-between">
         <label
-          className="block text-grey-darker text-sm mb-2"
+          className="block text-gray-800 text-sm mb-2"
           htmlFor="Password"
         >
           Password
         </label>
 
         <Link
-          className="inline-block align-baseline text-xs text-blue hover:text-blue-darker"
+          className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
           to="/forgot-password-user"
         >
           Forgot Password?
@@ -45,8 +45,7 @@ const PasswordInput = props => {
           value={password}
           id="Password"
           type={isSecure ? 'text' : 'password'}
-          placeholder="Enter Password"
-          className="Waftinputbox"
+          className="inputbox"
         />
         <span
           className={classes.EyeIcon}

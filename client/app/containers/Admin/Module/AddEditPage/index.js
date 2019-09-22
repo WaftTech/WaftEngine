@@ -209,96 +209,96 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>{id ? 'Edit' : 'Add'} Module</title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
+        <React.Fragment>
+          <Helmet>
+            <title>{id ? 'Edit' : 'Add'} Module</title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>{' '}
+              {id ? `Edit for ${one.module_name}` : 'Add Module'}
+            </PageHeader>
+            <Fab
+              color="primary"
+              aria-label="Change Access"
+              className={classes.fab}
+              onClick={this.handleChangeAccess}
             >
-              <BackIcon />
-            </IconButton>{' '}
-            {id ? `Edit for ${one.module_name}` : 'Add Module'}
-          </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Change Access"
-            className={classes.fab}
-            onClick={this.handleChangeAccess}
-          >
-            <SwapIcon />
-          </Fab>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-              Module Name
-            </label>
-            <input
-              className="Waftinputbox"
-              id="module_name"
-              type="text"
-              value={one.module_name}
-              onChange={this.handleChange('module_name')}
-            />
-            <div id="component-error-text">{errors.module_name}</div>
+              <SwapIcon />
+            </Fab>
           </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-              Descrition
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+                Module Name
             </label>
-            <textarea
-              className="Waftinputbox"
-              id="description"
-              type="text"
-              value={one.description}
-              onChange={this.handleChange('description')}
-            />
-            <div id="component-error-text">{errors.description}</div>
-          </div>
+              <input
+                className="inputbox"
+                id="module_name"
+                type="text"
+                value={one.module_name}
+                onChange={this.handleChange('module_name')}
+              />
+              <div id="component-error-text">{errors.module_name}</div>
+            </div>
 
-          {one.path.map((each, pathIndex) => (
-            <PathComponent
-              key={`${each._id}-${pathIndex}`}
-              each={each}
-              pathIndex={pathIndex}
-              handleAccessTypeChange={this.handleAccessTypeChange}
-              handleAdminRoutesChange={this.handleAdminRoutesChange}
-              handleRemoveAdminRoute={this.handleRemoveAdminRoute}
-              handleAddAdminRoute={this.handleAddAdminRoute}
-              handleServerRoutesMethodChange={
-                this.handleServerRoutesMethodChange
-              }
-              handleServerRoutesRouteChange={this.handleServerRoutesRouteChange}
-              handleRemoveServerRoute={this.handleRemoveServerRoute}
-              handleAddServerRoute={this.handleAddServerRoute}
-              handleRemovePath={this.handleRemovePath}
-            />
-          ))}
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+                Descrition
+            </label>
+              <textarea
+                className="inputbox"
+                id="description"
+                type="text"
+                value={one.description}
+                onChange={this.handleChange('description')}
+              />
+              <div id="component-error-text">{errors.description}</div>
+            </div>
 
-          <div className="inline-block">
-            <button
-              className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary mr-2"
-              onClick={this.handleAddPath}
-            >
-              Add Access Type
+            {one.path.map((each, pathIndex) => (
+              <PathComponent
+                key={`${each._id}-${pathIndex}`}
+                each={each}
+                pathIndex={pathIndex}
+                handleAccessTypeChange={this.handleAccessTypeChange}
+                handleAdminRoutesChange={this.handleAdminRoutesChange}
+                handleRemoveAdminRoute={this.handleRemoveAdminRoute}
+                handleAddAdminRoute={this.handleAddAdminRoute}
+                handleServerRoutesMethodChange={
+                  this.handleServerRoutesMethodChange
+                }
+                handleServerRoutesRouteChange={this.handleServerRoutesRouteChange}
+                handleRemoveServerRoute={this.handleRemoveServerRoute}
+                handleAddServerRoute={this.handleAddServerRoute}
+                handleRemovePath={this.handleRemovePath}
+              />
+            ))}
+
+            <div className="inline-block">
+              <button
+                className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary mr-2"
+                onClick={this.handleAddPath}
+              >
+                Add Access Type
             </button>
 
-            <button
-              className="text-white py-2 px-4 rounded mt-4 btn-waft"
-              onClick={this.handleSave}
-            >
-              Save
+              <button
+                className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+                onClick={this.handleSave}
+              >
+                Save
             </button>
-          </div>
-        </PageContent>
-      </React.Fragment>
-    );
+            </div>
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 

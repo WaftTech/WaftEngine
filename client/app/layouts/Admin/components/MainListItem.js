@@ -53,13 +53,13 @@ const MainlistItem = ({ location: { pathname }, access }) => {
           <>
             <li
               key={e.key}
-              className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm pl-${e.key.split(
+              className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-gray-200 text-sm pl-${e.key.split(
                 '.',
               ).length * 3}`}
               onClick={() => handleSetClick(e.key)}
             >
               <div className="flex items-center">
-                <i key={e} className="material-icons mr-3">
+                <i key={e} className="material-icons mr-3 text-sm">
                   {e.icon}
                 </i>
                 <span className="dropdown-title">{e.name}</span>
@@ -75,27 +75,27 @@ const MainlistItem = ({ location: { pathname }, access }) => {
             </Collapse>
           </>
         ) : (
-          <li
-            selected={pathname === e.link}
-            className={
-              e.key.split('.').length === 1
-                ? 'pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-grey-darker hover:text-black text-sm'
-                : ''
-            }
-          >
-            <Link
-              to={`${e.link}`}
-              className={`text-grey-darker hover:text-black text-sm no-underline flex items-center ${
-                e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-6 pr-6' : ''
-              }`} // pt-2 pb-2 pl-6 pr-6
+            <li
+              selected={pathname === e.link}
+              className={
+                e.key.split('.').length === 1
+                  ? 'pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-gray-light text-sm'
+                  : ''
+              }
             >
-              <i key={e} className="material-icons mr-3">
-                {e.icon}
-              </i>
-              {e.name}
-            </Link>
-          </li>
-        )}
+              <Link
+                to={`${e.link}`}
+                className={`text-gray-800 hover:text-black text-sm no-underline flex items-center ${
+                  e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-6 pr-6' : ''
+                  }`} // pt-2 pb-2 pl-6 pr-6
+              >
+                <i key={e} className="material-icons mr-3 text-sm">
+                  {e.icon}
+                </i>
+                {e.name}
+              </Link>
+            </li>
+          )}
       </div>
     );
   };

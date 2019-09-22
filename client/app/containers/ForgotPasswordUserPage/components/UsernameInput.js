@@ -13,7 +13,7 @@ const EmailInput = props => {
   return (
     <div className="w-full md:w-1/2 pb-4">
       <input
-        className="Waftinputbox"
+        className="inputbox"
         id="grid-last-name"
         type="text"
         value={email}

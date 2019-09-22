@@ -59,6 +59,12 @@ export const makeSelectSlide = () =>
     state => state.slide,
   );
 
+export const makeSelectLatestBlogs = () =>
+  createSelector(
+    selectGlobal,
+    state => state.latestBlogs,
+  );
+
 export const makeSelectNotifications = () =>
   createSelector(
     selectGlobal,
@@ -69,4 +75,16 @@ export const makeSelectAccess = () =>
   createSelector(
     selectGlobal,
     state => state.access,
+  );
+
+export const makeSelectCategory = () =>
+  createSelector(
+    selectGlobal,
+    state => state.category,
+  );
+
+export const makeSelecBlogLoading = () =>
+  createSelector(
+    selectGlobal,
+    state => state.blogLoading,
   );

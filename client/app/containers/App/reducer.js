@@ -12,6 +12,8 @@
 import produce from 'immer';
 
 import * as types from './constants';
+import { LOAD_ALL_SUCCESS as MEDIA_LOAD_ALL_SUCCESS } from '../Admin/Media/constants';
+import * as utils from './utils';
 
 // The initial state of the App
 export const initialState = {
@@ -22,6 +24,8 @@ export const initialState = {
   slide: {},
   notifications: [],
   access: {},
+  latestBlogs: {},
+  blogLoading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -30,6 +34,12 @@ const appReducer = (state = initialState, action = { type: '' }) =>
     const access = {};
     let isAdmin = false;
     switch (action.type) {
+      case MEDIA_LOAD_ALL_SUCCESS:
+        draft.media = {
+          ...state.media,
+          ...utils.normalizeMedia(action.payload.data),
+        };
+        break;
       case types.SET_USER:
         localStorage.setItem(
           'routes',
@@ -82,6 +92,17 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           ...draft.slide,
           [action.payload.data.slider_key]: action.payload.data,
         };
+        break;
+      case types.LOAD_LATEST_BLOGS_SUCCESS:
+        draft.latestBlogs[action.payload.data.category._id] =
+          action.payload.data;
+        draft.blogLoading = false;
+        break;
+      case types.LOAD_LATEST_BLOGS_REQUEST:
+        draft.blogLoading = true;
+        break;
+      case types.LOAD_LATEST_BLOGS_FAILURE:
+        draft.blogLoading = false;
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];

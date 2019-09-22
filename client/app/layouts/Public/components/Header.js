@@ -15,6 +15,7 @@ import {
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
+import style from './header.css';
 
 const styles = theme => ({});
 
@@ -46,51 +47,46 @@ const Header = props => {
 
   return (
     <header className="WaftHeader border-b lg:border-b">
-      <div className="container mx-auto pt-2 flex justify-between flex-wrap relative lg:pb-2">
-        <div className="px-5 w-full logo mt-2 md:w-1/2 lg:w-auto">
-          {' '}
+      <div className="container flex justify-between flex-wrap relative">
+        <div className="p-2 w-full md:w-1/2 lg:w-1/6 order-2 md:order-none">
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
           </Link>
         </div>
-        <div className="w-full nav-bar lg:w-auto lg:m-auto xl:w-3/5">
-          <div
-            className="block-mobile"
-            // style={{ justifyContent: 'flex-end', display: 'flex' }}
+        <div className="w-full nav-bar lg:w-auto lg:m-auto xl:w-3/6">
+          <input
+            className="ham"
+            type="checkbox"
+            checked={checked}
+            onChange={handleToggle}
+          />
+          <svg
+            className="icon icon-menu-toggle hamIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
           >
-            <input
-              className="ham"
-              type="checkbox"
-              checked={checked}
-              onChange={handleToggle}
-            />
-            <svg
-              className="icon icon-menu-toggle hamIcon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 100 100"
-            >
-              <g className="svg-menu-toggle">
-                <path className="line line-1" d="M5 13h90v14H5z" />
-                <path className="line line-2" d="M5 43h90v14H5z" />
-                <path className="line line-3" d="M5 73h90v14H5z" />
-              </g>
-            </svg>
-            <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
-              {HeaderMenu.map(each => (
-                <NavLink
-                  key={each.key}
-                  className="text-white text-center block no-underline py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-4"
-                  to={each.link}
-                  onClick={handleToggle}
-                >
-                  {each.name}
-                </NavLink>
-              ))}
-            </div>
+            <g className="svg-menu-toggle">
+              <path className="line line-1" d="M5 13h90v14H5z" />
+              <path className="line line-2" d="M5 43h90v14H5z" />
+              <path className="line line-3" d="M5 73h90v14H5z" />
+            </g>
+          </svg>
+          <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
+            {HeaderMenu.map(each => (
+              <NavLink
+                key={each.key}
+                className="text-white text-center block no-underline px-5 py-3 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
+                to={each.link}
+                onClick={handleToggle}
+              >
+                {each.name}
+              </NavLink>
+            ))}
           </div>
         </div>
+
         {!token ? (
-          <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
+          <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
             <button
               onClick={redirectToRegister}
               className="items-center hover:text-primary"
@@ -105,49 +101,47 @@ const Header = props => {
             </button>
           </div>
         ) : (
-          <div className="w-full text-base flex justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-auto">
-            <button className={classes.dropDown} onClick={handleMenu}>
-              <div className="text-base flex">
-                <span className="ml-2 mr-2">{user.name} | </span>
-                <AccountCircle />
-              </div>
-            </button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              {user.isAdmin && (
-                <MenuItem onClick={handleClose}>
+            <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
+              <button className={classes.dropDown} onClick={handleMenu}>
+                <div className="text-base flex">
+                  <span className="ml-2 mr-2">{user.name} | </span>
+                  <AccountCircle />
+                </div>
+              </button>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                {user.isAdmin && (
                   <Link
                     to="/admin/dashboard"
                     style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
                   >
-                    Dashboard
+                    <MenuItem>Dashboard</MenuItem>
                   </Link>
-                </MenuItem>
-              )}
-              <MenuItem onClick={handleClose}>
+                )}
                 <Link
                   to="/user/profile"
                   style={{ textDecoration: 'none', color: 'black' }}
+                  onClick={handleClose}
                 >
-                  Profile
+                  <MenuItem>Profile</MenuItem>
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleLogout}>LogOut</MenuItem>
-            </Menu>
-          </div>
-        )}
+                <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+              </Menu>
+            </div>
+          )}
       </div>
     </header>
   );

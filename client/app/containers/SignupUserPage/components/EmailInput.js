@@ -12,14 +12,14 @@ const EmailInput = props => {
   const hasError = Boolean(error);
   return (
     <div className="mb-4">
-      <label className="block text-grey-darker text-sm mb-2" htmlFor="username">
+      <label className="block text-gray-800 text-sm mb-2" htmlFor="username">
         {error || 'Email'}
       </label>
       <input
         error={hasError.toString()}
         onChange={handleChange}
         value={email}
-        className="Waftinputbox"
+        className="inputbox"
         type="text"
       />
     </div>

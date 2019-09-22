@@ -197,13 +197,13 @@ export class FAQManagePage extends React.PureComponent {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative">
+            <div className="flex relative">
               <input
                 type="text"
                 name="find_question"
                 id="faq-question"
                 placeholder="Search FAQs by question"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_question}
                 onChange={this.handleQueryChange}
               />

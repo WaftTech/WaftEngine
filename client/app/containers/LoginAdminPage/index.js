@@ -26,11 +26,11 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
   };
   return (
     <div className="flex h-screen">
-      <div className="hidden md:block md:w-3/5 login-l">
-        <div className="waftltext px-5 text-white lg:px-32">
-          <h1>WaftEngine</h1>
+      <div className="hidden md:flex md:w-3/5 bg-red-100 items-center">
+        <div className="px-5 text-black lg:px-32">
+          <h1 className="font-bold text-4xl">WaftEngine</h1>
           <p>A Powerful Mern Engine</p>
-          <ul className="fealogin mt-10">
+          <ul className="mt-10">
             <li>Quick Scaffolding</li>
             <li>Instant feedback</li>
             <li>Predictable state management</li>
@@ -44,14 +44,14 @@ const LoginAdminPage = ({ classes, loginRequest }) => {
         </div>
       </div>
 
-      <div className="login-R w-full md:w-2/5 relative block">
-        <div className="walfRlogin px-10 md:px-12 lg:px-16 xl:px-24 w-full">
+      <div className="w-full md:w-2/5 relative block">
+        <div className="absolute top-1/2 px-10 md:px-12 lg:px-16 xl:px-24 w-full" style={{ transform: 'translateY(-50%)' }}>
           <img src={logo} alt="WaftEngine" className="w-2/3" />
           <form className="mt-4" onSubmit={handleSubmit}>
             <UsernameInput />
             <PasswordInput />
             <button
-              className="text-white py-2 px-4 rounded mt-4 w-full btn-waft"
+              className="text-white py-2 px-4 rounded mt-4 w-full bg-red-600 hover:bg-red-800 font-bold"
               type="submit"
             >
               LOGIN

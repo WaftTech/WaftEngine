@@ -16,9 +16,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import BackIcon from '@material-ui/icons/ArrowBack';
 
 import injectSaga from 'utils/injectSaga';
@@ -61,67 +59,75 @@ const styles = () => ({
     marginRight: '5px',
   },
 });
-const SortableImageItem = SortableElement(({ value, index, _this }) => (
-  <div className="flex mb-4 bg-grey-lighter p-2">
-    <div className="w-1.5/5 m-auto text-center pr-5">
-      {value.image ? (
-        <MediaElement mediaKey={typeof value.image === 'string' ? value.image : value.image._id}/>
-      ) : (
-        <button
-          className="bg-grey-light py-2 px-4 rounded text-grey-darker hover:bg-grey-lightest border"
-          onClick={_this.handleSetImage(index)}
-        >
-          Click To Set Image
-        </button>
-      )}
-    </div>
 
-    <div className="w-1.5/5 m-auto text-center mr-2">
-      <input
-        className="Waftinputbox"
-        id={`slider-link-${index}`}
-        type="text"
-        value={value.link || ''}
-        placeholder="Link"
-        onChange={_this.handleImageLinkChange(index)}
-        style={{ background: '#FFF', height: '100%' }}
-      />
-    </div>
-    <div className="w-1.5/5 m-auto text-center">
-      <textarea
-        className="Waftinputbox"
-        id={`slider-caption-${index}`}
-        type="text"
-        value={value.caption || ''}
-        placeholder="Caption"
-        onChange={_this.handleImageCaptionChange(index)}
-        style={{ background: '#FFF', height: '100%' }}
-      />
-    </div>
-    <div className="w-0.5/5 m-auto text-center">
-      <Fab
-        color="secondary"
-        aria-label="Remove"
-        round="true"
-        onClick={() => _this.handleRemoveSlide(index)}
-        elevation={0}
-      >
-        <DeleteIcon />
-      </Fab>
-    </div>
-  </div>
-));
+const SortableImageItem = SortableElement(() => <div>***</div>);
 
 const SortableImageList = SortableContainer(({ items, _this }) => {
   return (
     <div className="rounded mt-4">
       {items.map((value, index) => (
-        <SortableImageItem
-          key={`${value._id}-item-image-${index}`}
-          index={index}
-          value={value}
-          _this={_this}
-        />
+        <div
+        key={`${value._id}-item-image-${index}`}>
+          <SortableImageItem
+            index={index}
+            value={value}
+            _this={_this}
+          />
+          <div className="flex mb-4 bg-gray-200 p-2">
+            <div className="w-1.5/5 m-auto text-center pr-5">
+              {value.image ? (
+                <MediaElement
+                  mediaKey={
+                    typeof value.image === 'string'
+                      ? value.image
+                      : value.image._id
+                  }
+                  onClick={_this.handleSetImage(index)}
+                />
+              ) : (
+                <button
+                  type="button"
+                  className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
+                  onClick={_this.handleSetImage(index)}
+                >
+                  Click To Set Image
+                </button>
+              )}
+            </div>
+
+            <div className="w-1.5/5 m-auto text-center mr-2">
+              <input
+                className="inputbox"
+                id={`slider-link-${index}`}
+                type="text"
+                value={value.link || ''}
+                placeholder="Link"
+                onChange={_this.handleImageLinkChange(index)}
+                style={{ background: '#FFF', height: '100%' }}
+              />
+            </div>
+            <div className="w-1.5/5 m-auto text-center">
+              <textarea
+                className="inputbox"
+                id={`slider-caption-${index}`}
+                type="text"
+                value={value.caption || ''}
+                placeholder="Caption"
+                onChange={_this.handleImageCaptionChange(index)}
+                style={{ background: '#FFF', height: '100%' }}
+              />
+            </div>
+            <div className="w-0.5/5 m-auto text-center">
+              <button
+                type="button"
+                className="border-red-500 border text-red-500 hover:bg-red-100 rounded px-4 py-2 uppercase text-sm"
+                onClick={() => _this.handleRemoveSlide(index)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div >
       ))}
     </div>
   );
@@ -138,22 +144,25 @@ class AddEdit extends React.PureComponent {
     classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
-    push: PropTypes.func.isRequired,
     media: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
       totaldata: PropTypes.number.isRequired,
     }),
+    clearErrors: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+      goBack: PropTypes.func,
+    }),
+    loading: PropTypes.bool.isRequired,
   };
 
-  state = { open: false, index: -1, subheader: 'Slider Add' };
+  state = { open: false, index: -1 };
 
   componentDidMount() {
     this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
-      this.setState({ subheader: 'Slider Edit' });
     }
     this.props.loadMediaRequest();
   }
@@ -231,6 +240,7 @@ class AddEdit extends React.PureComponent {
       value: arrayMove(this.props.one.images, oldIndex, newIndex),
     });
   };
+
   render() {
     const { one, classes, media, match, loading, errors } = this.props;
 
@@ -240,7 +250,7 @@ class AddEdit extends React.PureComponent {
     const isFirstPage = media.page === firstPage;
     const isLastPage = media.page === lastPage;
 
-    return loading && loading == true ? (
+    return loading ? (
       <Loading />
     ) : (
       <>
@@ -276,7 +286,6 @@ class AddEdit extends React.PureComponent {
           >
             <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
             <div>
-              {' '}
               {!isFirstPage && (
                 <Button
                   size="small"
@@ -302,11 +311,14 @@ class AddEdit extends React.PureComponent {
             </div>
           </div>
           <DialogContent>
-            {media.data.map(each => (
+            {media.data.map((each, index) => (
               <div
                 key={each._id}
                 className={classes.media}
                 onClick={() => this.handleImageImageChange(each._id)}
+                onKeyDown={() => this.handleImageImageChange(each._id)}
+                role="menuitem"
+                tabIndex={index}
               >
                 <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
               </div>
@@ -324,13 +336,13 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
               htmlFor="grid-last-name"
             >
               Slider Name
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="slider-name"
               type="text"
               value={one.slider_name}
@@ -342,13 +354,13 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
               htmlFor="grid-last-name"
             >
               Slider Key
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="slider-key"
               type="text"
               value={one.slider_key}
@@ -360,7 +372,7 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
               htmlFor="grid-last-name"
             >
               Slider Settings
@@ -368,7 +380,7 @@ class AddEdit extends React.PureComponent {
             <textarea
               name="slider settings"
               id="slider_setting"
-              className="Waftinputbox"
+              className="inputbox"
               cols="50"
               rows="8"
               onChange={this.handleChange('settings')}
@@ -377,6 +389,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
+            type="button"
             className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
             onClick={this.handleAddSlide}
           >
@@ -389,9 +402,9 @@ class AddEdit extends React.PureComponent {
               onSortEnd={this.onImageSortEnd}
             />
           </div>
-
           <button
-            className="text-white py-2 px-4 rounded mt-4 btn-waft"
+            type="button"
+            className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
             onClick={this.handleSave}
           >
             Save

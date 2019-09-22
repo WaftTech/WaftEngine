@@ -26,48 +26,41 @@ class Footer extends React.Component {
     const { email } = this.state;
 
     return (
-      <footer className="footer bg-lightest">
-        <div className="w-full newsletter_wrapper p-10 text-center">
-          <div className="widget-ft style1 widget-lastest">
-            <h1 className="text-white mb-2">Give Star, Show Your Love</h1>
-            <p className="mb-5 text-white">
-              You don't have to donate always. A Github star is enough to grow
-              WaftEngine.
+      <footer className="footer bg-gray-900">
+        <div className="w-full bg-gray-900 border-b border-gray-800 p-2 text-center">
+          <div className="py-10">
+            <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">Get updates</h1>
+            <p className="mb-5 text-gray-700">
+              Never miss any updates from WaftEngine.
             </p>
-            {/* <form onSubmit={this.handleSave}>
+            <form onSubmit={this.handleSave}>
               <input
                 type="text"
-                className="appearance-none rounded py-2 px-3 text-grey-darker leading-tight md:1/2 lg:w-1/4 rounded-r-none"
+                className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded rounded-r-none py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
                 placeholder="Enter Your Email"
                 value={email}
                 onChange={this.handleChange('email')}
               />
 
-              <Button
-                type="submit"
-                className="text-white py-2 px-4 rounded rounded-l-none btn-waft"
-                variant="contained"
-                color="primary"
+              <button
+                type="submit" style={{ paddingBottom: '0.45rem', marginLeft: '-1px' }}
+                className="text-white py-2 px-4 rounded rounded-l-none border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
               >
-                Submit
-              </Button>
-            </form> */}
-
-            <button className="text-white py-2 px-4 rounded mt-4 btn-waft hover:bg-black">
-              Star WaftEngine
-            </button>
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
         <div className="container mx-auto">
           <div className="flex flex-wrap p-5">
             <div className="w-full lg:w-1/3 mb-2 crorder">
               <Link to="/">
-                <img className="grayscale" src={logo} alt="WaftEngine" />
+                <img style={{ filter: 'grayscale(1)' }} src={logo} alt="WaftEngine" />
               </Link>
             </div>
             <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">
               <a
-                className="block no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
+                className="block no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
                 href="https://www.waftengine.org/about-us"
                 target="_blank"
                 rel="noopener"
@@ -75,7 +68,7 @@ class Footer extends React.Component {
                 About Us
               </a>
               <a
-                className="block no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
+                className="block no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
                 href="https://www.waftengine.org/features"
                 target="_blank"
                 rel="noopener"
@@ -83,7 +76,7 @@ class Footer extends React.Component {
                 Features
               </a>
               <a
-                className="display-block  no-underline  text-grey-darkest hover:text-primary pr-2 lg:m-auto"
+                className="display-block  no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
                 href="https://www.waftengine.org/contact-us"
                 target="_blank"
                 rel="noopener"

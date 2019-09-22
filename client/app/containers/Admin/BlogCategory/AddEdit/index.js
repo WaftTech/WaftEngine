@@ -93,9 +93,9 @@ class AddEdit extends React.PureComponent {
   handleChange = name => event => {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.value });
-    if(name === 'title'){
+    if (name === 'title') {
       const slug = this.slugify(event.target.value);
-      this.props.setOneValue({key: 'slug_url', value: slug});
+      this.props.setOneValue({ key: 'slug_url', value: slug });
     }
   };
 
@@ -137,122 +137,122 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.slug
-              ? 'Edit Blog'
-              : 'Add Blog'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
-            {match && match.params && match.params.slug
-              ? 'Edit Blog Category'
-              : 'Add Blog Category'}
-          </PageHeader>
-        </div>
+        <div>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.slug
+                ? 'Edit Blog'
+                : 'Add Blog'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
+              {match && match.params && match.params.slug
+                ? 'Edit Blog Category'
+                : 'Add Blog Category'}
+            </PageHeader>
+          </div>
 
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-blog-title"
-            >
-              Blog Title
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-blog-title"
+              >
+                Blog Title
             </label>
-            <input
-              className="Waftinputbox"
-              id="title"
-              type="text"
-              value={one && one.title || ''}
-              name="Title"
-              onChange={this.handleChange('title')}
-            />
-            <div id="component-error-text">{errors && errors.title}</div>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-slug"
-            >
-              Slug
+              <input
+                className="inputbox"
+                id="title"
+                type="text"
+                value={one && one.title || ''}
+                name="Title"
+                onChange={this.handleChange('title')}
+              />
+              <div id="component-error-text">{errors && errors.title}</div>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-slug"
+              >
+                Slug
             </label>
-            <input
-              className="Waftinputbox"
-              id="slug"
-              type="text"
-              value={one && one.slug_url || ''}
-              name="slug"
-              onChange={this.handleChange('slug_url')}
-            />
-            <div id="component-error-text">{errors && errors.slug_url}</div>
-          </div>
-          <div className="pb-4">
-            <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
-              Blog Category Description
+              <input
+                className="inputbox"
+                id="slug"
+                type="text"
+                value={one && one.slug_url || ''}
+                name="slug"
+                onChange={this.handleChange('slug_url')}
+              />
+              <div id="component-error-text">{errors && errors.slug_url}</div>
+            </div>
+            <div className="pb-4">
+              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+                Blog Category Description
             </label>
-            <CKEditor
-              name="cat-description"
-              content={one && one.description}
-              config={{ allowedContent: true }}
-              events={{
-                change: e => this.handleEditorChange(e, 'description'),
-                value: one && one.description || '',
-              }}
-            />
-          </div>
-          <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="Image"
-            >
-              Image
+              <CKEditor
+                name="cat-description"
+                content={one && one.description}
+                config={{ allowedContent: true }}
+                events={{
+                  change: e => this.handleEditorChange(e, 'description'),
+                  value: one && one.description || '',
+                }}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4 mt-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="Image"
+              >
+                Image
             </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <img
-                    className="Waftinputbox cursor-pointer"
-                    src={tempImage}
-                    alt="BlogCategoryImage"
-                    style={{ height: '120px', width: '60%' }}
+              <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <img
+                      className="inputbox cursor-pointer"
+                      src={tempImage}
+                      alt="BlogCategoryImage"
+                      style={{ height: '120px', width: '60%' }}
+                    />
+                  </div>
+                )}
+              </Dropzone>
+            </div>
+            <div>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one && one.is_active || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_active')}
+                    color="primary"
                   />
-                </div>
-              )}
-            </Dropzone>
-          </div>
-          <div>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one && one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
-            />
-          </div>
+                }
+                label="Is Active"
+              />
+            </div>
 
-          <button
-            className="text-white py-2 px-4 rounded mt-4 btn-waft"
-            onClick={this.handleSave}
-          >
-            Save
+            <button
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </div>
-    );
+          </PageContent>
+        </div>
+      );
   }
 }
 

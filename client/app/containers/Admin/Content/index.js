@@ -184,11 +184,11 @@ export class ContentsListingPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>Content Listing</title>
+          <title>Static Content</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           {loading && loading == true ? <Loading /> : <></>}
-          <PageHeader>Content Manage</PageHeader>
+          <PageHeader>Static Content</PageHeader>
           <Fab
             color="primary"
             aria-label="Add"
@@ -202,13 +202,13 @@ export class ContentsListingPage extends React.Component {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
-            <div className="waftformgroup flex relative mr-2">
+            <div className="flex relative mr-2">
               <input
                 type="text"
                 name="find_name"
                 id="contents-name"
                 placeholder="Search Contents by name"
-                className="m-auto Waftinputbox"
+                className="m-auto inputbox"
                 value={query.find_name}
                 onChange={this.handleQueryChange}
                 style={{ paddingRight: '50px' }}
@@ -228,7 +228,7 @@ export class ContentsListingPage extends React.Component {
                 name="find_key"
                 id="contents-key"
                 placeholder="Search Contents  by key"
-                className="m-auto Waftinputbox pr-6"
+                className="m-auto inputbox pr-6"
                 value={query.find_key}
                 onChange={this.handleQueryChange}
                 style={{ paddingRight: '50px' }}

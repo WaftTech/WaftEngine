@@ -28,13 +28,13 @@ const Path = props => {
     handleRemovePath,
   } = props;
   return (
-    <section className="rounded p-4 bg-grey-lighter mb-4">
+    <section className="rounded p-4 bg-gray-200 mb-4">
       <div className="w-full md:w-2/5 pb-4">
-        <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+        <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
           Access Type
         </label>
         <input
-          className="Waftinputbox"
+          className="inputbox"
           id={`${each._id}-access-type-${pathIndex}`}
           type="text"
           value={each.access_type}
@@ -50,12 +50,12 @@ const Path = props => {
               className="w-full pb-4 border-b mb-2"
               key={`${each._id}-${pathIndex}-each-admin-route-${index}`}
             >
-              <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                 Client Route
               </label>
               <div className="flex">
                 <input
-                  className="Waftinputbox mr-2"
+                  className="inputbox mr-2"
                   id={`${each._id}-each-admin-route-access-type-${index}`}
                   type="text"
                   value={eachAdminRoute}
@@ -86,16 +86,16 @@ const Path = props => {
               className="w-full pb-4 mb-2 border-b"
               key={`${each._id}-${pathIndex}-${
                 eachServerRoute._id
-              }-each-server-route-${index}`}
+                }-each-server-route-${index}`}
             >
               <div className="flex">
                 <div className="mr-2">
-                  <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+                  <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                     Method
                   </label>
 
                   <select
-                    className="Waftinputbox"
+                    className="inputbox"
                     placeholder="Method"
                     value={eachServerRoute.method}
                     onChange={handleServerRoutesMethodChange(pathIndex, index)}
@@ -103,7 +103,7 @@ const Path = props => {
                       name: 'Method',
                       id: `${each._id}-${
                         eachServerRoute._id
-                      }-each-server-route-${index}-method`,
+                        }-each-server-route-${index}-method`,
                     }}
                     style={{ minWidth: '80px', background: '#FFFFFF' }}
                   >
@@ -111,7 +111,7 @@ const Path = props => {
                       <option
                         key={`${eachMethod._id}-${pathIndex}-${
                           eachServerRoute._id
-                        }-each-server-route-method-${eachMethod}`}
+                          }-each-server-route-method-${eachMethod}`}
                         value={eachMethod}
                       >
                         {eachMethod}
@@ -120,17 +120,17 @@ const Path = props => {
                   </select>
                 </div>
                 <div>
-                  <label className="block uppercase tracking-wide text-grey-darker text-xs mb-2">
+                  <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                     Server Route
                   </label>
                   <div className="flex">
                     <input
                       type="text"
-                      className="Waftinputbox mr-2"
+                      className="inputbox mr-2"
                       style={{ background: '#FFFFFF' }}
                       id={`${each._id}-${
                         eachServerRoute._id
-                      }-each-admin-server-route-route-access-type-${index}`}
+                        }-each-admin-server-route-route-access-type-${index}`}
                       value={eachServerRoute.route}
                       onChange={handleServerRoutesRouteChange(pathIndex, index)}
                     />
@@ -156,7 +156,7 @@ const Path = props => {
       </div>
       <div className="mx-4 flex justify-end mt-4">
         <button
-          className="text-white py-2 px-4 rounded btn-waft"
+          className="text-white py-2 px-4 rounded bg-red-600 hover:bg-red-800 font-bold"
           onClick={handleRemovePath(pathIndex)}
         >
           Delete Access Type
