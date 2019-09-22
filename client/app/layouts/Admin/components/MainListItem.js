@@ -16,14 +16,6 @@ import {
 } from '../../../containers/App/selectors';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing.unit * 4,
-  },
 });
 
 const MainlistItem = ({ location: { pathname }, access }) => {
@@ -51,11 +43,11 @@ const MainlistItem = ({ location: { pathname }, access }) => {
       <div key={e.key}>
         {e.menu ? (
           <>
-            <li
+            <div
               key={e.key}
               className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-gray-200 text-sm pl-${e.key.split(
                 '.',
-              ).length * 3}`}
+              ).length * 4}`}
               onClick={() => handleSetClick(e.key)}
             >
               <div className="flex items-center">
@@ -65,47 +57,43 @@ const MainlistItem = ({ location: { pathname }, access }) => {
                 <span className="dropdown-title">{e.name}</span>
               </div>
               {openSet[e.key] ? <ExpandLess /> : <ExpandMore />}
-            </li>
+            </div>
             <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
-              <ul className={`list-reset ml-${e.key.split('.').length * 2}`}>
-                {e.menu.map(el => (
-                  <div key={el.key}>{menuFunctn(el)}</div>
-                ))}
-              </ul>
+              {e.menu.map(el => (
+                <div key={el.key}>{menuFunctn(el)}</div>
+              ))}
             </Collapse>
           </>
         ) : (
-            <li
+            <div
               selected={pathname === e.link}
               className={
                 e.key.split('.').length === 1
-                  ? 'pt-2 pr-4 pb-2 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-gray-light text-sm'
+                  ? ''
                   : ''
               }
             >
               <Link
                 to={`${e.link}`}
-                className={`text-gray-800 hover:text-black text-sm no-underline flex items-center ${
-                  e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-6 pr-6' : ''
-                  }`} // pt-2 pb-2 pl-6 pr-6
+                className={`text-gray-800 text-sm no-underline flex items-center text-gray-800 hover:text-black hover:bg-gray-200 ${
+                  e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-8 pr-6' : 'pt-2 pr-4 pb-2 pl-4'
+                  }`}
               >
                 <i key={e} className="material-icons mr-3 text-sm">
                   {e.icon}
                 </i>
                 {e.name}
               </Link>
-            </li>
+            </div>
           )}
       </div>
     );
   };
   return (
-    <div>
-      <ul className="list-reset">
-        {menus.map(e => (
-          <div key={e.key}>{menuFunctn(e)}</div>
-        ))}
-      </ul>
+    <div className="select-none">
+      {menus.map(e => (
+        <div key={e.key}>{menuFunctn(e)}</div>
+      ))}
     </div>
   );
 };

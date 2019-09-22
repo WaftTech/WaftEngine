@@ -54,7 +54,7 @@ function BlogDetail(props) {
             <div className="inline-block border-l border-gray-600 ml-2 pl-2">
               {blog.category.map((each, index) => (
                 <LinkBoth
-                  className="text-indigo-600 hover:text-indigo-800 leading-normal text-sm no-underline capitalize"
+                  className="text-blue-700 hover:text-indigo-800 leading-normal text-sm no-underline capitalize"
                   key={index}
                   to={`/blog/category/${each.slug_url}`}
                 >

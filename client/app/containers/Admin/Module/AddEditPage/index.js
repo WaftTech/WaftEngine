@@ -283,14 +283,14 @@ class AddEdit extends React.PureComponent {
 
             <div className="inline-block">
               <button
-                className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary mr-2"
+                className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100 mr-2"
                 onClick={this.handleAddPath}
               >
                 Add Access Type
             </button>
 
               <button
-                className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+                className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
                 onClick={this.handleSave}
               >
                 Save

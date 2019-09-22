@@ -12,7 +12,7 @@ const EmailInput = props => {
   const hasError = Boolean(errors);
   return (
     <div className="mb-4">
-      <label className="block text-gray-800 text-sm mb-2" htmlFor="username">
+      <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2" htmlFor="username">
         {errors || 'Email'}
       </label>
       <input
@@ -22,7 +22,6 @@ const EmailInput = props => {
         className="inputbox"
         id="username"
         type="text"
-        placeholder="Username"
       />
     </div>
   );

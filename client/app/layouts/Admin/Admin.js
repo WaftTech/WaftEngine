@@ -235,7 +235,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                   Profile
                   </MenuItem>
               </Link>
-              <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
             </Menu>
           </div>
           {switchRoutes(roles)}
