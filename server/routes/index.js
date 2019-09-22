@@ -43,5 +43,8 @@ router.use('/template', template);
 // All route of meta module (meta data)
 const meta = require('./api/meta');
 router.use('/meta', meta);
+// All route of comment module (comments)
+const comment = require('./api/comment');
+router.use('/comment', comment);
 
 module.exports = router;

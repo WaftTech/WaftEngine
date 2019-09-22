@@ -9,7 +9,7 @@ function* loadComment(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `blog/comment/${action.payload}`,
+      `comment/${action.payload}`,
       actions.loadCommentSuccess,
       actions.loadCommentFailure,
       token,
@@ -21,7 +21,7 @@ function* deleteComment(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.delete(
-      `blog/comment/${action.payload}`,
+      `comment/${action.payload}`,
       actions.deleteCommentSuccess,
       actions.deleteCommentFailure,
       token,
@@ -33,7 +33,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `blog/comment/one/${action.payload}`,
+      `comment/one/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token,
@@ -48,13 +48,7 @@ function* postComment(action) {
     ? actions.editCommentSuccess
     : actions.postCommentSuccess;
   yield call(
-    Api.post(
-      'blog/comment',
-      onSuccess,
-      actions.postCommentFailure,
-      data,
-      token,
-    ),
+    Api.post('comment', onSuccess, actions.postCommentFailure, data, token),
   );
 }
 

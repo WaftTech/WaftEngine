@@ -16,6 +16,7 @@ import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import Fab from '@material-ui/core/Fab';
+import View from '@material-ui/icons/RemoveRedEyeOutlined';
 
 // core components
 import Table from 'components/Table';
@@ -131,9 +132,8 @@ export class BlogManagePage extends React.Component {
     const tableData = data.map(
       ({
         title,
-        category,
-        // image,
-        // published_on,
+        slug_url,
+        category, // published_on, // image,
         added_at,
         is_published,
         is_active,
@@ -141,12 +141,9 @@ export class BlogManagePage extends React.Component {
         author,
         _id,
       }) => {
-        // console.log(category);
         return [
           title,
           (category && category.map(each => each.title).join(', ')) || 'No',
-          // (image && image.fieldname) || null,
-          // moment(published_on).format('MMM Do YY'),
           moment(added_at).format('MMM Do YY'),
           '' + is_published,
           '' + is_active,
@@ -169,6 +166,9 @@ export class BlogManagePage extends React.Component {
                 />
               </IconButton>
             </Tooltip>
+            <a href={`http://localhost:5051/blog/${slug_url}`} target="_blank">
+              view blog
+            </a>
             <Tooltip
               id="tooltip-top-start"
               title="Remove"

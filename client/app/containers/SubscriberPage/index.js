@@ -11,15 +11,13 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
-import { TextField, Button } from '@material-ui/core';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import {
   makeSelectEmail,
   makeSelectEmailError,
   makeSelectSuccess,
-  makeSelectSuccessMsg,
+  // makeSelectSuccessMsg,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
@@ -29,12 +27,13 @@ import saga from './saga';
 export class SubscriberPage extends React.PureComponent {
   static propTypes = {
     setStoreValue: PropTypes.func.isRequired,
-    error: PropTypes.string,
+    errors: PropTypes.string,
     email: PropTypes.string.isRequired,
   };
 
   handleChange = name => e => {
     e.persist();
+    this.props.clearQuery();
     this.props.setStoreValue({ key: name, value: e.target.value });
   };
 
@@ -44,35 +43,27 @@ export class SubscriberPage extends React.PureComponent {
   };
 
   render() {
-    const { email, error, successMsg } = this.props;
-    const hasError = Boolean(error);
+    const { email, errors } = this.props;
+    const hasError = Boolean(errors);
     return (
       <>
-        <div>
-          <h3 className="font-bold text-2xl">Subscribe Page</h3>
-        </div>
-        <form>
-          <div className="mb-2">
-            <TextField
-              error={hasError}
-              fullWidth
-              label={error || 'Enter Your Email'}
-              margin="normal"
-              value={email}
-              onChange={this.handleChange('email')}
-            />
-          </div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSubmit}
-          >
-            Subscribe
-          </Button>
-          <div>
-            <h1>{successMsg}</h1>
-          </div>
-        </form>
+        <input
+          type="text"
+          className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded rounded-r-none py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
+          placeholder="Enter Your Email"
+          value={email}
+          onChange={this.handleChange('email')}
+        />
+        <div id="component-error-text">{errors}</div>
+
+        <button
+          type="submit"
+          style={{ paddingBottom: '0.45rem', marginLeft: '-1px' }}
+          className="text-white py-2 px-4 rounded rounded-l-none border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
+          onClick={this.handleSubmit}
+        >
+          Subscribe
+        </button>
       </>
     );
   }
@@ -80,9 +71,9 @@ export class SubscriberPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
-  error: makeSelectEmailError(),
+  errors: makeSelectEmailError(),
   success: makeSelectSuccess(),
-  successMsg: makeSelectSuccessMsg(),
+  // successMsg: makeSelectSuccessMsg(),
 });
 
 const withConnect = connect(

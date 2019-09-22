@@ -20,15 +20,9 @@ router.get('/blogbytag/:tag', blogModule.GetBlogByTag);
 router.get('/blogbyauthor/:author', blogModule.GetBlogByAuthor);
 router.get('/blogbytime', blogModule.GetBlogArchives);
 router.get('/blogbytime/:time', blogModule.GetBlogByDate);
-router.get('/comment/:blog', blogModule.GetBlogCommentByBlog);
-router.get('/comment', blogModule.GetBlogComment);
-router.get('/comment/one/:id', blogModule.GetBlogCommentById);
-router.get('/:id', authorization, blogModule.GetBlogDetail);
-router.post('/comment', authorization, sanitizeComment, validateComment, blogModule.PostBlogComment);
 router.post('/', authorization, authentication, uploader.single('file'), sanitize, validate, blogModule.SaveBlog);
 router.post('/category', authorization, authentication, uploader.single('file'), catSanitize, catValidate, blogModule.SaveBlogCategory);
 router.delete('/:id', authorization, authentication, blogModule.DeleteBlog);
 router.delete('/category/:id', authorization, authentication, blogModule.DeleteBlogCat);
-router.delete('/comment/:id', authorization, blogModule.DeleteBlogComment);
 
 module.exports = router;
