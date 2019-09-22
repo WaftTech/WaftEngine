@@ -39,7 +39,7 @@ const Breadcrumb = ({ location: { pathname }, routeList }) => {
             return null;
           return (
             <Crumb key={link.path} isLast={index === breadcrumbs.length - 1}>
-              <Link className="text-indigo-600 no-underline hover:underline" to={link.path}>
+              <Link className="text-blue-700 no-underline hover:underline" to={link.path}>
                 {link.label}
               </Link>
             </Crumb>

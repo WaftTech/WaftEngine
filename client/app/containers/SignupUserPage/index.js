@@ -50,7 +50,7 @@ const SignupUserPage = ({
             SIGN UP
             </button>
           <Link
-            className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
+            className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
             to="/login-user"
           >
             Already Have Account? Login
