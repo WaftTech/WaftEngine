@@ -32,7 +32,7 @@ const PasswordInput = props => {
         </label>
 
         <Link
-          className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
+          className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
           to="/forgot-password-user"
         >
           Forgot Password?

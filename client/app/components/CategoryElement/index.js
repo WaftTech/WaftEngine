@@ -38,24 +38,26 @@ const CategoryElement = props => {
             latestBlogs[cat_id].category &&
             latestBlogs[cat_id].category.title}
         </h2>
-        <div>
+        <div className="-mx-6 article-group">
           {latestBlogs[cat_id] &&
             latestBlogs[cat_id].blogs &&
             latestBlogs[cat_id].blogs.map((each, index) => (
-              <div key={each._id} className={`pr-4 item-${index + 1}`}>
-                <div className="md:flex mb-5 article-container">
-                  <Link to={`/blog/${each.slug_url}`} className="w-32 h-32 article-img-container">
-                    <img
-                      src={`${IMAGE_BASE}${each &&
-                        each.image &&
-                        each.image.path}`}
-                      className="max-w-none object-cover article-img"
-                      // style={{ maxWidth: 100 }}
-                      alt={`${each.title}`}
-                    />
-                  </Link>
+              <div key={each._id} className={`px-6 mb-8 item-${index + 1}`}>
+                <div className="flex article-container">
+                  <div className="article-img-container">
+                    <Link to={`/blog/${each.slug_url}`} className="w-32 h-32 block overflow-hidden">
+                      <img
+                        src={`${IMAGE_BASE}${each &&
+                          each.image &&
+                          each.image.path}`}
+                        className="max-w-none object-cover article-img"
+                        // style={{ maxWidth: 100 }}
+                        alt={`${each.title}`}
+                      />
+                    </Link>
+                  </div>
 
-                  <div className="md:pl-5 leading-tight article-text">
+                  <div className="pl-5 leading-tight article-text">
                     <span className="text-gray-700 text-sm sans-serif article-date">
                       {moment(each.added_at).format('MMM DD, YYYY')}
                     </span>
