@@ -4,7 +4,7 @@ import SideMenu from '../Components/SideMenu';
 
 function App() {
   return (
-    <div className="flex justify-between py-4 container">
+    <div className="flex justify-between py-4 container mx-auto">
       <div className="w-1/4 bg-white rounded shadow">
         <SideMenu />
       </div>
