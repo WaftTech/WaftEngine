@@ -67,7 +67,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             Name
         </label>
 
-          <FormControl
+          <FormControl className="w-full"
             error={errors && errors.name && errors.name.length > 0}
           >
             <input className="inputbox" id="name" type="text" value={one.name || ''}
@@ -84,7 +84,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </label>
 
 
-          <FormControl
+          <FormControl className="w-full"
             error={errors && errors.email && errors.email.length > 0}
           >
             <input className="inputbox" id="email" type="text" value={one.email || ''}
@@ -126,13 +126,11 @@ class UserPersonalInformationPage extends React.PureComponent {
 
         <div className="w-full pb-2">You are one of {one.roles.map(each => `${each.role_title} `)}</div>
 
-        <div className="w-full  pb-4">Your account created at {moment(one.added_at).format('YYYY-MM-DD')}</div>
+        <div className="w-full pb-4">Your account created at {moment(one.added_at).format('YYYY-MM-DD')}</div>
 
+        <NavLink className="block text-primary" to="/user/change-password">Change Password</NavLink>
 
-        <NavLink className="text-gray-800 hover:text-black" to="/user/change-password">Change Password</NavLink>
-
-
-        <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme" onClick={this.handleSave}>Save</button>
+        <button className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold" onClick={this.handleSave}>Save</button>
 
 
 

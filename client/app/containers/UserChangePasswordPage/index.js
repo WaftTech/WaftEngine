@@ -21,20 +21,11 @@ export class UserChangePasswordPage extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <div className="container mx-auto mb-10">
-        <h1 className="text-center my-5 p-3 mb-10 bg-gray-200 px-5 text-4xl">
+      <div className="mx-auto max-w-md p-5 md:p-16">
+        <h1 className="font-bold text-2xl">
           Change Password
         </h1>
-        <div className="container mx-auto px-5">
-          <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
-            <b>{user.name}</b>
-          </div>
-          <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
-            <b>{user.email}</b>
-          </div>
-        </div>
-
-        <div className="container mx-auto px-5 mt-5">
+        <div className="py-5">
           <ChangePasswordPage />
         </div>
       </div>

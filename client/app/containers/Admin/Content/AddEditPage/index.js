@@ -239,7 +239,7 @@ class AddEdit extends React.PureComponent {
 
               <br />
               <button
-                className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+                className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
                 onClick={this.handleSave}
               >
                 Save
