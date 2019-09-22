@@ -30,3 +30,21 @@ export const addEditFailure = payload => ({
   type: types.ADD_EDIT_FAILURE,
   payload,
 });
+
+export const changePasswordRequest = payload => ({
+  type: types.CHANGE_PASSWORD_REQUEST,
+  payload,
+});
+export const changePasswordSuccess = payload => ({
+  type: types.CHANGE_PASSWORD_SUCCESS,
+  payload,
+});
+export const changePasswordFailure = payload => ({
+  type: types.CHANGE_PASSWORD_FAILURE,
+  payload,
+});
+
+export const clearError = payload => ({
+  type: types.CLEAR_ERROR,
+  payload,
+});

@@ -1,16 +1,11 @@
-import UserProfilePage from '../containers/UserProfilePage';
-import UserChangePasswordPage from '../containers/UserChangePasswordPage';
+// import UserProfilePage from '../containers/UserProfilePage';
+import ProfileRoute from '../containers/Profile/index';
 
 const userRoutes = [
   {
-    exact: true,
+    exact: false,
     path: '/user/profile',
-    component: UserProfilePage,
-  },
-  {
-    exact: true,
-    path: '/user/change-password',
-    component: UserChangePasswordPage,
+    component: ProfileRoute,
   },
 ];
 

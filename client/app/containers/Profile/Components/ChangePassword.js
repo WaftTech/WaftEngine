@@ -9,11 +9,8 @@ import { push } from 'connected-react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // core components
-import injectSaga from '../../../utils/injectSaga';
-import injectReducer from '../../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import * as mapDispatchToProps from './actions';
+import * as mapDispatchToProps from '../actions';
+import { makeSelectErrors } from '../selectors';
 
 const styles = theme => ({});
 
@@ -30,6 +27,14 @@ export class ChangePassword extends React.Component {
     newPassword2: '',
     errors: {},
     showPassword: false,
+  };
+
+  componentDidMount() {
+    this.props.clearError();
+  }
+
+  static getDerivedStateFromProps = nextProps => {
+    return { errors: nextProps.errors };
   };
 
   handleChange = e => {
@@ -86,7 +91,7 @@ export class ChangePassword extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="pb-4">
+        <div className="w-full md:w-1/2 pb-4">
           <label
             className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
             htmlFor="oldPassword"
@@ -105,7 +110,7 @@ export class ChangePassword extends React.Component {
           {errors.oldPassword && <span>{errors.oldPassword}</span>}
         </div>
 
-        <div className="pb-4">
+        <div className="w-full md:w-1/2 pb-4">
           <label
             className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
             htmlFor="newPassword"
@@ -124,7 +129,7 @@ export class ChangePassword extends React.Component {
           {errors.newPassword && <span>{errors.newPassword}</span>}
         </div>
 
-        <div className="pb-4">
+        <div className="w-full md:w-1/2 pb-4">
           <label
             className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
             htmlFor="newPassword"
@@ -144,7 +149,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <button
-          className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold uppercase"
+          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
           onClick={this.handleSave}
         >
           Save
@@ -154,21 +159,18 @@ export class ChangePassword extends React.Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  errors: makeSelectErrors(),
+});
 
 const withConnect = connect(
   mapStateToProps,
   { ...mapDispatchToProps, push },
 );
 
-const withReducer = injectReducer({ key: 'changePassword', reducer });
-const withSaga = injectSaga({ key: 'changePassword', saga });
-
 const withStyle = withStyles(styles);
 
 export default compose(
   withStyle,
-  withReducer,
-  withSaga,
   withConnect,
 )(ChangePassword);

@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
-import { NavLink } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -19,10 +18,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
-import reducer from './reducer';
-import saga from './saga';
-import { makeSelectOne, makeSelectErrors } from './selectors';
-import * as mapDispatchToProps from './actions';
+import reducer from '../reducer';
+import saga from '../saga';
+import { makeSelectOne, makeSelectErrors } from '../selectors';
+import * as mapDispatchToProps from '../actions';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -38,6 +37,7 @@ class UserPersonalInformationPage extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.clearError();
     this.props.loadOneRequest();
   }
 
@@ -66,7 +66,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             Name
           </label>
 
-          <FormControl error={errors && errors.name && errors.name.length > 0}>
+          <FormControl className="md:w-1/2" error={errors && errors.name && errors.name.length > 0}>
             <input
               className="inputbox"
               id="name"
@@ -85,7 +85,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             Email
           </label>
 
-          <FormControl className="w-full"
+          <FormControl className="md:w-1/2"
             error={errors && errors.email && errors.email.length > 0}
           >
             <input
@@ -101,14 +101,12 @@ class UserPersonalInformationPage extends React.PureComponent {
           </FormControl>
         </div>
 
-        <div className="w-full pb-4">
+        <div className="md:w-1/2 pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Date Of Birth
           </label>
 
           <DatePicker
-            margin="normal"
-            fullWidth
             name="date_of_birth"
             className="inputbox"
             value={
@@ -136,7 +134,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <button
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
           onClick={this.handleSave}
         >
           Save
@@ -145,12 +143,6 @@ class UserPersonalInformationPage extends React.PureComponent {
     );
   }
 }
-
-const withReducer = injectReducer({
-  key: 'userPersonalInformationPage',
-  reducer,
-});
-const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
@@ -167,8 +159,6 @@ const styles = theme => ({});
 const withStyle = withStyles(styles);
 
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
   withStyle,
 )(UserPersonalInformationPage);
