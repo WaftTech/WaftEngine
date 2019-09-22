@@ -61,15 +61,15 @@ export class Dashboard extends React.PureComponent {
           <PageHeader>Dashboard</PageHeader>
         </div>
         <div className="bg-white rounded p-4 shadow">
-        {info.map(each => (
-          <div key={each._id}>
-            <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
-            <div
-              className="mt-2 flex flex-wrap justify-between p-4 rounded"
-              dangerouslySetInnerHTML={{ __html: each.detail }}
-            />
-          </div>
-        ))}
+          {info.map(each => (
+            <div key={each._id}>
+              <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
+              <div
+                className="mt-2 flex flex-wrap justify-between p-4 rounded"
+                dangerouslySetInnerHTML={{ __html: each.detail }}
+              />
+            </div>
+          ))}
         </div>
 
         {/* <div className="bg-white rounded my-4 p-4 ">
@@ -165,7 +165,7 @@ export class Dashboard extends React.PureComponent {
                       className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
                     >
                       <div className="flex justify-between h-10 items-center px-2">
-                        <span className="w-24">{each._id}</span>
+                        <span className="w-24 text-sm">{each._id}</span>
                         <span className="inline-block text-waftprimary font-bold text-2xl text-right ">
                           {each.count}
                         </span>
@@ -174,7 +174,7 @@ export class Dashboard extends React.PureComponent {
                   ))
                 ) : (
                     <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-4xl">No Errors</h2>
+                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">No Errors</h2>
                     </div>
                   )}
               </div>

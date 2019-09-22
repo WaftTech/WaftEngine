@@ -67,7 +67,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
     <div className="rounded mt-4">
       {items.map((value, index) => (
         <div
-        key={`${value._id}-item-image-${index}`}>
+          key={`${value._id}-item-image-${index}`}>
           <SortableImageItem
             index={index}
             value={value}
@@ -85,14 +85,14 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
                   onClick={_this.handleSetImage(index)}
                 />
               ) : (
-                <button
-                  type="button"
-                  className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
-                  onClick={_this.handleSetImage(index)}
-                >
-                  Click To Set Image
+                  <button
+                    type="button"
+                    className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
+                    onClick={_this.handleSetImage(index)}
+                  >
+                    Click To Set Image
                 </button>
-              )}
+                )}
             </div>
 
             <div className="w-1.5/5 m-auto text-center mr-2">
@@ -120,7 +120,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
             <div className="w-0.5/5 m-auto text-center">
               <button
                 type="button"
-                className="border-red-500 border text-red-500 hover:bg-red-100 rounded px-4 py-2 uppercase text-sm"
+                className="border-red-500 border bg-primary rounded px-4 py-2 uppercase text-sm"
                 onClick={() => _this.handleRemoveSlide(index)}
               >
                 Delete
@@ -253,165 +253,165 @@ class AddEdit extends React.PureComponent {
     return loading ? (
       <Loading />
     ) : (
-      <>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
-            {match && match.params && match.params.id
-              ? 'Edit Slider'
-              : 'Add Slider'}
-          </PageHeader>
-        </div>
-        <Dialog
-          className={classes.modal}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderBottom: '1px solid #ccc',
-              marginBottom: '20px',
-            }}
-          >
-            <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
-            <div>
-              {!isFirstPage && (
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() =>
-                    this.handleImagePagination({ page: media.page - 1 })
-                  }
-                >
-                  Prev
-                </Button>
-              )}
-              {!isLastPage && (
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() =>
-                    this.handleImagePagination({ page: media.page + 1 })
-                  }
-                >
-                  Next
-                </Button>
-              )}
-            </div>
-          </div>
-          <DialogContent>
-            {media.data.map((each, index) => (
-              <div
-                key={each._id}
-                className={classes.media}
-                onClick={() => this.handleImageImageChange(each._id)}
-                onKeyDown={() => this.handleImageImageChange(each._id)}
-                role="menuitem"
-                tabIndex={index}
+        <>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
               >
-                <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
+                <BackIcon />
+              </IconButton>
+              {match && match.params && match.params.id
+                ? 'Edit Slider'
+                : 'Add Slider'}
+            </PageHeader>
+          </div>
+          <Dialog
+            className={classes.modal}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={this.state.open}
+            onClose={this.handleClose}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottom: '1px solid #ccc',
+                marginBottom: '20px',
+              }}
+            >
+              <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
+              <div>
+                {!isFirstPage && (
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() =>
+                      this.handleImagePagination({ page: media.page - 1 })
+                    }
+                  >
+                    Prev
+                </Button>
+                )}
+                {!isLastPage && (
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() =>
+                      this.handleImagePagination({ page: media.page + 1 })
+                    }
+                  >
+                    Next
+                </Button>
+                )}
               </div>
-            ))}
-          </DialogContent>
-        </Dialog>
+            </div>
+            <DialogContent>
+              {media.data.map((each, index) => (
+                <div
+                  key={each._id}
+                  className={classes.media}
+                  onClick={() => this.handleImageImageChange(each._id)}
+                  onKeyDown={() => this.handleImageImageChange(each._id)}
+                  role="menuitem"
+                  tabIndex={index}
+                >
+                  <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
+                </div>
+              ))}
+            </DialogContent>
+          </Dialog>
 
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit Slider'
-              : 'Add Slider'}
-          </title>
-        </Helmet>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Slider Name
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Slider'
+                : 'Add Slider'}
+            </title>
+          </Helmet>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Slider Name
             </label>
-            <input
-              className="inputbox"
-              id="slider-name"
-              type="text"
-              value={one.slider_name}
-              name="slider_name"
-              onChange={this.handleChange('slider_name')}
-            />
-            <div id="component-error-text">{errors.slider_name}</div>
-          </div>
+              <input
+                className="inputbox"
+                id="slider-name"
+                type="text"
+                value={one.slider_name}
+                name="slider_name"
+                onChange={this.handleChange('slider_name')}
+              />
+              <div id="component-error-text">{errors.slider_name}</div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Slider Key
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Slider Key
             </label>
-            <input
-              className="inputbox"
-              id="slider-key"
-              type="text"
-              value={one.slider_key}
-              name="slider_key"
-              onChange={this.handleChange('slider_key')}
-            />
-            <div id="component-error-text">{errors.slider_key}</div>
-          </div>
+              <input
+                className="inputbox"
+                id="slider-key"
+                type="text"
+                value={one.slider_key}
+                name="slider_key"
+                onChange={this.handleChange('slider_key')}
+              />
+              <div id="component-error-text">{errors.slider_key}</div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Slider Settings
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Slider Settings
             </label>
-            <textarea
-              name="slider settings"
-              id="slider_setting"
-              className="inputbox"
-              cols="50"
-              rows="8"
-              onChange={this.handleChange('settings')}
-              value={one.settings || ''}
-            />
-          </div>
+              <textarea
+                name="slider settings"
+                id="slider_setting"
+                className="inputbox"
+                cols="50"
+                rows="5"
+                onChange={this.handleChange('settings')}
+                value={one.settings || ''}
+              />
+            </div>
 
-          <button
-            type="button"
-            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
-            onClick={this.handleAddSlide}
-          >
-            Add Slide
+            <button
+              type="button"
+              className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
+              onClick={this.handleAddSlide}
+            >
+              Add Slide
           </button>
-          <div>
-            <SortableImageList
-              items={one.images}
-              _this={this}
-              onSortEnd={this.onImageSortEnd}
-            />
-          </div>
-          <button
-            type="button"
-            className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
-            onClick={this.handleSave}
-          >
-            Save
+            <div>
+              <SortableImageList
+                items={one.images}
+                _this={this}
+                onSortEnd={this.onImageSortEnd}
+              />
+            </div>
+            <button
+              type="button"
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </>
-    );
+          </PageContent>
+        </>
+      );
   }
 }
 

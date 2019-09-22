@@ -12,7 +12,7 @@ const NameInput = props => {
   const hasError = Boolean(error);
   return (
     <div className="mb-4">
-      <label className="block text-gray-800 text-sm mb-2" htmlFor="username">
+      <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2" htmlFor="username">
         {error || 'Name'}
       </label>
       <input

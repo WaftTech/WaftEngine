@@ -22,10 +22,8 @@ export class UserChangePasswordPage extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <div className="container mx-auto mb-10">
-        <h1 className="text-center my-5 p-3 mb-10 bg-gray-200 px-5 text-4xl">
-          Change Password
-        </h1>
+      <div className="mx-auto max-w-md p-5 md:p-16">
+        <h1 className="font-bold text-2xl">Change Password</h1>
 
         <div className="flex justify-between py-4">
           <div className="w-1/4 bg-white rounded shadow">

@@ -85,7 +85,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             Email
           </label>
 
-          <FormControl
+          <FormControl className="w-full"
             error={errors && errors.email && errors.email.length > 0}
           >
             <input

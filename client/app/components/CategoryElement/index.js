@@ -20,7 +20,7 @@ import {
   makeSelecBlogLoading,
 } from '../../containers/App/selectors';
 import Skeleton from './skeleton';
-import style from './style.css';
+import style from './category.css';
 
 const CategoryElement = props => {
   const { cat_id, latestBlogs, loading, size } = props;
@@ -33,42 +33,46 @@ const CategoryElement = props => {
     <Skeleton />
   ) : (
       <>
-        <h2 className="pt-5 pb-5 text-2xl">
+        <h2 className="pt-5 pb-4 text-2xl">
           {latestBlogs[cat_id] &&
             latestBlogs[cat_id].category &&
             latestBlogs[cat_id].category.title}
         </h2>
-        <div className="recent_blog">
+        <div className="-mx-6 article-group">
           {latestBlogs[cat_id] &&
             latestBlogs[cat_id].blogs &&
             latestBlogs[cat_id].blogs.map((each, index) => (
-              <div key={each._id} className={`pr-4 item-${index + 1}`}>
-                <div className="block md:flex mb-5">
-                  <Link to={`/blog/${each.slug_url}`} className="imgContainer">
-                    <img
-                      src={`${IMAGE_BASE}${each &&
-                        each.image &&
-                        each.image.path}`}
-                      className="max-w-full md:w-48 article"
-                      // style={{ maxWidth: 100 }}
-                      alt={`${each.title}`}
-                    />
-                  </Link>
+              <div key={each._id} className={`px-6 mb-8 item-${index + 1}`}>
+                <div className="flex article-container">
+                  <div className="article-img-container">
+                    <Link to={`/blog/${each.slug_url}`} className="w-32 h-32 block overflow-hidden">
+                      <img
+                        src={`${IMAGE_BASE}${each &&
+                          each.image &&
+                          each.image.path}`}
+                        className="max-w-none object-cover article-img"
+                        // style={{ maxWidth: 100 }}
+                        alt={`${each.title}`}
+                      />
+                    </Link>
+                  </div>
 
-                  <div className="md:pl-5 heading leading-tight">
-                    <span className="text-gray-700 text-sm sans-serif">
+                  <div className="pl-5 leading-tight article-text">
+                    <span className="text-gray-700 text-sm sans-serif article-date">
                       {moment(each.added_at).format('MMM DD, YYYY')}
                     </span>
                     <Link
-                      className="font-bold text-xl block text-black hover:text-waftprimary heading pointer no-underline"
+                      className="font-bold text-xl block text-black hover:text-waftprimary pointer no-underline article-title"
                       to={`/blog/${each.slug_url}`}
                     >
-                      {' '}
                       {each.title}{' '}
                     </Link>
-                    <span className="text-gray-700 text-sm sans-serif">
+                    <span className="text-gray-700 text-sm sans-serif author-name">
                       {each.author.name}
                     </span>
+
+                    <p className="text-gray-600 leading-relaxed short-description">{each.short_description}</p>
+
                   </div>
                 </div>
               </div>

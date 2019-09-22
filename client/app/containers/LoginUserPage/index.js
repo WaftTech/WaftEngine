@@ -36,11 +36,11 @@ const LoginUserPage = ({
   return (
     <div className="container mx-auto mb-10">
       <div className="mx-auto max-w-md p-5 md:p-16">
-        <h1 className="font-light text-4xl">LOGIN</h1>        <form className="mt-4" onSubmit={handleSubmit}>
+        <h1 className="font-bold text-2xl">LOGIN</h1>        <form className="mt-4" onSubmit={handleSubmit}>
           <UsernameInput />
           <PasswordInput />
           <button
-            className="text-white py-2 px-4 rounded mt-4 w-full bg-red-600 hover:bg-red-800 font-bold"
+            className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold"
             type="submit"
           >
             LOGIN
@@ -48,7 +48,7 @@ const LoginUserPage = ({
         </form>
 
         <Link
-          className="inline-block align-baseline text-xs text-indigo-600 hover:text-indigo-600-darker"
+          className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
           to="/signup-user"
         >
           Don't Have Account? Register

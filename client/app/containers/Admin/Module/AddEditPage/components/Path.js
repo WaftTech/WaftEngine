@@ -74,7 +74,7 @@ const Path = props => {
           ))}
 
           <button
-            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
+            className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
             onClick={handleAddAdminRoute(pathIndex)}
           >
             Add Client Route
@@ -147,7 +147,7 @@ const Path = props => {
           ))}
 
           <button
-            className="text-waftprimary font-bold py-2 px-4 rounded border-2 border-waftprimary hover:text-white hover:bg-waftprimary"
+            className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
             onClick={handleAddServerRoute(pathIndex)}
           >
             Add Server Route
@@ -156,7 +156,7 @@ const Path = props => {
       </div>
       <div className="mx-4 flex justify-end mt-4">
         <button
-          className="text-white py-2 px-4 rounded bg-red-600 hover:bg-red-800 font-bold"
+          className="text-white py-2 px-4 rounded bg-primary font-bold"
           onClick={handleRemovePath(pathIndex)}
         >
           Delete Access Type

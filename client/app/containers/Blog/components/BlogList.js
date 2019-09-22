@@ -29,26 +29,26 @@ const RenderBlogs = props => {
           title,
           author,
           slug_url,
-          description,
+          short_description,
           added_at,
           tags,
         } = each;
 
         return (
-          <div key={slug_url} className="border-b border-dotted py-5 md:flex">
-            <div className="md:w-1/4">
+          <div key={slug_url} className="border-b border-dotted py-5 md:flex article-container">
+            <div className="md:w-1/4 article-heading">
               <Link
                 className="text-black no-underline capitalize mb-2 bold block mt-4"
                 to={`/blog/${slug_url}`}
               >
-                <h2 className="text-2xl font-medium leading-tight">{title}</h2>
+                <h2 className="text-2xl font-medium leading-tight hover:text-primary">{title}</h2>
               </Link>
-              <span className="mt-2">
+              <span className="my-2 text-sm">
                 by{' '}
                 {author && author.name ? (
                   <Link
                     to={`/blog/author/${author._id}`}
-                    className="text-red-600 font-bold no-underline hover:underline"
+                    className="text-primary font-bold no-underline hover:underline"
                   >
                     {author.name}
                   </Link>
@@ -57,37 +57,35 @@ const RenderBlogs = props => {
                 )}
               </span>
             </div>
-            <div className="md:w-1/2 py-4 md:p-4">
-              <span className="text-gray-700 mr-2">
+            <div className="md:w-1/2 py-4 md:p-4 article-details">
+              <span className="text-gray-700 mr-2 article-date">
                 {moment(added_at).format('MMM Do YYYY')}
               </span>
-              {tags && tags.length > 0 ? (
-                <Link
-                  className="text-indigo-600 no-underline"
-                  to={`/blog/${each.slug_url}`}
-                >
-                  <span> {tags.join(', ') || ''} </span>
-                </Link>
-              ) : (
+              {tags && tags.length > 0 ? (<Link
+                className="text-blue-700 no-underline article-tag"
+                to={`/blog/${each.slug_url}`}
+              >
+                <span> {tags.join(', ') || ''} </span>
+              </Link> ) : (
                 ''
               )}
-              <Link
-                className="text-grey-darker text-base no-underline"
-                to={`/blog/${slug_url}`}
-              >
-                <div
-                  className="leading-normal text-sm text-gray-600 font-light overflow-hidden"
-                  style={{ height: '130px' }}
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </Link>
+              {short_description &&
+                <Link
+                  className="text-grey-darker text-base no-underline"
+                  to={`/blog/${slug_url}`}
+                >
+                  <div
+                    className="leading-normal text-sm text-gray-600 overflow-hidden"
+                    dangerouslySetInnerHTML={{ __html: short_description }}
+                  />
+                </Link>
+              }
             </div>
 
-            <div className="md:w-1/4 h-48 object-cover overflow-hidden p-8">
+            <div className="md:w-1/4 h-48 overflow-hidden p-8 article-image">
               <Link to={`/blog/${slug_url}`}>
                 <img
                   src={image && `${IMAGE_BASE}${image.path}`}
-                  className="rounded "
                   alt={`${title}`}
                 />
               </Link>
@@ -95,7 +93,7 @@ const RenderBlogs = props => {
           </div>
         );
       })}
-      <div className="flex">
+      <div className="flex clearfix w-full pagination">
         <div className="w-full md:w-1/4" />
         <div className="w-3/4 flex justify-end mt-3 ">
           {pagination.page !== 1 && (
