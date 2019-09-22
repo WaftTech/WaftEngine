@@ -23,7 +23,7 @@ const PasswordInput = props => {
   const hasError = Boolean(errors);
   return (
     <div className="mb-4">
-      <label className="block text-gray-800 text-sm mb-2" htmlFor="Password">
+      <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2" htmlFor="Password">
         Password
       </label>
       <div className="relative">

@@ -5,16 +5,20 @@
 @tailwind utilities;
 
 
-button:focus {
+button:focus, a:focus {
   outline: none;
 }
+
+div.react-datepicker-wrapper, div.react-datepicker__input-container {
+  display: block;
+}
+.select-none .active { color:#fc3d39;}
 
 .inputbox {
   display: block;
   width: 100%;
-  height: 36px;
   padding: 6px 12px;
-  background: #f4f4f4;
+  background: #f0f0f0;
   border-radius: 4px;
   font-family:sans-serif;
   border:1px solid transparent;
@@ -80,5 +84,5 @@ div#component-error-text {
   }
 }
 
-.bg-star { background:url(./assets/img/ptn.jpg) 0 32px; background-size:75px 75px; }
+.bg-star { background:url(./assets/img/ptn.jpg) 0 32px; background-size:50px 50px; }
 

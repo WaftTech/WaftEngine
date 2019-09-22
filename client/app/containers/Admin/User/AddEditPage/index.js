@@ -134,7 +134,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <h2 className="font-bold text-4xl">Basic Information</h2>
+              <h3 className="text-lg font-bold">Basic Information</h3>
               <br />
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                 Email
@@ -207,7 +207,7 @@ class AddEdit extends React.PureComponent {
             <br />
             {id ? (
               <button
-                className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+                className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
                 onClick={this.handleSave}
               >
                 Save
@@ -217,7 +217,7 @@ class AddEdit extends React.PureComponent {
               )}
             <br />
             <br />
-            <h3 className="text-2xl font-bold">Reset Password</h3>
+            <h3 className="text-lg font-bold">Reset Password</h3>
             <br />
             <div className="w-full md:w-1/2 pb-4">
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
@@ -242,7 +242,7 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.password || ''}</div>
             </div>
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
               onClick={this.handleUpdate}
             >
               {id ? 'Update Password' : 'Set Password'}

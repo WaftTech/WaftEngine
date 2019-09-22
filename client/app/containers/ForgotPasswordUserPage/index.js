@@ -32,7 +32,7 @@ const ForgotPasswordUser = ({ classes, forgotPasswordRequest }) => {
       <form className="my-4" onSubmit={handleSubmit}>
         <UsernameInput />
 
-        <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme" type="submit">
+        <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme" type="submit">
           SUBMIT
           </button>
 
