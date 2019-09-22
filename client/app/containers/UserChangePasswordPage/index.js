@@ -7,6 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import green from '@material-ui/core/colors/green';
 import { makeSelectUser } from '../App/selectors';
 import ChangePasswordPage from './ChangePasswordPage';
+import SideMenu from '../UserProfilePage/SideMenu';
 
 /* eslint-disable react/prefer-stateless-function */
 
@@ -25,17 +26,14 @@ export class UserChangePasswordPage extends React.Component {
         <h1 className="text-center my-5 p-3 mb-10 bg-gray-200 px-5 text-4xl">
           Change Password
         </h1>
-        <div className="container mx-auto px-5">
-          <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
-            <b>{user.name}</b>
-          </div>
-          <div className="w-full pb-2 text-base md:text-lg  xl:text-xl">
-            <b>{user.email}</b>
-          </div>
-        </div>
 
-        <div className="container mx-auto px-5 mt-5">
-          <ChangePasswordPage />
+        <div className="flex justify-between py-4">
+          <div className="w-1/4 bg-white rounded shadow">
+            <SideMenu />
+          </div>
+          <div className="w-3/4 bg-white rounded ml-2 p-4 shadow">
+            <ChangePasswordPage />
+          </div>
         </div>
       </div>
     );

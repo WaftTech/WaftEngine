@@ -8,6 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import green from '@material-ui/core/colors/green';
 import { makeSelectUser } from '../App/selectors';
 import UserPersonalInformationPage from './UserPersonalInformation';
+import SideMenu from './SideMenu';
 
 /* eslint-disable react/prefer-stateless-function */
 
@@ -22,23 +23,25 @@ export class UserProfilePage extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <div>
+      <>
         <Helmet>
           <title>Profile Page</title>
         </Helmet>
-
-        <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-4xl">Profile</h1>
-        </div>
-
         <div className="container mx-auto mb-10">
-          <div className="flex flex-wrap justify-between">
-            <div className="w-full md:w-1/2 px-5 md:px-16">
+          <h1 className="text-center my-5 p-3 mb-10 bg-gray-200 px-5 text-4xl">
+            Profile
+          </h1>
+
+          <div className="flex justify-between py-4">
+            <div className="w-1/4 bg-white rounded shadow">
+              <SideMenu />
+            </div>
+            <div className="w-3/4 bg-white rounded ml-2 p-4 shadow">
               <UserPersonalInformationPage />
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

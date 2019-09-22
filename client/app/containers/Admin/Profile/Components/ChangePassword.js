@@ -28,11 +28,11 @@ export class ChangePassword extends React.Component {
     errors: {},
     showPassword: false,
   };
-  
+
   componentDidMount() {
     this.props.clearError();
   }
-  
+
   static getDerivedStateFromProps = nextProps => {
     return { errors: nextProps.errors };
   };
