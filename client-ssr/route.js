@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 const htmlManupulator = require('./htmlmanupulator');
 
-router.get('/products', htmlManupulator.products);
-router.get('/services', htmlManupulator.services);
-router.get('/approach', htmlManupulator.approach);
-router.get('/blog', htmlManupulator.blogList);
-router.get('/blog/:slug_url', htmlManupulator.blogBySlugUrl);
-router.get('/team', htmlManupulator.team);
-router.get('/contact', htmlManupulator.contactUs);
-router.get('/blog-category', htmlManupulator.blogCategory);
-router.get('/blog-category/:id', htmlManupulator.BlogCategoryByID);
+router.get(['/login-user', '/signup-user', '/forgot-password-user', '/subscribe', '/contact-us', '/blog'], htmlManupulator.StaticPages);
+router.get('/faq', htmlManupulator.FaqPage);
+router.get(['/about-us', '/term-and-condition', '/data-policy', '/cookies-policy'], htmlManupulator.DynamicPages);
+router.get('/blog/:slug_url', htmlManupulator.BlogBySlugUrl);
+router.get('/blog/category/:slug_url', htmlManupulator.BlogsByCategoryPages);
+router.get('/blog/tag/:tag', htmlManupulator.BlogsByTagPages);
+router.get('/blog/author/:author', htmlManupulator.BlogsByAuthorPages);
+router.get('/blog/date/:date', htmlManupulator.BlogByDatePages);
 
 module.exports = router;

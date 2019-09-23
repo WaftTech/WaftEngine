@@ -1,14 +1,16 @@
 require('dotenv').config();
 const http = require('http');
 const app = require('./app');
-const port = process.env.PORT || 5071;
+const port = process.env.PORT;
+const live = process.env.LIVE_URL;
+const app_name = process.env.APP_NAME;
 const server = http.createServer(app);
 
 app.set('PORT_NUMBER', port);
 
-//  Start the app on the specific interface (and port).
 server.listen(port, () => {
-  console.log(`WAFT ENGINE Client started on port ${port} at Date ${new Date()}`);
+  const current_date = new Date();
+  console.table([{ 'Application Name': app_name, PORT: port, 'Started At': current_date, 'Local Link': 'http://localhost:' + port, 'Live Link': live }]);
 });
 
 process.on('SIGTERM', () => {
