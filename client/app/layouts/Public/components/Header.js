@@ -132,7 +132,7 @@ const Header = props => {
                   </Link>
                 )}
                 <Link
-                  to="/user/profile"
+                  to="/user/profile/information"
                   style={{ textDecoration: 'none', color: 'black' }}
                   onClick={handleClose}
                 >
