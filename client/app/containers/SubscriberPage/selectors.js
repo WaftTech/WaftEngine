@@ -28,8 +28,8 @@ export const makeSelectSuccess = () =>
     selectSubscriberPageDomain,
     state => state.success,
   );
-export const makeSelectSuccessMsg = () =>
-  createSelector(
-    selectSubscriberPageDomain,
-    state => state.successMsg,
-  );
+// export const makeSelectSuccessMsg = () =>
+//   createSelector(
+//     selectSubscriberPageDomain,
+//     state => state.successMsg,
+//   );

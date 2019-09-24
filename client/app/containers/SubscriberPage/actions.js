@@ -10,6 +10,10 @@ export const setStoreValue = payload => ({
   type: types.SET_STORE_VALUE,
   payload,
 });
+export const clearQuery = payload => ({
+  type: types.CLEAR_QUERY,
+  payload,
+});
 export const saveSubscriberRequest = payload => ({
   type: types.SAVE_SUBSCRIBER_REQUEST,
   payload,

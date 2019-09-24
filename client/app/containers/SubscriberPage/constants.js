@@ -12,3 +12,4 @@ export const SAVE_SUBSCRIBER_SUCCESS =
   'app/SubscriberPage/SAVE_SUBSCRIBER_SUCCESS';
 export const SAVE_SUBSCRIBER_FAILURE =
   'app/SubscriberPage/SAVE_SUBSCRIBER_FAILURE';
+export const CLEAR_QUERY = 'app/SubscriberPage/CLEAR_QUERY';

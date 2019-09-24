@@ -4,6 +4,8 @@ import { Link, withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { compose } from 'redux';
+
+import SubscriberPage from '../../../containers/SubscriberPage/Loadable';
 import logo from '../../../assets/img/logo.svg';
 import fb from '../../../assets/img/fb.png';
 import instagram from '../../../assets/img/Instagram.png';
@@ -16,6 +18,7 @@ class Footer extends React.Component {
 
   handleSave = e => {
     e.preventDefault();
+    this.props.loadSubscribeRequest();
   };
 
   handleChange = name => event => {
@@ -29,26 +32,13 @@ class Footer extends React.Component {
       <footer className="footer bg-gray-900">
         <div className="w-full bg-gray-900 border-b border-gray-800 p-2 text-center">
           <div className="py-10">
-            <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">Get updates</h1>
+            <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">
+              Get updates
+            </h1>
             <p className="mb-5 text-gray-700">
               Never miss any updates from WaftEngine.
             </p>
-            <form onSubmit={this.handleSave}>
-              <input
-                type="text"
-                className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded rounded-r-none py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
-                placeholder="Enter Your Email"
-                value={email}
-                onChange={this.handleChange('email')}
-              />
-
-              <button
-                type="submit" style={{ paddingBottom: '0.45rem', marginLeft: '-1px' }}
-                className="text-white py-2 px-4 rounded rounded-l-none border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
-              >
-                Subscribe
-              </button>
-            </form>
+            <SubscriberPage />
           </div>
         </div>
         <div className="container mx-auto">

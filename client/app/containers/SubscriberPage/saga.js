@@ -2,6 +2,7 @@ import { take, takeLatest, put, call, select } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
 import { makeSelectEmail } from './selectors';
+import { enqueueSnackbar } from '../App/actions';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectToken } from '../App/selectors';
@@ -34,7 +35,30 @@ export function* saveSubscriber() {
   }
 }
 
+function* saveSubscriberSuccessFunc(action) {
+  yield put(
+    enqueueSnackbar({
+      message: action.payload.msg || 'subscribe success!!',
+      options: {
+        variant: 'success',
+      },
+    }),
+  );
+}
+
+function* saveSubscriberFailFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while deleting!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 // Individual exports for testing
 export default function* defaultSaga() {
   yield takeLatest(types.SAVE_SUBSCRIBER_REQUEST, saveSubscriber);
+  yield takeLatest(types.SAVE_SUBSCRIBER_SUCCESS, saveSubscriberSuccessFunc);
+  yield takeLatest(types.SAVE_SUBSCRIBER_FAILURE, saveSubscriberFailFunc);
 }

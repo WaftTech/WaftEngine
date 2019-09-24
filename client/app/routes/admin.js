@@ -29,7 +29,6 @@ import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadabl
 import Report from '../containers/Admin/Report/Loadable';
 import Integration from '../containers/Admin/Integration/Loadable';
 import UserProfilePage from '../containers/Admin/Profile/index';
-import UserChangePasswordPage from '../containers/UserChangePasswordPage';
 
 const routes = [
   {
