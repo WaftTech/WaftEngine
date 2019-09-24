@@ -4,17 +4,17 @@
 .hamIcon {
   display: none;
 }
-.nav-link.active { box-shadow:0 1px 0 #d82929;}
+
+.nav .active {
+  color: #d82929;
+}
 
 @media screen and (max-width: 767px) {
-  .nav .active {
-    color: #ffffff;
-  }
+
 
   .nav {
     display: none;
     position: relative;
-    background: #ff5249;
     padding: 10px;
   }
 
@@ -114,6 +114,9 @@
 }
 
 @media screen and (min-width: 992px) {
+
+.nav-link.active { box-shadow:0 1px 0 #d82929;}
+
   .header_right,
   .nav-bar {
     order: inherit;
