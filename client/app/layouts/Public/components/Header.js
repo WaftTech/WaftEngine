@@ -75,7 +75,7 @@ const Header = props => {
             {HeaderMenu.map(each => (
               <NavLink
                 key={each.key}
-                className="text-white text-center block no-underline px-5 py-5 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
+                className="text-right md:text-left border-b md:border-none block no-underline px-5 py-5 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
                 to={each.link}
                 onClick={handleToggle}
               >
@@ -132,7 +132,7 @@ const Header = props => {
                   </Link>
                 )}
                 <Link
-                  to="/user/profile"
+                  to="/user/profile/information"
                   style={{ textDecoration: 'none', color: 'black' }}
                   onClick={handleClose}
                 >

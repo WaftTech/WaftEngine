@@ -4,3 +4,4 @@ node_modules/
 *lock.json
 yarn.lock
 .expo/
+build

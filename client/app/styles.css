@@ -32,6 +32,8 @@ div.react-datepicker-wrapper, div.react-datepicker__input-container {
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
+select.inputbox { height:36px;}
+
 .waftsrchstyle {
   width: 40px;
   text-align: center;
