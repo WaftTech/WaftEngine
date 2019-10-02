@@ -31,6 +31,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
+import { makeSelectToken } from '../../../App/selectors';
 
 const styles = {
   backbtn: {
@@ -162,7 +163,7 @@ class AddEdit extends React.PureComponent {
                 <CKEditor
                   name="description"
                   content={one.description}
-                  config={{ allowedContent: true }}
+                  config={{ allowedContent: true ,filebrowserUploadUrl  :`/api/media/uploader`, filebrowserBrowseUrl  :`/api/media`}}
                   events={{
                     change: e => this.handleEditorChange(e, 'description'),
                     value: one.description,
@@ -259,6 +260,7 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
   errors: makeSelectErrors(),
+  token: makeSelectToken(),
 });
 
 const withConnect = connect(
