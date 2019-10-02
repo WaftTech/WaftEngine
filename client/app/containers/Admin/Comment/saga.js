@@ -23,9 +23,21 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `blog/comment?${query}`,
+      `comment?${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
+      token,
+    ),
+  );
+}
+
+function* loadOne(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `comment/one/${action.payload}`,
+      actions.loadOneSuccess,
+      actions.loadOneFailure,
       token,
     ),
   );
@@ -34,4 +46,5 @@ function* loadAll(action) {
 // Individual exports for testing
 export default function* blogCommentManagePageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
+  yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
 }
