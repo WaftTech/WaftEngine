@@ -162,9 +162,11 @@ class AddEdit extends React.PureComponent {
               <CKEditor
                 name="description"
                 content={one.description}
+                scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
                 config={{
                   allowedContent: true,
                   filebrowserBrowseUrl: '/editor-file-select',
+                  filebrowserUploadUrl: '/editor-file-select',
                 }}
                 events={{
                   change: e => this.handleEditorChange(e, 'description'),
