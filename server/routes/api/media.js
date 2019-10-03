@@ -15,7 +15,7 @@ router.post('/multiple/:type', authorization, authentication, uploader.any('file
 router.get('/:id', dModule.GetMediaDetail);
 router.delete('/:id', authorization, authentication, dModule.DeleteMedia);
 
-router.post('/uploader', uploader.any('file'), dModule.UploadFromCkEditor);
+router.post('/uploader', authorization, authentication, uploader.any('file'), dModule.UploadFromCkEditor);
 // router.post('/uploader', multipartMiddleware, function(req, res) {
 //   var fs = require('fs');
 
