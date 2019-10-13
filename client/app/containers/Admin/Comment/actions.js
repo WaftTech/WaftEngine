@@ -39,3 +39,15 @@ export const setQueryValue = payload => ({
   type: types.SET_QUERY_VALUE,
   payload,
 });
+export const loadManageRequest = payload => ({
+  type: types.LOAD_MANAGE_REQUEST,
+  payload,
+});
+export const loadManageSuccess = payload => ({
+  type: types.LOAD_MANAGE_SUCCESS,
+  payload,
+});
+export const loadManageFailure = payload => ({
+  type: types.LOAD_MANAGE_FAILURE,
+  payload,
+});

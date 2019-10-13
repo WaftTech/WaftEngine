@@ -16,6 +16,7 @@ export const initialState = {
   one: {
     title: '',
     blog_id: '',
+    // status: 'onhold',
     is_approved: false,
     is_disapproved: false,
   },
@@ -51,7 +52,7 @@ const blogCommentManagePageReducer = (state = initialState, action) =>
         draft.query[action.payload.key] = action.payload.value;
         break;
       case types.SET_ONE_VALUE:
-        draft.one[action.payload.key] = action.payload.value;
+        draft.one = action.payload;
         break;
     }
   });

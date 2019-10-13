@@ -9,8 +9,8 @@ router.get('/:blog', commentModule.GetCommentByBlog);
 router.get('/', commentModule.GetComment);
 router.get('/one/:id', commentModule.GetCommentById);
 router.post('/', authorization, sanitizeComment, validateComment, commentModule.PostComment);
-router.post('/approve/:id', authorization, commentModule.ApproveComment);
-router.post('/disapprove/:id', authorization, commentModule.DisApproveComment);
+router.post('/approve', authorization, commentModule.ApproveComment);
+// router.post('/disapprove', authorization, commentModule.DisApproveComment);
 router.delete('/:id', authorization, commentModule.DeleteComment);
 
 module.exports = router;

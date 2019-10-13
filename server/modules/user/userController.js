@@ -319,7 +319,7 @@ userController.UpdateUserDetail = async (req, res, next) => {
   }
 };
 
-userController.Verifymail = async (req, res) => {
+userController.Verifymail = async (req, res, next) => {
   try {
     const {
       body: { email, code },
@@ -327,8 +327,9 @@ userController.Verifymail = async (req, res) => {
     const user = await users.findOne({ email, email_verification_code: code });
     const data = { email };
     if (!user) {
+      let errors = {};
       errors.email = 'Invalid Verification Code';
-      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, data, null, errors.email, null);
     }
     const d = await users.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     // Create JWT payload

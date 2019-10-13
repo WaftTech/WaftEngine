@@ -1,6 +1,6 @@
 /**
  *
- * BlogCommentManagePage
+ * CommentManagePage
  *
  */
 
@@ -14,13 +14,10 @@ import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Close from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
 import ViewIcon from '@material-ui/icons/RemoveRedEyeOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 import Table from 'components/Table';
 
 import injectSaga from 'utils/injectSaga';
@@ -33,7 +30,6 @@ import Loading from '../../../components/Loading';
 
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
-import DeleteDialog from '../../../components/DeleteDialog';
 
 const styles = theme => ({
   button: {
@@ -105,6 +101,14 @@ export class BlogCommentManagePage extends React.PureComponent {
     this.props.push(`/admin/comment/view/${id}`);
   };
 
+  handleApprove = (id, status) => {
+    // this.props.loadApproveRequest(id);
+  };
+
+  // handleDisapprove = id => {
+  //   this.props.loadDisapproveRequest(id);
+  // };
+
   render() {
     const { classes } = this.props;
     const {
@@ -114,9 +118,10 @@ export class BlogCommentManagePage extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ title, blog_id, added_at, updated_at, _id }) => [
+      ({ title, blog_id, status, added_at, updated_at, _id }) => [
         title,
         blog_id && blog_id.title,
+        status || 'onhold',
         moment(added_at).format('MMM Do YY'),
         moment(updated_at).format('MMM Do YY'),
         <>
@@ -136,6 +141,18 @@ export class BlogCommentManagePage extends React.PureComponent {
               />
             </IconButton>
           </Tooltip>
+          <button
+            className="ml-2 underline text-blue-500"
+            onClick={() => this.handleApprove(_id, 'approve')}
+          >
+            Approve
+          </button>
+          <button
+            className="ml-2 underline text-primary"
+            onClick={() => this.handleDisapprove(_id, 'disapprove')}
+          >
+            Disapprove
+          </button>
         </>,
       ],
     );
@@ -189,6 +206,7 @@ export class BlogCommentManagePage extends React.PureComponent {
             tableHead={[
               'Comment Title',
               'Blog',
+              'Status',
               'Added At',
               'Updated At',
               'Actions',

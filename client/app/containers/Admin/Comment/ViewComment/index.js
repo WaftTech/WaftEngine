@@ -40,7 +40,15 @@ export class ViewComment extends React.PureComponent {
 
   handleCheckedChange = name => event => {
     event.persist();
-    this.props.setOneValue({ key: name, value: event.target.checked });
+    const one = { ...this.props.one };
+    let newOne = { ...one, [name]: event.target.checked };
+    if (name === 'is_approved' && event.target.checked === true) {
+      newOne = { ...newOne, is_disapproved: false };
+    }
+    if (name === 'is_disapproved' && event.target.checked === true) {
+      newOne = { ...newOne, is_approved: false };
+    }
+    this.props.setOneValue(newOne);
   };
 
   handleBack = () => {
@@ -90,28 +98,30 @@ export class ViewComment extends React.PureComponent {
                 {one.status || ''}
               </p>
             ) : null}
-            <FormControlLabel
-              className="px-4"
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={(one && one.is_approved) || false}
-                  onClick={this.handleCheckedChange('is_approved')}
-                />
-              }
-              label="Is Approved"
-            />
-            <FormControlLabel
-              className="px-4"
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={(one && one.is_disapproved) || false}
-                  onClick={this.handleCheckedChange('is_disapproved')}
-                />
-              }
-              label="Is Disapproved"
-            />
+            <div>
+              <FormControlLabel
+                className="ml-2"
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={(one && one.is_approved) || false}
+                    onClick={this.handleCheckedChange('is_approved')}
+                  />
+                }
+                label="Is Approved"
+              />
+              <FormControlLabel
+                className="ml-2"
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={(one && one.is_disapproved) || false}
+                    onClick={this.handleCheckedChange('is_disapproved')}
+                  />
+                }
+                label="Is Disapproved"
+              />
+            </div>
 
             <button
               className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"

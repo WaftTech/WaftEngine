@@ -127,17 +127,32 @@ commentController.GetCommentById = async (req, res, next) => {
 };
 commentController.ApproveComment = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const comment = await commentSch.findOneAndUpdate({ _id: id, is_deleted: false }, { $set: { is_approved: true, approved_by: req.user.id, approved_at: Date.now(), status: 'approved' } }, { new: true });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment approve success!!', null);
+    const data = req.body;
+    if (data.is_approved) {
+      data.approved_by = req.user.id;
+      data.approved_at = Date.now();
+      data.status = 'approved';
+    }
+    else if (data.is_disapproved) {
+      data.disapproved_by = req.user.id;
+      data.disapproved_at = Date.now();
+      data.status = 'disapproved';
+    }else{
+      data.status = 'onhold';
+    }
+    const comment = await commentSch.findOneAndUpdate({ _id: data._id, is_deleted: false }, { $set: data }, { new: true });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment approve/disapprove success!!', null);
   } catch (err) {
     next(err);
   }
 };
 commentController.DisApproveComment = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const comment = await commentSch.findOneAndUpdate({ _id: id, is_deleted: false }, { $set: { is_disapproved: true, disapproved_by: req.user.id, disapproved_at: Date.now(), status: 'disapproved' } }, { new: true });
+    const data = req.body;
+    data.disapproved_by = req.user.id;
+    data.disapproved_at = Date.now();
+    data.status = 'disapproved';
+    const comment = await commentSch.findOneAndUpdate({ _id: data.id, is_deleted: false }, { $set: data }, { new: true });
     return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment disapprove success!!', null);
   } catch (err) {
     next(err);
