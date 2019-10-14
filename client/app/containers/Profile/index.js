@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Informtions, ChangePasswords } from './Pages/Loadable.js';
+import { Informtions, ChangePasswords, VerifyEmail } from './Pages/Loadable.js';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -17,6 +17,7 @@ const Blog = () => {
   return (
     <Switch>
       <Route exact path="/user/profile" component={Informtions} />
+      <Route exact path="/user/profile/verify" component={VerifyEmail} />
       <Route
         exact
         path="/user/profile/change-password"
