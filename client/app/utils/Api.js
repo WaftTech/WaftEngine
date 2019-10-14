@@ -31,14 +31,14 @@ class Api {
         try {
           const errorPromise = err.response.json();
           error = yield call(() => errorPromise);
-          if (error.errors.name === 'JsonWebTokenError') {
+          if (error.errors && error.errors.name === 'JsonWebTokenError') {
             yield put(sessionExpired(error));
           } else {
             yield put(onError(error));
           }
         } catch (e) {
           yield put(networkError(e));
-          yield put(onError());
+          yield put(onError(e));
         }
       }
     };

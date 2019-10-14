@@ -5,7 +5,7 @@
  */
 
 import React, { memo, useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -14,7 +14,7 @@ import { push } from 'connected-react-router';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
-// import { makeSelectDefaultData } from './selectors';
+import { makeSelectLoading } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -25,36 +25,39 @@ export const VerifyEmail = props => {
     match: {
       params: { email, code },
     },
+    loading,
   } = props;
 
-  // useEffect(() => {
-  //   props.loadVerifyEmailRequest({ email: email, code: code });
-  // }, []);
-  const handleVerify = () => {
-    props.loadVerifyEmailRequest({ email: email, code: code });
-  };
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  useEffect(() => {
+    props.loadVerifyEmailRequest({ email: email, code: code });
+  }, []);
+  // const handleVerify = () => {
+  //   props.loadVerifyEmailRequest({ email: email, code: code });
+  // };
+
   return (
     <div>
-      <div className="text-blue-500">Click to verify</div>
+      {loading ? <h2>Verifying...</h2> : ''}
+      {/* <div className="text-blue-500">Click to verify</div>
       <button
         className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
         onClick={handleVerify}
       >
         Verify
-      </button>
+      </button> */}
     </div>
   );
 };
 
 VerifyEmail.propTypes = {
-  // defaultData: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  // defaultData: makeSelectDefaultData(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
