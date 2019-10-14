@@ -13,6 +13,13 @@ export const initialState = {
     size: 10,
     totaldata: 0,
   },
+  one: {
+    title: '',
+    blog_id: '',
+    // status: 'onhold',
+    is_approved: false,
+    is_disapproved: false,
+  },
   loading: false,
   query: { find_title: '', find_blog_id: '', size: 10 },
 };
@@ -31,8 +38,21 @@ const blogCommentManagePageReducer = (state = initialState, action) =>
       case types.LOAD_ALL_FAILURE:
         draft.loading = false;
         break;
+      case types.LOAD_ONE_REQUEST:
+        draft.loading = true;
+        break;
+      case types.LOAD_ONE_SUCCESS:
+        draft.loading = false;
+        draft.one = action.payload.data;
+        break;
+      case types.LOAD_ONE_FAILURE:
+        draft.loading = false;
+        break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
+        break;
+      case types.SET_ONE_VALUE:
+        draft.one = action.payload;
         break;
     }
   });

@@ -12,6 +12,7 @@ export const initialState = {
   },
   changePassword: '',
   errors: {},
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -24,8 +25,15 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
         break;
+      case types.LOAD_ONE_REQUEST:
+        draft.loading = true;
+        break;
       case types.LOAD_ONE_SUCCESS:
+        draft.loading = false;
         draft.one = action.payload.data;
+        break;
+      case types.LOAD_ONE_FAILURE:
+        draft.loading = false;
         break;
       case types.CHANGE_PASSWORD_SUCCESS:
         draft.changePassword = initialState;

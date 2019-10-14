@@ -20,7 +20,11 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectErrors } from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectErrors,
+  makeSelectLoading,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 class UserPersonalInformationPage extends React.PureComponent {
@@ -56,17 +60,39 @@ class UserPersonalInformationPage extends React.PureComponent {
   handleSave = () => {
     this.props.addEditRequest();
   };
+  handleVerify = () => {
+    this.props.push('/');
+  };
 
   render() {
-    const { classes, one, errors } = this.props;
-    return (
+    const { classes, one, errors, loading } = this.props;
+    return loading ? (
+      <div>Loading</div>
+    ) : (
       <React.Fragment>
+        {!one.email_verified ? (
+          <div>
+            <h2>Click to verify email</h2>
+            <button
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              onClick={this.handleVerify}
+            >
+              Verify
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
+        <br />
         <div className="w-full pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Name
           </label>
 
-          <FormControl className="md:w-1/2" error={errors && errors.name && errors.name.length > 0}>
+          <FormControl
+            className="md:w-1/2"
+            error={errors && errors.name && errors.name.length > 0}
+          >
             <input
               className="inputbox"
               id="name"
@@ -85,7 +111,8 @@ class UserPersonalInformationPage extends React.PureComponent {
             Email
           </label>
 
-          <FormControl className="md:w-1/2"
+          <FormControl
+            className="md:w-1/2"
             error={errors && errors.email && errors.email.length > 0}
           >
             <input
@@ -147,6 +174,7 @@ class UserPersonalInformationPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   errors: makeSelectErrors(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
@@ -158,7 +186,15 @@ const styles = theme => ({});
 
 const withStyle = withStyles(styles);
 
+const withReducer = injectReducer({
+  key: 'userPersonalInformationPage',
+  reducer,
+});
+const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
+
 export default compose(
   withConnect,
+  withReducer,
+  withSaga,
   withStyle,
 )(UserPersonalInformationPage);
