@@ -60,9 +60,6 @@ class UserPersonalInformationPage extends React.PureComponent {
   handleSave = () => {
     this.props.addEditRequest();
   };
-  handleVerify = () => {
-    this.props.push('/');
-  };
 
   render() {
     const { classes, one, errors, loading } = this.props;
@@ -70,20 +67,6 @@ class UserPersonalInformationPage extends React.PureComponent {
       <div>Loading</div>
     ) : (
       <React.Fragment>
-        {!one.email_verified ? (
-          <div>
-            <h2>Click to verify email</h2>
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={this.handleVerify}
-            >
-              Verify
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
-        <br />
         <div className="w-full pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Name
@@ -145,12 +128,12 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        <FormControlLabel
+        {/* <FormControlLabel
           control={
             <CheckBox checked={one.email_verified || false} color="primary" />
           }
           label="Email Verified"
-        />
+        /> */}
 
         <div className="w-full pb-2">
           You are one of {one.roles.map(each => `${each.role_title} `)}
