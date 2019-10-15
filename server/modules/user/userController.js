@@ -352,6 +352,35 @@ userController.Verifymail = async (req, res, next) => {
     next(err);
   }
 };
+
+userController.ResendVerificationCode = async (req, res, next) => {
+  try {
+    const user = await users.findOne({ email: req.body.email });
+    if (user) {
+      const email_verification_code = otherHelper.generateRandomHexString(12);
+      const newUser = await users.findOneAndUpdate({ email: req.body.email }, { $set: { email_verification_code, email_verified: false } }, { new: true });
+      const renderedMail = await renderMail.renderTemplate(
+        'user_registration',
+        {
+          name: user.name,
+          email: user.email,
+          code: email_verification_code,
+        },
+        user.email,
+      );
+      if (renderMail.error) {
+        console.log('render mail error: ', renderMail.error);
+      } else {
+        emailHelper.send(renderedMail);
+        const dataReturn = { code: email_verification_code, email: user.email, name: user.name };
+        return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'email verification code resent and saved!!', null);
+      }
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 userController.VerifyServerMail = async (req, res, next) => {
   try {
     const { id, code } = req.params;
