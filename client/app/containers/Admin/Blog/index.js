@@ -92,8 +92,8 @@ export class BlogManagePage extends React.Component {
     this.props.clearOne();
     this.props.push('/admin/blog-manage/add');
   };
-  handleEdit = slug_url => {
-    this.props.push(`/admin/blog-manage/edit/${slug_url}`);
+  handleEdit = id => {
+    this.props.push(`/admin/blog-manage/edit/${id}`);
   };
   handleOpen = id => {
     this.setState({ open: true, deleteId: id });
@@ -159,7 +159,7 @@ export class BlogManagePage extends React.Component {
               <IconButton
                 aria-label="Edit"
                 className={classes.tableActionButton}
-                onClick={() => this.handleEdit(slug_url)}
+                onClick={() => this.handleEdit(_id)}
               >
                 <Edit
                   className={classes.tableActionButtonIcon + ' ' + classes.edit}

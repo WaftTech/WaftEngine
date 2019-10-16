@@ -104,8 +104,8 @@ class AddEdit extends React.PureComponent {
   componentDidMount() {
     this.props.clearOne();
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.slug_url) {
-      this.props.loadOneRequest(this.props.match.params.slug_url);
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOneRequest(this.props.match.params.id);
     }
     this.props.loadCategoryRequest();
     this.props.loadUsersRequest();
@@ -308,43 +308,43 @@ class AddEdit extends React.PureComponent {
           </PageHeader>
         </div>
         <PageContent>
-        <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                htmlFor="grid-blog-title"
-              >
-                Title
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              htmlFor="grid-blog-title"
+            >
+              Title
             </label>
             <input
-                className="inputbox"
-                id="blog-title"
-                type="text"
-                value={(one && one.title) || ''}
-                name="Blog Title"
-                onChange={this.handleChange('title')}
-              />
-              <div id="component-error-text">{errors && errors.title}</div>
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                htmlFor="grid-blog-title"
-              >
-                Slug
+              className="inputbox"
+              id="blog-title"
+              type="text"
+              value={(one && one.title) || ''}
+              name="Blog Title"
+              onChange={this.handleChange('title')}
+            />
+            <div id="component-error-text">{errors && errors.title}</div>
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              htmlFor="grid-blog-title"
+            >
+              Slug
             </label>
             <input
-                className="inputbox"
-                id="blog-slug-url"
-                type="text"
-                value={(one && one.slug_url) || ''}
-                name="Blog Slug"
-                onChange={this.handleChange('slug_url')}
-              />
-              <div id="component-error-text">{errors && errors.slug_url}</div>
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
+              className="inputbox"
+              id="blog-slug-url"
+              type="text"
+              value={(one && one.slug_url) || ''}
+              name="Blog Slug"
+              onChange={this.handleChange('slug_url')}
+            />
+            <div id="component-error-text">{errors && errors.slug_url}</div>
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
             <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
-            Category
+              Category
             </label>
             <select
               className="inputbox"
@@ -366,11 +366,11 @@ class AddEdit extends React.PureComponent {
             </select>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                htmlFor="grid-blog-title"
-              >
-                Short Description
+            <label
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              htmlFor="grid-blog-title"
+            >
+              Short Description
             </label>
             <textarea
               className="inputbox"
@@ -380,7 +380,7 @@ class AddEdit extends React.PureComponent {
               name="short_description"
               onChange={this.handleChange('short_description')}
             />
-            </div>
+          </div>
           <div className="pb-4">
             <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Blog Description
@@ -471,7 +471,6 @@ class AddEdit extends React.PureComponent {
               })}
             </Paper>
           </div>
-          
 
           <div className="w-full md:w-1/2 pb-4">
             <label
