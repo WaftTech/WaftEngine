@@ -136,12 +136,12 @@ class UserPersonalInformationPage extends React.PureComponent {
         /> */}
 
         <div className="w-full pb-2">
-          You are one of {one.roles.map(each => `${each.role_title} `)}
+         <div>Role : {one.roles.map(each => <span className="rounded bg-gray-600 px-4 py-2 mr-2">{each.role_title} </span>)}</div>
         </div>
 
-        <div className="w-full  pb-4">
+        {/* <div className="w-full  pb-4">
           Your account created at {moment(one.added_at).format('YYYY-MM-DD')}
-        </div>
+        </div> */}
 
         <button
           className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"

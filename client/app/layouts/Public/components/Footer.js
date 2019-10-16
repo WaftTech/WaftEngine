@@ -47,6 +47,7 @@ class Footer extends React.Component {
               <Link to="/">
                 <img style={{ filter: 'grayscale(1)' }} src={logo} alt="WaftEngine" />
               </Link>
+              <p style={{color:'#646464'}}>Designed and built by the WaftTech Team</p>
             </div>
             <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">
               <a
@@ -67,7 +68,7 @@ class Footer extends React.Component {
               </a>
               <a
                 className="display-block  no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
-                href="https://www.waftengine.org/contact-us"
+                href="/contact-us"
                 target="_blank"
                 rel="noopener"
               >

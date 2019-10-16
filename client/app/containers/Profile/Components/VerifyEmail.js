@@ -43,18 +43,18 @@ class VerifyEmail extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="flex">
-          <label className="block uppercase tracking-wide text-gray-800 p-2 w-1/5">
+          <label className="block uppercase tracking-wide text-gray-800 p-2 mr-2">
             Code
           </label>
           <input
-            className="inputbox w-3/5"
+            className="inputbox mr-2"
             id="code"
             type="text"
             value={code || ''}
             onChange={this.handleChange('code')}
           />
           <button
-            className="w-1/5 rounded ml-4 text-sm text-white bg-primary uppercase btn-theme"
+            className="py-2 px-6 rounded text-sm text-white bg-primary uppercase btn-theme"
             onClick={this.handleVerify}
           >
             Verify
@@ -62,7 +62,7 @@ class VerifyEmail extends React.PureComponent {
         </div>
         OR click the button to resend verification code.
         <button
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+          className="ml-2 py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
           onClick={this.handleResend}
         >
           Resend

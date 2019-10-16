@@ -7,14 +7,9 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-
-import Grid from '@material-ui/core/Grid';
-import CustomInput from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardBody from '@material-ui/core/CardContent';
-import CardFooter from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import StaticContentDiv from '../../components/StaticContentDiv';
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
 import saga from './saga';
@@ -51,7 +46,7 @@ class ContactUs extends React.Component {
   state = { name: '', email: '', subject: '', message: '', reCaptcha: '' };
 
   componentDidMount() {
-    this.props.ContactDetailRequest();
+    // this.props.ContactDetailRequest();
   }
 
   handleChange = name => event => {
@@ -85,79 +80,74 @@ class ContactUs extends React.Component {
     const { isRequesting, contactDetail } = this.props;
     const { name, email, subject, message } = this.state;
 
-    return isRequesting && isRequesting == true ? (
-      <CircularProgress color="primary" disableShrink />
-    ) : (
-        <div className="container">
-          <Helmet>
-            <title>Contact Us</title>
-          </Helmet>
-          <div>
-            <h1 className="text-4xl font-bold"> Contact Us </h1>
-          </div>
-          <div>
-            <Grid container>
-              <Grid item xs={6} sm={6} md={6}>
-                <Card>
-                  <CardBody>
-                    <Grid>
-                      <Grid item xs={12} sm={12} md={12}>
-                        <CustomInput
-                          name="Name"
-                          id="name"
-                          fullWidth
-                          placeholder="Name"
-                          inputProps={{
-                            value: name || '',
-                            onChange: this.handleChange('name'),
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid>
-                      <Grid item xs={12} sm={12} md={12}>
-                        <CustomInput
-                          name="Email"
-                          id="email"
-                          fullWidth
-                          placeholder="Email"
-                          inputProps={{
-                            value: email || '',
-                            onChange: this.handleChange('email'),
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid>
-                      <Grid item xs={12} sm={12} md={12}>
-                        <CustomInput
-                          name="Subject"
-                          id="subject"
-                          fullWidth
-                          placeholder="Subject"
-                          inputProps={{
-                            value: subject || '',
-                            onChange: this.handleChange('subject'),
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid>
-                      <Grid item xs={12} sm={12} md={12}>
-                        <CustomInput
-                          name="Message"
-                          id="message"
-                          fullWidth
-                          placeholder="Message"
-                          inputProps={{
-                            value: message || '',
-                            onChange: this.handleChange('message'),
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid>
-                      <Grid item xs={12} sm={12} md={12}>
+    return (
+      <div className="">
+        <Helmet>
+          <title>Contact Us</title>
+        </Helmet>
+        <div className="bg-star h-48 relative text-center py-12">
+            <h1 className="text-4xl mb-4">Contact Us</h1>
+        </div>
+         <div className="container mx-auto my-10">
+         <div className="flex flex-wrap">
+           <div className="w-full sm:w-full md:w-1/2">
+          <h2 className="text-xl font-bold">GET IN TOUCH</h2>
+        <div className="flex">
+                  <div className="w-full md:w-1/2 pr-2">
+                    <TextField
+                      id="name"
+                      fullWidth
+                      label="Name"
+                      type="name"
+                      name="name"
+                      margin="normal"
+                      variant="outlined"
+                      value={name}
+                      onChange={this.handleChange('name')}
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2  pl-2">
+                    <TextField
+                      id="email"
+                      fullWidth
+                      label="Email"
+                      type="email"
+                      name="email"
+                      margin="normal"
+                      variant="outlined"
+                      value={email}
+                      onChange={this.handleChange('email')}
+                    />
+                  </div>
+                </div>
+                 
+                <TextField
+                  id="subject"
+                  label="Subject"
+                  type="subject"
+                  name="subject"
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth
+                  value={subject}
+                  onChange={this.handleChange('subject')}
+                />
+                <TextField
+                  id="message"
+                  label="Message"
+                  fullWidth
+                  multiline
+                  rows="4"
+                  margin="normal"
+                  placeholder="Message"
+                  variant="outlined"
+                  value={message}
+                  onChange={this.handleChange('message')}
+                />
+                 
+                      {isRequesting && isRequesting == true ? (
+                        <CircularProgress color="primary" disableShrink />
+                      ) : (
                         <form onSubmit={this.onSubmit}>
                           <ReCAPTCHA
                             ref={recaptchaRef}
@@ -165,24 +155,27 @@ class ContactUs extends React.Component {
                             onChange={this.onChange}
                           />
                         </form>
-                      </Grid>
-                    </Grid>
-                  </CardBody>
-                  <CardFooter>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleSave}
-                    >
-                      Save Message
-                  </Button>
-                    <div>
-                      <h1>{this.props.error}</h1>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </Grid>
-              <Grid item xs={6} sm={6} md={6}>
+                      )}
+                   
+                   <button
+                  type="button"
+                  className="text-white py-2 px-4 rounded mt-4 bg-primary font-bold"
+                  disabled={isRequesting}
+                  onClick={this.handleSave}
+                >
+                  Save Message
+                </button>
+                  <div>
+                    <h1>{this.props.error}</h1>
+                  </div>
+                  </div>
+                  
+                  <div
+                  className="w-full mt-10 sm:w-full md:w-1/2 md:pl-10 md:mt-0">
+              <StaticContentDiv contentKey="contactdetail" />
+              </div>
+          
+            {/* <Grid item xs={6} sm={6} md={6}>
                 {contactDetail.description && (
                   <div
                     dangerouslySetInnerHTML={{
@@ -190,11 +183,12 @@ class ContactUs extends React.Component {
                     }}
                   />
                 )}
-              </Grid>
-            </Grid>
-          </div>
-        </div>
-      );
+              </Grid> */}
+              </div>
+              </div>
+              </div>
+      
+    );
   }
 }
 
