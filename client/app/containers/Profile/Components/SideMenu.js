@@ -12,8 +12,8 @@ import reducer from '../reducer';
 import saga from '../saga';
 // import { loadArchivesRequest } from '../actions';
 import { makeSelectEmailVerified } from '../selectors';
-import Tick from '@material-ui/icons/done';
-import Clear from '@material-ui/icons/clear';
+import Tick from '@material-ui/icons/Done';
+import Clear from '@material-ui/icons/Clear';
 
 function App(props) {
   const { verified } = props;

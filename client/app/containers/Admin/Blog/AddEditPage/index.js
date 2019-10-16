@@ -308,68 +308,79 @@ class AddEdit extends React.PureComponent {
           </PageHeader>
         </div>
         <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="title"
-              inputClassName="Waftinputbox"
-              inputId="blog-title"
-              value={(one && one.title) || ''}
-              name="Blog Title"
-              onChange={this.handleChange('title')}
-            />
-          </div>
-          <div id="component-error-text">{errors && errors.title}</div>
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="slug"
-              inputClassName="Waftinputbox"
-              inputId="blog-slug-url"
-              value={(one && one.slug_url) || ''}
-              name="Blog Slug"
-              onChange={this.handleChange('slug_url')}
-            />
-          </div>
-          <div id="component-error-text">{errors && errors.slug_url}</div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="select-multiple-category"
-            >
-              Category
+        <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-blog-title"
+              >
+                Title
             </label>
-
-            <Select
-              multiple
+            <input
+                className="inputbox"
+                id="blog-title"
+                type="text"
+                value={(one && one.title) || ''}
+                name="Blog Title"
+                onChange={this.handleChange('title')}
+              />
+              <div id="component-error-text">{errors && errors.title}</div>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-blog-title"
+              >
+                Slug
+            </label>
+            <input
+                className="inputbox"
+                id="blog-slug-url"
+                type="text"
+                value={(one && one.slug_url) || ''}
+                name="Blog Slug"
+                onChange={this.handleChange('slug_url')}
+              />
+              <div id="component-error-text">{errors && errors.slug_url}</div>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+            Category
+            </label>
+            <select
+              className="inputbox"
+              id="template-key"
+              name="template_key"
               value={one.category || []}
               onChange={this.handleMultipleSelectChange}
-              // renderValue={selected => selected.map(s => category.find(cat => cat._id === s).title).join(', ')}
             >
+              <option value="" name="none" disabled>
+                None
+              </option>
               {category.map(each => (
-                <MenuItem key={each._id} value={each._id}>
+                <option key={each._id} value={each._id}>
                   {/* <input type="checkbox" checked={one.category.includes(each._id) ? 'checked' : ''}
                 onChange={() => null}/> */}
                   {each.title}
-                </MenuItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="short_description"
-            >
-              Short Description
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-blog-title"
+              >
+                Short Description
             </label>
-
             <textarea
-              className="Waftinputbox"
+              className="inputbox"
               id="short_description"
               type="text"
               value={one.short_description || ''}
               name="short_description"
               onChange={this.handleChange('short_description')}
             />
-          </div>
+            </div>
           <div className="pb-4">
             <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Blog Description
@@ -399,7 +410,7 @@ class AddEdit extends React.PureComponent {
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
                   <img
-                    className="Waftinputbox cursor-pointer"
+                    className="inputbox cursor-pointer"
                     src={tempImage}
                     alt="Blogimage"
                     style={{ height: '120px', width: '60%' }}
@@ -416,7 +427,7 @@ class AddEdit extends React.PureComponent {
               Published On
             </label>
             <input
-              className="Waftinputbox"
+              className="inputbox"
               id="blog-title"
               type="date"
               value={
@@ -437,7 +448,7 @@ class AddEdit extends React.PureComponent {
             </label>
             <form onSubmit={this.insertTags}>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="blog-tags"
                 type="text"
                 value={tempTag || ''}
@@ -460,23 +471,7 @@ class AddEdit extends React.PureComponent {
               })}
             </Paper>
           </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Meta Description
-            </label>
-
-            <textarea
-              className="Waftinputbox"
-              id="blog-tags"
-              type="text"
-              value={one.meta_description || ''}
-              name="meta-description"
-              onChange={this.handleChange('meta_description')}
-            />
-          </div>
+          
 
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -487,7 +482,7 @@ class AddEdit extends React.PureComponent {
             </label>
             <form onSubmit={this.insertMetaTags}>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="blog-meta-tags"
                 type="text"
                 value={tempMetaTag || ''}
@@ -521,7 +516,7 @@ class AddEdit extends React.PureComponent {
 
             <form onSubmit={this.insertMetaKeywords}>
               <input
-                className="Waftinputbox"
+                className="inputbox"
                 id="blog-meta-keyword"
                 type="text"
                 value={tempMetaKeyword || ''}
@@ -551,11 +546,29 @@ class AddEdit extends React.PureComponent {
               className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
               htmlFor="grid-last-name"
             >
+              Meta Description
+            </label>
+
+            <textarea
+              className="inputbox"
+              id="blog-tags"
+              type="text"
+              value={one.meta_description || ''}
+              name="meta-description"
+              onChange={this.handleChange('meta_description')}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
               Author
             </label>
 
             <select
-              className="Waftinputbox"
+              className="inputbox"
               native="true"
               value={(one && one.author) || ''}
               onChange={this.handleDropDownChange('author')}
@@ -599,7 +612,7 @@ class AddEdit extends React.PureComponent {
 
           <br />
           <button
-            className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
             onClick={this.handleSave}
           >
             Save
