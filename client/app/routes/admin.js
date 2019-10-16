@@ -156,7 +156,7 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/blog-manage/edit/:id',
+    path: '/admin/blog-manage/edit/:slug_url',
     component: BlogManageAddEdit,
     exact: true,
   },

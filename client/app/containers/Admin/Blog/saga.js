@@ -56,7 +56,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `blog/${action.payload}`,
+      `blog/blog/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token,
