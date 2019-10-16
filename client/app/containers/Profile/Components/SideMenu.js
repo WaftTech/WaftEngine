@@ -21,18 +21,27 @@ function App(props) {
   return (
     <>
       <div className="p-4">
-      {verified ? (
-        <NavLink className="mb-2 block text-green-500 hover:text-primary">
-          Email verified <Tick/> 
-        </NavLink>
-      ) : (
-        <NavLink className="mb-2 block text-red-500 text-primary" to="/user/profile/verify">
-          Email not verified <Clear/>
-        </NavLink>
-      )}
+        {verified ? (
+          <NavLink
+            className="mb-2 block text-green-500 hover:text-primary"
+            to="/user/profile"
+          >
+            Email verified <Tick />
+          </NavLink>
+        ) : (
+          <NavLink
+            className="mb-2 block text-red-500 text-primary"
+            to="/user/profile/verify"
+          >
+            Email not verified <Clear />
+          </NavLink>
+        )}
         <h2 className="text-2xl mb-2 font-bold">Profile</h2>
 
-        <NavLink className="block text-gray-800 hover:text-primary" to="/user/profile">
+        <NavLink
+          className="block text-gray-800 hover:text-primary"
+          to="/user/profile"
+        >
           Information
         </NavLink>
         <NavLink

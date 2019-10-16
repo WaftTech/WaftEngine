@@ -83,10 +83,16 @@ function* changePassword(action) {
   yield cancel(successWatcher);
 }
 
+function* redirectOnVerifySuccess() {
+  yield take(types.VERIFY_EMAIL_SUCCESS);
+  yield put(push('/user/profile'));
+}
+
 function* verifyEmail(action) {
+  const successWatcher = yield fork(redirectOnVerifySuccess);
   const token = yield select(makeSelectToken());
   const user = yield select(makeSelectUser());
-  yield call(
+  yield fork(
     Api.post(
       `user/verifymail`,
       actions.verifyEmailSuccess,
@@ -95,6 +101,8 @@ function* verifyEmail(action) {
       token,
     ),
   );
+  yield take([LOCATION_CHANGE, types.VERIFY_EMAIL_FAILURE]);
+  yield cancel(successWatcher);
 }
 
 function* verifyEmailFailFunc(action) {

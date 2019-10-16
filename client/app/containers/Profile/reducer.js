@@ -48,10 +48,7 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
         draft.errors = action.payload.errors;
         break;
       case types.VERIFY_EMAIL_SUCCESS:
-        draft.verification_code = initialState.verification_code;
-        break;
-      case types.VERIFY_EMAIL_FAILURE:
-        draft.verification_code = initialState.verification_code;
+        draft.email_verified = true;
         break;
     }
   });
