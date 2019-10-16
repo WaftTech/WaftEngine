@@ -22,7 +22,7 @@ function App(props) {
     <>
       <div className="p-4">
       {verified ? (
-        <NavLink className="mb-2 block text-green-500 hover:text-primary" to="/user/profile/verify">
+        <NavLink className="mb-2 block text-green-500 hover:text-primary">
           Email verified <Tick/> 
         </NavLink>
       ) : (
