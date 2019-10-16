@@ -17,8 +17,7 @@ function App(props) {
   const { verified } = props;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl mb-4 font-bold">Profile</h2>
+    <>
       {verified ? (
         <NavLink className="block text-blue-500" to="/user/profile/verify">
           Email verified
@@ -28,16 +27,20 @@ function App(props) {
           Email not verified
         </NavLink>
       )}
-      <NavLink className="block text-primary" to="/user/profile">
-        Information
-      </NavLink>
-      <NavLink
-        className="block text-primary"
-        to="/user/profile/change-password"
-      >
-        Change Password
-      </NavLink>
-    </div>
+      <div className="p-4">
+        <h2 className="text-2xl mb-4 font-bold">Profile</h2>
+
+        <NavLink className="block text-primary" to="/user/profile">
+          Information
+        </NavLink>
+        <NavLink
+          className="block text-primary"
+          to="/user/profile/change-password"
+        >
+          Change Password
+        </NavLink>
+      </div>
+    </>
   );
 }
 
