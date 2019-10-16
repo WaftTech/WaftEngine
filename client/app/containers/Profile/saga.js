@@ -135,10 +135,10 @@ function* resendCode() {
   const user = yield select(makeSelectUser());
   yield call(
     Api.post(
-      `user/verifymail`,
+      `user/verifymail/resend`,
       actions.resendCodeSuccess,
       actions.resendCodeFailure,
-      { email: user.email, code: action.payload },
+      { email: user.email },
       token,
     ),
   );
