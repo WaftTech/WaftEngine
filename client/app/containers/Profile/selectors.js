@@ -21,15 +21,16 @@ export const makeSelectLoading = () =>
     selectUserPersonalInformationPageDomain,
     substate => substate.loading,
   );
-export const makeSelectEmailVerified = () =>
-  createSelector(
-    selectUserPersonalInformationPageDomain,
-    substate => substate.email_verified,
-  );
 export const makeSelectCode = () =>
   createSelector(
     selectUserPersonalInformationPageDomain,
     substate => substate.verification_code,
+  );
+
+export const makeSelectToken = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.token,
   );
 
 const makeSelectUserPersonalInformationPage = () =>

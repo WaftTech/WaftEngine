@@ -13,7 +13,7 @@ export const initialState = {
   changePassword: '',
   errors: {},
   loading: false,
-  email_verified: false,
+  token: false,
   verification_code: '',
 };
 
@@ -48,7 +48,11 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
         draft.errors = action.payload.errors;
         break;
       case types.VERIFY_EMAIL_SUCCESS:
-        draft.email_verified = true;
+        localStorage.setItem(
+          'token',
+          action.payload.token || localStorage.token,
+        );
+        draft.token = true;
         break;
     }
   });

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -10,18 +9,17 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import reducer from '../reducer';
 import saga from '../saga';
-// import { loadArchivesRequest } from '../actions';
-import { makeSelectEmailVerified } from '../selectors';
+import { makeSelectUser } from '../../App/selectors';
+import { makeSelectToken } from '../selectors';
 import Tick from '@material-ui/icons/Done';
 import Clear from '@material-ui/icons/Clear';
 
 function App(props) {
-  const { verified } = props;
-
+  const { user, token } = props;
   return (
     <>
       <div className="p-4">
-        {verified ? (
+        {token || user.email_verified ? (
           <NavLink
             className="mb-2 block text-green-500 hover:text-primary"
             to="/user/profile"
@@ -56,7 +54,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  verified: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  token: PropTypes.bool.isRequired,
 };
 
 const withReducer = injectReducer({
@@ -66,7 +65,8 @@ const withReducer = injectReducer({
 const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
 
 const mapStateToProps = createStructuredSelector({
-  verified: makeSelectEmailVerified(),
+  user: makeSelectUser(),
+  token: makeSelectToken(),
 });
 
 const mapDispatchToProps = dispatch => ({});
