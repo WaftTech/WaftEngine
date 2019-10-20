@@ -66,6 +66,7 @@ if (tokenWithBearer) {
         avatar: decoded.avatar,
         email: decoded.email,
         roles: decoded.roles,
+        email_verified: decoded.email_verified,
         routes: routes,
       };
       store.dispatch(setToken(tokenWithBearer));

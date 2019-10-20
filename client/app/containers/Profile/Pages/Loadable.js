@@ -14,3 +14,6 @@ export const Informtions = loadable(() => import('./Information'), {
 export const ChangePasswords = loadable(() => import('./ChangePassword'), {
   fallback: <Loading />,
 });
+export const VerifyEmail = loadable(() => import('./VerifyEmail'), {
+  fallback: <Loading />,
+});

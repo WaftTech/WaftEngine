@@ -16,6 +16,23 @@ export const makeSelectErrors = () =>
     substate => substate.errors,
   );
 
+export const makeSelectLoading = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.loading,
+  );
+export const makeSelectCode = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.verification_code,
+  );
+
+export const makeSelectToken = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.token,
+  );
+
 const makeSelectUserPersonalInformationPage = () =>
   createSelector(
     selectUserPersonalInformationPageDomain,

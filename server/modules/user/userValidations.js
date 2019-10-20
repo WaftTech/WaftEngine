@@ -300,7 +300,6 @@ validations.validateUpdateProfile = (req, res, next) => {
 
 validations.validateRegisterInput = (req, res, next) => {
   const data = req.body;
-  console.log(data);
   const validateArray = [
     {
       field: 'name',

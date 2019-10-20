@@ -4,6 +4,10 @@ export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
 });
+export const setCodeValue = payload => ({
+  type: types.SET_CODE_VALUE,
+  payload,
+});
 
 export const loadOneRequest = payload => ({
   type: types.LOAD_ONE_REQUEST,
@@ -46,5 +50,30 @@ export const changePasswordFailure = payload => ({
 
 export const clearError = payload => ({
   type: types.CLEAR_ERROR,
+  payload,
+});
+
+export const verifyEmailRequest = payload => ({
+  type: types.VERIFY_EMAIL_REQUEST,
+  payload,
+});
+export const verifyEmailSuccess = payload => ({
+  type: types.VERIFY_EMAIL_SUCCESS,
+  payload,
+});
+export const verifyEmailFailure = payload => ({
+  type: types.VERIFY_EMAIL_FAILURE,
+  payload,
+});
+export const resendCodeRequest = payload => ({
+  type: types.RESEND_CODE_REQUEST,
+  payload,
+});
+export const resendCodeSuccess = payload => ({
+  type: types.RESEND_CODE_SUCCESS,
+  payload,
+});
+export const resendCodeFailure = payload => ({
+  type: types.RESEND_CODE_FAILURE,
   payload,
 });

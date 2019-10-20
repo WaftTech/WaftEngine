@@ -100,154 +100,159 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <>
-          <Helmet>
-            <title>
-              {' '}
+      <>
+        <Helmet>
+          <title>
+            {' '}
+            {match && match.params && match.params.id
+              ? 'Edit Static Content'
+              : 'Add Static Content'}
+          </title>
+        </Helmet>
+        <div>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
               {match && match.params && match.params.id
                 ? 'Edit Static Content'
                 : 'Add Static Content'}
-            </title>
-          </Helmet>
-          <div>
-            <div className="flex justify-between mt-3 mb-3">
-              <PageHeader>
-                <IconButton
-                  className={`${classes.backbtn} cursor-pointer`}
-                  onClick={this.handleGoBack}
-                  aria-label="Back"
-                >
-                  <BackIcon />
-                </IconButton>
-                {match && match.params && match.params.id
-                  ? 'Edit Static Content'
-                  : 'Add Static Content'}
-              </PageHeader>
-            </div>
-            <PageContent>
-              <div className="w-full md:w-1/2 pb-4">
-                <label
-                  className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                  htmlFor="grid-last-name"
-                >
-                  Content Title
-              </label>
-                <input
-                  className="inputbox"
-                  id="grid-last-name"
-                  type="text"
-                  value={one.name}
-                  onChange={this.handleChange('name')}
-                />
-                <div id="component-error-text">{errors.name}</div>
-              </div>
-
-              <div className="w-full md:w-1/2 pb-4">
-                <label
-                  className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                  htmlFor="grid-last-name"
-                >
-                  Content Key
-              </label>
-                <input
-                  className="inputbox"
-                  id="grid-last-name"
-                  type="text"
-                  value={one.key}
-                  onChange={this.handleChange('key')}
-                />
-                <div id="component-error-text">{errors.key}</div>
-              </div>
-              <div className="pb-4">
-                <CKEditor
-                  name="description"
-                  content={one.description}
-                  config={{ allowedContent: true }}
-                  events={{
-                    change: e => this.handleEditorChange(e, 'description'),
-                    value: one.description,
-                  }}
-                />
-                <div id="component-error-text">{errors.description}</div>
-              </div>
-
-              <div className="w-full md:w-1/2">
-                <FormControl margin="normal" className={classes.formControl}>
-                  <label
-                    className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                    htmlFor="grid-last-name"
-                  >
-                    Published From
-                </label>
-                  <DatePicker
-                    margin="normal"
-                    name="publish_from"
-                    className={[classes.textField, 'inputbox']}
-                    value={
-                      (one.publish_from &&
-                        moment(one.publish_from).format('YYYY/MM/DD')) ||
-                      ''
-                    }
-                    onChange={this.handleDateChange('publish_from')}
-                  />
-                </FormControl>
-              </div>
-              <div className="w-full md:w-1/2">
-                <FormControl margin="normal" className={classes.formControl}>
-                  <label
-                    className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                    htmlFor="grid-last-name"
-                  >
-                    Published To
-                </label>
-                  <DatePicker
-                    margin="normal"
-                    name="publish_to"
-                    className={[classes.textField, 'inputbox']}
-                    value={
-                      (one.publish_to &&
-                        moment(one.publish_to).format('YYYY/MM/DD')) ||
-                      ''
-                    }
-                    onChange={this.handleDateChange('publish_to')}
-                  />
-                </FormControl>
-              </div>
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_active || false}
-                    tabIndex={-1}
-                    onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Active"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_feature || false}
-                    onClick={this.handleCheckedChange('is_feature')}
-                    value="is_feature"
-                    color="primary"
-                  />
-                }
-                label="Is Feature"
-              />
-
-              <br />
-              <button
-                className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-                onClick={this.handleSave}
-              >
-                Save
-            </button>
-            </PageContent>
+            </PageHeader>
           </div>
-        </>
-      );
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Content Title
+              </label>
+              <input
+                className="inputbox"
+                id="grid-last-name"
+                type="text"
+                value={one.name}
+                onChange={this.handleChange('name')}
+              />
+              <div id="component-error-text">{errors.name}</div>
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Content Key
+              </label>
+              <input
+                className="inputbox"
+                id="grid-last-name"
+                type="text"
+                value={one.key}
+                onChange={this.handleChange('key')}
+              />
+              <div id="component-error-text">{errors.key}</div>
+            </div>
+            <div className="pb-4">
+              <CKEditor
+                name="description"
+                content={one.description}
+                // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
+                config={{
+                  allowedContent: true,
+                  filebrowserBrowseUrl: '/editor-file-select',
+                  filebrowserUploadUrl: '/api/media/multiple',
+                }}
+                events={{
+                  change: e => this.handleEditorChange(e, 'description'),
+                  value: one.description,
+                }}
+              />
+              <div id="component-error-text">{errors.description}</div>
+            </div>
+
+            <div className="w-full md:w-1/2">
+              <FormControl margin="normal" className={classes.formControl}>
+                <label
+                  className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                  htmlFor="grid-last-name"
+                >
+                  Published From
+                </label>
+                <DatePicker
+                  margin="normal"
+                  name="publish_from"
+                  className={[classes.textField, 'inputbox']}
+                  value={
+                    (one.publish_from &&
+                      moment(one.publish_from).format('YYYY/MM/DD')) ||
+                    ''
+                  }
+                  onChange={this.handleDateChange('publish_from')}
+                />
+              </FormControl>
+            </div>
+            <div className="w-full md:w-1/2">
+              <FormControl margin="normal" className={classes.formControl}>
+                <label
+                  className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                  htmlFor="grid-last-name"
+                >
+                  Published To
+                </label>
+                <DatePicker
+                  margin="normal"
+                  name="publish_to"
+                  className={[classes.textField, 'inputbox']}
+                  value={
+                    (one.publish_to &&
+                      moment(one.publish_to).format('YYYY/MM/DD')) ||
+                    ''
+                  }
+                  onChange={this.handleDateChange('publish_to')}
+                />
+              </FormControl>
+            </div>
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={one.is_active || false}
+                  tabIndex={-1}
+                  onClick={this.handleCheckedChange('is_active')}
+                  color="primary"
+                />
+              }
+              label="Is Active"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={one.is_feature || false}
+                  onClick={this.handleCheckedChange('is_feature')}
+                  value="is_feature"
+                  color="primary"
+                />
+              }
+              label="Is Feature"
+            />
+
+            <br />
+            <button
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              onClick={this.handleSave}
+            >
+              Save
+            </button>
+          </PageContent>
+        </div>
+      </>
+    );
   }
 }
 

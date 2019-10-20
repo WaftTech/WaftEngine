@@ -92,8 +92,8 @@ export class BlogManagePage extends React.Component {
     this.props.clearOne();
     this.props.push('/admin/blog-manage/add');
   };
-  handleEdit = _id => {
-    this.props.push(`/admin/blog-manage/edit/${_id}`);
+  handleEdit = id => {
+    this.props.push(`/admin/blog-manage/edit/${id}`);
   };
   handleOpen = id => {
     this.setState({ open: true, deleteId: id });
