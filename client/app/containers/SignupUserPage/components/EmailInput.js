@@ -17,7 +17,7 @@ const EmailInput = props => {
           className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
           htmlFor="username"
         >
-          {error || 'Email'}
+          Email
         </label>
         <input
           error={hasError.toString()}
