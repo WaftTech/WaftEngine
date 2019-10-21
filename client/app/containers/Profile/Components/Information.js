@@ -20,7 +20,11 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectErrors } from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectErrors,
+  makeSelectLoading,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
 class UserPersonalInformationPage extends React.PureComponent {
@@ -58,15 +62,20 @@ class UserPersonalInformationPage extends React.PureComponent {
   };
 
   render() {
-    const { classes, one, errors } = this.props;
-    return (
+    const { classes, one, errors, loading } = this.props;
+    return loading ? (
+      <div>Loading</div>
+    ) : (
       <React.Fragment>
         <div className="w-full pb-4">
           <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
             Name
           </label>
 
-          <FormControl className="md:w-1/2" error={errors && errors.name && errors.name.length > 0}>
+          <FormControl
+            className="md:w-1/2"
+            error={errors && errors.name && errors.name.length > 0}
+          >
             <input
               className="inputbox"
               id="name"
@@ -85,7 +94,8 @@ class UserPersonalInformationPage extends React.PureComponent {
             Email
           </label>
 
-          <FormControl className="md:w-1/2"
+          <FormControl
+            className="md:w-1/2"
             error={errors && errors.email && errors.email.length > 0}
           >
             <input
@@ -118,20 +128,20 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        <FormControlLabel
+        {/* <FormControlLabel
           control={
             <CheckBox checked={one.email_verified || false} color="primary" />
           }
           label="Email Verified"
-        />
+        /> */}
 
         <div className="w-full pb-2">
-          You are one of {one.roles.map(each => `${each.role_title} `)}
+         <div>Role : {one.roles.map(each => <span key={each._id} className="rounded bg-gray-600 px-4 py-2 mr-2">{each.role_title} </span>)}</div>
         </div>
 
-        <div className="w-full  pb-4">
+        {/* <div className="w-full  pb-4">
           Your account created at {moment(one.added_at).format('YYYY-MM-DD')}
-        </div>
+        </div> */}
 
         <button
           className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
@@ -147,6 +157,7 @@ class UserPersonalInformationPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   errors: makeSelectErrors(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(
@@ -158,7 +169,15 @@ const styles = theme => ({});
 
 const withStyle = withStyles(styles);
 
+const withReducer = injectReducer({
+  key: 'userPersonalInformationPage',
+  reducer,
+});
+const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
+
 export default compose(
   withConnect,
+  withReducer,
+  withSaga,
   withStyle,
 )(UserPersonalInformationPage);

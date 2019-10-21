@@ -13,7 +13,7 @@ import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import { enqueueSnackbar } from '../App/actions';
 import * as actions from './actions';
-import { makeSelectOne } from './selectors';
+import { makeSelectUser } from '../App/selectors';
 
 function* loadOne() {
   const token = yield select(makeSelectToken());
@@ -82,10 +82,108 @@ function* changePassword(action) {
   yield take([LOCATION_CHANGE, types.CHANGE_PASSWORD_FAILURE]);
   yield cancel(successWatcher);
 }
+
+function* redirectOnVerifySuccess() {
+  yield take(types.VERIFY_EMAIL_SUCCESS);
+  yield put(push('/user/profile'));
+}
+
+function* verifyEmail(action) {
+  const successWatcher = yield fork(redirectOnVerifySuccess);
+  const token = yield select(makeSelectToken());
+  const user = yield select(makeSelectUser());
+  yield fork(
+    Api.post(
+      `user/verifymail`,
+      actions.verifyEmailSuccess,
+      actions.verifyEmailFailure,
+      { email: user.email, code: action.payload },
+      token,
+    ),
+  );
+  yield take([LOCATION_CHANGE, types.VERIFY_EMAIL_FAILURE]);
+  yield cancel(successWatcher);
+}
+
+function* verifyEmailFailFunc(action) {
+  const defaultMsg = {
+    message: action.payload.msg || 'Something went wrong while verifying!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultMsg));
+}
+
+function* verifyEmailSuccFunc(action) {
+  const defaultMsg = {
+    message: action.payload.msg || 'Email verified successfully!!',
+    options: {
+      variant: 'success',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultMsg));
+}
+
+function* changepwSuccessful(action) {
+  const defaultMsg = {
+    message: action.payload.msg || 'password change success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultMsg));
+}
+
+function* resendCode() {
+  const token = yield select(makeSelectToken());
+  const user = yield select(makeSelectUser());
+  yield call(
+    Api.post(
+      `user/verifymail/resend`,
+      actions.resendCodeSuccess,
+      actions.resendCodeFailure,
+      { email: user.email },
+      token,
+    ),
+  );
+}
+
+function* resendCodeSuccFunc(action) {
+  const defaultMsg = {
+    message: action.payload.msg || 'code resent successfully!!',
+    options: {
+      variant: 'success',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultMsg));
+}
+
+function* resendCodeFailFunc(action) {
+  const defaultMsg = {
+    message: action.payload.msg || 'code resent failure!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultMsg));
+}
+
 export default function* userPersonalInformationPageSaga() {
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
+  yield takeLatest(types.VERIFY_EMAIL_REQUEST, verifyEmail);
+  yield takeLatest(types.VERIFY_EMAIL_FAILURE, verifyEmailFailFunc);
+  yield takeLatest(types.VERIFY_EMAIL_SUCCESS, verifyEmailSuccFunc);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessful);
   yield takeLatest(types.CHANGE_PASSWORD_REQUEST, changePassword);
-  yield takeLatest(types.CHANGE_PASSWORD_SUCCESS, addEditSuccessful);
+  yield takeLatest(types.CHANGE_PASSWORD_SUCCESS, changepwSuccessful);
+  yield takeLatest(types.RESEND_CODE_REQUEST, resendCode);
+  yield takeLatest(types.RESEND_CODE_SUCCESS, resendCodeSuccFunc);
+  yield takeLatest(types.RESEND_CODE_FAILURE, resendCodeFailFunc);
 }

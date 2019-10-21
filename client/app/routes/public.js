@@ -8,14 +8,25 @@ import FaqPage from '../containers/FAQPage/Loadable';
 import ContactUsPage from '../containers/ContactUs/Loadable';
 import SubscribePage from '../containers/SubscriberPage/Loadable';
 import StaticPage from '../containers/StaticPages/Loadable';
-
+import EditorFileSelectPage from '../containers/EditorFileSelect';
 import BlogPages from '../containers/Blog';
+import VerifyEmail from '../containers/VerifyEmail/Loadable';
 
 const publicRoutes = [
   {
     exact: true,
     path: '/',
     component: HomePage,
+  },
+  {
+    exact: true,
+    path: '/verify/:email/:code',
+    component: VerifyEmail,
+  },
+  {
+    exact: true,
+    path: '/editor-file-select',
+    component: EditorFileSelectPage,
   },
   {
     exact: true,

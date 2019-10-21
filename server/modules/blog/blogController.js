@@ -387,10 +387,26 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
       {
         is_published: 0,
       },
-  )
+    )
     .populate([{ path: 'author', select: '_id name avatar image' }, { path: 'category', select: '_id title slug_url' }]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
+
+blogcontroller.GetBlogById = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const blogs = await blogSch
+      .findOne({
+        _id: id,
+        is_deleted: false,
+      })
+      .populate([{ path: 'author', select: '_id name avatar image' }, { path: 'category', select: '_id title slug_url' }]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
 blogcontroller.GetBlogByCat = async (req, res, next) => {
   try {
     const size_default = 10;

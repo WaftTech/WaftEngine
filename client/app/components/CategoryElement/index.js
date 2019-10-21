@@ -68,7 +68,7 @@ const CategoryElement = props => {
                       {each.title}{' '}
                     </Link>
                     <span className="text-gray-700 text-sm sans-serif author-name">
-                      {each.author.name}
+                      {each.author && each.author.name}
                     </span>
 
                     <p className="text-gray-600 leading-relaxed short-description">{each.short_description}</p>

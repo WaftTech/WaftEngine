@@ -95,11 +95,18 @@ router.post('/login/facebook/', getClientInfo, passport.authenticate('facebook-t
 router.post('/register/admin', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
 
 /**
- * @route POST api/user/register
- * @description Register user route
+ * @route POST api/user/verifymail
+ * @description Verify mail by user
  * @access Public
  */
 router.post('/verifymail', userModule.Verifymail);
+
+/**
+ * @route POST api/user/verifymail
+ * @description Verify mail by user
+ * @access Public
+ */
+router.post('/verifymail/resend', authorization, userModule.ResendVerificationCode);
 
 /**
  * @route POST api/user/login
