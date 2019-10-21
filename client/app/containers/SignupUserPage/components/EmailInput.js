@@ -11,18 +11,24 @@ const EmailInput = props => {
     setStoreValue({ key: 'email', value: e.target.value });
   const hasError = Boolean(error);
   return (
-    <div className="mb-4">
-      <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2" htmlFor="username">
-        {error || 'Email'}
-      </label>
-      <input
-        error={hasError.toString()}
-        onChange={handleChange}
-        value={email}
-        className="inputbox"
-        type="text"
-      />
-    </div>
+    <>
+      <div className="mb-4">
+        <label
+          className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+          htmlFor="username"
+        >
+          {error || 'Email'}
+        </label>
+        <input
+          error={hasError.toString()}
+          onChange={handleChange}
+          value={email}
+          className="inputbox"
+          type="text"
+        />
+      </div>
+      {error && <div id="component-error-text">{error}</div>}
+    </>
   );
 };
 
