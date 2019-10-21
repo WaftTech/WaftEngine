@@ -53,7 +53,7 @@ const LoginUserPage = ({
             className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold"
             type="submit"
           >
-            {!emailErr && !passwordErr && loading ? '...' : 'LOGIN'}
+            {loading ? '...' : 'LOGIN'}
           </button>
         </form>
         <Link
