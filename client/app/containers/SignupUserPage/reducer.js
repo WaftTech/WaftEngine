@@ -11,7 +11,7 @@ export const initialState = {
   email: '',
   password: '',
   errors: {},
-  loading: true,
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -21,7 +21,14 @@ const signupUserPageReducer = (state = initialState, action) =>
       case types.SET_STORE_VALUE:
         draft[action.payload.key] = action.payload.value;
         break;
+      case types.SIGNUP_REQUEST:
+        draft.loading = true;
+        break;
+      case types.SIGNUP_SUCCESS:
+        draft.loading = false;
+        break;
       case types.SIGNUP_FAILURE:
+        draft.loading = false;
         draft.errors = { ...action.payload.errors };
         break;
       case types.CLEAR_STORE:

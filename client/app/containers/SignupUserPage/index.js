@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
@@ -23,12 +24,14 @@ import NameInput from './components/NameInput';
 import EmailInput from './components/EmailInput';
 import PasswordInput from './components/PasswordInput';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
+import { makeSelectLoading } from './selectors';
 
 const SignupUserPage = ({
   classes,
   signupRequest,
   signupWithFbRequest,
   signupWithGoogleRequest,
+  loading,
 }) => {
   const handleSubmit = e => {
     e.preventDefault();
@@ -47,18 +50,18 @@ const SignupUserPage = ({
             className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold"
             type="submit"
           >
-            SIGN UP
-            </button>
+            {loading ? '...' : 'SIGN UP'}
+          </button>
           <Link
             className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
             to="/login-user"
           >
             Already Have Account? Login
-            </Link>
+          </Link>
 
           <p className="text-muted text-center mt-10 mb-4 text-xs">
             OR REGISTER WITH
-            </p>
+          </p>
 
           <div className="mt-5 mb-5 flex space-around">
             <FacebookLogin
@@ -107,7 +110,9 @@ SignupUserPage.propTypes = {
   signupRequest: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading(),
+});
 
 const withConnect = connect(
   mapStateToProps,
