@@ -32,6 +32,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
+import WECkEditior from '../../../../components/CkEditor'
 
 const styles = {
   backbtn: {
@@ -160,20 +161,21 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.key}</div>
             </div>
             <div className="pb-4">
-              <CKEditor
+              <WECkEditior description= {one.description} setOneValue={this.props.setOneValue}/>
+              {/* <CKEditor
                 name="description"
                 content={one.description}
                 // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
                 config={{
                   allowedContent: true,
-                  filebrowserBrowseUrl: '/editor-file-select',
-                  filebrowserUploadUrl: '/api/media/multiple',
+                  // filebrowserBrowseUrl: '/editor-file-select',
+                  // filebrowserUploadUrl: '/api/media/multiple',
                 }}
                 events={{
                   change: e => this.handleEditorChange(e, 'description'),
                   value: one.description,
                 }}
-              />
+              /> */}
               <div id="component-error-text">{errors.description}</div>
             </div>
 
