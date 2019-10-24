@@ -17,7 +17,6 @@ import * as mapDispatchToProps from './actions';
 import { selectFiles, selectFolders } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import FolderTree from './components/FolderTree';
 import FileList from './components/FileList';
 
 const key = 'editorFileSelect';
@@ -34,7 +33,6 @@ export const EditorFileSelect = ({
   }, []);
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <FolderTree />
       <FileList {...queryObj} />
     </div>
   );
