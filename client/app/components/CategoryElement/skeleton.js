@@ -7,7 +7,7 @@ const Loading = ({ size }) => (
       <Skeleton height={20} width={300} />
     </h2>
     <div className="-mx-6 article-group">
-      {Array(size - 1)
+      {Array(size)
         .fill(null)
         .map((x, i) => i)
         .map((each, index) => (
