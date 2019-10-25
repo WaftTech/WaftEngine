@@ -7,6 +7,7 @@ const dModule = require('../../modules/files/filesController');
 const { authentication, authorization } = require('../../middleware/authentication.middleware');
 
 router.get('/', dModule.GetFileAndFolder);
-router.post('/', dModule.uploadFiles);
+router.post('/', authorization, uploader.single('file'), dModule.UploadFiles);
+router.post('/folder', authorization, dModule.AddFolders);
 
 module.exports = router;
