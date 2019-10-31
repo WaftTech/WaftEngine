@@ -16,7 +16,7 @@ fileController.GetFileAndFolder = async (req, res, next) => {
       id = req.params.id;
     }
     const self = await folderSch
-      .find({ is_deleted: false, _id: id })
+      .findOne({ is_deleted: false, _id: id })
       .populate([{ path: 'path', select: { name: 1 } }])
       .select({ name: 1, path: 1 });
     const files = await fileSch.find({ is_deleted: false, folder_id: id });

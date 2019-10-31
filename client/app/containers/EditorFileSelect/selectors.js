@@ -11,24 +11,8 @@ export const selectDomain = state => state.editorFileSelect || initialState;
  * Other specific selectors
  */
 
-export const selectFiles = createSelector(
-  selectDomain,
-  state => state.files,
-);
-
-export const selectFolders = createSelector(
-  selectDomain,
-  state => state.folders,
-);
-
-/**
- * Default selector used by EditorFileSelect
- */
-
-const makeSelectEditorFileSelect = () =>
+export const makeSelectAll = () =>
   createSelector(
     selectDomain,
-    substate => substate,
+    state => state.all,
   );
-
-export default makeSelectEditorFileSelect;

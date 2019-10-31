@@ -14,7 +14,7 @@ import qs from 'query-string';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
-import { selectFiles, selectFolders } from './selectors';
+import { makeSelectAll } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import FileList from './components/FileList';
@@ -44,8 +44,7 @@ EditorFileSelect.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  files: selectFiles,
-  folders: selectFolders,
+  all: makeSelectAll(),
 });
 
 const withConnect = connect(
