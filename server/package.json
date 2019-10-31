@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "WaftEngine-Server",
   "version": "1.0.0",
-  "description": "Server for API Project",
+  "description": "Server for API of WaftEngine",
   "main": "index.js",
   "scripts": {
     "client": "npm start --prefix ../client",
