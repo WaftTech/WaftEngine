@@ -30,6 +30,7 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import { DATE_FORMAT } from '../../App/constants';
 
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -137,7 +138,7 @@ export class Contact extends React.Component {
       name,
       email,
       subject,
-      moment(added_at).format('MMM Do YY'),
+      moment(added_at).format(DATE_FORMAT),
 
       <React.Fragment>
         <Tooltip

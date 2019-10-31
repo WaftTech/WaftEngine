@@ -13,7 +13,7 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 
 import { Link } from 'react-router-dom';
-import { IMAGE_BASE } from '../../containers/App/constants';
+import { IMAGE_BASE, DATE_FORMAT } from '../../containers/App/constants';
 import * as mapDispatchToProps from '../../containers/App/actions';
 import {
   makeSelectLatestBlogs,
@@ -62,7 +62,7 @@ const CategoryElement = props => {
 
                 <div className="pl-5 leading-tight article-text">
                   <span className="text-gray-700 text-sm sans-serif article-date">
-                    {moment(each.added_at).format('MMM DD, YYYY')}
+                    {moment(each.added_at).format(DATE_FORMAT)}
                   </span>
                   <Link
                     className="font-bold text-xl block text-black hover:text-waftprimary pointer no-underline article-title"

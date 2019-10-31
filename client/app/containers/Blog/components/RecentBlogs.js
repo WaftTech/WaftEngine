@@ -8,7 +8,7 @@ import {
   makeSelectRecentBlogsIsLoading,
   makeSelectRecentBlogs,
 } from '../selectors';
-import { IMAGE_BASE } from '../../App/constants';
+import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
 import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
 
 function RecentBlogs(props) {
@@ -34,7 +34,7 @@ function RecentBlogs(props) {
           </div>
           <div className="flex-1 ml-4">
             <time className="text-xs text-gray-700">
-              {moment(blog.added_at).format('ll')}
+              {moment(blog.added_at).format(DATE_FORMAT)}
             </time>
             <h4 className="font-normal sans-serif text-sm">
               <Link

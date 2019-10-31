@@ -28,6 +28,7 @@ import {
 import { makeSelectUser } from '../App/selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { DATE_FORMAT } from '../App/constants';
 import avatar from '../../assets/img/user.svg';
 import DeleteDialog from '../../components/DeleteDialog';
 
@@ -132,7 +133,7 @@ export const Comments = props => {
                           : each.added_by.name}
                       </h5>
                       <span className="text-xs">
-                        {moment(each.added_at).format('ll')}{' '}
+                        {moment(each.added_at).format(DATE_FORMAT)}{' '}
                       </span>
                     </div>
 

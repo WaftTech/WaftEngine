@@ -16,7 +16,7 @@ import {
 
 import Dialog from '@material-ui/core/Dialog';
 import LinkBoth from '../../../components/LinkBoth';
-import { IMAGE_BASE } from '../../App/constants';
+import { IMAGE_BASE,DATE_FORMAT } from '../../App/constants';
 import BlogDetailSkeleton from '../Skeleton/BlogDetail';
 import BlogComments from '../../Comments';
 
@@ -33,7 +33,7 @@ function BlogDetail(props) {
         <div>
 
           <p className="text-gray-700">
-            {blog && moment(blog.added_at).format('MMM DD, YYYY')}
+            {blog && moment(blog.added_at).format(DATE_FORMAT)}
           </p>
           <h2 className="capitalize text-4xl mb-2 leading-tight">{blog.title}</h2>
 

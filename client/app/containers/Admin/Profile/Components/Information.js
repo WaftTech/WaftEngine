@@ -23,6 +23,8 @@ import saga from '../saga';
 import { makeSelectOne, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
+import { DATE_FORMAT } from '../../../App/constants';
+
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -49,7 +51,7 @@ class UserPersonalInformationPage extends React.PureComponent {
   handleDateChange = name => date => {
     this.props.setOneValue({
       key: name,
-      value: moment(date).format('YYYY-MM-DD'),
+      value: moment(date).format(DATE_FORMAT),
     });
   };
 
@@ -66,7 +68,10 @@ class UserPersonalInformationPage extends React.PureComponent {
             Name
           </label>
 
-          <FormControl className="md:w-1/2" error={errors && errors.name && errors.name.length > 0}>
+          <FormControl
+            className="md:w-1/2"
+            error={errors && errors.name && errors.name.length > 0}
+          >
             <input
               className="inputbox"
               id="name"
@@ -85,7 +90,8 @@ class UserPersonalInformationPage extends React.PureComponent {
             Email
           </label>
 
-          <FormControl className="md:w-1/2"
+          <FormControl
+            className="md:w-1/2"
             error={errors && errors.email && errors.email.length > 0}
           >
             <input
@@ -111,7 +117,7 @@ class UserPersonalInformationPage extends React.PureComponent {
             className="inputbox"
             value={
               (one.date_of_birth &&
-                moment(one.date_of_birth).format('YYYY-MM-DD')) ||
+                moment(one.date_of_birth).format(DATE_FORMAT)) ||
               ''
             }
             onChange={this.handleDateChange('date_of_birth')}
@@ -130,7 +136,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full  pb-4">
-          Your account created at {moment(one.added_at).format('YYYY-MM-DD')}
+          Your account created at {moment(one.added_at).format(DATE_FORMAT)}
         </div>
 
         <button

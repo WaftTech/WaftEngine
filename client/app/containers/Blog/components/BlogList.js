@@ -4,7 +4,7 @@ import PropTypes, { number } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { IMAGE_BASE } from 'containers/App/constants';
+import { IMAGE_BASE, DATE_FORMAT } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import * as mapDispatchToProps from '../actions';
@@ -64,7 +64,7 @@ const RenderBlogs = props => {
             </div>
             <div className="md:w-1/2 py-4 md:p-4 article-details">
               <span className="text-gray-700 mr-2 article-date">
-                {moment(added_at).format('MMM Do YYYY')}
+                {moment(added_at).format(DATE_FORMAT)}
               </span>
               {tags && tags.length > 0 ? (
                 <Link

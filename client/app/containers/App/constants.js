@@ -25,6 +25,9 @@ export const IMAGE_BASE =
     ? 'http://www.waftengine.com/'
     : 'http://localhost:5050/';
 
+    
+export const DATE_FORMAT = 'YYYY-MM-DD';
+
 export const SET_USER = 'app/App/SET_USER';
 export const SET_TOKEN = 'app/App/SET_TOKEN';
 export const LOGOUT = 'app/App/LOGOUT';

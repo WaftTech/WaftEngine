@@ -26,6 +26,7 @@ import {
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import { DATE_FORMAT } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
@@ -85,7 +86,7 @@ class AddEdit extends React.PureComponent {
   handleDateChange = name => date => {
     this.props.setOneValue({
       key: name,
-      value: moment(date).format('YYYY/MM/DD'),
+      value: moment(date).format(DATE_FORMAT),
     });
   };
 
@@ -193,7 +194,7 @@ class AddEdit extends React.PureComponent {
                   className={[classes.textField, 'inputbox']}
                   value={
                     (one.publish_from &&
-                      moment(one.publish_from).format('YYYY/MM/DD')) ||
+                      moment(one.publish_from).format(DATE_FORMAT)) ||
                     ''
                   }
                   onChange={this.handleDateChange('publish_from')}
@@ -214,7 +215,7 @@ class AddEdit extends React.PureComponent {
                   className={[classes.textField, 'inputbox']}
                   value={
                     (one.publish_to &&
-                      moment(one.publish_to).format('YYYY/MM/DD')) ||
+                      moment(one.publish_to).format(DATE_FORMAT)) ||
                     ''
                   }
                   onChange={this.handleDateChange('publish_to')}

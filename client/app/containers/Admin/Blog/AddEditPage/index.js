@@ -40,7 +40,7 @@ import * as mapDispatchToProps from '../actions';
 
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import { IMAGE_BASE } from '../../../App/constants';
+import { IMAGE_BASE,DATE_FORMAT } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
@@ -196,7 +196,7 @@ class AddEdit extends React.PureComponent {
     const published_on = moment(event.target.value);
     this.props.setOneValue({
       key: 'published_on',
-      value: published_on.format('YYYY-MM-DD'),
+      value: published_on.format(DATE_FORMAT),
     });
   };
 
@@ -432,8 +432,8 @@ class AddEdit extends React.PureComponent {
               type="date"
               value={
                 (one.published_on &&
-                  moment(one.published_on).format('YYYY-MM-DD')) ||
-                moment(Date.now()).format('YYYY-MM-DD')
+                  moment(one.published_on).format(DATE_FORMAT)) ||
+                moment(Date.now()).format(DATE_FORMAT)
               }
               name="published_on"
               onChange={this.handlePublishedOn}
