@@ -28,12 +28,13 @@ export const EditorFileSelect = ({
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const queryObj = qs.parse(search);
+
   useEffect(() => {
-    loadFilesRequest();
-  }, []);
+    loadFilesRequest(queryObj.path);
+  }, [queryObj.path]);
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <FileList {...queryObj} />
+      <FileList queryObj={queryObj} />
     </div>
   );
 };

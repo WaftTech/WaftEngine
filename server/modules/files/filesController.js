@@ -23,7 +23,7 @@ fileController.GetFileAndFolder = async (req, res, next) => {
     const folders = await folderSch.find({ is_deleted: false, parent_folder: id }).select({ name: 1 });
     const totalFile = files.length;
     const totalFolder = folders.length;
-    otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totaldata: totalFolder }, file: { data: files, totaldata: totalFile }, self: self }, null, 'files and folders get success!!', null);
+    otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totaldata: totalFolder }, files: { data: files, totaldata: totalFile }, self: self }, null, 'files and folders get success!!', null);
   } catch (err) {
     next(err);
   }

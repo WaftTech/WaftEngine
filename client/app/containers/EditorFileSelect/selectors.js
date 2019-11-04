@@ -16,3 +16,14 @@ export const makeSelectAll = () =>
     selectDomain,
     state => state.all,
   );
+
+export const makeSelectOne = () =>
+  createSelector(
+    selectDomain,
+    state => state.folderOne,
+  );
+export const makeSelectfolderAddRequest = () =>
+  createSelector(
+    selectDomain,
+    state => state.folderAddRequest,
+  );

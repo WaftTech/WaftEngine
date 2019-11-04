@@ -45,3 +45,22 @@ export const addMediaFailure = payload => ({
   type: types.ADD_MEDIA_FAILURE,
   payload,
 });
+
+export const loadNewFolderRequest = (payload, metadata) => ({
+  type: types.LOAD_NEW_FOLDER_REQUEST,
+  payload,
+  metadata,
+});
+export const loadNewFolderSuccess = payload => ({
+  type: types.LOAD_NEW_FOLDER_SUCCESS,
+  payload,
+});
+export const loadNewFolderFailure = payload => ({
+  type: types.LOAD_NEW_FOLDER_FAILURE,
+  payload,
+});
+
+export const setFolderName = payload => ({
+  type: types.SET_NAME_VALUE,
+  payload,
+});

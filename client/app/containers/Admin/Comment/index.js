@@ -163,7 +163,7 @@ export class BlogCommentManagePage extends React.PureComponent {
           <title>Blog Comments</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-          {loading && loading == true ? <Loading /> : <></>}
+          {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Blog Comment Listing</PageHeader>
         </div>
         <PageContent loading={loading}>
