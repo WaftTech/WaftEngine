@@ -52,6 +52,12 @@ const editorFileSelectReducer = (state = initialState, action) =>
       case types.LOAD_NEW_FOLDER_FAILURE:
         draft.folderAddRequest = false;
         break;
+      case types.ADD_MEDIA_SUCCESS:
+        action.payload.data.map(each => {
+          draft.all.files.data = [...state.all.files.data, each];
+        });
+        draft.all.files.totaldata = state.all.files.totaldata + 1;
+        break;
     }
   });
 

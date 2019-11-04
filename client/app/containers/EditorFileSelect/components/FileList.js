@@ -8,7 +8,6 @@ import { createStructuredSelector } from 'reselect';
 import Dropzone from 'react-dropzone';
 
 // material
-// import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
@@ -79,6 +78,10 @@ const FileList = ({
     setFolderName({ key: 'name', value: e.target.value });
   };
 
+  const handleFileUpload = (files, id) => {
+    addMediaRequest({ file: files, folder_id: id });
+  };
+
   const handleFolderLink = id => {
     const searchq = queryString.stringify({ ...queryObj, path: id });
     props.push({
@@ -144,7 +147,7 @@ const FileList = ({
       />
       <div style={{ display: 'flex' }} className="m-2">
         <div className="w-1/2">
-          <Dropzone onDrop={file => addMediaRequest(file, 'media')}>
+          <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
               <section
                 style={{ width: '100%' }}
@@ -163,10 +166,10 @@ const FileList = ({
           New Folder
         </Button>
       </div>
-      <div className="flex flex-wrap justify-between px-4 overflow-hidden m-2">
+      <div className="flex flex-wrap px-4 overflow-hidden m-2">
         {folders.data.map(each => (
           <div
-            className="-ml-4 -mr-4 w-1/5 h-28 mb-4 p-1 text-center bg-gray-300"
+            className="w-1/5 h-28 mb-4 p-1 text-center mr-4 bg-gray-300"
             key={each._id}
             onClick={() => handleFolderLink(each._id)}
             onKeyDown={() => handleFolderLink(each._id)}
@@ -175,10 +178,10 @@ const FileList = ({
             {each.name}
           </div>
         ))}
-        {files.data.map(each => (
+        {files.data.map((each, index) => (
           <div
             key={each._id}
-            className="-ml-4 -mr-4 w-1/5 h-28 mb-4 p-1 text-center bg-gray-300"
+            className="w-1/5 h-28 mb-4 p-1 text-center mr-4 bg-gray-300"
           >
             <img
               className="w-full h-24 object-contain"
@@ -188,7 +191,7 @@ const FileList = ({
               onKeyDown={() => handleFolderLink(each._id)}
               role="presentation"
             />
-            <div>{each.filename}</div>
+            <div className="overflow-hidden">{each.filename}</div>
           </div>
         ))}
         {folders.data.length < 1 && files.data.length < 1 && (
