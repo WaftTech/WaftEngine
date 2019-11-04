@@ -21,12 +21,13 @@ import RoutesUser from '../../layouts/User';
 import GlobalStyle from '../../global-styles';
 import AdminRoute from '../../components/Routes/AdminRoute';
 import UserRoute from '../../components/Routes/UserRoute';
+import ErrorBoundary from '../../components/ErrorBoundary';
 import Notifier from './components/Notifier';
 import { enqueueSnackbar } from './actions';
 import { makeSelectLocation } from './selectors';
 
 const App = ({ location }) => (
-  <>
+  <ErrorBoundary>
     <Notifier />
     <Switch location={location}>
       <UserRoute path="/user" component={RoutesUser} />
@@ -34,7 +35,7 @@ const App = ({ location }) => (
       <Route path="/" component={RoutesPublic} />
     </Switch>
     <GlobalStyle />
-  </>
+  </ErrorBoundary>
 );
 
 const withSaga = injectSaga({ key: 'global', saga });
