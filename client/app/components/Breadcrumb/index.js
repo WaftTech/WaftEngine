@@ -67,8 +67,6 @@ Breadcrumb.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-<<<<<<< HEAD
-=======
   routeList: PropTypes.arrayOf(
     PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -83,7 +81,6 @@ Breadcrumb.defaultProps = {
   routeList: [],
   onClick: () => null,
   linkcomponent: Link,
->>>>>>> 157d0a7e57b66994ce36d71cd9d0f2ec8db4102a
 };
 
 export default withRouter(Breadcrumb);
