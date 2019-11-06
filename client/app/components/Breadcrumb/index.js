@@ -10,25 +10,19 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import Crumb from './Crumb';
 
-const Breadcrumb = ({ location: { pathname }, routeList }) => {
-  let breadcrumbs = [];
-  if (routeList.length === 0) {
-    const subPaths = pathname.split('/').filter(each => !!each);
-    let tempPathname = pathname;
-    breadcrumbs = subPaths
-      .map(() => {
-        const breadcrumb = {
-          path: `${tempPathname}`,
-          label: tempPathname.substring(tempPathname.lastIndexOf('/') + 1),
-        };
-        tempPathname = tempPathname.substring(0, tempPathname.lastIndexOf('/'));
-        return breadcrumb;
-      })
-      .reverse();
-  } else {
-    breadcrumbs = routeList;
-  }
-
+const Breadcrumb = ({ location: { pathname } }) => {
+  const subPaths = pathname.split('/').filter(each => !!each);
+  let tempPathname = pathname;
+  const breadcrumbs = subPaths
+    .map(() => {
+      const breadcrumb = {
+        path: `${tempPathname}`,
+        label: tempPathname.substring(tempPathname.lastIndexOf('/') + 1),
+      };
+      tempPathname = tempPathname.substring(0, tempPathname.lastIndexOf('/'));
+      return breadcrumb;
+    })
+    .reverse();
   return (
     <div className="p-2 flex-1 my-1">
       <ol className="list-reset flex text-gray-700">
@@ -54,16 +48,6 @@ Breadcrumb.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  routeList: PropTypes.arrayOf(
-    PropTypes.shape({
-      path: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-    }),
-  ),
-};
-
-Breadcrumb.defaultProps = {
-  routeList: [],
 };
 
 export default withRouter(Breadcrumb);
