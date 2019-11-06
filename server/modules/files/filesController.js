@@ -16,14 +16,14 @@ fileController.GetFileAndFolder = async (req, res, next) => {
       id = req.params.id;
     }
     const self = await folderSch
-      .find({ is_deleted: false, _id: id })
+      .findOne({ is_deleted: false, _id: id })
       .populate([{ path: 'path', select: { name: 1 } }])
       .select({ name: 1, path: 1 });
     const files = await fileSch.find({ is_deleted: false, folder_id: id });
     const folders = await folderSch.find({ is_deleted: false, parent_folder: id }).select({ name: 1 });
     const totalFile = files.length;
     const totalFolder = folders.length;
-    otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totaldata: totalFolder }, file: { data: files, totaldata: totalFile }, self: self }, null, 'files and folders get success!!', null);
+    otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totaldata: totalFolder }, files: { data: files, totaldata: totalFile }, self: self }, null, 'files and folders get success!!', null);
   } catch (err) {
     next(err);
   }

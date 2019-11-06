@@ -188,7 +188,7 @@ export class ContentsListingPage extends React.Component {
           <title>Static Content</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-          {loading && loading == true ? <Loading /> : <></>}
+          {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Static Content</PageHeader>
           <Fab
             color="primary"

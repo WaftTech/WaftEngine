@@ -14,7 +14,7 @@ import qs from 'query-string';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
-import { selectFiles, selectFolders } from './selectors';
+import { makeSelectAll } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import FileList from './components/FileList';
@@ -28,12 +28,13 @@ export const EditorFileSelect = ({
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const queryObj = qs.parse(search);
+
   useEffect(() => {
-    loadFilesRequest();
-  }, []);
+    loadFilesRequest(queryObj.path);
+  }, [queryObj.path]);
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <FileList {...queryObj} />
+      <FileList queryObj={queryObj} />
     </div>
   );
 };
@@ -44,8 +45,7 @@ EditorFileSelect.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  files: selectFiles,
-  folders: selectFolders,
+  all: makeSelectAll(),
 });
 
 const withConnect = connect(
