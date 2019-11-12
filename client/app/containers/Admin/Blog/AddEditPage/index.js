@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
-import Inputs from '@material-ui/core/Input';
+import Input from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import injectSaga from 'utils/injectSaga';
@@ -40,10 +40,10 @@ import * as mapDispatchToProps from '../actions';
 
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import { IMAGE_BASE,DATE_FORMAT } from '../../../App/constants';
+import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
+import WECkEditior from '../../../../components/CkEditor';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -71,12 +71,6 @@ const styles = theme => ({
     marginBottom: 'auto',
     borderRadius: '50%',
     marginRight: '5px',
-  },
-  PaperProps: {
-    style: {
-      maxHeight: 48 * 4.5 + 8,
-      width: 250,
-    },
   },
 });
 
@@ -268,6 +262,13 @@ class AddEdit extends React.PureComponent {
     return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
   };
 
+  handleSelectedValue = (ids, cats) => {
+    const selected = ids.map(
+      each => Object.keys(cats).length && cats[each].title,
+    );
+    return selected.join(', ');
+  };
+
   render() {
     const {
       classes,
@@ -282,6 +283,19 @@ class AddEdit extends React.PureComponent {
       errors,
     } = this.props;
     const { tempImage } = this.state;
+    const menuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: 48 * 4.5 + 8,
+          width: 250,
+        },
+      },
+    };
+    let cats = {};
+    category.map(e => {
+      cats[e._id] = e;
+      return null;
+    });
     return loading && loading == true ? (
       <Loading />
     ) : (
@@ -346,24 +360,59 @@ class AddEdit extends React.PureComponent {
             <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Category
             </label>
-            <select
-              className="inputbox"
-              id="template-key"
-              name="template_key"
-              value={one.category || []}
-              onChange={this.handleMultipleSelectChange}
-            >
-              <option value="" name="none" disabled>
-                None
-              </option>
-              {category.map(each => (
-                <option key={each._id} value={each._id}>
-                  {/* <input type="checkbox" checked={one.category.includes(each._id) ? 'checked' : ''}
-                onChange={() => null}/> */}
-                  {each.title}
-                </option>
-              ))}
-            </select>
+            {/* <FormControl className={classes.formControl}>
+              <Select
+                // className="inputbox"
+                multiple
+                displayEmpty
+                name="template_key"
+                value={one.category || []}
+                input={<Input />}
+                onChange={this.handleMultipleSelectChange}
+                renderValue={selected => {
+                  if (selected.length === 0) {
+                    return <em>Select Categories</em>;
+                  } else {
+                    return selected.join(', ');
+                  }
+                }}
+                MenuProps={menuProps}
+              >
+                <MenuItem value="" name="none" disabled>
+                  None
+                </MenuItem>
+                {category.map(each => (
+                  <MenuItem key={each._id} value={each._id} name={each.title}>
+                    {each.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl> */}
+            <FormControl className={classes.formControl}>
+              <Select
+                // className="inputbox"
+                multiple
+                displayEmpty
+                name="template_key"
+                value={one.category || []}
+                input={<Input />}
+                onChange={this.handleMultipleSelectChange}
+                renderValue={selected =>
+                  this.handleSelectedValue(selected, cats)
+                }
+                MenuProps={menuProps}
+              >
+                <MenuItem value="" name="none" disabled>
+                  None
+                </MenuItem>
+                {category.map(each => (
+                  <MenuItem key={each._id} value={each._id} name={each.title}>
+                    <Checkbox checked={one.category.indexOf(each._id) > -1} />
+                    {each.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -385,14 +434,9 @@ class AddEdit extends React.PureComponent {
             <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
               Blog Description
             </label>
-            <CKEditor
-              name="description"
-              content={one.description}
-              config={{ allowedContent: true }}
-              events={{
-                change: e => this.handleEditorChange(e, 'description'),
-                value: one.description || '',
-              }}
+            <WECkEditior
+              description={one.description}
+              setOneValue={this.props.setOneValue}
             />
 
             <div id="component-error-text">{errors && errors.description}</div>
