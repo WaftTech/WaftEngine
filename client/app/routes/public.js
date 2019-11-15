@@ -91,6 +91,13 @@ const publicRoutes = [
   },
   {
     exact: true,
+    path: '/priacy-policy',
+    render: props => (
+      <StaticPage contentKey="priacy-policy" title="About Us" {...props} />
+    ),
+  },
+  {
+    exact: true,
     path: '/cookies-policy',
     render: props => (
       <StaticPage contentKey="cookies-policy" title="About Us" {...props} />

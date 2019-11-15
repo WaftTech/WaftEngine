@@ -11,23 +11,32 @@ import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import { createStructuredSelector } from 'reselect';
 
 import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import * as mapDispatchToProps from './actions';
 
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
+import reducer from './reducer';
+import saga from './saga';
+import * as mapDispatchToProps from './actions';
+import {
+  makeSelectLoading,
+  makeSelectEmailError,
+  makeSelectPasswordError,
+} from './selectors';
 
 const LoginUserPage = ({
   classes,
   loginRequest,
   loginWithFbRequest,
   loginWithGoogleRequest,
+  loading,
+  emailErr,
+  passwordErr,
 }) => {
   const handleSubmit = e => {
     e.preventDefault();
@@ -36,28 +45,26 @@ const LoginUserPage = ({
   return (
     <div className="container mx-auto mb-10">
       <div className="mx-auto max-w-md p-5 md:p-16">
-        <h1 className="font-bold text-2xl">LOGIN</h1>        <form className="mt-4" onSubmit={handleSubmit}>
+        <h1 className="font-bold text-2xl">LOGIN</h1>{' '}
+        <form className="mt-4" onSubmit={handleSubmit}>
           <UsernameInput />
           <PasswordInput />
           <button
             className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold"
             type="submit"
           >
-            LOGIN
+            {loading ? '...' : 'LOGIN'}
           </button>
         </form>
-
         <Link
           className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
           to="/signup-user"
         >
           Don't Have Account? Register
         </Link>
-
         <p className="text-muted text-center mt-4 mb-4 text-xs">
           OR LOGIN WITH
         </p>
-
         <div className="mt-5 mb-5 flex space-around">
           <FacebookLogin
             appId={FB_APP_ID}
@@ -104,8 +111,6 @@ const LoginUserPage = ({
               fontSize: '13px',
               boxShadow: 'none',
             }}
-
-
           />
         </div>
       </div>
@@ -120,7 +125,11 @@ LoginUserPage.propTypes = {
   loginWithGoogleRequest: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading(),
+  emailErr: makeSelectEmailError(),
+  passwordErr: makeSelectPasswordError(),
+});
 
 const withConnect = connect(
   mapStateToProps,
@@ -135,7 +144,7 @@ const styles = {
     boxShadow: 'none!important',
     border: '1px solid gainsboro!important',
     borderLeft: 'none!important',
-  }
+  },
 };
 
 const withStyle = withStyles(styles);

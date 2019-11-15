@@ -17,7 +17,7 @@ import {
   makeSelectEmail,
   makeSelectEmailError,
   makeSelectSuccess,
-  // makeSelectSuccessMsg,
+  makeSelectLoading,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
@@ -29,6 +29,7 @@ export class SubscriberPage extends React.PureComponent {
     setStoreValue: PropTypes.func.isRequired,
     errors: PropTypes.string,
     email: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
   };
 
   handleChange = name => e => {
@@ -43,7 +44,7 @@ export class SubscriberPage extends React.PureComponent {
   };
 
   render() {
-    const { email, errors } = this.props;
+    const { email, errors, loading } = this.props;
     const hasError = Boolean(errors);
     return (
       <>
@@ -62,7 +63,7 @@ export class SubscriberPage extends React.PureComponent {
           className="text-white py-2 px-4 rounded rounded-l-none border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
           onClick={this.handleSubmit}
         >
-          Subscribe
+          {loading ? '...' : 'Subscribe'}
         </button>
       </>
     );
@@ -73,7 +74,7 @@ const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
   errors: makeSelectEmailError(),
   success: makeSelectSuccess(),
-  // successMsg: makeSelectSuccessMsg(),
+  loading: makeSelectLoading(),
 });
 
 const withConnect = connect(

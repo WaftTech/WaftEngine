@@ -19,7 +19,9 @@ const switchRoutes = (
 const UserLayout = () => (
   <>
     <Header />
-    <div className="flex-1">{switchRoutes}</div>
+    <div className="container mx-auto pt-12 pb-12">
+    {switchRoutes}
+    </div>
     <Footer />
   </>
 );

@@ -133,5 +133,30 @@ mediaController.DeleteMedia = async (req, res, next) => {
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
 };
+mediaController.UploadFromCkEditor = async (req, res, next) => {
+  try {
+    console.log(req.files);
 
+    // media.destination =
+    //   media.destination
+    //     .split('\\')
+    //     .join('/')
+    //     .split('server/')[1] + '/';
+    // media.path = media.path
+    //   .split('\\')
+    //   .join('/')
+    //   .split('server/')[1];
+    let html = '';
+    html += `<script type='text/javascript'>
+    var funcNum = ${req.query.CKEditorFuncNum};
+    var url = "http://localhost:5051/public/media/${req.files[0].filename}";
+    var message = "Uploaded file successfully";
+   window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);
+    </script>`;
+
+    res.send(html);
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = mediaController;

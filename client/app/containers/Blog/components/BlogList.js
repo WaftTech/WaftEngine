@@ -4,7 +4,7 @@ import PropTypes, { number } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { IMAGE_BASE } from 'containers/App/constants';
+import { IMAGE_BASE, DATE_FORMAT } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import * as mapDispatchToProps from '../actions';
@@ -35,13 +35,18 @@ const RenderBlogs = props => {
         } = each;
 
         return (
-          <div key={slug_url} className="border-b border-dotted py-5 md:flex article-container">
+          <div
+            key={slug_url}
+            className="border-b border-dotted py-5 md:flex article-container"
+          >
             <div className="md:w-1/4 article-heading">
               <Link
                 className="text-black no-underline capitalize mb-2 bold block mt-4"
                 to={`/blog/${slug_url}`}
               >
-                <h2 className="text-2xl font-medium leading-tight hover:text-primary">{title}</h2>
+                <h2 className="text-2xl font-medium leading-tight hover:text-primary">
+                  {title}
+                </h2>
               </Link>
               <span className="my-2 text-sm">
                 by{' '}
@@ -59,17 +64,19 @@ const RenderBlogs = props => {
             </div>
             <div className="md:w-1/2 py-4 md:p-4 article-details">
               <span className="text-gray-700 mr-2 article-date">
-                {moment(added_at).format('MMM Do YYYY')}
+                {moment(added_at).format(DATE_FORMAT)}
               </span>
-              {tags && tags.length > 0 ? (<Link
-                className="text-blue-700 no-underline article-tag"
-                to={`/blog/${each.slug_url}`}
-              >
-                <span> {tags.join(', ') || ''} </span>
-              </Link> ) : (
+              {tags && tags.length > 0 ? (
+                <Link
+                  className="text-blue-700 no-underline article-tag"
+                  to={`/blog/${each.slug_url}`}
+                >
+                  <span> {tags.join(', ') || ''} </span>
+                </Link>
+              ) : (
                 ''
               )}
-              {short_description &&
+              {short_description && (
                 <Link
                   className="text-grey-darker text-base no-underline"
                   to={`/blog/${slug_url}`}
@@ -79,7 +86,7 @@ const RenderBlogs = props => {
                     dangerouslySetInnerHTML={{ __html: short_description }}
                   />
                 </Link>
-              }
+              )}
             </div>
 
             <div className="md:w-1/4 h-48 overflow-hidden p-8 article-image">
@@ -143,12 +150,15 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-        <div>Blogs Not Found</div>
-      );
+    <div>Blogs Not Found</div>
+  );
 };
 
 RenderBlogs.propTypes = {
   currentBlogs: PropTypes.array.isRequired,
+  loading: PropTypes.string,
+  pagination: PropTypes.object,
+  handlePagination: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({});

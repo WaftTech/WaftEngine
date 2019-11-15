@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "WaftEngine-Client",
   "version": "4.0.0",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "description": "Powerfull Mern Stack Engine :- Client side (React)",
   "repository": {
     "type": "git",
     "url": "git://github.com/react-boilerplate/react-boilerplate.git"
@@ -78,6 +78,7 @@
     "cross-env": "5.2.0",
     "disqus-react": "^1.0.6",
     "express": "4.16.4",
+    "express-http-proxy": "^1.6.0",
     "fontfaceobserver": "2.1.0",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",

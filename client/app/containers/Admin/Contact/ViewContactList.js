@@ -20,6 +20,7 @@ import reducer from './reducer';
 import * as mapDispatchToProps from './actions';
 import saga from './saga';
 import { makeSelectOne, makeSelectLoading } from './selectors';
+import { DATE_FORMAT } from '../../App/constants';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import BackIcon from '@material-ui/icons/ArrowBack';
@@ -91,7 +92,7 @@ export class ViewContacts extends React.Component {
 
           <div className="mb-2">
             <b>Added At: </b>
-            {moment(one && one.added_at).format('YYYY-MM-DD')}
+            {moment(one && one.added_at).format(DATE_FORMAT)}
           </div>
         </PageContent>
       </React.Fragment>

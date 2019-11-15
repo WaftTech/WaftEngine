@@ -27,6 +27,7 @@ import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
+import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
@@ -137,8 +138,8 @@ export class ContentsListingPage extends React.Component {
       ({ name, key, is_active, published_from, published_to, _id }) => [
         name,
         key,
-        moment(published_from).format('MMM Do YY'),
-        moment(published_to).format('MMM Do YY'),
+        moment(published_from).format(DATE_FORMAT),
+        moment(published_to).format(DATE_FORMAT),
         `${is_active}`,
         <>
           <Tooltip
@@ -187,7 +188,7 @@ export class ContentsListingPage extends React.Component {
           <title>Static Content</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-          {loading && loading == true ? <Loading /> : <></>}
+          {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Static Content</PageHeader>
           <Fab
             color="primary"

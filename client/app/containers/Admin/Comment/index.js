@@ -26,6 +26,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import { DATE_FORMAT } from '../../App/constants';
 import Loading from '../../../components/Loading';
 
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -122,8 +123,8 @@ export class BlogCommentManagePage extends React.PureComponent {
         title,
         blog_id && blog_id.title,
         status || 'onhold',
-        moment(added_at).format('MMM Do YY'),
-        moment(updated_at).format('MMM Do YY'),
+        moment(added_at).format(DATE_FORMAT),
+        moment(updated_at).format(DATE_FORMAT),
         <>
           <Tooltip
             id="tooltip-top-start"
@@ -162,7 +163,7 @@ export class BlogCommentManagePage extends React.PureComponent {
           <title>Blog Comments</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
-          {loading && loading == true ? <Loading /> : <></>}
+          {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Blog Comment Listing</PageHeader>
         </div>
         <PageContent loading={loading}>

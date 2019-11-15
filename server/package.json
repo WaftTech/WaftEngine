@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "WaftEngine-Server",
   "version": "1.0.0",
-  "description": "Server for API Project",
+  "description": "Server for API of WaftEngine",
   "main": "index.js",
   "scripts": {
     "client": "npm start --prefix ../client",
@@ -15,6 +15,7 @@
     "awesome-phonenumber": "^2.3.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "connect-multiparty": "^2.2.0",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.3",
@@ -30,7 +31,7 @@
     "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",
     "moment": "^2.23.0",
-    "mongoose": "^5.6.3",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "multer": "^1.4.0",
     "nodemailer": "^4.6.7",

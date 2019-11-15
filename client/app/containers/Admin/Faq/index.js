@@ -18,6 +18,7 @@ import Close from '@material-ui/icons/Close';
 import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table';
 
+import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import injectSaga from '../../../utils/injectSaga';
@@ -132,8 +133,8 @@ export class FAQManagePage extends React.PureComponent {
       ({ question, category, added_at, updated_at, _id }) => [
         question,
         (category && category.title) || 'No',
-        moment(added_at).format('MMM Do YY'),
-        moment(updated_at).format('MMM Do YY'),
+        moment(added_at).format(DATE_FORMAT),
+        moment(updated_at).format(DATE_FORMAT),
         <>
           <Tooltip
             id="tooltip-top"

@@ -68,6 +68,7 @@ async function MongoDBConnection(app) {
     .connect(mongoURI, {
       useNewUrlParser: true,
       useCreateIndex: true,
+      useUnifiedTopology: true,
     })
     .then(() => console.log('MongoDB Connected'));
 

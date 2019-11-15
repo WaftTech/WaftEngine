@@ -8,7 +8,7 @@ import {
   makeSelectRelatedBlogsIsLoading,
   makeSelectRelatedBlogs,
 } from '../selectors';
-import { IMAGE_BASE } from '../../App/constants';
+import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
 import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
 
 function RelatedBlogs(props) {
@@ -45,7 +45,7 @@ function RelatedBlogs(props) {
                 {blog.title}
               </Link>
             </h4>
-            <time>{moment(blog.added_at).format('ll')}</time>
+            <time>{moment(blog.added_at).format(DATE_FORMAT)}</time>
           </div>
         </div>
       ))}

@@ -26,11 +26,14 @@ import {
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import { DATE_FORMAT } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
+import { makeSelectToken } from '../../../App/selectors';
+import WECkEditior from '../../../../components/CkEditor'
 
 const styles = {
   backbtn: {
@@ -83,7 +86,7 @@ class AddEdit extends React.PureComponent {
   handleDateChange = name => date => {
     this.props.setOneValue({
       key: name,
-      value: moment(date).format('YYYY/MM/DD'),
+      value: moment(date).format(DATE_FORMAT),
     });
   };
 
@@ -159,20 +162,21 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.key}</div>
             </div>
             <div className="pb-4">
-              <CKEditor
+              <WECkEditior description= {one.description} setOneValue={this.props.setOneValue}/>
+              {/* <CKEditor
                 name="description"
                 content={one.description}
                 // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
                 config={{
                   allowedContent: true,
-                  filebrowserBrowseUrl: '/editor-file-select',
-                  filebrowserUploadUrl: '/api/media/multiple',
+                  // filebrowserBrowseUrl: '/editor-file-select',
+                  // filebrowserUploadUrl: '/api/media/multiple',
                 }}
                 events={{
                   change: e => this.handleEditorChange(e, 'description'),
                   value: one.description,
                 }}
-              />
+              /> */}
               <div id="component-error-text">{errors.description}</div>
             </div>
 
@@ -190,7 +194,7 @@ class AddEdit extends React.PureComponent {
                   className={[classes.textField, 'inputbox']}
                   value={
                     (one.publish_from &&
-                      moment(one.publish_from).format('YYYY/MM/DD')) ||
+                      moment(one.publish_from).format(DATE_FORMAT)) ||
                     ''
                   }
                   onChange={this.handleDateChange('publish_from')}
@@ -211,7 +215,7 @@ class AddEdit extends React.PureComponent {
                   className={[classes.textField, 'inputbox']}
                   value={
                     (one.publish_to &&
-                      moment(one.publish_to).format('YYYY/MM/DD')) ||
+                      moment(one.publish_to).format(DATE_FORMAT)) ||
                     ''
                   }
                   onChange={this.handleDateChange('publish_to')}
@@ -264,6 +268,7 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
   errors: makeSelectErrors(),
+  token: makeSelectToken(),
 });
 
 const withConnect = connect(

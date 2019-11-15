@@ -31,6 +31,7 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
+import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
@@ -137,8 +138,8 @@ export class FaqCategory extends React.PureComponent {
         title,
 
         `${is_active}`,
-        moment(added_at).format('MMM Do YY'),
-        moment(updated_at).format('MMM Do YY'),
+        moment(added_at).format(DATE_FORMAT),
+        moment(updated_at).format(DATE_FORMAT),
         <>
           <Tooltip
             id="tooltip-top"

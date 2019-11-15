@@ -27,6 +27,7 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import { DATE_FORMAT } from '../../App/constants';
 
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -95,6 +96,9 @@ export class BlogManagePage extends React.Component {
   handleEdit = id => {
     this.props.push(`/admin/blog-manage/edit/${id}`);
   };
+  handleView= slug_url => {
+    this.props.push(`/blog/${slug_url}`);
+  };
   handleOpen = id => {
     this.setState({ open: true, deleteId: id });
   };
@@ -144,7 +148,7 @@ export class BlogManagePage extends React.Component {
         return [
           title,
           (category && category.map(each => each.title).join(', ')) || 'No',
-          moment(added_at).format('MMM Do YY'),
+          moment(added_at).format(DATE_FORMAT),
           '' + is_published,
           '' + is_active,
           tags.join(','),
@@ -165,10 +169,25 @@ export class BlogManagePage extends React.Component {
                   className={classes.tableActionButtonIcon + ' ' + classes.edit}
                 />
               </IconButton>
+            </Tooltip><Tooltip
+              id="tooltip-top"
+              title="Edit Task"
+              placement="top"
+              classes={{ tooltip: classes.tooltip }}
+            >
+              <IconButton
+                aria-label="Edit"
+                className={classes.tableActionButton}
+                onClick={() => this.handleView(slug_url)}
+              >
+                <View
+                  className={classes.tableActionButtonIcon + ' ' + classes.edit}
+                />
+              </IconButton>
             </Tooltip>
-            <a href={`http://localhost:5051/blog/${slug_url}`} target="_blank">
+            {/* <a href={`http://localhost:5051/blog/${slug_url}`} target="_blank">
               view blog
-            </a>
+            </a> */}
             <Tooltip
               id="tooltip-top-start"
               title="Remove"

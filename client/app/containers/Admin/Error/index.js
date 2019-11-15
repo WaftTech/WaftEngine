@@ -24,6 +24,7 @@ import { Button } from '@material-ui/core';
 // core components
 import Table from 'components/Table';
 
+import { DATE_FORMAT } from '../../App/constants';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import reducer from './reducer';
@@ -135,7 +136,7 @@ export class Error extends React.Component {
         error_message,
         error_stack,
         error_type,
-        moment(added_at).format('MMM Do YY'),
+        moment(added_at).format(DATE_FORMAT),
         <React.Fragment>
           <Tooltip
             id="tooltip-top-start"
