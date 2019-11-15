@@ -197,7 +197,6 @@ class AddEdit extends React.PureComponent {
   // };
 
   handlePublishedOn = date => {
-    console.log(date, 'date');
     this.setState({ startDate: date });
     this.props.setOneValue({
       key: 'published_on',
