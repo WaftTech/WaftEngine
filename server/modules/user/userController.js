@@ -86,56 +86,24 @@ userController.GetAllUserGRBY = async (req, res, next) => {
 };
 
 userController.GetAllUser = async (req, res, next) => {
-  const size_default = 10;
-  let page;
-  let size;
-  let searchq;
-  let sortq;
-  let populate;
-  let selectq;
-  if (req.query.page && req.query.page == 0) {
-    const us = await users.find({ is_deleted: false }).select('_id name');
-    const totaldata = us.length;
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, us, 'all users get!', 1, 1, totaldata);
-  }
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
-  }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-  if (req.query.sort) {
-    let sortfield = req.query.sort.slice(1);
-    let sortby = req.query.sort.charAt(0);
-    if (sortby == 1 && !isNaN(sortby) && sortfield) {
-      //one is ascending
-      sortq = sortfield;
-    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-      //zero is descending
-      sortq = '-' + sortfield;
-    } else {
-      sortq = '';
+  try {
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    if (req.query.find_name) {
+      searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
     }
+    if (req.query.find_email) {
+      searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
+    }
+    selectq = 'name email password avatar bio email_verified roles';
+
+    populate = [{ path: 'roles', select: 'role_title' }];
+
+    let datas = await otherHelper.getquerySendResponse(users, page, size, sortq, searchq, selectq, next, populate);
+
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
+  } catch (err) {
+    next(err);
   }
-  searchq = { is_deleted: false };
-
-  if (req.query.find_name) {
-    searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
-  }
-  if (req.query.find_email) {
-    searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
-  }
-  selectq = 'name email password avatar bio email_verified roles';
-
-  populate = [{ path: 'roles', select: 'role_title' }];
-
-  let datas = await otherHelper.getquerySendResponse(users, page, size, sortq, searchq, selectq, next, populate);
-
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
 };
 
 userController.GetUserDetail = async (req, res, next) => {

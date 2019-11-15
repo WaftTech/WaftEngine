@@ -7,51 +7,23 @@ const roleConfig = require('./roleConfig');
 const roleController = {};
 
 roleController.GetRoles = async (req, res, next) => {
-  const size_default = 10;
-  let page;
-  let size;
-  let searchq;
-  let sortq;
-  let selectq;
-  if (req.query.page && req.query.page == 0) {
-    selectq = 'role_title description is_active is_deleted';
-    const roles = await roleSch.find({ is_deleted: false }).select(selectq);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!!', null);
-  }
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
-  }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-  if (req.query.sort) {
-    let sortfield = req.query.sort.slice(1);
-    let sortby = req.query.sort.charAt(0);
-    if (sortby == 1 && !isNaN(sortby) && sortfield) {
-      //one is ascending
-      sortq = sortfield;
-    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-      //zero is descending
-      sortq = '-' + sortfield;
-    } else {
-      sortq = '';
+  try {
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    if (req.query.page && req.query.page == 0) {
+      selectq = 'role_title description is_active is_deleted';
+      const roles = await roleSch.find(selectq).select(selectq);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!!', null);
     }
+    if (req.query.find_role_title) {
+      searchq = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchq };
+    }
+
+    let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortq, searchq, selectq, next, populate);
+
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.roleGet, page, size, datas.totaldata);
+  } catch (err) {
+    next(err);
   }
-
-  searchq = { is_deleted: false };
-
-  if (req.query.find_role_title) {
-    searchq = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchq };
-  }
-  selectq = 'role_title description is_active is_deleted';
-
-  let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortq, searchq, selectq, next, '');
-
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.roleGet, page, size, datas.totaldata);
 };
 roleController.GetRoleDetail = async (req, res, next) => {
   const roles = await roleSch.findById(req.params.id, { is_active: 1, role_title: 1, description: 1 });
@@ -82,46 +54,21 @@ roleController.DeleteRole = async (req, res, next) => {
     next(err);
   }
 };
-
 roleController.GetModule = async (req, res, next) => {
-  const size_default = 10;
-  let page;
-  let size;
-  let searchq;
-  let sortq;
-  let selectq;
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
-  }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-  if (req.query.sort) {
-    let sortfield = req.query.sort.slice(1);
-    let sortby = req.query.sort.charAt(0);
-    if (sortby == 1 && !isNaN(sortby) && sortfield) {
-      //one is ascending
-      sortq = sortfield;
-    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-      //zero is descending
-      sortq = '-' + sortfield;
-    } else {
-      sortq = '';
+  try {
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, null);
+
+    selectq = 'module_name description order path';
+
+    if (req.query.find_module_name) {
+      searchq = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchq };
     }
+    let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortq, searchq, selectq, next, populate);
+
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
+  } catch (err) {
+    next(err);
   }
-
-  if (req.query.find_module_name) {
-    searchq = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchq };
-  }
-  selectq = 'module_name description order path';
-
-  let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortq, searchq, selectq, next, '');
-
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
 };
 roleController.GetModuleDetail = async (req, res, next) => {
   const modules = await moduleSch.findById(req.params.id);

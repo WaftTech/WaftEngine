@@ -6,44 +6,8 @@ const mediaController = {};
 
 mediaController.GetMediaPagination = async (req, res, next) => {
   try {
-    const size_default = 10;
-    let page;
-    let size;
-    let sortq;
-    let searchq;
-    let populate;
-    let selectq;
-    if (req.query.page && req.query.page == 0) {
-      const media = await mediaSch.find({ is_deleted: false });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'all media success!!', null);
-    }
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-    if (req.query.sort) {
-      let sortfield = req.query.sort.slice(1);
-      let sortby = req.query.sort.charAt(0);
-      if (sortby == 1 && !isNaN(sortby) && sortfield) {
-        //one is ascending
-        sortq = sortfield;
-      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-        //zero is descending
-        sortq = '-' + sortfield;
-      } else {
-        sortq = '';
-      }
-    }
-    selectq = 'field_name type destination path field_name original_name mimetype size encoding added_at module';
-
-    searchq = { is_deleted: false };
-    populate = { path: 'added_by' };
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    populate = [{ path: 'added_by' }];
     let media = await otherHelper.getquerySendResponse(mediaSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totaldata);
   } catch (err) {
@@ -91,7 +55,6 @@ mediaController.SaveMedia = async (req, res, next) => {
     next(err);
   }
 };
-
 mediaController.SaveMultipleMedia = async (req, res, next) => {
   try {
     let medias = [];

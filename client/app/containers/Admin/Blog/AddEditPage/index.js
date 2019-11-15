@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CKEditor from 'react-ckeditor-component';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -8,6 +7,8 @@ import { push } from 'connected-react-router';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -93,6 +94,7 @@ class AddEdit extends React.PureComponent {
 
   state = {
     tempImage: defaultImage,
+    startDate: new Date(),
   };
 
   componentDidMount() {
@@ -185,12 +187,21 @@ class AddEdit extends React.PureComponent {
     reader.readAsDataURL(file);
   };
 
-  handlePublishedOn = event => {
-    event.persist();
-    const published_on = moment(event.target.value);
+  // handlePublishedOn = event => {
+  //   event.persist();
+  //   const published_on = moment(event.target.value);
+  //   this.props.setOneValue({
+  //     key: 'published_on',
+  //     value: published_on.format(DATE_FORMAT),
+  //   });
+  // };
+
+  handlePublishedOn = date => {
+    console.log(date, 'date');
+    this.setState({ startDate: date });
     this.props.setOneValue({
       key: 'published_on',
-      value: published_on.format(DATE_FORMAT),
+      value: moment(date).format('YYYY-MM-DD'),
     });
   };
 
@@ -470,18 +481,23 @@ class AddEdit extends React.PureComponent {
             >
               Published On
             </label>
-            <input
+            <DatePicker
+              className="inputbox"
+              selected={this.state.startDate}
+              onChange={this.handlePublishedOn}
+            />
+            {/* <input
               className="inputbox"
               id="blog-title"
               type="date"
               value={
                 (one.published_on &&
-                  moment(one.published_on).format(DATE_FORMAT)) ||
-                moment(Date.now()).format(DATE_FORMAT)
+                  moment(one.published_on).format("YYYY-MM-DD")) ||
+                moment(Date.now()).format("YYYY-MM-DD")
               }
               name="published_on"
               onChange={this.handlePublishedOn}
-            />
+            /> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label

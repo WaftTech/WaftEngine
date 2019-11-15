@@ -43,6 +43,49 @@ otherHelper.parsePhoneNo = (phone, RegionCode) => {
     return err;
   }
 };
+
+otherHelper.ParseFilters = (req, defaults, is_deleted) => {
+  const size_default = defaults ? defaults : 10;
+  let page;
+  let size;
+  let sortq = { _id: -1 };
+  let searchq = {};
+  let populate = [];
+  let selectq = { __v: 0 };
+  if (is_deleted === undefined) {
+  } else if (is_deleted === null) {
+  } else {
+    if (!isNaN(is_deleted)) {
+      searchq = { ...searchq, is_deleted: is_deleted };
+      selectq = { ...selectq, is_deleted: 0, deleted_at: 0, deleted_by: 0 };
+    }
+  }
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+    page = Math.abs(req.query.page);
+  } else {
+    page = 1;
+  }
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
+  } else {
+    size = size_default;
+  }
+  if (req.query.sort) {
+    let sortfield = req.query.sort.slice(1);
+    let sortby = req.query.sort.charAt(0);
+    if (sortby == 1 && !isNaN(sortby) && sortfield) {
+      //one is ascending
+      sortq = sortfield;
+    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+      //zero is descending
+      sortq = '-' + sortfield;
+    } else {
+      sortq = '';
+    }
+  }
+  return { page, size, sortq, searchq, selectq, populate };
+};
+
 otherHelper.sendResponse = (res, status, success, data, errors, msg, token) => {
   const response = {};
   if (success !== null) response.success = success;
