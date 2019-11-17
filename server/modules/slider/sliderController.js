@@ -7,49 +7,13 @@ const sliderController = {};
 
 sliderController.GetSlider = async (req, res, next) => {
   try {
-    const size_default = 10;
-    let page;
-    let size;
-    let sortq;
-    let searchq;
-    let populate;
-    let selectq;
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-    if (req.query.sort) {
-      let sortfield = req.query.sort.slice(1);
-      let sortby = req.query.sort.charAt(0);
-      if (sortby == 1 && !isNaN(sortby) && sortfield) {
-        //one is ascending
-        sortq = sortfield;
-      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-        //zero is descending
-        sortq = '-' + sortfield;
-      } else {
-        sortq = '';
-      }
-    }
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'images.image',
         select: '_id path mimetype filename size',
       },
     ];
-
-    selectq = 'slider_name slider_key images settings added_by added_at';
-
-    searchq = {
-      is_deleted: false,
-    };
-
     if (req.query.find_slider_name) {
       searchq = {
         slider_name: {

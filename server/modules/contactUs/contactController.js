@@ -40,37 +40,7 @@ contactController.PostContact = async (req, res, next) => {
   }
 };
 contactController.GetContact = async (req, res, next) => {
-  let page;
-  let size;
-  let searchq;
-  let sortquery;
-  let selectq;
-  const size_default = 10;
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
-  }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-
-  if (req.query.sort) {
-    let sortField = req.query.sort.slice(1);
-    let sortBy = req.query.sort.charAt(0);
-    if (sortBy == 1 && !isNaN(sortBy)) {
-      // 1 is for ascending
-      sortquery = sortField;
-    } else if (sortBy == 0 && !isNaN(sortBy)) {
-      //0 is for descending
-      sortquery = '-' + sortField;
-    } else {
-      sortquery = '';
-    }
-  }
-  searchq = { is_deleted: false };
+  let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
   if (req.query.find_name) {
     searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
   }
@@ -80,10 +50,10 @@ contactController.GetContact = async (req, res, next) => {
   if (req.query.find_added_at) {
     searchq = { added_at: { $regex: req.query.find_added_at, $options: 'i' }, ...searchq };
   }
-  selectq = 'name email message subject added_at is_deleted';
-  let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortquery, searchq, selectq, next, '');
+  let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortq, searchq, selectq, next, populate);
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totaldata);
 };
+
 contactController.GetContactById = async (req, res, next) => {
   const id = req.params.id;
   let contact = await contactSch.findOne({ _id: id, is_deleted: false });

@@ -42,39 +42,7 @@ faqController.PostFaqCat = async (req, res, next) => {
 };
 faqController.GetFaq = async (req, res, next) => {
   try {
-    const size_default = 10;
-    let page;
-    let size;
-    let sortq;
-    let searchq;
-    let populate;
-    let selectq;
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-    if (req.query.sort) {
-      let sortfield = req.query.sort.slice(1);
-      let sortby = req.query.sort.charAt(0);
-      if (sortby == 1 && !isNaN(sortby) && sortfield) {
-        //one is ascending
-        sortq = sortfield;
-      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-        //zero is descending
-        sortq = '-' + sortfield;
-      } else {
-        sortq = '';
-      }
-    }
-    selectq = 'title question category added_by added_at updated_at';
-
-    searchq = { is_deleted: false };
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
 
     if (req.query.find_title) {
       searchq = {
@@ -117,44 +85,12 @@ faqController.GetFaqById = async (req, res, next) => {
 };
 faqController.GetFaqCat = async (req, res, next) => {
   try {
-    const size_default = 10;
-    let page;
-    let size;
-    let sortq;
-    let searchq;
-    let populate;
-    let selectq;
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     if (req.query.page && req.query.page == 0) {
       selectq = 'title is_active';
-      const faqCats = await faqCatSch.find({ is_deleted: false }).select(selectq);
+      const faqCats = await faqCatSch.find({ searchq }).select(selectq);
       return otherHelper.sendResponse(res, httpStatus.OK, true, faqCats, null, 'all faq cats get success!!', null);
     }
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-    if (req.query.sort) {
-      let sortfield = req.query.sort.slice(1);
-      let sortby = req.query.sort.charAt(0);
-      if (sortby == 1 && !isNaN(sortby) && sortfield) {
-        //one is ascending
-        sortq = sortfield;
-      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-        //zero is descending
-        sortq = '-' + sortfield;
-      } else {
-        sortq = '';
-      }
-    }
-    selectq = 'title slug_url is_active is_deleted added_by added_at';
-
-    searchq = { is_deleted: false };
     if (req.query.find_title) {
       searchq = {
         title: {
@@ -164,7 +100,6 @@ faqController.GetFaqCat = async (req, res, next) => {
         ...searchq,
       };
     }
-    populate = '';
     let faqcat = await otherHelper.getquerySendResponse(faqCatSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faqcat.data, faqConfig.catGet, page, size, faqcat.totaldata);
   } catch (err) {

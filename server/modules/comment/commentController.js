@@ -29,47 +29,13 @@ commentController.PostComment = async (req, res, next) => {
 };
 commentController.GetComment = async (req, res, next) => {
   try {
-    const size_default = 10;
-    let page;
-    let size;
-    let sortq;
-    let searchq;
-    let populate;
-    let selectq;
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-    if (req.query.sort) {
-      let sortfield = req.query.sort.slice(1);
-      let sortby = req.query.sort.charAt(0);
-      if (sortby == 1 && !isNaN(sortby) && sortfield) {
-        //one is ascending
-        sortq = sortfield;
-      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-        //zero is descending
-        sortq = '-' + sortfield;
-      } else {
-        sortq = '';
-      }
-    }
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'blog_id',
         select: 'title',
       },
     ];
-    selectq = 'title blog_id is_approved is_disapproved approved_by disapproved_by approved_at disapproved_at status added_by added_at updated_at updated_by is_deleted';
-
-    searchq = {
-      is_deleted: false,
-    };
     if (req.query.find_title) {
       searchq = {
         title: {
@@ -119,7 +85,10 @@ commentController.DeleteComment = async (req, res, next) => {
 commentController.GetCommentById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const comment = await commentSch.findOne({ _id: id, is_deleted: false }).populate([{ path: 'blog_id', select: 'title' }, { path: 'added_by', select: 'name' }]);
+    const comment = await commentSch.findOne({ _id: id, is_deleted: false }).populate([
+      { path: 'blog_id', select: 'title' },
+      { path: 'added_by', select: 'name' },
+    ]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment get success!!', null);
   } catch (err) {
     next(err);
@@ -132,12 +101,11 @@ commentController.ApproveComment = async (req, res, next) => {
       data.approved_by = req.user.id;
       data.approved_at = Date.now();
       data.status = 'approved';
-    }
-    else if (data.is_disapproved) {
+    } else if (data.is_disapproved) {
       data.disapproved_by = req.user.id;
       data.disapproved_at = Date.now();
       data.status = 'disapproved';
-    }else{
+    } else {
       data.status = 'onhold';
     }
     const comment = await commentSch.findOneAndUpdate({ _id: data._id, is_deleted: false }, { $set: data }, { new: true });

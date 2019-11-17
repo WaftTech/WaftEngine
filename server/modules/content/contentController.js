@@ -8,37 +8,7 @@ const internal = {};
 
 contentController.GetContent = async (req, res, next) => {
   try {
-    const size_default = 10;
-    let page;
-    let size;
-    let searchq;
-    let sortq;
-    let selectq;
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-    if (req.query.sort) {
-      let sortfield = req.query.sort.slice(1);
-      let sortby = req.query.sort.charAt(0);
-      if (sortby == 1 && !isNaN(sortby) && sortfield) {
-        //one is ascending
-        sortq = sortfield;
-      } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-        //zero is descending
-        sortq = '-' + sortfield;
-      } else {
-        sortq = '';
-      }
-    }
-
-    searchq = { is_deleted: false };
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
 
     if (req.query.find_name) {
       searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
@@ -52,8 +22,7 @@ contentController.GetContent = async (req, res, next) => {
     if (req.query.find_publish_to) {
       searchq = { publish_to: { $regex: req.query.find_publish_to, $options: 'i' }, ...searchq };
     }
-    selectq = 'name key description publish_from publish_to is_active is_feature is_deleted';
-    let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, '');
+    let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
   } catch (err) {

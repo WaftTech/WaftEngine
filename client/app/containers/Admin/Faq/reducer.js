@@ -16,7 +16,6 @@ export const initialState = {
   one: {
     question: '',
     title: '',
-    category: '',
   },
   category: [],
   query: { find_question: '', size: 10 },

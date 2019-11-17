@@ -36,31 +36,9 @@ loginlogController.logout = async (req, res, next) => {
 loginlogController.getLogList = async (req, res, next) => {
   let user_id = req.user.id;
   try {
-    let page;
-    let size;
-    let searchq;
-    let sortquery;
-    let selectq;
-    const populate = '';
-
-    const size_default = 10;
-    if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-      page = Math.abs(req.query.page);
-    } else {
-      page = 1;
-    }
-    if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-      size = Math.abs(req.query.size);
-    } else {
-      size = size_default;
-    }
-
-    sortquery = '-_id';
-
-    searchq = { user_id };
-
-    selectq = 'login_date logout_date ip_address device_info browser_info is_active';
-    const data = await otherHelper.getquerySendResponse(loginlogs, page, size, sortquery, searchq, selectq, next, populate);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    searchq = { user_id, ...searchq };
+    const data = await otherHelper.getquerySendResponse(loginlogs, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data && data.data, 'logs Get Success', page, size, data && data.totaldata);
   } catch (err) {
     next(err);
