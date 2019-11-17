@@ -53,7 +53,7 @@ const Path = props => {
               <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                 Client Route
               </label>
-              <div className="flex">
+              <div className="flex items-start">
                 <input
                   className="inputbox mr-2"
                   id={`${each._id}-each-admin-route-access-type-${index}`}
@@ -63,18 +63,18 @@ const Path = props => {
                   style={{ background: '#FFFFFF' }}
                 />
 
-                <IconButton
+                <IconButton size="small"
                   aria-label="Delete client route"
                   onClick={handleRemoveAdminRoute(pathIndex, index)}
                 >
-                  <TrashIcon fontSize="small" />
+                  <TrashIcon className="text-red-500" fontSize="small" />
                 </IconButton>
               </div>
             </div>
           ))}
 
           <button
-            className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
+            className="py-1 px-2 text-sm rounded border border-indigo-600 font-bold hover:text-black hover:bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white"
             onClick={handleAddAdminRoute(pathIndex)}
           >
             Add Client Route
@@ -123,7 +123,7 @@ const Path = props => {
                   <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
                     Server Route
                   </label>
-                  <div className="flex">
+                  <div className="flex items-start">
                     <input
                       type="text"
                       className="inputbox mr-2"
@@ -134,11 +134,11 @@ const Path = props => {
                       value={eachServerRoute.route}
                       onChange={handleServerRoutesRouteChange(pathIndex, index)}
                     />
-                    <IconButton
+                    <IconButton size="small"
                       aria-label="Delete Server Route"
                       onClick={handleRemoveServerRoute(pathIndex, index)}
                     >
-                      <TrashIcon fontSize="small" />
+                      <TrashIcon className="text-red-500" fontSize="small" />
                     </IconButton>
                   </div>
                 </div>
@@ -147,21 +147,14 @@ const Path = props => {
           ))}
 
           <button
-            className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
+            className="py-1 px-2 text-sm rounded border border-indigo-600 font-bold hover:text-black hover:bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white"
             onClick={handleAddServerRoute(pathIndex)}
           >
             Add Server Route
           </button>
         </div>
       </div>
-      <div className="mx-4 flex justify-end mt-4">
-        <button
-          className="text-white py-2 px-4 rounded bg-primary font-bold"
-          onClick={handleRemovePath(pathIndex)}
-        >
-          Delete Access Type
-        </button>
-      </div>
+
     </section>
   );
 };

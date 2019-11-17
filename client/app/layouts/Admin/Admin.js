@@ -200,7 +200,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           <MainListItems />
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-8 py-4">
-          <div className="flex justify-end flex1 py-3 px-3 bg-white rounded">
+          <div className="flex justify-between p-1 bg-white rounded">
             <div className="flex">
               <Breadcrumb />
             </div>

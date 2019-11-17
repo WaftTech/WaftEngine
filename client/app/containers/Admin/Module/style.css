@@ -1,0 +1,11 @@
+[class*="MuiToggleButtonGroup"] [class*="MuiButtonBase"] { margin:0 4px;  
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px; font-weight: normal; font-size: 0.8rem;
+  color: #4c51bf;}
+
+  [class*="MuiToggleButtonGroup"] [class*="MuiButtonBase"]:hover { background: #ebf4ff; border-color:#c3dafe;  }
+
+  
+  [class*="MuiToggleButtonGroup"] [class*="MuiToggleButton-selected"],
+  [class*="MuiToggleButtonGroup"] [class*="MuiToggleButton-selected"]:hover  { border-color: #4c51bf; background:#4c51bf; color:#fff; }
