@@ -208,6 +208,7 @@ class AddEdit extends React.PureComponent {
       loading,
       errors,
     } = this.props;
+
     return loading && loading == true ? (
       <Loading />
     ) : (

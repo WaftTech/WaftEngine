@@ -28,7 +28,6 @@ div.react-datepicker__input-container {
   transition: all 0.2s ease-in-out;
   font-size: 0.875rem;
 }
-
 .inputbox:focus {
   outline: 0;
   border-color: #d0d0d0;
