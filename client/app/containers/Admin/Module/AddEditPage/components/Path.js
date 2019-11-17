@@ -28,31 +28,41 @@ const Path = props => {
     handleRemovePath,
   } = props;
   return (
-    <section className="rounded p-4 bg-gray-200 mb-4">
-      <div className="w-full md:w-2/5 pb-4">
-        <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
-          Access Type
-        </label>
-        <input
-          className="inputbox"
-          id={`${each._id}-access-type-${pathIndex}`}
-          type="text"
-          value={each.access_type}
-          onChange={handleAccessTypeChange(pathIndex)}
-          style={{ background: '#FFFFFF' }}
-        />
+    <section className="rounded py-1 bg-gray-100 mb-2">
+      <div className="flex">
+        <div className="w-full md:w-3/5 pb-1 px-4">
+          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-1 ">
+            Access Type
+          </label>
+          <input
+            className="inputbox bg-white"
+            id={`${each._id}-access-type-${pathIndex}`}
+            type="text"
+            value={each.access_type}
+            onChange={handleAccessTypeChange(pathIndex)}
+          />
+        </div>
+        <div className="w-full md:w-2/5 text-right">
+          <IconButton
+            size="small"
+            aria-label="Delete client route"
+            onClick={handleRemovePath(pathIndex)}
+          >
+            <i className="material-icons text-red-600">close</i>
+          </IconButton>
+        </div>
       </div>
 
-      <div className="flex justify-between mx-4">
-        <div className="clientRoute w-1/2 -ml-4 border rounded p-2">
+      <div className="flex justify-between">
+        <div className="clientRoute w-1/2 border-r">
+          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2 border-b pl-4">
+            Client Route
+          </label>
           {(each.admin_routes || []).map((eachAdminRoute, index) => (
             <div
-              className="w-full pb-4 border-b mb-2"
+              className="w-full pb-1 pl-4"
               key={`${each._id}-${pathIndex}-each-admin-route-${index}`}
             >
-              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
-                Client Route
-              </label>
               <div className="flex items-start">
                 <input
                   className="inputbox mr-2"
@@ -63,37 +73,45 @@ const Path = props => {
                   style={{ background: '#FFFFFF' }}
                 />
 
-                <IconButton size="small"
+                <span
                   aria-label="Delete client route"
                   onClick={handleRemoveAdminRoute(pathIndex, index)}
                 >
-                  <TrashIcon className="text-red-500" fontSize="small" />
-                </IconButton>
+                  <i className="material-icons text-red-500 cursor-pointer mr-2 mt-1">
+                    delete
+                  </i>
+                  {/* <TrashIcon className="text-red-500 text-sm" /> */}
+                </span>
               </div>
             </div>
           ))}
-
-          <button
-            className="py-1 px-2 text-sm rounded border border-indigo-600 font-bold hover:text-black hover:bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white"
-            onClick={handleAddAdminRoute(pathIndex)}
-          >
-            Add Client Route
-          </button>
+          <div className="border-t pt-1">
+            <button
+              className="py-1 px-2 text-sm rounded font-bold hover:text-black text-indigo-500  ml-4"
+              onClick={handleAddAdminRoute(pathIndex)}
+            >
+              Add Client Route
+            </button>
+          </div>
         </div>
-        <div className="serverRoute w-1/2 -mr-4 border rounded p-2">
+        <div className="serverRoute w-1/2 ">
+          <div className="flex border-b mb-2">
+            <label className=" uppercase tracking-wide text-gray-800 text-xs pl-4">
+              Method
+            </label>
+            <label className=" uppercase tracking-wide text-gray-800 text-xs pl-16">
+              Server Route
+            </label>
+          </div>
           {(each.server_routes || []).map((eachServerRoute, index) => (
             <div
-              className="w-full pb-4 mb-2 border-b"
+              className="w-full pb-1 pl-4"
               key={`${each._id}-${pathIndex}-${
                 eachServerRoute._id
-                }-each-server-route-${index}`}
+              }-each-server-route-${index}`}
             >
               <div className="flex">
                 <div className="mr-2">
-                  <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
-                    Method
-                  </label>
-
                   <select
                     className="inputbox"
                     placeholder="Method"
@@ -103,7 +121,7 @@ const Path = props => {
                       name: 'Method',
                       id: `${each._id}-${
                         eachServerRoute._id
-                        }-each-server-route-${index}-method`,
+                      }-each-server-route-${index}-method`,
                     }}
                     style={{ minWidth: '80px', background: '#FFFFFF' }}
                   >
@@ -111,7 +129,7 @@ const Path = props => {
                       <option
                         key={`${eachMethod._id}-${pathIndex}-${
                           eachServerRoute._id
-                          }-each-server-route-method-${eachMethod}`}
+                        }-each-server-route-method-${eachMethod}`}
                         value={eachMethod}
                       >
                         {eachMethod}
@@ -119,42 +137,36 @@ const Path = props => {
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
-                    Server Route
-                  </label>
-                  <div className="flex items-start">
-                    <input
-                      type="text"
-                      className="inputbox mr-2"
-                      style={{ background: '#FFFFFF' }}
-                      id={`${each._id}-${
-                        eachServerRoute._id
-                        }-each-admin-server-route-route-access-type-${index}`}
-                      value={eachServerRoute.route}
-                      onChange={handleServerRoutesRouteChange(pathIndex, index)}
-                    />
-                    <IconButton size="small"
-                      aria-label="Delete Server Route"
-                      onClick={handleRemoveServerRoute(pathIndex, index)}
-                    >
-                      <TrashIcon className="text-red-500" fontSize="small" />
-                    </IconButton>
-                  </div>
+                <div className="flex items-start w-full">
+                  <input
+                    type="text"
+                    className="inputbox mr-2 flex-1"
+                    style={{ background: '#FFFFFF' }}
+                    id={`${each._id}-${
+                      eachServerRoute._id
+                    }-each-admin-server-route-route-access-type-${index}`}
+                    value={eachServerRoute.route}
+                    onChange={handleServerRoutesRouteChange(pathIndex, index)}
+                  />
+                  <span onClick={handleRemoveServerRoute(pathIndex, index)}>
+                    <i className="material-icons text-red-500 cursor-pointer mr-2 mt-1">
+                      delete
+                    </i>
+                  </span>
                 </div>
               </div>
             </div>
           ))}
-
-          <button
-            className="py-1 px-2 text-sm rounded border border-indigo-600 font-bold hover:text-black hover:bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white"
-            onClick={handleAddServerRoute(pathIndex)}
-          >
-            Add Server Route
-          </button>
+          <div className="border-t pt-1">
+            <button
+              className="py-1 text-sm rounded font-bold hover:text-black text-indigo-500  ml-4"
+              onClick={handleAddServerRoute(pathIndex)}
+            >
+              Add Server Route
+            </button>
+          </div>
         </div>
       </div>
-
     </section>
   );
 };

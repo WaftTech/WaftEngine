@@ -4,26 +4,29 @@
 
 @tailwind utilities;
 
-
-button:focus, a:focus {
+button:focus,
+a:focus {
   outline: none;
 }
 
-div.react-datepicker-wrapper, div.react-datepicker__input-container {
+div.react-datepicker-wrapper,
+div.react-datepicker__input-container {
   display: block;
 }
-.select-none .active { color:#fc3d39;}
+.select-none .active {
+  color: #fc3d39;
+}
 
 .inputbox {
   display: block;
   width: 100%;
-  padding: 6px 12px;
+  padding: 4px 12px;
   background: #f0f0f0;
   border-radius: 4px;
-  font-family:sans-serif;
-  border:1px solid transparent;
-  transition:all .2s ease-in-out;
-  font-size:0.875rem;
+  font-family: sans-serif;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.875rem;
 }
 
 .inputbox:focus {
@@ -32,8 +35,12 @@ div.react-datepicker-wrapper, div.react-datepicker__input-container {
   background: #fff;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
-
-select.inputbox { height:36px;}
+.inputbox.bg-white {
+  background: #ffffff;
+}
+select.inputbox {
+  padding: 6px 12px 5px;
+}
 
 .waftsrchstyle {
   width: 40px;
@@ -45,7 +52,9 @@ select.inputbox { height:36px;}
   -moz-transform: translateY(-50%);
 }
 
-.flex.relative >.m-auto.inputbox { min-width: 300px;}
+.flex.relative > .m-auto.inputbox {
+  min-width: 300px;
+}
 
 div#component-error-text {
   color: #f44336;
@@ -87,5 +96,7 @@ div#component-error-text {
   }
 }
 
-.bg-star { background:url(./assets/img/ptn.jpg) 0 32px; background-size:50px 50px; }
-
+.bg-star {
+  background: url(./assets/img/ptn.jpg) 0 32px;
+  background-size: 50px 50px;
+}
