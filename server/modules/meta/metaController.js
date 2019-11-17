@@ -6,7 +6,7 @@ const metaController = {};
 
 metaController.getAllMeta = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_title) {
       searchq = {
         title: {

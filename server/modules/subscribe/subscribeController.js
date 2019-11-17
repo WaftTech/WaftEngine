@@ -5,7 +5,7 @@ const subscribeController = {};
 
 subscribeController.GetSubscribe = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     searchq = {
       is_subscribed: true,
       ...searchq,

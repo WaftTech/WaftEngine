@@ -8,7 +8,7 @@ const roleController = {};
 
 roleController.GetRoles = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     if (req.query.page && req.query.page == 0) {
       selectq = 'role_title description is_active is_deleted';
       const roles = await roleSch.find(selectq).select(selectq);
@@ -56,7 +56,7 @@ roleController.DeleteRole = async (req, res, next) => {
 };
 roleController.GetModule = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, null);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, null);
 
     selectq = 'module_name description order path';
 

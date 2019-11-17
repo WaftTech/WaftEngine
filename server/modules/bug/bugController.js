@@ -14,7 +14,7 @@ bugController.AddErrorToLogs = async (req, res, next, err) => {
 };
 bugController.GetErrors = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_errors) {
       searchq = { error_stack: { $regex: req.query.find_errors, $options: 'i' }, ...searchq };
     }

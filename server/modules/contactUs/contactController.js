@@ -40,7 +40,7 @@ contactController.PostContact = async (req, res, next) => {
   }
 };
 contactController.GetContact = async (req, res, next) => {
-  let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+  let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
   if (req.query.find_name) {
     searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
   }

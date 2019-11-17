@@ -6,7 +6,7 @@ const mediaController = {};
 
 mediaController.GetMediaPagination = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     populate = [{ path: 'added_by' }];
     let media = await otherHelper.getquerySendResponse(mediaSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totaldata);

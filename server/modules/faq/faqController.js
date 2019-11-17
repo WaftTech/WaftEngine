@@ -42,7 +42,7 @@ faqController.PostFaqCat = async (req, res, next) => {
 };
 faqController.GetFaq = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
 
     if (req.query.find_title) {
       searchq = {
@@ -85,7 +85,7 @@ faqController.GetFaqById = async (req, res, next) => {
 };
 faqController.GetFaqCat = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     if (req.query.page && req.query.page == 0) {
       selectq = 'title is_active';
       const faqCats = await faqCatSch.find({ searchq }).select(selectq);

@@ -44,7 +44,7 @@ otherHelper.parsePhoneNo = (phone, RegionCode) => {
   }
 };
 
-otherHelper.ParseFilters = (req, defaults, is_deleted) => {
+otherHelper.parseFilters = (req, defaults, is_deleted) => {
   const size_default = defaults ? defaults : 10;
   let page;
   let size;

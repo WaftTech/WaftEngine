@@ -36,7 +36,7 @@ loginlogController.logout = async (req, res, next) => {
 loginlogController.getLogList = async (req, res, next) => {
   let user_id = req.user.id;
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     searchq = { user_id, ...searchq };
     const data = await otherHelper.getquerySendResponse(loginlogs, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data && data.data, 'logs Get Success', page, size, data && data.totaldata);

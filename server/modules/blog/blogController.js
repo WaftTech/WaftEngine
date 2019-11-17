@@ -8,7 +8,7 @@ const blogcontroller = {};
 
 blogcontroller.GetBlogAuthorize = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'author',
@@ -146,7 +146,7 @@ blogcontroller.GetBlogArchives = async (req, res, next) => {
 
 blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 12, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 12, false);
     populate = [
       {
         path: 'category',
@@ -189,7 +189,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
 };
 blogcontroller.GetBlogCategory = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     selectq = 'title slug_url description image is_active added_by added_at is_deleted';
     if (req.query.find_title) {
       searchq = {
@@ -339,7 +339,7 @@ blogcontroller.GetBlogById = async (req, res, next) => {
 
 blogcontroller.GetBlogByCat = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.ParseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     const slug = req.params.slug_url;
     const cat = await blogCatSch.findOne({ slug_url: slug, is_deleted: false }, { _id: 1, title: 1 });
     populate = [
