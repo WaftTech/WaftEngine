@@ -25,6 +25,7 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
+import '../style.css';
 
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
@@ -121,8 +122,8 @@ class AccessManagePage extends React.PureComponent {
               }
               return (
 
-                <div className="mb-4 border-b" key={role._id}>
-                  <h3 className="font-normal mb-4 text-2xl">{role.role_title}</h3>
+                <div className="mb-4 border rounded mt-6 p-2" key={role._id}>
+                  <h3 className="font-bold bg-white px-2 relative ml-2 inline-block" style={{ top: -21 }}>{role.role_title}</h3>
                   <ToggleButtonGroup className={classes.accesslist}
                     value={accesses}
 

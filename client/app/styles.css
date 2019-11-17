@@ -23,6 +23,7 @@ div.react-datepicker-wrapper, div.react-datepicker__input-container {
   font-family:sans-serif;
   border:1px solid transparent;
   transition:all .2s ease-in-out;
+  font-size:0.875rem;
 }
 
 .inputbox:focus {
