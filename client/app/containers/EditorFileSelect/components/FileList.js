@@ -115,73 +115,89 @@ const FileList = ({
   const onClick = linkObj => {
     handleFolderLink(linkObj.id);
   };
+  console.log(routeList);
 
   return (
-    <div style={{ backgroundColor: '#f2f2f2', flex: 1, height: '100%' }}>
+    <div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="new-folder">
-        <DialogTitle>Folder name</DialogTitle>
+        <DialogTitle>New Folder</DialogTitle>
         <DialogContent>
-          <InputBase
+          <input
             autoFocus
-            margin="dense"
             id="name"
-            label="New Folder"
             type="text"
+            className="inputbox"
             onChange={handleInput}
             value={one.name}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <button
+            onClick={handleClose}
+            color="bg-secondary px-4 py-2 text-sm rounded text-white flex items-center"
+          >
             Cancel
-          </Button>
-          <Button onClick={handleSave} color="primary">
+          </button>
+          <button
+            onClick={handleSave}
+            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
+          >
             Save
-          </Button>
+          </button>
         </DialogActions>
       </Dialog>
-      <BreadCrumb
-        linkcomponent={LinkComponent}
-        routeList={routeList}
-        onClick={onClick}
-      />
-      <div style={{ display: 'flex' }} className="m-2">
-        <div className="w-1/2">
+
+      <div className="m-2 flex items-center justify-between">
+        <BreadCrumb
+          linkcomponent={LinkComponent}
+          routeList={routeList}
+          onClick={onClick}
+        />
+        <div className="flex-1 flex justify-end">
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
-              <section
-                style={{ width: '100%' }}
-                className="text-black hover:text-primary text-center self-start py-6 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
-              >
-                <div {...getRootProps()}>
+              <section className="text-black hover:text-primary hover:border-primary text-center self-start py-2 px-4 border border-gray-500 rounded  cursor-pointer mr-2 =">
+                <div className="flex items-center " {...getRootProps()}>
                   <input {...getInputProps()} />
+                  <i className="material-icons text-base mr-2">add_to_photos</i>
                   <span>Choose File</span>
                 </div>
               </section>
             )}
           </Dropzone>
+          <button
+            onClick={handleAdd}
+            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
+          >
+            <i className="material-icons text-base mr-2">add</i>
+            New Folder
+          </button>
         </div>
-        <Button color="primary" onClick={handleAdd} elevation={0}>
-          <AddIcon />
-          New Folder
-        </Button>
       </div>
-      <div className="flex flex-wrap px-4 overflow-hidden m-2">
+      <div className="flex flex-wrap p-4 overflow-hidden m-2 border rounded">
         {folders.data.map(each => (
           <div
-            className="w-1/5 h-28 mb-4 p-1 text-center mr-4 bg-gray-300"
+            data-tooltip={each.name}
+            className="flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 hover:bg-yellow-100 border border-transparent hover:border-yellow-300 cursor-pointer rounded"
             key={each._id}
             onClick={() => handleFolderLink(each._id)}
             onKeyDown={() => handleFolderLink(each._id)}
             role="presentation"
           >
-            {each.name}
+            <i
+              className="material-icons text-yellow-500 self-center"
+              style={{ fontSize: '7rem' }}
+            >
+              folder
+            </i>
+            <span className="block text-sm truncate">{each.name}</span>
           </div>
         ))}
         {files.data.map((each, index) => (
           <div
             key={each._id}
-            className="w-1/5 h-28 mb-4 p-1 text-center mr-4 bg-gray-300"
+            data-tooltip={each.filename}
+            className="flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 hover:bg-yellow-100 border border-transparent hover:border-yellow-300 cursor-pointer rounded"
           >
             <img
               className="w-full h-24 object-contain"
@@ -191,11 +207,13 @@ const FileList = ({
               onKeyDown={() => handleFolderLink(each._id)}
               role="presentation"
             />
-            <div className="overflow-hidden">{each.filename}</div>
+            <div className="truncate text-sm pt-2">{each.filename}</div>
           </div>
         ))}
         {folders.data.length < 1 && files.data.length < 1 && (
-          <div>No Items</div>
+          <div className="text-center w-full text-sm h-64">
+            This Folder is Empty
+          </div>
         )}
       </div>
     </div>

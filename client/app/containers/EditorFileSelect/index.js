@@ -18,6 +18,7 @@ import { makeSelectAll } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import FileList from './components/FileList';
+import './style.css';
 
 const key = 'editorFileSelect';
 
@@ -33,7 +34,7 @@ export const EditorFileSelect = ({
     loadFilesRequest(queryObj.path);
   }, [queryObj.path]);
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div className="container mx-auto h-full">
       <FileList queryObj={queryObj} />
     </div>
   );

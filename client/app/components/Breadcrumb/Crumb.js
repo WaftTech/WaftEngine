@@ -7,7 +7,9 @@ export default function Crumb(props) {
       <li>{props.children}</li>
       {!props.isLast && (
         <li>
-          <span className="mx-2">/</span>
+          <span className="flex items-center">
+            <i className="material-icons">keyboard_arrow_right</i>
+          </span>
         </li>
       )}
     </>

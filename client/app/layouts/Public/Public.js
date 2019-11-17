@@ -41,7 +41,6 @@ const PublicLayout = ({ location }) => {
   return (
     <>
       {showHeaderAndFooter && <Header />}
-      <Breadcrumb />
       <div className="flex-1">{switchRoutes}</div>
       {showHeaderAndFooter && <Footer />}
     </>
