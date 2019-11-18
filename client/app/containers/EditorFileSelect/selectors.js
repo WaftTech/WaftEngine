@@ -27,3 +27,8 @@ export const makeSelectfolderAddRequest = () =>
     selectDomain,
     state => state.folderAddRequest,
   );
+export const makeSelectLoading = () =>
+  createSelector(
+    selectDomain,
+    state => state.loading,
+  );

@@ -16,3 +16,6 @@ div[data-tooltip]:hover:after {
   border: 1px solid #ccc;
   z-index: 2;
 }
+.folder_media {
+  background-color: gray;
+}

@@ -22,6 +22,7 @@ import {
   makeSelectAll,
   makeSelectOne,
   makeSelectfolderAddRequest,
+  makeSelectLoading,
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
@@ -43,9 +44,11 @@ const FileList = ({
   loadNewFolderRequest,
   setFolderName,
   folderAdded,
+  loading,
   ...props
 }) => {
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState('');
 
   useEffect(() => {
     if (!folderAdded) {
@@ -83,10 +86,25 @@ const FileList = ({
   };
 
   const handleFolderLink = id => {
+    setSelected('');
     const searchq = queryString.stringify({ ...queryObj, path: id });
     props.push({
       search: searchq,
     });
+  };
+
+  const handleSingleClick = id => {
+    if (selected === id) {
+      setSelected('');
+    } else {
+      setSelected(id);
+    }
+  };
+
+  const handleOutClick = () => {
+    if (selected != '') {
+      setSelected('');
+    }
   };
 
   let routeList = [];
@@ -115,9 +133,10 @@ const FileList = ({
   const onClick = linkObj => {
     handleFolderLink(linkObj.id);
   };
-  console.log(routeList);
 
-  return (
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="new-folder">
         <DialogTitle>New Folder</DialogTitle>
@@ -146,7 +165,6 @@ const FileList = ({
           </button>
         </DialogActions>
       </Dialog>
-
       <div className="m-2 flex items-center justify-between">
         <BreadCrumb
           linkcomponent={LinkComponent}
@@ -178,9 +196,12 @@ const FileList = ({
         {folders.data.map(each => (
           <div
             data-tooltip={each.name}
-            className="flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 hover:bg-yellow-100 border border-transparent hover:border-yellow-300 cursor-pointer rounded"
+            className={`${
+              selected === each._id ? 'folder_media' : ''
+            } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
             key={each._id}
-            onClick={() => handleFolderLink(each._id)}
+            onClick={() => handleSingleClick(each._id)}
+            onDoubleClick={() => handleFolderLink(each._id)}
             onKeyDown={() => handleFolderLink(each._id)}
             role="presentation"
           >
@@ -197,13 +218,16 @@ const FileList = ({
           <div
             key={each._id}
             data-tooltip={each.filename}
-            className="flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 hover:bg-yellow-100 border border-transparent hover:border-yellow-300 cursor-pointer rounded"
+            className={`${
+              selected === each._id ? 'folder_media' : ''
+            } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
           >
             <img
               className="w-full h-24 object-contain"
               src={`${IMAGE_BASE}${each.path}`}
               alt={each.filename}
-              onClick={() => onSelect(each)}
+              onClick={() => handleSingleClick(each._id)}
+              onDoubleClick={() => onSelect(each)}
               onKeyDown={() => handleFolderLink(each._id)}
               role="presentation"
             />
@@ -236,6 +260,7 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   one: makeSelectOne(),
   folderAdded: makeSelectfolderAddRequest(),
+  loading: makeSelectLoading(),
 });
 
 const styles = theme => ({

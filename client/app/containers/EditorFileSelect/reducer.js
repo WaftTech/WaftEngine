@@ -26,14 +26,22 @@ export const initialState = {
     is_root: false,
   },
   folderAddRequest: false,
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const editorFileSelectReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case types.LOAD_FILES_REQUEST:
+        draft.loading = true;
+        break;
       case types.LOAD_FILES_SUCCESS:
+        draft.loading = false;
         draft.all = action.payload.data;
+        break;
+      case types.LOAD_FILES_FAILURE:
+        draft.loading = false;
         break;
       case types.SET_NAME_VALUE:
         draft.folderOne[action.payload.key] = action.payload.value;
