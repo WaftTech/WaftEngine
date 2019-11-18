@@ -6,8 +6,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import injectSaga from './node_modules/utils/injectSaga';
-import injectReducer from './node_modules/utils/injectReducer';
+import injectSaga from '../../../../utils/injectSaga';
+import injectReducer from '../../../../utils/injectReducer';
 // core components
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -82,70 +82,70 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <div>
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Faq Category'
-                : 'Add Faq Category'}
-            </title>
-          </Helmet>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>{' '}
-              {match && match.params && match.params.id
-                ? 'Edit Faq Category'
-                : 'Add Faq Category'}
-            </PageHeader>
-          </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-                htmlFor="grid-last-name"
-              >
-                Title
-            </label>
-              <input
-                type="text"
-                className="inputbox"
-                name="Title"
-                id="title"
-                label="Title"
-                value={one.title}
-                onChange={this.handleChange('title')}
-              />
-              <div id="component-error-text">{errors.title}</div>
-            </div>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_active || false}
-                    tabIndex={-1}
-                    onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Active"
-              />
-            </div>
-
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={this.handleSave}
+      <div>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Faq Category'
+              : 'Add Faq Category'}
+          </title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleGoBack}
+              aria-label="Back"
             >
-              Save
-          </button>
-          </PageContent>
+              <BackIcon />
+            </IconButton>{' '}
+            {match && match.params && match.params.id
+              ? 'Edit Faq Category'
+              : 'Add Faq Category'}
+          </PageHeader>
         </div>
-      );
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              htmlFor="grid-last-name"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              className="inputbox"
+              name="Title"
+              id="title"
+              label="Title"
+              value={one.title}
+              onChange={this.handleChange('title')}
+            />
+            <div id="component-error-text">{errors.title}</div>
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={one.is_active || false}
+                  tabIndex={-1}
+                  onClick={this.handleCheckedChange('is_active')}
+                  color="primary"
+                />
+              }
+              label="Is Active"
+            />
+          </div>
+
+          <button
+            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+            onClick={this.handleSave}
+          >
+            Save
+          </button>
+        </PageContent>
+      </div>
+    );
   }
 }
 

@@ -22,7 +22,7 @@ import ContactListPage from '../containers/Admin/Contact/Loadable';
 import ContactViewPage from '../containers/Admin/Contact/ViewContactList';
 import TemplateListingPage from '../containers/Admin/Template/Loadable';
 import ErrorManagePage from '../containers/Admin/Error/Loadable';
-import FaqCatAddEditPage from '../containers/Admin/FaqCategory';
+import FaqCatAddEditPage from '../containers/Admin/FaqCategory/AddEdit/Loadable';
 import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
 import BlogCommentManagePage from '../containers/Admin/Comment/Loadable';
 import ViewCommentManagePage from '../containers/Admin/Comment/ViewComment/Loadable';
