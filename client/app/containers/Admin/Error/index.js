@@ -132,11 +132,21 @@ export class Error extends React.Component {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ error_message, error_stack, error_type, added_at, _id }) => [
+      ({
         error_message,
         error_stack,
         error_type,
+        added_at,
+        count,
+        last_added_at,
+        _id,
+      }) => [
+        error_message,
+        error_stack,
+        error_type,
+        count,
         moment(added_at).format(DATE_FORMAT),
+        moment(last_added_at).format(DATE_FORMAT),
         <React.Fragment>
           <Tooltip
             id="tooltip-top-start"
@@ -208,7 +218,9 @@ export class Error extends React.Component {
               'Error Message',
               'Error Stack',
               'Error Type',
+              'Count',
               'Added At',
+              'Last Encountered At',
               'Actions',
               '',
             ]}

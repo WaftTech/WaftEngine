@@ -5,6 +5,11 @@ const otherHelper = require('../../helper/others.helper');
 const bugController = {};
 
 bugController.AddErrorToLogs = async (req, res, next, err) => {
+  const is_already = await bugSch.findOne({ error_message: err.message });
+  if (is_already) {
+    await bugSch.findOneAndUpdate({ error_message: err.message }, { $set: { count: is_already.count + 1, last_added_at: Date.now(), added_by: req.user && req.user.id } }, { new: true });
+    return;
+  }
   const errObj = bugHelper.getErrorObj(err, next);
   errObj.added_by = req.user && req.user.id;
   errObj.device = req.device;
