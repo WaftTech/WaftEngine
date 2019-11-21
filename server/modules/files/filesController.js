@@ -77,4 +77,24 @@ fileController.UploadFiles = async (req, res, next) => {
     next(err);
   }
 };
+
+fileController.DeleteFolder = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = await folderSch.findByIdAndUpdate(id, { $set: { is_deleted: true, deleted_at: new Date(), deleted_by: req.user.id } }, { new: true });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'folder delete success!!', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+fileController.DeleteFile = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = await fileSch.findByIdAndUpdate(id, { $set: { is_deleted: true, deleted_at: new Date(), deleted_by: req.user.id } }, { new: true });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'file delete success!!', null);
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = fileController;

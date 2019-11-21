@@ -69,6 +69,7 @@ async function MongoDBConnection(app) {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     })
     .then(() => console.log('MongoDB Connected'));
 

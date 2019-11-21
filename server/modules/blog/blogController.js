@@ -161,6 +161,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
 
     searchq = {
       is_published: true,
+      is_active: true,
       ...searchq,
     };
     if (req.query.find_title) {
@@ -355,6 +356,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
     selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
     searchq = {
       is_published: true,
+      is_active: true,
       category: cat._id,
       ...searchq,
     };
@@ -460,6 +462,8 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
 
     searchq = {
       is_deleted: false,
+      is_active: true,
+      is_published: true,
     };
     if (start) {
       searchq = {

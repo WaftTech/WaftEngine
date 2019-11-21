@@ -10,6 +10,8 @@ import Dropzone from 'react-dropzone';
 // material
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import Edit from '@material-ui/icons/Edit';
+import Cancel from '@material-ui/icons/Cancel';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -23,6 +25,7 @@ import {
   makeSelectOne,
   makeSelectfolderAddRequest,
   makeSelectLoading,
+  makeSelectfolderRenameRequest,
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
@@ -42,19 +45,35 @@ const FileList = ({
   queryObj,
   loadFilesRequest,
   loadNewFolderRequest,
+  renameFolderRequest,
+  folderDeleteRequest,
+  fileDeleteRequest,
   setFolderName,
   folderAdded,
+  folderRename,
+  clearValue,
   loading,
   ...props
 }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState('');
-
+  const [over, setOver] = useState('');
+  const [overFile, setOverFile] = useState('');
+  const [show, setShow] = useState(false);
+  const [rename_id, setRenameId] = useState('');
+  const [rename, setRename] = useState('');
   useEffect(() => {
     if (!folderAdded) {
       setOpen(false);
+      clearValue();
     }
   }, [folderAdded]);
+
+  useEffect(() => {
+    if (!folderRename) {
+      setShow(false);
+    }
+  }, [folderRename]);
 
   const onSelect = image => {
     window.opener.CKEDITOR.tools.callFunction(
@@ -74,7 +93,7 @@ const FileList = ({
 
   const handleSave = () => {
     // dsodsd
-    loadNewFolderRequest(self._id);
+    loadNewFolderRequest({ key: self._id });
   };
 
   const handleInput = e => {
@@ -105,6 +124,47 @@ const FileList = ({
     if (selected != '') {
       setSelected('');
     }
+  };
+
+  const handleMouseOver = id => {
+    setOver(id);
+  };
+
+  const handleMouseOverFile = id => {
+    setOverFile(id);
+  };
+
+  const handleRename = (id, name) => {
+    setRenameId(id);
+    setRename(name);
+    setShow(true);
+    renameFolderRequest();
+  };
+
+  const handleRenameClose = () => {
+    setShow(false);
+  };
+
+  const handleEdit = e => {
+    setRename(e.target.value);
+  };
+
+  const handleSaveRename = () => {
+    loadNewFolderRequest({ key: self._id, value: rename_id, name: rename });
+  };
+
+  const handleEnter = e => {
+    if (e.key === 'Enter') {
+      loadNewFolderRequest({ key: self._id, value: rename_id, name: rename });
+    }
+  };
+
+  const handleDeleteFolder = id => {
+    folderDeleteRequest(id);
+  };
+
+  const handleDeleteFile = id => {
+    fileDeleteRequest(id);
   };
 
   let routeList = [];
@@ -192,46 +252,119 @@ const FileList = ({
           </button>
         </div>
       </div>
+      <Dialog
+        open={show}
+        onClose={handleRenameClose}
+        aria-labelledby="rename-folder"
+      >
+        <DialogTitle>Rename Folder</DialogTitle>
+        <DialogContent>
+          <input
+            autoFocus
+            id="rename"
+            type="text"
+            className="inputbox"
+            onChange={handleEdit}
+            value={rename}
+            onKeyDown={handleEnter}
+          />
+        </DialogContent>
+        <DialogActions>
+          <button
+            onClick={handleRenameClose}
+            color="bg-secondary px-4 py-2 text-sm rounded text-white flex items-center"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSaveRename}
+            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
+          >
+            Save
+          </button>
+        </DialogActions>
+      </Dialog>
       <div className="flex flex-wrap p-4 overflow-hidden m-2 border rounded">
         {folders.data.map(each => (
           <div
-            data-tooltip={each.name}
-            className={`${
-              selected === each._id ? 'folder_media' : ''
-            } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
             key={each._id}
-            onClick={() => handleSingleClick(each._id)}
-            onDoubleClick={() => handleFolderLink(each._id)}
-            onKeyDown={() => handleFolderLink(each._id)}
-            role="presentation"
+            // className="w-56 h-30 mb-8 p-2"
+            onMouseOver={() => handleMouseOver(each._id)}
+            onMouseLeave={() => handleMouseOver('')}
           >
-            <i
-              className="material-icons text-yellow-500 self-center"
-              style={{ fontSize: '7rem' }}
+            {over === each._id ? (
+              <div className="flex justify-between">
+                <button
+                  className="hover:text-blue-500"
+                  onClick={() => handleRename(each._id, each.name)}
+                >
+                  <Edit />
+                </button>
+                <button
+                  className="hover:text-primary"
+                  onClick={() => handleDeleteFolder(each._id)}
+                >
+                  <Cancel />
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+            <div
+              data-tooltip={each.name}
+              className={`${
+                selected === each._id ? 'folder_media' : ''
+              } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
+              onClick={() => handleSingleClick(each._id)}
+              onDoubleClick={() => handleFolderLink(each._id)}
+              onKeyDown={() => handleFolderLink(each._id)}
+              role="presentation"
             >
-              folder
-            </i>
-            <span className="block text-sm truncate">{each.name}</span>
+              <i
+                className="material-icons text-yellow-500 self-center"
+                style={{ fontSize: '7rem' }}
+              >
+                folder
+              </i>
+              <span className="block text-sm truncate">{each.name}</span>
+            </div>
           </div>
         ))}
         {files.data.map((each, index) => (
           <div
             key={each._id}
-            data-tooltip={each.filename}
-            className={`${
-              selected === each._id ? 'folder_media' : ''
-            } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
+            onMouseOver={() => handleMouseOverFile(each._id)}
+            onMouseLeave={() => handleMouseOverFile('')}
           >
-            <img
-              className="w-full h-24 object-contain"
-              src={`${IMAGE_BASE}${each.path}`}
-              alt={each.filename}
-              onClick={() => handleSingleClick(each._id)}
-              onDoubleClick={() => onSelect(each)}
-              onKeyDown={() => handleFolderLink(each._id)}
-              role="presentation"
-            />
-            <div className="truncate text-sm pt-2">{each.filename}</div>
+            {overFile === each._id ? (
+              <div className="flex justify-end">
+                <button
+                  className="hover:text-primary"
+                  onClick={() => handleDeleteFile(each._id)}
+                >
+                  <Cancel />
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+            <div
+              data-tooltip={each.filename}
+              className={`${
+                selected === each._id ? 'folder_media' : ''
+              } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
+            >
+              <img
+                className="w-full h-24 object-contain"
+                src={`${IMAGE_BASE}${each.path}`}
+                alt={each.filename}
+                onClick={() => handleSingleClick(each._id)}
+                onDoubleClick={() => onSelect(each)}
+                onKeyDown={() => handleFolderLink(each._id)}
+                role="presentation"
+              />
+              <div className="truncate text-sm pt-2">{each.filename}</div>
+            </div>
           </div>
         ))}
         {folders.data.length < 1 && files.data.length < 1 && (
@@ -252,6 +385,7 @@ FileList.propTypes = {
   push: PropTypes.func.isRequired,
   queryObj: PropTypes.object,
   loadNewFolderRequest: PropTypes.func.isRequired,
+  folderRename: PropTypes.bool.isRequired,
   setFolderName: PropTypes.func.isRequired,
   folderAdded: PropTypes.bool.isRequired,
 };
@@ -260,6 +394,7 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   one: makeSelectOne(),
   folderAdded: makeSelectfolderAddRequest(),
+  folderRename: makeSelectfolderRenameRequest(),
   loading: makeSelectLoading(),
 });
 

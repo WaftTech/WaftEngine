@@ -24,3 +24,22 @@ export const LOAD_NEW_FOLDER_FAILURE =
   'app/EditorFileSelect/LOAD_NEW_FOLDER_FAILURE';
 
 export const SET_NAME_VALUE = 'app/EditorFileSelect/SET_NAME_VALUE';
+export const CLEAR_VALUE = 'app/EditorFileSelect/CLEAR_VALUE';
+
+export const RENAME_FOLDER_REQUEST =
+  'app/EditorFileSelect/RENAME_FOLDER_REQUEST';
+export const RENAME_FOLDER_SUCCESS =
+  'app/EditorFileSelect/RENAME_FOLDER_SUCCESS';
+export const RENAME_FOLDER_FAILURE =
+  'app/EditorFileSelect/RENAME_FOLDER_FAILURE';
+
+export const DELETE_FOLDER_REQUEST =
+  'app/EditorFileSelect/DELETE_FOLDER_REQUEST';
+export const DELETE_FOLDER_SUCCESS =
+  'app/EditorFileSelect/DELETE_FOLDER_SUCCESS';
+export const DELETE_FOLDER_FAILURE =
+  'app/EditorFileSelect/DELETE_FOLDER_FAILURE';
+
+export const DELETE_FILE_REQUEST = 'app/EditorFileSelect/DELETE_FILE_REQUEST';
+export const DELETE_FILE_SUCCESS = 'app/EditorFileSelect/DELETE_FILE_SUCCESS';
+export const DELETE_FILE_FAILURE = 'app/EditorFileSelect/DELETE_FILE_FAILURE';

@@ -60,7 +60,50 @@ export const loadNewFolderFailure = payload => ({
   payload,
 });
 
+export const renameFolderRequest = payload => ({
+  type: types.RENAME_FOLDER_REQUEST,
+  payload,
+});
+export const renameFolderSuccess = payload => ({
+  type: types.RENAME_FOLDER_SUCCESS,
+  payload,
+});
+export const renameFolderFailure = payload => ({
+  type: types.RENAME_FOLDER_FAILURE,
+  payload,
+});
+
 export const setFolderName = payload => ({
   type: types.SET_NAME_VALUE,
+  payload,
+});
+
+export const clearValue = payload => ({
+  type: types.CLEAR_VALUE,
+  payload,
+});
+
+export const folderDeleteRequest = payload => ({
+  type: types.DELETE_FOLDER_REQUEST,
+  payload,
+});
+export const folderDeleteSuccess = payload => ({
+  type: types.DELETE_FOLDER_SUCCESS,
+  payload,
+});
+export const folderDeleteFailure = payload => ({
+  type: types.DELETE_FOLDER_FAILURE,
+  payload,
+});
+export const fileDeleteRequest = payload => ({
+  type: types.DELETE_FILE_REQUEST,
+  payload,
+});
+export const fileDeleteSuccess = payload => ({
+  type: types.DELETE_FILE_SUCCESS,
+  payload,
+});
+export const fileDeleteFailure = payload => ({
+  type: types.DELETE_FILE_FAILURE,
   payload,
 });

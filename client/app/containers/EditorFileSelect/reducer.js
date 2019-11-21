@@ -26,6 +26,7 @@ export const initialState = {
     is_root: false,
   },
   folderAddRequest: false,
+  folderRename: false,
   loading: false,
 };
 
@@ -46,6 +47,10 @@ const editorFileSelectReducer = (state = initialState, action) =>
       case types.SET_NAME_VALUE:
         draft.folderOne[action.payload.key] = action.payload.value;
         break;
+      case types.CLEAR_VALUE:
+        draft.folderOne.name = initialState.folderOne.name;
+        break;
+
       case types.LOAD_NEW_FOLDER_REQUEST:
         draft.folderAddRequest = true;
         break;
@@ -57,6 +62,22 @@ const editorFileSelectReducer = (state = initialState, action) =>
         ];
         draft.all.folders.totaldata = state.all.folders.totaldata + 1;
         break;
+      case types.RENAME_FOLDER_REQUEST:
+        draft.folderRename = true;
+        break;
+      case types.RENAME_FOLDER_SUCCESS:
+        draft.folderRename = false;
+        draft.all.folders.data = state.all.folders.data.map(each => {
+          if (each._id === action.payload.data._id) {
+            return action.payload.data;
+          } else {
+            return each;
+          }
+        });
+        break;
+      case types.RENAME_FOLDER_FAILURE:
+        draft.folderRename = false;
+        break;
       case types.LOAD_NEW_FOLDER_FAILURE:
         draft.folderAddRequest = false;
         break;
@@ -65,6 +86,24 @@ const editorFileSelectReducer = (state = initialState, action) =>
           draft.all.files.data = [...state.all.files.data, each];
         });
         draft.all.files.totaldata = state.all.files.totaldata + 1;
+        break;
+      case types.DELETE_FOLDER_SUCCESS:
+        draft.all.folders = {
+          ...state.all.folders,
+          data: state.all.folders.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
+        draft.all.folders.totaldata = state.all.folders.totaldata - 1;
+        break;
+      case types.DELETE_FILE_SUCCESS:
+        draft.all.files = {
+          ...state.all.files,
+          data: state.all.files.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
+        draft.all.files.totaldata = state.all.files.totaldata - 1;
         break;
     }
   });
