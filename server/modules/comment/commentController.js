@@ -35,6 +35,10 @@ commentController.GetComment = async (req, res, next) => {
         path: 'blog_id',
         select: 'title',
       },
+      {
+        path: 'added_by',
+        select: 'name',
+      },
     ];
     if (req.query.find_title) {
       searchq = {

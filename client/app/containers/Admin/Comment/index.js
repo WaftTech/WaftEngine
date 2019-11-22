@@ -119,10 +119,11 @@ export class BlogCommentManagePage extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ title, blog_id, status, added_at, updated_at, _id }) => [
+      ({ title, blog_id, status, added_at, added_by, updated_at, _id }) => [
         title,
         blog_id && blog_id.title,
         status || 'onhold',
+        added_by && added_by.name,
         moment(added_at).format(DATE_FORMAT),
         moment(updated_at).format(DATE_FORMAT),
         <>
@@ -208,6 +209,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               'Comment Title',
               'Blog',
               'Status',
+              'Added By',
               'Added At',
               'Updated At',
               'Actions',

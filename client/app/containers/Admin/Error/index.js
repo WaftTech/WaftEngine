@@ -19,7 +19,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
+import View from '@material-ui/icons/RemoveRedEyeOutlined';
 import { Button } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
 
 // core components
 import Table from 'components/Table';
@@ -78,6 +82,9 @@ export class Error extends React.Component {
   state = {
     open: false,
     deleteId: '',
+    show: false,
+    showId: '',
+    stack: '',
   };
 
   componentDidMount() {
@@ -93,7 +100,7 @@ export class Error extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, show: false });
   };
 
   handleCloseAll = () => {
@@ -123,6 +130,10 @@ export class Error extends React.Component {
     this.props.loadAllRequest(paging);
   };
 
+  handleShow = (id, stack) => {
+    this.setState({ showId: id, show: true, stack });
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -142,12 +153,29 @@ export class Error extends React.Component {
         _id,
       }) => [
         error_message,
-        error_stack,
+        // error_stack,
         error_type,
         count,
         moment(added_at).format(DATE_FORMAT),
-        moment(last_added_at).format(DATE_FORMAT),
+        // console.log(last_added_at, 'dsds'),
+        last_added_at != null
+          ? moment(last_added_at).format(DATE_FORMAT)
+          : moment(added_at).format(DATE_FORMAT),
         <React.Fragment>
+          <Tooltip
+            id="tooltip-top-start"
+            title="View error stack"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <IconButton
+              aria-label="View stack"
+              className={classes.tableActionButton}
+              onClick={() => this.handleShow(_id, error_stack)}
+            >
+              <View className={`${classes.tableActionButtonIcon}`} />
+            </IconButton>
+          </Tooltip>
           <Tooltip
             id="tooltip-top-start"
             title="Remove from list"
@@ -178,6 +206,12 @@ export class Error extends React.Component {
               : this.handleDeleteAll()
           }
         />
+        <Dialog open={this.state.show} onClose={this.handleClose}>
+          <DialogTitle>Error Stack</DialogTitle>
+          <DialogContent>
+            <pre>{this.state.stack}</pre>
+          </DialogContent>
+        </Dialog>
         <Helmet>
           <title>Error Listing</title>
         </Helmet>
@@ -216,10 +250,9 @@ export class Error extends React.Component {
           <Table
             tableHead={[
               'Error Message',
-              'Error Stack',
               'Error Type',
               'Count',
-              'Added At',
+              'First Encountered At',
               'Last Encountered At',
               'Actions',
               '',

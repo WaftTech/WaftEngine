@@ -9,11 +9,11 @@ const faqController = {};
 faqController.PostFaq = async (req, res, next) => {
   try {
     const faqs = req.body;
-    if (id && faqs && faqs._id) {
+    if (faqs && faqs._id) {
       const update = await faqSch.findByIdAndUpdate(faqs._id, { $set: faqs });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, faqConfig.faqSave, null);
     } else {
-      faqs.added_by = id; //req.user.id;
+      faqs.added_by = req.user.id;
       const newfaqs = new faqSch(faqs);
       const savefaqs = await newfaqs.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, savefaqs, null, faqConfig.faqSave, null);

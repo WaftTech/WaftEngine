@@ -11,7 +11,7 @@ import ContentManageAddEdit from '../containers/Admin/Content/AddEditPage/Loadab
 import FaqPage from '../containers/Admin/Faq/Loadable';
 import FaqCatManagePage from '../containers/Admin/FaqCategory/Loadable';
 import FaqAddEdit from '../containers/Admin/Faq/AddEditPage/Loadable';
-import MediaPage from '../containers/Admin/Media/Loadable';
+import MediaPage from '../containers/EditorFileSelect';
 import SliderPage from '../containers/Admin/Slider/Loadable';
 import SliderAddEdit from '../containers/Admin/Slider/AddEditPage/Loadable';
 import BlogManagePage from '../containers/Admin/Blog/Loadable';

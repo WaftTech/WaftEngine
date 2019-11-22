@@ -49,7 +49,7 @@ function* deleteSuccessFunc(action) {
 
 function* deleteFailureFunc(action) {
   const snackbarData = {
-    message: action.payload.msg || 'Something went wrong while deleting!!',
+    message: 'Something went wrong while deleting!!',
     options: {
       variant: 'warning',
     },

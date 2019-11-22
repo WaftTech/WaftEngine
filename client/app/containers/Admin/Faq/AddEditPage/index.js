@@ -116,7 +116,7 @@ class AddEdit extends React.PureComponent {
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
-            <div id="component-error-text">{errors.question}</div>
+            {/* <div id="component-error-text">{errors.question}</div> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -134,7 +134,7 @@ class AddEdit extends React.PureComponent {
               value={one.title || ''}
               onChange={this.handleChange('title')}
             />
-            <div id="component-error-text">{errors.title}</div>
+            {/* <div id="component-error-text">{errors.title}</div> */}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
