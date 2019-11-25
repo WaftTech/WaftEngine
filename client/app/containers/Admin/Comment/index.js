@@ -18,6 +18,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import ViewIcon from '@material-ui/icons/RemoveRedEyeOutlined';
 import SearchIcon from '@material-ui/icons/Search';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 import Table from 'components/Table';
 
 import injectSaga from 'utils/injectSaga';
@@ -75,6 +78,10 @@ export class BlogCommentManagePage extends React.PureComponent {
     }),
   };
 
+  state = {
+    selected: [],
+  };
+
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
   }
@@ -110,6 +117,20 @@ export class BlogCommentManagePage extends React.PureComponent {
   //   this.props.loadDisapproveRequest(id);
   // };
 
+  handleCheckedChange = id => {
+    const index = this.state.selected.indexOf(id);
+    if (index > -1) {
+      let removed = [
+        ...this.state.selected.slice(0, index),
+        ...this.state.selected.slice(index + 1),
+      ];
+      this.setState({ selected: removed });
+    } else {
+      let added = [...this.state.selected, id];
+      this.setState({ selected: added });
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -120,6 +141,17 @@ export class BlogCommentManagePage extends React.PureComponent {
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ title, blog_id, status, added_at, added_by, updated_at, _id }) => [
+        <>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.selected.includes(_id)}
+                onChange={() => this.handleCheckedChange(_id)}
+              />
+            }
+            // label=""
+          />
+        </>,
         title,
         blog_id && blog_id.title,
         status || 'onhold',
@@ -143,7 +175,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               />
             </IconButton>
           </Tooltip>
-          <button
+          {/* <button
             className="ml-2 underline text-blue-500"
             onClick={() => this.handleApprove(_id, 'approve')}
           >
@@ -154,7 +186,7 @@ export class BlogCommentManagePage extends React.PureComponent {
             onClick={() => this.handleDisapprove(_id, 'disapprove')}
           >
             Disapprove
-          </button>
+          </button> */}
         </>,
       ],
     );
@@ -206,6 +238,7 @@ export class BlogCommentManagePage extends React.PureComponent {
 
           <Table
             tableHead={[
+              'Selected',
               'Comment Title',
               'Blog',
               'Status',
