@@ -130,5 +130,25 @@ commentController.DisApproveComment = async (req, res, next) => {
     next(err);
   }
 };
+commentController.GetApprovedComment = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    searchq = { is_approved: true, ...searchq };
+    let approvedComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortq, searchq, selectq, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, approvedComments.data, 'approved comments get success!!', page, size, approvedComments.totaldata);
+  } catch (err) {
+    next();
+  }
+};
+commentController.GetDisapprovedComment = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    searchq = { is_disapproved: true, ...searchq };
+    let disapprovedComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortq, searchq, selectq, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, disapprovedComments.data, 'Disapproved comments get success!!', page, size, disapprovedComments.totaldata);
+  } catch (err) {
+    next();
+  }
+};
 
 module.exports = commentController;

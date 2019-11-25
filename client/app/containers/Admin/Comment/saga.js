@@ -45,6 +45,30 @@ function* loadOne(action) {
   );
 }
 
+function* getApproved(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      'comment/all/approved',
+      actions.getApprovedSuccess,
+      actions.getApprovedFailure,
+      token,
+    ),
+  );
+}
+
+function* getDisapproved(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      'comment/all/disapproved',
+      actions.getDisapprovedSuccess,
+      actions.getDisapprovedFailure,
+      token,
+    ),
+  );
+}
+
 function* redirectOnSuccess() {
   yield take(types.LOAD_MANAGE_SUCCESS);
   yield put(push('/admin/blog-comment-manage'));
@@ -72,4 +96,6 @@ export default function* blogCommentManagePageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.LOAD_MANAGE_REQUEST, loadManage);
+  yield takeLatest(types.GET_APPROVED_REQUEST, getApproved);
+  yield takeLatest(types.GET_DISAPPROVED_REQUEST, getDisapproved);
 }

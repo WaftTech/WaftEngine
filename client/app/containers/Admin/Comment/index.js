@@ -80,6 +80,9 @@ export class BlogCommentManagePage extends React.PureComponent {
 
   state = {
     selected: [],
+    selectAll: false,
+    selectApproved: false,
+    selectDisapproved: false,
   };
 
   componentDidMount() {
@@ -109,8 +112,26 @@ export class BlogCommentManagePage extends React.PureComponent {
     this.props.push(`/admin/comment/view/${id}`);
   };
 
-  handleApprove = (id, status) => {
-    // this.props.loadApproveRequest(id);
+  handleSelectApproved = () => {
+    if (this.state.selectApproved === false) {
+      this.props.getApprovedRequest(this.props.query);
+    } else {
+      this.props.loadAllRequest(this.props.query);
+    }
+    this.setState({ selectApproved: !this.state.selectApproved });
+  };
+
+  handleSelectDisapproved = () => {
+    if (this.state.selectDisapproved === false) {
+      this.props.getDisapprovedRequest(this.props.query);
+    } else {
+      this.props.loadAllRequest(this.props.query);
+    }
+    this.setState({ selectDisapproved: !this.state.selectDisapproved });
+  };
+
+  handleSelectAll = () => {
+    this.setState({ selectAll: !this.state.selectAll });
   };
 
   // handleDisapprove = id => {
@@ -145,11 +166,16 @@ export class BlogCommentManagePage extends React.PureComponent {
           <FormControlLabel
             control={
               <Checkbox
-                checked={this.state.selected.includes(_id)}
+                checked={
+                  this.state.selectAll === true
+                    ? true
+                    : this.state.selected.includes(_id)
+                    ? true
+                    : false
+                }
                 onChange={() => this.handleCheckedChange(_id)}
               />
             }
-            // label=""
           />
         </>,
         title,
@@ -201,6 +227,24 @@ export class BlogCommentManagePage extends React.PureComponent {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-end">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.selectApproved}
+                  onChange={this.handleSelectApproved}
+                />
+              }
+              label="Approved"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.selectDisapproved}
+                  onChange={this.handleSelectDisapproved}
+                />
+              }
+              label="Disapproved"
+            />
             <div className="flex relative mr-2">
               <input
                 type="text"
@@ -234,6 +278,17 @@ export class BlogCommentManagePage extends React.PureComponent {
                 <SearchIcon />
               </IconButton>
             </div>
+          </div>
+          <div className="ml-2">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.selectAll}
+                  onChange={this.handleSelectAll}
+                />
+              }
+              label="Select All"
+            />
           </div>
 
           <Table

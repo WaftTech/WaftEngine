@@ -54,6 +54,12 @@ const blogCommentManagePageReducer = (state = initialState, action) =>
       case types.SET_ONE_VALUE:
         draft.one = action.payload;
         break;
+      case types.GET_APPROVED_SUCCESS:
+        draft.all = action.payload;
+        break;
+      case types.GET_DISAPPROVED_SUCCESS:
+        draft.all = action.payload;
+        break;
     }
   });
 
