@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
 const httpStatus = require('http-status');
-const { mongoURI } = require('./config/keys');
+const mongoURI = process.env.MONGODB_URI ? process.env.MONGODB_URI : require('./config/keys').mongoURI;
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
@@ -71,7 +71,10 @@ async function MongoDBConnection(app) {
       useUnifiedTopology: true,
       useFindAndModify: false,
     })
-    .then(() => console.log('MongoDB Connected'));
+    .then(() => {
+      console.log('| MongoDB Connected');
+      console.log('|--------------------------------------------');
+    });
 
   return app;
 }
