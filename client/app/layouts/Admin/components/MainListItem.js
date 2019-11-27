@@ -40,53 +40,57 @@ const MainlistItem = ({ location: { pathname }, access }) => {
     const isVisible = e.menu ? showChildren : hasAccess(e.link);
     if (!isVisible) return null;
     return (
-      <div key={e.key}>
-        {e.menu ? (
-          <>
-            <div
-              key={e.key}
-              className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-gray-200 text-sm pl-${e.key.split(
-                '.',
-              ).length * 4}`}
-              onClick={() => handleSetClick(e.key)}
-            >
-              <div className="flex items-center">
-                <i key={e} className="material-icons mr-3 text-sm">
-                  {e.icon}
-                </i>
-                <span className="dropdown-title">{e.name}</span>
-              </div>
-              {openSet[e.key] ? <ExpandLess /> : <ExpandMore />}
-            </div>
-            <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
-              {e.menu.map(el => (
-                <div key={el.key}>{menuFunctn(el)}</div>
-              ))}
-            </Collapse>
-          </>
-        ) : (
-            <div
-              selected={pathname === e.link}
-              className={
-                e.key.split('.').length === 1
-                  ? ''
-                  : ''
-              }
-            >
-              <Link
-                to={`${e.link}`}
-                className={`text-gray-800 text-sm no-underline flex items-center text-gray-800 hover:text-black hover:bg-gray-200 ${
-                  e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-8 pr-6' : 'pt-2 pr-4 pb-2 pl-4'
-                  }`}
+      <>
+        <div className="text-white h-10 fixed w-full left-0 top-0" style={{ background: '#2A3C85' }} />
+
+        <div key={e.key}>
+          {e.menu ? (
+            <>
+              <div
+                key={e.key}
+                className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-blue-500 text-sm pl-${e.key.split(
+                  '.',
+                ).length * 4}`}
+                onClick={() => handleSetClick(e.key)}
               >
-                <i key={e} className="material-icons mr-3 text-sm">
-                  {e.icon}
-                </i>
-                {e.name}
-              </Link>
-            </div>
-          )}
-      </div>
+                <div className="flex items-center">
+                  <i key={e} className="material-icons mr-3 text-sm text-gray-100">
+                    {e.icon}
+                  </i>
+                  <span className="dropdown-title text-gray-100">{e.name}</span>
+                </div>
+                {openSet[e.key] ? <ExpandLess className="text-gray-100" /> : <ExpandMore className="text-gray-100" />}
+              </div>
+              <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
+                {e.menu.map(el => (
+                  <div key={el.key}>{menuFunctn(el)}</div>
+                ))}
+              </Collapse>
+            </>
+          ) : (
+              <div
+                selected={pathname === e.link}
+                className={
+                  e.key.split('.').length === 1
+                    ? ''
+                    : ''
+                }
+              >
+                <Link
+                  to={`${e.link}`}
+                  className={`text-gray-800 text-sm no-underline flex items-center text-gray-800 hover:text-black hover:bg-blue-500 ${
+                    e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-8 pr-6' : 'pt-2 pr-4 pb-2 pl-4'
+                    }`}
+                >
+                  <i key={e} className="material-icons mr-3 text-sm">
+                    {e.icon}
+                  </i>
+                  {e.name}
+                </Link>
+              </div>
+            )}
+        </div>
+      </>
     );
   };
   return (

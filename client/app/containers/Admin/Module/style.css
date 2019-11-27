@@ -1,3 +1,5 @@
+body { font-size:12px;}
+
 [class*="MuiToggleButtonGroup"] [class*="MuiButtonBase"] { margin:0 4px;  
   background: #fff;
   border: 1px solid #ccc;

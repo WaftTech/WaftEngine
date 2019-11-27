@@ -187,8 +187,9 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           style={{
             width: 250,
             height: '100vh',
+            background: '#1C2260'
           }}
-          className="bg-white shadow-lg overflow-hidden"
+          className="shadow-lg overflow-hidden"
         >
           <Link to="/">
             <img

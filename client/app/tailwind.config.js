@@ -15,12 +15,12 @@ module.exports = {
       black: '#000',
       white: '#fff',
 
-      primary: '#fc3d39',
+      primary: '#2A3C85',
 
       gray: {
-        100: '#f5f5f5',
-        200: '#eeeeee',
-        300: '#e0e0e0',
+        100: '#F4F6F8',
+        200: '#ECEFF3',
+        300: '#ECEFF3',
         400: '#bdbdbd',
         500: '#9e9e9e',
         600: '#f0f0f0',
@@ -88,7 +88,7 @@ module.exports = {
         200: '#bee3f8',
         300: '#90cdf4',
         400: '#63b3ed',
-        500: '#4299e1',
+        500: '#43497E',
         600: '#3182ce',
         700: '#2b6cb0',
         800: '#2c5282',
