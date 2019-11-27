@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Star';
 import CategoryElement from '../../components/CategoryElement';
 import SlickSlider from '../../components/SlickSlider';
+import StaticContentDiv from '../../components/StaticContentDiv';
 import star from '../../assets/img/star.svg';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -51,6 +52,10 @@ export default class HomePage extends React.PureComponent {
               <img className="opacity-25" src={star} alt="star waftengine" />
             </div>
           </div>
+        </div>
+
+        <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
+          <StaticContentDiv contentKey="home-page-content" />
         </div>
         <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
           <CategoryElement cat_id="5d0a07f3f305de105c4fc674" size={3} />
