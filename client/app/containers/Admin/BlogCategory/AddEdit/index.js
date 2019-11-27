@@ -163,7 +163,7 @@ class AddEdit extends React.PureComponent {
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
               <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                className="label"
                 htmlFor="grid-blog-title"
               >
                 Blog Title
@@ -180,7 +180,7 @@ class AddEdit extends React.PureComponent {
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                className="label"
                 htmlFor="grid-slug"
               >
                 Slug
@@ -196,7 +196,7 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors && errors.slug_url}</div>
             </div>
             <div className="pb-4">
-              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+              <label className="label">
                 Blog Category Description
             </label>
               <CKEditor
@@ -211,7 +211,7 @@ class AddEdit extends React.PureComponent {
             </div>
             <div className="w-full md:w-1/2 pb-4 mt-4">
               <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                className="label"
                 htmlFor="Image"
               >
                 Image

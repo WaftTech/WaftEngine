@@ -14,7 +14,7 @@ const EmailInput = props => {
     <>
       <div className="mb-4">
         <label
-          className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+          className="label"
           htmlFor="username"
         >
           Email

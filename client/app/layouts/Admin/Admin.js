@@ -23,7 +23,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
-import Logo from '../../assets/img/logo.svg';
+import Logo from '../../assets/img/logo-white.svg';
 
 import routes from '../../routes/admin';
 
@@ -179,73 +179,78 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
+      <div className="flex justify-between px-4 text-white h-12 fixed z-50 w-full left-0 top-0 items-center bg-primary" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <div className="flex-1 flex items-center">
+          <img style={{ height: 28 }}
+            src={Logo}
+            alt="waftengine"
+          />
+          <Link target="_blank" className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm bg-blue-900 hover:bg-blue-700" to="/">Visit Site <i className="material-icons text-sm ml-1">open_in_new</i></Link>
+          <Link className="px-4" to="/">Docs</Link>
+          <Link className="px-4" to="/">Blog</Link>
+          <Link className="px-4" to="/">Forum</Link>
+        </div>
+        <div>
+          <button className="flex" onClick={handleMenu}>
+            <div className="m-auto mr-1">{users.name}</div>
+            <AccountCircle />
+            <i className="material-icons text-gray-200 opacity-50">arrow_drop_down</i>
+          </button>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorel}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={anchorOpen}
+            onClose={handleClose}
+          ><Link
+            to="/admin/dashboard"
+            style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
+          >
+              <MenuItem>
+                Dashboard
+                </MenuItem>
+            </Link>
+            <Link
+              to="/admin/profile"
+              style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
+            >
+              <MenuItem >
+                Profile
+                  </MenuItem>
+            </Link>
+            <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+          </Menu>
+        </div>
+      </div>
       <div className="flex overflow-y-hidden bg-gray-200">
         <ColoredScrollbars
           autoHide
           autoHideTimeout={1000}
           autoHideDuration={200}
           style={{
-            width: 250,
+            width: 220,
             height: '100vh',
-            background: '#1C2260'
           }}
-          className="shadow-lg overflow-hidden"
+          className="bg-gray-900"
         >
-          <Link to="/">
-            <img
-              className="mt-3 mb-6 ml-4 mx-auto flex"
-              src={Logo}
-              alt="waftengine"
-            />
-          </Link>
+
+
           <MainListItems />
         </ColoredScrollbars>
-        <main className="h-screen flex-1 overflow-auto px-8 py-4">
-          <div className="flex justify-between p-1 bg-white rounded">
-            <div className="flex">
-              <Breadcrumb />
-            </div>
-
-            <button className="flex" onClick={handleMenu}>
-              <div className="m-auto mr-1">{users.name}</div>
-              <AccountCircle />
-            </button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorel}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={anchorOpen}
-              onClose={handleClose}
-            ><Link
-              to="/admin/dashboard"
-              style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-            >
-                <MenuItem>
-                  Dashboard
-                </MenuItem>
-              </Link>
-              <Link
-                to="/admin/profile"
-                style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-              >
-                <MenuItem >
-                  Profile
-                  </MenuItem>
-              </Link>
-              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-            </Menu>
-          </div>
-          {switchRoutes(roles)}
+        <main className="h-screen flex-1 overflow-auto px-4 pt-12 flex flex-col justify-between">
+          <Breadcrumb />
+          <div className="flex-1">{switchRoutes(roles)}</div>
+          <p className="text-gray-700 py-4">version 1.0.1</p>
         </main>
-      </div>
-    </React.Fragment>
+      </div >
+    </React.Fragment >
   );
 };
 

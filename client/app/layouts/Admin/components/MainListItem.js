@@ -41,16 +41,15 @@ const MainlistItem = ({ location: { pathname }, access }) => {
     if (!isVisible) return null;
     return (
       <>
-        <div className="text-white h-10 fixed w-full left-0 top-0" style={{ background: '#2A3C85' }} />
 
         <div key={e.key}>
           {e.menu ? (
             <>
               <div
                 key={e.key}
-                className={`pt-2 pb-2 pr-4 pl-4 cursor-pointer flex items-center justify-between text-gray-800 hover:bg-blue-500 text-sm pl-${e.key.split(
+                className={`p-2 cursor-pointer flex items-center justify-between text-gray-200 hover:bg-gray-800 text-sm pl-${e.key.split(
                   '.',
-                ).length * 4}`}
+                ).length * 2}`}
                 onClick={() => handleSetClick(e.key)}
               >
                 <div className="flex items-center">
@@ -59,7 +58,7 @@ const MainlistItem = ({ location: { pathname }, access }) => {
                   </i>
                   <span className="dropdown-title text-gray-100">{e.name}</span>
                 </div>
-                {openSet[e.key] ? <ExpandLess className="text-gray-100" /> : <ExpandMore className="text-gray-100" />}
+                <i className={`material-icons text-gray-200 opacity-50 ease-in-out ${!openSet[e.key] ? 'rotate-90' : ''}`}>arrow_drop_down</i>
               </div>
               <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
                 {e.menu.map(el => (
@@ -78,8 +77,8 @@ const MainlistItem = ({ location: { pathname }, access }) => {
               >
                 <Link
                   to={`${e.link}`}
-                  className={`text-gray-800 text-sm no-underline flex items-center text-gray-800 hover:text-black hover:bg-blue-500 ${
-                    e.key.split('.').length > 1 ? 'pt-2 pb-2 pl-8 pr-6' : 'pt-2 pr-4 pb-2 pl-4'
+                  className={`text-gray-200 text-sm no-underline flex items-center hover:bg-gray-800 ${
+                    e.key.split('.').length > 1 ? 'p-2' : 'p-2'
                     }`}
                 >
                   <i key={e} className="material-icons mr-3 text-sm">
@@ -94,7 +93,7 @@ const MainlistItem = ({ location: { pathname }, access }) => {
     );
   };
   return (
-    <div className="select-none">
+    <div className="select-none pt-12 pb-8">
       {menus.map(e => (
         <div key={e.key}>{menuFunctn(e)}</div>
       ))}

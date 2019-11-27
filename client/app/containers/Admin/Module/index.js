@@ -123,7 +123,7 @@ export class AdminModuleManage extends React.PureComponent {
         </div>
 
         <PageContent loading={loading}>
-          <div className="flex justify-end">
+          <div className="flex">
             <div className="flex relative">
               <input
                 type="text"
