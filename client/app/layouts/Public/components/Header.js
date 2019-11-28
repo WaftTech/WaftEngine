@@ -51,7 +51,7 @@ const Header = props => {
   return (
     <header className="WaftHeader border-b lg:border-b">
       <div className="container flex justify-between flex-wrap relative">
-        <div className="py-4 p w-full md:w-1/2 lg:w-1/6 order-2 md:order-none">
+        <div className="py-2 p w-full md:w-1/2 lg:w-1/6 order-2 md:order-none">
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
           </Link>
@@ -78,7 +78,7 @@ const Header = props => {
             {HeaderMenu.map(each => (
               <NavLink
                 key={each.key}
-                className="text-right md:text-left border-b md:border-none block no-underline px-5 py-5 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
+                className="text-right md:text-left border-b md:border-none block no-underline px-5 py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
                 to={each.link}
                 onClick={handleToggle}
               >

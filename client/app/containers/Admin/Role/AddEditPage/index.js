@@ -85,7 +85,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+              <label className="label">
                 Role Title
             </label>
               <input className="inputbox" id="role_title" type="text" value={one.role_title}
@@ -96,7 +96,7 @@ class AddEdit extends React.PureComponent {
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
-              <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+              <label className="label">
                 Description
             </label>
               <textarea className="inputbox" id="description" type="text" value={one.description}

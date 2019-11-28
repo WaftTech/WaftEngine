@@ -24,8 +24,8 @@ export default class HomePage extends React.PureComponent {
 
     return (
       <>
-        <div className="bg-star">
-          <div className="max-w-5xl mx-auto py-16 px-4 overflow-hidden relative md:flex">
+        <div className="bg-primary bg-star text-gray-100">
+          <div className="container mx-auto py-12 px-4 overflow-hidden relative md:flex items-center">
             <div className="md:w-1/2">
               <h1 className="uppercase text-4xl">Help us to grow</h1>
               <p className="my-4">
@@ -40,7 +40,6 @@ export default class HomePage extends React.PureComponent {
                   color: '#333',
                   backgroundImage:
                     'linear-gradient(-180deg, #FAFBFC 0%, #EFF3F6 100%)',
-                  border: '1px solid #CDCFD0',
                   borderRadius: 4,
                 }}
               >
@@ -48,8 +47,12 @@ export default class HomePage extends React.PureComponent {
                 <span className="pl-2">Star WaftEngine</span>
               </a>
             </div>
-            <div className="md:w-1/2 pt-10">
-              <img className="opacity-25" src={star} alt="star waftengine" />
+            <div className="md:w-1/2 clearfix">
+              <img
+                className="opacity-25 h-48 float-right"
+                src={star}
+                alt="star waftengine"
+              />
             </div>
           </div>
         </div>
@@ -57,12 +60,8 @@ export default class HomePage extends React.PureComponent {
         <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
           <StaticContentDiv contentKey="home-page-content" />
         </div>
-        <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
+        <div className="max-w-5xl mx-auto py-12 px-4 layout-1">
           <CategoryElement cat_id="5d0a07f3f305de105c4fc674" size={3} />
-        </div>
-        <div className="py-12 px-4 overflow-hidden">
-          <h2 className="font-bold text-3xl">Slider Example</h2>
-          <SlickSlider slideKey="slider-one" />
         </div>
       </>
     );

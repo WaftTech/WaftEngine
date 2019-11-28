@@ -199,7 +199,7 @@ export class BlogCategory extends React.PureComponent {
           </Fab>
         </div>
         <PageContent loading={loading}>
-          <div className="flex justify-end">
+          <div className="flex">
             <div className="flex relative mr-2">
               <input
                 type="text"

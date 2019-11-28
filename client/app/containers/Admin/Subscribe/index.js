@@ -156,7 +156,7 @@ export class Subscribe extends React.PureComponent {
           <PageHeader>Subscribe Manage</PageHeader>
         </div>
         <PageContent loading={loading}>
-          <div className="flex justify-end">
+          <div className="flex">
             <div className="flex relative mr-2">
               <input
                 type="text"

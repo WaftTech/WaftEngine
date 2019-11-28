@@ -24,7 +24,7 @@ const PasswordInput = props => {
     <div className="mb-4">
       <div className="flex justify-between">
         <label
-          className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+          className="label"
           htmlFor="Password"
         >
           Password

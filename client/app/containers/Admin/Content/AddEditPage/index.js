@@ -130,7 +130,7 @@ class AddEdit extends React.PureComponent {
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
               <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                className="label"
                 htmlFor="grid-last-name"
               >
                 Content Title
@@ -147,7 +147,7 @@ class AddEdit extends React.PureComponent {
 
             <div className="w-full md:w-1/2 pb-4">
               <label
-                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                className="label"
                 htmlFor="grid-last-name"
               >
                 Content Key
@@ -183,7 +183,7 @@ class AddEdit extends React.PureComponent {
             <div className="w-full md:w-1/2">
               <FormControl margin="normal" className={classes.formControl}>
                 <label
-                  className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                  className="label"
                   htmlFor="grid-last-name"
                 >
                   Published From
@@ -204,7 +204,7 @@ class AddEdit extends React.PureComponent {
             <div className="w-full md:w-1/2">
               <FormControl margin="normal" className={classes.formControl}>
                 <label
-                  className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                  className="label"
                   htmlFor="grid-last-name"
                 >
                   Published To
