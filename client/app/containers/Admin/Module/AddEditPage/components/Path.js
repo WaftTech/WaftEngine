@@ -55,7 +55,7 @@ const Path = props => {
 
       <div className="flex justify-between">
         <div className="clientRoute w-1/2 border-r">
-          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2 border-b pl-4">
+          <label className="label border-b pl-4">
             Client Route
           </label>
           {(each.admin_routes || []).map((eachAdminRoute, index) => (

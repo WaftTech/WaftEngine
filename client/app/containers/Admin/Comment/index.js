@@ -284,7 +284,7 @@ export class BlogCommentManagePage extends React.PureComponent {
           </DialogActions>
         </Dialog>
         <PageContent loading={loading}>
-          <div className="flex justify-end">
+          <div className="flex">
             <FormControlLabel
               control={
                 <Checkbox

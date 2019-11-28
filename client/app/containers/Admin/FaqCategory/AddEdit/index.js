@@ -107,7 +107,7 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Title

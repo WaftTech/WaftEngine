@@ -5,7 +5,7 @@ const PageContent = props => {
   const { loading, children } = props;
   return (
     <div
-      className={`bg-white rounded pt-2 pb-5 px-5 ${loading ? 'opacity-50' : ''}`}
+      className={`${loading ? 'opacity-25' : ''}`}
     >
       {children}
     </div>
