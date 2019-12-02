@@ -156,16 +156,16 @@ export class BlogManagePage extends React.Component {
           <div className="flex">
             <button
               aria-label="Edit"
-              className="bg-white border border-white px-2 py-1 items-center rounded flex text-indigo-500 hover:border-indigo-200"
+              className="bg-white border border-white px-2 py-1 items-center flex text-indigo-500 hover:shadow"
               onClick={() => this.handleEdit(_id)}
             >
               <i className="material-icons text-base text-indigo-500 mr-1">edit</i>Edit
             </button>
 
-            <button
+            <button className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base ml-2 text-red-500">delete</i>
+              <i className="material-icons text-base text-red-400 hover:text-red-600">delete</i>
             </button>
           </div>,
         ];
@@ -223,7 +223,7 @@ export class BlogManagePage extends React.Component {
               'Is Published',
               'Is Active',
               'Author',
-              'Actions',
+              '',
             ]}
             tableData={tableData}
             pagination={tablePagination}
