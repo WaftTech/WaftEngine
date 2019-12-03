@@ -219,23 +219,13 @@ export class SliderPage extends React.Component {
         <Helmet>
           <title>Slider Listing</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between -mt-5 mb-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Slider Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
         </div>
 
         <PageContent loading={loading}>
-          <div className="flex">
+          <div className="flex justify-between">
             <div className="flex relative mr-2">
               <input
                 type="text"
@@ -254,6 +244,28 @@ export class SliderPage extends React.Component {
                 <SearchIcon />
               </IconButton>
             </div>
+
+            <div className="flex">
+              <span className="bg-white border border-indigo-200 px-1 mr-2 inline-flex items-center cursor-pointer hover:border-indigo-200 hover:shadow">
+                <i className="material-icons text-indigo-600">code</i>
+              </span>
+
+              <button
+                className="bg-indigo-700 text-white px-2 leading-none items-center flex hover:bg-indigo-600"
+                onClick={this.handleAdd}>
+                <i className="material-icons">add</i>Add Slider
+            </button>
+            </div>
+          </div>
+
+          <div className="bg-gray-900 h-32 my-2 py-2 px-4 text-white font-mono">
+            <code className="">
+              ...<br />
+              import  SlickSlider from 'client/app/components/SlickSlider';<br />
+              ...<br />
+              SlickSlider slideKey="key" /><br />
+              ...
+</code>
           </div>
 
           <Table

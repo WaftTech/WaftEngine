@@ -1,5 +1,8 @@
 
+.table th { white-space: nowrap;}
 
-.table tr:nth-child(even) {
+.table tr td { border-bottom:1px solid #ECEFF3; }
+
+.table tr:hover td {
   background: #F4F6F8;
 }
