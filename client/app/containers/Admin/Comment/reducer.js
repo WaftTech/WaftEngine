@@ -21,7 +21,14 @@ export const initialState = {
     is_disapproved: false,
   },
   loading: false,
-  query: { find_title: '', find_blog_id: '', size: 10 },
+  query: {
+    find_title: '',
+    find_blog_id: '',
+    // find_is_approved: false,
+    // find_is_disapproved: false,
+    size: 10,
+  },
+  requesting: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -54,11 +61,35 @@ const blogCommentManagePageReducer = (state = initialState, action) =>
       case types.SET_ONE_VALUE:
         draft.one = action.payload;
         break;
-      case types.GET_APPROVED_SUCCESS:
-        draft.all = action.payload;
+      case types.APPROVE_REQUEST:
+        draft.requesting = true;
         break;
-      case types.GET_DISAPPROVED_SUCCESS:
-        draft.all = action.payload;
+      case types.DISAPPROVE_REQUEST:
+        draft.requesting = true;
+        break;
+      case types.APPROVE_FAILURE:
+        draft.requesting = false;
+        break;
+      case types.DISAPPROVE_FAILURE:
+        draft.requesting = false;
+        break;
+      case types.APPROVE_SUCCESS:
+        draft.requesting = false;
+        break;
+      case types.DISAPPROVE_SUCCESS:
+        draft.requesting = false;
+        for (let i = 0; i < action.payload.data.length; i++) {
+          draft.all = {
+            ...state.all,
+            data: state.all.data.map(each => {
+              if (each._id === action.payload.data[i]._id) {
+                return action.payload.data[i];
+              } else {
+                return each;
+              }
+            }),
+          };
+        }
         break;
     }
   });
