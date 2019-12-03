@@ -407,7 +407,7 @@ userController.ForgotPassword = async (req, res, next) => {
     );
 
     const renderedMail = await renderMail.renderTemplate(
-      'user_registration',
+      'forgot_password',
       {
         name: user.name,
         email: user.email,

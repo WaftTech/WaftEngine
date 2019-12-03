@@ -34,6 +34,7 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const blogCommentManagePageReducer = (state = initialState, action) =>
   produce(state, draft => {
+    let helperObj = {};
     switch (action.type) {
       case types.LOAD_ALL_REQUEST:
         draft.loading = true;
@@ -62,34 +63,28 @@ const blogCommentManagePageReducer = (state = initialState, action) =>
         draft.one = action.payload;
         break;
       case types.APPROVE_REQUEST:
-        draft.requesting = true;
-        break;
       case types.DISAPPROVE_REQUEST:
         draft.requesting = true;
         break;
       case types.APPROVE_FAILURE:
-        draft.requesting = false;
-        break;
       case types.DISAPPROVE_FAILURE:
         draft.requesting = false;
         break;
+      case types.DISAPPROVE_SUCCESS:
       case types.APPROVE_SUCCESS:
         draft.requesting = false;
-        break;
-      case types.DISAPPROVE_SUCCESS:
-        draft.requesting = false;
-        for (let i = 0; i < action.payload.data.length; i++) {
-          draft.all = {
-            ...state.all,
-            data: state.all.data.map(each => {
-              if (each._id === action.payload.data[i]._id) {
-                return action.payload.data[i];
-              } else {
-                return each;
-              }
-            }),
-          };
-        }
+        draft.all.data = state.all.data.map(each => {
+          // case for each is updated
+          helperObj =
+            action.payload.data.reduce(
+              (acc, curr) => ({ ...acc, [curr._id]: curr }),
+              {},
+            ) || {};
+          if (Object.keys(helperObj).includes(each._id)) {
+            return helperObj[each._id];
+          }
+          return each;
+        });
         break;
     }
   });

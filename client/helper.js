@@ -4,7 +4,13 @@ const request = require('request-promise');
 // const rp = require('request-promise');
 const thirdPartyApiRequesterHelper = {};
 
-thirdPartyApiRequesterHelper.requestThirdPartyApi = async (req, request_url, headers, next, request_method) => {
+thirdPartyApiRequesterHelper.requestThirdPartyApi = async (
+  req,
+  request_url,
+  headers,
+  next,
+  request_method,
+) => {
   try {
     const options = headers
       ? {
