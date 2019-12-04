@@ -10,6 +10,8 @@ router.post('/' ,validate, authorization, teamController.saveTeam);
 
 router.get('/' , teamController.getTeam);
 
-router.delete('/delete_team' , authorization, teamController.deleteTeam);
+router.get('/:id' , teamController.getTeamDetail);
+
+router.delete('/:id' , authorization, teamController.deleteTeam);
 
 module.exports=router;

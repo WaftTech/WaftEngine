@@ -9,15 +9,9 @@ validation.sanitize = (req, res, next) => {
     {
       field: 'title',
       sanitize: {
-        rtrim: true,
+        trim: true,
       },
-    },
-    // {
-    //   field: 'link',
-    //   sanitize: {
-    //     trim: true,
-    //   },
-    // },
+    }
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
@@ -43,27 +37,11 @@ validation.validate = (req, res, next) => {
         },
       ],
     },
-    // {
-    //   field: 'link',
-    //   validate: [
-    //     {
-    //       condition: 'IsEmpty',
-    //       msg: menuConfig.validate.empty,
-    //     },
-    //     {
-    //       condition: 'IsLength',
-    //       msg: menuConfig.validate.descriptionLength,
-    //       option: {
-    //         min: 5,
-    //         max: 2000,
-    //       },
-    //     },
-    //   ],
-    // }
+    
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-//   console.log('error',errors);
+
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
@@ -130,7 +108,6 @@ validation.itemvalidate = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-//   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {

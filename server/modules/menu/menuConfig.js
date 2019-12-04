@@ -12,4 +12,7 @@ module.exports = {
     csave: 'menu category saved successfully.',
     cget: 'menu category get successfully.',
     cdelete: 'menu category deleted successfully!!',
+    isave: 'menuItem saved successfully.',
+    iget: 'menuItems get successfully.',
+    idelete: 'menuItem deleted successfully!!',
   };

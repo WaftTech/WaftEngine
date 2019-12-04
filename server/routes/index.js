@@ -52,6 +52,9 @@ router.use('/menu', menuRoutes);
 // All route of Team module
 const teamRoutes = require('./api/team');
 router.use('/team', teamRoutes);
+// All route of MenuItem module
+const menuItemRoutes = require('./api/menuitem');
+router.use('/menuItem' , menuItemRoutes);
 // All route of comment module (comments)
 const comment = require('./api/comment');
 router.use('/comment', comment);

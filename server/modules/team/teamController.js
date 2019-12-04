@@ -23,12 +23,10 @@ teamController.saveTeam = async(req, res, next) => {
                const data = { email: req.body.email };
                return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
             }else {
-            team.added_at = new Date();
-            // console.log(req.user);
             team.added_by = req.user.id;
             const new_team = new Team(team);
             const new_team_save = await new_team.save();
-            return otherHelper.sendResponse(res,httpStatus.OK,true,new_team_save, null,teamConfig.get, null)
+            return otherHelper.sendResponse(res,httpStatus.OK,true,new_team_save, null,teamConfig.get, null);
         }
         }
 
@@ -38,7 +36,7 @@ teamController.saveTeam = async(req, res, next) => {
 }
 teamController.getTeam = async(req, res, next) => {
     try{
-      const get_team = await Team.find({is_deleted:true});
+      const get_team = await Team.find({is_deleted:false});
       return otherHelper.sendResponse(res,httpStatus.OK,true,get_team, null,teamConfig.save, null);
     }catch(err) {
         next(err);
@@ -47,9 +45,9 @@ teamController.getTeam = async(req, res, next) => {
 
 teamController.deleteTeam = async(req, res, next) => {
     try{
-        const id = req.body._id;
+        const id = req.params.id;
         const delete_team = await Team.findByIdAndUpdate(id , {
-            $set : {is_deleted:true , deleted_by: req.user.id}
+            $set : {is_deleted:true ,deleted_at:Date.now(), deleted_by: req.user.id}
         }, {new:true});
         return otherHelper.sendResponse(res,httpStatus.OK,true,delete_team, null,teamConfig.delete, null);
 
@@ -58,4 +56,14 @@ teamController.deleteTeam = async(req, res, next) => {
     }
 }
 
+teamController.getTeamDetail = async(req, res, next) => {
+    try{
+        const id= req.params.id;
+        const team_detail = await Team.findById(id);
+        return otherHelper.sendResponse(res,httpStatus.OK,true,team_detail,null,teamConfig.get,null);
+
+    }catch(err) {
+        next(err);
+    }
+}
 module.exports = teamController;
