@@ -6,15 +6,19 @@
 
 import * as types from './constants';
 
-export const defaultActionRequest = payload => ({
-  type: types.DEFAULT_ACTION_REQUEST,
+export const loadAllSettingsRequest = payload => ({
+  type: types.LOAD_ALL_SETTINGS_REQUEST,
   payload,
 });
-export const defaultActionSuccess = payload => ({
-  type: types.DEFAULT_ACTION_SUCCESS,
+export const loadAllSettingsSuccess = payload => ({
+  type: types.LOAD_ALL_SETTINGS_SUCCESS,
   payload,
 });
-export const defaultActionFailure = payload => ({
-  type: types.DEFAULT_ACTION_FAILURE,
+export const loadAllSettingsFailure = payload => ({
+  type: types.LOAD_ALL_SETTINGS_FAILURE,
+  payload,
+});
+export const setValue = payload => ({
+  type: types.SET_VALUE,
   payload,
 });
