@@ -4,9 +4,10 @@
  *
  */
 
-export const DEFAULT_ACTION_REQUEST =
-  'app/SettingsManagePage/DEFAULT_ACTION_REQUEST';
-export const DEFAULT_ACTION_SUCCESS =
-  'app/SettingsManagePage/DEFAULT_ACTION_SUCCESS';
-export const DEFAULT_ACTION_FAILURE =
-  'app/SettingsManagePage/DEFAULT_ACTION_FAILURE';
+export const LOAD_ALL_SETTINGS_REQUEST =
+  'app/SettingsManagePage/LOAD_ALL_SETTINGS_REQUEST';
+export const LOAD_ALL_SETTINGS_SUCCESS =
+  'app/SettingsManagePage/LOAD_ALL_SETTINGS_SUCCESS';
+export const LOAD_ALL_SETTINGS_FAILURE =
+  'app/SettingsManagePage/LOAD_ALL_SETTINGS_FAILURE';
+export const SET_VALUE = 'app/SettingsManagePage/SET_VALUE';

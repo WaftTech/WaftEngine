@@ -7,7 +7,7 @@ const settingController = {};
 
 settingController.GetSetting = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, null);
 
     if (req.query.find_title) {
       searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
@@ -31,7 +31,7 @@ settingController.SaveSetting = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.OK, true, updated, null, settingConfig.save, null);
     } else {
       data.added_by = req.user.id;
-      let newsetting = new settings(data);
+      let newsetting = new settingSch(data);
       let saved = await newsetting.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, saved, null, settingConfig.save, null);
     }
