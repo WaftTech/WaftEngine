@@ -7,21 +7,32 @@ import produce from 'immer';
 import * as types from './constants';
 
 export const initialState = {
-  defaultData: 'defaultData',
+  all: {
+    data: [],
+    page: 1,
+    size: 10,
+    totaldata: 0,
+  },
+  one: {},
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const settingsManagePageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case types.DEFAULT_ACTION_REQUEST:
-        draft.defaultData = 'default data is loading';
+      case types.LOAD_ALL_SETTINGS_REQUEST:
+        draft.loading = true;
         break;
-      case types.DEFAULT_ACTION_SUCCESS:
-        draft.defaultData = 'default data is loaded';
+      case types.LOAD_ALL_SETTINGS_SUCCESS:
+        draft.loading = false;
+        draft.all = action.payload;
         break;
-      case types.DEFAULT_ACTION_FAILURE:
-        draft.defaultData = 'default data is loading failure';
+      case types.LOAD_ALL_SETTINGS_FAILURE:
+        draft.loading = false;
+        break;
+      case types.SET_VALUE:
+        draft.all = action.payload;
         break;
     }
   });

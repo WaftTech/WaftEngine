@@ -8,23 +8,17 @@ import { initialState } from './reducer';
 export const selectDomain = state => state.settingsManagePage || initialState;
 
 /**
- * Other specific selectors
- */
-
-export const makeSelectDefaultData = () =>
-  createSelector(
-    selectDomain,
-    state => state.defaultData,
-  );
-
-/**
  * Default selector used by SettingsManagePage
  */
 
-const makeSelectSettingsManagePage = () =>
+export const makeSelectSettings = () =>
   createSelector(
     selectDomain,
-    substate => substate,
+    state => state.all,
   );
 
-export default makeSelectSettingsManagePage;
+export const makeSelectLoading = () =>
+  createSelector(
+    selectDomain,
+    state => state.loading,
+  );
