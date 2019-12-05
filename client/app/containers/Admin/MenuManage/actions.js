@@ -45,6 +45,19 @@ export const addEditFailure = payload => ({
   payload,
 });
 
+export const addEditRequest2 = payload => ({
+  type: types.ADD_EDIT_REQUEST_2,
+  payload,
+});
+export const addEditSuccess2 = payload => ({
+  type: types.ADD_EDIT_SUCCESS_2,
+  payload,
+});
+export const addEditFailure2 = payload => ({
+  type: types.ADD_EDIT_FAILURE_2,
+  payload,
+});
+
 export const deleteOneRequest = payload => ({
   type: types.DELETE_ONE_REQUEST,
   payload,
@@ -75,4 +88,8 @@ export const clearQuery = () => ({
 });
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
+});
+
+export const showSubMenu = () => ({
+  type: types.SHOW_SUB_MENU,
 });

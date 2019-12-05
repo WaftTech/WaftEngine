@@ -16,6 +16,10 @@ export const ADD_EDIT_REQUEST = 'app/MenuManage/ADD_EDIT_REQUEST';
 export const ADD_EDIT_SUCCESS = 'app/MenuManage/ADD_EDIT_SUCCESS';
 export const ADD_EDIT_FAILURE = 'app/MenuManage/ADD_EDIT_FAILURE';
 
+export const ADD_EDIT_REQUEST_2 = 'app/MenuManage/ADD_EDIT_REQUEST_2';
+export const ADD_EDIT_SUCCESS_2 = 'app/MenuManage/ADD_EDIT_SUCCESS_2';
+export const ADD_EDIT_FAILURE_2 = 'app/MenuManage/ADD_EDIT_FAILURE_2';
+
 export const DELETE_ONE_REQUEST = 'app/MenuManage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/MenuManage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/MenuManage/DELETE_ONE_FAILURE';
@@ -27,3 +31,5 @@ export const SET_QUERY_VALUE = 'app/MenuManage/SET_QUERY_VALUE';
 export const CLEAR_QUERY = 'app/MenuManage/CLEAR_QUERY';
 
 export const CLEAR_ERRORS = 'app/MenuManage/CLEAR_ERRORS';
+
+export const SHOW_SUB_MENU = 'app/MenuManage/SHOW_SUB_MENU';

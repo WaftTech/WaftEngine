@@ -4,10 +4,11 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -43,56 +44,98 @@ export const MenuManage = props => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  const [open, setOpen] = useState(false);
+  const [deletedId, setDeletedId] = useState('');
+
   const {
     all: { data, page, size, totaldata },
     query,
     loading,
     classes,
+    loadAllRequest,
   } = props;
+
+  useEffect(() => {
+    // loadAllRequest(query);
+  }, []);
+
+  const handleAdd = () => {
+    props.clearOne();
+    props.push('/admin/menu-manage/add');
+  };
+  const handleEdit = id => {
+    props.push(`/admin/menu-manage/edit/${id}`);
+  };
+  const handleView = slug_url => {
+    props.push(`/blog/${slug_url}`);
+  };
+  const handleOpen = id => {
+    setOpen(true);
+    setDeletedId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = id => {
+    props.deleteOneRequest(id);
+    setOpen(false);
+  };
+
+  const handleQueryChange = e => {
+    e.persist();
+    props.setQueryValue({ key: e.target.name, value: e.target.value });
+  };
+
+  const handleSearch = () => {
+    props.loadAllRequest(props.query);
+  };
+
+  const handlePagination = paging => {
+    props.loadAllRequest(paging);
+  };
+
   const tablePagination = { page, size, totaldata };
-  const tableData = data.map(
-    ({ name, key, is_active, published_from, published_to, _id }) => [
-      name,
-      key,
-      moment(published_from).format(DATE_FORMAT),
-      moment(published_to).format(DATE_FORMAT),
-      `${is_active}`,
-      <>
-        <Tooltip
-          id="tooltip-top"
-          title="Edit Task"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
+  const tableData = data.map(({ title, order, is_active, _id }) => [
+    title,
+    order,
+    is_active ? 'Active' : 'In active',
+    <>
+      <Tooltip
+        id="tooltip-top"
+        title="Edit Task"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
+        <IconButton
+          aria-label="Edit"
+          className={classes.tableActionButton}
+          onClick={() => handleEdit(_id)}
         >
-          <IconButton
-            aria-label="Edit"
-            className={classes.tableActionButton}
-            onClick={() => handleEdit(_id)}
-          >
-            <Edit
-              className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip
-          id="tooltip-top-start"
-          title="Remove"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          <Edit
+            className={`${classes.tableActionButtonIcon} ${classes.edit}`}
+          />
+        </IconButton>
+      </Tooltip>
+      <Tooltip
+        id="tooltip-top-start"
+        title="Remove"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
+        <IconButton
+          aria-label="Close"
+          className={classes.tableActionButton}
+          onClick={() => handleOpen(_id)}
         >
-          <IconButton
-            aria-label="Close"
-            className={classes.tableActionButton}
-            onClick={() => handleOpen(_id)}
-          >
-            <Close
-              className={`${classes.tableActionButtonIcon} ${classes.close}`}
-            />
-          </IconButton>
-        </Tooltip>
-      </>,
-    ],
-  );
+          <Close
+            className={`${classes.tableActionButtonIcon} ${classes.close}`}
+          />
+        </IconButton>
+      </Tooltip>
+    </>,
+  ]);
   return (
     <>
       <div>
@@ -102,13 +145,13 @@ export const MenuManage = props => {
         </Helmet>
       </div>
       <DeleteDialog
-        open={state.open}
+        open={open}
         doClose={handleClose}
-        doDelete={() => handleDelete(state.deleteId)}
+        doDelete={() => handleDelete(deletedId)}
       />
       <div className="flex justify-between mt-3 mb-3">
         {loading && loading === true ? <Loading /> : <></>}
-        <PageHeader>Static Content</PageHeader>
+        <PageHeader>Menu Manage</PageHeader>
         <Fab
           color="primary"
           aria-label="Add"
@@ -125,11 +168,11 @@ export const MenuManage = props => {
           <div className="flex relative mr-2">
             <input
               type="text"
-              name="find_name"
+              name="find_title"
               id="contents-name"
-              placeholder="Search Contents by name"
+              placeholder="Search Menu by title"
               className="m-auto inputbox"
-              value={query.find_name}
+              value={query.find_title}
               onChange={handleQueryChange}
               style={{ paddingRight: '50px' }}
             />
@@ -147,7 +190,7 @@ export const MenuManage = props => {
               type="text"
               name="find_key"
               id="contents-key"
-              placeholder="Search Contents  by key"
+              placeholder="Search Menu  by key"
               className="m-auto inputbox pr-6"
               value={query.find_key}
               onChange={handleQueryChange}
@@ -164,17 +207,10 @@ export const MenuManage = props => {
         </div>
 
         <Table
-          tableHead={[
-            'Name',
-            'Key',
-            'Pub From',
-            'Pub To',
-            'Is Active',
-            'Action',
-          ]}
+          tableHead={['Title', 'Order', 'Is Active', 'Action']}
           tableData={tableData}
           pagination={tablePagination}
-          handlePagination={this.handlePagination}
+          handlePagination={handlePagination}
         />
       </PageContent>
     </>
@@ -217,14 +253,16 @@ MenuManage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  defaultData: makeSelectDefaultData(),
+  all: makeSelectAll(),
+  loading: makeSelectLoading(),
+  query: makeSelectQuery(),
 });
 
 const withStyle = withStyles(styles);
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  { ...mapDispatchToProps, push },
 );
 export default compose(
   withConnect,

@@ -11,6 +11,12 @@ export const selectDomain = state => state.menuManage || initialState;
  * Other specific selectors
  */
 
+export const makeSelectShowSubMenu = () =>
+  createSelector(
+    selectDomain,
+    state => state.show_sub_menu,
+  );
+
 export const makeSelectAll = () =>
   createSelector(
     selectDomain,
@@ -29,6 +35,12 @@ export const makeSelectQuery = () =>
     substate => substate.query,
   );
 
+export const makeSelectCategory = () =>
+  createSelector(
+    selectDomain,
+    substate => substate.sub_menu,
+  );
+
 export const makeSelectLoading = () =>
   createSelector(
     selectDomain,
@@ -39,6 +51,12 @@ export const makeSelectErrors = () =>
   createSelector(
     selectDomain,
     state => state.errors,
+  );
+
+export const makeSelectSubMenu = () =>
+  createSelector(
+    selectDomain,
+    state => state.sub_menu_form,
   );
 
 /**

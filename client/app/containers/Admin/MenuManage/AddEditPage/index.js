@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -11,27 +11,32 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
 // core components
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { IconButton } from '@material-ui/core';
+import {
+  IconButton,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+} from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import reducer from '../reducer';
 import saga from '../saga';
-import // makeSelectOne,
-// makeSelectLoading,
-// makeSelectErrors,
-'../selectors';
 import * as mapDispatchToProps from '../actions';
 import { DATE_FORMAT } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import { makeSelectToken } from '../../../App/selectors';
+import {
+  makeSelectOne,
+  makeSelectLoading,
+  makeSelectErrors,
+  makeSelectSubMenu,
+  makeSelectShowSubMenu,
+} from '../selectors';
 
+import SidebarCategoriesList from './SideBarCategoriesList';
 import WECkEditior from '../../../../components/CkEditor';
 
 const styles = {
@@ -51,54 +56,74 @@ const AddEdit = props => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  // componentDidMount() {
+  // useEffect(() => {
   //   props.clearErrors();
   //   if (props.match.params && props.match.params.id) {
   //     props.loadOneRequest(props.match.params.id);
   //   }
-  // }
+  // }, []);
 
-  // handleEditorChange = (e, name) => {
-  //   const newContent = e.editor.getData();
-  //   props.setOneValue({ key: name, value: newContent });
-  // };
+  const handleCheckedChange = (name, index) => event => {
+    event.persist();
+    // if (index) {
+    props.setOneValue({ key: name, index, value: event.target.checked });
+    // }
+    // props.setOneValue({ key: name, value: event.target.checked });
+  };
 
-  // handleCheckedChange = name => event => {
+  const handleChange = (name, index) => event => {
+    event.persist();
+    // if (index) {
+    props.setOneValue({ key: name, index, value: event.target.value });
+    // }
+    // props.setOneValue({ key: name, value: event.target.value });
+  };
+  // const handleCheckedChange = name => event => {
   //   event.persist();
-  //   props.setOneValue({ key: name, value: event.target.checked });
+  //   props.setOneValue({ key: name, value: !event.target.value });
   // };
 
-  // handleChange = name => event => {
-  //   event.persist();
-  //   props.setOneValue({ key: name, value: event.target.value });
+  const handleDateChange = name => date => {
+    props.setOneValue({
+      key: name,
+      value: moment(date).format(DATE_FORMAT),
+    });
+  };
+
+  const handleGoBack = () => {
+    props.push('/admin/menu-manage');
+  };
+
+  const handleSave = () => {
+    props.addEditRequest();
+  };
+
+  const handleAddChildMenuSave = () => {
+    props.addEditRequest2();
+  };
+
+  // const handleSubMenuAdd = () => {
+  //   props.addSubMenu();
   // };
 
-  // handleDateChange = name => date => {
-  //   props.setOneValue({
-  //     key: name,
-  //     value: moment(date).format(DATE_FORMAT),
-  //   });
-  // };
-
-  // handleGoBack = () => {
-  //   props.push('/admin/content-manage');
-  // };
-
-  // handleSave = () => {
-  //   props.addEditRequest();
-  // };
-
-  const { one, classes, match, loading, errors } = props;
+  const {
+    one,
+    classes,
+    match,
+    loading,
+    errors,
+    subMenu,
+    showSubMenuBool,
+  } = props;
+  console.log('showSubMenu', showSubMenuBool);
+  console.log('subMenu', subMenu);
   return loading && loading == true ? (
     <Loading />
   ) : (
     <>
       <Helmet>
         <title>
-          {' '}
-          {match && match.params && match.params.id
-            ? 'Edit Static Content'
-            : 'Add Static Content'}
+          {match && match.params && match.params.id ? 'Edit Menu' : 'Add Menu'}
         </title>
       </Helmet>
       <div>
@@ -112,127 +137,217 @@ const AddEdit = props => {
               <BackIcon />
             </IconButton>
             {match && match.params && match.params.id
-              ? 'Edit Static Content'
-              : 'Add Static Content'}
+              ? showSubMenuBool
+                ? 'Edit Sub Menu'
+                : 'Edit Menu'
+              : showSubMenuBool
+                ? 'Add Sub Menu'
+                : 'Add Menu'}
           </PageHeader>
         </div>
         <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Content Title
-            </label>
-            <input
-              className="inputbox"
-              id="grid-last-name"
-              type="text"
-              value={one.name}
-              onChange={handleChange('name')}
-            />
-            <div id="component-error-text">{errors.name}</div>
-          </div>
+          <>
+            {showSubMenuBool ? (
+              <div className="mt-3">
+                <div className="flex justify-between">
+                  <div
+                    className="bg-white rounded"
+                    style={{ minWidth: '250px' }}
+                  >
+                    <SidebarCategoriesList />
+                  </div>
+                  <div className="flex-1 bg-white rounded ml-4 pb-4">
+                    <div className="container mt-4">
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Title
+                        </label>
+                        <input
+                          className="inputbox"
+                          id="grid-last-name"
+                          type="text"
+                          value={one.title || ''}
+                          onChange={handleChange('title', null)}
+                        />
+                        {errors && errors.title && (
+                          <div id="component-error-text">{errors.title}</div>
+                        )}
+                      </div>{' '}
+                      <div className="flex flex-wrap justify-between px-2">
+                        <div className="w-full md:w-1/2 pb-4 -ml-2">
+                          <label className="label" htmlFor="grid-last-name">
+                            Category
+                          </label>
+                          {/* {getCategoryDropDown()} */}
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Content Key
-            </label>
-            <input
-              className="inputbox"
-              id="grid-last-name"
-              type="text"
-              value={one.key}
-              onChange={handleChange('key')}
-            />
-            <div id="component-error-text">{errors.key}</div>
-          </div>
-          <div className="pb-4">
-            <WECkEditior
-              description={one.description}
-              setOneValue={props.setOneValue}
-            />
-            {/* <CKEditor
-                name="description"
-                content={one.description}
-                // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
-                config={{
-                  allowedContent: true,
-                  // filebrowserBrowseUrl: '/editor-file-select',
-                  // filebrowserUploadUrl: '/api/media/multiple',
-                }}
-                events={{
-                  change: e => handleEditorChange(e, 'description'),
-                  value: one.description,
-                }}
-              /> */}
-            <div id="component-error-text">{errors.description}</div>
-          </div>
+                          {/* <div id="component-error-text">{errors.title}</div> */}
+                        </div>
+                      </div>
+                      <div className="w-full md:w-1/2 ">
+                        <Checkbox
+                          color="primary"
+                          checked={one.is_active || false}
+                          name="is_active"
+                          onChange={handleCheckedChange('is_active', null)}
+                        />
+                        <label className="label" htmlFor="grid-last-name">
+                          Is Active
+                        </label>
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Link Type
+                        </label>
+                        <select
+                          className="inputbox"
+                          id="product_type"
+                          // value={
+                          //   listProductTypeNormalized[generalInfo.product_type] ||
+                          //   null
+                          // }
+                          placeholder="Product Type"
+                          name="is_internal"
+                          // onChange={handleDropDownChange('product_type')}
+                          isSearchable
+                        >
+                          <option value>Same Site</option>
+                          <option value={false}>Other Site</option>
+                        </select>
+                        {/* <input
+                        className="inputbox"
+                        id="grid-last-name"
+                        type="text"
+                        value={one.title || ''}
+                        onChange={handleChange('title', null)}
+                      /> */}
+                        {errors && errors.title && (
+                          <div id="component-error-text">
+                            {errors.is_internal}
+                          </div>
+                        )}
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Target
+                        </label>
+                        <select
+                          className="inputbox"
+                          id="product_type"
+                          // value={
+                          //   listProductTypeNormalized[generalInfo.product_type] ||
+                          //   null
+                          // }
+                          placeholder="Product Type"
+                          name="target"
+                          // onChange={handleDropDownChange('product_type')}
+                          isSearchable
+                        >
+                          <option value="_blank">_blank</option>
+                          <option value="_self">_self</option>
+                          <option value="_top">_top</option>
+                          <option value="_parent">_parent</option>
+                        </select>
+                        {/* <input
+                        className="inputbox"
+                        id="grid-last-name"
+                        type="text"
+                        value={one.title || ''}
+                        onChange={handleChange('title', null)}
+                      /> */}
+                        {errors && errors.title && (
+                          <div id="component-error-text">{errors.target}</div>
+                        )}
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          URL
+                        </label>
+                        <input
+                          className="inputbox"
+                          id="grid-last-name"
+                          type="text"
+                          value={one.title || ''}
+                          onChange={handleChange('url', null)}
+                        />
+                        {errors && errors.title && (
+                          <div id="component-error-text">{errors.url}</div>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+                        onClick={handleSave}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="w-full md:w-1/2 pb-4">
+                  <label className="label" htmlFor="grid-last-name">
+                    Title
+                  </label>
+                  <input
+                    className="inputbox"
+                    id="grid-last-name"
+                    type="text"
+                    value={one.title || ''}
+                    onChange={handleChange('title', null)}
+                  />
+                  {errors && errors.title && (
+                    <div id="component-error-text">{errors.title}</div>
+                  )}
+                </div>
 
-          <div className="w-full md:w-1/2">
-            <FormControl margin="normal" className={classes.formControl}>
-              <label className="label" htmlFor="grid-last-name">
-                Published From
-              </label>
-              <DatePicker
-                margin="normal"
-                name="publish_from"
-                className={[classes.textField, 'inputbox']}
-                value={
-                  (one.publish_from &&
-                    moment(one.publish_from).format(DATE_FORMAT)) ||
-                  ''
-                }
-                onChange={handleDateChange('publish_from')}
-              />
-            </FormControl>
-          </div>
-          <div className="w-full md:w-1/2">
-            <FormControl margin="normal" className={classes.formControl}>
-              <label className="label" htmlFor="grid-last-name">
-                Published To
-              </label>
-              <DatePicker
-                margin="normal"
-                name="publish_to"
-                className={[classes.textField, 'inputbox']}
-                value={
-                  (one.publish_to &&
-                    moment(one.publish_to).format(DATE_FORMAT)) ||
-                  ''
-                }
-                onChange={handleDateChange('publish_to')}
-              />
-            </FormControl>
-          </div>
+                <div className="w-full md:w-1/2 pb-4">
+                  <label className="label" htmlFor="grid-last-name">
+                    Key
+                  </label>
+                  <input
+                    className="inputbox"
+                    id="grid-last-name"
+                    type="text"
+                    value={one.key || ''}
+                    onChange={handleChange('key', null)}
+                  />
+                  {errors && errors.key && (
+                    <div id="component-error-text">{errors.key}</div>
+                  )}
+                </div>
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={one.is_active || false}
-                tabIndex={-1}
-                onClick={handleCheckedChange('is_active')}
-                color="primary"
-              />
-            }
-            label="Is Active"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={one.is_feature || false}
-                onClick={handleCheckedChange('is_feature')}
-                value="is_feature"
-                color="primary"
-              />
-            }
-            label="Is Feature"
-          />
+                <div className="w-full md:w-1/2 pb-4">
+                  <Checkbox
+                    color="primary"
+                    checked={one.is_active || false}
+                    name="is_active"
+                    onChange={handleCheckedChange('is_active', null)}
+                  />
+                  <label className="label" htmlFor="grid-last-name">
+                    Is Active
+                  </label>
+                </div>
 
-          <br />
-          <button
-            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-            onClick={handleSave}
-          >
-            Save
-          </button>
+                <button
+                  type="button"
+                  className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme mr-2"
+                  onClick={handleAddChildMenuSave}
+                >
+                  Add Child Menu
+                </button>
+
+                <button
+                  type="button"
+                  className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+                  onClick={handleSave}
+                >
+                  Save
+                </button>
+              </>
+            )}
+          </>
         </PageContent>
       </div>
     </>
@@ -245,7 +360,8 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
   errors: makeSelectErrors(),
-  token: makeSelectToken(),
+  subMenu: makeSelectSubMenu(),
+  showSubMenuBool: makeSelectShowSubMenu(),
 });
 
 const withConnect = connect(
@@ -254,7 +370,7 @@ const withConnect = connect(
 );
 
 AddEdit.propTypes = {
-  loadOneRequest: PropTypes.func.isRequired,
+  // loadOneRequest: PropTypes.func.isRequired,
   addEditRequest: PropTypes.func.isRequired,
   setOneValue: PropTypes.func.isRequired,
   match: PropTypes.shape({
