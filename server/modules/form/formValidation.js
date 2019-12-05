@@ -92,7 +92,8 @@ validations.validation = (req, res, next) => {
         }
       ],
     
-    },
+    },  
+
     {
       field: 'type_of_property',
       validate: [
@@ -103,6 +104,7 @@ validations.validation = (req, res, next) => {
       ],
     
     },
+    //
     {
       field: 'looking_for_city',
       validate: [
