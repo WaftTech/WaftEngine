@@ -100,6 +100,12 @@ const menu = [
         icon: 'email',
         link: '/admin/template-manage',
       },
+      {
+        key: '4.2',
+        name: 'General Settings',
+        icon: 'email',
+        link: '/admin/settings',
+      },
     ],
   },
   {

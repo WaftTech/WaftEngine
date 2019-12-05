@@ -93,7 +93,7 @@ export class ChangePassword extends React.Component {
       <React.Fragment>
         <div className="w-full md:w-1/2 pb-4">
           <label
-            className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+            className="label"
             htmlFor="oldPassword"
           >
             Old Password
@@ -112,7 +112,7 @@ export class ChangePassword extends React.Component {
 
         <div className="w-full md:w-1/2 pb-4">
           <label
-            className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+            className="label"
             htmlFor="newPassword"
           >
             New Password
@@ -131,7 +131,7 @@ export class ChangePassword extends React.Component {
 
         <div className="w-full md:w-1/2 pb-4">
           <label
-            className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+            className="label"
             htmlFor="newPassword"
           >
             Confirm New Password

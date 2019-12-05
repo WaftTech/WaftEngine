@@ -35,17 +35,17 @@ router.use('/slider', sliderRoutes);
 const faqRoutes = require('./api/faq');
 router.use('/faq', faqRoutes);
 // All route of Dynamic Module
-const dmodule = require('./api/module');
-router.use('/module', dmodule);
+const dynamicModuleRoutes = require('./api/module');
+router.use('/module', dynamicModuleRoutes);
 // All route of Subscribe
 const subscribeRoutes = require('./api/subscribe');
 router.use('/subscribe', subscribeRoutes);
 // All route of templates (email)
-const template = require('./api/template');
-router.use('/template', template);
+const templateRoutes = require('./api/template');
+router.use('/template', templateRoutes);
 // All route of meta module (meta data)
-const meta = require('./api/meta');
-router.use('/meta', meta);
+const metaRoutes = require('./api/meta');
+router.use('/meta', metaRoutes);
 // All route of menu module
 const menuRoutes = require('./api/menu');
 router.use('/menu', menuRoutes);
@@ -55,11 +55,13 @@ router.use('/team', teamRoutes);
 // All route of MenuItem module
 const menuItemRoutes = require('./api/menuitem');
 router.use('/menuItem' , menuItemRoutes);
-// All route of comment module (comments)
-const comment = require('./api/comment');
-router.use('/comment', comment);
+
+
 // All route of form module
 const form = require('./api/form');
 router.use('/form' , form);
+// All route of comment module (comments)
+const commentRoutes = require('./api/comment');
+router.use('/comment', commentRoutes);
 
 module.exports = router;

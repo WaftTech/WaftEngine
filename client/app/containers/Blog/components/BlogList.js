@@ -102,7 +102,7 @@ const RenderBlogs = props => {
       })}
       <div className="flex clearfix w-full pagination">
         <div className="w-full md:w-1/4" />
-        <div className="w-3/4 flex justify-end mt-3 ">
+        <div className="w-3/4 flex mt-3 ">
           {pagination.page !== 1 && (
             <span className="inline-block pr-2">
               <button

@@ -58,6 +58,13 @@ commentController.GetComment = async (req, res, next) => {
       };
     }
 
+    if (req.query.find_is_approved) {
+      searchq = { ...searchq, is_approved: req.query.find_is_approved };
+    }
+    if (req.query.find_is_disapproved) {
+      searchq = { ...searchq, is_disapproved: req.query.find_is_disapproved };
+    }
+
     let blogComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogComments.data, 'comments get success!!', page, size, blogComments.totaldata);
   } catch (err) {
@@ -101,19 +108,17 @@ commentController.GetCommentById = async (req, res, next) => {
 commentController.ApproveComment = async (req, res, next) => {
   try {
     const data = req.body;
-    if (data.is_approved) {
-      data.approved_by = req.user.id;
-      data.approved_at = Date.now();
-      data.status = 'approved';
-    } else if (data.is_disapproved) {
-      data.disapproved_by = req.user.id;
-      data.disapproved_at = Date.now();
-      data.status = 'disapproved';
+    const comments = [];
+    if (data && data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        let update = {};
+        update = await commentSch.findOneAndUpdate({ _id: data[i], is_deleted: false }, { $set: { is_approved: true, is_disapproved: false, approved_by: req.user.id, approved_at: Date.now(), status: 'approved' } }, { new: true });
+        comments.push(update);
+      }
+      return otherHelper.sendResponse(res, httpStatus.OK, true, comments, null, 'comment approve success!!', null);
     } else {
-      data.status = 'onhold';
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'invalid data', 'data not selected for approve!!', null);
     }
-    const comment = await commentSch.findOneAndUpdate({ _id: data._id, is_deleted: false }, { $set: data }, { new: true });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment approve/disapprove success!!', null);
   } catch (err) {
     next(err);
   }
@@ -121,33 +126,19 @@ commentController.ApproveComment = async (req, res, next) => {
 commentController.DisApproveComment = async (req, res, next) => {
   try {
     const data = req.body;
-    data.disapproved_by = req.user.id;
-    data.disapproved_at = Date.now();
-    data.status = 'disapproved';
-    const comment = await commentSch.findOneAndUpdate({ _id: data.id, is_deleted: false }, { $set: data }, { new: true });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, comment, null, 'comment disapprove success!!', null);
+    const comments = [];
+    if (data && data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        let update = {};
+        update = await commentSch.findOneAndUpdate({ _id: data[i], is_deleted: false }, { $set: { is_disapproved: true, is_approved: false, disapproved_by: req.user.id, disapproved_at: Date.now(), status: 'disapproved' } }, { new: true });
+        comments.push(update);
+      }
+      return otherHelper.sendResponse(res, httpStatus.OK, true, comments, null, 'comment disapprove success!!', null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'invalid data', 'data not selected for disapprove!!', null);
+    }
   } catch (err) {
     next(err);
-  }
-};
-commentController.GetApprovedComment = async (req, res, next) => {
-  try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-    searchq = { is_approved: true, ...searchq };
-    let approvedComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, approvedComments.data, 'approved comments get success!!', page, size, approvedComments.totaldata);
-  } catch (err) {
-    next();
-  }
-};
-commentController.GetDisapprovedComment = async (req, res, next) => {
-  try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-    searchq = { is_disapproved: true, ...searchq };
-    let disapprovedComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, disapprovedComments.data, 'Disapproved comments get success!!', page, size, disapprovedComments.totaldata);
-  } catch (err) {
-    next();
   }
 };
 
