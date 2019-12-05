@@ -49,7 +49,114 @@ validations.validation = (req, res, next) => {
       ],
     
     },
+    {
+      field: 'email',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+        {
+          condition: 'IsEmail',
+          msg: formConfig.validate.email,
+          
+        },
+      ],
     
+    },
+    {
+      field: 'mobile',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+        {
+          condition: 'IsPhone',
+          msg: formConfig.validate.phone,
+          
+        },
+      ],
+    
+    },
+    {
+      field: 'is_identified',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+        {
+          condition: 'IsBoolean',
+          msg: formConfig.validate.boolean
+        }
+      ],
+    
+    },
+    {
+      field: 'type_of_property',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+      ],
+    
+    },
+    {
+      field: 'looking_for_city',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+      ],
+    
+    },
+    {
+      field: 'resident_status',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+      ],
+    
+    },
+    {
+      field: 'employment_type',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+      ],
+    
+    },
+    {
+      field: 'monthly_income',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+      ],
+    
+    },
+    {
+      field: 'is_co_borrower',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: formConfig.validate.empty,
+        },
+        {
+          condition: 'IsBoolean',
+          msg: formConfig.validate.boolean,
+        }
+      ],
+    
+    },
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
