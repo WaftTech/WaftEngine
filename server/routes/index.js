@@ -54,12 +54,12 @@ const teamRoutes = require('./api/team');
 router.use('/team', teamRoutes);
 // All route of MenuItem module
 const menuItemRoutes = require('./api/menuitem');
-router.use('/menuItem' , menuItemRoutes);
+router.use('/menuItem', menuItemRoutes);
 // All route of comment module (comments)
 const comment = require('./api/comment');
 router.use('/comment', comment);
 // All route of form module
 const form = require('./api/form');
-router.use('/form' , form);
+router.use('/form', form);
 
 module.exports = router;
