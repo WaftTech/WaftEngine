@@ -11,6 +11,7 @@ import { LOCATION_CHANGE } from 'connected-react-router';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectEmail } from './selectors';
+import { enqueueSnackbar } from '../App/actions';
 
 // Individual exports for testing
 export const validate = data => {
@@ -52,6 +53,20 @@ export function* forgotPasswordAction(action) {
   }
 }
 
+function* forgotPasswordSuccFunc(action) {
+  yield put(
+    enqueueSnackbar({
+      message:
+        action.payload.msg ||
+        'forget password code sent!! Have a look in you email account!!',
+      options: {
+        variant: 'success',
+      },
+    }),
+  );
+}
+
 export default function* loginAdminPageSaga() {
   yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordAction);
+  yield takeLatest(types.FORGOT_PASSWORD_SUCCESS, forgotPasswordSuccFunc);
 }
