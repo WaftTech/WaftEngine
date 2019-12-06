@@ -2,7 +2,7 @@ import { takeLatest, call, select, put } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { push } from 'connected-react-router';
 import { makeSelectToken } from '../../App/selectors';
-import { makeSelectOne } from './selectors';
+import { makeSelectOne, makeSelectSubMenu } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
 import { enqueueSnackbar } from '../../App/actions';
@@ -21,6 +21,18 @@ function* loadOne(action) {
       `menu/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
+      token,
+    ),
+  );
+}
+
+function* loadMenu(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `menu/menuitem/${action.payload}`,
+      actions.loadMenuSuccess,
+      actions.loadMenuFailure,
       token,
     ),
   );
@@ -75,7 +87,8 @@ function* addEdit2SuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
-  yield put(actions.showSubMenu());
+  yield put(actions.showSubMenu(true));
+  yield put(actions.loadMenuRequest(action.payload.data._id));
 }
 
 function* addEdit2FailureFunc(action) {
@@ -92,7 +105,7 @@ function* addEdit2FailureFunc(action) {
 // add child menu
 function* addEditChild(action) {
   const token = yield select(makeSelectToken());
-  const data = yield select(makeSelectOne());
+  const data = yield select(makeSelectSubMenu());
   yield call(
     Api.post(
       `menu/menuitem`,
@@ -152,6 +165,7 @@ function* deleteOneFailureFunc(action) {
 export default function* menuManageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
+  yield takeLatest(types.LOAD_MENU_REQUEST, loadMenu);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
   yield takeLatest(types.ADD_EDIT_CHILD_REQUEST, addEditChild);

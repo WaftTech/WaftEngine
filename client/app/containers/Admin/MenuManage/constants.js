@@ -12,6 +12,10 @@ export const LOAD_ONE_REQUEST = 'app/MenuManage/LOAD_ONE_REQUEST';
 export const LOAD_ONE_SUCCESS = 'app/MenuManage/LOAD_ONE_SUCCESS';
 export const LOAD_ONE_FAILURE = 'app/MenuManage/LOAD_ONE_FAILURE';
 
+export const LOAD_MENU_REQUEST = 'app/MenuManage/LOAD_MENU_REQUEST';
+export const LOAD_MENU_SUCCESS = 'app/MenuManage/LOAD_MENU_SUCCESS';
+export const LOAD_MENU_FAILURE = 'app/MenuManage/LOAD_MENU_FAILURE';
+
 export const ADD_EDIT_REQUEST = 'app/MenuManage/ADD_EDIT_REQUEST';
 export const ADD_EDIT_SUCCESS = 'app/MenuManage/ADD_EDIT_SUCCESS';
 export const ADD_EDIT_FAILURE = 'app/MenuManage/ADD_EDIT_FAILURE';

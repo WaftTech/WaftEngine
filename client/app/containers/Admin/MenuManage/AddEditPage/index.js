@@ -56,12 +56,15 @@ const AddEdit = props => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  // useEffect(() => {
-  //   props.clearErrors();
-  //   if (props.match.params && props.match.params.id) {
-  //     props.loadOneRequest(props.match.params.id);
-  //   }
-  // }, []);
+  useEffect(() => {
+    props.showSubMenu(false);
+    props.clearErrors();
+    props.clearOne();
+    if (props.match.params && props.match.params.id) {
+      // props.loadMenuRequest(props.match.params.id);
+      props.loadOneRequest(props.match.params.id);
+    }
+  }, []);
 
   const handleCheckedChange = (name, index) => event => {
     event.persist();
@@ -96,6 +99,10 @@ const AddEdit = props => {
 
   const handleSave = () => {
     props.addEditRequest();
+  };
+
+  const handleChildSave = () => {
+    props.addEditChildRequest();
   };
 
   const handleAddChildMenuSave = () => {
@@ -141,8 +148,8 @@ const AddEdit = props => {
                 ? 'Edit Sub Menu'
                 : 'Edit Menu'
               : showSubMenuBool
-                ? 'Add Sub Menu'
-                : 'Add Menu'}
+              ? 'Add Sub Menu'
+              : 'Add Menu'}
           </PageHeader>
         </div>
         <PageContent>
@@ -166,7 +173,7 @@ const AddEdit = props => {
                           className="inputbox"
                           id="grid-last-name"
                           type="text"
-                          value={one.title || ''}
+                          value={subMenu.title || ''}
                           onChange={handleChange('title', null)}
                         />
                         {errors && errors.title && (
@@ -186,7 +193,7 @@ const AddEdit = props => {
                       <div className="w-full md:w-1/2 ">
                         <Checkbox
                           color="primary"
-                          checked={one.is_active || false}
+                          checked={subMenu.is_active || false}
                           name="is_active"
                           onChange={handleCheckedChange('is_active', null)}
                         />
@@ -205,12 +212,13 @@ const AddEdit = props => {
                           //   listProductTypeNormalized[generalInfo.product_type] ||
                           //   null
                           // }
+                          value={subMenu.is_internal}
                           placeholder="Product Type"
                           name="is_internal"
                           // onChange={handleDropDownChange('product_type')}
                           isSearchable
                         >
-                          <option value>Same Site</option>
+                          <option value={true}>Same Site</option>
                           <option value={false}>Other Site</option>
                         </select>
                         {/* <input
@@ -237,6 +245,7 @@ const AddEdit = props => {
                           //   listProductTypeNormalized[generalInfo.product_type] ||
                           //   null
                           // }
+                          value={subMenu.target}
                           placeholder="Product Type"
                           name="target"
                           // onChange={handleDropDownChange('product_type')}
@@ -266,7 +275,7 @@ const AddEdit = props => {
                           className="inputbox"
                           id="grid-last-name"
                           type="text"
-                          value={one.title || ''}
+                          value={subMenu.url || ''}
                           onChange={handleChange('url', null)}
                         />
                         {errors && errors.title && (
@@ -276,8 +285,9 @@ const AddEdit = props => {
                       <button
                         type="button"
                         className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-                        onClick={handleSave}
+                        onClick={handleChildSave}
                       >
+                        {/* chid save button */}
                         Save
                       </button>
                     </div>
@@ -318,6 +328,21 @@ const AddEdit = props => {
                   )}
                 </div>
 
+                <div className="w-full md:w-1/2 pb-4">
+                  <label className="label" htmlFor="grid-last-name">
+                    Order
+                  </label>
+                  <input
+                    className="inputbox"
+                    id="grid-last-name"
+                    type="number"
+                    value={one.order || ''}
+                    onChange={handleChange('order', null)}
+                  />
+                  {errors && errors.title && (
+                    <div id="component-error-text">{errors.order}</div>
+                  )}
+                </div>
                 <div className="w-full md:w-1/2 pb-4">
                   <Checkbox
                     color="primary"

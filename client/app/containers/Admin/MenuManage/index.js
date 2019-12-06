@@ -56,7 +56,7 @@ export const MenuManage = props => {
   } = props;
 
   useEffect(() => {
-    // loadAllRequest(query);
+    loadAllRequest(query);
   }, []);
 
   const handleAdd = () => {
@@ -97,45 +97,48 @@ export const MenuManage = props => {
   };
 
   const tablePagination = { page, size, totaldata };
-  const tableData = data.map(({ title, order, is_active, _id }) => [
-    title,
-    order,
-    is_active ? 'Active' : 'In active',
-    <>
-      <Tooltip
-        id="tooltip-top"
-        title="Edit Task"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
-        <IconButton
-          aria-label="Edit"
-          className={classes.tableActionButton}
-          onClick={() => handleEdit(_id)}
+  const tableData = data.map(
+    ({ title, key: itemKey, order, is_active, _id }) => [
+      title || '',
+      itemKey || '',
+      order || '',
+      is_active ? 'Active' : 'In active',
+      <>
+        <Tooltip
+          id="tooltip-top"
+          title="Edit Task"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
         >
-          <Edit
-            className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-          />
-        </IconButton>
-      </Tooltip>
-      <Tooltip
-        id="tooltip-top-start"
-        title="Remove"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
-        <IconButton
-          aria-label="Close"
-          className={classes.tableActionButton}
-          onClick={() => handleOpen(_id)}
+          <IconButton
+            aria-label="Edit"
+            className={classes.tableActionButton}
+            onClick={() => handleEdit(_id)}
+          >
+            <Edit
+              className={`${classes.tableActionButtonIcon} ${classes.edit}`}
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          id="tooltip-top-start"
+          title="Remove"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
         >
-          <Close
-            className={`${classes.tableActionButtonIcon} ${classes.close}`}
-          />
-        </IconButton>
-      </Tooltip>
-    </>,
-  ]);
+          <IconButton
+            aria-label="Close"
+            className={classes.tableActionButton}
+            onClick={() => handleOpen(_id)}
+          >
+            <Close
+              className={`${classes.tableActionButtonIcon} ${classes.close}`}
+            />
+          </IconButton>
+        </Tooltip>
+      </>,
+    ],
+  );
   return (
     <>
       <div>
@@ -207,7 +210,7 @@ export const MenuManage = props => {
         </div>
 
         <Table
-          tableHead={['Title', 'Order', 'Is Active', 'Action']}
+          tableHead={['Title', 'Key', 'Order', 'Is Active', 'Action']}
           tableData={tableData}
           pagination={tablePagination}
           handlePagination={handlePagination}

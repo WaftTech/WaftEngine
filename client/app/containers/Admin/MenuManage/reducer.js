@@ -10,21 +10,22 @@ export const initialState = {
   all: {
     data: [
       {
-        title: 'Main Menu',
+        title: '',
         order: 1,
         _id: 1,
-        key: 'main_menu',
+        key: '',
       },
     ],
     page: 1,
     size: 10,
     totaldata: 1,
   },
-  sub_menu: [{ name: 'Main Menu' }, { name: 'Top Menu' }],
+  sub_menu: [],
   show_sub_menu: false,
   one: {
-    title: 'Main Menu',
-    key: 'main_menu',
+    title: '',
+    key: '',
+    order: '',
     is_active: false,
   },
   sub_menu_form: {
@@ -44,7 +45,11 @@ const menuManageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case types.SHOW_SUB_MENU:
-        draft.show_sub_menu = !draft.show_sub_menu;
+        // draft.show_sub_menu = !draft.show_sub_menu;
+        draft.show_sub_menu = action.payload;
+        break;
+      case types.LOAD_MENU_SUCCESS:
+        draft.sub_menu = action.payload.data;
         break;
       case types.SET_ONE_VALUE:
         if (action.payload.index !== null) {
@@ -89,7 +94,8 @@ const menuManageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.one = action.payload.data;
+        draft.one = action.payload.data.parent;
+        draft.sub_menu_form = action.payload.data.child;
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
