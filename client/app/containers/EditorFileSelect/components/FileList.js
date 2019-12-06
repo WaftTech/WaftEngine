@@ -231,7 +231,7 @@ const FileList = ({
           routeList={routeList}
           onClick={onClick}
         />
-        <div className="flex-1 flex justify-end">
+        <div className="flex-1 flex">
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
               <section className="text-black hover:text-primary hover:border-primary text-center self-start py-2 px-4 border border-gray-500 rounded  cursor-pointer mr-2 =">
@@ -337,7 +337,7 @@ const FileList = ({
             onMouseLeave={() => handleMouseOverFile('')}
           >
             {overFile === each._id ? (
-              <div className="flex justify-end">
+              <div className="flex">
                 <button
                   className="hover:text-primary"
                   onClick={() => handleDeleteFile(each._id)}

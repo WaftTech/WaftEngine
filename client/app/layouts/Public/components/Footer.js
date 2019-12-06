@@ -31,51 +31,21 @@ class Footer extends React.Component {
     return (
       <footer className="footer bg-gray-900">
         <div className="w-full bg-gray-900 border-b border-gray-800 p-2 text-center">
-          <div className="py-10">
-            <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">
-              Get updates
+          <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">
+            Get updates
             </h1>
-            <p className="mb-5 text-gray-700">
-              Never miss any updates from WaftEngine.
+          <p className="mb-5 text-gray-700">
+            Never miss any updates from WaftEngine.
             </p>
-            <SubscriberPage />
-          </div>
+          <SubscriberPage />
         </div>
         <div className="container mx-auto">
           <div className="flex flex-wrap p-5">
-            <div className="w-full lg:w-1/3 mb-2 crorder">
-              <Link to="/">
-                <img style={{ filter: 'grayscale(1)' }} src={logo} alt="WaftEngine" />
-              </Link>
-              <p style={{color:'#646464'}}>Designed and built by the WaftTech Team</p>
+            <div className="w-full lg:w-1/2 mb-2 crorder">
+              <p className="text-gray-700">Designed and built by the WaftTech Team</p>
             </div>
-            <div className="w-full lg:w-1/3 mb-4 flex lg:justify-between">
-              <a
-                className="block no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
-                href="https://www.waftengine.org/about-us"
-                target="_blank"
-                rel="noopener"
-              >
-                About Us
-              </a>
-              <a
-                className="block no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
-                href="https://www.waftengine.org/features"
-                target="_blank"
-                rel="noopener"
-              >
-                Features
-              </a>
-              <a
-                className="display-block  no-underline  text-gray-600 hover:text-white pr-2 lg:m-auto font-sans"
-                href="/contact-us"
-                target="_blank"
-                rel="noopener"
-              >
-                Contact Us
-              </a>
-            </div>
-            <div className="w-full lg:w-1/3 mb-4 lg:flex lg:justify-end">
+
+            <div className="w-full lg:w-1/2 mb-4 lg:flex lg:justify-end">
               <ul className="flex list-none p-0">
                 <li className="pr-2 lg:m-auto lg:pr-2">
                   <a

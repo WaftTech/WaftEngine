@@ -11,6 +11,7 @@ import Api from 'utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
+import { enqueueSnackbar } from '../../App/actions';
 import { makeSelectOne } from './selectors';
 import { LOCATION_CHANGE, push } from 'connected-react-router';
 
@@ -45,28 +46,69 @@ function* loadOne(action) {
   );
 }
 
-function* getApproved(action) {
+function* loadApprove(action) {
   const token = yield select(makeSelectToken());
   yield call(
-    Api.get(
-      'comment/all/approved',
-      actions.getApprovedSuccess,
-      actions.getApprovedFailure,
+    Api.post(
+      `comment/approve`,
+      actions.approveSuccess,
+      actions.approveFailure,
+      action.payload,
       token,
     ),
   );
 }
 
-function* getDisapproved(action) {
+function* approveFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while approving!!!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+function* loadDisapprove(action) {
   const token = yield select(makeSelectToken());
   yield call(
-    Api.get(
-      'comment/all/disapproved',
-      actions.getDisapprovedSuccess,
-      actions.getDisapprovedFailure,
+    Api.post(
+      `comment/disapprove`,
+      actions.disapproveSuccess,
+      actions.disapproveFailure,
+      action.payload,
       token,
     ),
   );
+}
+function* approveSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Approve success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* disapproveSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Disapprove success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* disapproveFailureFunc(action) {
+  const snackbarData = {
+    message:
+      action.payload.msg || 'Something went wrong while disapproving!!!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
 }
 
 function* redirectOnSuccess() {
@@ -96,6 +138,10 @@ export default function* blogCommentManagePageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.LOAD_MANAGE_REQUEST, loadManage);
-  yield takeLatest(types.GET_APPROVED_REQUEST, getApproved);
-  yield takeLatest(types.GET_DISAPPROVED_REQUEST, getDisapproved);
+  yield takeLatest(types.APPROVE_REQUEST, loadApprove);
+  yield takeLatest(types.DISAPPROVE_REQUEST, loadDisapprove);
+  yield takeLatest(types.DISAPPROVE_FAILURE, disapproveFailureFunc);
+  yield takeLatest(types.APPROVE_FAILURE, approveFailureFunc);
+  yield takeLatest(types.APPROVE_SUCCESS, approveSuccessFunc);
+  yield takeLatest(types.DISAPPROVE_SUCCESS, disapproveSuccessFunc);
 }

@@ -7,12 +7,10 @@ const { sanitizeComment, validateComment } = require('../../modules/comment/comm
 
 router.get('/:blog', commentModule.GetCommentByBlog);
 router.get('/', commentModule.GetComment);
-router.get('/all/approved', commentModule.GetApprovedComment);
-router.get('/all/disapproved', commentModule.GetDisapprovedComment);
 router.get('/one/:id', commentModule.GetCommentById);
 router.post('/', authorization, sanitizeComment, validateComment, commentModule.PostComment);
 router.post('/approve', authorization, commentModule.ApproveComment);
-// router.post('/disapprove', authorization, commentModule.DisApproveComment);
+router.post('/disapprove', authorization, commentModule.DisApproveComment);
 router.delete('/:id', authorization, commentModule.DeleteComment);
 
 module.exports = router;

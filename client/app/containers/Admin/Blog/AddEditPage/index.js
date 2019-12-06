@@ -334,7 +334,7 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-blog-title"
             >
               Title
@@ -351,7 +351,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-blog-title"
             >
               Slug
@@ -367,7 +367,7 @@ class AddEdit extends React.PureComponent {
             <div id="component-error-text">{errors && errors.slug_url}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+            <label className="label">
               Category
             </label>
             {/* <FormControl className={classes.formControl}>
@@ -426,7 +426,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-blog-title"
             >
               Short Description
@@ -441,7 +441,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="pb-4">
-            <label className="block uppercase tracking-wide text-gray-800 text-xs mb-2">
+            <label className="label">
               Blog Description
             </label>
             <WECkEditior
@@ -454,7 +454,7 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4 mt-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="Image"
             >
               Image
@@ -475,7 +475,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Published On
@@ -500,7 +500,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Tags
@@ -533,7 +533,7 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Meta Tags
@@ -566,7 +566,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Meta Keywords
@@ -601,7 +601,7 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Meta Description
@@ -619,7 +619,7 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+              className="label"
               htmlFor="grid-last-name"
             >
               Author

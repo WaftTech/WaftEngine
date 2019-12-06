@@ -23,32 +23,6 @@ export const loadAllFailure = payload => ({
   payload,
 });
 
-export const getApprovedRequest = payload => ({
-  type: types.GET_APPROVED_REQUEST,
-  payload,
-});
-export const getApprovedSuccess = payload => ({
-  type: types.GET_APPROVED_SUCCESS,
-  payload,
-});
-export const getApprovedFailure = payload => ({
-  type: types.GET_APPROVED_FAILURE,
-  payload,
-});
-
-export const getDisapprovedRequest = payload => ({
-  type: types.GET_DISAPPROVED_REQUEST,
-  payload,
-});
-export const getDisapprovedSuccess = payload => ({
-  type: types.GET_DISAPPROVED_SUCCESS,
-  payload,
-});
-export const getDisapprovedFailure = payload => ({
-  type: types.GET_DISAPPROVED_FAILURE,
-  payload,
-});
-
 export const loadOneRequest = payload => ({
   type: types.LOAD_ONE_REQUEST,
   payload,
@@ -75,5 +49,31 @@ export const loadManageSuccess = payload => ({
 });
 export const loadManageFailure = payload => ({
   type: types.LOAD_MANAGE_FAILURE,
+  payload,
+});
+
+export const approveRequest = payload => ({
+  type: types.APPROVE_REQUEST,
+  payload,
+});
+export const approveSuccess = payload => ({
+  type: types.APPROVE_SUCCESS,
+  payload,
+});
+export const approveFailure = payload => ({
+  type: types.APPROVE_FAILURE,
+  payload,
+});
+
+export const disapproveRequest = payload => ({
+  type: types.DISAPPROVE_REQUEST,
+  payload,
+});
+export const disapproveSuccess = payload => ({
+  type: types.DISAPPROVE_SUCCESS,
+  payload,
+});
+export const disapproveFailure = payload => ({
+  type: types.DISAPPROVE_FAILURE,
   payload,
 });

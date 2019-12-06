@@ -30,6 +30,9 @@ import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadabl
 import Report from '../containers/Admin/Report/Loadable';
 import Integration from '../containers/Admin/Integration/Loadable';
 import UserProfilePage from '../containers/Admin/Profile/index';
+import SettingsManage from '../containers/Admin/SettingsManagePage';
+import MenuManage from '../containers/Admin/MenuManage/Loadable';
+import AddEditMenu from '../containers/Admin/MenuManage/AddEditPage/Loadable';
 
 const routes = [
   {
@@ -222,6 +225,11 @@ const routes = [
     exact: true,
   },
   {
+    path: '/admin/settings',
+    component: SettingsManage,
+    exact: true,
+  },
+  {
     path: '/admin/errors',
     component: ErrorManagePage,
     exact: true,
@@ -240,6 +248,21 @@ const routes = [
     exact: false,
     path: '/admin/profile',
     component: UserProfilePage,
+  },
+  {
+    exact: true,
+    path: '/admin/menu-manage',
+    component: MenuManage,
+  },
+  {
+    exact: true,
+    path: '/admin/menu-manage/edit/:id',
+    component: AddEditMenu,
+  },
+  {
+    exact: true,
+    path: '/admin/menu-manage/add',
+    component: AddEditMenu,
   },
 ];
 

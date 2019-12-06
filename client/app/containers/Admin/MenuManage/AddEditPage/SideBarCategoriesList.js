@@ -1,0 +1,208 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import IndeterminateCheckBoxOutlinedIcon from '@material-ui/icons/IndeterminateCheckBoxOutlined';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import StopIcon from '@material-ui/icons/Stop';
+// import Loader from '../../assets/img/loader.gif';
+import FolderIcon from '@material-ui/icons/Folder';
+import DescriptionIcon from '@material-ui/icons/Description';
+import AddIcon from '@material-ui/icons/Add';
+import * as mapDispatchToProps from '../actions';
+
+import { makeSelectCategory, makeSelectLoading } from '../selectors';
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4,
+  },
+});
+
+const SidebarCategoriesList = props => {
+  const {
+    category,
+    loadOneCategoryRequest,
+    loading,
+    setInnerStateValue,
+    clearGeneralInfo,
+  } = props;
+  const [openSet, setOpenSet] = useState({});
+
+  const handleSetClick = key => {
+    setOpenSet({ ...openSet, [key]: !openSet[key] });
+  };
+
+  const handleClick = id => {
+    loadOneCategoryRequest(id);
+  };
+
+  const handleCollapse = () => {
+    setOpenSet({});
+  };
+
+  const handleChange = (name, value) => {
+    clearGeneralInfo();
+    setInnerStateValue({ state: 'generalInfo', key: name, value });
+  };
+
+  // TODO:look afterward
+  const handleExpand = () => {
+    const ids = [];
+    const idsObj = {};
+    category.map(each => {
+      ids.push(each._id);
+      each.child_category
+        ? each.child_category.map(each1 => {
+          ids.push(each1._id);
+        })
+        : '';
+    });
+    // console.log('ids', ids);
+    ids.map(e => (idsObj[e] = true));
+    // console.log('idsObj', idsObj);
+    setOpenSet(idsObj);
+  };
+
+  const categoryFunctn = (e, parentId = '') => (
+    <ul key={`show-category-${e._id}`}>
+      {e.child_category && e.child_category.length ? (
+        <>
+          <li
+            key={e._id}
+            className="abc pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+            onClick={() => handleSetClick(e._id)}
+          >
+            {openSet[e._id] ? (
+              <div className="text-grey-darker hover:text-primary">
+                <IndeterminateCheckBoxOutlinedIcon />
+              </div>
+            ) : (
+              <div className="text-grey-darker hover:text-primary">
+                <AddBoxOutlinedIcon />
+                <FolderIcon />
+              </div>
+            )}
+            <div className="flex items-center">
+              <span
+                onClick={() => handleClick(e._id)}
+                className="dropdown-title capitalize ml-2"
+              >
+                {e.title}
+              </span>
+            </div>
+          </li>
+
+          <Collapse in={openSet[e._id]} timeout="auto" unmountOnExit>
+            <div className="list-reset pl-8">
+              {e.child_category.map(el => (
+                <div key={el._id}>{categoryFunctn(el, e._id)}</div>
+              ))}
+            </div>
+          </Collapse>
+        </>
+      ) : (
+        <>
+          {e._id === '' ? (
+            <div
+              onClick={() => handleChange('parent_category', parentId)}
+              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+            >
+              <AddIcon />
+              Add subcategory
+            </div>
+          ) : (
+            <div
+              onClick={() => handleClick(e._id)}
+              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+            >
+              <DescriptionIcon />
+              {`${e.title}`}
+            </div>
+          )}
+        </>
+      )}
+    </ul>
+  );
+  return <div>{category && category.map(each => <h1>{each.name}</h1>)}</div>;
+
+  // return (
+  //   <div className="list-reset">
+  //     <div className="p-4">
+  //       <input type="text" placeholder="Search" className="inputbox" />
+  //     </div>
+  //     <div className="px-4">
+  //       <button className="mb-2" type="button" onClick={handleCollapse}>
+  //         Collapse All
+  //       </button>
+  //       <span className="text-gray-800 px-4">|</span>
+  //       <button className="mb-2" type="button" onClick={handleExpand}>
+  //         Expand All
+  //       </button>
+  //     </div>
+
+  //     {category.length <= 0 ? (
+  //       <img
+  //         src={Loader}
+  //         alt="loader"
+  //         className="m-auto mt-10"
+  //         height="100px"
+  //         width="100px"
+  //       />
+  //     ) : (
+  //       category.map(e => <div key={e._id}>{categoryFunctn(e)}</div>)
+  //     )}
+  //     <div className="px-4 mt-5">
+  //       <button
+  //         className="btn-waft"
+  //         style={{ width: '100%' }}
+  //         type="button"
+  //         onClick={() => clearGeneralInfo()}
+  //       >
+  //         Add New Category
+  //       </button>
+  //     </div>
+  //   </div>
+  // );
+};
+
+SidebarCategoriesList.propTypes = {
+  category: PropTypes.array,
+};
+
+const mapStateToProps = createStructuredSelector({
+  category: makeSelectCategory(),
+  loading: makeSelectLoading(),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withStyle = withStyles(styles);
+
+export default compose(
+  withConnect,
+  withStyle,
+)(SidebarCategoriesList);
+
+// {e.child_category[0]._id.length <= 0 && (
+//             <>
+//               <div
+//                 onClick={() => handleClick(e._id)}
+//                 className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-grey-darker hover:text-primary text-sm"
+//               >
+//                 {/* {e.title} */}
+//                 "Add Sub-category"
+//               </div>
+//             </>
+//           )}

@@ -202,7 +202,7 @@ export class FaqCategory extends React.PureComponent {
           </Fab>
         </div>
         <PageContent loading={loading}>
-          <div className="flex justify-end">
+          <div className="flex">
             <div className="flex relative">
               <input
                 type="text"
