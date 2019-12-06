@@ -85,6 +85,7 @@ const AddEdit = props => {
 
   const handleChange = name => event => {
     event.persist();
+    console.log('I am in');
     // if (index) {
     props.setOneValue({ key: name, value: event.target.value });
     // }
@@ -176,8 +177,8 @@ const AddEdit = props => {
       childContent = [];
     };
     const getChildCategory = (parentObj, depth) => {
-      if (parentObj.child_category.length) {
-        parentObj.child_category.map(childElement => {
+      if (parentObj.child_menu.length) {
+        parentObj.child_menu.map(childElement => {
           childContent.push(
             <option
               className="ml-2"
@@ -188,10 +189,7 @@ const AddEdit = props => {
               {'-'.repeat(depth) + childElement.title}
             </option>,
           );
-          if (
-            childElement.child_category &&
-            childElement.child_category.length
-          ) {
+          if (childElement.child_menu && childElement.child_menu.length) {
             return getChildCategory(childElement, depth + 5);
           }
         });
@@ -204,18 +202,18 @@ const AddEdit = props => {
         className="inputbox"
         value={subMenu.parent_category}
         name="parent_category"
-        onChange={handleChange}
-        onBlur={handleChange}
+        onChange={handleChange('parent_menu')}
+        onBlur={handleChange('parent_menu')}
       >
         <option disabled="" value="">
-          ParentCategory
+          Parent Category
         </option>
         {category.map(each => (
           <>
             <option key={each._id} disabled="" value={each._id}>
               {each.title}
             </option>
-            {each.child_category && each.child_category[0]._id !== ''
+            {each.child_menu && each.child_menu[0]._id !== ''
               ? (resetChildContent(),
               getChildCategory(each, 1).map(eachChild => eachChild))
               : null}
@@ -329,10 +327,8 @@ const AddEdit = props => {
                           //   null
                           // }
                           value={subMenu.is_internal}
-                          placeholder="Product Type"
                           name="is_internal"
                           onChange={handleChildChange('is_internal')}
-                          isSearchable
                         >
                           <option value>Same Site</option>
                           <option value={false}>Other Site</option>
@@ -362,10 +358,8 @@ const AddEdit = props => {
                           //   null
                           // }
                           value={subMenu.target}
-                          placeholder="Product Type"
                           name="target"
                           onChange={handleChildChange('target')}
-                          isSearchable
                         >
                           <option value="_blank">_blank</option>
                           <option value="_self">_self</option>

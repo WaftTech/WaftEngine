@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import IndeterminateCheckBoxOutlinedIcon from '@material-ui/icons/IndeterminateCheckBoxOutlined';
 import Collapse from '@material-ui/core/Collapse';
+import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import StopIcon from '@material-ui/icons/Stop';
 // import Loader from '../../assets/img/loader.gif';
@@ -33,6 +34,7 @@ const SidebarCategoriesList = props => {
     category,
     loadOneCategoryRequest,
     loading,
+    setChildValue,
     setInnerStateValue,
     clearGeneralInfo,
   } = props;
@@ -43,7 +45,7 @@ const SidebarCategoriesList = props => {
   };
 
   const handleClick = id => {
-    loadOneCategoryRequest(id);
+    setChildValue({ key: 'parent_menu', value: id });
   };
 
   const handleCollapse = () => {
@@ -85,10 +87,16 @@ const SidebarCategoriesList = props => {
             {openSet[e._id] ? (
               <div className="text-grey-darker hover:text-primary">
                 <IndeterminateCheckBoxOutlinedIcon />
+                <FolderIcon />
               </div>
             ) : (
               <div className="text-grey-darker hover:text-primary">
-                <AddBoxOutlinedIcon />
+                {e.child_menu[0]._id !== '' ? (
+                  <AddBoxOutlinedIcon />
+                ) : (
+                  // <h1>Data</h1>
+                  <CheckBoxOutlineBlankOutlinedIcon />
+                )}
                 <FolderIcon />
               </div>
             )}

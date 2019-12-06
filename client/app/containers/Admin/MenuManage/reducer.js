@@ -136,6 +136,7 @@ export const initialState = {
     title: '',
     is_internal: true,
     url: '',
+    parent_menu: '',
     is_active: true,
     target: '_blank',
   },
@@ -202,7 +203,7 @@ const menuManageReducer = (state = initialState, action) =>
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
         draft.one = action.payload.data.parent;
-        // draft.sub_menu = action.payload.data.child;
+        draft.sub_menu = action.payload.data.child;
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
