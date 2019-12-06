@@ -58,6 +58,19 @@ export const addEditFailure2 = payload => ({
   payload,
 });
 
+export const addEditChildRequest = payload => ({
+  type: types.ADD_EDIT_CHILD_REQUEST,
+  payload,
+});
+export const addEditChildSuccess = payload => ({
+  type: types.ADD_EDIT_CHILD_SUCCESS,
+  payload,
+});
+export const addEditChildFailure = payload => ({
+  type: types.ADD_EDIT_CHILD_FAILURE,
+  payload,
+});
+
 export const deleteOneRequest = payload => ({
   type: types.DELETE_ONE_REQUEST,
   payload,
