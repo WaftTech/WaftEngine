@@ -19,12 +19,21 @@ menuController.getMenu = async (req, res, next) => {
 };
 
 menuItemController.getMenuItem = async (req, res, next) => {
-  try {
-    const menuListItem = await menu_item.find();
-    return otherHelper.sendResponse(res, httpStatus.OK, true, menuListItem, null, menuConfig.get, null);
-  } catch (err) {
-    next(err);
+  let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+  searchq = { is_deleted: false };
+  if (req.query.find_title) {
+    searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
   }
+
+  selectq = 'title key order';
+  let data = await otherHelper.getquerySendResponse(menu_item, page, size, sortq, searchq, selectq, next, populate);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu Item get success!!', page, size, data.totaldata);
+  // try {
+  //   const menuListItem = await menu_item.find();
+  //   return otherHelper.sendResponse(res, httpStatus.OK, true, menuListItem, null, menuConfig.get, null);
+  // } catch (err) {
+  //   next(err);
+  // }
 };
 
 menuItemController.saveMenuItem = async (req, res, next) => {
@@ -116,7 +125,7 @@ menuController.getEditMenu = async (req, res, next) => {
     }
   }
 
-  const parent = await menusch.findById(req.params.id).select('title key order');
+  const parent = await menusch.findById(req.params.id).select('title key order is_active');
 
   let child = await menu_item.aggregate([
     {
