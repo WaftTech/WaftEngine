@@ -9,8 +9,9 @@ router.get('/', menuController.getMenu);
 router.post('/', sanitize, validate, authorization, menuController.saveMenu);
 
 router.delete('/:id', authorization, menuController.deleteMenu);
+router.get('/menuitem/:id', menuItemController.getMenuItem);
+//router.get('/menuitem/:id', menuItemController.getMenuItemDetail);
 
-router.get('/menuitem', menuItemController.getMenuItem);
 router.get('/:id', menuController.getEditMenu);
 
 router.post('/menuitem', itemsanitize, authorization, menuItemController.saveMenuItem); //itemvalidate,
