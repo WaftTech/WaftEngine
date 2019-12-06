@@ -101,6 +101,12 @@ export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
 });
+
+export const setChildValue = payload => ({
+  type: types.SET_CHILD_VALUE,
+  payload,
+});
+
 export const clearOne = () => ({
   type: types.CLEAR_ONE,
 });

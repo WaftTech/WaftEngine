@@ -88,7 +88,7 @@ function* addEdit2SuccessFunc(action) {
   };
   yield put(enqueueSnackbar(snackbarData));
   yield put(actions.showSubMenu(true));
-  yield put(actions.loadMenuRequest(action.payload.data._id));
+  // yield put(actions.loadMenuRequest(action.payload.data._id));
 }
 
 function* addEdit2FailureFunc(action) {

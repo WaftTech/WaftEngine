@@ -55,27 +55,27 @@ const SidebarCategoriesList = props => {
     setInnerStateValue({ state: 'generalInfo', key: name, value });
   };
 
-  // TODO:look afterward
-  const handleExpand = () => {
-    const ids = [];
-    const idsObj = {};
-    category.map(each => {
-      ids.push(each._id);
-      each.child_category
-        ? each.child_category.map(each1 => {
-          ids.push(each1._id);
-        })
-        : '';
-    });
-    // console.log('ids', ids);
-    ids.map(e => (idsObj[e] = true));
-    // console.log('idsObj', idsObj);
-    setOpenSet(idsObj);
-  };
+  // // TODO:look afterward
+  // const handleExpand = () => {
+  //   const ids = [];
+  //   const idsObj = {};
+  //   category.map(each => {
+  //     ids.push(each._id);
+  //     each.child_category
+  //       ? each.child_category.map(each1 => {
+  //         ids.push(each1._id);
+  //       })
+  //       : '';
+  //   });
+  //   // console.log('ids', ids);
+  //   ids.map(e => (idsObj[e] = true));
+  //   // console.log('idsObj', idsObj);
+  //   setOpenSet(idsObj);
+  // };
 
-  const categoryFunctn = (e, parentId = '') => (
+  const categoryFunction = (e, parentId = '') => (
     <ul key={`show-category-${e._id}`}>
-      {e.child_category && e.child_category.length ? (
+      {e.child_menu && e.child_menu.length ? (
         <>
           <li
             key={e._id}
@@ -104,15 +104,15 @@ const SidebarCategoriesList = props => {
 
           <Collapse in={openSet[e._id]} timeout="auto" unmountOnExit>
             <div className="list-reset pl-8">
-              {e.child_category.map(el => (
-                <div key={el._id}>{categoryFunctn(el, e._id)}</div>
+              {e.child_menu.map(el => (
+                <div key={el._id}>{categoryFunction(el, e._id)}</div>
               ))}
             </div>
           </Collapse>
         </>
       ) : (
         <>
-          {e._id === '' ? (
+          {/* {e._id === '' ? (
             <div
               onClick={() => handleChange('parent_category', parentId)}
               className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
@@ -120,7 +120,8 @@ const SidebarCategoriesList = props => {
               <AddIcon />
               Add subcategory
             </div>
-          ) : (
+          ) : ( */}
+          {e._id !== '' && (
             <div
               onClick={() => handleClick(e._id)}
               className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
@@ -129,50 +130,52 @@ const SidebarCategoriesList = props => {
               {`${e.title}`}
             </div>
           )}
+          {/* )} */}
         </>
       )}
     </ul>
   );
-  return <div>{category && category.map(each => <h1>{each.name}</h1>)}</div>;
+  // return <div>{category && category.map(each => <h1>{each.title}</h1>)}</div>;
 
-  // return (
-  //   <div className="list-reset">
-  //     <div className="p-4">
-  //       <input type="text" placeholder="Search" className="inputbox" />
-  //     </div>
-  //     <div className="px-4">
-  //       <button className="mb-2" type="button" onClick={handleCollapse}>
-  //         Collapse All
-  //       </button>
-  //       <span className="text-gray-800 px-4">|</span>
-  //       <button className="mb-2" type="button" onClick={handleExpand}>
-  //         Expand All
-  //       </button>
-  //     </div>
+  return (
+    <div className="list-reset">
+      {/* <div className="p-4">
+        <input type="text" placeholder="Search" className="inputbox" />
+      </div>
+      <div className="px-4">
+        <button className="mb-2" type="button" onClick={handleCollapse}>
+          Collapse All
+        </button>
+        <span className="text-gray-800 px-4">|</span>
+        <button className="mb-2" type="button" onClick={handleExpand}>
+          Expand All
+        </button>
+      </div> */}
 
-  //     {category.length <= 0 ? (
-  //       <img
-  //         src={Loader}
-  //         alt="loader"
-  //         className="m-auto mt-10"
-  //         height="100px"
-  //         width="100px"
-  //       />
-  //     ) : (
-  //       category.map(e => <div key={e._id}>{categoryFunctn(e)}</div>)
-  //     )}
-  //     <div className="px-4 mt-5">
-  //       <button
-  //         className="btn-waft"
-  //         style={{ width: '100%' }}
-  //         type="button"
-  //         onClick={() => clearGeneralInfo()}
-  //       >
-  //         Add New Category
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
+      {category.length <= 0 ? (
+        // <img
+        //   src={Loader}
+        //   alt="loader"
+        //   className="m-auto mt-10"
+        //   height="100px"
+        //   width="100px"
+        // />
+        <h1>Loading...</h1>
+      ) : (
+        category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
+      )}
+      {/* <div className="px-4 mt-5">
+        <button
+          className="btn-waft"
+          style={{ width: '100%' }}
+          type="button"
+          onClick={() => clearGeneralInfo()}
+        >
+          Add New Category
+        </button>
+      </div> */}
+    </div>
+  );
 };
 
 SidebarCategoriesList.propTypes = {
