@@ -91,7 +91,18 @@ function* networkError() {
   // alert('User Session expired. please login again');
 }
 
+function* loadMenu(action) {
+  yield call(
+    Api.get(
+      `menu/detailforuser/${action.payload}`,
+      actions.loadContentSuccess,
+      actions.loadContentFailure,
+    ),
+  );
+}
+
 export default function* defaultSaga() {
+  yield takeEvery(types.LOAD_MENU_REQUEST, loadMenu);
   yield takeEvery(types.LOAD_CONTENT_REQUEST, loadContent);
   yield takeEvery(types.LOAD_MEDIA_REQUEST, loadMedia);
   yield takeEvery(types.LOAD_SLIDE_REQUEST, loadSlide);
