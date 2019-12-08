@@ -134,10 +134,10 @@ export const initialState = {
   },
   sub_menu_form: {
     title: '',
-    is_internal: true,
+    is_internal: 'true',
     url: '',
-    parent_menu: '',
-    is_active: true,
+    parent_menu: '5dea2c73ae00661fc8842b70',
+    is_active: 'true',
     target: '_blank',
   },
   query: { find_title: '', size: 10 },

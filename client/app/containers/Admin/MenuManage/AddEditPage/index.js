@@ -202,8 +202,8 @@ const AddEdit = props => {
         className="inputbox"
         value={subMenu.parent_category}
         name="parent_category"
-        onChange={handleChange('parent_menu')}
-        onBlur={handleChange('parent_menu')}
+        onChange={handleChildChange('parent_menu')}
+        onBlur={handleChildChange('parent_menu')}
       >
         <option disabled="" value="">
           Parent Category
