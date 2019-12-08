@@ -67,10 +67,10 @@ const AddEdit = props => {
     }
   }, []);
 
-  const handleCheckedChange = (name, index) => event => {
+  const handleCheckedChange = name => event => {
     event.persist();
     // if (index) {
-    props.setOneValue({ key: name, index, value: event.target.checked });
+    props.setOneValue({ key: name, value: event.target.checked });
     // }
     // props.setOneValue({ key: name, value: event.target.checked });
   };
@@ -85,7 +85,6 @@ const AddEdit = props => {
 
   const handleChange = name => event => {
     event.persist();
-    console.log('I am in');
     // if (index) {
     props.setOneValue({ key: name, value: event.target.value });
     // }
@@ -106,7 +105,6 @@ const AddEdit = props => {
   const handleChildChange = name => event => {
     event.persist();
     // if (index) {
-    console.log('name,event.target.value', name, event.target.value);
     props.setChildValue({ key: name, value: event.target.value });
     // }
     // props.setOneValue({ key: name, value: event.target.value });
@@ -136,7 +134,7 @@ const AddEdit = props => {
     const {
       target: { value },
     } = event;
-    props.setChildValue({ key: 'title', value });
+    props.setOneValue({ key: 'title', value });
     const url = value
       .trim()
       .split(' ')
@@ -154,7 +152,7 @@ const AddEdit = props => {
       .replace('!', '')
       .replace('#', '')
       .replace('@', '');
-    props.setChildValue({ key: 'url', value: url });
+    props.setOneValue({ key: 'key', value: url });
   };
 
   const {
@@ -273,7 +271,7 @@ const AddEdit = props => {
                           id="grid-last-name"
                           type="text"
                           value={subMenu.title || ''}
-                          onChange={handleTitleChange}
+                          onChange={handleChildChange('title')}
                         />
                         {errors && errors.title && (
                           <div id="component-error-text">{errors.title}</div>
@@ -400,7 +398,7 @@ const AddEdit = props => {
                     id="grid-last-name"
                     type="text"
                     value={one.title || ''}
-                    onChange={handleChange('title')}
+                    onChange={handleTitleChange}
                   />
                   {errors && errors.title && (
                     <div id="component-error-text">{errors.title}</div>

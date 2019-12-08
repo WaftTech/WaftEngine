@@ -173,6 +173,11 @@ const menuManageReducer = (state = initialState, action) =>
       case types.ADD_EDIT_FAILURE_2:
         draft.errors = action.payload.errors;
         break;
+      case types.ADD_EDIT_SUCCESS_2:
+        draft.show_sub_menu = true;
+        console.log('action.payload', action.payload);
+        draft.sub_menu_form.menu_sch_id = action.payload.data._id;
+        break;
       case types.ADD_EDIT_CHILD_SUCCESS:
         // draft.sub_menu = action.payload.data;
         break;
@@ -183,6 +188,7 @@ const menuManageReducer = (state = initialState, action) =>
         draft.one = initialState.one;
         draft.show_sub_menu = initialState.show_sub_menu;
         draft.sub_menu = initialState.sub_menu;
+        draft.sub_menu_form = initialState.sub_menu_form;
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
