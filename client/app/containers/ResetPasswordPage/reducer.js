@@ -10,24 +10,35 @@ export const initialState = {
   defaultData: {
     code: '',
     password: '',
+    confirm_password: '',
   },
+  loading: false,
+  errors: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const resetPasswordPageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case types.DEFAULT_ACTION_REQUEST:
-        draft.defaultData = 'default data is loading';
+      case types.LOAD_RESET_REQUEST:
+        draft.loading = true;
         break;
-      case types.DEFAULT_ACTION_SUCCESS:
-        draft.defaultData = 'default data is loaded';
+      case types.LOAD_RESET_SUCCESS:
+        draft.loading = false;
         break;
-      case types.DEFAULT_ACTION_FAILURE:
-        draft.defaultData = 'default data is loading failure';
+      case types.LOAD_RESET_FAILURE:
+        draft.loading = false;
         break;
       case types.SET_DATA:
         draft.defaultData[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.key] = '';
+        break;
+      case types.SET_ERRORS:
+        draft.errors = action.payload;
+        draft.loading = false;
+        break;
+      case types.CLEAR_ERRORS:
+        draft.errors = initialState.errors;
         break;
     }
   });

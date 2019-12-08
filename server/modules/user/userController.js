@@ -442,7 +442,7 @@ userController.ResetPassword = async (req, res, next) => {
     }
     let salt = await bcrypt.genSalt(10);
     let hashpw = await bcrypt.hash(password, salt);
-    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
     const payload = {
       id: user._id,

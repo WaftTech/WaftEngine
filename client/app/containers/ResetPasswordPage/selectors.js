@@ -17,4 +17,14 @@ export const makeSelectDefaultData = () =>
     state => state.defaultData,
   );
 
-export default makeSelectResetPasswordPage;
+export const makeSelectLoading = () =>
+  createSelector(
+    selectDomain,
+    state => state.loading,
+  );
+
+export const makeSelectErrors = () =>
+  createSelector(
+    selectDomain,
+    state => state.errors,
+  );
