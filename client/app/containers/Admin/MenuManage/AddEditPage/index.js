@@ -120,6 +120,7 @@ const AddEdit = props => {
 
   const handleChildSave = () => {
     props.addEditChildRequest();
+    props.clearErrors();
   };
 
   const handleAddChildMenuSave = () => {
@@ -273,8 +274,12 @@ const AddEdit = props => {
                           value={subMenu.title || ''}
                           onChange={handleChildChange('title')}
                         />
-                        {errors && errors.title && (
-                          <div id="component-error-text">{errors.title}</div>
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.title && (
+                          <div id="component-error-text">
+                            {errors.sub_menu_form.title}
+                          </div>
                         )}
                       </div>
                       <div className="w-full md:w-1/2 pb-4">
@@ -288,8 +293,12 @@ const AddEdit = props => {
                           value={subMenu.url || ''}
                           onChange={handleChildChange('url')}
                         />
-                        {errors && errors.title && (
-                          <div id="component-error-text">{errors.url}</div>
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.url && (
+                          <div id="component-error-text">
+                            {errors.sub_menu_form.url}
+                          </div>
                         )}
                       </div>
                       <div className="flex flex-wrap justify-between px-2">

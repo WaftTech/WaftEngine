@@ -139,6 +139,7 @@ function* addEditChildSuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
+  yield put(actions.clearSubMenu());
   // yield put(push('/admin/menu-manage'));
 }
 

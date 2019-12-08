@@ -39,7 +39,7 @@ export const initialState = {
   },
   query: { find_title: '', find_key: '', size: 10 },
   loading: false,
-  errors: { title: '', is_active: '' },
+  errors: { title: '', is_active: '', key: '', order: '', sub_menu_form: {} },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -74,11 +74,20 @@ const menuManageReducer = (state = initialState, action) =>
         console.log('action.payload', action.payload);
         draft.sub_menu_form.menu_sch_id = action.payload.data._id;
         break;
+      case types.ADD_EDIT_CHILD_FAILURE:
+        draft.errors.sub_menu_form = action.payload.errors;
+        break;
       case types.ADD_EDIT_CHILD_SUCCESS:
-        // draft.sub_menu = action.payload.data;
+        draft.sub_menu = action.payload.data;
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
+        break;
+      case types.CLEAR_SUB_MENU:
+        draft.sub_menu_form = {
+          ...initialState.sub_menu_form,
+          menu_sch_id: draft.sub_menu_form.menu_sch_id,
+        };
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
