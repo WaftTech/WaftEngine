@@ -13,6 +13,9 @@ menuController.getMenu = async (req, res, next) => {
   if (req.query.find_title) {
     searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
   }
+  if (req.query.find_key) {
+    searchq = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchq };
+  }
 
   selectq = 'title key order';
   let data = await otherHelper.getquerySendResponse(menusch, page, size, sortq, searchq, selectq, next, populate);
