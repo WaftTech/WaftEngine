@@ -168,7 +168,7 @@ const SidebarCategoriesList = props => {
         //   height="100px"
         //   width="100px"
         // />
-        <h1>Loading...</h1>
+        <h1 />
       ) : (
         category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
       )}

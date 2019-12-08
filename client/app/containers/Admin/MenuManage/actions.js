@@ -107,6 +107,9 @@ export const setChildValue = payload => ({
   payload,
 });
 
+export const clearSubMenu = () => ({
+  type: types.CLEAR_SUB_MENU,
+});
 export const clearOne = () => ({
   type: types.CLEAR_ONE,
 });

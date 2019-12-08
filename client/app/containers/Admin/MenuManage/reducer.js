@@ -20,111 +20,7 @@ export const initialState = {
     size: 10,
     totaldata: 1,
   },
-  sub_menu: [
-    {
-      _id: '5dea2a18ae00661fc8842b1a',
-      is_active: true,
-      order: 1,
-      title: 'category',
-      url: 'level_1.2',
-      child_menu: [
-        {
-          is_internal: true,
-          is_active: true,
-          order: 1,
-          title: 'Electronic',
-          url: 'level_1.1.1',
-          target: '_blank',
-          parent_menu: '5dea29a0ae00661fc8842b6b',
-          _id: '5dea29f3ae00661fc8842b6c',
-          child_menu: [
-            {
-              is_internal: true,
-              is_active: true,
-              order: 1,
-              title: 'Samsung',
-              url: 'level_1.1.1',
-              target: '_blank',
-              parent_menu: '5dea29a0ae00661fc8842b6d',
-              _id: '5dea29f3ae00661fc8842b6e',
-              child_menu: [],
-            },
-            {
-              is_internal: true,
-              is_active: true,
-              order: 1,
-              title: 'LG',
-              url: 'level_1.1.1',
-              target: '_blank',
-              parent_menu: '5dea29a0ae00661fc8842b6f',
-              _id: '5dea29f3ae00661fc8842b6g',
-              child_menu: [],
-            },
-          ],
-        },
-        {
-          is_internal: true,
-          is_active: true,
-          order: 1,
-          title: 'Fashion',
-          url: 'level_1.1.1',
-          target: '_blank',
-          parent_menu: '5dea29a0ae00661fc8842b6h',
-          _id: '5dea29f3ae00661fc8842b6i',
-          child_menu: [
-            {
-              is_internal: true,
-              is_active: true,
-              order: 1,
-              title: 'Men',
-              url: 'level_1.1.1',
-              target: '_blank',
-              parent_menu: '5dea29a0ae00661fc8842b6b',
-              _id: '5dea29f3ae00661fc8842b6d',
-              child_menu: [],
-            },
-            {
-              is_internal: true,
-              is_active: true,
-              order: 1,
-              title: 'Women',
-              url: 'level_1.1.1',
-              target: '_blank',
-              parent_menu: '5dea29a0ae00661fc8842b6b',
-              _id: '5dea29f3ae00661fc8842b6d',
-              child_menu: [],
-            },
-          ],
-        },
-      ],
-      target: ['_blank'],
-      is_internal: ['is_internal'],
-      parent_menu: ['parent_menu'],
-    },
-    {
-      _id: '5dea29a0ae00661fc8842b1b',
-      is_active: true,
-      order: 1,
-      title: 'Home',
-      url: 'level_1.1',
-      child_menu: [
-        {
-          is_internal: true,
-          is_active: true,
-          order: 1,
-          title: 'Search',
-          url: 'level_1.1.1',
-          target: '_blank',
-          parent_menu: '5dea29a0ae00661fc8842b6b',
-          _id: '5dea29f3ae00661fc8842b6d',
-          child_menu: [],
-        },
-      ],
-      target: ['_blank'],
-      is_internal: ['is_internal'],
-      parent_menu: ['parent_menu'],
-    },
-  ],
+  sub_menu: [],
   show_sub_menu: false,
   one: {
     title: '',
@@ -137,12 +33,13 @@ export const initialState = {
     is_internal: true,
     url: '',
     parent_menu: '',
+    menu_sch_id: '',
     is_active: true,
     target: '_blank',
   },
-  query: { find_title: '', size: 10 },
+  query: { find_title: '', find_key: '', size: 10 },
   loading: false,
-  errors: { title: '', is_active: '' },
+  errors: { title: '', is_active: '', key: '', order: '', sub_menu_form: {} },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -172,16 +69,31 @@ const menuManageReducer = (state = initialState, action) =>
       case types.ADD_EDIT_FAILURE_2:
         draft.errors = action.payload.errors;
         break;
+      case types.ADD_EDIT_SUCCESS_2:
+        draft.show_sub_menu = true;
+        console.log('action.payload', action.payload);
+        draft.sub_menu_form.menu_sch_id = action.payload.data._id;
+        break;
+      case types.ADD_EDIT_CHILD_FAILURE:
+        draft.errors.sub_menu_form = action.payload.errors;
+        break;
       case types.ADD_EDIT_CHILD_SUCCESS:
         draft.sub_menu = action.payload.data;
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
         break;
+      case types.CLEAR_SUB_MENU:
+        draft.sub_menu_form = {
+          ...initialState.sub_menu_form,
+          menu_sch_id: draft.sub_menu_form.menu_sch_id,
+        };
+        break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
         draft.show_sub_menu = initialState.show_sub_menu;
         draft.sub_menu = initialState.sub_menu;
+        draft.sub_menu_form = initialState.sub_menu_form;
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
@@ -203,6 +115,7 @@ const menuManageReducer = (state = initialState, action) =>
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
         draft.one = action.payload.data.parent;
+        draft.sub_menu_form.menu_sch_id = action.payload.data.parent._id;
         draft.sub_menu = action.payload.data.child;
         break;
       case types.LOAD_ONE_FAILURE:
