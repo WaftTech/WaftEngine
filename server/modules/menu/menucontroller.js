@@ -13,6 +13,9 @@ menuController.getMenu = async (req, res, next) => {
   if (req.query.find_title) {
     searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
   }
+  if (req.query.find_key) {
+    searchq = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchq };
+  }
 
   selectq = 'title key order';
   let data = await otherHelper.getquerySendResponse(menusch, page, size, sortq, searchq, selectq, next, populate);
@@ -224,7 +227,7 @@ menuController.getEditMenu = async (req, res, next) => {
 
   let child = await menu_item.aggregate([
     {
-      $match: { parent_menu: null, menu_sch_id: objectId(req.params.id), is_deleted: false },
+      $match: { parent_menu: null, menu_sch_id: objectId(req.params.id) },
     },
     {
       $lookup: {
