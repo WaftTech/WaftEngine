@@ -12,6 +12,9 @@ router.post('/menuitem', itemsanitize, itemvalidate, authorization, menuItemCont
 
 router.get('/detail/:id', menuController.getEditMenu);
 
+
+router.get('/detailforuser/:key', menuController.getMenuForUser);
+
 router.delete('/:id', authorization, menuController.deleteMenu);
 
 // router.get('/', menuController.getMenu);

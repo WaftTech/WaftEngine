@@ -305,4 +305,102 @@ menuController.deleteMenu = async (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.delete, null);
 };
 
+menuController.getMenuForUser = async (req, res, next) => {
+  const size_default = 10;
+  let page;
+  let size;
+  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
+    page = Math.abs(req.query.page);
+  } else {
+    page = 1;
+  }
+  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
+    size = Math.abs(req.query.size);
+  } else {
+    size = size_default;
+  }
+  if (req.query.sort) {
+    let sortfield = req.query.sort.slice(1);
+    let sortby = req.query.sort.charAt(0);
+    if (sortby == 1 && !isNaN(sortby) && sortfield) {
+      //one is ascending
+      sortq = sortfield;
+    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
+      //zero is descending
+      sortq = '-' + sortfield;
+    } else {
+      sortq = '';
+    }
+  }
+
+  const id = await menusch.findOne({ key: req.params.key }).select('_id');
+
+  let child = await menu_item.aggregate([
+    {
+      $match: { parent_menu: null, menu_sch_id: objectId(id._id) },
+    },
+    {
+      $lookup: {
+        from: 'menu_items',
+        localField: '_id',
+        foreignField: 'parent_menu',
+        as: 'child_menu',
+      },
+    },
+    {
+      $unwind: { path: '$child_menu', preserveNullAndEmptyArrays: true },
+    },
+    {
+      $project: {
+        _id: 1,
+        is_active: 1,
+        order: 1,
+        title: 1,
+        target: 1,
+        url: 1,
+        is_internal: 1,
+        parent_menu: 1,
+        'child_menu._id': { $ifNull: ['$child_menu._id', ''] },
+        'child_menu.is_active': 1,
+        'child_menu.order': 1,
+        'child_menu.title': 1,
+        'child_menu.target': 1,
+        'child_menu.url': 1,
+        'child_menu.is_internal': 1,
+        'child_menu.parent_menu': 1,
+      },
+    },
+
+    {
+      $lookup: {
+        from: 'menu_items',
+        localField: 'child_menu._id',
+        foreignField: 'parent_menu',
+        as: 'child_menu.child_menu',
+      },
+    },
+    {
+      $group: {
+        _id: '$_id',
+        is_active: { $first: '$is_active' },
+        order: { $first: '$order' },
+        title: { $first: '$title' },
+        url: { $first: '$url' },
+        child_menu: { $push: '$child_menu' },
+        target: { $first: '$target' },
+        is_internal: { $first: '$is_internal' },
+        parent_menu: { $first: '$parent_menu' },
+      },
+    },
+
+    {
+      $skip: (page - 1) * size,
+    },
+    {
+      $limit: size,
+    },
+  ]);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, child, null, 'Child menu get success!!', null);
+};
+
 module.exports = { menuController, menuItemController };
