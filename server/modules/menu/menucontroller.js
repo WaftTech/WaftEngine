@@ -261,9 +261,9 @@ menuController.getEditMenu = async (req, res, next) => {
         title: { $first: '$title' },
         url: { $first: '$url' },
         child_menu: { $push: '$child_menu' },
-        target: { $push: '$target' },
-        is_internal: { $push: 'is_internal' },
-        parent_menu: { $push: 'parent_menu' },
+        target: { $first: '$target' },
+        is_internal: { $first: '$is_internal' },
+        parent_menu: { $first: '$parent_menu' },
       },
     },
 
