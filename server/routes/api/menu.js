@@ -8,7 +8,7 @@ router.get('/', menuController.getMenu);
 
 router.post('/', sanitize, validate, authorization, menuController.saveMenu);
 
-router.post('/menuitem', itemsanitize, authorization, menuItemController.saveMenuItem);
+router.post('/menuitem', itemsanitize, itemvalidate, authorization, menuItemController.saveMenuItem);
 
 router.get('/detail/:id', menuController.getEditMenu);
 
