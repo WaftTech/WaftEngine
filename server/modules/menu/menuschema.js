@@ -8,7 +8,7 @@ const menuItemSchema = new Schema({
   is_internal: { type: Boolean, required: true, default: true },
   url: { type: String, required: true },
   is_active: { type: Boolean, default: true, required: true },
-  target: { type: String, required: true, enum: ['_blank', '_self', '_parent', '_top'] },
+  target: { type: String, required: true, enum: ['_blank', '_self', '_parent', '_top'], default: '_self' },
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },
   updated_at: { type: Date },
   updated_by: { type: Schema.Types.ObjectId, ref: 'users' },

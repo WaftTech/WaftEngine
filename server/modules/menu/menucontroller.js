@@ -333,7 +333,7 @@ menuController.getMenuForUser = async (req, res, next) => {
     }
   }
 
-  const id = await menusch.findOne({ key: req.params.key }).select('_id');
+  const id = await menusch.findOne({ key: req.params.key }).select('key');
 
   let child = await menu_item.aggregate([
     {
@@ -400,7 +400,7 @@ menuController.getMenuForUser = async (req, res, next) => {
       $limit: size,
     },
   ]);
-  return otherHelper.sendResponse(res, httpStatus.OK, true, child, null, 'Child menu get success!!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: id.key }, null, 'Child menu get success!!', null);
 };
 
 module.exports = { menuController, menuItemController };
