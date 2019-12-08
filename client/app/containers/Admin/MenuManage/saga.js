@@ -9,8 +9,22 @@ import { enqueueSnackbar } from '../../App/actions';
 
 function* loadAll(action) {
   const token = yield select(makeSelectToken());
+
+  let query = '';
+  if (action.payload) {
+    Object.keys(action.payload).map(each => {
+      query = `${query}&${each}=${action.payload[each]}`;
+      return null;
+    });
+  }
+
   yield call(
-    Api.get(`menu`, actions.loadAllSuccess, actions.loadAllFailure, token),
+    Api.get(
+      `menu?${query}`,
+      actions.loadAllSuccess,
+      actions.loadAllFailure,
+      token,
+    ),
   );
 }
 
