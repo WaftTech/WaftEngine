@@ -224,7 +224,7 @@ menuController.getEditMenu = async (req, res, next) => {
 
   let child = await menu_item.aggregate([
     {
-      $match: { parent_menu: null, menu_sch_id: objectId(req.params.id), is_deleted: false },
+      $match: { parent_menu: null, menu_sch_id: objectId(req.params.id) },
     },
     {
       $lookup: {
