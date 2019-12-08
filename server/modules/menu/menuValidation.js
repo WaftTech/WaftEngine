@@ -120,6 +120,19 @@ validation.itemvalidate = (req, res, next) => {
       ],
     },
     {
+      field: 'menu_sch_id',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: menuConfig.validate.empty,
+        },
+        {
+          condition: 'IsMongoId',
+          msg: menuConfig.validate.invalid,
+        },
+      ],
+    },
+    {
       field: 'is_internal',
       validate: [
         {
