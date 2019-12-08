@@ -134,13 +134,14 @@ export const initialState = {
   },
   sub_menu_form: {
     title: '',
-    is_internal: 'true',
+    is_internal: true,
     url: '',
-    parent_menu: '5dea2c73ae00661fc8842b70',
-    is_active: 'true',
+    parent_menu: '',
+    menu_sch_id: '',
+    is_active: true,
     target: '_blank',
   },
-  query: { find_title: '', size: 10 },
+  query: { find_title: '', find_key: '', size: 10 },
   loading: false,
   errors: { title: '', is_active: '' },
 };
@@ -173,7 +174,7 @@ const menuManageReducer = (state = initialState, action) =>
         draft.errors = action.payload.errors;
         break;
       case types.ADD_EDIT_CHILD_SUCCESS:
-        draft.sub_menu = action.payload.data;
+        // draft.sub_menu = action.payload.data;
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
@@ -203,6 +204,7 @@ const menuManageReducer = (state = initialState, action) =>
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
         draft.one = action.payload.data.parent;
+        draft.sub_menu_form.menu_sch_id = action.payload.data.parent._id;
         draft.sub_menu = action.payload.data.child;
         break;
       case types.LOAD_ONE_FAILURE:
