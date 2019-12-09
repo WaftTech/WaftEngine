@@ -95,8 +95,8 @@ function* loadMenu(action) {
   yield call(
     Api.get(
       `menu/detailforuser/${action.payload}`,
-      actions.loadContentSuccess,
-      actions.loadContentFailure,
+      actions.loadMenuSuccess,
+      actions.loadMenuFailure,
     ),
   );
 }

@@ -17,6 +17,8 @@ import SlickSlider from '../../components/SlickSlider';
 import StaticContentDiv from '../../components/StaticContentDiv';
 import star from '../../assets/img/star.svg';
 
+import StaticMenu from '../../components/StaticMenu';
+
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
   render() {
@@ -47,6 +49,7 @@ export default class HomePage extends React.PureComponent {
                 <span className="pl-2">Star WaftEngine</span>
               </a>
             </div>
+
             <div className="md:w-1/2 clearfix">
               <img
                 className="opacity-25 h-48 float-right"
@@ -57,6 +60,9 @@ export default class HomePage extends React.PureComponent {
           </div>
         </div>
 
+        <div className="text-sm nav md:w-full md:text-center lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
+          <StaticMenu menuKey="main-menu-1" />
+        </div>
         <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
           <StaticContentDiv contentKey="home-page-content" />
         </div>
