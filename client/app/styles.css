@@ -75,6 +75,10 @@ address {
   line-height: inherit;
 }
 
+ul{
+  list-style-type: none;
+}
+
 ol,
 ul,
 dl {
@@ -386,6 +390,11 @@ mark,
 .mark {
   padding: 0.2em;
   background-color: #fcf8e3;
+}
+
+.list-circle{
+  list-style-type: circle;
+  padding-left:40px;
 }
 
 /* custom css starts */

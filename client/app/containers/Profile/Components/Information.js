@@ -137,7 +137,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         /> */}
 
         <div className="w-full pb-2">
-         <div>Role : {one.roles.map(each => <span key={each._id} className="rounded bg-gray-600 px-4 py-2 mr-2">{each.role_title} </span>)}</div>
+         <div>Role : {one.roles.map(each => <span key={each._id} className="rounded border px-4 py-2 mr-2">{each.role_title} </span>)}</div>
         </div>
 
         {/* <div className="w-full  pb-4">
