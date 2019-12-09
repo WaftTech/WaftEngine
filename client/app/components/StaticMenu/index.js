@@ -60,61 +60,64 @@ class StaticMenu extends React.PureComponent {
     }
   };
 
-  /*
-          <div className="text-sm nav md:w-full md:text-center lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated"></div>
- */ render() {
+ render() {
     const { menuObj } = this.props;
     const data = menuObj[this.props.menuKey];
     if (!data) return null;
-    return data.map(each => {
-      if (each.is_internal) {
-        if (each.child_menu && each.child_menu[0]._id !== '') {
+    return (
+    <div className="container mx-auto w-full nav-bar">
+    <div className="flex text-sm nav md:w-full md:text-center lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
+      {
+        data.map(each => {
+          if (each.is_internal) {
+            if (each.child_menu && each.child_menu[0]._id !== '') {
+              return (
+                <>
+                  <NavLink
+                    to="#"
+                    className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
+                    onClick={this.handleToggle}
+                  >
+                    {each.title}
+                    {each.child_menu &&
+                      each.child_menu[0]._id !== '' &&
+                      // checked === each.title &&
+                      this.getChildElement(each, 1)}
+                  </NavLink>
+                </>
+              );
+            }
+            return (
+              <>
+                <NavLink
+                  to={each.url}
+                  className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
+                  onClick={this.handleToggle}
+                >
+                  {each.title}
+                  {/* {each.child_menu &&
+                  each.child_menu[0]._id !== '' &&
+                  this.getChildElement(each)} */}
+                </NavLink>
+              </>
+            );
+          }
           return (
             <>
-              <NavLink
-                to="#"
+              <a
                 className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-                onClick={this.handleToggle}
+                href={each.url}
+                target={each.target}
               >
                 {each.title}
-                {each.child_menu &&
-                  each.child_menu[0]._id !== '' &&
-                  // checked === each.title &&
-                  this.getChildElement(each, 1)}
-              </NavLink>
-              <br />
+              </a>
             </>
           );
-        }
-        return (
-          <>
-            <NavLink
-              to={each.url}
-              className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-              onClick={this.handleToggle}
-            >
-              {each.title}
-              {/* {each.child_menu &&
-              each.child_menu[0]._id !== '' &&
-              this.getChildElement(each)} */}
-            </NavLink>
-            <br />
-          </>
-        );
+        })
       }
-      return (
-        <>
-          <a
-            className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-            href={each.url}
-            target={each.target}
-          >
-            {each.title}
-          </a>
-          <br />
-        </>
-      );
-    });
+       </div>
+       </div>
+    )
   }
 }
 
