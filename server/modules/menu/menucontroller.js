@@ -298,7 +298,7 @@ menuController.deleteMenu = async (req, res, next) => {
   const menu = await menusch.findByIdAndUpdate(
     menuId,
     {
-      $set: { is_deleted: true },
+      $set: { is_deleted: true, key: '' },
     },
     { new: true },
   );
