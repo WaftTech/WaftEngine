@@ -35,6 +35,7 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import MediaElement from '../../../../components/MediaElement';
+import EditorFileSelect from '../../../EditorFileSelect';
 
 const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
@@ -66,33 +67,37 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
   return (
     <div className="rounded mt-4">
       {items.map((value, index) => (
-        <div
-          key={`${value._id}-item-image-${index}`}>
-          <SortableImageItem
-            index={index}
-            value={value}
-            _this={_this}
-          />
+        <div key={`${value._id}-item-image-${index}`}>
+          <SortableImageItem index={index} value={value} _this={_this} />
           <div className="flex mb-4 bg-gray-200 p-2">
             <div className="w-1.5/5 m-auto text-center pr-5">
               {value.image ? (
-                <MediaElement
-                  mediaKey={
+                <img
+                  className={_this.props.classes.media}
+                  src={
                     typeof value.image === 'string'
-                      ? value.image
-                      : value.image._id
+                      ? `${IMAGE_BASE}${_this.state.files[value.image].path}`
+                      : `${IMAGE_BASE}${value.image.path}`
                   }
                   onClick={_this.handleSetImage(index)}
                 />
               ) : (
-                  <button
-                    type="button"
-                    className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
-                    onClick={_this.handleSetImage(index)}
-                  >
-                    Click To Set Image
+                // <MediaElement
+                //   mediaKey={
+                //     typeof value.image === 'string'
+                //       ? value.image
+                //       : value.image._id
+                //   }
+                //   onClick={_this.handleSetImage(index)}
+                // />
+                <button
+                  type="button"
+                  className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
+                  onClick={_this.handleSetImage(index)}
+                >
+                  Click To Set Image
                 </button>
-                )}
+              )}
             </div>
 
             <div className="w-1.5/5 m-auto text-center mr-2">
@@ -120,14 +125,14 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
             <div className="w-0.5/5 m-auto text-center">
               <button
                 type="button"
-                className="border-red-500 border bg-primary rounded px-4 py-2 uppercase text-sm"
+                className="text-white border bg-primary rounded px-4 py-2 uppercase text-sm"
                 onClick={() => _this.handleRemoveSlide(index)}
               >
                 Delete
               </button>
             </div>
           </div>
-        </div >
+        </div>
       ))}
     </div>
   );
@@ -157,14 +162,14 @@ class AddEdit extends React.PureComponent {
     loading: PropTypes.bool.isRequired,
   };
 
-  state = { open: false, index: -1 };
+  state = { open: false, index: -1, files: {} };
 
   componentDidMount() {
     this.props.clearErrors();
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
-    this.props.loadMediaRequest();
+    // this.props.loadMediaRequest();
   }
 
   handleOpen = () => {
@@ -194,11 +199,17 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'images', value: tempImages });
   };
 
-  handleImageImageChange = id => {
+  handleImageImageChange = file => {
+    // console.log(id);
+    // debugger;
     const tempImages = [...this.props.one.images];
-    tempImages[this.state.index].image = id;
+    tempImages[this.state.index].image = file._id;
     this.props.setOneValue({ key: 'images', value: tempImages });
-    this.setState({ open: false, index: -1 });
+    this.setState(state => ({
+      open: false,
+      index: -1,
+      files: { ...state.files, [file._id]: file },
+    }));
   };
 
   handleAddSlide = () => {
@@ -223,7 +234,7 @@ class AddEdit extends React.PureComponent {
   };
 
   handleGoBack = () => {
-    this.props.history.goBack();
+    this.props.push('/admin/slider-manage');
   };
 
   handleSave = () => {
@@ -243,7 +254,6 @@ class AddEdit extends React.PureComponent {
 
   render() {
     const { one, classes, media, match, loading, errors } = this.props;
-
     // media next prev logic
     const lastPage = Math.ceil(media.totaldata / media.size);
     const firstPage = 1;
@@ -253,165 +263,160 @@ class AddEdit extends React.PureComponent {
     return loading ? (
       <Loading />
     ) : (
-        <>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </PageHeader>
-          </div>
-          <Dialog
-            className={classes.modal}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.open}
-            onClose={this.handleClose}
+      <>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleGoBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </PageHeader>
+        </div>
+        <Dialog
+          className={classes.modal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottom: '1px solid #ccc',
+              marginBottom: '20px',
+            }}
           >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                borderBottom: '1px solid #ccc',
-                marginBottom: '20px',
-              }}
-            >
-              <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
-              <div>
-                {!isFirstPage && (
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() =>
-                      this.handleImagePagination({ page: media.page - 1 })
-                    }
-                  >
-                    Prev
-                </Button>
-                )}
-                {!isLastPage && (
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() =>
-                      this.handleImagePagination({ page: media.page + 1 })
-                    }
-                  >
-                    Next
-                </Button>
-                )}
-              </div>
-            </div>
-            <DialogContent>
-              {media.data.map((each, index) => (
-                <div
-                  key={each._id}
-                  className={classes.media}
-                  onClick={() => this.handleImageImageChange(each._id)}
-                  onKeyDown={() => this.handleImageImageChange(each._id)}
-                  role="menuitem"
-                  tabIndex={index}
+            <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
+            {/* <div>
+              {!isFirstPage && (
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={() =>
+                    this.handleImagePagination({ page: media.page - 1 })
+                  }
                 >
-                  <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
-                </div>
-              ))}
-            </DialogContent>
-          </Dialog>
-
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </title>
-          </Helmet>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-last-name"
+                  Prev
+                </Button>
+              )}
+              {!isLastPage && (
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={() =>
+                    this.handleImagePagination({ page: media.page + 1 })
+                  }
+                >
+                  Next
+                </Button>
+              )}
+            </div> */}
+          </div>
+          <DialogContent>
+            {/* {media.data.map((each, index) => (
+              <div
+                key={each._id}
+                className={classes.media}
+                onClick={() => this.handleImageImageChange(each._id)}
+                onKeyDown={() => this.handleImageImageChange(each._id)}
+                role="menuitem"
+                tabIndex={index}
               >
-                Slider Name
-            </label>
-              <input
-                className="inputbox"
-                id="slider-name"
-                type="text"
-                value={one.slider_name}
-                name="slider_name"
-                onChange={this.handleChange('slider_name')}
-              />
-              <div id="component-error-text">{errors.slider_name}</div>
-            </div>
+                <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
+              </div>
+            ))} */}
+            <EditorFileSelect
+              location={location}
+              selectFile={file => this.handleImageImageChange(file)}
+            />
+          </DialogContent>
+        </Dialog>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-last-name"
-              >
-                Slider Key
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </title>
+        </Helmet>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="label" htmlFor="grid-last-name">
+              Slider Name
             </label>
-              <input
-                className="inputbox"
-                id="slider-key"
-                type="text"
-                value={one.slider_key}
-                name="slider_key"
-                onChange={this.handleChange('slider_key')}
-              />
-              <div id="component-error-text">{errors.slider_key}</div>
-            </div>
+            <input
+              className="inputbox"
+              id="slider-name"
+              type="text"
+              value={one.slider_name}
+              name="slider_name"
+              onChange={this.handleChange('slider_name')}
+            />
+            <div id="component-error-text">{errors.slider_name}</div>
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-last-name"
-              >
-                Slider Settings
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="label" htmlFor="grid-last-name">
+              Slider Key
             </label>
-              <textarea
-                name="slider settings"
-                id="slider_setting"
-                className="inputbox"
-                cols="50"
-                rows="5"
-                onChange={this.handleChange('settings')}
-                value={one.settings || ''}
-              />
-            </div>
+            <input
+              className="inputbox"
+              id="slider-key"
+              type="text"
+              value={one.slider_key}
+              name="slider_key"
+              onChange={this.handleChange('slider_key')}
+            />
+            <div id="component-error-text">{errors.slider_key}</div>
+          </div>
 
-            <button
-              type="button"
-              className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
-              onClick={this.handleAddSlide}
-            >
-              Add Slide
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="label" htmlFor="grid-last-name">
+              Slider Settings
+            </label>
+            <textarea
+              name="slider settings"
+              id="slider_setting"
+              className="inputbox"
+              cols="50"
+              rows="5"
+              onChange={this.handleChange('settings')}
+              value={one.settings || ''}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
+            onClick={this.handleAddSlide}
+          >
+            Add Slide
           </button>
-            <div>
-              <SortableImageList
-                items={one.images}
-                _this={this}
-                onSortEnd={this.onImageSortEnd}
-              />
-            </div>
-            <button
-              type="button"
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={this.handleSave}
-            >
-              Save
+          <div>
+            <SortableImageList
+              items={one.images}
+              _this={this}
+              onSortEnd={this.onImageSortEnd}
+            />
+          </div>
+          <button
+            type="button"
+            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+            onClick={this.handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </>
-      );
+        </PageContent>
+      </>
+    );
   }
 }
 

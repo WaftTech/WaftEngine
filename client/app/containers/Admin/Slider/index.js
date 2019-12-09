@@ -110,6 +110,7 @@ export class SliderPage extends React.Component {
   };
 
   handleEdit = id => {
+    this.props.clearOne();
     this.props.push(`/admin/slider-manage/edit/${id}`);
   };
 
