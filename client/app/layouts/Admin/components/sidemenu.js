@@ -131,12 +131,12 @@ const menu = [
         icon: 'subscriptions',
         link: '/admin/subscribe-manage',
       },
-      {
-        key: '5.3',
-        name: 'Reports',
-        icon: 'insert_chart',
-        link: '/admin/reports',
-      },
+      // {
+      //   key: '5.3',
+      //   name: 'Reports',
+      //   icon: 'insert_chart',
+      //   link: '/admin/reports',
+      // },
       {
         key: '5.4',
         name: 'Errors',

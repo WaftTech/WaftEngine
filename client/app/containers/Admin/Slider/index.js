@@ -260,15 +260,19 @@ export class SliderPage extends React.Component {
             </div>
           </div>
 
-          {/* <div className="bg-gray-900 h-32 my-2 py-2 px-4 text-white font-mono">
+          <div className="bg-gray-900 h-32 my-2 py-2 px-4 text-white font-mono">
             <code className="">
-              ...<br />
-              import  SlickSlider from 'client/app/components/SlickSlider';<br />
-              ...<br />
-              SlickSlider slideKey="key" /><br />
               ...
-</code>
-          </div> */}
+              <br />
+              import SlickSlider from 'client/app/components/SlickSlider';
+              <br />
+              ...
+              <br />
+              SlickSlider slideKey="key" />
+              <br />
+              ...
+            </code>
+          </div>
 
           <Table
             tableHead={[
