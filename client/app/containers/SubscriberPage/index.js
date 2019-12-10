@@ -50,7 +50,7 @@ export class SubscriberPage extends React.PureComponent {
       <>
         <input
           type="text"
-          className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded rounded-r-none py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
+          className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
           placeholder="Enter Your Email"
           value={email}
           onChange={this.handleChange('email')}
@@ -59,8 +59,7 @@ export class SubscriberPage extends React.PureComponent {
 
         <button
           type="submit"
-          style={{ paddingBottom: '0.45rem', marginLeft: '-1px' }}
-          className="text-white py-2 px-4 rounded rounded-l-none border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
+          className="text-white py-2 px-4 rounded border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
           onClick={this.handleSubmit}
         >
           {loading ? '...' : 'Subscribe'}
