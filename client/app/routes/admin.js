@@ -27,17 +27,34 @@ import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
 import BlogCommentManagePage from '../containers/Admin/Comment/Loadable';
 import ViewCommentManagePage from '../containers/Admin/Comment/ViewComment/Loadable';
 import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadable';
-import Report from '../containers/Admin/Report/Loadable';
+// import Report from '../containers/Admin/Report/Loadable';
 import Integration from '../containers/Admin/Integration/Loadable';
 import UserProfilePage from '../containers/Admin/Profile/index';
 import SettingsManage from '../containers/Admin/SettingsManagePage';
 import MenuManage from '../containers/Admin/MenuManage/Loadable';
 import AddEditMenu from '../containers/Admin/MenuManage/AddEditPage/Loadable';
+import PageManage from '../containers/Admin/PageContent/Loadable';
+import AddEditPageManage from '../containers/Admin/PageContent/AddEditPage/Loadable';
 
 const routes = [
   {
     path: '/admin/dashboard',
     component: DashboardPage,
+    exact: true,
+  },
+  {
+    path: '/admin/page-manage/add',
+    component: AddEditPageManage,
+    exact: true,
+  },
+  {
+    path: '/admin/page-manage/edit/:id',
+    component: AddEditPageManage,
+    exact: true,
+  },
+  {
+    path: '/admin/page-manage',
+    component: PageManage,
     exact: true,
   },
   {
@@ -232,11 +249,6 @@ const routes = [
   {
     path: '/admin/errors',
     component: ErrorManagePage,
-    exact: true,
-  },
-  {
-    path: '/admin/reports',
-    component: Report,
     exact: true,
   },
   {

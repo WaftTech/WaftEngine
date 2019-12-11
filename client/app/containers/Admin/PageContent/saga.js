@@ -26,7 +26,7 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `contents?find_is_page=false${query}`,
+      `contents?find_is_page=true${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
@@ -48,7 +48,7 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/admin/content-manage'));
+  yield put(push('/admin/page-manage'));
 }
 
 function* addEdit() {

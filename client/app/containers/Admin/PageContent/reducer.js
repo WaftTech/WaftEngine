@@ -1,6 +1,6 @@
 /*
  *
- * AdsListingPage reducer
+ * PageListingPage reducer
  *
  */
 
@@ -20,7 +20,7 @@ export const initialState = {
     description: '',
     publish_from: '',
     is_active: false,
-    is_page: false,
+    is_feature: false,
     publish_to: '',
   },
   query: { find_name: '', find_key: '', size: 10 },
