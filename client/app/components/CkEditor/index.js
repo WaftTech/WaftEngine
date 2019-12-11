@@ -23,6 +23,7 @@ const CkEditor = props => {
         // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
         config={{
           allowedContent: true,
+          image_previewText: ' ',
           filebrowserBrowseUrl: '/editor-file-select',
           filebrowserUploadUrl: '/api/media/multiple',
         }}

@@ -94,6 +94,9 @@ userController.GetAllUser = async (req, res, next) => {
     if (req.query.find_email) {
       searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
     }
+    const roles = ['5bf7af0a736db01f8fa21a25', '5bf7ae3694db051f5486f845', '5def4c1cb3f6c12264bcf622'];
+    searchq = { ...searchq, roles: { $in: roles } };
+
     selectq = 'name email password avatar bio email_verified roles';
 
     populate = [{ path: 'roles', select: 'role_title' }];

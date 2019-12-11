@@ -1,36 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 import { compose } from 'redux';
+import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
-import qs from 'query-string';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
 import Edit from '@material-ui/icons/Edit';
+import SearchIcon from '@material-ui/icons/Search';
+import Fab from '@material-ui/core/Fab';
 import Close from '@material-ui/icons/Close';
 
 // core components
-import Fab from '@material-ui/core/Fab';
-import Table from 'components/Table/Table';
+import Table from 'components/Table';
 
-import { DATE_FORMAT } from '../../App/constants';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
-
 import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 
+import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
@@ -67,9 +64,12 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class SliderPage extends React.Component {
+export class ContentsListingPage extends React.Component {
   static propTypes = {
+    loading: PropTypes.bool.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
+    deleteOneRequest: PropTypes.func.isRequired,
+    clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
@@ -83,60 +83,30 @@ export class SliderPage extends React.Component {
   };
 
   state = {
-    display: false,
     open: false,
     deleteId: '',
   };
 
   componentDidMount() {
-    const {
-      loadAllRequest,
-      query,
-      location: { search },
-      setQueryObj,
-    } = this.props;
-    let queryObj = { ...query };
-    if (search) {
-      queryObj = qs.parse(search);
-      setQueryObj(queryObj);
-    }
-
     this.props.loadAllRequest(this.props.query);
   }
 
   handleAdd = () => {
     this.props.clearOne();
-    this.props.push('/admin/slider-manage/add');
+    this.props.push('/admin/page-manage/add');
   };
 
   handleEdit = id => {
-    this.props.clearOne();
-    this.props.push(`/admin/slider-manage/edit/${id}`);
+    this.props.push(`/admin/page-manage/edit/${id}`);
   };
 
   handleQueryChange = e => {
     e.persist();
     this.props.setQueryValue({ key: e.target.name, value: e.target.value });
-    const queryString = qs.stringify({
-      ...this.props.query,
-      [e.target.name]: e.target.value,
-    });
-    this.props.push({
-      search: queryString,
-    });
   };
 
-  handleSearch = e => {
-    e.preventDefault();
+  handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
-  };
-
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
-    const queryString = qs.stringify(paging);
-    this.props.push({
-      search: queryString,
-    });
   };
 
   handleOpen = id => {
@@ -152,28 +122,26 @@ export class SliderPage extends React.Component {
     this.setState({ open: false });
   };
 
-  handleToggle = () => {
-    this.setState(state => ({ display: !state.display }));
+  handlePagination = paging => {
+    this.props.loadAllRequest(paging);
   };
 
   render() {
-    const { display } = this.state;
-
+    const { classes } = this.props;
     const {
-      classes,
       all: { data, page, size, totaldata },
       query,
       loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ slider_name, slider_key, images, added_at, _id }) => [
-        slider_name,
-        slider_key,
-        images.length,
-        moment(added_at).format(DATE_FORMAT),
-
-        <React.Fragment>
+      ({ name, key, is_active, published_from, published_to, _id }) => [
+        name,
+        key,
+        moment(published_from).format(DATE_FORMAT),
+        moment(published_to).format(DATE_FORMAT),
+        `${is_active}`,
+        <>
           <Tooltip
             id="tooltip-top"
             title="Edit Task"
@@ -206,10 +174,9 @@ export class SliderPage extends React.Component {
               />
             </IconButton>
           </Tooltip>
-        </React.Fragment>,
+        </>,
       ],
     );
-
     return (
       <>
         <DeleteDialog
@@ -218,24 +185,34 @@ export class SliderPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>Slider Listing</title>
+          <title>Page Management</title>
         </Helmet>
-        <div className="flex justify-between -mt-5 mb-3">
-          {loading && loading == true ? <Loading /> : <></>}
-          <PageHeader>Slider Manage</PageHeader>
+        <div className="flex justify-between mt-3 mb-3">
+          {loading && loading === true ? <Loading /> : <></>}
+          <PageHeader>Page Manage</PageHeader>
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            round="true"
+            onClick={this.handleAdd}
+            elevation={0}
+          >
+            <AddIcon />
+          </Fab>
         </div>
-
         <PageContent loading={loading}>
-          <div className="flex justify-between">
+          <div className="flex">
             <div className="flex relative mr-2">
               <input
                 type="text"
-                name="find_slider_name"
-                id="slider-name"
-                placeholder="Search Slider"
+                name="find_name"
+                id="page-name"
+                placeholder="Search page by name"
                 className="m-auto inputbox"
-                value={query.find_slider_name}
+                value={query.find_name}
                 onChange={this.handleQueryChange}
+                style={{ paddingRight: '50px' }}
               />
               <IconButton
                 aria-label="Search"
@@ -246,41 +223,35 @@ export class SliderPage extends React.Component {
               </IconButton>
             </div>
 
-            <div className="flex">
-              <span className="bg-white border border-indigo-200 px-1 mr-2 inline-flex items-center cursor-pointer hover:border-indigo-200 hover:shadow">
-                <i className="material-icons text-indigo-600">code</i>
-              </span>
-
-              <button
-                className="bg-indigo-700 text-white px-2 leading-none items-center flex hover:bg-indigo-600"
-                onClick={this.handleAdd}
+            <div className="waftformgroup relative flex">
+              <input
+                type="text"
+                name="find_key"
+                id="page-key"
+                placeholder="Search page by key"
+                className="m-auto inputbox pr-6"
+                value={query.find_key}
+                onChange={this.handleQueryChange}
+                style={{ paddingRight: '50px' }}
+              />
+              <IconButton
+                aria-label="Search"
+                className={`${classes.waftsrch} waftsrchstyle`}
+                onClick={this.handleSearch}
               >
-                <i className="material-icons">add</i>Add Slider
-              </button>
+                <SearchIcon />
+              </IconButton>
             </div>
-          </div>
-
-          <div className="bg-gray-900 h-32 my-2 py-2 px-4 text-white font-mono">
-            <code className="">
-              ...
-              <br />
-              import SlickSlider from 'client/app/components/SlickSlider';
-              <br />
-              ...
-              <br />
-              SlickSlider slideKey="key" />
-              <br />
-              ...
-            </code>
           </div>
 
           <Table
             tableHead={[
-              'Slider Name',
-              'Slider Key',
-              'Images',
-              'Added at',
-              'Actions',
+              'Name',
+              'Key',
+              'Pub From',
+              'Pub To',
+              'Is Active',
+              'Action',
             ]}
             tableData={tableData}
             pagination={tablePagination}
@@ -303,15 +274,14 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const withReducer = injectReducer({ key: 'sliderManagePage', reducer });
-const withSaga = injectSaga({ key: 'sliderManagePage', saga });
+const withReducer = injectReducer({ key: 'PagecontentListing', reducer });
+const withSaga = injectSaga({ key: 'PagecontentListing', saga });
 
 const withStyle = withStyles(styles);
 
 export default compose(
-  withRouter,
   withStyle,
   withReducer,
   withSaga,
   withConnect,
-)(SliderPage);
+)(ContentsListingPage);

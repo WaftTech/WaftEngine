@@ -91,7 +91,7 @@ class AddEdit extends React.PureComponent {
   };
 
   handleGoBack = () => {
-    this.props.push('/admin/content-manage');
+    this.props.push('/admin/page-manage');
   };
 
   handleSave = () => {
@@ -108,8 +108,8 @@ class AddEdit extends React.PureComponent {
           <title>
             {' '}
             {match && match.params && match.params.id
-              ? 'Edit Static Content'
-              : 'Add Static Content'}
+              ? 'Edit Static Page'
+              : 'Add Static Page'}
           </title>
         </Helmet>
         <div>
@@ -123,14 +123,14 @@ class AddEdit extends React.PureComponent {
                 <BackIcon />
               </IconButton>
               {match && match.params && match.params.id
-                ? 'Edit Static Content'
-                : 'Add Static Content'}
+                ? 'Edit Static Page'
+                : 'Add Static Page'}
             </PageHeader>
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
               <label className="label" htmlFor="grid-last-name">
-                Content Title
+                Page Title
               </label>
               <input
                 className="inputbox"
@@ -144,7 +144,7 @@ class AddEdit extends React.PureComponent {
 
             <div className="w-full md:w-1/2 pb-4">
               <label className="label" htmlFor="grid-last-name">
-                Content Key
+                Page Key
               </label>
               <input
                 className="inputbox"
@@ -252,8 +252,8 @@ class AddEdit extends React.PureComponent {
 }
 
 const withStyle = withStyles(styles);
-const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
-const withSaga = injectSaga({ key: 'contentsListingPage', saga });
+const withReducer = injectReducer({ key: 'PagecontentListing', reducer });
+const withSaga = injectSaga({ key: 'PagecontentListing', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),

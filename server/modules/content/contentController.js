@@ -22,6 +22,9 @@ contentController.GetContent = async (req, res, next) => {
     if (req.query.find_publish_to) {
       searchq = { publish_to: { $regex: req.query.find_publish_to, $options: 'i' }, ...searchq };
     }
+    if (req.query.find_is_page) {
+      searchq = { ...searchq, is_page: req.query.find_is_page };
+    }
     let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
