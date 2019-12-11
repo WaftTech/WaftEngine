@@ -33,11 +33,28 @@ import UserProfilePage from '../containers/Admin/Profile/index';
 import SettingsManage from '../containers/Admin/SettingsManagePage';
 import MenuManage from '../containers/Admin/MenuManage/Loadable';
 import AddEditMenu from '../containers/Admin/MenuManage/AddEditPage/Loadable';
+import PageManage from '../containers/Admin/PageContent/Loadable';
+import AddEditPageManage from '../containers/Admin/PageContent/AddEditPage/Loadable';
 
 const routes = [
   {
     path: '/admin/dashboard',
     component: DashboardPage,
+    exact: true,
+  },
+  {
+    path: '/admin/page-manage/add',
+    component: AddEditPageManage,
+    exact: true,
+  },
+  {
+    path: '/admin/page-manage/edit/:id',
+    component: AddEditPageManage,
+    exact: true,
+  },
+  {
+    path: '/admin/page-manage',
+    component: PageManage,
     exact: true,
   },
   {

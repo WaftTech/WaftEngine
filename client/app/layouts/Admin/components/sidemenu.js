@@ -13,6 +13,12 @@ const menu = [
         link: '/admin/content-manage',
       },
       {
+        key: '2.6',
+        name: 'Page Management',
+        icon: 'insert_drive_file',
+        link: '/admin/page-manage',
+      },
+      {
         key: '2.2',
         name: 'FAQ',
         icon: 'question_answer',
