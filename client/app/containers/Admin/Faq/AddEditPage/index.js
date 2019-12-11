@@ -24,6 +24,7 @@ import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   backbtn: {
@@ -103,24 +104,19 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
-              htmlFor="grid-last-name"
-            >
-              Question
-            </label>
-            <input
-              className="inputbox"
+          <Input
+              label="Question"
+              inputclassName="inputbox"
+              inputid="faq"
+              inputType="text"
               name="Question"
-              id="faq"
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
-            {/* <div id="component-error-text">{errors.question}</div> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
+              className="font-bold text-gray-700"
               htmlFor="grid-last-name"
             >
               Answer
@@ -167,7 +163,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
-            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+            className="block btn bg-primary hover:bg-secondary"
             onClick={this.handleSave}
           >
             Save

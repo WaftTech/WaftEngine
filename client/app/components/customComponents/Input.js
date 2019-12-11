@@ -1,25 +1,36 @@
 import React from 'react';
 
-const Input = (props) => (
+const Input = ({
+  label,
+  inputid,
+  inputType,
+  inputclassName,
+  value,
+  name,
+  error,
+  errorClassName,
+  children,
+  ...restProps
+}) => (
   <React.Fragment>
-    {props.label && <label
-      className="label"
-      htmlFor="grid-last-name"
-    >
-      {props.label}
-    </label>}
+    {label && (
+      <label
+        className="font-bold text-gray-700"
+        htmlFor={`grid-last-name-${inputid}`}
+      >
+        {label}
+      </label>
+    )}
     <input
-      className={props.inputClassName}
-      id={props.inputId}
-      type={props.inputType || 'text'}
-      value={props.value || ''}
-      name={props.name || 'name'}
-      onChange={props.onChange}
-
+      className={inputclassName}
+      id={`grid-last-name-${inputid}`}
+      type={inputType || 'text'}
+      value={value || ''}
+      name={name || 'name'}
+      {...restProps}
     />
-    {props.error && <div id={props.errorClassName || 'component-error-text'}>
-      {props.error}
-    </div>}
+    {children && <>{children}</>}
+    {error && <div id={errorClassName || 'component-error-text'}>{error}</div>}
   </React.Fragment>
 );
 
