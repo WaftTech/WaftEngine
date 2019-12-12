@@ -95,7 +95,10 @@ userController.GetAllUser = async (req, res, next) => {
       searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
     }
     const roles = ['5bf7af0a736db01f8fa21a25', '5bf7ae3694db051f5486f845', '5def4c1cb3f6c12264bcf622'];
-    searchq = { ...searchq, roles: { $in: roles } };
+
+    if (req.query.filter_author) {
+      searchq = { roles: { $in: roles }, ...searchq };
+    }
 
     selectq = 'name email password avatar bio email_verified roles';
 
@@ -357,12 +360,12 @@ userController.VerifyServerMail = async (req, res, next) => {
     const { id, code } = req.params;
     const user = await users.findOne({ _id: id, email_verification_code: code });
     if (!user) {
-      return res.redirect(302, 'http://localhost:5240?verify=false');
+      return res.redirect(302, 'http://localhost:5050?verify=false');
     }
     const d = await users.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     const payload = {
       id: user._id,
-      iss: 'http://localhost:5240',
+      iss: 'http://localhost:5050',
       name: user.name,
       avatar: user.avatar,
       email: user.email,
@@ -377,7 +380,7 @@ userController.VerifyServerMail = async (req, res, next) => {
 
       res.cookie('token', token); // add cookie here
       res.cookie('email', user.email); // add cookie here
-      return res.redirect(302, 'http://localhost:5240?verify=true');
+      return res.redirect(302, 'http://localhost:5050?verify=true');
     });
   } catch (err) {
     next(err);
