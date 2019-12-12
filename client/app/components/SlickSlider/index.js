@@ -15,6 +15,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { makeSelectSlide } from '../../containers/App/selectors';
 import { loadSlideRequest } from '../../containers/App/actions';
 import MediaElement from '../MediaElement';
+import LinkBoth from '../LinkBoth';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import './index.css';
 
@@ -34,8 +35,9 @@ class SlickSlider extends React.PureComponent {
   }
 
   render() {
-    const { slideObj } = this.props;
+    const { slideObj, show_link, show_caption } = this.props;
     const slide = slideObj[this.props.slideKey];
+    console.log(slide, 'slider');
     let settings = {
       slidesToShow: 2,
       slidesToScroll: 1,
@@ -58,12 +60,16 @@ class SlickSlider extends React.PureComponent {
       <div className="slider">
         <Slider {...settings}>
           {slide.images.map(image => (
-            <img
-              src={`${IMAGE_BASE}${image.image.path}`}
-              style={{ maxWidth: 200, maxHeight: 200 }}
-              alt="slider media"
-              key={image._id}
-            />
+            <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
+              <>
+                <img
+                  src={`${IMAGE_BASE}${image.image.path}`}
+                  style={{ maxWidth: 200, maxHeight: 200 }}
+                  alt="slider media"
+                />
+                {show_caption && <h6>{image.caption}</h6>}
+              </>
+            </LinkBoth>
             // <MediaElement
             //   mediaKey={image.image}
             //   key={image._id}

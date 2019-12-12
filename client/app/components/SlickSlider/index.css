@@ -87,6 +87,8 @@
   right: 40px !important;
 }
 
-.slick-prev:before, .slick-next:before { font-size: 40px;}
-
-
+.slick-prev:before,
+.slick-next:before {
+  font-size: 40px;
+  color: #000000;
+}
