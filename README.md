@@ -22,7 +22,7 @@ WaftEngine core features include:
 - Development ready setup
 - Production ready setup
 
-Since anything in our codebase can be extended, overwritten, or installed as a package, you may also develop, scale, and customize anything on our platform.
+Since anything in our codebase can be extended, overwritten, or installed as a package, you may also develop, scale, and customize anything on our platform. 
 
 ## Installation
 
