@@ -30,6 +30,7 @@ import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Loading from '../../../../components/Loading';
+import Input from '../../../../components/customComponents/Input';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -134,36 +135,29 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <h3 className="text-lg font-bold">Basic Information</h3>
-              <br />
-              <label className="label">
-                Email
-            </label>
-              <input
-                className="inputbox"
-                readOnly={id ? true : false}
-                id="email"
-                type="text"
-                value={users.email || ''}
-                onChange={this.handleChange('email')}
-              />
+              <h3 className="text-lg font-bold mb-2">Basic Information</h3>
+              <Input
+              label="Email"
+              inputclassName="inputbox"
+              inputid="email"
+              inputType="text"
+              value={users.email || ''}
+              onChange={this.handleChange('email')}
+            />
             </div>
             <div className="w-full md:w-1/2 pb-4">
-              <label className="label">
-                Name
-            </label>
-
-              <input
-                className="inputbox"
-                id="name"
-                type="text"
-                value={users.name || ''}
-                onChange={this.handleChange('name')}
-              />
-              <div id="component-error-text">{(errors && errors.name) || ''}</div>
+            <Input
+              label="Name"
+              inputclassName="inputbox"
+              inputid="name"
+              inputType="text"
+              value={users.name || ''}
+              onChange={this.handleChange('name')}
+              error={(errors && errors.name) || ''}
+            />
             </div>
             <div className="w-full md:w-1/2 pb-4">
-              <label className="label">
+              <label className="font-bold text-gray-700">
                 Bio
             </label>
 
@@ -190,12 +184,10 @@ class AddEdit extends React.PureComponent {
               />
             ))}
             <div id="component-error-text">{(errors && errors.roles) || ''}</div>
-
-            <br />
             <FormControlLabel
               control={
                 <Checkbox
-                  color="secondary"
+                  color="primary"
                   disabled
                   name="email_verified"
                   checked={users.email_verified || false}
@@ -204,7 +196,6 @@ class AddEdit extends React.PureComponent {
               }
               label="Email Verified"
             />
-            <br />
             {id ? (
               <button
                 className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
@@ -215,10 +206,7 @@ class AddEdit extends React.PureComponent {
             ) : (
                 <></>
               )}
-            <br />
-            <br />
-            <h3 className="text-lg font-bold">Reset Password</h3>
-            <br />
+            <h3 className="text-lg font-bold mt-3">Reset Password</h3>
             <div className="w-full md:w-1/2 pb-4">
               <label className="label">
                 Password
@@ -242,7 +230,7 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.password || ''}</div>
             </div>
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              className="block btn bg-primary hover:bg-secondary"
               onClick={this.handleUpdate}
             >
               {id ? 'Update Password' : 'Set Password'}

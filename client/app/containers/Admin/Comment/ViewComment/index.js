@@ -80,7 +80,8 @@ export class ViewComment extends React.PureComponent {
           Comment Details
         </PageHeader>
         <PageContent>
-          <div className="print-fluid" style={{ width: 870 }}>
+        <div className="bg-white mt-2 shadow p-2">
+          <div className="print-fluid">
             {one && one.blog_id ? (
               <p className="mb-2">
                 <b> Blog: </b>
@@ -145,6 +146,7 @@ export class ViewComment extends React.PureComponent {
             >
               Save
               </button> */}
+          </div>
           </div>
         </PageContent>
       </React.Fragment>

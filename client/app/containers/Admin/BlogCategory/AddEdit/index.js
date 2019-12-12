@@ -31,6 +31,7 @@ import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   backbtn: {
@@ -162,41 +163,30 @@ class AddEdit extends React.PureComponent {
 
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-blog-title"
-              >
-                Blog Title
-            </label>
-              <input
-                className="inputbox"
-                id="title"
-                type="text"
-                value={one && one.title || ''}
-                name="Title"
-                onChange={this.handleChange('title')}
-              />
-              <div id="component-error-text">{errors && errors.title}</div>
+            <Input
+              label="Blog Title"
+              inputclassName="inputbox"
+              inputid="title"
+              inputType="text"
+              value={one && one.title || ''}
+              onChange={this.handleChange('title')}
+              error={errors && errors.title}
+            />
             </div>
             <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-slug"
-              >
-                Slug
-            </label>
-              <input
-                className="inputbox"
-                id="slug"
-                type="text"
-                value={one && one.slug_url || ''}
-                name="slug"
-                onChange={this.handleChange('slug_url')}
-              />
-              <div id="component-error-text">{errors && errors.slug_url}</div>
+            <Input
+              label="Slug"
+              inputclassName="inputbox"
+              inputid="slug"
+              inputType="text"
+              value={one && one.slug_url || ''}
+              name="slug"
+              onChange={this.handleChange('slug_url')}
+              error={errors && errors.slug_url}
+            />
             </div>
             <div className="pb-4">
-              <label className="label">
+              <label className="font-bold text-gray-700">
                 Blog Category Description
             </label>
               <CKEditor
@@ -245,7 +235,7 @@ class AddEdit extends React.PureComponent {
             </div>
 
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              className="block btn bg-primary hover:bg-secondary"
               onClick={this.handleSave}
             >
               Save
