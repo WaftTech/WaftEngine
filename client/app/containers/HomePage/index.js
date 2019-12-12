@@ -60,9 +60,8 @@ export default class HomePage extends React.PureComponent {
           </div>
         </div>
 
-        <div className="text-sm nav md:w-full md:text-center lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
-          <StaticMenu menuKey="main-menu-1" />
-        </div>
+        <StaticMenu menuKey="main-menu-1" />
+
         <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
           <StaticContentDiv contentKey="home-page-content" />
         </div>
