@@ -17,13 +17,13 @@ export const GOOGLE_CLIENT_ID =
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'https://demo.waftengine.org/api/'
-    : 'http://localhost:5240/api/';
+    ? 'https://www.waftengine.com/api/'
+    : 'http://localhost:5050/api/';
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'https://demo.waftengine.org/'
-    : 'http://localhost:5240/';
+    ? 'https://www.waftengine.com/'
+    : 'http://localhost:5050/';
 
 export const DATE_FORMAT = 'll';
 

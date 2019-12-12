@@ -6,7 +6,7 @@
 require('dotenv').config();
 const http = require('http');
 const app = require('./app');
-const port = process.env.PORT || 5240;
+const port = process.env.PORT || 5050;
 const env = process.env.ENV || 'Development';
 const app_name = process.env.APP_NAME || 'Waft Engine Server';
 const server = http.createServer(app);

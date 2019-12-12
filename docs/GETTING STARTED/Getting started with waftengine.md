@@ -14,7 +14,7 @@
 14. For the configuration of email, go to `server/config/email.js`
 15. Start the server; `npm start` or `yarn start` from appropriate directory in your terminal.
 16. Start the client on another shell; `npm start` or `yarn start` from appropriate directory in your terminal.
-17. The client runs on [http://localhost:5241/](http://localhost:5241/)
-18. The server runs on [http://localhost:5240/](http://localhost:5240/)
+17. The client runs on [http://localhost:5051/](http://localhost:5051/)
+18. The server runs on [http://localhost:5050/](http://localhost:5050/)
 
 Congratulations You just setup Waft Engine.

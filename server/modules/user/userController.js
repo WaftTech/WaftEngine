@@ -357,12 +357,12 @@ userController.VerifyServerMail = async (req, res, next) => {
     const { id, code } = req.params;
     const user = await users.findOne({ _id: id, email_verification_code: code });
     if (!user) {
-      return res.redirect(302, 'http://localhost:5240?verify=false');
+      return res.redirect(302, 'http://localhost:5050?verify=false');
     }
     const d = await users.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     const payload = {
       id: user._id,
-      iss: 'http://localhost:5240',
+      iss: 'http://localhost:5050',
       name: user.name,
       avatar: user.avatar,
       email: user.email,
@@ -377,7 +377,7 @@ userController.VerifyServerMail = async (req, res, next) => {
 
       res.cookie('token', token); // add cookie here
       res.cookie('email', user.email); // add cookie here
-      return res.redirect(302, 'http://localhost:5240?verify=true');
+      return res.redirect(302, 'http://localhost:5050?verify=true');
     });
   } catch (err) {
     next(err);

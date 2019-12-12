@@ -35,7 +35,7 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
-app.use('/', proxy('http://localhost:5240/'));
+app.use('/', proxy('http://localhost:5050/'));
 // Start your app.
 app.listen(port, host, async err => {
   if (err) {
