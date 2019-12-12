@@ -156,10 +156,10 @@ export class BlogManagePage extends React.Component {
           <div className="flex">
             <button
               aria-label="Edit"
-              className="bg-white border border-white px-2 py-1 items-center flex text-indigo-500 hover:shadow"
+              className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 mr-1">edit</i>Edit
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">edit</i>
             </button>
 
             <button className="ml-2 px-1 text-center leading-none"
@@ -181,7 +181,7 @@ export class BlogManagePage extends React.Component {
         <Helmet>
           <title>Blog Category Listing</title>
         </Helmet>
-        <div className="flex justify-between -mt-5 mb-3">
+        <div className="flex justify-between mt-3 mb-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Blog Manage</PageHeader>
         </div>

@@ -45,6 +45,7 @@ import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
 import WECkEditior from '../../../../components/CkEditor';
+import Inputs from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -95,6 +96,7 @@ class AddEdit extends React.PureComponent {
   state = {
     tempImage: defaultImage,
     startDate: new Date(),
+    selected: []
   };
 
   componentDidMount() {
@@ -333,43 +335,34 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="label"
-              htmlFor="grid-blog-title"
-            >
-              Title
-            </label>
-            <input
-              className="inputbox"
-              id="blog-title"
-              type="text"
+          <Inputs
+              label="Title"
+              inputclassName="inputbox"
+              inputid="blog-title"
+              inputType="text"
               value={(one && one.title) || ''}
               name="Blog Title"
               onChange={this.handleChange('title')}
+              error={errors && errors.title}
             />
-            <div id="component-error-text">{errors && errors.title}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="label"
-              htmlFor="grid-blog-title"
-            >
-              Slug
-            </label>
-            <input
-              className="inputbox"
-              id="blog-slug-url"
-              type="text"
+          <Inputs
+              label="Slug"
+              inputclassName="inputbox"
+              inputid="blog-slug-url"
+              inputType="text"
               value={(one && one.slug_url) || ''}
               name="Blog Slug"
               onChange={this.handleChange('slug_url')}
+              error={errors && errors.slug_url}
             />
-            <div id="component-error-text">{errors && errors.slug_url}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="label">
               Category
             </label>
+           
             {/* <FormControl className={classes.formControl}>
               <Select
                 // className="inputbox"
@@ -398,6 +391,7 @@ class AddEdit extends React.PureComponent {
                 ))}
               </Select>
             </FormControl> */}
+
             <FormControl className={classes.formControl}>
               <Select
                 // className="inputbox"
@@ -426,7 +420,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
-              className="label"
+              className="font-bold text-gray-700"
               htmlFor="grid-blog-title"
             >
               Short Description
@@ -440,8 +434,8 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('short_description')}
             />
           </div>
-          <div className="pb-4">
-            <label className="label">
+          <div>
+            <label className="font-bold text-gray-700">
               Blog Description
             </label>
             <WECkEditior

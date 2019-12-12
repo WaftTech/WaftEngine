@@ -17,7 +17,7 @@ const CkEditor = props => {
     setOneValue({ key: title, value: newContent });
   };
   return (
-    <div className="p-2 flex-1 my-1">
+    <div className="flex-1">
       <CKEditor
         name="description"
         content={description}

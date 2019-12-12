@@ -33,8 +33,8 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
-import WECkEditior from '../../../../components/CkEditor';
-
+import WECkEditior from '../../../../components/CkEditor'
+import Input from '../../../../components/customComponents/Input';
 const styles = {
   backbtn: {
     padding: 0,
@@ -129,33 +129,32 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <label className="label" htmlFor="grid-last-name">
-                Content Title
-              </label>
-              <input
-                className="inputbox"
-                id="grid-last-name"
-                type="text"
-                value={one.name}
-                onChange={this.handleChange('name')}
-              />
-              <div id="component-error-text">{errors.name}</div>
+              
+            <Input
+              label="Content Title"
+              inputclassName="inputbox"
+              inputid="grid-last-name"
+              inputType="text"
+              value={one.name}
+              onChange={this.handleChange('name')}
+              error={errors.name}
+            />
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
-              <label className="label" htmlFor="grid-last-name">
-                Content Key
-              </label>
-              <input
-                className="inputbox"
-                id="grid-last-name"
-                type="text"
-                value={one.key}
-                onChange={this.handleChange('key')}
-              />
-              <div id="component-error-text">{errors.key}</div>
-            </div>
-            <div className="pb-4">
+              
+            <Input
+              label="Content Key"
+              inputclassName="inputbox"
+              inputid="grid-last-name"
+              inputType="text"
+              value={one.key}
+              onChange={this.handleChange('key')}
+              error={errors.key}
+            />            </div>
+ 
+            <div>
+
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
@@ -177,9 +176,14 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.description}</div>
             </div>
 
-            <div className="w-full md:w-1/2">
-              <FormControl margin="normal" className={classes.formControl}>
-                <label className="label" htmlFor="grid-last-name">
+              <div className="flex w-full justify-between md:w-1/2 px-2">
+            <div className="w-full md:w-1/2 -ml-2">
+              <div margin="normal" className={classes.formControl}>
+              
+                <label
+                  className="font-bold text-gray-700"
+                  htmlFor="grid-last-name"
+                >
                   Published From
                 </label>
                 <DatePicker
@@ -193,11 +197,17 @@ class AddEdit extends React.PureComponent {
                   }
                   onChange={this.handleDateChange('publish_from')}
                 />
-              </FormControl>
+
+              </div>
             </div>
-            <div className="w-full md:w-1/2">
-              <FormControl margin="normal" className={classes.formControl}>
-                <label className="label" htmlFor="grid-last-name">
+         
+            <div className="w-full md:w-1/2 -mr-2">
+              <div margin="normal" className={classes.formControl}>
+                
+                <label
+                   className="font-bold text-gray-700"
+                  htmlFor="grid-last-name"
+                >
                   Published To
                 </label>
                 <DatePicker
@@ -211,7 +221,9 @@ class AddEdit extends React.PureComponent {
                   }
                   onChange={this.handleDateChange('publish_to')}
                 />
-              </FormControl>
+    
+              </div>
+            </div>
             </div>
 
             <FormControlLabel
@@ -228,21 +240,25 @@ class AddEdit extends React.PureComponent {
             <FormControlLabel
               control={
                 <Checkbox
+                 
                   checked={one.is_page || false}
                   onClick={this.handleCheckedChange('is_page')}
                   value="is_page"
                   color="primary"
                 />
               }
+  
               label="Is Page"
             />
 
-            <br />
+
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+ 
+              className="block btn bg-primary hover:bg-secondary"
               onClick={this.handleSave}
             >
-              Save
+
+            Save
             </button>
           </PageContent>
         </div>

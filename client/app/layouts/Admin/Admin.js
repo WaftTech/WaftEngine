@@ -245,7 +245,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           <MainListItems />
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-4 pt-12 flex flex-col justify-between">
-          <Breadcrumb />
+          {/* <Breadcrumb /> */}
           <div className="flex-1">{switchRoutes(roles)}</div>
           <p className="text-gray-700 py-4">version 1.0.1</p>
         </main>
