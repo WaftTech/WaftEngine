@@ -88,19 +88,22 @@ export class AdminModuleManage extends React.PureComponent {
       module_name,
       description,
       <>
-        <button
-          className={classes.tableActionButton}
-          onClick={() => this.handleEdit(_id)}
-        >
-          <CreateIcon />
-        </button>
 
-        <button
-          className={classes.tableActionButton}
-          onClick={() => this.handleAccessEdit(_id)}
-        >
-          <VpnKey />
-        </button>
+<div className="flex">
+            <button
+              aria-label="Edit"
+              className=" px-1 text-center leading-none"
+              onClick={() => this.handleEdit(_id)}
+            >
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">edit</i>
+            </button>
+
+            <button className="ml-2 px-1 text-center leading-none"
+               onClick={() => this.handleAccessEdit(_id)}
+            >
+              <i className="material-icons text-base text-green-400 hover:text-green-600">vpn_key</i>
+            </button>
+          </div>
       </>,
     ]);
 

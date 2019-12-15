@@ -70,6 +70,7 @@ export class ViewContacts extends React.Component {
           </PageHeader>
         </div>
         <PageContent>
+          <div className="bg-white mt-2 shadow p-2">
           <div className="mb-2 capitalize">
             <b>Name: </b>
             {one && one.name ? one.name : ''}
@@ -93,6 +94,7 @@ export class ViewContacts extends React.Component {
           <div className="mb-2">
             <b>Added At: </b>
             {moment(one && one.added_at).format(DATE_FORMAT)}
+          </div>
           </div>
         </PageContent>
       </React.Fragment>
