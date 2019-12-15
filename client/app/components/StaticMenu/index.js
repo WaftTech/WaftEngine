@@ -96,7 +96,8 @@ class StaticMenu extends React.PureComponent {
                     onClick={this.handleToggle}
                   >
                     {each.title}
-                    {each.child_menu && each.child_menu[0]._id !== '' && (
+                    {each.child_menu && each.child_menu.length > 0 && (
+                      // each.child_menu[0]._id !== '' &&
                       <ul className="relative menu-child text-sm">
                         {this.getChildElement(each, 1)}
                       </ul>

@@ -212,8 +212,9 @@ const AddEdit = props => {
             <option key={each._id} disabled="" value={each._id}>
               {each.title}
             </option>
-            {each.child_menu && each.child_menu[0]._id !== ''
-              ? (resetChildContent(),
+            {each.child_menu && each.child_menu.length > 0
+              ? //  && each.child_menu[0]._id !== ''
+              (resetChildContent(),
               getChildCategory(each, 1).map(eachChild => eachChild))
               : null}
           </>
