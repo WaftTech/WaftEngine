@@ -16,6 +16,8 @@ settingController.GetSetting = async (req, res, next) => {
       searchq = { value: { $regex: req.query.find_value, $options: 'i' }, ...searchq };
     }
 
+    selectq = 'key value';
+
     let setting = await otherHelper.getquerySendResponse(settingSch, page, size, sortq, searchq, selectq, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totaldata);
   } catch (err) {
@@ -34,6 +36,24 @@ settingController.SaveSetting = async (req, res, next) => {
       let newsetting = new settingSch(data);
       let saved = await newsetting.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, saved, null, settingConfig.save, null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+settingController.EditSetting = async (req, res, next) => {
+  try {
+    const data = req.body;
+    let allData = [];
+    await Promise.all(
+      Object.keys(data).map(async each => {
+        let edited = await settingSch.findOneAndUpdate({ key: each }, { $set: { value: req.body[each].value, updated_at: Date.now(), updated_by: req.user.id } }, { new: true });
+        allData.push(edited);
+      }),
+    );
+
+    if (Object.keys(allData).length) {
+      return otherHelper.sendResponse(res, httpStatus.OK, true, allData, null, 'settings edit success!!', null);
     }
   } catch (err) {
     next(err);
