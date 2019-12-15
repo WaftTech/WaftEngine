@@ -182,14 +182,14 @@ const AddEdit = props => {
             <option
               className="ml-2"
               key={childElement._id}
-              disabled=""
+              disabled={depth >= 3}
               value={childElement._id}
             >
               {'-'.repeat(depth) + childElement.title}
             </option>,
           );
           if (childElement.child_menu && childElement.child_menu.length) {
-            return getChildCategory(childElement, depth + 5);
+            return getChildCategory(childElement, depth + 1);
           }
         });
         return childContent;
@@ -214,8 +214,8 @@ const AddEdit = props => {
             </option>
             {each.child_menu && each.child_menu.length > 0
               ? //  && each.child_menu[0]._id !== ''
-              (resetChildContent(),
-              getChildCategory(each, 1).map(eachChild => eachChild))
+                (resetChildContent(),
+                getChildCategory(each, 1).map(eachChild => eachChild))
               : null}
           </>
         ))}
@@ -247,8 +247,8 @@ const AddEdit = props => {
                 ? 'Edit Sub Menu'
                 : 'Edit Menu'
               : showSubMenuBool
-                ? 'Add Sub Menu'
-                : 'Add Menu'}
+              ? 'Add Sub Menu'
+              : 'Add Menu'}
           </PageHeader>
         </div>
         <PageContent>
@@ -278,10 +278,10 @@ const AddEdit = props => {
                         {errors &&
                           errors.sub_menu_form &&
                           errors.sub_menu_form.title && (
-                          <div id="component-error-text">
-                            {errors.sub_menu_form.title}
-                          </div>
-                        )}
+                            <div id="component-error-text">
+                              {errors.sub_menu_form.title}
+                            </div>
+                          )}
                       </div>
                       <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
@@ -297,10 +297,10 @@ const AddEdit = props => {
                         {errors &&
                           errors.sub_menu_form &&
                           errors.sub_menu_form.url && (
-                          <div id="component-error-text">
-                            {errors.sub_menu_form.url}
-                          </div>
-                        )}
+                            <div id="component-error-text">
+                              {errors.sub_menu_form.url}
+                            </div>
+                          )}
                       </div>
                       <div className="flex flex-wrap justify-between px-2">
                         <div className="w-full md:w-1/2 pb-4 -ml-2">
