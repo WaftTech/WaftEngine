@@ -24,8 +24,6 @@ export const initialState = {
   query: {
     find_title: '',
     find_blog_id: '',
-    // find_is_approved: false,
-    // find_is_disapproved: false,
     size: 10,
   },
   requesting: false,

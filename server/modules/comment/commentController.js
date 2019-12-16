@@ -75,7 +75,7 @@ commentController.GetCommentByBlog = async (req, res, next) => {
   try {
     const id = req.params.blog;
     const comment = await commentSch
-      .find({ blog_id: id, is_deleted: false })
+      .find({ blog_id: id, is_deleted: false, status: { $ne: 'disapproved' } })
       .populate({ path: 'added_by', select: 'name' })
       .sort({ _id: -1 });
     const totaldata = comment.length;

@@ -114,6 +114,12 @@ export class BlogCommentManagePage extends React.PureComponent {
 
   handleCheckedQueryChange = name => e => {
     e.persist();
+    // if (name === 'find_is_approved' && this.props.query.find_is_disapproved) {
+    //   this.props.setQueryValue({
+    //     key: 'find_is_disapproved',
+    //     value: false,
+    //   });
+    // }
     this.props.setQueryValue({ key: name, value: e.target.checked });
   };
 
@@ -213,12 +219,7 @@ export class BlogCommentManagePage extends React.PureComponent {
           <FormControlLabel
             control={
               <Checkbox
-                checked={
-                  // is_approved ? true : false
-                  // this.state.selectAll === true
-                  //   ? true:
-                  this.state.selected.includes(_id) ? true : false
-                }
+                checked={this.state.selected.includes(_id) ? true : false}
                 onChange={() => this.handleCheckedChange(_id)}
               />
             }
@@ -231,17 +232,17 @@ export class BlogCommentManagePage extends React.PureComponent {
         moment(added_at).format(DATE_FORMAT),
         moment(updated_at).format(DATE_FORMAT),
         <>
-        <div className="flex">
-        <button
-          aria-label="Edit"
-          className=" px-1 text-center leading-none"
-          onClick={() => this.handleView(_id)}
-        >
-          <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-            visibility
-          </i>
-        </button>
-      </div>
+          <div className="flex">
+            <button
+              aria-label="Edit"
+              className=" px-1 text-center leading-none"
+              onClick={() => this.handleView(_id)}
+            >
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+                visibility
+              </i>
+            </button>
+          </div>
         </>,
       ],
     );
@@ -283,7 +284,7 @@ export class BlogCommentManagePage extends React.PureComponent {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={query.find_approved}
+                  checked={query.find_is_approved}
                   onChange={this.handleCheckedQueryChange('find_is_approved')}
                 />
               }
