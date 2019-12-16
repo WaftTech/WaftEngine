@@ -201,6 +201,9 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
         ...searchq,
       };
     }
+    if (req.query.is_active) {
+      searchq = { is_active: true, ...searchq };
+    }
     let blogcats = await otherHelper.getquerySendResponse(blogCatSch, page, size, sortq, searchq, selectq, next, '');
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogcats.data, blogConfig.cget, page, size, blogcats.totaldata);
   } catch (err) {
