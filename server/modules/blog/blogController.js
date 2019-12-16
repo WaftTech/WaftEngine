@@ -191,7 +191,7 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
 blogcontroller.GetBlogCategory = async (req, res, next) => {
   try {
     let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-    selectq = 'title slug_url description image is_active added_by added_at is_deleted';
+    selectq = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
     if (req.query.find_title) {
       searchq = {
         title: {
@@ -276,6 +276,8 @@ blogcontroller.SaveBlogCategory = async (req, res, next) => {
         .split('server/')[1];
     }
     if (blogcats && blogcats._id) {
+      blogcats.updated_at = new Date();
+      blogcats.updated_by = req.user.id;
       if (req.file) {
         blogcats.image = req.file;
       }

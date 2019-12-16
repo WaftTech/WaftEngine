@@ -132,12 +132,12 @@ export class BlogCategory extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ title, image, slug_url, is_active, added_at, updated_at, _id }) => [
+      ({ title, image, slug_url, is_active, added_at, _id }) => [
         title,
         (image && image.fieldname) || '',
         '' + is_active,
         moment(added_at).format(DATE_FORMAT),
-        moment(updated_at).format(DATE_FORMAT),
+        moment(added_at).format(DATE_FORMAT),
         <>
           <div className="flex">
             <button

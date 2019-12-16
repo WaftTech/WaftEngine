@@ -114,12 +114,6 @@ export class BlogCommentManagePage extends React.PureComponent {
 
   handleCheckedQueryChange = name => e => {
     e.persist();
-    // if (name === 'find_is_approved' && this.props.query.find_is_disapproved) {
-    //   this.props.setQueryValue({
-    //     key: 'find_is_disapproved',
-    //     value: false,
-    //   });
-    // }
     this.props.setQueryValue({ key: name, value: e.target.checked });
   };
 
@@ -230,7 +224,7 @@ export class BlogCommentManagePage extends React.PureComponent {
         status || 'onhold',
         added_by && added_by.name,
         moment(added_at).format(DATE_FORMAT),
-        moment(updated_at).format(DATE_FORMAT),
+        moment(updated_at ? updated_at : added_at).format(DATE_FORMAT),
         <>
           <div className="flex">
             <button
