@@ -13,7 +13,7 @@ router.get('/latest', blogModule.getLatestBlog);
 router.get('/latest/:cat_id', blogModule.getLatestBlogByCat);
 router.get('/related/:slug_url', blogModule.getRealtedBlog);
 router.get('/category', blogModule.GetBlogCategory);
-router.get('/category/:slug', blogModule.GetBlogCatBySlug);
+router.get('/category/:id', blogModule.GetBlogCatById);
 router.get('/blog/:slug_url', blogModule.GetBlogBySlug);
 router.get('/blogbyid/:id', blogModule.GetBlogById);
 router.get('/blogbycat/:slug_url', blogModule.GetBlogByCat);

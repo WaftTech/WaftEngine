@@ -210,11 +210,11 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogCatBySlug = async (req, res, next) => {
+blogcontroller.GetBlogCatById = async (req, res, next) => {
   try {
-    const slug_url = req.params.slug;
+    const id = req.params.id;
     const blogcats = await blogCatSch.findOne({
-      slug_url,
+      _id: id,
     });
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
   } catch (err) {

@@ -192,7 +192,7 @@ const routes = [
   },
 
   {
-    path: '/admin/blog-cat-manage/edit/:slug',
+    path: '/admin/blog-cat-manage/edit/:id',
     component: BlogCatAddEditPage,
     exact: true,
   },

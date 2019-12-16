@@ -97,8 +97,8 @@ export class BlogCategory extends React.PureComponent {
     this.props.loadAllRequest(this.props.query);
   };
 
-  handleEdit = slug => {
-    this.props.push(`/admin/blog-cat-manage/edit/${slug}`);
+  handleEdit = id => {
+    this.props.push(`/admin/blog-cat-manage/edit/${id}`);
   };
 
   handleOpen = id => {
@@ -134,7 +134,7 @@ export class BlogCategory extends React.PureComponent {
     const tableData = data.map(
       ({ title, image, slug_url, is_active, added_at, updated_at, _id }) => [
         title,
-        image && image.fieldname || '',
+        (image && image.fieldname) || '',
         '' + is_active,
         moment(added_at).format(DATE_FORMAT),
         moment(updated_at).format(DATE_FORMAT),
@@ -145,13 +145,18 @@ export class BlogCategory extends React.PureComponent {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">edit</i>
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+                edit
+              </i>
             </button>
 
-            <button className="ml-2 px-1 text-center leading-none"
+            <button
+              className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">delete</i>
+              <i className="material-icons text-base text-red-400 hover:text-red-600">
+                delete
+              </i>
             </button>
           </div>
         </>,
