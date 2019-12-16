@@ -54,7 +54,7 @@ class UserPersonalInformationPage extends React.PureComponent {
   handleDateChange = name => date => {
     this.props.setOneValue({
       key: name,
-      value: moment(date).format(DATE_FORMAT),
+      value: moment(date).format('YYYY-MM-DD'),
     });
   };
 
@@ -69,9 +69,7 @@ class UserPersonalInformationPage extends React.PureComponent {
     ) : (
       <React.Fragment>
         <div className="w-full pb-4">
-          <label className="label">
-            Name
-          </label>
+          <label className="label">Name</label>
 
           <FormControl
             className="md:w-1/2"
@@ -91,9 +89,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full pb-4">
-          <label className="label">
-            Email
-          </label>
+          <label className="label">Email</label>
 
           <FormControl
             className="md:w-1/2"
@@ -113,9 +109,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="md:w-1/2 pb-4">
-          <label className="label">
-            Date Of Birth
-          </label>
+          <label className="label">Date Of Birth</label>
 
           <DatePicker
             name="date_of_birth"
@@ -137,7 +131,14 @@ class UserPersonalInformationPage extends React.PureComponent {
         /> */}
 
         <div className="w-full pb-2">
-         <div>Role : {one.roles.map(each => <span key={each._id} className="rounded border px-4 py-2 mr-2">{each.role_title} </span>)}</div>
+          <div>
+            Role :{' '}
+            {one.roles.map(each => (
+              <span key={each._id} className="rounded border px-4 py-2 mr-2">
+                {each.role_title}{' '}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* <div className="w-full  pb-4">
