@@ -18,6 +18,10 @@ roleController.GetRoles = async (req, res, next) => {
       searchq = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchq };
     }
 
+    if (req.query.is_active) {
+      searchq = { is_active: true, ...searchq };
+    }
+
     let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortq, searchq, selectq, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.roleGet, page, size, datas.totaldata);
