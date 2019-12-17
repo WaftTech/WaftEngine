@@ -140,32 +140,50 @@ export class BlogManagePage extends React.Component {
         slug_url,
         category,
         added_at,
+        published_on,
         is_published,
         is_active,
         author,
         _id,
       }) => {
         return [
-          <Link to={`/blog/${slug_url}`} target="_blank" className="text-indigo-600 cursor-pointer hover:underline">{title}</Link>,
+          <Link
+            to={`/blog/${slug_url}`}
+            target="_blank"
+            className="text-indigo-600 cursor-pointer hover:underline"
+          >
+            {title}
+          </Link>,
           (category && category.map(each => each.title).join(', ')) || 'No',
-          <span className="whitespace-no-wrap">{moment(added_at).format(DATE_FORMAT)}</span>,
+          <span className="whitespace-no-wrap">
+            {moment(added_at).format(DATE_FORMAT)}
+          </span>,
+          <span className="whitespace-no-wrap">
+            {moment(published_on).format(DATE_FORMAT)}
+          </span>,
           '' + is_published,
           '' + is_active,
           // tags.join(','),
-          <span className="whitespace-no-wrap">{(author && author.name)}</span> || '',
+          <span className="whitespace-no-wrap">{author && author.name}</span> ||
+            '',
           <div className="flex">
             <button
               aria-label="Edit"
               className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">edit</i>
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+                edit
+              </i>
             </button>
 
-            <button className="ml-2 px-1 text-center leading-none"
+            <button
+              className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">delete</i>
+              <i className="material-icons text-base text-red-400 hover:text-red-600">
+                delete
+              </i>
             </button>
           </div>,
         ];
@@ -187,7 +205,6 @@ export class BlogManagePage extends React.Component {
         </div>
         <PageContent loading={loading}>
           <div className="flex justify-between">
-
             <div className="flex relative">
               <input
                 type="text"
@@ -209,21 +226,23 @@ export class BlogManagePage extends React.Component {
 
             <button
               className="bg-indigo-700 text-white px-2 py-px items-center flex hover:bg-indigo-600"
-              onClick={this.handleAdd}>
+              onClick={this.handleAdd}
+            >
               <i className="material-icons">add</i>Add Post
             </button>
-
           </div>
 
-          <Table className="fixed-layout"
+          <Table
+            className="fixed-layout"
             tableHead={[
               'Title',
               'Category',
               'Added At',
+              'Published On',
               'Is Published',
               'Is Active',
               'Author',
-              '',
+              'Actions',
             ]}
             tableData={tableData}
             pagination={tablePagination}
