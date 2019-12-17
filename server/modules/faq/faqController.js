@@ -10,6 +10,8 @@ faqController.PostFaq = async (req, res, next) => {
   try {
     const faqs = req.body;
     if (faqs && faqs._id) {
+      faqs.updated_at = new Date();
+      faqs.updated_by = req.user.id;
       const update = await faqSch.findByIdAndUpdate(faqs._id, { $set: faqs });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, faqConfig.faqSave, null);
     } else {
@@ -28,6 +30,8 @@ faqController.PostFaqCat = async (req, res, next) => {
     let d = new Date();
     faqCat.slug_url = otherHelper.slugify(`${d.getFullYear()} ${d.getMonth() + 1} ${d.getDate()} ${faqCat.title}`);
     if (faqCat && faqCat._id) {
+      faqCat.updated_at = new Date();
+      faqCat.updated_by = req.user.id;
       const update = await faqCatSch.findByIdAndUpdate(faqCat._id, { $set: faqCat });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, faqConfig.catSave, null);
     } else {

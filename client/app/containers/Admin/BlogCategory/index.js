@@ -137,7 +137,7 @@ export class BlogCategory extends React.PureComponent {
         (image && image.fieldname) || '',
         '' + is_active,
         moment(added_at).format(DATE_FORMAT),
-        moment(updated_at).format(DATE_FORMAT),
+        moment(updated_at ? updated_at : added_at).format(DATE_FORMAT),
         <>
           <div className="flex">
             <button
