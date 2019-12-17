@@ -17,6 +17,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import WithStyles from '@material-ui/core/styles/withStyles';
+import PageContent from '../../../components/PageContent/PageContent';
 import InputBase from '@material-ui/core/InputBase';
 
 import * as mapDispatchToProps from '../actions';
@@ -223,10 +224,8 @@ const FileList = ({
     handleFolderLink(linkObj.id);
   };
 
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
+  return (
+    <PageContent loading={loading}>
       <Dialog open={open} onClose={handleClose} aria-labelledby="new-folder">
         <DialogTitle>New Folder</DialogTitle>
         <DialogContent>
@@ -414,7 +413,7 @@ const FileList = ({
           </div>
         )}
       </div>
-    </div>
+    </PageContent>
   );
 };
 
