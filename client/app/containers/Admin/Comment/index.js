@@ -96,7 +96,7 @@ export class BlogCommentManagePage extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.props.loadAllRequest();
+    this.props.loadAllRequest(this.props.query);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -115,12 +115,12 @@ export class BlogCommentManagePage extends React.PureComponent {
   handleCheckedQueryChange = name => e => {
     e.persist();
     this.props.setQueryValue({ key: name, value: e.target.checked });
-    // if (name === 'find_is_approved' && this.props.query.find_is_disapproved) {
-    //   this.props.setQueryValue({ key: 'find_is_disapproved', value: false });
-    // }
-    // if (name === 'find_is_disapproved' && this.props.query.find_is_approved) {
-    //   this.props.setQueryValue({ key: 'find_is_approved', value: false });
-    // }
+    if (name === 'find_is_approved' && this.props.query.find_is_disapproved) {
+      this.props.setQueryValue({ key: 'find_is_disapproved', value: false });
+    }
+    if (name === 'find_is_disapproved' && this.props.query.find_is_approved) {
+      this.props.setQueryValue({ key: 'find_is_approved', value: false });
+    }
   };
 
   handleSearch = () => {
