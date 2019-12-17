@@ -17,13 +17,13 @@ menuController.getMenu = async (req, res, next) => {
     searchq = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchq };
   }
 
-  selectq = 'title key order';
+  selectq = 'title key order is_active';
   let data = await otherHelper.getquerySendResponse(menusch, page, size, sortq, searchq, selectq, next, populate);
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
 };
 
 const menuControl = async (req, res, next) => {
-  const child_menu = await menu_item.find({ parent_menu: null, menu_sch_id: objectId(id._id) }).lean();
+  const child_menu = await menu_item.find({ parent_menu: null }).lean();
   let lvl2,
     lvl3,
     lvl4 = [];
