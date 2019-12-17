@@ -23,7 +23,7 @@ menuController.getMenu = async (req, res, next) => {
 };
 
 const menuControl = async (req, res, next) => {
-  const child_menu = await menu_item.find({ parent_menu: null }).lean();
+  const child_menu = await menu_item.find({ parent_menu: null, menu_sch_id: objectId(req.body.menu_sch_id) }).lean();
   let lvl2,
     lvl3,
     lvl4 = [];
