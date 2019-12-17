@@ -35,7 +35,7 @@ export const EditorFileSelect = ({
     loadFilesRequest(queryObj.path);
   }, [queryObj.path]);
   return (
-    <div className="container mx-auto h-full">
+    <div className="container mx-auto h-screen">
       <FileList queryObj={queryObj} selectFile={selectFile} />
     </div>
   );

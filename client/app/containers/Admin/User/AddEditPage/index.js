@@ -173,7 +173,7 @@ class AddEdit extends React.PureComponent {
               control={
                 <Checkbox
                   key={each}
-                  color="secondary"
+                  color="primary"
                   checked={users.roles.includes(each._id)}
                   onChange={() => this.handleRolesChecked(each._id)}
                 />
