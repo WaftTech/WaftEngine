@@ -36,9 +36,11 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import MediaElement from '../../../../components/MediaElement';
 import EditorFileSelect from '../../../EditorFileSelect';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
+
   media: {
     width: '100px',
     height: '100px',
@@ -61,6 +63,8 @@ const styles = () => ({
   },
 });
 
+
+
 const SortableImageItem = SortableElement(() => <div>***</div>);
 
 const SortableImageList = SortableContainer(({ items, _this }) => {
@@ -69,8 +73,8 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
       {items.map((value, index) => (
         <div key={`${value._id}-item-image-${index}`}>
           <SortableImageItem index={index} value={value} _this={_this} />
-          <div className="flex mb-4 bg-gray-200 p-2">
-            <div className="w-1.5/5 m-auto text-center pr-5">
+          <div className="flex justify-between mb-4 bg-white shadow p-2 items-center px-8">
+            <div className="w-1/4 text-center -ml-8">
               {value.image ? (
                 <img
                   className={_this.props.classes.media}
@@ -100,7 +104,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
               )}
             </div>
 
-            <div className="w-1.5/5 m-auto text-center mr-2">
+            <div className="w-1/4 text-center mr-2">
               <input
                 className="inputbox"
                 id={`slider-link-${index}`}
@@ -111,7 +115,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
                 style={{ background: '#FFF', height: '100%' }}
               />
             </div>
-            <div className="w-1.5/5 m-auto text-center">
+            <div className="w-1/4 text-center">
               <textarea
                 className="inputbox"
                 id={`slider-caption-${index}`}
@@ -122,13 +126,15 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
                 style={{ background: '#FFF', height: '100%' }}
               />
             </div>
-            <div className="w-0.5/5 m-auto text-center">
+            <div className="w-1/4 -mr-8 text-center">
               <button
                 type="button"
-                className="text-white border bg-primary rounded px-4 py-2 uppercase text-sm"
+                className="px-1 text-center leading-none"
                 onClick={() => _this.handleRemoveSlide(index)}
               >
-                Delete
+               <i className="material-icons text-base text-red-400 hover:text-red-600">
+                delete
+              </i>
               </button>
             </div>
           </div>
@@ -162,7 +168,7 @@ class AddEdit extends React.PureComponent {
     loading: PropTypes.bool.isRequired,
   };
 
-  state = { open: false, index: -1, files: {} };
+  state = { open: false, index: -1, files: {}, fullWidth: true, maxWidth: ('lg'), };
 
   componentDidMount() {
     this.props.clearErrors();
@@ -280,46 +286,14 @@ class AddEdit extends React.PureComponent {
         </div>
         <Dialog
           className={classes.modal}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          aria-labelledby="max-width-dialog-title"
           open={this.state.open}
           onClose={this.handleClose}
+          fullWidth={this.state.fullWidth}
+          maxWidth={this.state.maxWidth}
+
         >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderBottom: '1px solid #ccc',
-              marginBottom: '20px',
-            }}
-          >
             <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
-            {/* <div>
-              {!isFirstPage && (
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() =>
-                    this.handleImagePagination({ page: media.page - 1 })
-                  }
-                >
-                  Prev
-                </Button>
-              )}
-              {!isLastPage && (
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() =>
-                    this.handleImagePagination({ page: media.page + 1 })
-                  }
-                >
-                  Next
-                </Button>
-              )}
-            </div> */}
-          </div>
           <DialogContent>
             {/* {media.data.map((each, index) => (
               <div
@@ -349,37 +323,33 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Slider Name
-            </label>
-            <input
-              className="inputbox"
-              id="slider-name"
-              type="text"
+          <Input
+              label="Slider Name"
+              inputclassName="inputbox"
+              inputid="slider-name"
+              inputType="text"
               value={one.slider_name}
               name="slider_name"
               onChange={this.handleChange('slider_name')}
+              error={errors.slider_name}
             />
-            <div id="component-error-text">{errors.slider_name}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Slider Key
-            </label>
-            <input
-              className="inputbox"
-              id="slider-key"
-              type="text"
+          <Input
+              label="Slider Key"
+              inputclassName="inputbox"
+              inputid="slider-key"
+              inputType="text"
               value={one.slider_key}
               name="slider_key"
               onChange={this.handleChange('slider_key')}
+              error={errors.slider_key}
             />
-            <div id="component-error-text">{errors.slider_key}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
+            <label className="font-bold text-gray-700" htmlFor="grid-last-name">
               Slider Settings
             </label>
             <textarea
@@ -395,7 +365,7 @@ class AddEdit extends React.PureComponent {
 
           <button
             type="button"
-            className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100"
+            className="block btn bg-info hover:bg-secondary"
             onClick={this.handleAddSlide}
           >
             Add Slide
@@ -409,7 +379,7 @@ class AddEdit extends React.PureComponent {
           </div>
           <button
             type="button"
-            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+            className="block btn bg-primary hover:bg-secondary"
             onClick={this.handleSave}
           >
             Save

@@ -184,7 +184,9 @@ div#component-error-text {
 }
 
 .btn{
-   @apply py-1 px-2 text-white rounded;
+   padding: 0.5rem 1rem;
+   color:#FFFFFF;
+   border-radius: 0.25rem;
 }
 
 

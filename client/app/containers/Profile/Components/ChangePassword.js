@@ -104,7 +104,7 @@ export class ChangePassword extends React.Component {
             onChange={this.handleChange}
             type={showPassword ? 'text' : 'password'}
           />
-          {errors.oldPassword && <span>{errors.oldPassword}</span>}
+          {errors.oldPassword && <div id="component-error-text">{errors.oldPassword}</div>}
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
@@ -120,7 +120,7 @@ export class ChangePassword extends React.Component {
             onChange={this.handleChange}
             type={showPassword ? 'text' : 'password'}
           />
-          {errors.newPassword && <span>{errors.newPassword}</span>}
+          {errors.newPassword && <div id="component-error-text">{errors.newPassword}</div>}
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
@@ -136,11 +136,11 @@ export class ChangePassword extends React.Component {
             onChange={this.handleChange}
             type={showPassword ? 'text' : 'password'}
           />
-          {errors.newPassword2 && <span>{errors.newPassword2}</span>}
+          {errors.newPassword2 && <div id="component-error-text">{errors.newPassword2}</div>}
         </div>
 
         <button
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+          className="block btn bg-primary hover:bg-secondary"
           onClick={this.handleSave}
         >
           Save

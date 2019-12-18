@@ -27,6 +27,7 @@ import {
 } from '../selectors';
 import { DATE_FORMAT } from '../../App/constants';
 import * as mapDispatchToProps from '../actions';
+import Input from '../../../components/customComponents/Input';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -68,48 +69,40 @@ class UserPersonalInformationPage extends React.PureComponent {
       <div>Loading</div>
     ) : (
       <React.Fragment>
-        <div className="w-full pb-4">
-          <label className="label">Name</label>
-
-          <FormControl
-            className="md:w-1/2"
-            error={errors && errors.name && errors.name.length > 0}
-          >
-            <input
-              className="inputbox"
-              id="name"
-              type="text"
-              value={one.name || ''}
-              onChange={this.handleChange('name')}
-            />
-            <FormHelperText id="component-error-text">
-              {errors.name}
-            </FormHelperText>
-          </FormControl>
+        <div
+          className="w-full md:w-1/2 pb-4"
+          error={errors && errors.name && errors.name.length > 0}
+        >
+          <Input
+            label="Name"
+            inputclassName="inputbox"
+            inputid="name"
+            inputType="text"
+            name="Name"
+            value={one.name || ''}
+            onChange={this.handleChange('name')}
+            error={errors.name}
+          />
         </div>
 
-        <div className="w-full pb-4">
-          <label className="label">Email</label>
-
-          <FormControl
-            className="md:w-1/2"
-            error={errors && errors.email && errors.email.length > 0}
-          >
-            <input
-              className="inputbox"
-              id="email"
-              type="text"
-              value={one.email || ''}
-              onChange={this.handleChange('name')}
-            />
-            <FormHelperText id="component-error-text">
-              {errors.email}
-            </FormHelperText>
-          </FormControl>
+        <div
+          className="w-full md:w-1/2 pb-4"
+          error={errors && errors.email && errors.email.length > 0}
+        >
+          <Input
+            label="Email"
+            inputclassName="inputbox"
+            inputid="email"
+            inputType="text"
+            name="Email"
+            value={one.email || ''}
+            onChange={this.handleChange('name')}
+            error={errors.email}
+          />
         </div>
 
         <div className="md:w-1/2 pb-4">
-          <label className="label">Date Of Birth</label>
+          <label className="font-bold text-gray-700">Date Of Birth</label>
 
           <DatePicker
             name="date_of_birth"
@@ -130,9 +123,9 @@ class UserPersonalInformationPage extends React.PureComponent {
           label="Email Verified"
         /> */}
 
-        <div className="w-full pb-2">
+        <div className="w-full pb-4">
           <div>
-            Role :{' '}
+            <span className="font-bold text-gray-700">Role :</span>{' '}
             {one.roles.map(each => (
               <span key={each._id} className="rounded border px-4 py-2 mr-2">
                 {each.role_title}{' '}
@@ -146,7 +139,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div> */}
 
         <button
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+          className="block btn bg-primary hover:bg-secondary"
           onClick={this.handleSave}
         >
           Save
