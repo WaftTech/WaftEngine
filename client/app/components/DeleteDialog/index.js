@@ -32,13 +32,13 @@ export default function DeleteDialog(props) {
         <DialogTitle id="alert-dialog-title">
           {'Do you really want to delete this item??'}
         </DialogTitle>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+        <DialogActions style={{justifyContent:'center'}}>
+          <button className="btn bg-info hover:bg-secondary" onClick={handleClose}>
             No
-          </Button>
-          <Button onClick={handleDialogDelete} color="primary">
+          </button>
+          <button className="btn bg-primary hover:bg-secondary" onClick={handleDialogDelete}>
             Yes
-          </Button>
+          </button>
         </DialogActions>
       </Dialog>
     </div>
