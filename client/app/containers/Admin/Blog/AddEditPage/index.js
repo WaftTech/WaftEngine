@@ -17,7 +17,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
+// import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
@@ -46,6 +46,7 @@ import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
 import WECkEditior from '../../../../components/CkEditor';
 import Inputs from '../../../../components/customComponents/Input';
+import Select from '../../../../components/Select';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -109,6 +110,7 @@ class AddEdit extends React.PureComponent {
     this.props.loadUsersRequest();
   }
 
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
       const { one } = nextProps;
@@ -155,9 +157,13 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: e.target.value });
   };
 
-  handleMultipleSelectChange = e => {
-    e.persist();
-    this.props.setCategoryValue(e.target.value);
+  // handleMultipleSelectChange = e => {
+  //   e.persist();
+  //   this.props.setCategoryValue(e.target.value);
+  // };
+
+  handleMultipleSelectCategoryChange = e => {
+    this.props.setCategoryValue({value: e && e.map(each=> each.value)});
   };
 
   handleTempMetaKeyword = e => {
@@ -295,6 +301,20 @@ class AddEdit extends React.PureComponent {
       errors,
     } = this.props;
     const { tempImage } = this.state;
+  
+    let listCategoryNormalized = {};
+    const listCategory = category.map(each => {
+      const obj = {
+        label: each.title,
+        value: each._id,
+      };
+      listCategoryNormalized = {
+        ...listCategoryNormalized,
+        [each._id]: obj,
+      };
+      return obj;
+    });
+
     const menuProps = {
       PaperProps: {
         style: {
@@ -359,7 +379,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label">Category</label>
+            <label className="font-bold text-gray-700">Category</label>
 
             {/* <FormControl className={classes.formControl}>
               <Select
@@ -390,9 +410,31 @@ class AddEdit extends React.PureComponent {
               </Select>
             </FormControl> */}
 
-            <FormControl className={classes.formControl}>
-              <Select
-                // className="inputbox"
+            {/* <FormControl className={classes.formControl}> */}
+            <Select
+              className="React_Select"
+              id="category"
+              value={
+                one.category && one.category.map((each, index)=> {
+                  const catObj = listCategoryNormalized[each];
+                  if (!catObj) {
+                    return {
+                      label: 'loading',
+                      value: index,
+                    }
+                  }
+                  return catObj;
+                }) || []
+              }
+              name="category"
+              placeholder="Select Blog Category"
+              onChange={this.handleMultipleSelectCategoryChange}
+              isSearchable
+              isMulti
+              options={listCategory}
+              styles={customStyles}
+            />
+              {/* <Select
                 multiple
                 displayEmpty
                 name="template_key"
@@ -413,8 +455,8 @@ class AddEdit extends React.PureComponent {
                     {each.title}
                   </MenuItem>
                 ))}
-              </Select>
-            </FormControl>
+              </Select> */}
+            {/* </FormControl> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label
@@ -653,6 +695,31 @@ class AddEdit extends React.PureComponent {
 const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
+
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
+    color: state.isFocused || state.isSelected ? 'white' : 'black',
+    padding: '6px 12px',
+  }),
+
+  menuList: () => ({
+    background: '#FFFFFF',
+    border: '1px solid #d4d9df',
+    boxShadow:'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+  }),
+
+  indicatorSeparator: () => ({
+    background: 'transparent',
+  }),
+
+  container: provided => ({
+    ...provided,
+    width: '100%',
+    minWidth: '100px',
+  }),
+};
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
