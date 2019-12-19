@@ -132,7 +132,8 @@ const SidebarCategoriesList = props => {
           {e._id !== '' && (
             <div
               onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+              className="pt-1 pb-1 pr-4 pl-4
+                flex items-center capitalize text-gray-800 hover:text-primary text-sm"
             >
               <DescriptionIcon />
               {`${e.title}`}
