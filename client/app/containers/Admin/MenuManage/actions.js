@@ -32,6 +32,7 @@ export const loadOneFailure = payload => ({
   payload,
 });
 
+// to load individual menu data
 export const loadMenuRequest = payload => ({
   type: types.LOAD_MENU_REQUEST,
   payload,

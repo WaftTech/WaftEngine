@@ -33,6 +33,7 @@ const SidebarCategoriesList = props => {
   const {
     category,
     loadOneCategoryRequest,
+    loadMenuRequest,
     loading,
     setChildValue,
     setInnerStateValue,
@@ -45,7 +46,8 @@ const SidebarCategoriesList = props => {
   };
 
   const handleClick = id => {
-    setChildValue({ key: 'parent_menu', value: id });
+    // setChildValue({ key: 'parent_menu', value: id });
+    loadMenuRequest(id);
   };
 
   const handleCollapse = () => {
