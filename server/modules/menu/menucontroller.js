@@ -66,7 +66,8 @@ menuItemController.saveMenuItem = async (req, res, next) => {
         },
         { new: true },
       );
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, menuConfig.save, null);
+      const child = await menuControl(req, res, next);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, child, null, menuConfig.save, null);
     } else {
       menuitem.added_at = new Date();
       menuitem.added_by = req.user.id;
