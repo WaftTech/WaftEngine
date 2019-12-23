@@ -9,9 +9,9 @@ router.get('/', menuController.getMenu);
 router.post('/', sanitize, validate, authorization, menuController.saveMenu);
 
 router.post('/menuitem', itemsanitize, itemvalidate, authorization, menuItemController.saveMenuItem);
+router.get('/menuitem/:id', authorization, menuItemController.getMenuItem);
 
 router.get('/detail/:id', menuController.getEditMenu);
-
 
 router.get('/detailforuser/:key', menuController.getMenuForUser);
 
