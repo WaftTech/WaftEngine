@@ -51,7 +51,7 @@ const menuManageReducer = (state = initialState, action) =>
         draft.show_sub_menu = action.payload;
         break;
       case types.LOAD_MENU_SUCCESS:
-        draft.sub_menu = action.payload.data;
+        draft.sub_menu_form = action.payload.data;
         break;
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
@@ -129,9 +129,9 @@ const menuManageReducer = (state = initialState, action) =>
           ),
         };
         break;
-      case types.LOAD_MENU_REQUEST:
-        draft.sub_menu_form = action.payload.data;
-        break;
+      // case types.LOAD_MENU_SUCCESS:
+      //   draft.sub_menu_form = action.payload.data;
+      //   break;
     }
   });
 
