@@ -183,7 +183,7 @@ const AddEdit = props => {
               className="ml-2"
               key={childElement._id}
               disabled={depth >= 3}
-              value={childElement._id}
+              value={childElement.parent_menu}
             >
               {'-'.repeat(depth) + childElement.title}
             </option>,
@@ -199,19 +199,19 @@ const AddEdit = props => {
     return (
       <select
         className="inputbox"
-        value={subMenu.parent_category}
+        value={subMenu.parent_menu}
         name="parent_category"
         onChange={handleChildChange('parent_menu')}
-        onBlur={handleChildChange('parent_menu')}
+        // onBlur={handleChildChange('parent_menu')}
       >
         <option disabled="" value="">
           Parent Category
         </option>
         {category.map(each => (
           <>
-            <option key={each._id} disabled="" value={each._id}>
-              {each.title}
-            </option>
+            {/* <option key={each._id} disabled="" value={each._id}>
+              {`${each.title}weeee`}
+            </option> */}
             {each.child_menu && each.child_menu.length > 0
               ? //  && each.child_menu[0]._id !== ''
                 (resetChildContent(),
@@ -299,6 +299,25 @@ const AddEdit = props => {
                           errors.sub_menu_form.url && (
                             <div id="component-error-text">
                               {errors.sub_menu_form.url}
+                            </div>
+                          )}
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Order
+                        </label>
+                        <input
+                          className="inputbox"
+                          id="grid-last-name"
+                          type="text"
+                          value={subMenu.order || ''}
+                          onChange={handleChildChange('order')}
+                        />
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.order && (
+                            <div id="component-error-text">
+                              {errors.sub_menu_form.order}
                             </div>
                           )}
                       </div>

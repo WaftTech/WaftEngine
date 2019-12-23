@@ -38,6 +38,7 @@ const SidebarCategoriesList = props => {
     setChildValue,
     setInnerStateValue,
     clearGeneralInfo,
+    clearSubMenu,
   } = props;
   const [openSet, setOpenSet] = useState({});
 
@@ -47,6 +48,7 @@ const SidebarCategoriesList = props => {
 
   const handleClick = id => {
     // setChildValue({ key: 'parent_menu', value: id });
+    clearSubMenu();
     loadMenuRequest(id);
   };
 
