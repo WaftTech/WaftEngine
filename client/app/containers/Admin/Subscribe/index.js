@@ -123,22 +123,26 @@ export class Subscribe extends React.PureComponent {
       moment(added_at).format(DATE_FORMAT),
 
       <React.Fragment>
-        <Tooltip id="tooltip-top" title="View subscribe" placement="top">
-          <IconButton
-            className={classes.tableActionButton}
-            onClick={() => this.handleView(_id)}
-          >
-            <View />
-          </IconButton>
-        </Tooltip>
-        <Tooltip id="tooltip-top" title="Remove" placement="top">
-          <IconButton
-            className={classes.tableActionButton}
-            onClick={() => this.handleOpen(_id)}
-          >
-            <Close />
-          </IconButton>
-        </Tooltip>
+       <div className="flex">
+        <button
+          aria-label="Edit"
+          className=" px-1 text-center leading-none"
+          onClick={() => this.handleView(_id)}
+        >
+          <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+            visibility
+          </i>
+        </button>
+
+        <button
+          className="ml-2 px-1 text-center leading-none"
+          onClick={() => this.handleOpen(_id)}
+        >
+          <i className="material-icons text-base text-red-400 hover:text-red-600">
+            delete
+          </i>
+        </button>
+      </div>
       </React.Fragment>,
     ]);
     return (

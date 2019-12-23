@@ -94,6 +94,12 @@ userController.GetAllUser = async (req, res, next) => {
     if (req.query.find_email) {
       searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
     }
+    const roles = ['5bf7af0a736db01f8fa21a25', '5bf7ae3694db051f5486f845', '5def4c1cb3f6c12264bcf622'];
+
+    if (req.query.filter_author) {
+      searchq = { roles: { $in: roles }, ...searchq };
+    }
+
     selectq = 'name email password avatar bio email_verified roles';
 
     populate = [{ path: 'roles', select: 'role_title' }];
@@ -421,7 +427,7 @@ userController.ForgotPassword = async (req, res, next) => {
       emailHelper.send(renderedMail);
     }
 
-    const msg = `Password Reset Code For<b> ${email} </b> is sent to email`;
+    const msg = `Password Reset Code For ${email} is sent to email`;
     return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, msg, null);
   } catch (err) {
     next(err);
@@ -442,7 +448,7 @@ userController.ResetPassword = async (req, res, next) => {
     }
     let salt = await bcrypt.genSalt(10);
     let hashpw = await bcrypt.hash(password, salt);
-    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() } }, { $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+    const d = await users.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
     const payload = {
       id: user._id,

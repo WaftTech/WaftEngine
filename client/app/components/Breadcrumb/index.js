@@ -36,7 +36,7 @@ const Breadcrumb = ({
 
   const LinkComponent = linkcomponent;
   return (
-    <div className="pt-2 text-right">
+    <div>
       <ol className="list-reset inline-flex text-gray-700 rounded text-sm items-center">
         {breadcrumbs.map((link, index) => {
           if (link.path === '/admin')

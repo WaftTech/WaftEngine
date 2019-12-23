@@ -16,6 +16,14 @@ module.exports = {
       white: '#fff',
 
       primary: '#2A3C85',
+      secondary: '#4d62ba',
+      success:'#28a745',
+      danger:'#dc3545',
+      warning:'#ffc107',
+      info:'#17a2b8',
+      light:'#f8f9fa',
+      dark:'#343a40',
+      link:'transparent',
 
       gray: {
         100: '#F4F6F8',
@@ -304,6 +312,7 @@ module.exports = {
       none: 'none',
       disc: 'disc',
       decimal: 'decimal',
+      cirlcle: 'circle',
     },
     margin: (theme, { negative }) => ({
       auto: 'auto',

@@ -50,7 +50,7 @@ function* loadAllRoles() {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `role/role`,
+      `role/role?is_active=true`,
       actions.loadAllRolesSuccess,
       actions.loadAllRolesFailure,
       token,

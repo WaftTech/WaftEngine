@@ -104,38 +104,26 @@ export const MenuManage = props => {
       order || '',
       is_active ? 'Active' : 'In active',
       <>
-        <Tooltip
-          id="tooltip-top"
-          title="Edit Task"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <IconButton
-            aria-label="Edit"
-            className={classes.tableActionButton}
-            onClick={() => handleEdit(_id)}
-          >
-            <Edit
-              className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip
-          id="tooltip-top-start"
-          title="Remove"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <IconButton
-            aria-label="Close"
-            className={classes.tableActionButton}
-            onClick={() => handleOpen(_id)}
-          >
-            <Close
-              className={`${classes.tableActionButtonIcon} ${classes.close}`}
-            />
-          </IconButton>
-        </Tooltip>
+       <div className="flex">
+            <button
+              aria-label="Edit"
+              className=" px-1 text-center leading-none"
+              onClick={() => handleEdit(_id)}
+            >
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+                edit
+              </i>
+            </button>
+
+            <button
+              className="ml-2 px-1 text-center leading-none"
+              onClick={() => handleOpen(_id)}
+            >
+              <i className="material-icons text-base text-red-400 hover:text-red-600">
+                delete
+              </i>
+            </button>
+          </div>
       </>,
     ],
   );

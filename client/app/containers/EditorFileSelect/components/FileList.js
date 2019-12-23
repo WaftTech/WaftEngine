@@ -11,12 +11,13 @@ import Dropzone from 'react-dropzone';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
-import Cancel from '@material-ui/icons/Cancel';
+import Cancel from '@material-ui/icons/delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import WithStyles from '@material-ui/core/styles/withStyles';
+import PageContent from '../../../components/PageContent/PageContent';
 import InputBase from '@material-ui/core/InputBase';
 
 import * as mapDispatchToProps from '../actions';
@@ -29,6 +30,7 @@ import {
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
+import DeleteDialog from '../../../components/DeleteDialog';
 
 const LinkComponent = ({ children, staticContext, ...props }) => (
   <div {...props}>{children}</div>
@@ -62,6 +64,11 @@ const FileList = ({
   const [show, setShow] = useState(false);
   const [rename_id, setRenameId] = useState('');
   const [rename, setRename] = useState('');
+  const [deleteId, setdeleteId] = useState('');
+  const [deleteFile, setdeleteFile] = useState('');
+  const [deleteOpen, setdeleteOpen] = useState(false);
+  const [fileOpen, setfileOpen] = useState(false);
+  
   useEffect(() => {
     if (!folderAdded) {
       setOpen(false);
@@ -76,16 +83,28 @@ const FileList = ({
   }, [folderRename]);
 
   const onSelect = image => {
-    window.opener.CKEDITOR.tools.callFunction(
-      queryObj.CKEditorFuncNum,
-      `${IMAGE_BASE}${image.path}`,
-    );
+    if (props.selectFile) {
+      props.selectFile(image);
+    } else {
+      window.opener.CKEDITOR.tools.callFunction(
+        queryObj.CKEditorFuncNum,
+        `${IMAGE_BASE}${image.path}`,
+      );
+    }
     window.close();
   };
 
   const handleAdd = () => {
     setOpen(true);
   };
+
+  const handleDelClose = () => {
+    setdeleteOpen(false);
+  }
+  
+  const handleFileClose = () => {
+    setfileOpen(false);
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -160,13 +179,24 @@ const FileList = ({
   };
 
   const handleDeleteFolder = id => {
-    folderDeleteRequest(id);
+    setdeleteId(id);
+    setdeleteOpen(true);
   };
 
   const handleDeleteFile = id => {
-    fileDeleteRequest(id);
+    setdeleteFile(id);
+    setfileOpen(true);
   };
 
+  const handleFolderDel = () => {
+    folderDeleteRequest(deleteId)
+    setdeleteOpen(false)
+  }
+
+  const handleFileDel = () => {
+    fileDeleteRequest(deleteFile)
+    setfileOpen(false)
+  }
   let routeList = [];
   self.path.map(each => {
     routeList = [
@@ -194,10 +224,8 @@ const FileList = ({
     handleFolderLink(linkObj.id);
   };
 
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
+  return (
+    <PageContent loading={loading}>
       <Dialog open={open} onClose={handleClose} aria-labelledby="new-folder">
         <DialogTitle>New Folder</DialogTitle>
         <DialogContent>
@@ -225,16 +253,18 @@ const FileList = ({
           </button>
         </DialogActions>
       </Dialog>
-      <div className="m-2 flex items-center justify-between">
+      <div className="flex items-center justify-between mt-3 mb-3">
+        <div className="my-auto">
         <BreadCrumb
           linkcomponent={LinkComponent}
           routeList={routeList}
           onClick={onClick}
         />
-        <div className="flex-1 flex">
+        </div>
+        <div className="flex">
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
-              <section className="text-black hover:text-primary hover:border-primary text-center self-start py-2 px-4 border border-gray-500 rounded  cursor-pointer mr-2 =">
+              <section className="btn bg-info hover:bg-secondary mr-2 cursor-pointer">
                 <div className="flex items-center " {...getRootProps()}>
                   <input {...getInputProps()} />
                   <i className="material-icons text-base mr-2">add_to_photos</i>
@@ -245,10 +275,10 @@ const FileList = ({
           </Dropzone>
           <button
             onClick={handleAdd}
-            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
+            className="items-center flex btn bg-primary hover:bg-secondary"
           >
             <i className="material-icons text-base mr-2">add</i>
-            New Folder
+            <span>New Folder</span>
           </button>
         </div>
       </div>
@@ -284,16 +314,26 @@ const FileList = ({
           </button>
         </DialogActions>
       </Dialog>
-      <div className="flex flex-wrap p-4 overflow-hidden m-2 border rounded">
+      <DeleteDialog
+        open={deleteOpen}
+        doClose={handleDelClose}
+        doDelete={handleFolderDel}
+      />
+      <DeleteDialog
+        open={fileOpen}
+        doClose={handleFileClose}
+        doDelete={handleFileDel}
+      />
+      <div className="flex flex-wrap bg-white mt-2 shadow p-4">
         {folders.data.map(each => (
-          <div
+          <div className="relative overflow-hidden mr-4 hover:bg-gray-100"
             key={each._id}
             // className="w-56 h-30 mb-8 p-2"
             onMouseOver={() => handleMouseOver(each._id)}
             onMouseLeave={() => handleMouseOver('')}
           >
             {over === each._id ? (
-              <div className="flex justify-between">
+              <div className="w-full flex absolute justify-center">
                 <button
                   className="hover:text-blue-500"
                   onClick={() => handleRename(each._id, each.name)}
@@ -311,10 +351,10 @@ const FileList = ({
               ''
             )}
             <div
-              data-tooltip={each.name}
+              // data-tooltip={each.name}
               className={`${
                 selected === each._id ? 'folder_media' : ''
-              } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
+              } flex flex-col justify-between w-32 h-32 text-center mt-4 cursor-pointer overflow-hidden`}
               onClick={() => handleSingleClick(each._id)}
               onDoubleClick={() => handleFolderLink(each._id)}
               onKeyDown={() => handleFolderLink(each._id)}
@@ -322,22 +362,22 @@ const FileList = ({
             >
               <i
                 className="material-icons text-yellow-500 self-center"
-                style={{ fontSize: '7rem' }}
+                style={{ fontSize: '6rem' }}
               >
                 folder
               </i>
-              <span className="block text-sm truncate">{each.name}</span>
+              <div className="p-2 block text-sm truncate">{each.name}</div>
             </div>
           </div>
         ))}
         {files.data.map((each, index) => (
-          <div
+          <div className="relative overflow-hidden mr-4"
             key={each._id}
             onMouseOver={() => handleMouseOverFile(each._id)}
             onMouseLeave={() => handleMouseOverFile('')}
           >
             {overFile === each._id ? (
-              <div className="flex">
+              <div className="w-full flex justify-center absolute">
                 <button
                   className="hover:text-primary"
                   onClick={() => handleDeleteFile(each._id)}
@@ -349,10 +389,10 @@ const FileList = ({
               ''
             )}
             <div
-              data-tooltip={each.filename}
+              // data-tooltip={each.filename}
               className={`${
                 selected === each._id ? 'folder_media' : ''
-              } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
+              } flex flex-col justify-between w-32 h-32 mt-4 text-center cursor-pointer overflow-hidden`}
             >
               <img
                 className="w-full h-24 object-contain"
@@ -363,7 +403,7 @@ const FileList = ({
                 onKeyDown={() => handleFolderLink(each._id)}
                 role="presentation"
               />
-              <div className="truncate text-sm pt-2">{each.filename}</div>
+              <div className="truncate text-sm p-2">{each.filename}</div>
             </div>
           </div>
         ))}
@@ -373,7 +413,7 @@ const FileList = ({
           </div>
         )}
       </div>
-    </div>
+    </PageContent>
   );
 };
 

@@ -11,11 +11,15 @@ roleController.GetRoles = async (req, res, next) => {
     let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
     if (req.query.page && req.query.page == 0) {
       selectq = 'role_title description is_active is_deleted';
-      const roles = await roleSch.find({ is_deleted: false }).select(selectq);
+      const roles = await roleSch.find(searchq).select(selectq);
       return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!!', null);
     }
     if (req.query.find_role_title) {
       searchq = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchq };
+    }
+
+    if (req.query.is_active) {
+      searchq = { is_active: true, ...searchq };
     }
 
     let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortq, searchq, selectq, next, populate);

@@ -14,6 +14,7 @@ import * as types from './constants';
 import { enqueueSnackbar } from '../App/actions';
 import * as actions from './actions';
 import { makeSelectUser } from '../App/selectors';
+import { makeSelectOne } from './selectors';
 
 function* loadOne() {
   const token = yield select(makeSelectToken());

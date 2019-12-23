@@ -26,7 +26,7 @@ function* loadAll(action) {
   }
   yield call(
     Api.get(
-      `contents?${query}`,
+      `contents?find_is_page=false${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,

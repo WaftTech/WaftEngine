@@ -40,13 +40,13 @@ class Footer extends React.Component {
           <SubscriberPage />
         </div>
         <div className="container mx-auto">
-          <div className="flex flex-wrap p-5">
-            <div className="w-full lg:w-1/2 mb-2 crorder">
-              <p className="text-gray-700">Designed and built by the WaftTech Team</p>
+          <div className="flex flex-wrap p-3">
+            <div className="w-full lg:w-1/2 crorder my-auto">
+              <p className="text-gray-700 m-0">Designed and built by the WaftTech Team</p>
             </div>
 
-            <div className="w-full lg:w-1/2 mb-4 lg:flex lg:justify-end">
-              <ul className="flex list-none p-0">
+            <div className="w-full lg:w-1/2 lg:flex lg:justify-end my-auto">
+              <ul className="flex list-none p-0 m-0">
                 <li className="pr-2 lg:m-auto lg:pr-2">
                   <a
                     href="https://www.facebook.com/waftengine/?__tn__=%2Cd%2CP-R&eid=ARAX_40QP9563fc6KG5lw6J6gUpVNZYGxmuY-DGkVQv4ZDHe_P40ZA3eBvyrqpM0Q17rniO7GpVujCKW"

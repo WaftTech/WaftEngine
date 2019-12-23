@@ -22,3 +22,16 @@ export const setValue = payload => ({
   type: types.SET_VALUE,
   payload,
 });
+
+export const editSettingsRequest = payload => ({
+  type: types.EDIT_SETTINGS_REQUEST,
+  payload,
+});
+export const editSettingsSuccess = payload => ({
+  type: types.EDIT_SETTINGS_SUCCESS,
+  payload,
+});
+export const editSettingsFailure = payload => ({
+  type: types.EDIT_SETTINGS_FAILURE,
+  payload,
+});

@@ -127,7 +127,7 @@ function* loadCategory() {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      'blog/category',
+      'blog/category?is_active=true',
       actions.loadCategorySuccess,
       actions.loadCategoryFailure,
       token,

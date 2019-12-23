@@ -4,10 +4,86 @@
 
 @tailwind utilities;
 
+@font-face { font-family: 'MaterialIcons-Regular'; 
+  src: url('../app/assets/font/MaterialIcons-Regular.eot') 
+  format('embedded-opentype'), 
+  url('../app/assets/font/MaterialIcons-Regular.woff') 
+  format('woff'), 
+  url('../app/assets/font/MaterialIcons-Regular.ttf') 
+  format('truetype'); 
+  font-weight: normal; font-style: normal; }
+
+  .material-icons {
+    font-family: 'MaterialIcons-Regular';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+
+
+/* /* General Css Starts */
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-top:0;
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h1, .h1 {
+  font-size: 2.5rem;
+}
+
+h2, .h2 {
+  font-size: 2rem;
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+}
+
+h6, .h6 {
+  font-size: 1rem;
+}
+
+.list-circle{
+  list-style-type: circle;
+  padding-left:40px;
+} 
+
+/* custom css starts */
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
-}
-body {
   font-size: 14px;
 }
 
@@ -44,10 +120,6 @@ div.react-datepicker__input-container {
 }
 select.inputbox {
   height: 36px;
-}
-.label {
-  font-weight: bold;
-  color: #43414d;
 }
 
 .waftsrchstyle {
@@ -110,3 +182,12 @@ div#component-error-text {
 .rotate-90 {
   transform: rotate(-90deg);
 }
+
+.btn{
+   padding: 0.5rem 1rem;
+   color:#FFFFFF;
+   border-radius: 0.25rem;
+}
+
+
+

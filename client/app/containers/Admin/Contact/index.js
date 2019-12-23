@@ -140,40 +140,26 @@ export class Contact extends React.Component {
       subject,
       moment(added_at).format(DATE_FORMAT),
 
-      <React.Fragment>
-        <Tooltip
-          id="tooltip-top"
-          title="View Contacts"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
+      <div className="flex">
+        <button
+          aria-label="Edit"
+          className=" px-1 text-center leading-none"
+          onClick={() => this.handleView(_id)}
         >
-          <IconButton
-            aria-label="View"
-            className={classes.tableActionButton}
-            onClick={() => this.handleView(_id)}
-          >
-            <View
-              className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip
-          id="tooltip-top-start"
-          title="Remove"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+            visibility
+          </i>
+        </button>
+
+        <button
+          className="ml-2 px-1 text-center leading-none"
+          onClick={() => this.handleOpen(_id)}
         >
-          <IconButton
-            aria-label="Close"
-            className={classes.tableActionButton}
-            onClick={() => this.handleOpen(_id)}
-          >
-            <Close
-              className={`${classes.tableActionButtonIcon} ${classes.close}`}
-            />
-          </IconButton>
-        </Tooltip>
-      </React.Fragment>,
+          <i className="material-icons text-base text-red-400 hover:text-red-600">
+            delete
+          </i>
+        </button>
+      </div>,
     ]);
 
     return (

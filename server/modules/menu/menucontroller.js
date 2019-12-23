@@ -45,7 +45,14 @@ const menuControl = async (req, res, next) => {
   }
   return child;
 };
-
+menuItemController.getMenuItem = async (req, res, next) => {
+  try {
+    const menu = await menu_item.findById(req.params.id);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.get, null);
+  } catch (err) {
+    next(err);
+  }
+};
 menuItemController.saveMenuItem = async (req, res, next) => {
   try {
     let menuitem = req.body;

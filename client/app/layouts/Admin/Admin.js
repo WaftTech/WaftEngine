@@ -181,10 +181,11 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
       </Helmet>
       <div className="flex justify-between px-4 text-white h-12 fixed z-50 w-full left-0 top-0 items-center bg-primary" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div className="flex-1 flex items-center">
+        <Link target="_blank"  to="/">
           <img style={{ height: 28 }}
             src={Logo}
-            alt="waftengine"
-          />
+            alt="waftengine"/>
+          </Link>
           <Link target="_blank" className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm bg-blue-900 hover:bg-blue-700" to="/">Visit Site <i className="material-icons text-sm ml-1">open_in_new</i></Link>
           <Link className="px-4" to="/">Docs</Link>
           <Link className="px-4" to="/">Blog</Link>
@@ -245,7 +246,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           <MainListItems />
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-4 pt-12 flex flex-col justify-between">
-          <Breadcrumb />
+          {/* <Breadcrumb /> */}
           <div className="flex-1">{switchRoutes(roles)}</div>
           <p className="text-gray-700 py-4">version 1.0.1</p>
         </main>

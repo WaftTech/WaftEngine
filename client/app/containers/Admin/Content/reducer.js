@@ -20,12 +20,12 @@ export const initialState = {
     description: '',
     publish_from: '',
     is_active: false,
-    is_feature: false,
+    is_page: false,
     publish_to: '',
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,
-  errors: { name: '', key: '', description: ''},
+  errors: { name: '', key: '', description: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */

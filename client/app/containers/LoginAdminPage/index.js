@@ -24,6 +24,7 @@ import * as mapDispatchToProps from './actions';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import logo from '../../assets/img/logo.svg';
+import '../../assets/styles/loading.css';
 
 const LoginAdminPage = ({
   classes,
@@ -38,8 +39,8 @@ const LoginAdminPage = ({
   };
   return (
     <div className="flex h-screen">
-      <div className="hidden md:flex md:w-3/5 bg-red-100 items-center">
-        <div className="px-5 text-black lg:px-32">
+      <div className="hidden md:flex md:w-3/5 bg-primary items-center">
+        <div className="px-5 text-white lg:px-32">
           <h1 className="font-bold text-4xl">WaftEngine</h1>
           <p>A Powerful Mern Engine</p>
           <ul className="mt-10">
@@ -66,10 +67,10 @@ const LoginAdminPage = ({
             <UsernameInput />
             <PasswordInput />
             <button
-              className="text-white py-2 px-4 rounded mt-4 w-full bg-primary font-bold"
+              className="btn mt-4 w-full bg-primary hover:bg-secondary"
               type="submit"
             >
-              {loading ? '...' : 'LOGIN'}
+              {loading ?  <div className="btn_loading"><div></div><div></div><div></div><div></div><span className="ml-2">Login</span></div> : 'Login'}
             </button>
           </form>
         </div>

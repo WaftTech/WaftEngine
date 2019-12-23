@@ -45,43 +45,43 @@ export class ViewSubscriber extends React.Component {
   };
 
   render() {
-    const { classes, one, loading} = this.props;
+    const { classes, one, loading } = this.props;
     return loading && loading == true ? (
-      
-        <Loading />
-       ) : (
+      <Loading />
+    ) : (
       <React.Fragment>
-
         <Helmet>
           <title> Subscriber Details </title>
         </Helmet>
-   <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-        <IconButton className={`${classes.backbtn} cursor-pointer`}	onClick={this.handleBack} aria-label="Back">
-          <BackIcon />
-        </IconButton> Subscribe Details</PageHeader>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>{' '}
+            Subscribe Details
+          </PageHeader>
         </div>
         <PageContent>
-        
-  
-           
-                <div className="mb-2 Capitalize">
-                  <b>Email: </b>
-                  {one && one.email ? one.email : ''}
-                </div>
-         
-             
-                <div className="mb-2 Capitalize">
-                  <b>Is Subscribed: </b>
-                  {one && one.is_subscribed ? '' + one.is_subscribed : ''}
-                </div>
-         
-           
-                <div className="mb-2 Capitalize">
-                  <b>Added At: </b>
-                  {moment(one && one.added_at).format(DATE_FORMAT)}
-                </div>
-          
+          <div className="bg-white mt-2 shadow p-2">
+            <div className="mb-2 Capitalize">
+              <b>Email: </b>
+              {one && one.email ? one.email : ''}
+            </div>
+
+            <div className="mb-2 Capitalize">
+              <b>Is Subscribed: </b>
+              {one && one.is_subscribed ? '' + one.is_subscribed : ''}
+            </div>
+
+            <div className="mb-2 Capitalize">
+              <b>Added At: </b>
+              {moment(one && one.added_at).format(DATE_FORMAT)}
+            </div>
+          </div>
         </PageContent>
       </React.Fragment>
     );
@@ -102,14 +102,14 @@ const withReducer = injectReducer({ key: 'adminSubscribePage', reducer });
 const withSaga = injectSaga({ key: 'adminSubscribePage', saga });
 
 const styles = theme => ({
-  backbtn:{
-    padding:0,
-    height:'40px',
-    width:'40px',
-    marginTop:'auto',
-    marginBottom:'auto',
-    borderRadius:'50%',
-    marginRight:'5px',
+  backbtn: {
+    padding: 0,
+    height: '40px',
+    width: '40px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    borderRadius: '50%',
+    marginRight: '5px',
   },
 });
 

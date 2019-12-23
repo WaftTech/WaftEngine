@@ -16,13 +16,18 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectOne, makeSelectLoading, makeSelectErrors } from '../selectors';
+import {
+  makeSelectOne,
+  makeSelectLoading,
+  makeSelectErrors,
+} from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
+import Input from '../../../../components/customComponents/Input';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -67,65 +72,75 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <React.Fragment>
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Role'
-                : 'Add Role'}
-            </title>
-          </Helmet>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton className={`${classes.backbtn} cursor-pointer`} onClick={this.handleBack} aria-label="Back">
-                <BackIcon />
-              </IconButton>{match && match.params && match.params.id
-                ? 'Edit Role'
-                : 'Add Role'}</PageHeader>
-          </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="label">
-                Role Title
-            </label>
-              <input className="inputbox" id="role_title" type="text" value={one.role_title}
-                onChange={this.handleChange('role_title')} required />
-              <div id="component-error-text">
-                {errors.role_title}
-              </div>
-            </div>
-
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="label">
-                Description
-            </label>
-              <textarea className="inputbox" id="description" type="text" value={one.description}
-                onChange={this.handleChange('description')} required />
-              <div id="component-error-text">
-                {errors.description}
-              </div>
-            </div>
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  name="is_active"
-                  checked={one.is_active}
-                  onChange={this.handleChecked('is_active')}
-                />
-              }
-              label="Is Active"
+      <React.Fragment>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Role'
+              : 'Add Role'}
+          </title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
+            {match && match.params && match.params.id
+              ? 'Edit Role'
+              : 'Add Role'}
+          </PageHeader>
+        </div>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+          <Input
+              label="Role Title"
+              inputclassName="inputbox"
+              inputid="role_title"
+              inputType="text"
+              value={one.role_title}
+              onChange={this.handleChange('role_title')}
+              error={errors.role_title}
             />
-            <br />
+          </div>
 
-            <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme" onClick={this.handleSave}>
-              Save
-              </button>
+          <div className="w-full md:w-1/2">
+            <label className="font-bold text-gray-700">Description</label>
+            <textarea
+              className="inputbox"
+              id="description"
+              type="text"
+              value={one.description}
+              onChange={this.handleChange('description')}
+              required
+            />
+            <div id="component-error-text">{errors.description}</div>
+          </div>
 
-          </PageContent>
-        </React.Fragment>
-      );
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                name="is_active"
+                checked={one.is_active}
+                onChange={this.handleChecked('is_active')}
+              />
+            }
+            label="Is Active"
+          />
+
+          <button
+            className="block btn bg-primary hover:bg-secondary"
+            onClick={this.handleSave}
+          >
+            Save
+          </button>
+        </PageContent>
+      </React.Fragment>
+    );
   }
 }
 
@@ -152,7 +167,7 @@ const styles = theme => ({
     marginBottom: 'auto',
     borderRadius: '50%',
     marginRight: '5px',
-  }
+  },
 });
 
 const withStyle = withStyles(styles);

@@ -78,7 +78,7 @@ const MainlistItem = ({ location: { pathname }, access }) => {
                 <Link
                   to={`${e.link}`}
                   className={`text-gray-200 text-sm no-underline flex items-center hover:bg-gray-800 ${
-                    e.key.split('.').length > 1 ? 'p-2' : 'p-2'
+                    e.key.split('.').length > 1 ? 'p-2 pl-4' : 'p-2'
                     }`}
                 >
                   <i key={e} className="material-icons mr-3 text-sm">
