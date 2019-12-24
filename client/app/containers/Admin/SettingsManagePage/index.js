@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-//@material components
+// @material components
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {
@@ -35,7 +35,7 @@ import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import Loading from '../../../components/Loading';
 import Input from '../../../components/customComponents/Input';
-import Select from '../../../components/customComponents/select';
+import Select from '../../../components/customComponents/Select';
 
 const key = 'settingsManagePage';
 
@@ -169,8 +169,8 @@ export const SettingsManagePage = props => {
                   native="true"
                   value={
                     Object.keys(setting_normalized).length &&
-                    setting_normalized['default_status_of_comment'] &&
-                    setting_normalized['default_status_of_comment'].value
+                    setting_normalized.default_status_of_comment &&
+                    setting_normalized.default_status_of_comment.value
                   }
                   // onChange={e => setCommentStatus(e.target.value)}
                   onChange={handleDropDownChange('default_status_of_comment')}
@@ -191,8 +191,8 @@ export const SettingsManagePage = props => {
                     <Checkbox
                       checked={
                         (Object.keys(setting_normalized).length &&
-                          setting_normalized['recaptcha_check'] &&
-                          setting_normalized['recaptcha_check'].value) ||
+                          setting_normalized.recaptcha_check &&
+                          setting_normalized.recaptcha_check.value) ||
                         false
                       }
                       tabIndex={-1}
@@ -209,8 +209,8 @@ export const SettingsManagePage = props => {
                     <Checkbox
                       checked={
                         (Object.keys(setting_normalized).length &&
-                          setting_normalized['is_login_required'] &&
-                          setting_normalized['is_login_required'].value) ||
+                          setting_normalized.is_login_required &&
+                          setting_normalized.is_login_required.value) ||
                         false
                       }
                       tabIndex={-1}
@@ -255,8 +255,8 @@ export const SettingsManagePage = props => {
                     native="true"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['email_channel'] &&
-                        setting_normalized['email_channel'].value) ||
+                        setting_normalized.email_channel &&
+                        setting_normalized.email_channel.value) ||
                       ''
                     }
                     onChange={handleDropDownChange('email_channel')}
@@ -279,8 +279,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['email_to_send_test_mail'] &&
-                        setting_normalized['email_to_send_test_mail'].value) ||
+                        setting_normalized.email_to_send_test_mail &&
+                        setting_normalized.email_to_send_test_mail.value) ||
                       ''
                     }
                     name="email_to_send_test_mail"
@@ -296,8 +296,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['protocol'] &&
-                        setting_normalized['protocol'].value) ||
+                        setting_normalized.protocol &&
+                        setting_normalized.protocol.value) ||
                       ''
                     }
                     name="protocol"
@@ -314,8 +314,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['email'] &&
-                        setting_normalized['email'].value) ||
+                        setting_normalized.email &&
+                        setting_normalized.email.value) ||
                       ''
                     }
                     name="email"
@@ -330,8 +330,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['password'] &&
-                        setting_normalized['password'].value) ||
+                        setting_normalized.password &&
+                        setting_normalized.password.value) ||
                       ''
                     }
                     name="password"
@@ -346,8 +346,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['server'] &&
-                        setting_normalized['server'].value) ||
+                        setting_normalized.server &&
+                        setting_normalized.server.value) ||
                       ''
                     }
                     name="server"
@@ -364,8 +364,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['port'] &&
-                        setting_normalized['port'].value) ||
+                        setting_normalized.port &&
+                        setting_normalized.port.value) ||
                       ''
                     }
                     name="port"
@@ -380,8 +380,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['security'] &&
-                        setting_normalized['security'].value) ||
+                        setting_normalized.security &&
+                        setting_normalized.security.value) ||
                       ''
                     }
                     name="security"
@@ -395,13 +395,13 @@ export const SettingsManagePage = props => {
                     native="true"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['secure'] &&
-                        setting_normalized['secure'].value) ||
+                        setting_normalized.secure &&
+                        setting_normalized.secure.value) ||
                       false
                     }
                     onChange={handleDropDownChange('secure')}
                   >
-                    <option name="secure" value={true}>
+                    <option name="secure" value>
                       True
                     </option>
                     <option name="secure" value={false}>
@@ -419,8 +419,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['api_key'] &&
-                        setting_normalized['api_key'].value) ||
+                        setting_normalized.api_key &&
+                        setting_normalized.api_key.value) ||
                       ''
                     }
                     name="api_key"
@@ -435,8 +435,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['domain'] &&
-                        setting_normalized['domain'].value) ||
+                        setting_normalized.domain &&
+                        setting_normalized.domain.value) ||
                       ''
                     }
                     name="domain"
@@ -491,8 +491,8 @@ export const SettingsManagePage = props => {
                     <Checkbox
                       checked={
                         (Object.keys(setting_normalized).length &&
-                          setting_normalized['is_public_registration'] &&
-                          setting_normalized['is_public_registration'].value) ||
+                          setting_normalized.is_public_registration &&
+                          setting_normalized.is_public_registration.value) ||
                         false
                       }
                       tabIndex={-1}
@@ -512,8 +512,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['secret_key'] &&
-                        setting_normalized['secret_key'].value) ||
+                        setting_normalized.secret_key &&
+                        setting_normalized.secret_key.value) ||
                       ''
                     }
                     name="secret_key"
@@ -528,8 +528,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['token_expire_time'] &&
-                        setting_normalized['token_expire_time'].value) ||
+                        setting_normalized.token_expire_time &&
+                        setting_normalized.token_expire_time.value) ||
                       ''
                     }
                     name="token_expire_time"
@@ -543,8 +543,8 @@ export const SettingsManagePage = props => {
                     <Checkbox
                       checked={
                         (Object.keys(setting_normalized).length &&
-                          setting_normalized['allow_google_login'] &&
-                          setting_normalized['allow_google_login'].value) ||
+                          setting_normalized.allow_google_login &&
+                          setting_normalized.allow_google_login.value) ||
                         false
                       }
                       tabIndex={-1}
@@ -559,8 +559,8 @@ export const SettingsManagePage = props => {
                     <Checkbox
                       checked={
                         (Object.keys(setting_normalized).length &&
-                          setting_normalized['allow_facebook_login'] &&
-                          setting_normalized['allow_facebook_login'].value) ||
+                          setting_normalized.allow_facebook_login &&
+                          setting_normalized.allow_facebook_login.value) ||
                         false
                       }
                       tabIndex={-1}
@@ -580,8 +580,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['client_id'] &&
-                        setting_normalized['client_id'].value) ||
+                        setting_normalized.client_id &&
+                        setting_normalized.client_id.value) ||
                       ''
                     }
                     name="client_id"
@@ -596,8 +596,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['app_id'] &&
-                        setting_normalized['app_id'].value) ||
+                        setting_normalized.app_id &&
+                        setting_normalized.app_id.value) ||
                       ''
                     }
                     name="app_id"
@@ -614,8 +614,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['client_secret'] &&
-                        setting_normalized['client_secret'].value) ||
+                        setting_normalized.client_secret &&
+                        setting_normalized.client_secret.value) ||
                       ''
                     }
                     name="client_secret"
@@ -630,8 +630,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['app_secret'] &&
-                        setting_normalized['app_secret'].value) ||
+                        setting_normalized.app_secret &&
+                        setting_normalized.app_secret.value) ||
                       ''
                     }
                     name="app_secret"
@@ -669,8 +669,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['captcha_secret_key'] &&
-                        setting_normalized['captcha_secret_key'].value) ||
+                        setting_normalized.captcha_secret_key &&
+                        setting_normalized.captcha_secret_key.value) ||
                       ''
                     }
                     name="captcha_secret_key"
@@ -686,8 +686,8 @@ export const SettingsManagePage = props => {
                     inputType="text"
                     value={
                       (Object.keys(setting_normalized).length &&
-                        setting_normalized['captcha_site_key'] &&
-                        setting_normalized['captcha_site_key'].value) ||
+                        setting_normalized.captcha_site_key &&
+                        setting_normalized.captcha_site_key.value) ||
                       ''
                     }
                     name="site_key"

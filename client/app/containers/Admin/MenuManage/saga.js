@@ -40,17 +40,18 @@ function* loadOne(action) {
   );
 }
 
-// function* loadMenu(action) {
-//   const token = yield select(makeSelectToken());
-//   yield call(
-//     Api.get(
-//       `menu/menuitem/${action.payload}`,
-//       actions.loadMenuSuccess,
-//       actions.loadMenuFailure,
-//       token,
-//     ),
-//   );
-// }
+// to load individual menu data
+function* loadMenu(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `menu/menuitem/${action.payload}`,
+      actions.loadMenuSuccess,
+      actions.loadMenuFailure,
+      token,
+    ),
+  );
+}
 
 // add parent menu
 function* addEdit(action) {
@@ -194,7 +195,7 @@ function* deleteOneFailureFunc(action) {
 export default function* menuManageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
-  // yield takeLatest(types.LOAD_MENU_REQUEST, loadMenu);
+  yield takeLatest(types.LOAD_MENU_REQUEST, loadMenu);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
   yield takeLatest(types.ADD_EDIT_CHILD_REQUEST, addEditChild);

@@ -11,14 +11,14 @@ import Dropzone from 'react-dropzone';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
-import Cancel from '@material-ui/icons/delete';
+import Cancel from '@material-ui/icons/Delete';
+import InputBase from '@material-ui/core/InputBase';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import WithStyles from '@material-ui/core/styles/withStyles';
 import PageContent from '../../../components/PageContent/PageContent';
-import InputBase from '@material-ui/core/InputBase';
 
 import * as mapDispatchToProps from '../actions';
 import {
@@ -68,7 +68,7 @@ const FileList = ({
   const [deleteFile, setdeleteFile] = useState('');
   const [deleteOpen, setdeleteOpen] = useState(false);
   const [fileOpen, setfileOpen] = useState(false);
-  
+
   useEffect(() => {
     if (!folderAdded) {
       setOpen(false);
@@ -100,11 +100,11 @@ const FileList = ({
 
   const handleDelClose = () => {
     setdeleteOpen(false);
-  }
-  
+  };
+
   const handleFileClose = () => {
     setfileOpen(false);
-  }
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -189,14 +189,14 @@ const FileList = ({
   };
 
   const handleFolderDel = () => {
-    folderDeleteRequest(deleteId)
-    setdeleteOpen(false)
-  }
+    folderDeleteRequest(deleteId);
+    setdeleteOpen(false);
+  };
 
   const handleFileDel = () => {
-    fileDeleteRequest(deleteFile)
-    setfileOpen(false)
-  }
+    fileDeleteRequest(deleteFile);
+    setfileOpen(false);
+  };
   let routeList = [];
   self.path.map(each => {
     routeList = [
@@ -255,11 +255,11 @@ const FileList = ({
       </Dialog>
       <div className="flex items-center justify-between mt-3 mb-3">
         <div className="my-auto">
-        <BreadCrumb
-          linkcomponent={LinkComponent}
-          routeList={routeList}
-          onClick={onClick}
-        />
+          <BreadCrumb
+            linkcomponent={LinkComponent}
+            routeList={routeList}
+            onClick={onClick}
+          />
         </div>
         <div className="flex">
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
@@ -326,7 +326,8 @@ const FileList = ({
       />
       <div className="flex flex-wrap bg-white mt-2 shadow p-4">
         {folders.data.map(each => (
-          <div className="relative overflow-hidden mr-4 hover:bg-gray-100"
+          <div
+            className="relative overflow-hidden mr-4 hover:bg-gray-100"
             key={each._id}
             // className="w-56 h-30 mb-8 p-2"
             onMouseOver={() => handleMouseOver(each._id)}
@@ -371,7 +372,8 @@ const FileList = ({
           </div>
         ))}
         {files.data.map((each, index) => (
-          <div className="relative overflow-hidden mr-4"
+          <div
+            className="relative overflow-hidden mr-4"
             key={each._id}
             onMouseOver={() => handleMouseOverFile(each._id)}
             onMouseLeave={() => handleMouseOverFile('')}
