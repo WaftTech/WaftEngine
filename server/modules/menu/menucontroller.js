@@ -1,9 +1,9 @@
 const httpStatus = require('http-status');
-
 const { menusch, menu_item } = require('./menuschema');
 const otherHelper = require('../../helper/others.helper');
 const menuConfig = require('./menuConfig');
 const objectId = require('mongoose').Types.ObjectId;
+const utils = require('./utils');
 const menuController = {};
 const menuItemController = {};
 
@@ -23,26 +23,21 @@ menuController.getMenu = async (req, res, next) => {
 };
 
 const menuControl = async (req, res, next) => {
-  const child_menu = await menu_item.find({ parent_menu: null, menu_sch_id: objectId(req.body.menu_sch_id) }).lean();
-  let lvl2,
-    lvl3,
-    lvl4 = [];
-  let child = [];
-  for (let i = 0; i < child_menu.length; i++) {
-    child.push(child_menu[i]);
-    child[i].child_menu = [];
-    lvl2 = await menu_item.find({ parent_menu: child_menu[i]._id }).lean();
-    for (let j = 0; j < lvl2.length; j++) {
-      lvl3 = await menu_item.find({ parent_menu: lvl2[j]._id }).lean();
-      child[i].child_menu.push(lvl2[j]);
-      child[i].child_menu[j].child_menu = [];
-      for (k = 0; k < lvl3.length; k++) {
-        lvl4 = await menu_item.find({ parent_menu: lvl3[k]._id }).lean();
-        child[i].child_menu[j].child_menu.push(lvl3[k]);
-        child[i].child_menu[j].child_menu[k].child_menu = lvl4;
-      }
+  const all_menu = await menu_item
+    .find({ menu_sch_id: objectId(req.body.menu_sch_id) })
+    .sort({ order: 1 })
+    .lean();
+  const baseParents = [];
+  const childrens = [];
+  all_menu.forEach(each => {
+    if (each.parent_menu == null) {
+      baseParents.push(each);
+    } else {
+      childrens.push(each);
     }
-  }
+  });
+
+  const child = utils.recursiveChildFinder(baseParents, childrens);
   return child;
 };
 menuItemController.getMenuItem = async (req, res, next) => {
@@ -124,27 +119,22 @@ menuController.saveMenu = async (req, res, next) => {
 
 menuController.getEditMenu = async (req, res, next) => {
   const parent = await menusch.findById(req.params.id).select('title key order is_active');
+  const all_menu = await menu_item
+    .find({ menu_sch_id: objectId(req.params.id) })
+    .sort({ order: 1 })
+    .lean();
 
-  const child_menu = await menu_item.find({ parent_menu: null, menu_sch_id: objectId(req.params.id) }).lean();
-  let lvl2,
-    lvl3,
-    lvl4 = [];
-  let child = [];
-  for (let i = 0; i < child_menu.length; i++) {
-    child.push(child_menu[i]);
-    child[i].child_menu = [];
-    lvl2 = await menu_item.find({ parent_menu: child_menu[i]._id }).lean();
-    for (let j = 0; j < lvl2.length; j++) {
-      lvl3 = await menu_item.find({ parent_menu: lvl2[j]._id }).lean();
-      child[i].child_menu.push(lvl2[j]);
-      child[i].child_menu[j].child_menu = [];
-      for (k = 0; k < lvl3.length; k++) {
-        lvl4 = await menu_item.find({ parent_menu: lvl3[k]._id }).lean();
-        child[i].child_menu[j].child_menu.push(lvl3[k]);
-        child[i].child_menu[j].child_menu[k].child_menu = lvl4;
-      }
+  const baseParents = [];
+  const childrens = [];
+  all_menu.forEach(each => {
+    if (each.parent_menu == null) {
+      baseParents.push(each);
+    } else {
+      childrens.push(each);
     }
-  }
+  });
+  const child = utils.recursiveChildFinder(baseParents, childrens);
+
   return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!!', null);
 };
 
@@ -162,28 +152,21 @@ menuController.deleteMenu = async (req, res, next) => {
 
 menuController.getMenuForUser = async (req, res, next) => {
   const id = await menusch.findOne({ key: req.params.key }).select('key');
-
-  const child_menu = await menu_item.find({ parent_menu: null, menu_sch_id: objectId(id._id) }).lean();
-  let lvl2,
-    lvl3,
-    lvl4 = [];
-  let child = [];
-  for (let i = 0; i < child_menu.length; i++) {
-    child.push(child_menu[i]);
-    child[i].child_menu = [];
-    lvl2 = await menu_item.find({ parent_menu: child_menu[i]._id }).lean();
-    for (let j = 0; j < lvl2.length; j++) {
-      lvl3 = await menu_item.find({ parent_menu: lvl2[j]._id }).lean();
-      child[i].child_menu.push(lvl2[j]);
-      child[i].child_menu[j].child_menu = [];
-      for (k = 0; k < lvl3.length; k++) {
-        lvl4 = await menu_item.find({ parent_menu: lvl3[k]._id }).lean();
-        child[i].child_menu[j].child_menu.push(lvl3[k]);
-        child[i].child_menu[j].child_menu[k].child_menu = lvl4;
-      }
+  const all_menu = await menu_item
+    .find({ menu_sch_id: objectId(id._id) })
+    .sort({ order: 1 })
+    .lean();
+  const baseParents = [];
+  const childrens = [];
+  all_menu.forEach(each => {
+    if (each.parent_menu == null) {
+      baseParents.push(each);
+    } else {
+      childrens.push(each);
     }
-  }
+  });
 
+  const child = utils.recursiveChildFinder(baseParents, childrens);
   return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: id.key }, null, 'Child menu get success!!', null);
 };
 
