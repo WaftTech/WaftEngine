@@ -89,12 +89,12 @@ const SidebarCategoriesList = props => {
             onClick={() => handleSetClick(e._id)}
           >
             {openSet[e._id] ? (
-              <div className="text-grey-darker hover:text-primary">
+              <div className="text-grey-darker hover:text-primary cursor-pointer">
                 <IndeterminateCheckBoxOutlinedIcon />
                 <FolderIcon />
               </div>
             ) : (
-              <div className="text-grey-darker hover:text-primary">
+              <div className="text-grey-darker hover:text-primary cursor-pointer">
                 {e.child_menu[0]._id !== '' ? (
                   <AddBoxOutlinedIcon />
                 ) : (
@@ -104,10 +104,10 @@ const SidebarCategoriesList = props => {
                 <FolderIcon />
               </div>
             )}
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <span
                 onClick={() => handleClick(e._id)}
-                className="dropdown-title capitalize ml-2"
+                className="dropdown-title capitalize ml-2 cursor-pointer"
               >
                 {e.title}
               </span>
@@ -136,8 +136,7 @@ const SidebarCategoriesList = props => {
           {e._id !== '' && (
             <div
               onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-4
-                flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
             >
               <DescriptionIcon />
               {`${e.title}`}
