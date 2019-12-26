@@ -51,9 +51,26 @@ menuItemController.getMenuItem = async (req, res, next) => {
 menuItemController.saveMenuItem = async (req, res, next) => {
   try {
     let menuitem = req.body;
+
+    if (menuitem.parent_menu) {
+      const hierarchy = await menu_item
+        .findById(menuitem.parent_menu)
+        .select('parent_hierarchy')
+        .lean();
+
+      menuitem.parent_hierarchy = [...hierarchy.parent_hierarchy, hierarchy._id];
+    }
+
     if (menuitem && menuitem._id) {
       menuitem.updated_at = new Date();
       menuitem.updated_by = req.user.id;
+
+      const isLoop = otherHelper.mongoIdExistInArray(menuitem.parent_hierarchy, menuitem._id);
+      if (isLoop) {
+        const errors = { parent_menu: 'Circular Dependencies detected' };
+        return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'Invalid Call', null);
+      }
+
       const update = await menu_item.findByIdAndUpdate(
         menuitem._id,
         {
