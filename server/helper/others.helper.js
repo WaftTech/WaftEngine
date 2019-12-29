@@ -3,7 +3,15 @@ const crypto = require('crypto');
 const Validator = require('validator');
 const isEmpty = require('../validation/isEmpty');
 const PhoneNumber = require('awesome-phonenumber');
+
 const otherHelper = {};
+
+otherHelper.mongoIdExistInArray = (mongodbIdArray, mongoDbId) => {
+  for (let i = 0; i < mongodbIdArray.length; i++) {
+    if (mongodbIdArray[i].toString() === mongoDbId.toString()) return true;
+  }
+  return false;
+};
 
 otherHelper.generateRandomHexString = len => {
   return crypto

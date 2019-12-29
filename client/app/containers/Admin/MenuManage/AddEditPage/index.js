@@ -183,7 +183,7 @@ const AddEdit = props => {
               className="ml-2"
               key={childElement._id}
               disabled={depth >= 3}
-              value={childElement.parent_menu}
+              value={childElement._id}
             >
               {'-'.repeat(depth) + childElement.title}
             </option>,
@@ -209,9 +209,9 @@ const AddEdit = props => {
         </option>
         {category.map(each => (
           <>
-            {/* <option key={each._id} disabled="" value={each._id}>
-              {`${each.title}weeee`}
-            </option> */}
+            <option key={each._id} disabled="" value={each._id}>
+              {`${each.title}`}
+            </option>
             {each.child_menu && each.child_menu.length > 0
               ? //  && each.child_menu[0]._id !== ''
                 (resetChildContent(),
@@ -328,7 +328,13 @@ const AddEdit = props => {
                           </label>
                           {getCategoryDropDown()}
 
-                          {/* <div id="component-error-text">{errors.title}</div> */}
+                          {errors &&
+                            errors.sub_menu_form &&
+                            errors.sub_menu_form.parent_menu && (
+                              <div id="component-error-text">
+                                {errors.sub_menu_form.parent_menu}
+                              </div>
+                            )}
                         </div>
                       </div>
                       <div className="w-full md:w-1/2 ">

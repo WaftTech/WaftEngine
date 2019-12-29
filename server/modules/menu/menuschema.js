@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const menuItemSchema = new Schema({
   title: { type: String, required: true },
   parent_menu: { type: Schema.Types.ObjectId, required: false, ref: 'menu_item' },
+  parent_hierarchy: [{ type: Schema.Types.ObjectId, required: false, ref: 'menu_item' }],
   is_internal: { type: Boolean, required: true, default: true },
   url: { type: String, required: true },
   is_active: { type: Boolean, default: true, required: true },
