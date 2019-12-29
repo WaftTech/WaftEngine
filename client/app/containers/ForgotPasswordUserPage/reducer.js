@@ -16,6 +16,9 @@ export const initialState = {
 const ForgotPasswordUserReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case types.CLEAR_ERROR:
+        draft.errors = initialState.errors;
+        break;
       case types.SET_STORE_VALUE:
         draft[action.payload.key] = action.payload.value;
         break;

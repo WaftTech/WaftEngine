@@ -12,6 +12,8 @@ export const setStoreValue = payload => ({
 });
 export const clearStore = payload => ({ type: types.CLEAR_STORE, payload });
 
+export const clearError = payload => ({ type: types.CLEAR_ERROR, payload });
+
 export const forgotPasswordRequest = payload => ({
   type: types.FORGOT_PASSWORD_REQUEST,
   payload,
