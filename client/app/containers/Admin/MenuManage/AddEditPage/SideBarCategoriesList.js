@@ -163,7 +163,13 @@ const SidebarCategoriesList = props => {
           Expand All
         </button>
       </div> */}
-
+      <button
+        type="button"
+        onClick={() => clearSubMenu()}
+        className="py-2 px-6 w-full rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+      >
+        Add New
+      </button>
       {category.length <= 0 ? (
         // <img
         //   src={Loader}
