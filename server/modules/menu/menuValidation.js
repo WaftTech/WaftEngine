@@ -63,7 +63,7 @@ validation.validate = (req, res, next) => {
   }
 };
 
-validation.itemsanitize = (req, res, next) => {
+validation.itemSanitize = (req, res, next) => {
   const sanitizeArray = [
     {
       field: 'title',
@@ -82,7 +82,7 @@ validation.itemsanitize = (req, res, next) => {
   next();
 };
 
-validation.itemvalidate = (req, res, next) => {
+validation.itemValidate = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {

@@ -4,7 +4,7 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../../helper/others.helper');
 const { secretOrKey } = require('../../../config/keys');
 const internal = {};
-const loginlogController = {};
+const loginLogController = {};
 
 internal.addloginlog = async (req, token, next) => {
   try {
@@ -18,7 +18,7 @@ internal.addloginlog = async (req, token, next) => {
   }
 };
 
-loginlogController.logout = async (req, res, next) => {
+loginLogController.logout = async (req, res, next) => {
   try {
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     token = token.replace('Bearer ', '');
@@ -33,19 +33,19 @@ loginlogController.logout = async (req, res, next) => {
   }
 };
 
-loginlogController.getLogList = async (req, res, next) => {
+loginLogController.getLogList = async (req, res, next) => {
   let user_id = req.user.id;
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-    searchq = { user_id, ...searchq };
-    const data = await otherHelper.getquerySendResponse(loginlogs, page, size, sortq, searchq, selectq, next, populate);
+    let { page, size, populate, selectQuery, searchQuery, sortQueryuery: sortQuery } = otherHelper.parseFilters(req, 10, false);
+    searchQuery = { user_id, ...searchQuery };
+    const data = await otherHelper.getquerySendResponse(loginlogs, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data && data.data, 'logs Get Success', page, size, data && data.totaldata);
   } catch (err) {
     next(err);
   }
 };
 
-loginlogController.removeToken = async (req, res, next) => {
+loginLogController.removeToken = async (req, res, next) => {
   let { loginID } = req.body;
   let found;
   try {
@@ -60,4 +60,4 @@ loginlogController.removeToken = async (req, res, next) => {
   }
 };
 
-module.exports = { internal, loginlogController };
+module.exports = { internal, loginLogController };

@@ -29,7 +29,7 @@ commentController.PostComment = async (req, res, next) => {
 };
 commentController.GetComment = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'blog_id',
@@ -41,31 +41,31 @@ commentController.GetComment = async (req, res, next) => {
       },
     ];
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_blog_id) {
       const blog = await blogSch.find({ title: { $regex: req.query.find_blog_id, $options: 'i' } }).select({ _id: 1 });
       const blogId = blog.map(each => each._id);
-      searchq = {
+      searchQuery = {
         blog_id: { $in: blogId },
-        ...searchq,
+        ...searchQuery,
       };
     }
 
     if (req.query.find_is_approved) {
-      searchq = { ...searchq, is_approved: req.query.find_is_approved };
+      searchQuery = { ...searchQuery, is_approved: req.query.find_is_approved };
     }
     if (req.query.find_is_disapproved) {
-      searchq = { ...searchq, is_disapproved: req.query.find_is_disapproved };
+      searchQuery = { ...searchQuery, is_disapproved: req.query.find_is_disapproved };
     }
 
-    let blogComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortq, searchq, selectq, next, populate);
+    let blogComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogComments.data, 'comments get success!!', page, size, blogComments.totaldata);
   } catch (err) {
     next(err);

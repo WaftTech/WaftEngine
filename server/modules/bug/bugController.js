@@ -19,17 +19,17 @@ bugController.AddErrorToLogs = async (req, res, next, err) => {
 };
 bugController.GetErrors = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_errors) {
-      searchq = { error_stack: { $regex: req.query.find_errors, $options: 'i' }, ...searchq };
+      searchQuery = { error_stack: { $regex: req.query.find_errors, $options: 'i' }, ...searchQuery };
     }
-    let bugs = await otherHelper.getquerySendResponse(bugSch, page, size, sortq, searchq, selectq, next, populate);
+    let bugs = await otherHelper.getquerySendResponse(bugSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totaldata);
   } catch (err) {
     next(err);
   }
 };
-bugController.GetErrorsGRBY = async (req, res, next) => {
+bugController.GetErrorsGroupBy = async (req, res, next) => {
   try {
     const bugs = await bugSch.aggregate([{ $group: { _id: '$error_type', count: { $sum: 1 } } }, { $sort: { count: -1 } }]);
     let totaldata = 0;

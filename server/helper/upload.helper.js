@@ -2,7 +2,7 @@ const fileUploadHelper = filePath => {
   const multer = require('multer');
   const path = require('path');
   const mkdirp = require('mkdirp');
-  const hasher = require('./others.helper');
+  const hashHelper = require('./others.helper');
 
   const storage = multer.diskStorage({
     destination: async (req, file, cb) => {
@@ -19,7 +19,7 @@ const fileUploadHelper = filePath => {
       }
     },
     filename: async (req, file, cb) => {
-      const randomString = await hasher.generateRandomHexString(15);
+      const randomString = await hashHelper.generateRandomHexString(15);
       cb(null, randomString + '-' + file.originalname);
     },
     onFileUploadStart: file => {

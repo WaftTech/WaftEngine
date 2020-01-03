@@ -4,7 +4,7 @@ const otherHelper = require('../../helper/others.helper');
 const metaConfig = require('./metaConfig');
 const metaValidation = {};
 
-metaValidation.Santize = (req, res, next) => {
+metaValidation.Sanitized = (req, res, next) => {
   const sanitizeArray = [
     {
       field: 'title',

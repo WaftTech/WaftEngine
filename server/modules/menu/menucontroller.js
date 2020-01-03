@@ -8,17 +8,17 @@ const menuController = {};
 const menuItemController = {};
 
 menuController.getMenu = async (req, res, next) => {
-  let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-  searchq = { is_deleted: false };
+  let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+  searchQuery = { is_deleted: false };
   if (req.query.find_title) {
-    searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
+    searchQuery = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
   }
   if (req.query.find_key) {
-    searchq = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchq };
+    searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
   }
 
-  selectq = 'title key order is_active';
-  let data = await otherHelper.getquerySendResponse(menusch, page, size, sortq, searchq, selectq, next, populate);
+  selectQuery = 'title key order is_active';
+  let data = await otherHelper.getquerySendResponse(menusch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
 };
 

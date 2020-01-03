@@ -8,10 +8,10 @@ const { authorization, authentication } = require('../../middleware/authenticati
 const { catSanitize, catValidate, sanitize, validate, sanitizeComment, validateComment } = require('../../modules/blog/blogValidation');
 
 router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
-router.get('/', blogModule.GetBlogUnauthorize);
+router.get('/', blogModule.GetBlogNonAuthorize);
 router.get('/latest', blogModule.getLatestBlog);
 router.get('/latest/:cat_id', blogModule.getLatestBlogByCat);
-router.get('/related/:slug_url', blogModule.getRealtedBlog);
+router.get('/related/:slug_url', blogModule.getRelatedBlog);
 router.get('/category', blogModule.GetBlogCategory);
 router.get('/category/:id', blogModule.GetBlogCatById);
 router.get('/blog/:slug_url', blogModule.GetBlogBySlug);

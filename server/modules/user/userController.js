@@ -12,7 +12,7 @@ const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
-const loginlogs = require('./loginlogs/loginlogController').internal;
+const loginLogs = require('./loginlogs/loginlogController').internal;
 
 const userController = {};
 
@@ -27,8 +27,8 @@ userController.PostUser = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!!', null);
     } else {
       const newUser = new users(user);
-      const usersave = await newUser.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, usersave, null, 'user add success!!', null);
+      const userSave = await newUser.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!!', null);
     }
   } catch (err) {
     next(err);
@@ -41,18 +41,18 @@ userController.PostUserPw = async (req, res, next) => {
     const { email, name, email_verified, roles } = req.body;
     user = { email, name, email_verified, roles };
     let salt = await bcrypt.genSalt(10);
-    let hashpw = await bcrypt.hash(req.body.password, salt);
+    let hashPwd = await bcrypt.hash(req.body.password, salt);
     if (req.body && req.body._id) {
       const update = await users.findByIdAndUpdate(req.body._id, {
-        $set: { password: hashpw, last_password_change_date: new Date() },
+        $set: { password: hashPwd, last_password_change_date: new Date() },
       });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!!', null);
     } else {
-      user.password = hashpw;
+      user.password = hashPwd;
       user.last_password_change_date = new Date();
       const newUser = new users(user);
-      const usersave = await newUser.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, usersave, null, 'user add success!!', null);
+      const userSave = await newUser.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!!', null);
     }
   } catch (err) {
     next(err);
@@ -72,14 +72,12 @@ userController.CheckMail = async (req, res) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Mail found', null);
 };
 
-userController.GetAllUserGRBY = async (req, res, next) => {
+userController.GetAllUserGroupBy = async (req, res, next) => {
   try {
-    // const user = await users.aggregate([{ $group: { _id: '$roles', count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $unwind: '$_id' }, { $lookup: { from: 'roles', localField: '_id', foreignField: '_id', as: 'roles' } }, { $unwind: '$roles' }]);
-
     const role = await roles.find({ is_deleted: false }).select('role_title');
     let user = await users.find({ is_deleted: false });
-    let totaldata = await users.countDocuments({ is_deleted: false });
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role, user }, 'users by group by get success!!', 1, 1, totaldata);
+    let totalData = await users.countDocuments({ is_deleted: false });
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role, user }, 'users by group by get success!!', 1, 1, totalData);
   } catch (err) {
     next(err);
   }
@@ -87,24 +85,24 @@ userController.GetAllUserGRBY = async (req, res, next) => {
 
 userController.GetAllUser = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_name) {
-      searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
+      searchQuery = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_email) {
-      searchq = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchq };
+      searchQuery = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchQuery };
     }
     const roles = ['5bf7af0a736db01f8fa21a25', '5bf7ae3694db051f5486f845', '5def4c1cb3f6c12264bcf622'];
 
     if (req.query.filter_author) {
-      searchq = { roles: { $in: roles }, ...searchq };
+      searchQuery = { roles: { $in: roles }, ...searchQuery };
     }
 
-    selectq = 'name email password avatar bio email_verified roles';
+    selectQuery = 'name email password avatar bio email_verified roles';
 
     populate = [{ path: 'roles', select: 'role_title' }];
 
-    let datas = await otherHelper.getquerySendResponse(users, page, size, sortq, searchq, selectq, next, populate);
+    let datas = await otherHelper.getquerySendResponse(users, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
   } catch (err) {
@@ -195,7 +193,7 @@ userController.Register = async (req, res, next) => {
         let token = jwt.sign(payload, secretOrKey, {
           expiresIn: tokenExpireTime,
         });
-        await loginlogs.addloginlog(req, token, next);
+        await loginLogs.addloginlog(req, token, next);
         token = `Bearer ${token}`;
         payload.routes = routes;
         return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
@@ -523,7 +521,7 @@ userController.Login = async (req, res, next) => {
                 expiresIn: tokenExpireTime,
               },
               (err, token) => {
-                loginlogs.addloginlog(req, token, next);
+                loginLogs.addloginlog(req, token, next);
                 token = `Bearer ${token}`;
                 payload.routes = routes;
                 return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
@@ -715,7 +713,7 @@ userController.loginGOath = async (req, res, next) => {
   let token = jwt.sign(payload, secretOrKey, {
     expiresIn: tokenExpireTime,
   });
-  await loginlogs.addloginlog(req, token, next);
+  await loginLogs.addloginlog(req, token, next);
   token = `Bearer ${token}`;
   payload.routes = routes;
   return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);

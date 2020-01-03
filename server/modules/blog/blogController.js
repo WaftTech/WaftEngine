@@ -8,7 +8,7 @@ const blogcontroller = {};
 
 blogcontroller.GetBlogAuthorize = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'author',
@@ -19,26 +19,26 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
         select: '_id title',
       },
     ];
-    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url is_published published_on is_active image added_by added_at updated_at updated_by';
+    selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url is_published published_on is_active image added_by added_at updated_at updated_by';
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_published_on) {
-      searchq = {
+      searchQuery = {
         published_on: {
           $regex: req.query.find_published_on,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
@@ -92,7 +92,7 @@ blogcontroller.getLatestBlogByCat = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.getRealtedBlog = async (req, res, next) => {
+blogcontroller.getRelatedBlog = async (req, res, next) => {
   try {
     const tages = await blogSch
       .findOne({
@@ -144,9 +144,9 @@ blogcontroller.GetBlogArchives = async (req, res, next) => {
   }
 };
 
-blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
+blogcontroller.GetBlogNonAuthorize = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 12, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 12, false);
     populate = [
       {
         path: 'category',
@@ -157,32 +157,32 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
         select: '_id name',
       },
     ];
-    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+    selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
 
-    searchq = {
+    searchQuery = {
       is_published: true,
       is_active: true,
-      ...searchq,
+      ...searchQuery,
     };
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_published_on) {
-      searchq = {
+      searchQuery = {
         published_on: {
           $regex: req.query.find_published_on,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
@@ -190,21 +190,21 @@ blogcontroller.GetBlogUnauthorize = async (req, res, next) => {
 };
 blogcontroller.GetBlogCategory = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-    selectq = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+    selectQuery = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.is_active) {
-      searchq = { is_active: true, ...searchq };
+      searchQuery = { is_active: true, ...searchQuery };
     }
-    let blogcats = await otherHelper.getquerySendResponse(blogCatSch, page, size, sortq, searchq, selectq, next, '');
+    let blogcats = await otherHelper.getquerySendResponse(blogCatSch, page, size, sortQuery, searchQuery, selectQuery, next, '');
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogcats.data, blogConfig.cget, page, size, blogcats.totaldata);
   } catch (err) {
     next(err);
@@ -345,7 +345,7 @@ blogcontroller.GetBlogById = async (req, res, next) => {
 
 blogcontroller.GetBlogByCat = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     const slug = req.params.slug_url;
     const cat = await blogCatSch.findOne({ slug_url: slug, is_deleted: false }, { _id: 1, title: 1 });
     populate = [
@@ -358,32 +358,32 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
         select: 'name',
       },
     ];
-    selectq = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
-    searchq = {
+    selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+    searchQuery = {
       is_published: true,
       is_active: true,
       category: cat._id,
-      ...searchq,
+      ...searchQuery,
     };
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_published_on) {
-      searchq = {
+      searchQuery = {
         published_on: {
           $regex: req.query.find_published_on,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortq, searchq, selectq, next, populate);
+    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, cat.title, page, size, blogs.totaldata);
   } catch (err) {
     next(err);
@@ -393,7 +393,7 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
   try {
     let page;
     let size;
-    let searchq;
+    let searchQuery;
     let populateq;
     const size_default = 10;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
@@ -408,11 +408,11 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
     }
     const tag = req.params.tag;
     populateq = [{ path: 'author', select: 'name' }];
-    searchq = {
+    searchQuery = {
       is_deleted: false,
       tags: tag,
     };
-    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, populateq);
+    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchQuery, '', next, populateq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
   } catch (err) {
     next(err);
@@ -423,7 +423,7 @@ blogcontroller.GetBlogByAuthor = async (req, res, next) => {
     const size_default = 10;
     let page;
     let size;
-    let searchq;
+    let searchQuery;
     let populateq;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
       page = Math.abs(req.query.page);
@@ -437,8 +437,8 @@ blogcontroller.GetBlogByAuthor = async (req, res, next) => {
     }
     const authorId = req.params.author;
     populateq = [{ path: 'author', select: 'name' }];
-    searchq = { is_deleted: false, is_active: true, author: authorId };
-    const blogByAuthor = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, populateq);
+    searchQuery = { is_deleted: false, is_active: true, author: authorId };
+    const blogByAuthor = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchQuery, '', next, populateq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogByAuthor.data, 'blogs by author get success!!', page, size, blogByAuthor.totaldata);
   } catch (err) {
     next(err);
@@ -448,7 +448,7 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
   try {
     let page;
     let size;
-    let searchq;
+    let searchQuery;
     let populateq;
     const size_default = 10;
     if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
@@ -465,18 +465,18 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
     let end = new Date(req.params.time);
     end.setMonth(end.getMonth() + 1);
 
-    searchq = {
+    searchQuery = {
       is_deleted: false,
       is_active: true,
       is_published: true,
     };
     if (start) {
-      searchq = {
+      searchQuery = {
         added_at: {
           $gte: start,
           $lt: end,
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     populateq = [
@@ -484,7 +484,7 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
       { path: 'author', select: 'name' },
     ];
 
-    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchq, '', next, populateq);
+    const tagBlog = await otherHelper.getquerySendResponse(blogSch, page, size, '', searchQuery, '', next, populateq);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
   } catch (err) {
     next(err);

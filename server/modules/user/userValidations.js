@@ -176,7 +176,7 @@ validations.validateUpdateUserProfile = (req, res, next) => {
 
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -188,11 +188,11 @@ validations.validateLoginInput = (req, res, next) => {
       field: 'email',
       validate: [
         {
-          condtition: 'IsEmpty',
+          condition: 'IsEmpty',
           msg: config.validate.empty,
         },
         {
-          condtition: 'IsEmail',
+          condition: 'IsEmail',
           msg: config.validate.isEmail,
         },
       ],
@@ -201,11 +201,11 @@ validations.validateLoginInput = (req, res, next) => {
       field: 'password',
       validate: [
         {
-          condtition: 'IsEmpty',
+          condition: 'IsEmpty',
           msg: config.validate.empty,
         },
         {
-          condtition: 'IsLength',
+          condition: 'IsLength',
           msg: config.validate.passLength,
           option: { min: 6, max: 30 },
         },
@@ -214,7 +214,7 @@ validations.validateLoginInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -263,7 +263,7 @@ validations.validateUpdateProfile = (req, res, next) => {
       validate: [
         {
           condition: 'IsBoolean',
-          msg: config.validate.inerr,
+          msg: config.validate.invalidInput,
         },
       ],
     },
@@ -292,7 +292,7 @@ validations.validateUpdateProfile = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -345,7 +345,7 @@ validations.validateRegisterInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -369,7 +369,7 @@ validations.validateUserScanInput = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -418,7 +418,7 @@ validations.validateAdd = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -452,7 +452,7 @@ validations.validateEdit = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
@@ -475,7 +475,7 @@ validations.validateSubscribe = (req, res, next) => {
       ];
       const errors = otherHelper.validation(data, validateArray);
       if (!isEmpty(errors)) {
-        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.inerr, null);
+        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.invalidInput, null);
       } else {
         next();
       }
@@ -493,7 +493,7 @@ validations.validateSubscribe = (req, res, next) => {
       ];
       const errors = otherHelper.validation(data, validateArray);
       if (!isEmpty(errors)) {
-        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.inerr, null);
+        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, config.validate.invalidInput, null);
       } else {
         next();
       }
@@ -502,7 +502,7 @@ validations.validateSubscribe = (req, res, next) => {
     }
   }
 };
-validations.validateLoginlogsLogut = (req, res, next) => {
+validations.validateLogsLogoutAction = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
@@ -514,7 +514,7 @@ validations.validateLoginlogsLogut = (req, res, next) => {
         },
         {
           condition: 'IsMONGOID',
-          msg: config.validate.inerr,
+          msg: config.validate.invalidInput,
         },
       ],
     },
@@ -522,12 +522,12 @@ validations.validateLoginlogsLogut = (req, res, next) => {
 
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }
 };
-validations.validatechangePassword = (req, res, next) => {
+validations.validateChangePassword = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
@@ -580,7 +580,7 @@ validations.validatechangePassword = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.inerr, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, config.validate.invalidInput, null);
   } else {
     next();
   }

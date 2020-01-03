@@ -3,12 +3,12 @@ const router = express.Router();
 const passport = require('passport');
 const validateRegisterInput = require('../../modules/user/userValidations');
 
-const loginlogs = require('../../modules/user/loginlogs/loginlogController').loginlogController;
-
+const loginLogs = require('../../modules/user/loginlogs/loginlogController').loginLogController;
 const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
 const userModule = require('../../modules/user/userController');
 const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
+
 /**
  * @route GET api/user/test
  * @description Tests users route
@@ -32,7 +32,7 @@ router.get('/', authorization, authentication, userModule.GetAllUser);
  * @description Check user is returning user group by or new  || for admin
  * @access Public
  */
-router.get('/grby', authorization, userModule.GetAllUserGRBY);
+router.get('/grby', authorization, userModule.GetAllUserGroupBy);
 
 /**
  * @route GET api/user
@@ -134,7 +134,7 @@ router.post('/resetpassword', userModule.ResetPassword);
  * @description change Password
  * @access Public
  */
-router.post('/changepassword', authorization, validateRegisterInput.validatechangePassword, userModule.changePassword);
+router.post('/changepassword', authorization, validateRegisterInput.validateChangePassword, userModule.changePassword);
 
 /**
  * @route POST api/user/login/github
@@ -162,21 +162,21 @@ router.get('/info', authorization, userModule.Info);
  * @description returns the loginlogs
  * @access Private
  */
-router.get('/loginlogs', authorization, authentication, loginlogs.getLogList);
+router.get('/loginlogs', authorization, authentication, loginLogs.getLogList);
 
 /**
  * @route POST api/user/loginlogs/logout
  * @description remove token from loginlog
  * @access Private
  */
-router.post('/loginlogs/logout', authorization, validateRegisterInput.validateLoginlogsLogut, loginlogs.removeToken);
+router.post('/loginlogs/logout', authorization, validateRegisterInput.validateLogsLogoutAction, loginLogs.removeToken);
 
 /**
  * @route POST api/user/logout
  * @description remove token from loginlog
  * @access Public
  */
-router.get('/logout', authorizationForLogout, loginlogs.logout);
+router.get('/logout', authorizationForLogout, loginLogs.logout);
 
 /**
  * @route GET api/user/profile

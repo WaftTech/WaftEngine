@@ -7,6 +7,6 @@ const { authentication, authorization } = require('../../middleware/authenticati
 
 router.get('/', authorization, authentication, templateModule.getTemplateName);
 router.get('/:key', authorization, authentication, templateModule.getTemplateDetail);
-router.post('/', authorization, authentication, validations.sanitze, validations.validate, templateModule.postTemplate);
+router.post('/', authorization, authentication, validations.sanitized, validations.validate, templateModule.postTemplate);
 
 module.exports = router;
