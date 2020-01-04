@@ -86,10 +86,6 @@ app.use(passport.initialize());
 // Passport Config
 require('./helper/passport')(passport);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
 // CORS setup for dev
 app.use(function(req, res, next) {
   req.client_ip_address = requestIp.getClientIp(req);

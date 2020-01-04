@@ -3,6 +3,8 @@ coverage
 build
 node_modules
 stats.json
+package-lock.json
+yarn.lock
 
 # Cruft
 .DS_Store
@@ -11,8 +13,6 @@ npm-debug.log
 # public
 config
 
-package-lock.json
-yarn.lock
 
 # files
 public/
