@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+    nodeserver:
+        build: 
+            context: ./server
+        command: nodemon index.js
+        volumes:
+            - ./server:/app
+            - ./server/public:/app/public
+        ports:
+            - "5050:5050"
+            - "5858:5858"
+        depends_on:
+            - mongodb
+        networks:
+            - internal
+    mongodb:
+        container_name: mongodb
+        image: mongodb
+        build: ./mongo
+        volumes:
+            - /data/db
+        env_file:
+            - ./mongo/.env
+        ports: 
+            - "27017:27017"
+        networks:
+            - internal
+    reactserver:
+        build: ./client
+        command: node server
+        volumes: 
+            - ./client:/app
+            - ./client/app/build:/app/app/build
+        ports: 
+            - "5051:5051"
+        depends_on:
+            - nodeserver
+        networks:
+            - internal
+networks:
+    internal: 
+        driver: bridge
