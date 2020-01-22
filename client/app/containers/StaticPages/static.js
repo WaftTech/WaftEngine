@@ -10,23 +10,23 @@ import { Route } from 'react-router-dom';
 
 const StaticPage = props => {
   const key = props.match.params.key;
-  console.log(key, 'match', props.match);
 
+  const camelCaseKey =
+    key[0].toUpperCase() +
+    key
+      .slice(1)
+      .split('-')
+      .join(' ');
   return (
     <React.Fragment>
       <Helmet>
-        <title>{key}</title>
+        <title>{camelCaseKey}</title>
       </Helmet>
       <div className="container p-5">
         <StaticContentDiv contentKey={key} />
       </div>
     </React.Fragment>
   );
-};
-
-StaticPage.propTypes = {
-  title: PropTypes.string.isRequired,
-  contentKey: PropTypes.string.isRequired,
 };
 
 export default StaticPage;
