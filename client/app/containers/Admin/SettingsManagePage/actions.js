@@ -35,3 +35,16 @@ export const editSettingsFailure = payload => ({
   type: types.EDIT_SETTINGS_FAILURE,
   payload,
 });
+
+export const sendTestMailRequest = payload => ({
+  type: types.SEND_TEST_MAIL_REQUEST,
+  payload,
+});
+export const sendTestMailSuccess = payload => ({
+  type: types.SEND_TEST_MAIL_SUCCESS,
+  payload,
+});
+export const sendTestMailFailure = payload => ({
+  type: types.SEND_TEST_MAIL_FAILURE,
+  payload,
+});

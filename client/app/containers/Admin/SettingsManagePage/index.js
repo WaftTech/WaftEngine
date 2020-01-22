@@ -107,6 +107,7 @@ export const SettingsManagePage = props => {
     setting_normalized,
     editSettingsRequest,
     loading,
+    sendTestMailRequest,
   } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -129,6 +130,10 @@ export const SettingsManagePage = props => {
 
   const handleSave = () => {
     editSettingsRequest();
+  };
+
+  const sendTestMail = () => {
+    sendTestMailRequest();
   };
 
   const commentStatus = ['posted', 'onhold', 'approved', 'disapproved'];
@@ -276,7 +281,7 @@ export const SettingsManagePage = props => {
                     label="Email to send test mail"
                     inputclassName="inputbox"
                     inputid="email-to-send-test-mail"
-                    inputType="text"
+                    inputType="email"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.email_to_send_test_mail &&
@@ -286,6 +291,13 @@ export const SettingsManagePage = props => {
                     name="email_to_send_test_mail"
                     onChange={handleChange('email_to_send_test_mail')}
                   />
+                  <button
+                    type="button"
+                    className="block btn bg-primary hover:bg-secondary"
+                    onClick={sendTestMail}
+                  >
+                    Send Test Mail
+                  </button>
                 </div>
               </div>
               {Object.keys(setting_normalized).length &&
