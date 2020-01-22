@@ -58,13 +58,13 @@ function* editSettingFailFunc(action) {
 function* sendTestMail(action) {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectSettingsNormalized());
-  const mail = data.email_to_send_test_mail.value;
+  const mail_data = { mail: data.email_to_send_test_mail.value };
   yield call(
     Api.post(
       `send/mail`,
       actions.sendTestMailSuccess,
       actions.sendTestMailFailure,
-      mail,
+      mail_data,
       token,
     ),
   );
