@@ -48,7 +48,13 @@ settingController.EditSetting = async (req, res, next) => {
     await Promise.all(
       Object.keys(data).map(async each => {
         let edited = await settingSch.findOneAndUpdate({ key: each }, { $set: { value: req.body[each].value, updated_at: Date.now(), updated_by: req.user.id } }, { new: true });
-        allData.push(edited);
+        if (edited) {
+          allData.push(edited);
+        } else {
+          const newSetting = new settingSch({ title: each, key: each, value: req.body[each].value, updated_at: Date.now(), added_by: req.user.id });
+          const d = await newSetting.save();
+          allData.push(d);
+        }
       }),
     );
 
