@@ -15,6 +15,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
 // core components
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -24,6 +26,7 @@ import {
   makeSelectOne,
   makeSelectLoading,
   makeSelectErrors,
+  makeSelectMetaTag,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import { DATE_FORMAT } from '../../../App/constants';
@@ -33,7 +36,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
-import WECkEditior from '../../../../components/CkEditor'
+import WECkEditior from '../../../../components/CkEditor';
 import Input from '../../../../components/customComponents/Input';
 const styles = {
   backbtn: {
@@ -98,8 +101,32 @@ class AddEdit extends React.PureComponent {
     this.props.addEditRequest();
   };
 
+  handleTempMetaTag = e => {
+    e.persist();
+    this.props.setMetaTagValue(e.target.value);
+  };
+
+  insertMetaTags = event => {
+    event.preventDefault();
+    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+      this.props.setOneValue({
+        key: 'meta_tag',
+        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+      });
+      this.props.setMetaTagValue('');
+    }
+    return { tempMetaTag: this.props.setMetaTagValue('') };
+  };
+
+  handleMetaTagDelete = index => () => {
+    const chipData = [...this.props.one.meta_tag];
+
+    chipData.splice(index, 1);
+    this.props.setOneValue({ key: 'meta_tag', value: chipData });
+  };
+
   render() {
-    const { one, classes, match, loading, errors } = this.props;
+    const { one, classes, match, loading, errors, tempMetaTag } = this.props;
     return loading && loading == true ? (
       <Loading />
     ) : (
@@ -129,32 +156,30 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              
-            <Input
-              label="Content Title"
-              inputclassName="inputbox"
-              inputid="grid-last-name"
-              inputType="text"
-              value={one.name}
-              onChange={this.handleChange('name')}
-              error={errors.name}
-            />
+              <Input
+                label="Content Title"
+                inputclassName="inputbox"
+                inputid="grid-last-name"
+                inputType="text"
+                value={one.name}
+                onChange={this.handleChange('name')}
+                error={errors.name}
+              />
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
-              
-            <Input
-              label="Content Key"
-              inputclassName="inputbox"
-              inputid="grid-last-name"
-              inputType="text"
-              value={one.key}
-              onChange={this.handleChange('key')}
-              error={errors.key}
-            />            </div>
- 
-            <div>
+              <Input
+                label="Content Key"
+                inputclassName="inputbox"
+                inputid="grid-last-name"
+                inputType="text"
+                value={one.key}
+                onChange={this.handleChange('key')}
+                error={errors.key}
+              />{' '}
+            </div>
 
+            <div>
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
@@ -176,54 +201,104 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.description}</div>
             </div>
 
-              <div className="flex w-full justify-between md:w-1/2 px-2">
-            <div className="w-full md:w-1/2 -ml-2">
-              <div margin="normal" className={classes.formControl}>
-              
-                <label
-                  className="font-bold text-gray-700"
-                  htmlFor="grid-last-name"
-                >
-                  Published From
-                </label>
-                <DatePicker
-                  margin="normal"
-                  name="publish_from"
-                  className={[classes.textField, 'inputbox']}
-                  value={
-                    (one.publish_from &&
-                      moment(one.publish_from).format(DATE_FORMAT)) ||
-                    ''
-                  }
-                  onChange={this.handleDateChange('publish_from')}
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Meta Title"
+                inputclassName="inputbox"
+                inputid="grid-last-meta_title"
+                inputType="text"
+                value={one.meta_title}
+                onChange={this.handleChange('meta_title')}
+                error={errors.meta_title}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Meta Description"
+                inputclassName="inputbox"
+                inputid="grid-last-meta_description"
+                inputType="text"
+                value={one.meta_description}
+                onChange={this.handleChange('meta_description')}
+                error={errors.meta_description}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Meta Tags
+              </label>
+              <form onSubmit={this.insertMetaTags}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-tags"
+                  type="text"
+                  value={tempMetaTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaTag}
                 />
+              </form>
+              <Paper>
+                {one.meta_tag &&
+                  one.meta_tag.map((tag, index) => {
+                    const icon = null;
 
-              </div>
+                    return (
+                      <Chip
+                        key={`meta-${tag}-${index}`}
+                        icon={icon}
+                        label={tag}
+                        onDelete={this.handleMetaTagDelete(index)}
+                        className={classes.chip}
+                      />
+                    );
+                  })}
+              </Paper>
             </div>
-         
-            <div className="w-full md:w-1/2 -mr-2">
-              <div margin="normal" className={classes.formControl}>
-                
-                <label
-                   className="font-bold text-gray-700"
-                  htmlFor="grid-last-name"
-                >
-                  Published To
-                </label>
-                <DatePicker
-                  margin="normal"
-                  name="publish_to"
-                  className={[classes.textField, 'inputbox']}
-                  value={
-                    (one.publish_to &&
-                      moment(one.publish_to).format(DATE_FORMAT)) ||
-                    ''
-                  }
-                  onChange={this.handleDateChange('publish_to')}
-                />
-    
+
+            <div className="flex w-full justify-between md:w-1/2 px-2">
+              <div className="w-full md:w-1/2 -ml-2">
+                <div margin="normal" className={classes.formControl}>
+                  <label
+                    className="font-bold text-gray-700"
+                    htmlFor="grid-last-name"
+                  >
+                    Published From
+                  </label>
+                  <DatePicker
+                    margin="normal"
+                    name="publish_from"
+                    className={[classes.textField, 'inputbox']}
+                    value={
+                      (one.publish_from &&
+                        moment(one.publish_from).format(DATE_FORMAT)) ||
+                      ''
+                    }
+                    onChange={this.handleDateChange('publish_from')}
+                  />
+                </div>
               </div>
-            </div>
+
+              <div className="w-full md:w-1/2 -mr-2">
+                <div margin="normal" className={classes.formControl}>
+                  <label
+                    className="font-bold text-gray-700"
+                    htmlFor="grid-last-name"
+                  >
+                    Published To
+                  </label>
+                  <DatePicker
+                    margin="normal"
+                    name="publish_to"
+                    className={[classes.textField, 'inputbox']}
+                    value={
+                      (one.publish_to &&
+                        moment(one.publish_to).format(DATE_FORMAT)) ||
+                      ''
+                    }
+                    onChange={this.handleDateChange('publish_to')}
+                  />
+                </div>
+              </div>
             </div>
 
             <FormControlLabel
@@ -237,28 +312,12 @@ class AddEdit extends React.PureComponent {
               }
               label="Is Active"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                 
-                  checked={one.is_page || false}
-                  onClick={this.handleCheckedChange('is_page')}
-                  value="is_page"
-                  color="primary"
-                />
-              }
-  
-              label="Is Page"
-            />
-
 
             <button
- 
               className="block btn bg-primary hover:bg-secondary"
               onClick={this.handleSave}
             >
-
-            Save
+              Save
             </button>
           </PageContent>
         </div>
@@ -276,6 +335,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   errors: makeSelectErrors(),
   token: makeSelectToken(),
+  tempMetaTag: makeSelectMetaTag(),
 });
 
 const withConnect = connect(
