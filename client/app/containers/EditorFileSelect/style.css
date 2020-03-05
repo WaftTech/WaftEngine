@@ -1,21 +1,13 @@
-/* div[data-tooltip] {
-  position: relative;
+.mediaCheck{
+  display: none;
+  top:0.25rem;
+  right: 0.25rem;
 }
 
-div[data-tooltip]:hover:after {
-  position: absolute;
-  background: #fff;
-  content: attr(data-tooltip);
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #000;
-  padding: 2px 6px;
-  white-space: nowrap;
-  font-size: 0.8rem;
-  border: 1px solid #ccc;
-  z-index: 2;
+.mediaCheck[type="checkbox"]:checked{
+  display: block;
 }
-.folder_media {
-  background-color: gray;
-} */
+
+.mediaCont:hover .mediaCheck{
+  display: block;
+}
