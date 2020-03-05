@@ -4,10 +4,6 @@
   right: 0.25rem;
 }
 
-.mediaCheck[type="checkbox"]:checked{
-  display: block;
-}
-
 .mediaCont:hover .mediaCheck{
   display: block;
 }
