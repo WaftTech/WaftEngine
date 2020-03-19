@@ -23,7 +23,7 @@
     "gravatar": "^1.6.0",
     "hpp": "^0.2.2",
     "http-status": "^1.2.0",
-    "jimp": "^0.6.0",
+    "jimp": "^0.9.0",
     "jsonwebtoken": "^8.3.0",
     "mailgun-js": "^0.22.0",
     "mongoose": "^5.7.5",
