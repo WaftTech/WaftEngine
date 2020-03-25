@@ -88,7 +88,6 @@ coronaController.SaveCorona = async (req, res, next) => {
       const update = await coronaSch.findByIdAndUpdate(coronas._id, { $set: coronas }, { new: true });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, coronaConfig.save, null);
     } else {
-      coronas.added_by = req.user.id;
       const newCorona = new coronaSch(coronas);
       const coronasSave = await newCorona.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, coronasSave, null, coronaConfig.save, null);

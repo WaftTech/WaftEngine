@@ -334,7 +334,7 @@ module.exports = {
     keyLength: 'The length should be between 2 to 20',
     isDate: 'Please input date type data',
   },
-  get: 'Device Register successful!!',
-  save: 'Content save successful',
-  gets: 'Contents get successful',
+  get: 'Data Get successful!!',
+  save: 'Data save successful',
+  gets: 'Data get successful',
 };
