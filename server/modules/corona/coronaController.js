@@ -28,7 +28,33 @@ coronaController.saveDevice = async (req, res, next) => {
     next(err);
   }
 };
+coronaController.GetDevice = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
 
+    if (req.query.find_name) {
+      searchQuery = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.find_key) {
+      searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.find_publish_from) {
+      searchQuery = { publish_from: { $regex: req.query.find_publish_from, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.find_publish_to) {
+      searchQuery = { publish_to: { $regex: req.query.find_publish_to, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.find_is_page) {
+      searchQuery = { ...searchQuery, is_page: req.query.find_is_page };
+    }
+    console.log(searchQuery);
+    let datas = await otherHelper.getquerySendResponse(deviceSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, coronaConfig.gets, page, size, datas.totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
 coronaController.GetCorona = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);

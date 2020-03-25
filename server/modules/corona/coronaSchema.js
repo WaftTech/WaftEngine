@@ -20,6 +20,7 @@ const coronaSchema = new schema({
     detail: { type: String },
   },
   device_id: { type: schema.Types.ObjectId, ref: 'device' },
+  is_deleted: { type: Boolean, default: false },
   added_at: { type: Date, default: Date.now },
 });
 

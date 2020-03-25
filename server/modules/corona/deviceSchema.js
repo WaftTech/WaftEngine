@@ -6,6 +6,7 @@ const deviceSchema = new schema({
   location: { type: schema.Types.Mixed, required: true },
   android_token: { type: String },
   ios_token: { type: String },
+  is_deleted: { type: Boolean, default: false },
   added_at: { type: Date, default: Date.now },
 });
 
