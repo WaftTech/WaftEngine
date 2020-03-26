@@ -1,7 +1,7 @@
 module.exports = {
-  mongoURI: '',
+  mongoURI: 'mongodb://corona:corona1@ds119640.mlab.com:19640/corona-app',
   recaptcha: { secretKey: '', siteKey: '' },
-  secretOrKey: '',
+  secretOrKey: 'secretKey',
   tokenExpireTime: 360000,
   isOauthConfig: { isGoogleAuth: false, isFacebookAuth: false, isGithubAuth: false },
   oauthConfig: {
