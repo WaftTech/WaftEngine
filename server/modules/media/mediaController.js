@@ -96,6 +96,22 @@ mediaController.DeleteMedia = async (req, res, next) => {
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
 };
+
+mediaController.DeleteAllMedia = async (req, res, next) => {
+  let all = req.body.ids;
+  let media;
+  for(let i=0 ; i < all.length ; i++) {
+     media = await mediaSch.findByIdAndUpdate(
+      all[i],
+      {
+        $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+      },
+      { new: true },
+    );
+  }
+  
+  return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
+};
 mediaController.UploadFromCkEditor = async (req, res, next) => {
   try {
     console.log(req.files);
