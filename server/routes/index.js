@@ -55,8 +55,5 @@ router.use('/team', teamRoutes);
 // All route of comment module (comments)
 const commentRoutes = require('./api/comment');
 router.use('/comment', commentRoutes);
-// All route of corona module (coronas)
-const coronaRoutes = require('./api/corona');
-router.use('/corona', coronaRoutes);
 
 module.exports = router;
