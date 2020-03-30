@@ -1,6 +1,9 @@
 const httpStatus = require('http-status');
 var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
+const folderSch = require('../files/folderSchema');
+const fileSch = require('../files/fileSchema');
+
 const mediaSch = require('./mediaSchema');
 const mediaController = {};
 
@@ -95,6 +98,44 @@ mediaController.DeleteMedia = async (req, res, next) => {
     { new: true },
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
+};
+
+mediaController.DeleteAllMedia = async (req, res, next) => {
+  let folder_id = req.body.folder_id;
+  let file_id = req.body.file_id;
+  
+  let file,folder;
+
+  for(let i=0 ; i < folder_id.length ; i++) {
+    folder = await folderSch.findByIdAndUpdate(
+      folder_id[i],
+     {
+       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+     },
+     { new: true },
+   );
+ }
+ for(let i=0 ; i < file_id.length ; i++) {
+  file = await fileSch.findByIdAndUpdate(
+    file_id[i],
+   {
+     $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+   },
+   { new: true },
+ );
+}
+  // let media;
+  // for(let i=0 ; i < all.length ; i++) {
+  //    media = await mediaSch.findByIdAndUpdate(
+  //     all[i],
+  //     {
+  //       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+  //     },
+  //     { new: true },
+  //   );
+  // }
+  
+  return otherHelper.sendResponse(res, httpStatus.OK, true, {file,folder}, null, 'Media Delete Success !!', null);
 };
 mediaController.UploadFromCkEditor = async (req, res, next) => {
   try {

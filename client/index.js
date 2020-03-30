@@ -1,6 +1,8 @@
+'use strict';
+
 const http = require('http');
 const app = require('./app');
-const port = process.env.PORT || 5501;
+const port = process.env.PORT || 5051;
 const server = http.createServer(app);
 
 app.set('PORT_NUMBER', port);

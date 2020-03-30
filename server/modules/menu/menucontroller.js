@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
-const { menusch, menu_item } = require('./menuschema');
+
+const {menuSch , menu_item } = require('./menuschema');
 const otherHelper = require('../../helper/others.helper');
 const menuConfig = require('./menuConfig');
 const objectId = require('mongoose').Types.ObjectId;

@@ -129,13 +129,14 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  const user = await users.findOne({ email: req.body.email });
+  let email = req.body.email.toLowerCase();
+  const user = await users.findOne({ email: email });
   if (user) {
     const errors = { email: 'Email already exists' };
-    const data = { email: req.body.email };
+    const data = { email: email };
     return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
   } else {
-    const { name, email, password, gender } = req.body;
+    const { name, password, gender } = req.body;
     const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' });
     const newUser = new users({ name, email, avatar, password, gender });
     bcrypt.genSalt(10, async (err, salt) => {
@@ -471,8 +472,9 @@ userController.Login = async (req, res, next) => {
   try {
     let errors = {};
     const {
-      body: { email, password },
+      body: {  password },
     } = req;
+    let email = req.body.email.toLowerCase();
     users
       .findOne({
         email,
