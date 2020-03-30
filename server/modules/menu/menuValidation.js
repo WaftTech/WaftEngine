@@ -37,7 +37,6 @@ validation.validate = (req, res, next) => {
         },
       ],
     },
-<<<<<<< HEAD
     {
       field: 'key',
       validate: [
@@ -51,13 +50,6 @@ validation.validate = (req, res, next) => {
   const errors = otherHelper.validation(data, validateArray);
 
   //   console.log('error',errors);
-=======
-    
-  ];
-  const errors = otherHelper.validation(data, validateArray);
-
-
->>>>>>> 01e732e032e223958e93321b5837aa002fdf9bec
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
@@ -164,10 +156,7 @@ validation.itemValidate = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-<<<<<<< HEAD
   //   console.log('error',errors);
-=======
->>>>>>> 01e732e032e223958e93321b5837aa002fdf9bec
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
