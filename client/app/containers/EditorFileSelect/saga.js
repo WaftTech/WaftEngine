@@ -88,7 +88,6 @@ function* createNewFolder(action) {
     datas.name = action.payload.name;
     successCall = actions.renameFolderSuccess;
   }
-  console.log(datas, 'datas');
   yield call(
     Api.post(
       `files/folder/${action.payload.key}`,
@@ -110,7 +109,6 @@ function* multipleDelete(action) {
     file_id: [...files],
   };
 
-  console.log('delete DATA', data);
   yield call(
     Api.post(
       `media/deleteall`,

@@ -32,7 +32,6 @@ export const EditorFileSelect = ({
   useInjectSaga({ key, saga });
   const queryObj = qs.parse(search);
 
-  console.log(queryObj.path);
   useEffect(() => {
     loadFilesRequest(queryObj.path);
   }, [queryObj.path]);
