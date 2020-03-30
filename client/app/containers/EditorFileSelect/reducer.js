@@ -85,9 +85,14 @@ const editorFileSelectReducer = (state = initialState, action) =>
         draft.folderAddRequest = false;
         break;
       case types.ADD_MEDIA_SUCCESS:
-        action.payload.data.map(each => {
-          draft.all.files.data = [...state.all.files.data, each];
-        });
+        draft.all.files.data = [
+          ...state.all.files.data,
+          ...action.payload.data.map(function images(each) {
+            return {
+              ...each,
+            };
+          }),
+        ];
         draft.all.files.totaldata = state.all.files.totaldata + 1;
         break;
       case types.DELETE_FOLDER_SUCCESS:
@@ -142,10 +147,20 @@ const editorFileSelectReducer = (state = initialState, action) =>
         }
         break;
 
+      case types.DELETE_MULTIPLE_REQUEST:
+        draft.loading = true;
+
+        break;
+
       case types.DELETE_MULTIPLE_SUCCESS:
         draft.chosen = initialState.chosen;
         draft.chosen_files = initialState.chosen_files;
         draft.chosen_folders = initialState.chosen_folders;
+        draft.loading = false;
+        break;
+
+      case types.DELETE_MULTIPLE_FAILURE:
+        draft.loading = false;
 
         break;
     }
