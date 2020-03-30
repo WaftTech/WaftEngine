@@ -43,3 +43,6 @@ export const DELETE_FOLDER_FAILURE =
 export const DELETE_FILE_REQUEST = 'app/EditorFileSelect/DELETE_FILE_REQUEST';
 export const DELETE_FILE_SUCCESS = 'app/EditorFileSelect/DELETE_FILE_SUCCESS';
 export const DELETE_FILE_FAILURE = 'app/EditorFileSelect/DELETE_FILE_FAILURE';
+
+export const ADD_CHOSEN_FILE = 'app/EditorFileSelect/ADD_CHOSEN_FILE';
+export const CLEAR_CHOSEN = 'app/EditorFileSelect/CLEAR_CHOSEN';

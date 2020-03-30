@@ -107,3 +107,12 @@ export const fileDeleteFailure = payload => ({
   type: types.DELETE_FILE_FAILURE,
   payload,
 });
+
+export const addChosenFile = payload => ({
+  type: types.ADD_CHOSEN_FILE,
+  payload,
+});
+export const clearChosen = payload => ({
+  type: types.CLEAR_CHOSEN,
+  payload,
+});

@@ -28,6 +28,8 @@ export const initialState = {
   folderAddRequest: false,
   folderRename: false,
   loading: false,
+  chosen: [],
+  chosen_files: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -104,6 +106,27 @@ const editorFileSelectReducer = (state = initialState, action) =>
           ),
         };
         draft.all.files.totaldata = state.all.files.totaldata - 1;
+        break;
+
+      case types.ADD_CHOSEN_FILE:
+        const index = draft.chosen.indexOf(action.payload._id);
+        if (index >= 0) {
+          const tempChosen = [...draft.chosen];
+          const tempChosenFiles = [...draft.chosen_files];
+          tempChosen.splice(index, 1);
+          tempChosenFiles.splice(index, 1);
+          draft.chosen = tempChosen;
+          draft.chosen_files = tempChosenFiles;
+        } else {
+          draft.chosen = [...draft.chosen, action.payload._id];
+          draft.chosen_files = [...draft.chosen_files, action.payload];
+        }
+        break;
+
+      case types.CLEAR_CHOSEN:
+        draft.chosen = initialState.chosen;
+        draft.chosen_files = initialState.chosen_files;
+
         break;
     }
   });

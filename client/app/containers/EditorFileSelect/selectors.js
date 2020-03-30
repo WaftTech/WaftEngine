@@ -32,6 +32,19 @@ export const makeSelectLoading = () =>
     selectDomain,
     state => state.loading,
   );
+
+export const makeSelectChosen = () =>
+  createSelector(
+    selectDomain,
+    state => state.chosen,
+  );
+
+export const makeSelectChosenFiles = () =>
+  createSelector(
+    selectDomain,
+    state => state.chosen_files,
+  );
+
 export const makeSelectfolderRenameRequest = () =>
   createSelector(
     selectDomain,
