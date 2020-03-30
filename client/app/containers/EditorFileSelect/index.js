@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -31,12 +31,23 @@ export const EditorFileSelect = ({
   useInjectSaga({ key, saga });
   const queryObj = qs.parse(search);
 
+  const [images, setImages] = useState([]);
+
+  const handleImages = files => {
+    setImages(files);
+  };
+
+  console.log(images);
   useEffect(() => {
     loadFilesRequest(queryObj.path);
   }, [queryObj.path]);
   return (
     <div className="container mx-auto h-screen">
-      <FileList queryObj={queryObj} selectFile={selectFile} />
+      <FileList
+        queryObj={queryObj}
+        selectFile={selectFile}
+        uploadMultiple={handleImages}
+      />
     </div>
   );
 };

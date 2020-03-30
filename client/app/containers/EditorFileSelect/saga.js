@@ -111,7 +111,7 @@ function* multipleDelete(action) {
 
   console.log('delete DATA', data);
   yield call(
-    Api.delete(
+    Api.post(
       `media/deleteall`,
       actions.deleteMultipleSuccess,
       actions.deleteMultipleFailure,
