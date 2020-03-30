@@ -141,6 +141,13 @@ const editorFileSelectReducer = (state = initialState, action) =>
           draft.chosen_folders = [...draft.chosen_folders, action.payload._id];
         }
         break;
+
+      case types.DELETE_MULTIPLE_SUCCESS:
+        draft.chosen = initialState.chosen;
+        draft.chosen_files = initialState.chosen_files;
+        draft.chosen_folders = initialState.chosen_folders;
+
+        break;
     }
   });
 
