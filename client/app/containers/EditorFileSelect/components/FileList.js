@@ -242,22 +242,36 @@ const FileList = ({
   };
 
   const handleSelectMultipleButton = () => {
-    setfileCheckbox(true);
+    if (selectedButton === 'Multiple') {
+      setfileCheckbox(!fileCheckbox);
+    } else {
+      setfileCheckbox(true);
+    }
     setfolderCheckbox(false);
     setSelectedButton('Multiple');
     clearChosen();
   };
 
   const handleRenameButton = () => {
+    if (selectedButton === 'Rename') {
+      setfolderCheckbox(!folderCheckbox);
+    } else {
+      setfolderCheckbox(true);
+    }
     setfileCheckbox(false);
-    setfolderCheckbox(true);
     setSelectedButton('Rename');
     clearChosen();
   };
 
   const handleDeleteButton = () => {
-    setfileCheckbox(true);
-    setfolderCheckbox(true);
+    if (selectedButton === 'Delete') {
+      setfileCheckbox(!fileCheckbox);
+      setfolderCheckbox(!folderCheckbox);
+    } else {
+      setfileCheckbox(true);
+      setfolderCheckbox(true);
+    }
+
     setSelectedButton('Delete');
     clearChosen();
   };
