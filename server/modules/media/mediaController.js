@@ -98,17 +98,39 @@ mediaController.DeleteMedia = async (req, res, next) => {
 };
 
 mediaController.DeleteAllMedia = async (req, res, next) => {
-  let all = req.body.ids;
+  let folder_id = req.body.folder_id;
+  let file_id = req.body.file_id;
+  
   let media;
-  for(let i=0 ; i < all.length ; i++) {
-     media = await mediaSch.findByIdAndUpdate(
-      all[i],
-      {
-        $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
-      },
-      { new: true },
-    );
-  }
+
+  for(let i=0 ; i < folder_id.length ; i++) {
+    media = await mediaSch.findByIdAndUpdate(
+      folder_id[i],
+     {
+       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+     },
+     { new: true },
+   );
+ }
+ for(let i=0 ; i < file_id.length ; i++) {
+  media = await mediaSch.findByIdAndUpdate(
+    file_id[i],
+   {
+     $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+   },
+   { new: true },
+ );
+}
+  // let media;
+  // for(let i=0 ; i < all.length ; i++) {
+  //    media = await mediaSch.findByIdAndUpdate(
+  //     all[i],
+  //     {
+  //       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+  //     },
+  //     { new: true },
+  //   );
+  // }
   
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
 };
