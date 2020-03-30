@@ -1,4 +1,4 @@
-import { takeLatest, call, select } from 'redux-saga/effects';
+import { takeLatest, call, select, put } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import {
@@ -8,6 +8,7 @@ import {
 } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
+import { enqueueSnackbar } from '../App/actions';
 
 function* loadFolders() {
   const token = yield select(makeSelectToken());
@@ -109,15 +110,35 @@ function* multipleDelete(action) {
   };
 
   console.log('delete DATA', data);
-  // yield call(
-  //   Api.delete(
-  //     `files/deletall`,
-  //     actions.deleteMultipleSuccess,
-  //     actions.deleteMultipleFailure,
-  //     data,
-  //     token,
-  //   ),
-  // );
+  yield call(
+    Api.delete(
+      `media/deleteall`,
+      actions.deleteMultipleSuccess,
+      actions.deleteMultipleFailure,
+      data,
+      token,
+    ),
+  );
+}
+
+function* multiDeleteSuccessFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Delete success',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* multiDeleteFailureFunc(action) {
+  const snackbarData = {
+    message: 'Something went wrong while deleting!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
 }
 
 // Individual exports for testing
@@ -129,4 +150,6 @@ export default function* editorFileSelectSaga() {
   yield takeLatest(types.ADD_MEDIA_REQUEST, addMedia);
   yield takeLatest(types.LOAD_NEW_FOLDER_REQUEST, createNewFolder);
   yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multipleDelete);
+  yield takeLatest(types.DELETE_MULTIPLE_SUCCESS, multiDeleteSuccessFunc);
+  yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multiDeleteFailureFunc);
 }
