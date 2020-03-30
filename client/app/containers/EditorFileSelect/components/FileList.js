@@ -70,6 +70,9 @@ const FileList = ({
   const [deleteOpen, setdeleteOpen] = useState(false);
   const [fileOpen, setfileOpen] = useState(false);
 
+  const [folderCheckbox, setfolderCheckbox] = useState(false);
+  const [fileCheckbox, setfileCheckbox] = useState(false);
+
   useEffect(() => {
     if (!folderAdded) {
       setOpen(false);
@@ -225,6 +228,16 @@ const FileList = ({
     handleFolderLink(linkObj.id);
   };
 
+  const handleSelectMultipleButton = () => {
+    setfileCheckbox(!fileCheckbox);
+    setfolderCheckbox(false);
+  };
+
+  const handleRenameButton = () => {
+    setfileCheckbox(false);
+    setfolderCheckbox(!folderCheckbox);
+  };
+
   return (
     <PageContent loading={loading}>
       <Dialog open={open} onClose={handleClose} aria-labelledby="new-folder">
@@ -264,8 +277,8 @@ const FileList = ({
           />
         </div>
         <div className="flex">
-        <button
-            onClick={handleAdd}
+          <button
+            onClick={handleSelectMultipleButton}
             className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
           >
             <i className="material-icons text-base mr-2">filter</i>
@@ -289,7 +302,10 @@ const FileList = ({
             <i className="material-icons text-base mr-2">add</i>
             <span>New Folder</span>
           </button>
-          <button className="items-center flex bg-yellow-600 hover:bg-yellow-400 btn mr-2">
+          <button
+            onClick={handleRenameButton}
+            className="items-center flex bg-yellow-600 hover:bg-yellow-400 btn mr-2"
+          >
             {' '}
             <i className="material-icons text-base mr-2">edit</i>
             <span>Rename</span>
@@ -369,9 +385,14 @@ const FileList = ({
             ) : (
               ''
             )} */}
-              <div className="mediaCheck absolute">
-                <Checkbox value="primary" color="primary" style={{padding:0}}/>
-              </div>
+            <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
+              <Checkbox
+                value="primary"
+                color="primary"
+                style={{ padding: 0 }}
+                onClick={() => handleRename(each._id, each.name)}
+              />
+            </div>
             <div
               // data-tooltip={each.name}
               className={`${
@@ -383,12 +404,12 @@ const FileList = ({
               role="presentation"
             >
               <div className="flex h-24 justify-center">
-              <i
-                className="material-icons text-yellow-500 self-center"
-                style={{ fontSize: '6rem' }}
-              >
-                folder
-              </i>
+                <i
+                  className="material-icons text-yellow-500 self-center"
+                  style={{ fontSize: '6rem' }}
+                >
+                  folder
+                </i>
               </div>
               <div className="block text-sm truncate">{each.name}</div>
             </div>
@@ -413,9 +434,13 @@ const FileList = ({
             ) : (
               ''
             )} */}
-             <div className="mediaCheck absolute">
-                <Checkbox value="primary" color="primary" style={{padding:0}}/>
-              </div>
+            <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
+              <Checkbox
+                value="primary"
+                color="primary"
+                style={{ padding: 0 }}
+              />
+            </div>
             <div
               // data-tooltip={each.filename}
               className={`${
@@ -423,15 +448,15 @@ const FileList = ({
               } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
             >
               <div className="flex h-24">
-              <img
-                className="w-full h-24 object-contain"
-                src={`${IMAGE_BASE}${each.path}`}
-                alt={each.filename}
-                onClick={() => handleSingleClick(each._id)}
-                onDoubleClick={() => onSelect(each)}
-                onKeyDown={() => handleFolderLink(each._id)}
-                role="presentation"
-              />
+                <img
+                  className="w-full h-24 object-contain"
+                  src={`${IMAGE_BASE}${each.path}`}
+                  alt={each.filename}
+                  onClick={() => handleSingleClick(each._id)}
+                  onDoubleClick={() => onSelect(each)}
+                  onKeyDown={() => handleFolderLink(each._id)}
+                  role="presentation"
+                />
               </div>
               <div className="truncate text-sm">{each.filename}</div>
             </div>
