@@ -63,8 +63,6 @@ const styles = () => ({
   },
 });
 
-
-
 const SortableImageItem = SortableElement(() => <div>***</div>);
 
 const SortableImageList = SortableContainer(({ items, _this }) => {
@@ -132,9 +130,9 @@ const SortableImageList = SortableContainer(({ items, _this }) => {
                 className="px-1 text-center leading-none"
                 onClick={() => _this.handleRemoveSlide(index)}
               >
-               <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
+                <i className="material-icons text-base text-red-400 hover:text-red-600">
+                  delete
+                </i>
               </button>
             </div>
           </div>
@@ -168,7 +166,13 @@ class AddEdit extends React.PureComponent {
     loading: PropTypes.bool.isRequired,
   };
 
-  state = { open: false, index: -1, files: {}, fullWidth: true, maxWidth: ('lg'), };
+  state = {
+    open: false,
+    index: -1,
+    files: {},
+    fullWidth: true,
+    maxWidth: 'lg',
+  };
 
   componentDidMount() {
     this.props.clearErrors();
@@ -291,9 +295,8 @@ class AddEdit extends React.PureComponent {
           onClose={this.handleClose}
           fullWidth={this.state.fullWidth}
           maxWidth={this.state.maxWidth}
-
         >
-            <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
+          <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
           <DialogContent>
             {/* {media.data.map((each, index) => (
               <div
@@ -323,7 +326,7 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-          <Input
+            <Input
               label="Slider Name"
               inputclassName="inputbox"
               inputid="slider-name"
@@ -336,7 +339,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-          <Input
+            <Input
               label="Slider Key"
               inputclassName="inputbox"
               inputid="slider-key"

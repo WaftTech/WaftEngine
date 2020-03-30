@@ -28,6 +28,9 @@ import {
   makeSelectfolderAddRequest,
   makeSelectLoading,
   makeSelectfolderRenameRequest,
+  makeSelectChosen,
+  makeSelectChosenFiles,
+  makeSelectChosenFolders,
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
@@ -56,6 +59,13 @@ const FileList = ({
   folderRename,
   clearValue,
   loading,
+  addChosenFile,
+  chosen,
+  chosen_files,
+  clearChosen,
+  addChosenFolder,
+  chosen_folders,
+  deleteMultipleRequest,
   ...props
 }) => {
   const [open, setOpen] = useState(false);
@@ -72,18 +82,21 @@ const FileList = ({
 
   const [folderCheckbox, setfolderCheckbox] = useState(false);
   const [fileCheckbox, setfileCheckbox] = useState(false);
+  const [selectedButton, setSelectedButton] = useState('');
 
   useEffect(() => {
     if (!folderAdded) {
       setOpen(false);
       clearValue();
     }
+    clearChosen();
   }, [folderAdded]);
 
   useEffect(() => {
     if (!folderRename) {
       setShow(false);
     }
+    clearChosen();
   }, [folderRename]);
 
   const onSelect = image => {
@@ -229,13 +242,47 @@ const FileList = ({
   };
 
   const handleSelectMultipleButton = () => {
-    setfileCheckbox(!fileCheckbox);
+    setfileCheckbox(true);
     setfolderCheckbox(false);
+    setSelectedButton('Multiple');
+    clearChosen();
   };
 
   const handleRenameButton = () => {
     setfileCheckbox(false);
-    setfolderCheckbox(!folderCheckbox);
+    setfolderCheckbox(true);
+    setSelectedButton('Rename');
+    clearChosen();
+  };
+
+  const handleDeleteButton = () => {
+    setfileCheckbox(true);
+    setfolderCheckbox(true);
+    setSelectedButton('Delete');
+    clearChosen();
+  };
+
+  const onChooseFile = image => {
+    addChosenFile(image);
+  };
+
+  const onChooseFolder = folder => {
+    addChosenFolder(folder);
+  };
+
+  const handleUploadMultiple = () => {
+    if (props.uploadMultiple) {
+      props.uploadMultiple(chosen_files);
+    } else {
+      window.alert(
+        'Define function for multiple upload where this component is called. Pass it as uploadMultiple in props',
+      );
+    }
+    console.log('Chosen Files', chosen_files);
+  };
+
+  const confirmDelete = () => {
+    deleteMultipleRequest();
   };
 
   return (
@@ -277,13 +324,24 @@ const FileList = ({
           />
         </div>
         <div className="flex">
-          <button
-            onClick={handleSelectMultipleButton}
-            className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
-          >
-            <i className="material-icons text-base mr-2">filter</i>
-            <span>Select Multiple</span>
-          </button>
+          {selectedButton === 'Multiple' && chosen_files.length > 0 ? (
+            <button
+              onClick={handleUploadMultiple}
+              className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+            >
+              <i className="material-icons text-base mr-2">filter</i>
+              <span>Upload Multiple</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleSelectMultipleButton}
+              className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+            >
+              <i className="material-icons text-base mr-2">filter</i>
+              <span>Select Multiple</span>
+            </button>
+          )}
+
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
               <section className="btn bg-info hover:bg-secondary mr-2 cursor-pointer">
@@ -310,10 +368,24 @@ const FileList = ({
             <i className="material-icons text-base mr-2">edit</i>
             <span>Rename</span>
           </button>
-          <button className="items-center flex btn bg-red-600 hover:bg-red-500">
-            <i className="material-icons text-base mr-2">delete</i>
-            <span>Delete</span>
-          </button>
+          {selectedButton === 'Delete' &&
+          (chosen_files.length > 0 || chosen_folders.length > 0) ? (
+            <button
+              onClick={confirmDelete}
+              className="items-center flex btn bg-red-600 hover:bg-red-500"
+            >
+              <i className="material-icons text-base mr-2">delete</i>
+              <span>Confirm Delete</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDeleteButton}
+              className="items-center flex btn bg-red-600 hover:bg-red-500"
+            >
+              <i className="material-icons text-base mr-2">delete</i>
+              <span>Delete</span>
+            </button>
+          )}
         </div>
       </div>
       <Dialog
@@ -386,12 +458,22 @@ const FileList = ({
               ''
             )} */}
             <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
-              <Checkbox
-                value="primary"
-                color="primary"
-                style={{ padding: 0 }}
-                onClick={() => handleRename(each._id, each.name)}
-              />
+              {selectedButton === 'Rename' && (
+                <button
+                  className="hover:text-blue-500"
+                  onClick={() => handleRename(each._id, each.name)}
+                >
+                  <Edit />
+                </button>
+              )}
+              {selectedButton === 'Delete' && (
+                <Checkbox
+                  value="secondary"
+                  color="secondary"
+                  style={{ padding: 0 }}
+                  onClick={() => addChosenFolder(each)}
+                />
+              )}
             </div>
             <div
               // data-tooltip={each.name}
@@ -435,11 +517,22 @@ const FileList = ({
               ''
             )} */}
             <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
-              <Checkbox
-                value="primary"
-                color="primary"
-                style={{ padding: 0 }}
-              />
+              {selectedButton === 'Multiple' && (
+                <Checkbox
+                  value="primary"
+                  color="primary"
+                  style={{ padding: 0 }}
+                  onClick={() => onChooseFile(each)}
+                />
+              )}
+              {selectedButton === 'Delete' && (
+                <Checkbox
+                  value="secondary"
+                  color="secondary"
+                  style={{ padding: 0 }}
+                  onClick={() => addChosenFile(each)}
+                />
+              )}
             </div>
             <div
               // data-tooltip={each.filename}
@@ -491,6 +584,9 @@ const mapStateToProps = createStructuredSelector({
   folderAdded: makeSelectfolderAddRequest(),
   folderRename: makeSelectfolderRenameRequest(),
   loading: makeSelectLoading(),
+  chosen: makeSelectChosen(),
+  chosen_files: makeSelectChosenFiles(),
+  chosen_folders: makeSelectChosenFolders(),
 });
 
 const styles = theme => ({
