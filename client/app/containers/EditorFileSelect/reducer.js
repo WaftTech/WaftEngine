@@ -30,6 +30,7 @@ export const initialState = {
   loading: false,
   chosen: [],
   chosen_files: [],
+  chosen_folders: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -126,7 +127,19 @@ const editorFileSelectReducer = (state = initialState, action) =>
       case types.CLEAR_CHOSEN:
         draft.chosen = initialState.chosen;
         draft.chosen_files = initialState.chosen_files;
+        draft.chosen_folders = initialState.chosen_folders;
 
+        break;
+
+      case types.ADD_CHOSEN_FOLDER:
+        const folderindex = draft.chosen_folders.indexOf(action.payload._id);
+        if (folderindex >= 0) {
+          const tempChosenFolders = [...draft.chosen_folders];
+          tempChosenFolders.splice(folderindex, 1);
+          draft.chosen_folders = tempChosenFolders;
+        } else {
+          draft.chosen_folders = [...draft.chosen_folders, action.payload._id];
+        }
         break;
     }
   });

@@ -46,3 +46,12 @@ export const DELETE_FILE_FAILURE = 'app/EditorFileSelect/DELETE_FILE_FAILURE';
 
 export const ADD_CHOSEN_FILE = 'app/EditorFileSelect/ADD_CHOSEN_FILE';
 export const CLEAR_CHOSEN = 'app/EditorFileSelect/CLEAR_CHOSEN';
+
+export const ADD_CHOSEN_FOLDER = 'app/EditorFileSelect/ADD_CHOSEN_FOLDER';
+
+export const DELETE_MULTIPLE_REQUEST =
+  'app/EditorFileSelect/DELETE_MULTIPLE_REQUEST';
+export const DELETE_MULTIPLE_SUCCESS =
+  'app/EditorFileSelect/DELETE_MULTIPLE_SUCCESS';
+export const DELETE_MULTIPLE_FAILURE =
+  'app/EditorFileSelect/DELETE_MULTIPLE_FAILURE';

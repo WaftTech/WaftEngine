@@ -30,6 +30,7 @@ import {
   makeSelectfolderRenameRequest,
   makeSelectChosen,
   makeSelectChosenFiles,
+  makeSelectChosenFolders,
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
@@ -62,6 +63,9 @@ const FileList = ({
   chosen,
   chosen_files,
   clearChosen,
+  addChosenFolder,
+  chosen_folders,
+  deleteMultipleRequest,
   ...props
 }) => {
   const [open, setOpen] = useState(false);
@@ -238,7 +242,7 @@ const FileList = ({
   };
 
   const handleSelectMultipleButton = () => {
-    setfileCheckbox(!fileCheckbox);
+    setfileCheckbox(true);
     setfolderCheckbox(false);
     setSelectedButton('Multiple');
     clearChosen();
@@ -246,13 +250,24 @@ const FileList = ({
 
   const handleRenameButton = () => {
     setfileCheckbox(false);
-    setfolderCheckbox(!folderCheckbox);
+    setfolderCheckbox(true);
     setSelectedButton('Rename');
+    clearChosen();
+  };
+
+  const handleDeleteButton = () => {
+    setfileCheckbox(true);
+    setfolderCheckbox(true);
+    setSelectedButton('Delete');
     clearChosen();
   };
 
   const onChooseFile = image => {
     addChosenFile(image);
+  };
+
+  const onChooseFolder = folder => {
+    addChosenFolder(folder);
   };
 
   const handleUploadMultiple = () => {
@@ -264,6 +279,10 @@ const FileList = ({
       );
     }
     console.log('Chosen Files', chosen_files);
+  };
+
+  const confirmDelete = () => {
+    deleteMultipleRequest();
   };
 
   return (
@@ -349,10 +368,24 @@ const FileList = ({
             <i className="material-icons text-base mr-2">edit</i>
             <span>Rename</span>
           </button>
-          <button className="items-center flex btn bg-red-600 hover:bg-red-500">
-            <i className="material-icons text-base mr-2">delete</i>
-            <span>Delete</span>
-          </button>
+          {selectedButton === 'Delete' &&
+          (chosen_files.length > 0 || chosen_folders.length > 0) ? (
+            <button
+              onClick={confirmDelete}
+              className="items-center flex btn bg-red-600 hover:bg-red-500"
+            >
+              <i className="material-icons text-base mr-2">delete</i>
+              <span>Confirm Delete</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDeleteButton}
+              className="items-center flex btn bg-red-600 hover:bg-red-500"
+            >
+              <i className="material-icons text-base mr-2">delete</i>
+              <span>Delete</span>
+            </button>
+          )}
         </div>
       </div>
       <Dialog
@@ -433,12 +466,14 @@ const FileList = ({
                   <Edit />
                 </button>
               )}
-              {/* <Checkbox
-                value="primary"
-                color="primary"
-                style={{ padding: 0 }}
-                onClick={() => handleRename(each._id, each.name)}
-              /> */}
+              {selectedButton === 'Delete' && (
+                <Checkbox
+                  value="secondary"
+                  color="secondary"
+                  style={{ padding: 0 }}
+                  onClick={() => addChosenFolder(each)}
+                />
+              )}
             </div>
             <div
               // data-tooltip={each.name}
@@ -488,6 +523,14 @@ const FileList = ({
                   color="primary"
                   style={{ padding: 0 }}
                   onClick={() => onChooseFile(each)}
+                />
+              )}
+              {selectedButton === 'Delete' && (
+                <Checkbox
+                  value="secondary"
+                  color="secondary"
+                  style={{ padding: 0 }}
+                  onClick={() => addChosenFile(each)}
                 />
               )}
             </div>
@@ -543,6 +586,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   chosen: makeSelectChosen(),
   chosen_files: makeSelectChosenFiles(),
+  chosen_folders: makeSelectChosenFolders(),
 });
 
 const styles = theme => ({

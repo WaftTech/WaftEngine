@@ -116,3 +116,20 @@ export const clearChosen = payload => ({
   type: types.CLEAR_CHOSEN,
   payload,
 });
+export const addChosenFolder = payload => ({
+  type: types.ADD_CHOSEN_FOLDER,
+  payload,
+});
+
+export const deleteMultipleRequest = payload => ({
+  type: types.DELETE_MULTIPLE_REQUEST,
+  payload,
+});
+export const deleteMultipleSuccess = payload => ({
+  type: types.DELETE_MULTIPLE_SUCCESS,
+  payload,
+});
+export const deleteMultipleFailure = payload => ({
+  type: types.DELETE_MULTIPLE_FAILURE,
+  payload,
+});

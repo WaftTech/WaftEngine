@@ -1,7 +1,11 @@
 import { takeLatest, call, select } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { makeSelectToken } from '../App/selectors';
-import { makeSelectOne } from './selectors';
+import {
+  makeSelectOne,
+  makeSelectChosen,
+  makeSelectChosenFolders,
+} from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
 
@@ -94,6 +98,28 @@ function* createNewFolder(action) {
   );
 }
 
+function* multipleDelete(action) {
+  const token = yield select(makeSelectToken());
+  const files = yield select(makeSelectChosen());
+  const folders = yield select(makeSelectChosenFolders());
+
+  const data = {
+    folder_id: [...folders],
+    file_id: [...files],
+  };
+
+  console.log('delete DATA', data);
+  // yield call(
+  //   Api.delete(
+  //     `files/deletall`,
+  //     actions.deleteMultipleSuccess,
+  //     actions.deleteMultipleFailure,
+  //     data,
+  //     token,
+  //   ),
+  // );
+}
+
 // Individual exports for testing
 export default function* editorFileSelectSaga() {
   yield takeLatest(types.LOAD_FILES_REQUEST, loadFiles);
@@ -102,4 +128,5 @@ export default function* editorFileSelectSaga() {
   yield takeLatest(types.DELETE_FILE_REQUEST, deleteFile);
   yield takeLatest(types.ADD_MEDIA_REQUEST, addMedia);
   yield takeLatest(types.LOAD_NEW_FOLDER_REQUEST, createNewFolder);
+  yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multipleDelete);
 }

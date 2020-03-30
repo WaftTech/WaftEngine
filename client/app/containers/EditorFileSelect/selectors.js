@@ -45,6 +45,12 @@ export const makeSelectChosenFiles = () =>
     state => state.chosen_files,
   );
 
+export const makeSelectChosenFolders = () =>
+  createSelector(
+    selectDomain,
+    state => state.chosen_folders,
+  );
+
 export const makeSelectfolderRenameRequest = () =>
   createSelector(
     selectDomain,
