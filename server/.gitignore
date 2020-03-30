@@ -11,7 +11,7 @@ yarn.lock
 npm-debug.log
 .idea
 # public
-config
+config/
 
 
 # files
