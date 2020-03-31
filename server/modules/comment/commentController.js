@@ -11,7 +11,9 @@ commentController.PostComment = async (req, res, next) => {
     let cmntstatus = await settingSch.findOne({key:'default_status_of_comment'},{value:1 , _id:0});
     if (data._id) {
       data.updated_at = Date.now();
-      data.updated_by = req.user.id;
+      if(req.user) {
+        data.updated_by = req.user.id;
+      }
       const update = await commentSch.findOneAndUpdate({ _id: data._id, added_by: req.user.id }, { $set: data }, { new: true });
       if (update) {
         return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'comment edit success!!', null);
@@ -21,7 +23,9 @@ commentController.PostComment = async (req, res, next) => {
     } else {
       data.status = cmntstatus.value;
       // console.log(data.status , 'status')
-      data.added_by = req.user.id;
+      if(req.user) {
+        data.added_by = req.user.id;
+      }
       const newComment = new commentSch(data);
       const saveComment = await newComment.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, saveComment, null, 'comment added successfully!!', null);

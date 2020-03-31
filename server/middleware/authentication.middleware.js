@@ -11,13 +11,14 @@ const { secretOrKey } = require('../config/keys');
 const accessSch = require('../modules/role/accessSchema');
 const modulesSch = require('../modules/role/moduleSchema');
 const rolesSch = require('../modules/role/roleSchema');
+const settingSch = require('../modules/setting/settingSchema');
 const authMiddleware = {};
 const mongoose = require('mongoose');
 
 const isEmpty = require('../validation/isEmpty');
 
 authMiddleware.authorization = async (req, res, next) => {
-  try {
+  try { 
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
@@ -36,6 +37,29 @@ authMiddleware.authorization = async (req, res, next) => {
   }
 };
 
+authMiddleware.commmentauthorization = async (req, res, next) => {
+  try {
+    let checkis_login = await settingSch.findOne({key:'is_login_required'},{value:1 , _id:0});
+    if(checkis_login.value == false) {
+        return next();
+    }
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
+    if (token && token.length) {
+      token = token.replace('Bearer ', '');
+      const d = await jwt.verify(token, secretOrKey);
+      req.user = d;
+      let passed = await loginlogs.findOne({ token, is_active: true });
+      if (passed) {
+        return next();
+      } else {
+        return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Session Expired', null);
+      }
+    }
+    return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, token, 'token not found', null);
+  } catch (err) {
+    return next(err);
+  }
+};
 authMiddleware.authorizationForLogout = async (req, res, next) => {
   try {
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
