@@ -5,6 +5,7 @@ import {
   makeSelectOne,
   makeSelectChosen,
   makeSelectChosenFolders,
+  makeSelectAll,
 } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -87,7 +88,6 @@ function* createNewFolder(action) {
     datas.name = action.payload.name;
     successCall = actions.renameFolderSuccess;
   }
-  console.log(datas, 'datas');
   yield call(
     Api.post(
       `files/folder/${action.payload.key}`,
@@ -109,7 +109,6 @@ function* multipleDelete(action) {
     file_id: [...files],
   };
 
-  console.log('delete DATA', data);
   yield call(
     Api.post(
       `media/deleteall`,
@@ -122,6 +121,10 @@ function* multipleDelete(action) {
 }
 
 function* multiDeleteSuccessFunc(action) {
+  const path = yield select(makeSelectAll());
+  if (path.self) {
+    yield put(actions.loadFilesRequest(path.self._id));
+  }
   const snackbarData = {
     message: action.payload.msg || 'Delete success',
     options: {
@@ -151,5 +154,5 @@ export default function* editorFileSelectSaga() {
   yield takeLatest(types.LOAD_NEW_FOLDER_REQUEST, createNewFolder);
   yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multipleDelete);
   yield takeLatest(types.DELETE_MULTIPLE_SUCCESS, multiDeleteSuccessFunc);
-  yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multiDeleteFailureFunc);
+  yield takeLatest(types.DELETE_MULTIPLE_FAILURE, multiDeleteFailureFunc);
 }
