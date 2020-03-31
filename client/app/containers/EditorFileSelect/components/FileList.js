@@ -341,11 +341,11 @@ const FileList = ({
             onClick={onClick}
           />
         </div>
-        <div className="flex">
+        <div className="flex media_btn">
           {selectedButton === 'Multiple' && chosen_files.length > 0 ? (
             <button
               onClick={handleUploadMultiple}
-              className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+              className="blink items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
             >
               <i className="material-icons text-base mr-2">filter</i>
               <span>Upload Multiple</span>
@@ -390,7 +390,7 @@ const FileList = ({
           (chosen_files.length > 0 || chosen_folders.length > 0) ? (
             <button
               onClick={confirmDelete}
-              className="items-center flex btn bg-red-600 hover:bg-red-500"
+              className="blink items-center flex btn bg-red-600 hover:bg-red-500"
             >
               <i className="material-icons text-base mr-2">delete</i>
               <span>Confirm Delete</span>
@@ -449,6 +449,7 @@ const FileList = ({
         doDelete={handleFileDel}
       />
       <div className="flex flex-wrap bg-white mt-2 shadow p-4">
+        <p className="italic w-full block py-2">Note : Please Click the given button first for selecting <span className="font-bold">Multiple Images, Rename folders and Delete files</span>!!!</p>
         {folders.data.map(each => (
           <div
             className="mediaCont border p-1 relative overflow-hidden mr-4 hover:border-primary"
