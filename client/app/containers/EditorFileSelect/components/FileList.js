@@ -449,7 +449,7 @@ const FileList = ({
         doDelete={handleFileDel}
       />
       <div className="flex flex-wrap bg-white mt-2 shadow p-4">
-        <p className="italic w-full block py-2">Note : Please Click the given button first for selecting <span className="font-bold">Multiple Images, Rename folders and Delete files</span>!!!</p>
+        <p className="italic w-full block py-2">Note : Please Click the given button first for selecting <span className="font-bold">Multiple Images, Renaming folders and Deleting files</span>!!!</p>
         {folders.data.map(each => (
           <div
             className="mediaCont border p-1 relative overflow-hidden mr-4 hover:border-primary"
