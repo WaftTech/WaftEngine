@@ -8,7 +8,7 @@ const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
 const userModule = require('../../modules/user/userController');
 const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
-
+const reCaptchaValidator = require('../../middleware/recaptcha.middleware');
 /**
  * @route GET api/user/test
  * @description Tests users route
@@ -71,7 +71,7 @@ router.post('/changepw', authorization, validateRegisterInput.sanitizeAdd, valid
  * @description Register user route
  * @access Public
  */
-router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, getClientInfo, userModule.Register);
+router.post('/register', validateRegisterInput.sanitizeRegister,reCaptchaValidator.validate, validateRegisterInput.validateRegisterInput, getClientInfo, userModule.Register);
 
 /**
  * @route POST api/user/login/google/

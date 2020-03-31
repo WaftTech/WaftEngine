@@ -2,11 +2,13 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const commentSch = require('./commentSchema');
 const blogSch = require('../blog/blogSchema');
+const settingSch = require('../setting/settingSchema');
 const commentController = {};
 
 commentController.PostComment = async (req, res, next) => {
   try {
     const data = req.body;
+    let cmntstatus = await settingSch.findOne({key:'default_status_of_comment'},{value:1 , _id:0});
     if (data._id) {
       data.updated_at = Date.now();
       data.updated_by = req.user.id;
@@ -17,7 +19,8 @@ commentController.PostComment = async (req, res, next) => {
         return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, 'You are not allowed to edit!!', null);
       }
     } else {
-      data.status = 'posted';
+      data.status = cmntstatus.value;
+      // console.log(data.status , 'status')
       data.added_by = req.user.id;
       const newComment = new commentSch(data);
       const saveComment = await newComment.save();
@@ -75,7 +78,7 @@ commentController.GetCommentByBlog = async (req, res, next) => {
   try {
     const id = req.params.blog;
     const comment = await commentSch
-      .find({ blog_id: id, is_deleted: false, status: { $ne: 'disapproved' } })
+      .find({ blog_id: id, is_deleted: false, status: 'approved' })
       .populate({ path: 'added_by', select: 'name' })
       .sort({ _id: -1 });
     const totaldata = comment.length;
