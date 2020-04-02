@@ -138,4 +138,34 @@ authMiddleware.getClientInfo = async (req, res, next) => {
   req.clinfo = info;
   return next();
 };
+
+authMiddleware.isPublicFacebookRegistrationAllow = async(req, res, next) => {
+  try{
+    let checkis_public_registration = await settingSch.findOne({key:'is_public_registration'},{value:1 , _id:0});
+    let checkis_fblogin = await settingSch.findOne({key:'allow_facebook_login'},{value:1 , _id:0});
+    if(checkis_public_registration.value == false || checkis_fblogin.value == false) {
+      return otherHelper.sendResponse(res,HttpStatus.NOT_ACCEPTABLE,false,null,null,'facebook login function disabled','null');
+    }else{
+      return next();
+    }
+
+  }catch(err){
+    next(err);
+  }
+}
+
+authMiddleware.isPublicGoogleRegistrationAllow = async(req, res, next) => {
+  try{
+    let checkis_public_registration = await settingSch.findOne({key:'is_public_registration'},{value:1 , _id:0});
+    let checkis_googlelogin = await settingSch.findOne({key:'allow_google_login'},{value:1 , _id:0});
+    if(checkis_public_registration.value == false || checkis_googlelogin.value == false) {
+      return otherHelper.sendResponse(res,HttpStatus.NOT_ACCEPTABLE,false,null,null,'google login function disabled','null');
+    }else{
+      return next();
+    }
+
+  }catch(err){
+    next(err);
+  }
+}
 module.exports = authMiddleware;

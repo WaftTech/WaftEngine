@@ -7,7 +7,7 @@ const loginLogs = require('../../modules/user/loginlogs/loginlogController').log
 const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
 const userModule = require('../../modules/user/userController');
-const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
+const { authorization, authorizationForLogout, authentication, getClientInfo,isPublicFacebookRegistrationAllow,isPublicGoogleRegistrationAllow} = require('../../middleware/authentication.middleware');
 const reCaptchaValidator = require('../../middleware/recaptcha.middleware');
 /**
  * @route GET api/user/test
@@ -78,14 +78,14 @@ router.post('/register', validateRegisterInput.sanitizeRegister,reCaptchaValidat
  * @description Register user route
  * @access Public
  */
-router.post('/login/google/', getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
+router.post('/login/google/',isPublicGoogleRegistrationAllow, getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
 
 /**
  * @route POST api/user/login/facebook/
  * @description Register user route
  * @access Public
  */
-router.post('/login/facebook/', getClientInfo, passport.authenticate('facebook-token'), userModule.loginGOath);
+router.post('/login/facebook/',isPublicFacebookRegistrationAllow, getClientInfo, passport.authenticate('facebook-token'), userModule.loginGOath);
 
 /**
  * @route POST api/user/register
