@@ -13,6 +13,8 @@ const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginLogs = require('./loginlogs/loginlogController').internal;
+const settingSch = require('../setting/settingSchema');
+
 
 const userController = {};
 
@@ -191,8 +193,11 @@ userController.Register = async (req, res, next) => {
         }
 
         // Sign Token
-        let token = jwt.sign(payload, secretOrKey, {
-          expiresIn: tokenExpireTime,
+        let secret_key = await settingSch.findOne({key:'secret_key'},{value:1 , _id:0});
+        let token_expire_time = await settingSch.findOne({key:'token_expire_time'},{value:1 , _id:0});
+
+        let token = jwt.sign(payload, secret_key.value, {
+          expiresIn: token_expire_time.value,
         });
         await loginLogs.addloginlog(req, token, next);
         token = `Bearer ${token}`;
@@ -316,7 +321,9 @@ userController.Verifymail = async (req, res, next) => {
       gender: user.gender,
     };
     // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
+    let secret_key = await settingSch.findOne({key:'secret_key'},{value:1 , _id:0});
+    let token_expire_time = await settingSch.findOne({key:'token_expire_time'},{value:1 , _id:0});
+    jwt.sign(payload, secret_key.value, { expiresIn: token_expire_time.value }, (err, token) => {
       const msg = config.emailVerify;
       token = `Bearer ${token}`;
       return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, token);
@@ -373,7 +380,9 @@ userController.VerifyServerMail = async (req, res, next) => {
       gender: user.gender,
     };
     // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
+    let secret_key = await settingSch.findOne({key:'secret_key'},{value:1 , _id:0});
+    let token_expire_time = await settingSch.findOne({key:'token_expire_time'},{value:1 , _id:0});
+    jwt.sign(payload, secret_key.value, { expiresIn: token_expire_time.value }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;
 
@@ -458,7 +467,9 @@ userController.ResetPassword = async (req, res, next) => {
       roles: user.roles,
     };
     // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
+    let secret_key = await settingSch.findOne({key:'secret_key'},{value:1 , _id:0});
+    let token_expire_time = await settingSch.findOne({key:'token_expire_time'},{value:1 , _id:0});
+    jwt.sign(payload, secret_key.value, { expiresIn: token_expire_time.value }, (err, token) => {
       const msg = `Password Reset Success`;
       token = `Bearer ${token}`;
       return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, token);
@@ -516,11 +527,13 @@ userController.Login = async (req, res, next) => {
               gender: user.gender,
             };
             // Sign Token
+            let secret_key = await settingSch.findOne({key:'secret_key'},{value:1 , _id:0});
+            let token_expire_time = await settingSch.findOne({key:'token_expire_time'},{value:1 , _id:0});
             jwt.sign(
               payload,
-              secretOrKey,
+              secret_key.value,
               {
-                expiresIn: tokenExpireTime,
+                expiresIn: token_expire_time.value,
               },
               (err, token) => {
                 loginLogs.addloginlog(req, token, next);
@@ -712,8 +725,10 @@ userController.loginGOath = async (req, res, next) => {
   }
 
   // Sign Token
-  let token = jwt.sign(payload, secretOrKey, {
-    expiresIn: tokenExpireTime,
+  let secret_key = await settingSch.findOne({key:'secret_key'},{value:1 , _id:0});
+  let token_expire_time = await settingSch.findOne({key:'token_expire_time'},{value:1 , _id:0});
+  let token = jwt.sign(payload, secret_key.value, {
+    expiresIn: token_expire_time.value,
   });
   await loginLogs.addloginlog(req, token, next);
   token = `Bearer ${token}`;
