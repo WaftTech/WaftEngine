@@ -14,9 +14,55 @@ const moduleSch = require('../role/moduleSchema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginLogs = require('./loginlogs/loginlogController').internal;
 const settingSch = require('../setting/settingSchema');
+const sgMail = require('@sendgrid/mail');
 
 
 const userController = {};
+
+userController.test = async(req, res, next) => {
+  try{
+    const api_key = await settingSch.findOne({key:'sendgrid_api_key'},{value : 1 , _id:0});
+    sgMail.setApiKey(api_key.value);
+    console.log(api_key.value)
+    const msg = {
+      to: 'saileshkandel789@gmail.com',
+      from: 'kulchan.sailesh@gmail.com',
+      subject: 'Sending with Twilio SendGrid is Fun',
+      text: 'and easy to do anywhere, even with Node.js',
+      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    };
+    sgMail.send(msg);
+    // return otherHelper.sendResponse(res,httpStatus.OK,true,msg,null,'send successfull',null);
+  }catch(err){
+    next(err);
+  }
+}
+userController.testmailgun = async(req, res, next) => {
+  try{
+    const api_key = await settingSch.findOne({key:'api_key'},{value : 1 , _id:0});
+    const domain = await settingSch.findOne({key:'domain'},{value : 1 , _id:0});
+
+    // const api_key = '7329ce5a129fcb9bf6a692df899d929d-aa4b0867-61ff9ed0';
+    // const domain = 'sandbox6bd462cc8a284bfda9abe26f2842688d.mailgun.org';
+    const mailgun = require('mailgun-js')({apiKey: api_key.value, domain: domain.value});
+ 
+    const data = {
+      from: 'sailesh <saileshkandel789@gmail.com>',
+      to: 'saileshkandel789@gmail.com',
+      subject: 'Hello',
+      text: 'Testing some Mailgun awesomeness!'
+    };
+ 
+    mailgun.messages().send(data, function (error, body) {
+      if(error){
+        console.log(error);
+      }
+      console.log(body);
+    });
+  }catch(err){
+    next(err);
+  }
+}
 
 userController.PostUser = async (req, res, next) => {
   try {

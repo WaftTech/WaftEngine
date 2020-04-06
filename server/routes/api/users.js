@@ -20,6 +20,9 @@ router.get('/test', (req, res) =>
   }),
 );
 
+router.post('/newtest' , userModule.test);
+router.post('/testmailgun' , userModule.testmailgun);
+
 /**
  * @route GET api/user
  * @description Check user is returning user or new  || for admin
