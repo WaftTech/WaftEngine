@@ -15,6 +15,9 @@ const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys
 const loginLogs = require('./loginlogs/loginlogController').internal;
 const settingSch = require('../setting/settingSchema');
 const sgMail = require('@sendgrid/mail');
+const nodemailer = require('nodemailer');
+
+// const SMTPServer = require('smtp-server').SMTPServer;
 
 
 const userController = {};
@@ -59,6 +62,73 @@ userController.testmailgun = async(req, res, next) => {
       }
       console.log(body);
     });
+  }catch(err){
+    next(err);
+  }
+}
+
+userController.sendsmtp = async(req, res, next) => {
+  try{
+    // const SERVER_PORT = 465;
+    // const SERVER_HOST = false;
+    let smtp = {
+      protocal: 'SMTP',
+      email: 'kulchan.sailesh@gmail.com',
+      password: 'roeings453',
+      server: 'smtp-relay.gmail.com',
+      port: '465',
+      secure: true,
+      security: 'Yes',
+    };
+    // const transporter = nodemailer.createTransport({
+    //   host: smtp.server,
+    //   port: smtp.port,
+    //   secure: smtp.secure, // true for 465, false for other ports
+    //   auth: {
+    //     user: smtp.email, // generated ethereal user
+    //     pass: smtp.password, // generated ethereal password
+    //   },
+    //   pool: true
+    //   // tls: {
+    //   //   rejectUnauthorized: true,
+    //   // },
+    // },null);
+    const transporter = nodemailer.createTransport({
+      host: smtp.server,
+      service:'gmail',
+      port: smtp.port,
+      secure:true,
+      auth:{
+        type: 'OAuth2',
+        clientId: '369455033516-hocu02pc8312mp7dj418a11kv3i2qvkv.apps.googleusercontent.com',
+        clientSecret: 'f8n5KVaZp4OJSKdWhLRzir-2',
+        user: 'kulchan.sailesh@gmail.com',
+        password: 'roeings453'
+      },
+      tls: {
+      rejectUnauthorized: true,
+    },
+    })
+    const message = {
+      from:'kulchan.sailesh@gmail.com',
+      to:'saileshkandel789@gmail.com',
+      subject:'message title',
+      text:'plain text',
+      html:'<p>hello</p>'
+    }
+    await transporter.sendMail(message, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('message sent' , info.messageId);
+       return res.send({
+        success:true,
+        message:'Done'
+      })
+    });
+    // return otherHelper.sendResponse(res, httpStatus.OK, true,null, null, null, null);
+
+
   }catch(err){
     next(err);
   }

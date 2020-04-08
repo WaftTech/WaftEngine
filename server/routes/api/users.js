@@ -22,6 +22,7 @@ router.get('/test', (req, res) =>
 
 router.post('/newtest' , userModule.test);
 router.post('/testmailgun' , userModule.testmailgun);
+router.post('/sendsmtp' ,userModule.sendsmtp);
 
 /**
  * @route GET api/user
