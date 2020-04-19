@@ -107,6 +107,7 @@ export const SettingsManagePage = props => {
     setting_normalized,
     editSettingsRequest,
     loading,
+    sendTestMailRequest,
   } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -129,6 +130,10 @@ export const SettingsManagePage = props => {
 
   const handleSave = () => {
     editSettingsRequest();
+  };
+
+  const sendTestMail = () => {
+    sendTestMailRequest();
   };
 
   const commentStatus = ['posted', 'onhold', 'approved', 'disapproved'];
@@ -276,7 +281,7 @@ export const SettingsManagePage = props => {
                     label="Email to send test mail"
                     inputclassName="inputbox"
                     inputid="email-to-send-test-mail"
-                    inputType="text"
+                    inputType="email"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.email_to_send_test_mail &&
@@ -286,182 +291,200 @@ export const SettingsManagePage = props => {
                     name="email_to_send_test_mail"
                     onChange={handleChange('email_to_send_test_mail')}
                   />
-                </div>
-
-                <div className="w-1/3 pb-4 -mr-4">
-                  <Input
-                    label="Protocol"
-                    inputclassName="inputbox"
-                    inputid="protocol"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.protocol &&
-                        setting_normalized.protocol.value) ||
-                      ''
-                    }
-                    name="protocol"
-                    onChange={handleChange('protocol')}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between px-4">
-                <div className="w-1/3 pb-4 -ml-4">
-                  <Input
-                    label="Email"
-                    inputclassName="inputbox"
-                    inputid="email"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.email &&
-                        setting_normalized.email.value) ||
-                      ''
-                    }
-                    name="email"
-                    onChange={handleChange('email')}
-                  />
-                </div>
-                <div className="w-1/3 pb-4">
-                  <Input
-                    label="Password"
-                    inputclassName="inputbox"
-                    inputid="password"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.password &&
-                        setting_normalized.password.value) ||
-                      ''
-                    }
-                    name="password"
-                    onChange={handleChange('password')}
-                  />
-                </div>
-                <div className="w-1/3 pb-4 -mr-4">
-                  <Input
-                    label="Server"
-                    inputclassName="inputbox"
-                    inputid="server"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.server &&
-                        setting_normalized.server.value) ||
-                      ''
-                    }
-                    name="server"
-                    onChange={handleChange('server')}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between px-4">
-                <div className="w-1/3 pb-4 -ml-4">
-                  <Input
-                    label="Port"
-                    inputclassName="inputbox"
-                    inputid="port"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.port &&
-                        setting_normalized.port.value) ||
-                      ''
-                    }
-                    name="port"
-                    onChange={handleChange('port')}
-                  />
-                </div>
-                <div className="w-1/3 pb-4">
-                  <Input
-                    label="Security"
-                    inputclassName="inputbox"
-                    inputid="security"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.security &&
-                        setting_normalized.security.value) ||
-                      ''
-                    }
-                    name="security"
-                    onChange={handleChange('security')}
-                  />
-                </div>
-                <div className="w-1/3 pb-4 -mr-4">
-                  <label className="font-bold text-gray-700">Secure</label>
-                  <select
-                    className="inputbox"
-                    native="true"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.secure &&
-                        setting_normalized.secure.value) ||
-                      false
-                    }
-                    onChange={handleDropDownChange('secure')}
+                  <button
+                    type="button"
+                    className="block btn bg-primary hover:bg-secondary"
+                    onClick={sendTestMail}
                   >
-                    <option name="secure" value>
-                      True
-                    </option>
-                    <option name="secure" value={false}>
-                      False
-                    </option>
-                  </select>
+                    Send Test Mail
+                  </button>
                 </div>
               </div>
-              <div className="flex justify-between px-4">
-                <div className="w-1/3 pb-4 -ml-4">
-                  <Input
-                    label="Api Key"
-                    inputclassName="inputbox"
-                    inputid="api-key"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.api_key &&
-                        setting_normalized.api_key.value) ||
-                      ''
-                    }
-                    name="api_key"
-                    onChange={handleChange('api_key')}
-                  />
-                </div>
-                <div className="w-1/3 pb-4">
-                  <Input
-                    label="Domain"
-                    inputclassName="inputbox"
-                    inputid="domain"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.domain &&
-                        setting_normalized.domain.value) ||
-                      ''
-                    }
-                    name="domain"
-                    onChange={handleChange('domain')}
-                  />
-                </div>
-                <div className="w-1/3 pb-4 -mr-4">
-                  {/* <label className="label" htmlFor="grid-sendgrid-api-key">
-                    Api Key
-                  </label>
-                  <input
-                    className="inputbox"
-                    id="sendgrid-api-key"
-                    type="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized['sendgrid_api_key'] &&
-                        setting_normalized['sendgrid_api_key'].value) ||
-                      ''
-                    }
-                    name="sendgrid-api-key"
-                    onChange={handleChange('sendgrid_api_key')}
-                  /> */}
-                </div>
-              </div>
+              {Object.keys(setting_normalized).length &&
+                setting_normalized.email_channel &&
+                setting_normalized.email_channel.value === 'smtp' && (
+                  <div className="flex-wrap px-4">
+                    <div className="w-1/2 pb-4  ">
+                      <Input
+                        label="Protocol"
+                        inputclassName="inputbox"
+                        inputid="protocol"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.protocol &&
+                            setting_normalized.protocol.value) ||
+                          ''
+                        }
+                        name="protocol"
+                        onChange={handleChange('protocol')}
+                      />
+                    </div>
+                    <div className="w-1/2 pb-4 ">
+                      <Input
+                        label="Email"
+                        inputclassName="inputbox"
+                        inputid="email"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.email &&
+                            setting_normalized.email.value) ||
+                          ''
+                        }
+                        name="email"
+                        onChange={handleChange('email')}
+                      />
+                    </div>
+                    <div className="w-1/2 pb-4 ">
+                      <Input
+                        label="Password"
+                        inputclassName="inputbox"
+                        inputid="password"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.password &&
+                            setting_normalized.password.value) ||
+                          ''
+                        }
+                        name="password"
+                        onChange={handleChange('password')}
+                      />
+                    </div>
+                    <div className="w-1/2 pb-4  ">
+                      <Input
+                        label="Server"
+                        inputclassName="inputbox"
+                        inputid="server"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.server &&
+                            setting_normalized.server.value) ||
+                          ''
+                        }
+                        name="server"
+                        onChange={handleChange('server')}
+                      />
+                    </div>
+
+                    <div className="w-1/2 pb-4  ">
+                      <Input
+                        label="Port"
+                        inputclassName="inputbox"
+                        inputid="port"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.port &&
+                            setting_normalized.port.value) ||
+                          ''
+                        }
+                        name="port"
+                        onChange={handleChange('port')}
+                      />
+                    </div>
+                    <div className="w-1/2 pb-4 ">
+                      <Input
+                        label="Security"
+                        inputclassName="inputbox"
+                        inputid="security"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.security &&
+                            setting_normalized.security.value) ||
+                          ''
+                        }
+                        name="security"
+                        onChange={handleChange('security')}
+                      />
+                    </div>
+                    <div className="w-1/2 pb-4 ">
+                      <label className="font-bold text-gray-700">Secure</label>
+                      <select
+                        className="inputbox"
+                        native="true"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.secure &&
+                            setting_normalized.secure.value) ||
+                          false
+                        }
+                        onChange={handleDropDownChange('secure')}
+                      >
+                        <option name="secure" value>
+                          True
+                        </option>
+                        <option name="secure" value={false}>
+                          False
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+              {Object.keys(setting_normalized).length &&
+                setting_normalized.email_channel &&
+                setting_normalized.email_channel.value === 'mailgun' && (
+                  <div className="flex justify-between px-4 flex">
+                    <div className="w-1/3 pb-4 -ml-4">
+                      <Input
+                        label="Api Key"
+                        inputclassName="inputbox"
+                        inputid="api-key"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.api_key &&
+                            setting_normalized.api_key.value) ||
+                          ''
+                        }
+                        name="api_key"
+                        onChange={handleChange('api_key')}
+                      />
+                    </div>
+                    <div className="w-1/3 pb-4 ">
+                      <Input
+                        label="Domain"
+                        inputclassName="inputbox"
+                        inputid="domain"
+                        inputType="text"
+                        value={
+                          (Object.keys(setting_normalized).length &&
+                            setting_normalized.domain &&
+                            setting_normalized.domain.value) ||
+                          ''
+                        }
+                        name="domain"
+                        onChange={handleChange('domain')}
+                      />
+                    </div>
+                  </div>
+                )}
+              {Object.keys(setting_normalized).length &&
+                setting_normalized.email_channel &&
+                setting_normalized.email_channel.value === 'sendgrid' && (
+                  <div className="flex justify-between px-4 flex">
+                    <label className="label" htmlFor="grid-sendgrid-api-key">
+                      Api Key
+                    </label>
+                    <input
+                      className="inputbox"
+                      id="sendgrid-api-key"
+                      type="text"
+                      value={
+                        (Object.keys(setting_normalized).length &&
+                          setting_normalized['sendgrid_api_key'] &&
+                          setting_normalized['sendgrid_api_key'].value) ||
+                        ''
+                      }
+                      name="sendgrid-api-key"
+                      onChange={handleChange('sendgrid_api_key')}
+                    />
+                  </div>
+                )}
             </div>
           </div>
         </ExpansionPanelDetails>
@@ -547,6 +570,12 @@ export const SettingsManagePage = props => {
                           setting_normalized.allow_google_login.value) ||
                         false
                       }
+                      disabled={
+                        Object.keys(setting_normalized).length &&
+                        setting_normalized.is_public_registration
+                          ? !setting_normalized.is_public_registration.value
+                          : true
+                      }
                       tabIndex={-1}
                       onClick={handleCheckedChange('allow_google_login')}
                       color="primary"
@@ -563,6 +592,12 @@ export const SettingsManagePage = props => {
                           setting_normalized.allow_facebook_login.value) ||
                         false
                       }
+                      disabled={
+                        Object.keys(setting_normalized).length &&
+                        setting_normalized.is_public_registration
+                          ? !setting_normalized.is_public_registration.value
+                          : true
+                      }
                       tabIndex={-1}
                       onClick={handleCheckedChange('allow_facebook_login')}
                       color="primary"
@@ -573,70 +608,96 @@ export const SettingsManagePage = props => {
               </div>
               <div className="flex justify-between px-4">
                 <div className="w-1/2 pb-4 -ml-4">
-                  <Input
-                    label="Client Id"
-                    inputclassName="inputbox"
-                    inputid="client-id"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.client_id &&
-                        setting_normalized.client_id.value) ||
-                      ''
-                    }
-                    name="client_id"
-                    onChange={handleChange('client_id')}
-                  />
+                  <div>
+                    <Input
+                      label="Client Id"
+                      inputclassName="inputbox"
+                      inputid="client-id"
+                      inputType="text"
+                      value={
+                        (Object.keys(setting_normalized).length &&
+                          setting_normalized.client_id &&
+                          setting_normalized.client_id.value) ||
+                        ''
+                      }
+                      disabled={
+                        Object.keys(setting_normalized).length &&
+                        setting_normalized.allow_google_login
+                          ? !setting_normalized.allow_google_login.value
+                          : true
+                      }
+                      name="client_id"
+                      onChange={handleChange('client_id')}
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      label="Client Secret"
+                      inputclassName="inputbox"
+                      inputid="client-secret"
+                      inputType="text"
+                      value={
+                        (Object.keys(setting_normalized).length &&
+                          setting_normalized.client_secret &&
+                          setting_normalized.client_secret.value) ||
+                        ''
+                      }
+                      disabled={
+                        Object.keys(setting_normalized).length &&
+                        setting_normalized.allow_google_login
+                          ? !setting_normalized.allow_google_login.value
+                          : true
+                      }
+                      name="client_secret"
+                      onChange={handleChange('client_secret')}
+                    />
+                  </div>
                 </div>
                 <div className="w-1/2 pb-4 -mr-4">
-                  <Input
-                    label="App Id"
-                    inputclassName="inputbox"
-                    inputid="app-id"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.app_id &&
-                        setting_normalized.app_id.value) ||
-                      ''
-                    }
-                    name="app_id"
-                    onChange={handleChange('app_id')}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between px-4">
-                <div className="w-1/2 pb-4 -ml-4">
-                  <Input
-                    label="Client Secret"
-                    inputclassName="inputbox"
-                    inputid="client-secret"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.client_secret &&
-                        setting_normalized.client_secret.value) ||
-                      ''
-                    }
-                    name="client_secret"
-                    onChange={handleChange('client_secret')}
-                  />
-                </div>
-                <div className="w-1/2 pb-4 -mr-4">
-                  <Input
-                    label="App Secret"
-                    inputclassName="inputbox"
-                    inputid="app-secret"
-                    inputType="text"
-                    value={
-                      (Object.keys(setting_normalized).length &&
-                        setting_normalized.app_secret &&
-                        setting_normalized.app_secret.value) ||
-                      ''
-                    }
-                    name="app_secret"
-                    onChange={handleChange('app_secret')}
-                  />
+                  <div>
+                    <Input
+                      label="App Id"
+                      inputclassName="inputbox"
+                      inputid="app-id"
+                      inputType="text"
+                      value={
+                        (Object.keys(setting_normalized).length &&
+                          setting_normalized.app_id &&
+                          setting_normalized.app_id.value) ||
+                        ''
+                      }
+                      disabled={
+                        Object.keys(setting_normalized).length &&
+                        setting_normalized.allow_facebook_login
+                          ? !setting_normalized.allow_facebook_login.value
+                          : true
+                      }
+                      name="app_id"
+                      onChange={handleChange('app_id')}
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      label="App Secret"
+                      inputclassName="inputbox"
+                      inputid="app-secret"
+                      inputType="text"
+                      value={
+                        (Object.keys(setting_normalized).length &&
+                          setting_normalized.app_secret &&
+                          setting_normalized.app_secret.value) ||
+                        ''
+                      }
+                      disabled={
+                        Object.keys(setting_normalized).length &&
+                        setting_normalized.allow_facebook_login
+                          ? !setting_normalized.allow_facebook_login.value
+                          : true
+                      }
+                      name="app_secret"
+                      onChange={handleChange('app_secret')}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

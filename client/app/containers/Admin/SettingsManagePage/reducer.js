@@ -38,8 +38,11 @@ const settingsManagePageReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
       case types.SET_VALUE:
-        draft.settings_normalized[action.payload.key].value =
-          action.payload.value;
+        const key = action.payload.key;
+        draft.settings_normalized[key] = {
+          ...draft.settings_normalized[key],
+          value: action.payload.value,
+        };
         break;
     }
   });

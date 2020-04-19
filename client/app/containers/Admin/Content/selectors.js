@@ -42,6 +42,12 @@ export const makeSelectErrors = () =>
     state => state.errors,
   );
 
+export const makeSelectMetaTag = () =>
+  createSelector(
+    selectContentsListingPageDomain,
+    state => state.tempMetaTag,
+  );
+
 /**
  * Default selector used by ContentsListingPage
  */
