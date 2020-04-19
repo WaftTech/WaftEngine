@@ -10,7 +10,7 @@
     "npm": ">=5",
     "node": ">=8.15.0"
   },
-  "author": "Max Stoiber",
+  "author": "Max Stoiber, Waft Technology",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
@@ -90,7 +90,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "map": "^1.0.1",
-    "minimist": "1.2.3",
+    "minimist": "^1.2.5",
     "moment": "^2.24.0",
     "notistack": "0.5.1",
     "prop-types": "15.7.2",
@@ -196,7 +196,7 @@
     "webpack-cli": "3.3.0",
     "webpack-dev-middleware": "3.6.2",
     "webpack-hot-middleware": "2.24.3",
-    "webpack-pwa-manifest": "4.0.0",
+    "webpack-pwa-manifest": "^4.2.0",
     "whatwg-fetch": "3.0.0"
   }
 }
