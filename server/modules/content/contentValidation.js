@@ -70,24 +70,6 @@ validations.validation = (req, res, next) => {
         },
       ],
     },
-    // {
-    //   field: 'publish_from',
-    //   validate: [
-    //     {
-    //       condition: 'IsDate',
-    //       msg: contentConfig.validation.isDate,
-    //     },
-    //   ],
-    // },
-    // {
-    //   field: 'publish_to',
-    //   validate: [
-    //     {
-    //       condition: 'IsDate',
-    //       msg: contentConfig.validation.isDate,
-    //     },
-    //   ],
-    // },
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {

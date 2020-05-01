@@ -1,12 +1,11 @@
 const httpStatus = require('http-status');
-var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const blogConfig = require('./blogConfig');
 const blogSch = require('./blogSchema');
 const blogCatSch = require('./categorySchema');
-const blogcontroller = {};
+const blogController = {};
 
-blogcontroller.GetBlogAuthorize = async (req, res, next) => {
+blogController.GetBlogAuthorize = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [
@@ -44,7 +43,7 @@ blogcontroller.GetBlogAuthorize = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.getLatestBlog = async (req, res, next) => {
+blogController.getLatestBlog = async (req, res, next) => {
   try {
     const data = await blogSch
       .find({ is_active: true, is_deleted: false })
@@ -57,7 +56,7 @@ blogcontroller.getLatestBlog = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.getLatestBlogByCat = async (req, res, next) => {
+blogController.getLatestBlogByCat = async (req, res, next) => {
   try {
     const size_default = 10;
     let size;
@@ -92,7 +91,7 @@ blogcontroller.getLatestBlogByCat = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.getRelatedBlog = async (req, res, next) => {
+blogController.getRelatedBlog = async (req, res, next) => {
   try {
     const tages = await blogSch
       .findOne({
@@ -121,7 +120,7 @@ blogcontroller.getRelatedBlog = async (req, res, next) => {
   }
 };
 
-blogcontroller.GetBlogArchives = async (req, res, next) => {
+blogController.GetBlogArchives = async (req, res, next) => {
   try {
     const blogArchives = await blogSch
       .find({ is_deleted: false, is_active: true })
@@ -144,7 +143,7 @@ blogcontroller.GetBlogArchives = async (req, res, next) => {
   }
 };
 
-blogcontroller.GetBlogNonAuthorize = async (req, res, next) => {
+blogController.GetBlogNonAuthorize = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 12, false);
     populate = [
@@ -188,7 +187,7 @@ blogcontroller.GetBlogNonAuthorize = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogCategory = async (req, res, next) => {
+blogController.GetBlogCategory = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     selectQuery = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
@@ -210,7 +209,7 @@ blogcontroller.GetBlogCategory = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogCatById = async (req, res, next) => {
+blogController.GetBlogCatById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const blogcats = await blogCatSch.findOne({
@@ -221,7 +220,7 @@ blogcontroller.GetBlogCatById = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.SaveBlog = async (req, res, next) => {
+blogController.SaveBlog = async (req, res, next) => {
   try {
     let blogs = req.body;
     if (req.file) {
@@ -261,7 +260,7 @@ blogcontroller.SaveBlog = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.SaveBlogCategory = async (req, res, next) => {
+blogController.SaveBlogCategory = async (req, res, next) => {
   try {
     let blogcats = req.body;
     if (req.file) {
@@ -299,7 +298,7 @@ blogcontroller.SaveBlogCategory = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogDetail = async (req, res, next) => {
+blogController.GetBlogDetail = async (req, res, next) => {
   const id = req.params.id;
   const populate = [];
   const blog = await blogSch
@@ -310,7 +309,7 @@ blogcontroller.GetBlogDetail = async (req, res, next) => {
     .populate(populate);
   return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.get, null);
 };
-blogcontroller.GetBlogBySlug = async (req, res, next) => {
+blogController.GetBlogBySlug = async (req, res, next) => {
   const slug = req.params.slug_url;
   const blogs = await blogSch
     .findOne(
@@ -330,7 +329,7 @@ blogcontroller.GetBlogBySlug = async (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
 };
 
-blogcontroller.GetBlogById = async (req, res, next) => {
+blogController.GetBlogById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const blogs = await blogSch.findOne({
@@ -343,7 +342,7 @@ blogcontroller.GetBlogById = async (req, res, next) => {
   }
 };
 
-blogcontroller.GetBlogByCat = async (req, res, next) => {
+blogController.GetBlogByCat = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     const slug = req.params.slug_url;
@@ -389,7 +388,7 @@ blogcontroller.GetBlogByCat = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogByTag = async (req, res, next) => {
+blogController.GetBlogByTag = async (req, res, next) => {
   try {
     let page;
     let size;
@@ -418,7 +417,7 @@ blogcontroller.GetBlogByTag = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogByAuthor = async (req, res, next) => {
+blogController.GetBlogByAuthor = async (req, res, next) => {
   try {
     const size_default = 10;
     let page;
@@ -444,7 +443,7 @@ blogcontroller.GetBlogByAuthor = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.GetBlogByDate = async (req, res, next) => {
+blogController.GetBlogByDate = async (req, res, next) => {
   try {
     let page;
     let size;
@@ -490,9 +489,9 @@ blogcontroller.GetBlogByDate = async (req, res, next) => {
     next(err);
   }
 };
-blogcontroller.DeleteBlog = async (req, res, next) => {
+blogController.DeleteBlog = async (req, res, next) => {
   const id = req.params.id;
-  const blog = await blogSch.findByIdAndUpdate(objectId(id), {
+  const blog = await blogSch.findByIdAndUpdate(id, {
     $set: {
       is_deleted: true,
       deleted_at: new Date(),
@@ -500,9 +499,9 @@ blogcontroller.DeleteBlog = async (req, res, next) => {
   });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blog, null, blogConfig.delete, null);
 };
-blogcontroller.DeleteBlogCat = async (req, res, next) => {
+blogController.DeleteBlogCat = async (req, res, next) => {
   const id = req.params.id;
-  const blogCat = await blogCatSch.findByIdAndUpdate(objectId(id), {
+  const blogCat = await blogCatSch.findByIdAndUpdate(id, {
     $set: {
       is_deleted: true,
       deleted_at: new Date(),
@@ -511,4 +510,4 @@ blogcontroller.DeleteBlogCat = async (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogCat, null, blogConfig.deleteCat, null);
 };
 
-module.exports = blogcontroller;
+module.exports = blogController;

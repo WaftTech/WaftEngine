@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const objectId = require('mongoose').Types.ObjectId;
 const faqSch = require('./faqSchema');
 const faqCatSch = require('./faqCategorySchema');
 const otherHelper = require('../../helper/others.helper');
@@ -152,7 +151,7 @@ faqController.GetFaqByCat = async (req, res, next) => {
 };
 faqController.DeleteFaq = async (req, res, next) => {
   const id = req.params.id;
-  const faq = await faqSch.findByIdAndUpdate(objectId(id), {
+  const faq = await faqSch.findByIdAndUpdate(id, {
     $set: {
       is_deleted: true,
       deleted_at: new Date(),

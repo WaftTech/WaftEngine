@@ -12,12 +12,6 @@ validation.sanitize = (req, res, next) => {
         trim: true,
       },
     },
-    // {
-    //   field: 'link',
-    //   sanitize: {
-    //     trim: true,
-    //   },
-    // },
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();

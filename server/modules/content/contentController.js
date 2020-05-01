@@ -1,10 +1,8 @@
 const httpStatus = require('http-status');
-var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const contentSch = require('./contentSchema');
 const contentConfig = require('./contentConfig');
 const contentController = {};
-const internal = {};
 
 contentController.GetContent = async (req, res, next) => {
   try {

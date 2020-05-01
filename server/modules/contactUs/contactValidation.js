@@ -3,7 +3,7 @@ const otherHelper = require('../../helper/others.helper');
 const config = require('./contactConfig');
 const apiCallHelper = require('../../helper/apicall.helper');
 const {
-  recaptcha: { secretKey, siteKey },
+  recaptcha: { secretKey },
 } = require('../../config/keys');
 const isEmpty = require('../../validation/isEmpty');
 const validateInput = {};

@@ -5,7 +5,7 @@ const uploader = fileUpload.uploader;
 
 const blogModule = require('../../modules/blog/blogController');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
-const { catSanitize, catValidate, sanitize, validate, sanitizeComment, validateComment } = require('../../modules/blog/blogValidation');
+const { catSanitize, catValidate, sanitize, validate } = require('../../modules/blog/blogValidation');
 
 router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
 router.get('/', blogModule.GetBlogNonAuthorize);

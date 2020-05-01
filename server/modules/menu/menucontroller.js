@@ -3,7 +3,6 @@ const httpStatus = require('http-status');
 const { menuSch, menu_item } = require('./menuschema');
 const otherHelper = require('../../helper/others.helper');
 const menuConfig = require('./menuConfig');
-const objectId = require('mongoose').Types.ObjectId;
 const utils = require('./utils');
 const menuController = {};
 const menuItemController = {};
@@ -25,12 +24,12 @@ menuController.getMenu = async (req, res, next) => {
 
 const menuControl = async (req, res, next) => {
   const all_menu = await menu_item
-    .find({ menu_sch_id: objectId(req.body.menu_sch_id) })
+    .find({ menu_sch_id: req.body.menu_sch_id })
     .sort({ order: 1 })
     .lean();
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach((each) => {
+  all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
@@ -54,7 +53,10 @@ menuItemController.saveMenuItem = async (req, res, next) => {
     let menuitem = req.body;
 
     if (menuitem.parent_menu) {
-      const hierarchy = await menu_item.findById(menuitem.parent_menu).select('parent_hierarchy').lean();
+      const hierarchy = await menu_item
+        .findById(menuitem.parent_menu)
+        .select('parent_hierarchy')
+        .lean();
 
       menuitem.parent_hierarchy = [...hierarchy.parent_hierarchy, hierarchy._id];
     }
@@ -135,13 +137,13 @@ menuController.saveMenu = async (req, res, next) => {
 menuController.getEditMenu = async (req, res, next) => {
   const parent = await menuSch.findById(req.params.id).select('title key order is_active');
   const all_menu = await menu_item
-    .find({ menu_sch_id: objectId(req.params.id) })
+    .find({ menu_sch_id: req.params.id })
     .sort({ order: 1 })
     .lean();
 
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach((each) => {
+  all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
@@ -168,12 +170,12 @@ menuController.deleteMenu = async (req, res, next) => {
 menuController.getMenuForUser = async (req, res, next) => {
   const id = await menuSch.findOne({ key: req.params.key }).select('key');
   const all_menu = await menu_item
-    .find({ menu_sch_id: objectId(id._id) })
+    .find({ menu_sch_id: id._id })
     .sort({ order: 1 })
     .lean();
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach((each) => {
+  all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {

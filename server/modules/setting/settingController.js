@@ -1,6 +1,5 @@
 const httpStatus = require('http-status');
 const settingSch = require('./settingSchema');
-const isEmpty = require('../../validation/isEmpty');
 const settingConfig = require('./settingConfig');
 const otherHelper = require('../../helper/others.helper');
 const settingController = {};

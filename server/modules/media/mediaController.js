@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const folderSch = require('../files/folderSchema');
 const fileSch = require('../files/fileSchema');
@@ -39,8 +38,15 @@ mediaController.SaveMedia = async (req, res, next) => {
     } else {
       media = req.file;
       media.added_by = req.user.id;
-      media.destination = media.destination.split('\\').join('/').split('server/')[1] + '/';
-      media.path = media.path.split('\\').join('/').split('server/')[1];
+      media.destination =
+        media.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      media.path = media.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
       media.type = req.params.type;
       media.added_by = req.user.id;
       const newMedia = new mediaSch(media);
@@ -57,8 +63,15 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
     for (let i = 0; i < req.files.length; i++) {
       let media = req.files[i];
       media.added_by = req.user.id;
-      media.destination = media.destination.split('\\').join('/').split('server/')[1] + '/';
-      media.path = media.path.split('\\').join('/').split('server/')[1];
+      media.destination =
+        media.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      media.path = media.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
       media.type = req.params.type;
       const newMedia = new mediaSch(media);
       const mediaSave = await newMedia.save();
@@ -71,13 +84,13 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
 };
 mediaController.GetMediaDetail = async (req, res, next) => {
   const id = req.params.id;
-  const media = await mediaSch.findOne({ _id: objectId(id), is_deleted: false });
+  const media = await mediaSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Get Success !!', null);
 };
 mediaController.DeleteMedia = async (req, res, next) => {
   const id = req.params.id;
   const media = await mediaSch.findByIdAndUpdate(
-    objectId(id),
+    id,
     {
       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
     },
@@ -110,16 +123,6 @@ mediaController.DeleteAllMedia = async (req, res, next) => {
       { new: true },
     );
   }
-  // let media;
-  // for(let i=0 ; i < all.length ; i++) {
-  //    media = await mediaSch.findByIdAndUpdate(
-  //     all[i],
-  //     {
-  //       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
-  //     },
-  //     { new: true },
-  //   );
-  // }
 
   return otherHelper.sendResponse(res, httpStatus.OK, true, { file, folder }, null, 'Media Delete Success !!', null);
 };

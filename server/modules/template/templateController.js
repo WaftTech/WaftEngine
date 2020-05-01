@@ -34,7 +34,6 @@ templateController.postTemplate = async (req, res, next) => {
   try {
     const { _id, template_name, template_key, information, variables, from, subject, alternate_text, body } = req.body;
 
-    // if (_id) {
     const update = await templateSch.findOneAndUpdate(
       { _id, template_name, template_key },
       {
@@ -58,11 +57,6 @@ templateController.postTemplate = async (req, res, next) => {
     } else {
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, templateConfig.templateNotFound, null);
     }
-    // } else {
-    //   const tmeplate = new templateSch({ template_name, template_key, information, variables, from, subject, body });
-    //   const template = tmeplate.save();
-    //   return otherHelper.sendResponse(res, httpStatus.OK, true, template, null, templateConfig.templateSave, null);
-    // }
   } catch (err) {
     next(err);
   }

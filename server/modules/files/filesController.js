@@ -4,8 +4,6 @@ const fileSch = require('./fileSchema');
 const folderSch = require('./folderSchema');
 const fileController = {};
 
-// Reads text from the file asynchronously and returns a Promise.
-
 fileController.GetFileAndFolder = async (req, res, next) => {
   try {
     let id = '';

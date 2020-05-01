@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const sliderSch = require('./sliderSchema');
 const sliderConfig = require('./sliderConfig');

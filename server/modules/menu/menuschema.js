@@ -22,7 +22,6 @@ const menuSchema = new Schema({
   title: { type: String, required: true },
   key: { type: String, required: true },
   order: { type: Number, required: true, default: 1 },
-  // parent_menu: { type: Schema.Types.ObjectId, required: false, ref: 'menu_item' },
   is_active: { type: Boolean, required: true, default: true },
   is_deleted: { type: Boolean, required: true, default: false },
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },
