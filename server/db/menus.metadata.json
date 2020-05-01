@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"waft-engine.menus"}],"uuid":"b470274369cc439a9af102e0a5f14981"}

@@ -25,9 +25,9 @@ const transporter = nodemailer.createTransport({
 });
 
 // send mail with defined transport object
-sendMail.send = mailOptions => {
+sendMail.send = (mailOptions) => {
   if (emailConf.channel === 'mailgun') {
-    mailgun.messages().send(mailOptions, function(error, info) {
+    mailgun.messages().send(mailOptions, function (error, info) {
       if (error) {
         return error;
       }
@@ -45,7 +45,7 @@ sendMail.send = mailOptions => {
     });
   } else if (emailConf.channel === 'waft') {
     apiCall.requestThirdPartyApi1(
-      'https://www.waftengine.org/api/mail',
+      'https://waftengine.org/api/mail',
       {
         'content-type': 'application/json',
       },

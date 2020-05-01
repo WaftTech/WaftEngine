@@ -15,6 +15,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import AccountBox from '@material-ui/icons/AccountBox';
+import Error from '@material-ui/icons/Error';
+import NoteAdd from '@material-ui/icons/NoteAdd';
+import Note from '@material-ui/icons/Note';
 import {
   makeSelectErrors,
   makeSelectUsers,
@@ -26,10 +30,6 @@ import reducer from './reducer';
 import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import LinkBoth from '../../../components/LinkBoth';
-import AccountBox from '@material-ui/icons/AccountBox';
-import Error from '@material-ui/icons/Error';
-import NoteAdd from '@material-ui/icons/NoteAdd';
-import Note from '@material-ui/icons/Note';
 
 const styles = theme => ({
   dashicon: {
@@ -63,7 +63,9 @@ export class Dashboard extends React.PureComponent {
         <div className="bg-white rounded p-4 shadow">
           {info.map(each => (
             <div key={each._id}>
-              <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
+              <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">
+                {each.title}
+              </h3>
               <div
                 className="mt-2 flex flex-wrap justify-between p-4 rounded"
                 dangerouslySetInnerHTML={{ __html: each.detail }}
@@ -78,7 +80,7 @@ export class Dashboard extends React.PureComponent {
             <LinkBoth
               className="mt-2 bg-gray-200 flex flex-wrap justify-between p-2 rounded"
               key={each._id}
-              to={`https://www.waftengine.org/blog/${each.slug_url}`}
+              to={`https://waftengine.org/blog/${each.slug_url}`}
             >
               <div>
                 <h4>{each.title}</h4>
@@ -100,7 +102,7 @@ export class Dashboard extends React.PureComponent {
           <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black shadow">
             <LinkBoth
               className="text-gray-800 no-underline hover:text-black font-bold"
-              to="https://www.waftengine.org/documentation"
+              to="https://waftengine.org/documentation"
               target="_blank"
             >
               <Note className={classes.dashicon} />
@@ -130,7 +132,9 @@ export class Dashboard extends React.PureComponent {
         <div>
           <div className="flex justify-between mx-4 my-4">
             <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">By Roles </h3>
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                By Roles{' '}
+              </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {users &&
                   users.data &&
@@ -156,7 +160,9 @@ export class Dashboard extends React.PureComponent {
             </div>
 
             <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">By Types </h3>
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                By Types{' '}
+              </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {errors.data && errors.data.length ? (
                   errors.data.map(each => (
@@ -173,10 +179,12 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                    <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">No Errors</h2>
-                    </div>
-                  )}
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Errors
+                    </h2>
+                  </div>
+                )}
               </div>
             </div>
           </div>
