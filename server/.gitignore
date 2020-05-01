@@ -12,7 +12,8 @@ npm-debug.log
 .idea
 # public
 config/
-
+# env file 
+.env
 
 # files
 public/
