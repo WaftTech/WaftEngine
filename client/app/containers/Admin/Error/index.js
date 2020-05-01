@@ -153,11 +153,9 @@ export class Error extends React.Component {
         _id,
       }) => [
         error_message,
-        // error_stack,
         error_type,
         count,
         moment(added_at).format(DATE_FORMAT),
-        // console.log(last_added_at, 'dsds'),
         last_added_at != null
           ? moment(last_added_at).format(DATE_FORMAT)
           : moment(added_at).format(DATE_FORMAT),
@@ -209,7 +207,7 @@ export class Error extends React.Component {
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Error Manage</PageHeader>
           <button
-           className="btn bg-danger hover:bg-secondary"
+            className="btn bg-danger hover:bg-secondary"
             onClick={this.handleOpenAll}
           >
             Delete All

@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 
-const {menuSch , menu_item } = require('./menuschema');
+const { menuSch, menu_item } = require('./menuschema');
 const otherHelper = require('../../helper/others.helper');
 const menuConfig = require('./menuConfig');
 const objectId = require('mongoose').Types.ObjectId;
@@ -19,7 +19,7 @@ menuController.getMenu = async (req, res, next) => {
   }
 
   selectQuery = 'title key order is_active';
-  let data = await otherHelper.getquerySendResponse(menusch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+  let data = await otherHelper.getquerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
 };
 
@@ -30,7 +30,7 @@ const menuControl = async (req, res, next) => {
     .lean();
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach(each => {
+  all_menu.forEach((each) => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
@@ -54,10 +54,7 @@ menuItemController.saveMenuItem = async (req, res, next) => {
     let menuitem = req.body;
 
     if (menuitem.parent_menu) {
-      const hierarchy = await menu_item
-        .findById(menuitem.parent_menu)
-        .select('parent_hierarchy')
-        .lean();
+      const hierarchy = await menu_item.findById(menuitem.parent_menu).select('parent_hierarchy').lean();
 
       menuitem.parent_hierarchy = [...hierarchy.parent_hierarchy, hierarchy._id];
     }
@@ -98,7 +95,7 @@ menuController.saveMenu = async (req, res, next) => {
   try {
     let menu = req.body;
     if (menu && menu._id && menu.key) {
-      const checkIf = await menusch.findOne({ key: menu.key, is_deleted: false, _id: { $ne: menu._id } });
+      const checkIf = await menuSch.findOne({ key: menu.key, is_deleted: false, _id: { $ne: menu._id } });
       if (checkIf) {
         const error = { key: 'Key already exists!!' };
         return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
@@ -107,7 +104,7 @@ menuController.saveMenu = async (req, res, next) => {
       menu.updated_by = req.user.id;
       menu.updated_at = new Date();
 
-      const update = await menusch.findByIdAndUpdate(
+      const update = await menuSch.findByIdAndUpdate(
         menu._id,
         {
           $set: menu,
@@ -117,14 +114,14 @@ menuController.saveMenu = async (req, res, next) => {
 
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, menuConfig.save, null);
     } else {
-      const checkIf = await menusch.findOne({ key: menu.key, is_deleted: false });
+      const checkIf = await menuSch.findOne({ key: menu.key, is_deleted: false });
       if (checkIf) {
         const error = { key: 'Key already exists!!' };
         return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
       }
       menu.added_by = req.user.id;
       menu.added_at = new Date();
-      const newMenu = new menusch(menu);
+      const newMenu = new menuSch(menu);
       const MenuSave = await newMenu.save();
 
       // const data = await menuControl(req, res, next);
@@ -136,7 +133,7 @@ menuController.saveMenu = async (req, res, next) => {
 };
 
 menuController.getEditMenu = async (req, res, next) => {
-  const parent = await menusch.findById(req.params.id).select('title key order is_active');
+  const parent = await menuSch.findById(req.params.id).select('title key order is_active');
   const all_menu = await menu_item
     .find({ menu_sch_id: objectId(req.params.id) })
     .sort({ order: 1 })
@@ -144,7 +141,7 @@ menuController.getEditMenu = async (req, res, next) => {
 
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach(each => {
+  all_menu.forEach((each) => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
@@ -158,7 +155,7 @@ menuController.getEditMenu = async (req, res, next) => {
 
 menuController.deleteMenu = async (req, res, next) => {
   const menuId = req.params.id;
-  const menu = await menusch.findByIdAndUpdate(
+  const menu = await menuSch.findByIdAndUpdate(
     menuId,
     {
       $set: { is_deleted: true, key: '' },
@@ -169,14 +166,14 @@ menuController.deleteMenu = async (req, res, next) => {
 };
 
 menuController.getMenuForUser = async (req, res, next) => {
-  const id = await menusch.findOne({ key: req.params.key }).select('key');
+  const id = await menuSch.findOne({ key: req.params.key }).select('key');
   const all_menu = await menu_item
     .find({ menu_sch_id: objectId(id._id) })
     .sort({ order: 1 })
     .lean();
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach(each => {
+  all_menu.forEach((each) => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {

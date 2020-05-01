@@ -13,13 +13,11 @@ coronaController.saveDevice = async (req, res, next) => {
     let device_id = '';
     let response = { country: coronaConfig.country, district: coronaConfig.district };
     const ifAlready = await deviceSch.find({ android_token: android_token, ios_token: ios_token }).lean();
-    console.log(ifAlready);
     if (ifAlready && ifAlready.length) {
       device_id = ifAlready[0]._id;
     } else {
       const newDevice = new deviceSch({ device, android_token, ios_token, location });
       const deviceInfo = await newDevice.save();
-      console.log(deviceInfo);
       device_id = deviceInfo._id;
     }
     response.device_id = device_id;
@@ -47,7 +45,6 @@ coronaController.GetDevice = async (req, res, next) => {
     if (req.query.find_is_page) {
       searchQuery = { ...searchQuery, is_page: req.query.find_is_page };
     }
-    console.log(searchQuery);
     let datas = await otherHelper.getquerySendResponse(deviceSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, coronaConfig.gets, page, size, datas.totaldata);

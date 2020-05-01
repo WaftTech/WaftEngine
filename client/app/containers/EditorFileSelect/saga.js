@@ -13,15 +13,6 @@ import { enqueueSnackbar } from '../App/actions';
 
 function* loadFolders() {
   const token = yield select(makeSelectToken());
-  // console.log(token);
-  //  yield call(
-  //    Api.get(
-  //      `someroute/${action.payload}`,
-  //      actions.defaultActionSuccess,
-  //      actions.defaultActionFailure,
-  //      token,
-  //    ),
-  //  );
 }
 
 function* loadFiles(action) {
@@ -81,7 +72,7 @@ function* deleteFile(action) {
 function* createNewFolder(action) {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
-  let datas = { ...data };
+  const datas = { ...data };
   let successCall = actions.loadNewFolderSuccess;
   if (action.payload.value && action.payload.name) {
     datas._id = action.payload.value;

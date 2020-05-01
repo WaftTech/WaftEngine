@@ -37,7 +37,6 @@ class SlickSlider extends React.PureComponent {
   render() {
     const { slideObj, show_link, show_caption } = this.props;
     const slide = slideObj[this.props.slideKey];
-    console.log(slide, 'slider');
     let settings = {
       slidesToShow: 2,
       slidesToScroll: 1,

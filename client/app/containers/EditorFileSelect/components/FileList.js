@@ -18,8 +18,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import WithStyles from '@material-ui/core/styles/withStyles';
-import PageContent from '../../../components/PageContent/PageContent';
 import Checkbox from '@material-ui/core/Checkbox';
+import PageContent from '../../../components/PageContent/PageContent';
 
 import * as mapDispatchToProps from '../actions';
 import {
@@ -296,7 +296,6 @@ const FileList = ({
         'Define function for multiple upload where this component is called. Pass it as uploadMultiple in props',
       );
     }
-    console.log('Chosen Files', chosen_files);
   };
 
   const confirmDelete = () => {
@@ -449,7 +448,13 @@ const FileList = ({
         doDelete={handleFileDel}
       />
       <div className="flex flex-wrap bg-white mt-2 shadow p-4">
-        <p className="italic w-full block py-2">Note : Please Click the given button first for selecting <span className="font-bold">Multiple Images, Renaming folders and Deleting files</span>!!!</p>
+        <p className="italic w-full block py-2">
+          Note : Please Click the given button first for selecting{' '}
+          <span className="font-bold">
+            Multiple Images, Renaming folders and Deleting files
+          </span>
+          !!!
+        </p>
         {folders.data.map(each => (
           <div
             className="mediaCont border p-1 relative overflow-hidden mr-4 hover:border-primary"

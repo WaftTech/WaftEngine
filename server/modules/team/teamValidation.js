@@ -59,17 +59,15 @@ validation.validate = (req, res, next) => {
           },
         },
       ],
-    }
+    },
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-//   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
     next();
   }
 };
-
 
 module.exports = validation;

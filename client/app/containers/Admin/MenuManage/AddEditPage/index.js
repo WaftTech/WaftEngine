@@ -166,8 +166,6 @@ const AddEdit = props => {
     showSubMenuBool,
     category,
   } = props;
-  console.log('showSubMenu', showSubMenuBool);
-  console.log('subMenu', subMenu);
 
   const getCategoryDropDown = () => {
     let childContent = [];

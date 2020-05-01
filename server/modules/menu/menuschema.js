@@ -30,6 +30,6 @@ const menuSchema = new Schema({
   updated_by: { type: Schema.Types.ObjectId, ref: 'users' },
   added_at: { type: Date },
 });
-const menusch = mongoose.model('menusch', menuSchema);
+const menuSch = mongoose.model('menusch', menuSchema);
 const menu_item = mongoose.model('menu_item', menuItemSchema);
-module.exports = { menusch, menu_item };
+module.exports = { menuSch, menu_item };

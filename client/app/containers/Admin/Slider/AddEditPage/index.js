@@ -65,82 +65,80 @@ const styles = () => ({
 
 const SortableImageItem = SortableElement(() => <div>***</div>);
 
-const SortableImageList = SortableContainer(({ items, _this }) => {
-  return (
-    <div className="rounded mt-4">
-      {items.map((value, index) => (
-        <div key={`${value._id}-item-image-${index}`}>
-          <SortableImageItem index={index} value={value} _this={_this} />
-          <div className="flex justify-between mb-4 bg-white shadow p-2 items-center px-8">
-            <div className="w-1/4 text-center -ml-8">
-              {value.image ? (
-                <img
-                  className={_this.props.classes.media}
-                  src={
-                    typeof value.image === 'string'
-                      ? `${IMAGE_BASE}${_this.state.files[value.image].path}`
-                      : `${IMAGE_BASE}${value.image.path}`
-                  }
-                  onClick={_this.handleSetImage(index)}
-                />
-              ) : (
-                // <MediaElement
-                //   mediaKey={
-                //     typeof value.image === 'string'
-                //       ? value.image
-                //       : value.image._id
-                //   }
-                //   onClick={_this.handleSetImage(index)}
-                // />
-                <button
-                  type="button"
-                  className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
-                  onClick={_this.handleSetImage(index)}
-                >
-                  Click To Set Image
-                </button>
-              )}
-            </div>
-
-            <div className="w-1/4 text-center mr-2">
-              <input
-                className="inputbox"
-                id={`slider-link-${index}`}
-                type="text"
-                value={value.link || ''}
-                placeholder="Link"
-                onChange={_this.handleImageLinkChange(index)}
-                style={{ background: '#FFF', height: '100%' }}
+const SortableImageList = SortableContainer(({ items, _this }) => (
+  <div className="rounded mt-4">
+    {items.map((value, index) => (
+      <div key={`${value._id}-item-image-${index}`}>
+        <SortableImageItem index={index} value={value} _this={_this} />
+        <div className="flex justify-between mb-4 bg-white shadow p-2 items-center px-8">
+          <div className="w-1/4 text-center -ml-8">
+            {value.image ? (
+              <img
+                className={_this.props.classes.media}
+                src={
+                  typeof value.image === 'string'
+                    ? `${IMAGE_BASE}${_this.state.files[value.image].path}`
+                    : `${IMAGE_BASE}${value.image.path}`
+                }
+                onClick={_this.handleSetImage(index)}
               />
-            </div>
-            <div className="w-1/4 text-center">
-              <textarea
-                className="inputbox"
-                id={`slider-caption-${index}`}
-                type="text"
-                value={value.caption || ''}
-                placeholder="Caption"
-                onChange={_this.handleImageCaptionChange(index)}
-                style={{ background: '#FFF', height: '100%' }}
-              />
-            </div>
-            <div className="w-1/4 -mr-8 text-center">
+            ) : (
+              // <MediaElement
+              //   mediaKey={
+              //     typeof value.image === 'string'
+              //       ? value.image
+              //       : value.image._id
+              //   }
+              //   onClick={_this.handleSetImage(index)}
+              // />
               <button
                 type="button"
-                className="px-1 text-center leading-none"
-                onClick={() => _this.handleRemoveSlide(index)}
+                className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
+                onClick={_this.handleSetImage(index)}
               >
-                <i className="material-icons text-base text-red-400 hover:text-red-600">
-                  delete
-                </i>
+                Click To Set Image
               </button>
-            </div>
+            )}
+          </div>
+
+          <div className="w-1/4 text-center mr-2">
+            <input
+              className="inputbox"
+              id={`slider-link-${index}`}
+              type="text"
+              value={value.link || ''}
+              placeholder="Link"
+              onChange={_this.handleImageLinkChange(index)}
+              style={{ background: '#FFF', height: '100%' }}
+            />
+          </div>
+          <div className="w-1/4 text-center">
+            <textarea
+              className="inputbox"
+              id={`slider-caption-${index}`}
+              type="text"
+              value={value.caption || ''}
+              placeholder="Caption"
+              onChange={_this.handleImageCaptionChange(index)}
+              style={{ background: '#FFF', height: '100%' }}
+            />
+          </div>
+          <div className="w-1/4 -mr-8 text-center">
+            <button
+              type="button"
+              className="px-1 text-center leading-none"
+              onClick={() => _this.handleRemoveSlide(index)}
+            >
+              <i className="material-icons text-base text-red-400 hover:text-red-600">
+                delete
+              </i>
+            </button>
           </div>
         </div>
-      ))}
-    </div>
-  );
-});
+      </div>
+    ))}
+  </div>
+));
 class AddEdit extends React.PureComponent {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -210,8 +208,6 @@ class AddEdit extends React.PureComponent {
   };
 
   handleImageImageChange = file => {
-    // console.log(id);
-    // debugger;
     const tempImages = [...this.props.one.images];
     tempImages[this.state.index].image = file._id;
     this.props.setOneValue({ key: 'images', value: tempImages });

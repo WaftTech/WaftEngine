@@ -121,7 +121,6 @@ function* addEdit2FailureFunc(action) {
 function* addEditChild(action) {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectSubMenu());
-  console.log('data', data);
   if (data.parent_menu === '') {
     const { parent_menu, ...restData } = data;
     yield call(

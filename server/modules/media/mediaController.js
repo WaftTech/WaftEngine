@@ -39,15 +39,8 @@ mediaController.SaveMedia = async (req, res, next) => {
     } else {
       media = req.file;
       media.added_by = req.user.id;
-      media.destination =
-        media.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      media.path = media.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      media.destination = media.destination.split('\\').join('/').split('server/')[1] + '/';
+      media.path = media.path.split('\\').join('/').split('server/')[1];
       media.type = req.params.type;
       media.added_by = req.user.id;
       const newMedia = new mediaSch(media);
@@ -64,15 +57,8 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
     for (let i = 0; i < req.files.length; i++) {
       let media = req.files[i];
       media.added_by = req.user.id;
-      media.destination =
-        media.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      media.path = media.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      media.destination = media.destination.split('\\').join('/').split('server/')[1] + '/';
+      media.path = media.path.split('\\').join('/').split('server/')[1];
       media.type = req.params.type;
       const newMedia = new mediaSch(media);
       const mediaSave = await newMedia.save();
@@ -103,27 +89,27 @@ mediaController.DeleteMedia = async (req, res, next) => {
 mediaController.DeleteAllMedia = async (req, res, next) => {
   let folder_id = req.body.folder_id;
   let file_id = req.body.file_id;
-  
-  let file,folder;
 
-  for(let i=0 ; i < folder_id.length ; i++) {
+  let file, folder;
+
+  for (let i = 0; i < folder_id.length; i++) {
     folder = await folderSch.findByIdAndUpdate(
       folder_id[i],
-     {
-       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
-     },
-     { new: true },
-   );
- }
- for(let i=0 ; i < file_id.length ; i++) {
-  file = await fileSch.findByIdAndUpdate(
-    file_id[i],
-   {
-     $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
-   },
-   { new: true },
- );
-}
+      {
+        $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+      },
+      { new: true },
+    );
+  }
+  for (let i = 0; i < file_id.length; i++) {
+    file = await fileSch.findByIdAndUpdate(
+      file_id[i],
+      {
+        $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+      },
+      { new: true },
+    );
+  }
   // let media;
   // for(let i=0 ; i < all.length ; i++) {
   //    media = await mediaSch.findByIdAndUpdate(
@@ -134,22 +120,11 @@ mediaController.DeleteAllMedia = async (req, res, next) => {
   //     { new: true },
   //   );
   // }
-  
-  return otherHelper.sendResponse(res, httpStatus.OK, true, {file,folder}, null, 'Media Delete Success !!', null);
+
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { file, folder }, null, 'Media Delete Success !!', null);
 };
 mediaController.UploadFromCkEditor = async (req, res, next) => {
   try {
-    console.log(req.files);
-
-    // media.destination =
-    //   media.destination
-    //     .split('\\')
-    //     .join('/')
-    //     .split('server/')[1] + '/';
-    // media.path = media.path
-    //   .split('\\')
-    //   .join('/')
-    //   .split('server/')[1];
     let html = '';
     html += `<script type='text/javascript'>
     var funcNum = ${req.query.CKEditorFuncNum};

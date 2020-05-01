@@ -11,7 +11,7 @@ validation.sanitize = (req, res, next) => {
       sanitize: {
         trim: true,
       },
-    }
+    },
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
@@ -49,7 +49,6 @@ validation.validate = (req, res, next) => {
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-  //   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
@@ -146,17 +145,11 @@ validation.itemValidate = (req, res, next) => {
           condition: 'IsEmpty',
           msg: menuConfig.validate.empty,
         },
-        // {
-        //   condition: 'IsIn',
-        //   msg: menuConfig.validate.invalid,
-        //   enum: ['_blank', '_self', '_parent', '_top'],
-        // },
       ],
     },
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-  //   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {

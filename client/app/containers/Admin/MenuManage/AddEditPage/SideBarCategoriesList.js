@@ -61,24 +61,6 @@ const SidebarCategoriesList = props => {
     setInnerStateValue({ state: 'generalInfo', key: name, value });
   };
 
-  // // TODO:look afterward
-  // const handleExpand = () => {
-  //   const ids = [];
-  //   const idsObj = {};
-  //   category.map(each => {
-  //     ids.push(each._id);
-  //     each.child_category
-  //       ? each.child_category.map(each1 => {
-  //         ids.push(each1._id);
-  //       })
-  //       : '';
-  //   });
-  //   // console.log('ids', ids);
-  //   ids.map(e => (idsObj[e] = true));
-  //   // console.log('idsObj', idsObj);
-  //   setOpenSet(idsObj);
-  // };
-
   const categoryFunction = (e, parentId = '') => (
     <ul key={`show-category-${e._id}`}>
       {e.child_menu && e.child_menu.length ? (
