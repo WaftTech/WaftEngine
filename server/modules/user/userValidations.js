@@ -322,10 +322,10 @@ validations.validateRegisterInput = (req, res, next) => {
           condition: 'IsEmpty',
           msg: config.validate.empty,
         },
-        // {
-        //   condition: 'IsEmail',
-        //   msg: config.validate.isEmail,
-        // },
+        {
+          condition: 'IsEmail',
+          msg: config.validate.isEmail,
+        },
       ],
     },
     {
