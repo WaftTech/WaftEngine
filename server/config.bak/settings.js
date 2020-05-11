@@ -4,5 +4,6 @@ module.exports = {
   public_register_email_template: 'user_registration',
   public_register_oauth_template: 'third_party_signup',
   verify_mail_template: 'verify_mail',
+  forgot_password_mail_template: 'forgot_password',
   force_allow_email_verify: true,
 };

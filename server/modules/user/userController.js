@@ -194,12 +194,6 @@ userController.validLoginResponse = async (req, user, next) => {
     loginLogs.addloginlog(req, token, next);
     token = `Bearer ${token}`;
     payload.routes = routes;
-    payload.first_name = user.first_name;
-    payload.last_name = user.last_name;
-    if (payload.sql_id) {
-      const companies = await spDataManipulator.findMyCompany(req, next, payload.sql_id);
-      payload.companies = companies;
-    }
     return { token, payload };
   } catch (err) {
     next(err);
@@ -291,9 +285,8 @@ userController.UpdateUserDetail = async (req, res, next) => {
 
 userController.Verifymail = async (req, res, next) => {
   try {
-    const {
-      body: { email, code },
-    } = req;
+    const email = req.body.email.toLowerCase();
+    const code = req.body.code;
     const user = await userSch.findOne({ email, email_verification_code: code });
     const data = { email };
     if (!user) {
@@ -302,21 +295,8 @@ userController.Verifymail = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, data, null, errors.email, null);
     }
     const d = await userSch.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
-    // Create JWT payload
-    const payload = {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      email_verified: true,
-      roles: user.roles,
-      gender: user.gender,
-    };
-    // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
-      const msg = config.emailVerify;
-      token = `Bearer ${token}`;
-      return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, token);
-    });
+    const { token, payload } = await userController.validLoginResponse(req, d, next);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, config.emailVerify, token);
   } catch (err) {
     next(err);
   }
@@ -331,7 +311,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Verified', null);
       } else {
         const currentDate = new Date();
-        const diff = parseInt((date2 - date1) / (1000 * 60)); //in minute
+        const diff = parseInt((currentDate - user.email_verified_request_date) / (1000 * 60)); //in minute
         if (diff < 10) {
           return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Sent', null);
         }
@@ -393,9 +373,7 @@ userController.VerifyServerMail = async (req, res, next) => {
 
 userController.ForgotPassword = async (req, res, next) => {
   try {
-    const {
-      body: { email },
-    } = req;
+    const email = req.body.email.toLowerCase();
     const errors = {};
     const user = await userSch.findOne({ email });
     const data = { email };
@@ -403,8 +381,15 @@ userController.ForgotPassword = async (req, res, next) => {
       errors.email = 'Email not found';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
+    const currentDate = new Date();
+    if (user.password_reset_request_date) {
+      const diff = parseInt((currentDate - user.password_reset_request_date) / (1000 * 60)); //in minute
+      if (diff < 10) {
+        return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Sent, Check your Inbox', null);
+      }
+    }
     user.password_reset_code = otherHelper.generateRandomHexString(6);
-    user.password_reset_request_date = new Date();
+    user.password_reset_request_date = currentDate;
     const update = await userSch.findByIdAndUpdate(
       user._id,
       {
@@ -417,7 +402,7 @@ userController.ForgotPassword = async (req, res, next) => {
     );
 
     const renderedMail = await renderMail.renderTemplate(
-      'forgot_password',
+      appSetting.forgot_password_mail_template,
       {
         name: user.name,
         email: user.email,
@@ -440,9 +425,8 @@ userController.ForgotPassword = async (req, res, next) => {
 
 userController.ResetPassword = async (req, res, next) => {
   try {
-    const {
-      body: { email, code, password },
-    } = req;
+    let { email, code, password } = req.body;
+    email = email.toLowerCase();
     const user = await userSch.findOne({ email, password_reset_code: code });
     const data = { email };
     const errors = {};
@@ -452,21 +436,11 @@ userController.ResetPassword = async (req, res, next) => {
     }
     let salt = await bcrypt.genSalt(10);
     let hashpw = await bcrypt.hash(password, salt);
-    const d = await userSch.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now() }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+    const d = await userSch.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now(), email_verified: true }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
-    const payload = {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      email_verified: user.email_verified,
-      roles: user.roles,
-    };
-    // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
-      const msg = `Password Reset Success`;
-      token = `Bearer ${token}`;
-      return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, msg, token);
-    });
+
+    const { token, payload } = await userController.validLoginResponse(req, d, next);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
   } catch (err) {
     return next(err);
   }
