@@ -82,7 +82,7 @@ router.post('/verifymail', userModule.Verifymail);
  * @description Resent Verify mail by user
  * @access Public
  */
-router.post('/verifymail/resend', authorization, userModule.ResendVerificationCode);
+router.post('/verifymail/resend', userModule.ResendVerificationCode);
 
 /**
  * @route POST api/user/login

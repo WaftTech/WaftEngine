@@ -141,6 +141,7 @@ userController.Register = async (req, res, next) => {
     newUser.email_verified = false;
     newUser.roles = appSetting.public_register_role;
     newUser.last_password_change_date = new Date();
+    newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
     const renderedMail = await renderMail.renderTemplate(
       appSetting.public_register_email_template,
@@ -323,25 +324,35 @@ userController.Verifymail = async (req, res, next) => {
 
 userController.ResendVerificationCode = async (req, res, next) => {
   try {
-    const user = await userSch.findOne({ email: req.body.email });
+    const email = req.body.email.toLowerCase();
+    const user = await userSch.findOne({ email });
     if (user) {
-      const email_verification_code = otherHelper.generateRandomHexString(12);
-      const newUser = await userSch.findOneAndUpdate({ email: req.body.email }, { $set: { email_verification_code, email_verified: false } }, { new: true });
-      const renderedMail = await renderMail.renderTemplate(
-        'verify_mail',
-        {
-          name: user.name,
-          email: user.email,
-          code: email_verification_code,
-        },
-        user.email,
-      );
-      if (renderMail.error) {
-        console.log('render mail error: ', renderMail.error);
+      if (user.email_verified) {
+        return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Verified', null);
       } else {
-        emailHelper.send(renderedMail);
-        const dataReturn = { email: user.email, name: user.name };
-        return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'email verification code resent and saved!!', null);
+        const currentDate = new Date();
+        const diff = parseInt((date2 - date1) / (1000 * 60)); //in minute
+        if (diff < 10) {
+          return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Sent', null);
+        }
+        const email_verification_code = otherHelper.generateRandomHexString(12);
+        const newUser = await userSch.findOneAndUpdate({ email: email }, { $set: { email_verification_code, email_verified: false, email_verified_request_date: currentDate } }, { new: true });
+        const renderedMail = await renderMail.renderTemplate(
+          appSetting.verify_mail_template,
+          {
+            name: user.name,
+            email: user.email,
+            code: email_verification_code,
+          },
+          user.email,
+        );
+        if (renderMail.error) {
+          console.log('render mail error: ', renderMail.error);
+        } else {
+          emailHelper.send(renderedMail);
+          const dataReturn = { email: user.email, name: user.name };
+          return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'Email verification code Sent!!', null);
+        }
       }
     }
   } catch (err) {
