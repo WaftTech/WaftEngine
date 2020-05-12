@@ -60,6 +60,12 @@ export const VerifyEmail = props => {
     setCode(value);
   };
 
+  const handleResend = () => {
+    if (form_email !== '') {
+      props.resendMailRequest({ email: form_email });
+    }
+  };
+
   return (
     <div>
       {loading ? (
@@ -77,7 +83,7 @@ export const VerifyEmail = props => {
               name="Email"
             />
           </div>
-          <div className="m-auto w-1/2">
+          <div className="m-auto w-1/2 mt-2">
             <Input
               label="Code"
               inputclassName="inputbox"
@@ -88,9 +94,18 @@ export const VerifyEmail = props => {
               name="Code"
             />
           </div>
+          <div className="m-auto w-1/2 mt-4">
+            <button
+              className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
+              onClick={handleResend}
+              type="button"
+            >
+              Resend code.
+            </button>
+          </div>
           <div className="m-auto w-1/2">
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
+              className="py-2 px-6 rounded mt-2 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
               onClick={handleVerify}
               type="button"
             >
