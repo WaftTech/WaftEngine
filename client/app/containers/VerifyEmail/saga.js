@@ -50,8 +50,48 @@ function* verifyEmailFailFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* resendMail(action) {
+  const token = yield select(makeSelectToken());
+  const data = { email: action.payload.email };
+  yield fork(
+    Api.post(
+      `user/verifymail/resend`,
+      actions.resendMailSuccess,
+      actions.resendMailFailure,
+      data,
+      token,
+    ),
+  );
+}
+
+function* resendMailSuccess(action) {
+  const snackbarData = {
+    message:
+      (action.payload && action.payload.msg) || 'Something went wrong !!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* resendMailFail(action) {
+  const snackbarData = {
+    message:
+      (action.payload && action.payload.msg) || 'Something went wrong !!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 // Individual exports for testing
 export default function* verifyEmailSaga() {
   yield takeLatest(types.LOAD_VERIFY_EMAIL_REQUEST, verifyEmail);
   yield takeLatest(types.LOAD_VERIFY_EMAIL_FAILURE, verifyEmailFailFunc);
+
+  yield takeLatest(types.RESEND_MAIL_REQUEST, resendMail);
+  yield takeLatest(types.RESEND_MAIL_SUCCESS, resendMailSuccess);
+  yield takeLatest(types.RESEND_MAIL_FAILURE, resendMailFail);
 }
