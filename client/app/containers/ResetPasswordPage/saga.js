@@ -32,7 +32,7 @@ function* redirectOnSuccess() {
 function* resetAction(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   let data = yield select(makeSelectDefaultData());
-  data = { ...data, email: action.payload.email };
+  data = { ...data };
   const verified = confirmPassword(data);
   if (verified.verified) {
     yield fork(

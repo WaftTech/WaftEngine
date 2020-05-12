@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -28,13 +28,26 @@ export const ResetPasswordPage = props => {
     loadResetRequest,
     setData,
     clearErrors,
-    match: { params: email },
+    match: {
+      params: { email, code },
+    },
     defaultData,
     loading,
     errors,
   } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    if (email !== '') {
+      setData({ key: 'email', value: email });
+    }
+    if (code !== undefined && code !== '') {
+      setData({ key: 'code', value: code });
+    } else {
+      setData({ key: 'code', value: '' });
+    }
+  }, []);
 
   const handleChange = e => {
     e.persist();
@@ -43,7 +56,7 @@ export const ResetPasswordPage = props => {
 
   const handleSubmit = () => {
     // e.preventDefault();
-    loadResetRequest(email);
+    loadResetRequest();
   };
 
   return (
@@ -51,6 +64,18 @@ export const ResetPasswordPage = props => {
       <h1 className="text-2xl font-bold">
         Reset your password with the help of code sent to your email...
       </h1>
+      <input
+        className="inputbox w-full"
+        id="code"
+        name="email"
+        type="text"
+        value={defaultData.email}
+        placeholder="Enter email"
+        onChange={handleChange}
+        disabled
+      />
+      <div id="component-error-text">{errors && errors.email}</div>
+
       <input
         className="inputbox w-full"
         id="code"

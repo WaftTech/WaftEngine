@@ -57,6 +57,11 @@ const publicRoutes = [
   },
   {
     exact: true,
+    path: '/reset-password/:email/:code',
+    component: ResetPasswordPage,
+  },
+  {
+    exact: true,
     path: '/reset-password/:email',
     component: ResetPasswordPage,
   },
