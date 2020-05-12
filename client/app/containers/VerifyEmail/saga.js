@@ -10,12 +10,15 @@ import {
 import Api from 'utils/Api';
 import { push, LOCATION_CHANGE } from 'connected-react-router';
 import { makeSelectToken } from '../App/selectors';
-import { enqueueSnackbar } from '../App/actions';
+import { enqueueSnackbar, setToken, setUser } from '../App/actions';
 import * as types from './constants';
 import * as actions from './actions';
 
 function* redirectOnSuccess() {
-  yield take(types.LOAD_VERIFY_EMAIL_SUCCESS);
+  const { payload } = yield take(types.LOAD_VERIFY_EMAIL_SUCCESS);
+  const { token, data } = payload;
+  yield put(setUser(data));
+  yield put(setToken(token));
   yield put(push('/'));
 }
 
