@@ -27,6 +27,11 @@ const publicRoutes = [
   },
   {
     exact: true,
+    path: '/verify/:email',
+    component: VerifyEmail,
+  },
+  {
+    exact: true,
     path: '/editor-file-select',
     component: EditorFileSelectPage,
   },
