@@ -96,14 +96,14 @@ router.post('/login', validateRegisterInput.sanitizeLogin, validateRegisterInput
  * @description Forgot Password
  * @access Public
  */
-router.post('/forgotpassword', userModule.ForgotPassword);
+router.post('/forgotpassword', getClientInfo, userModule.ForgotPassword);
 
 /**
  * @route POST api/user/resetpassword
  * @description Forgot Password
  * @access Public
  */
-router.post('/resetpassword', userModule.ResetPassword);
+router.post('/resetpassword', getClientInfo, userModule.ResetPassword);
 
 /**
  * @route POST api/user/changepassword
