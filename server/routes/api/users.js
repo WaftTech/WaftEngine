@@ -75,7 +75,7 @@ router.post('/register/admin', authorization, authentication, uploader.single('f
  * @description Verify mail by user
  * @access Public
  */
-router.post('/verifymail', userModule.Verifymail);
+router.post('/verifymail', getClientInfo, userModule.Verifymail);
 
 /**
  * @route POST api/user/verifymail/resend
