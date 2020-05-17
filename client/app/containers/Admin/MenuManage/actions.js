@@ -130,3 +130,16 @@ export const showSubMenu = payload => ({
   type: types.SHOW_SUB_MENU,
   payload,
 });
+
+export const deleteMenuItemRequest = payload => ({
+  type: types.DELETE_MENU_ITEM_REQUEST,
+  payload,
+});
+export const deleteMenuItemSuccess = payload => ({
+  type: types.DELETE_MENU_ITEM_SUCCESS,
+  payload,
+});
+export const deleteMenuItemFailure = payload => ({
+  type: types.DELETE_MENU_ITEM_FAILURE,
+  payload,
+});

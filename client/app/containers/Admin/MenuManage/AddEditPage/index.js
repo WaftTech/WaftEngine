@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -39,6 +39,7 @@ import {
 
 import SidebarCategoriesList from './SideBarCategoriesList';
 import WECkEditior from '../../../../components/CkEditor';
+import DeleteDialog from '../../../../components/DeleteDialog';
 
 const styles = {
   backbtn: {
@@ -66,6 +67,23 @@ const AddEdit = props => {
       props.loadOneRequest(props.match.params.id);
     }
   }, []);
+
+  const [open, setOpen] = useState(false);
+  const [deleteID, setDeleteId] = useState('');
+
+  const handleOpen = id => {
+    setOpen(true);
+    setDeleteId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = id => {
+    props.deleteMenuItemRequest(id);
+    setOpen(false);
+  };
 
   const handleCheckedChange = name => event => {
     event.persist();
@@ -426,6 +444,15 @@ const AddEdit = props => {
                         {/* chid save button */}
                         Save
                       </button>
+                      {subMenu._id && (
+                        <button
+                          type="button"
+                          className="py-2 px-6 rounded mt-4 text-sm text-white uppercase btn-theme ml-2 bg-danger"
+                          onClick={() => handleOpen(subMenu._id)}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -506,9 +533,23 @@ const AddEdit = props => {
                 >
                   Save
                 </button>
+                {subMenu._id && (
+                  <button
+                    type="button"
+                    className="btn-waft btn-red"
+                    onClick={() => handleOpen(subMenu._id)}
+                  >
+                    Delete
+                  </button>
+                )}
               </>
             )}
           </>
+          <DeleteDialog
+            open={open}
+            doClose={handleClose}
+            doDelete={() => handleDelete(deleteID)}
+          />
         </PageContent>
       </div>
     </>
