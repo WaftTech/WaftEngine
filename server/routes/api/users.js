@@ -96,7 +96,7 @@ router.post('/login', validateRegisterInput.sanitizeLogin, validateRegisterInput
  * @description Forgot Password
  * @access Public
  */
-router.post('/forgotpassword', getClientInfo, userModule.ForgotPassword);
+router.post('/forgotpassword', userModule.ForgotPassword);
 
 /**
  * @route POST api/user/resetpassword
