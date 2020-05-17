@@ -51,7 +51,7 @@ menuItemController.getMenuItem = async (req, res, next) => {
 menuItemController.deleteMenuItem = async (req, res, next) => {
   try {
     const menuId = req.params.id;
-    const menu = await menuSch.findByIdAndUpdate(
+    const menu = await menu_item.findByIdAndUpdate(
       menuId,
       {
         $set: { is_deleted: true },
