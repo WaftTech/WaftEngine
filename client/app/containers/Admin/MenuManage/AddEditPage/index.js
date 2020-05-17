@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -285,6 +285,15 @@ const AddEdit = props => {
                         <label className="label" htmlFor="grid-last-name">
                           URL
                         </label>
+                        {subMenu.url && (
+                          <Link
+                            to={`${subMenu.url}`}
+                            className="ml-1 hover:text-primary cursor-pointer text-subprimary text-xs"
+                            target="_blank"
+                          >
+                            ( open URL )
+                          </Link>
+                        )}
                         <input
                           className="inputbox"
                           id="grid-last-name"
@@ -292,6 +301,7 @@ const AddEdit = props => {
                           value={subMenu.url || ''}
                           onChange={handleChildChange('url')}
                         />
+
                         {errors &&
                           errors.sub_menu_form &&
                           errors.sub_menu_form.url && (
