@@ -25,7 +25,7 @@
     "gravatar": "^1.6.0",
     "hpp": "^0.2.3",
     "http-status": "^1.2.0",
-    "jimp": "^0.10.3",
+    "jimp": "^0.12.0",
     "jsonwebtoken": "^8.3.0",
     "mailgun-js": "^0.22.0",
     "mongoose": "^5.9.11",
