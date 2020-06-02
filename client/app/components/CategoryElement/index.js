@@ -32,58 +32,53 @@ const CategoryElement = props => {
   return loading ? (
     <Skeleton size={size} />
   ) : (
-    <>
-      <h2 className="pt-5 pb-4 text-2xl">
-        {latestBlogs[cat_id] &&
-          latestBlogs[cat_id].category &&
-          latestBlogs[cat_id].category.title}
-      </h2>
-      <div className="-mx-6 article-group">
-        {latestBlogs[cat_id] &&
-          latestBlogs[cat_id].blogs &&
-          latestBlogs[cat_id].blogs.map((each, index) => (
-            <div key={each._id} className={`px-6 mb-8 item-${index + 1}`}>
-              <div className="flex article-container">
-                <div className="article-img-container">
-                  <Link
-                    to={`/blog/${each.slug_url}`}
-                    className="w-32 h-32 block overflow-hidden"
-                  >
+      <>
+        <h2 className="pt-5 pb-4 text-2xl">
+          {latestBlogs[cat_id] &&
+            latestBlogs[cat_id].category &&
+            latestBlogs[cat_id].category.title}
+        </h2>
+        <div className="article-group -mx-4">
+          {latestBlogs[cat_id] &&
+            latestBlogs[cat_id].blogs &&
+            latestBlogs[cat_id].blogs.map((each, index) => (
+              <div
+                onClick={() => push(`/news/${each.slug_url}`)}
+                key={each._id}
+                className={`px-4 mb-6 cursor-pointer h-full item-${index + 1}`}
+              >
+                <div className="article-container">
+                  <div className="article-img-container">
                     <img
                       src={`${IMAGE_BASE}${each &&
                         each.image &&
                         each.image.path}`}
-                      className="max-w-none object-cover article-img"
-                      // style={{ maxWidth: 100 }}
+                      className="object-cover article-img"
                       alt={`${each.title}`}
                     />
-                  </Link>
-                </div>
-
-                <div className="pl-5 leading-tight article-text">
-                  <span className="text-gray-700 text-sm sans-serif article-date">
-                    {moment(each.added_at).format(DATE_FORMAT)}
-                  </span>
-                  <Link
-                    className="font-bold text-xl block text-black hover:text-waftprimary pointer no-underline article-title"
-                    to={`/blog/${each.slug_url}`}
+                  </div>
+                  <div
+                    className="text-xl leading-normal py-5 hover:text-secondary pointer no-underline article-title font-mukta"
+                    to={`/news/${each.slug_url}`}
                   >
-                    {each.title}{' '}
-                  </Link>
-                  <span className="text-gray-700 text-sm sans-serif author-name">
-                    {each.author && each.author.name}
-                  </span>
+                    {each.title}
+                  </div>
+                  {/* <span className="text-gray-700 text-sm sans-serif article-date">
+                      {moment(each.added_at).format(DATE_FORMAT)}
+                    </span> */}
+                  {/* <span className="text-gray-700 text-sm sans-serif author-name">
+                      {each.author && each.author.name}
+                    </span> */}
 
-                  <p className="text-gray-600 leading-relaxed short-description">
+                  <p className="hidden font-mukta-regular text-lg md:text-xl short-description">
                     {each.short_description}
                   </p>
                 </div>
               </div>
-            </div>
-          ))}
-      </div>
-    </>
-  );
+            ))}
+        </div>
+      </>
+    );
 };
 
 CategoryElement.propTypes = {

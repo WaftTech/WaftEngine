@@ -60,8 +60,8 @@ export default class HomePage extends React.PureComponent {
         <div className="max-w-5xl mx-auto py-12 px-4 layout-2">
           <StaticContentDiv contentKey="home-page-content" />
         </div>
-        <div className="max-w-5xl mx-auto py-12 px-4 layout-1">
-          <CategoryElement cat_id="5d0a07f3f305de105c4fc674" size={3} />
+        <div className="max-w-5xl mx-auto py-12 px-4 layout-5">
+          <CategoryElement cat_id="5d0a07f3f305de105c4fc674" size={5} />
         </div>
       </>
     );
