@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const contentValidation = require('./../../modules/content/contentValidation');
-
 const dModule = require('../../modules/content/contentController');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
 

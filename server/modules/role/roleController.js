@@ -8,17 +8,21 @@ const roleController = {};
 
 roleController.GetRoles = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     if (req.query.page && req.query.page == 0) {
-      selectq = 'role_title description is_active is_deleted';
-      const roles = await roleSch.find(selectq).select(selectq);
+      selectQuery = 'role_title description is_active is_deleted';
+      const roles = await roleSch.find(searchQuery).select(selectQuery);
       return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!!', null);
     }
     if (req.query.find_role_title) {
-      searchq = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchq };
+      searchQuery = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchQuery };
     }
 
-    let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortq, searchq, selectq, next, populate);
+    if (req.query.is_active) {
+      searchQuery = { is_active: true, ...searchQuery };
+    }
+
+    let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.roleGet, page, size, datas.totaldata);
   } catch (err) {
@@ -56,14 +60,14 @@ roleController.DeleteRole = async (req, res, next) => {
 };
 roleController.GetModule = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, null);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
 
-    selectq = 'module_name description order path';
+    selectQuery = 'module_name description order path';
 
     if (req.query.find_module_name) {
-      searchq = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchq };
+      searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
-    let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortq, searchq, selectq, next, populate);
+    let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
   } catch (err) {
@@ -74,7 +78,7 @@ roleController.GetModuleDetail = async (req, res, next) => {
   const modules = await moduleSch.findById(req.params.id);
   return otherHelper.sendResponse(res, httpStatus.OK, true, modules, null, roleConfig.moduleGet, null, 'Module Not Found');
 };
-roleController.AddModulList = async (req, res, next) => {
+roleController.AddModuleList = async (req, res, next) => {
   try {
     const modules = req.body;
     if (modules._id) {

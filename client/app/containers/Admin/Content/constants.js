@@ -27,3 +27,5 @@ export const SET_QUERY_VALUE = 'app/ContentsListingPage/SET_QUERY_VALUE';
 export const CLEAR_QUERY = 'app/ContentsListingPage/CLEAR_QUERY';
 
 export const CLEAR_ERRORS = 'app/ContentsListingPage/CLEAR_ERRORS';
+
+export const SET_META_TAG_VALUE = 'app/ContentsListingPage/SET_META_TAG_VALUE';

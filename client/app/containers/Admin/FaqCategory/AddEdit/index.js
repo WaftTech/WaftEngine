@@ -26,6 +26,7 @@ import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   backbtn: {
@@ -106,22 +107,16 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="label"
-              htmlFor="grid-last-name"
-            >
-              Title
-            </label>
-            <input
-              type="text"
-              className="inputbox"
-              name="Title"
-              id="title"
+          <Input
               label="Title"
+              inputclassName="inputbox"
+              inputid="title"
+              name="Title"
+              inputType="text"
               value={one.title}
               onChange={this.handleChange('title')}
+              error={errors.title}
             />
-            <div id="component-error-text">{errors.title}</div>
           </div>
           <div>
             <FormControlLabel
@@ -138,7 +133,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
-            className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+            className="block btn bg-primary hover:bg-secondary"
             onClick={this.handleSave}
           >
             Save

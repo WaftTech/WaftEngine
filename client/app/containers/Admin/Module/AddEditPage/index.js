@@ -168,7 +168,10 @@ class AddEdit extends React.PureComponent {
     const tempPath = [...path];
     tempPath[index] = {
       ...path[index],
-      server_routes: [...path[index].server_routes, { route: '', method: '' }],
+      server_routes: [
+        ...path[index].server_routes,
+        { route: '', method: 'GET' },
+      ],
     };
     this.props.setOneValue({
       key: 'path',
@@ -238,9 +241,7 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-2">
-            <label className="label">
-              Module Name
-            </label>
+            <label className="label">Module Name</label>
             <input
               className="inputbox"
               id="module_name"
@@ -254,9 +255,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-2">
-            <label className="label">
-              Descrition
-            </label>
+            <label className="label">Description</label>
             <textarea
               className="inputbox"
               id="description"
@@ -288,7 +287,7 @@ class AddEdit extends React.PureComponent {
             />
           ))}
 
-          <div className="inline-block">
+          <div className="flex">
             <button
               className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100 mr-2"
               onClick={this.handleAddPath}
@@ -297,7 +296,7 @@ class AddEdit extends React.PureComponent {
             </button>
 
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              className="block btn bg-primary hover:bg-secondary"
               onClick={this.handleSave}
             >
               Save

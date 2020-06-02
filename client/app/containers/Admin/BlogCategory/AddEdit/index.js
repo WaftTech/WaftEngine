@@ -31,6 +31,7 @@ import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
+import Input from '../../../../components/customComponents/Input';
 
 const styles = theme => ({
   backbtn: {
@@ -63,8 +64,8 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.slug) {
-      this.props.loadOneRequest(this.props.match.params.slug);
+    if (this.props.match.params && this.props.match.params.id) {
+      this.props.loadOneRequest(this.props.match.params.id);
     }
   }
 
@@ -73,7 +74,10 @@ class AddEdit extends React.PureComponent {
       const { one } = nextProps;
       if (one && one.image && one.image.fieldname) {
         const tempImage =
-          one && one.image && one.image.path && `${IMAGE_BASE}${one.image.path}`;
+          one &&
+          one.image &&
+          one.image.path &&
+          `${IMAGE_BASE}${one.image.path}`;
         this.setState({ ...one, tempImage });
       }
     }
@@ -137,122 +141,108 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <div>
-          <Helmet>
-            <title>
-              {match && match.params && match.params.slug
-                ? 'Edit Blog'
-                : 'Add Blog'}
-            </title>
-          </Helmet>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
-              {match && match.params && match.params.slug
-                ? 'Edit Blog Category'
-                : 'Add Blog Category'}
-            </PageHeader>
+      <div>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.slug
+              ? 'Edit Blog'
+              : 'Add Blog'}
+          </title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={this.handleGoBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
+            {match && match.params && match.params.slug
+              ? 'Edit Blog Category'
+              : 'Add Blog Category'}
+          </PageHeader>
+        </div>
+
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Blog Title"
+              inputclassName="inputbox"
+              inputid="title"
+              inputType="text"
+              value={(one && one.title) || ''}
+              onChange={this.handleChange('title')}
+              error={errors && errors.title}
+            />
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Slug"
+              inputclassName="inputbox"
+              inputid="slug"
+              inputType="text"
+              value={(one && one.slug_url) || ''}
+              name="slug"
+              onChange={this.handleChange('slug_url')}
+              error={errors && errors.slug_url}
+            />
+          </div>
+          <div className="pb-4">
+            <label className="font-bold text-gray-700">
+              Blog Category Description
+            </label>
+            <CKEditor
+              name="cat-description"
+              content={one && one.description}
+              config={{ allowedContent: true }}
+              events={{
+                change: e => this.handleEditorChange(e, 'description'),
+                value: (one && one.description) || '',
+              }}
+            />
+          </div>
+          <div className="w-full md:w-1/2 pb-4 mt-4">
+            <label className="label" htmlFor="Image">
+              Image
+            </label>
+            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <img
+                    className="inputbox cursor-pointer"
+                    src={tempImage}
+                    alt="BlogCategoryImage"
+                    style={{ height: '120px', width: '60%' }}
+                  />
+                </div>
+              )}
+            </Dropzone>
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={(one && one.is_active) || false}
+                  tabIndex={-1}
+                  onClick={this.handleCheckedChange('is_active')}
+                  color="primary"
+                />
+              }
+              label="Is Active"
+            />
           </div>
 
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-blog-title"
-              >
-                Blog Title
-            </label>
-              <input
-                className="inputbox"
-                id="title"
-                type="text"
-                value={one && one.title || ''}
-                name="Title"
-                onChange={this.handleChange('title')}
-              />
-              <div id="component-error-text">{errors && errors.title}</div>
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="label"
-                htmlFor="grid-slug"
-              >
-                Slug
-            </label>
-              <input
-                className="inputbox"
-                id="slug"
-                type="text"
-                value={one && one.slug_url || ''}
-                name="slug"
-                onChange={this.handleChange('slug_url')}
-              />
-              <div id="component-error-text">{errors && errors.slug_url}</div>
-            </div>
-            <div className="pb-4">
-              <label className="label">
-                Blog Category Description
-            </label>
-              <CKEditor
-                name="cat-description"
-                content={one && one.description}
-                config={{ allowedContent: true }}
-                events={{
-                  change: e => this.handleEditorChange(e, 'description'),
-                  value: one && one.description || '',
-                }}
-              />
-            </div>
-            <div className="w-full md:w-1/2 pb-4 mt-4">
-              <label
-                className="label"
-                htmlFor="Image"
-              >
-                Image
-            </label>
-              <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-                {({ getRootProps, getInputProps }) => (
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <img
-                      className="inputbox cursor-pointer"
-                      src={tempImage}
-                      alt="BlogCategoryImage"
-                      style={{ height: '120px', width: '60%' }}
-                    />
-                  </div>
-                )}
-              </Dropzone>
-            </div>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one && one.is_active || false}
-                    tabIndex={-1}
-                    onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Active"
-              />
-            </div>
-
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={this.handleSave}
-            >
-              Save
+          <button
+            className="block btn bg-primary hover:bg-secondary"
+            onClick={this.handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </div>
-      );
+        </PageContent>
+      </div>
+    );
   }
 }
 

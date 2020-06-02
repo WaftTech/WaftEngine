@@ -17,12 +17,12 @@ export const GOOGLE_CLIENT_ID =
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://www.waftengine.com/api/'
+    ? 'https://www.waftengine.com/api/'
     : 'http://localhost:5050/api/';
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'http://www.waftengine.com/'
+    ? 'https://www.waftengine.com/'
     : 'http://localhost:5050/';
 
 export const DATE_FORMAT = 'll';
@@ -60,3 +60,7 @@ export const LOAD_AVAILABLE_FAILURE = 'app/App/LOAD_AVAILABLE_FAILURE';
 export const LOAD_LATEST_BLOGS_REQUEST = 'app/App/LOAD_LATEST_BLOGS_REQUEST';
 export const LOAD_LATEST_BLOGS_SUCCESS = 'app/App/LOAD_LATEST_BLOGS_SUCCESS';
 export const LOAD_LATEST_BLOGS_FAILURE = 'app/App/LOAD_LATEST_BLOGS_FAILURE';
+
+export const LOAD_MENU_REQUEST = 'app/App/LOAD_MENU_REQUEST';
+export const LOAD_MENU_SUCCESS = 'app/App/LOAD_MENU_SUCCESS';
+export const LOAD_MENU_FAILURE = 'app/App/LOAD_MENU_FAILURE';

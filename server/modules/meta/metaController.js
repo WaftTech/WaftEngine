@@ -6,26 +6,26 @@ const metaController = {};
 
 metaController.getAllMeta = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i x',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_client_route) {
-      searchq = {
+      searchQuery = {
         client_route: {
           $regex: req.query.find_client_route,
           $options: 'i x',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let metas = await otherHelper.getquerySendResponse(metaSch, page, size, sortq, searchq, selectq, next, populate);
+    let metas = await otherHelper.getquerySendResponse(metaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, metas.data, metaConfig.get, page, size, metas.totaldata);
   } catch (err) {
     next(err);

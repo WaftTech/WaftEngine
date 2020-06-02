@@ -24,19 +24,9 @@ const PasswordInput = props => {
   return (
     <div className="mb-4">
       <div className="flex justify-between">
-        <label
-          className="label"
-          htmlFor="Password"
-        >
+        <label className="label" htmlFor="Password">
           Password
         </label>
-
-        <Link
-          className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
-          to="/forgot-password-user"
-        >
-          Forgot Password?
-        </Link>
       </div>
       <div className="relative">
         <input
@@ -54,6 +44,12 @@ const PasswordInput = props => {
         >
           {isSecure ? <Visibility /> : <VisibilityOff />}
         </span>
+        <Link
+          className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
+          to="/forgot-password-user"
+        >
+          Forgot Password?
+        </Link>
       </div>
       {error && <div id="component-error-text">{error}</div>}
     </div>

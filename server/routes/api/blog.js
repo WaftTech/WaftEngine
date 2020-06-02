@@ -5,15 +5,15 @@ const uploader = fileUpload.uploader;
 
 const blogModule = require('../../modules/blog/blogController');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
-const { catSanitize, catValidate, sanitize, validate, sanitizeComment, validateComment } = require('../../modules/blog/blogValidation');
+const { catSanitize, catValidate, sanitize, validate } = require('../../modules/blog/blogValidation');
 
 router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
-router.get('/', blogModule.GetBlogUnauthorize);
+router.get('/', blogModule.GetBlogNonAuthorize);
 router.get('/latest', blogModule.getLatestBlog);
 router.get('/latest/:cat_id', blogModule.getLatestBlogByCat);
-router.get('/related/:slug_url', blogModule.getRealtedBlog);
+router.get('/related/:slug_url', blogModule.getRelatedBlog);
 router.get('/category', blogModule.GetBlogCategory);
-router.get('/category/:slug', blogModule.GetBlogCatBySlug);
+router.get('/category/:id', blogModule.GetBlogCatById);
 router.get('/blog/:slug_url', blogModule.GetBlogBySlug);
 router.get('/blogbyid/:id', blogModule.GetBlogById);
 router.get('/blogbycat/:slug_url', blogModule.GetBlogByCat);

@@ -3,33 +3,33 @@ const menu = [
   { key: '1', name: 'Dashboard', icon: 'dashboard', link: '/admin/dashboard' },
   {
     key: '2',
-    name: 'Content Manage',
+    name: 'Content',
     icon: 'text_fields',
     menu: [
       {
         key: '2.1',
-        name: 'Static Content',
+        name: 'HTML',
         icon: 'format_shapes',
-        link: '/admin/content-manage',
-      },
-      {
-        key: '2.2',
-        name: 'FAQ',
-        icon: 'question_answer',
         menu: [
           {
-            key: '2.2.1',
-            name: 'Faq',
+            key: '2.1.1',
+            name: 'Section',
+            link: '/admin/content-manage',
             icon: 'remove',
-            link: '/admin/faq-manage',
           },
           {
-            key: '2.2.2',
-            name: 'Category',
+            key: '2.1.2',
+            name: 'Page',
             icon: 'remove',
-            link: '/admin/faq-cat-manage',
+            link: '/admin/page-manage',
           },
         ],
+      },
+      {
+        key: '2.7',
+        name: 'Menu',
+        icon: 'menu',
+        link: '/admin/menu-manage',
       },
       {
         key: '2.3',
@@ -62,11 +62,30 @@ const menu = [
           },
         ],
       },
+      {
+        key: '2.2',
+        name: 'FAQ',
+        icon: 'question_answer',
+        menu: [
+          {
+            key: '2.2.1',
+            name: 'Faq',
+            icon: 'remove',
+            link: '/admin/faq-manage',
+          },
+          {
+            key: '2.2.2',
+            name: 'Category',
+            icon: 'remove',
+            link: '/admin/faq-cat-manage',
+          },
+        ],
+      },
     ],
   },
   {
     key: '3',
-    name: 'Access Manage',
+    name: 'Access',
     icon: 'security',
     menu: [
       {
@@ -125,12 +144,12 @@ const menu = [
         icon: 'subscriptions',
         link: '/admin/subscribe-manage',
       },
-      {
-        key: '5.3',
-        name: 'Reports',
-        icon: 'insert_chart',
-        link: '/admin/reports',
-      },
+      // {
+      //   key: '5.3',
+      //   name: 'Reports',
+      //   icon: 'insert_chart',
+      //   link: '/admin/reports',
+      // },
       {
         key: '5.4',
         name: 'Errors',

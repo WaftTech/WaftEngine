@@ -113,3 +113,16 @@ export const loadLatestBlogsFailure = payload => ({
   type: types.LOAD_LATEST_BLOGS_FAILURE,
   payload,
 });
+
+export const loadMenuRequest = payload => ({
+  type: types.LOAD_MENU_REQUEST,
+  payload,
+});
+export const loadMenuSuccess = payload => ({
+  type: types.LOAD_MENU_SUCCESS,
+  payload,
+});
+export const loadMenuFailure = payload => ({
+  type: types.LOAD_MENU_FAILURE,
+  payload,
+});

@@ -35,5 +35,12 @@ const categorySchema = new schema({
     type: Date,
     default: Date.now,
   },
+  updated_at: {
+    type: Date,
+  },
+  updated_by: {
+    type: schema.Types.ObjectId,
+    ref: 'users',
+  },
 });
 module.exports = Category = mongoose.model('category', categorySchema);

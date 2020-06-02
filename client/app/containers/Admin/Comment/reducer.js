@@ -21,12 +21,20 @@ export const initialState = {
     is_disapproved: false,
   },
   loading: false,
-  query: { find_title: '', find_blog_id: '', size: 10 },
+  query: {
+    find_title: '',
+    find_blog_id: '',
+    find_is_approved: true,
+    find_is_disapproved: false,
+    size: 10,
+  },
+  requesting: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const blogCommentManagePageReducer = (state = initialState, action) =>
   produce(state, draft => {
+    let helperObj = {};
     switch (action.type) {
       case types.LOAD_ALL_REQUEST:
         draft.loading = true;
@@ -54,11 +62,29 @@ const blogCommentManagePageReducer = (state = initialState, action) =>
       case types.SET_ONE_VALUE:
         draft.one = action.payload;
         break;
-      case types.GET_APPROVED_SUCCESS:
-        draft.all = action.payload;
+      case types.APPROVE_REQUEST:
+      case types.DISAPPROVE_REQUEST:
+        draft.requesting = true;
         break;
-      case types.GET_DISAPPROVED_SUCCESS:
-        draft.all = action.payload;
+      case types.APPROVE_FAILURE:
+      case types.DISAPPROVE_FAILURE:
+        draft.requesting = false;
+        break;
+      case types.DISAPPROVE_SUCCESS:
+      case types.APPROVE_SUCCESS:
+        draft.requesting = false;
+        draft.all.data = state.all.data.map(each => {
+          // case for each is updated
+          helperObj =
+            action.payload.data.reduce(
+              (acc, curr) => ({ ...acc, [curr._id]: curr }),
+              {},
+            ) || {};
+          if (Object.keys(helperObj).includes(each._id)) {
+            return helperObj[each._id];
+          }
+          return each;
+        });
         break;
     }
   });

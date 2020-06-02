@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const sliderSch = require('./sliderSchema');
 const sliderConfig = require('./sliderConfig');
@@ -7,7 +6,7 @@ const sliderController = {};
 
 sliderController.GetSlider = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'images.image',
@@ -15,24 +14,24 @@ sliderController.GetSlider = async (req, res, next) => {
       },
     ];
     if (req.query.find_slider_name) {
-      searchq = {
+      searchQuery = {
         slider_name: {
           $regex: req.query.find_slider_name,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_slider_key) {
-      searchq = {
+      searchQuery = {
         slider_key: {
           $regex: req.query.find_slider_key,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let sliders = await otherHelper.getquerySendResponse(sliderSch, page, size, sortq, searchq, selectq, next, populate);
+    let sliders = await otherHelper.getquerySendResponse(sliderSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totaldata);
   } catch (err) {
     next(err);

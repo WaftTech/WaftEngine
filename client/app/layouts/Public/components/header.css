@@ -6,7 +6,7 @@
 }
 
 .nav .active {
-  color: #d82929;
+  color: #2a3c85;
 }
 
 @media screen and (max-width: 767px) {
@@ -115,7 +115,7 @@
 
 @media screen and (min-width: 992px) {
 
-.nav-link.active { box-shadow:0 1px 0 #d82929;}
+.nav-link.active { box-shadow:0 1px 0 #2a3c85;}
 
   .header_right,
   .nav-bar {

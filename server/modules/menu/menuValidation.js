@@ -9,15 +9,9 @@ validation.sanitize = (req, res, next) => {
     {
       field: 'title',
       sanitize: {
-        rtrim: true,
+        trim: true,
       },
     },
-    // {
-    //   field: 'link',
-    //   sanitize: {
-    //     trim: true,
-    //   },
-    // },
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
@@ -43,27 +37,18 @@ validation.validate = (req, res, next) => {
         },
       ],
     },
-    // {
-    //   field: 'link',
-    //   validate: [
-    //     {
-    //       condition: 'IsEmpty',
-    //       msg: menuConfig.validate.empty,
-    //     },
-    //     {
-    //       condition: 'IsLength',
-    //       msg: menuConfig.validate.descriptionLength,
-    //       option: {
-    //         min: 5,
-    //         max: 2000,
-    //       },
-    //     },
-    //   ],
-    // }
+    {
+      field: 'key',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: menuConfig.validate.empty,
+        },
+      ],
+    },
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-//   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
@@ -71,7 +56,7 @@ validation.validate = (req, res, next) => {
   }
 };
 
-validation.itemsanitize = (req, res, next) => {
+validation.itemSanitize = (req, res, next) => {
   const sanitizeArray = [
     {
       field: 'title',
@@ -90,7 +75,7 @@ validation.itemsanitize = (req, res, next) => {
   next();
 };
 
-validation.itemvalidate = (req, res, next) => {
+validation.itemValidate = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
@@ -111,7 +96,7 @@ validation.itemvalidate = (req, res, next) => {
       ],
     },
     {
-      field: 'link',
+      field: 'url',
       validate: [
         {
           condition: 'IsEmpty',
@@ -126,11 +111,45 @@ validation.itemvalidate = (req, res, next) => {
           },
         },
       ],
-    }
+    },
+    {
+      field: 'menu_sch_id',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: menuConfig.validate.empty,
+        },
+        {
+          condition: 'IsMongoId',
+          msg: menuConfig.validate.invalid,
+        },
+      ],
+    },
+    {
+      field: 'is_internal',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: menuConfig.validate.empty,
+        },
+        {
+          condition: 'IsBoolean',
+          msg: menuConfig.validate.invalid,
+        },
+      ],
+    },
+    {
+      field: 'target',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: menuConfig.validate.empty,
+        },
+      ],
+    },
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-//   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {

@@ -64,6 +64,7 @@ Promise.resolve(app)
 
 // Database Connection
 async function MongoDBConnection(app) {
+  console.log(`| MongoDB URL  : ${mongoURI}`);
   await mongoose
     .connect(mongoURI, {
       useNewUrlParser: true,
@@ -84,10 +85,6 @@ app.use(passport.initialize());
 
 // Passport Config
 require('./helper/passport')(passport);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 // CORS setup for dev
 app.use(function(req, res, next) {
@@ -120,11 +117,6 @@ app.use((err, req, res, next) => {
     AddErrorToLogs(req, res, next, err);
     return otherHelper.sendResponse(res, httpStatus.INTERNAL_SERVER_ERROR, false, null, err, null, null);
   }
-  // res.status(err.status || 500);
-  // res.render('error', {
-  //   message: err.message,
-  //   error: app.get('env') === 'development' ? err : {},
-  // });
 });
 
 module.exports = app;

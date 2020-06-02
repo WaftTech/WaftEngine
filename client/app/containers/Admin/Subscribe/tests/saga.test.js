@@ -4,7 +4,7 @@
 
 /* eslint-disable redux-saga/yield-effects */
 // import { take, call, put, select } from 'redux-saga/effects';
-// import adminSubscribePageSaga from '../saga';
+// import adminSubscribePageSaga from '../saga';s
 
 // const generator = adminSubscribePageSaga();
 

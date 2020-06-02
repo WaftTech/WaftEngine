@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for ReportPage
+ * Asynchronously loads the component for MenuManage
  *
  */
 

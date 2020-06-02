@@ -27,7 +27,7 @@ export const initialState = {
     category: [],
     description: '',
     summary: '',
-    published_on: Date.now(),
+    published_on: '',
     image: null,
     is_published: true,
     is_active: false,
@@ -106,7 +106,7 @@ const reducer = (state = initialState, action) =>
         draft.tempTag = action.payload;
         break;
       case types.SET_CATEGORY_VALUE:
-        draft.one.category = action.payload;
+        draft.one.category = action.payload.value;
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;

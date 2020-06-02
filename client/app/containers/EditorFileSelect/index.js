@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -25,6 +25,8 @@ const key = 'editorFileSelect';
 export const EditorFileSelect = ({
   loadFilesRequest,
   location: { search },
+  selectFile,
+  uploadMultiple,
 }) => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -33,9 +35,14 @@ export const EditorFileSelect = ({
   useEffect(() => {
     loadFilesRequest(queryObj.path);
   }, [queryObj.path]);
+
   return (
-    <div className="container mx-auto h-full">
-      <FileList queryObj={queryObj} />
+    <div className="container mx-auto h-screen">
+      <FileList
+        queryObj={queryObj}
+        selectFile={selectFile}
+        uploadMultiple={uploadMultiple}
+      />
     </div>
   );
 };
@@ -43,6 +50,12 @@ export const EditorFileSelect = ({
 EditorFileSelect.propTypes = {
   loadFilesRequest: PropTypes.func.isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  selectFile: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  uploadMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+};
+
+EditorFileSelect.defaultProps = {
+  selectFile: false,
 };
 
 const mapStateToProps = createStructuredSelector({

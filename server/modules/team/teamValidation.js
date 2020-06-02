@@ -12,12 +12,6 @@ validation.sanitize = (req, res, next) => {
         trim: true,
       },
     },
-    // {
-    //   field: 'link',
-    //   sanitize: {
-    //     trim: true,
-    //   },
-    // },
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
@@ -59,17 +53,15 @@ validation.validate = (req, res, next) => {
           },
         },
       ],
-    }
+    },
   ];
   const errors = otherHelper.validation(data, validateArray);
 
-//   console.log('error',errors);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
   } else {
     next();
   }
 };
-
 
 module.exports = validation;

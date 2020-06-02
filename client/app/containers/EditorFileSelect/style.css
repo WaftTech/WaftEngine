@@ -1,21 +1,29 @@
-div[data-tooltip] {
-  position: relative;
+.mediaCheck{
+  display: none;
+  top:0.25rem;
+  right: 0.25rem;
 }
 
-div[data-tooltip]:hover:after {
-  position: absolute;
-  background: #fff;
-  content: attr(data-tooltip);
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #000;
-  padding: 2px 6px;
-  white-space: nowrap;
-  font-size: 0.8rem;
-  border: 1px solid #ccc;
-  z-index: 2;
+.mediaCont:hover .mediaCheck{
+  display: block;
 }
-.folder_media {
-  background-color: gray;
+
+.media_btn .blink {
+  animation: blink 1s linear infinite;
+}
+
+.media_btn .blink:hover{
+  animation: normal;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

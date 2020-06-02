@@ -15,4 +15,5 @@ router.post('/', authorization, authentication, validations.Sanitize, validation
 router.post('/cat', authorization, authentication, validations.catSanitize, validations.catValidation, faqModule.PostFaqCat);
 router.delete('/cat/:id', authorization, authentication, faqModule.DeleteFaqCat);
 router.delete('/:id', authorization, authentication, faqModule.DeleteFaq);
+
 module.exports = router;

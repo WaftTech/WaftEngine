@@ -11,6 +11,7 @@ const userSchema = new schema({
   date_of_birth: { type: Date },
   email_verification_code: { type: String },
   email_verified: { type: Boolean, required: true, default: false },
+  email_verified_request_date: { type: Date },
   password_reset_code: { type: String },
   password_reset_request_date: { type: Date },
   last_password_change_date: { type: Date },
@@ -21,6 +22,7 @@ const userSchema = new schema({
   is_added_by_admin: { type: Boolean, require: true, default: false },
   roles: [{ type: [schema.Types.ObjectId], required: true, ref: 'roles' }],
   bio: { type: String },
+  register_method: { type: String },
   skills: { type: [String] },
   description: { type: String },
   is_deleted: {

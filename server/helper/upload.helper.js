@@ -2,7 +2,7 @@ const fileUploadHelper = filePath => {
   const multer = require('multer');
   const path = require('path');
   const mkdirp = require('mkdirp');
-  const hasher = require('./others.helper');
+  const hashHelper = require('./others.helper');
 
   const storage = multer.diskStorage({
     destination: async (req, file, cb) => {
@@ -19,7 +19,7 @@ const fileUploadHelper = filePath => {
       }
     },
     filename: async (req, file, cb) => {
-      const randomString = await hasher.generateRandomHexString(15);
+      const randomString = await hashHelper.generateRandomHexString(15);
       cb(null, randomString + '-' + file.originalname);
     },
     onFileUploadStart: file => {
@@ -42,7 +42,15 @@ const fileUploadHelper = filePath => {
     });
   };
   return {
-    uploader: multer({ storage: storage }),
+    uploader: multer({
+      storage: storage,
+      fileFilter: (req, file, cb) => {
+        if (!file.mimetype.includes('jpeg') && !file.mimetype.includes('jpg') && !file.mimetype.includes('png') && !file.mimetype.includes('gif') && !file.mimetype.includes('pdf')) {
+          return cb(null, false, new Error('Only images are allowed'));
+        }
+        cb(null, true);
+      },
+    }),
   };
 };
 
