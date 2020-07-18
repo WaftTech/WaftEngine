@@ -22,7 +22,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "express-device": "^0.4.2",
-    "gravatar": "^1.6.0",
+    "gravatar": "^1.8.1",
     "hpp": "^0.2.3",
     "http-status": "^1.2.0",
     "jimp": "^0.10.3",
