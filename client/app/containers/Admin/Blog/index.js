@@ -29,6 +29,7 @@ import * as mapDispatchToProps from './actions';
 import {
   makeSelectAll,
   makeSelectQuery,
+  makeSelectHelper,
   makeSelectLoading,
   makeSelectOne,
   makeSelectUsers,
@@ -83,6 +84,11 @@ const styles = theme => ({
 export class BlogManagePage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
+    loadOneRequest: PropTypes.func.isRequired,
+    loadUsersRequest: PropTypes.func.isRequired,
+    loadCategoryRequest: PropTypes.func.isRequired,
+    addEditRequest: PropTypes.func.isRequired,
+    setOneValue: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -99,7 +105,6 @@ export class BlogManagePage extends React.Component {
   state = {
     open: false,
     deleteId: '',
-    openModal: false,
   };
 
   componentDidMount() {
@@ -146,9 +151,12 @@ export class BlogManagePage extends React.Component {
   };
 
   // for quick edit state
+
   handleLoadOne = id => {
-    this.setState({ openModal: true });
     this.props.loadOneRequest(id);
+    this.props.loadCategoryRequest();
+    this.props.loadUsersRequest();
+    this.props.setValue({ name: 'helper', key: 'showQuickEdit', value: true });
   };
 
   handleEditorChange = (e, name) => {
@@ -205,10 +213,11 @@ export class BlogManagePage extends React.Component {
   };
 
   handlePublishedOn = date => {
-    this.setState({ startDate: date });
+    // this.setState({ startDate: date });
     this.props.setOneValue({
       key: 'published_on',
-      value: moment(date).format('YYYY-MM-DD'),
+      // value: moment(date).format('YYYY-MM-DD'),
+      value: date,
     });
   };
 
@@ -284,6 +293,7 @@ export class BlogManagePage extends React.Component {
       all: { data, page, size, totaldata },
       query,
       loading,
+      helper: { showQuickEdit },
     } = this.props;
     const {
       one,
@@ -329,35 +339,41 @@ export class BlogManagePage extends React.Component {
         <span className="whitespace-no-wrap">{author && author.name}</span> ||
           '',
         <div className="flex">
-          <button
-            aria-label="Edit"
-            type="button"
-            className=" px-1 text-center leading-none"
-            onClick={() => this.handleLoadOne(_id)}
-          >
-            <i className="material-icons text-green-400 text-base  hover:text-green-700">
-              edit
-            </i>
-          </button>
-          <button
-            aria-label="Edit"
-            type="button"
-            className=" px-1 text-center leading-none"
-            onClick={() => this.handleEdit(_id)}
-          >
-            <i className="material-icons  text-base text-indigo-500 hover:text-indigo-700">
-              edit
-            </i>
-          </button>
-          <button
-            className="ml-2 px-1 text-center leading-none"
-            type="button"
-            onClick={() => this.handleOpen(_id)}
-          >
-            <i className="material-icons text-base text-red-400 hover:text-red-600">
-              delete
-            </i>
-          </button>
+          <Tooltip title="Quick Edit">
+            <button
+              aria-label="Edit"
+              type="button"
+              className=" px-1 text-center leading-none"
+              onClick={() => this.handleLoadOne(_id)}
+            >
+              <i className="material-icons text-green-400 text-base  hover:text-green-500">
+                edit
+              </i>
+            </button>
+          </Tooltip>
+          <Tooltip title="Edit">
+            <button
+              aria-label="Edit"
+              type="button"
+              className=" px-1 text-center leading-none"
+              onClick={() => this.handleEdit(_id)}
+            >
+              <i className="material-icons  text-base text-indigo-500 hover:text-indigo-700">
+                edit
+              </i>
+            </button>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <button
+              className="ml-2 px-1 text-center leading-none"
+              type="button"
+              onClick={() => this.handleOpen(_id)}
+            >
+              <i className="material-icons text-base text-red-400 hover:text-red-600">
+                delete
+              </i>
+            </button>
+          </Tooltip>
         </div>,
       ],
     );
@@ -372,8 +388,14 @@ export class BlogManagePage extends React.Component {
           <title>Blog Category Listing</title>
         </Helmet>
         <Modal
-          open={this.state.openModal}
-          handleClose={() => this.setState({ openModal: false })}
+          open={showQuickEdit}
+          handleClose={() =>
+            this.props.setValue({
+              name: 'helper',
+              key: 'showQuickEdit',
+              value: false,
+            })
+          }
           handleUpdate={this.handleSave}
         >
           <QuickEdit
@@ -463,6 +485,7 @@ export class BlogManagePage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
+  helper: makeSelectHelper(),
   loading: makeSelectLoading(),
   // for quick edit
   one: makeSelectOne(),

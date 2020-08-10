@@ -206,7 +206,8 @@ class AddEdit extends React.PureComponent {
     this.setState({ startDate: date });
     this.props.setOneValue({
       key: 'published_on',
-      value: moment(date).format('YYYY-MM-DD'),
+      // value: moment(date).format('YYYY-MM-DD'),
+      value: date,
     });
   };
 
@@ -507,8 +508,11 @@ class AddEdit extends React.PureComponent {
               Published On
             </label>
             <DatePicker
+              showTimeSelect
               className="inputbox"
-              selected={this.state.startDate}
+              dateFormat="Pp"
+              selected={new Date(one.published_on)}
+              // selected={this.state.startDate}
               onChange={this.handlePublishedOn}
             />
             {/* <input

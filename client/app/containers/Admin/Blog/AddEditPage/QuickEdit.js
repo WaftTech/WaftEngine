@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -68,6 +68,8 @@ const QuickEdit = props => {
     tempMetaKeyword,
     errors,
   } = props;
+
+  const [startDate, setStartDate] = useState(new Date());
 
   let listCategoryNormalized = {};
   const listCategory = category.map(each => {
@@ -171,8 +173,10 @@ const QuickEdit = props => {
             Published On
           </label>
           <DatePicker
+            dateFormat="Pp"
+            showTimeSelect
             className="inputbox"
-            selected={one.startDate}
+            selected={new Date(one.published_on)}
             onChange={handlePublishedOn}
           />
         </div>
@@ -331,19 +335,12 @@ const QuickEdit = props => {
 };
 
 QuickEdit.propTypes = {
-  loadOneRequest: PropTypes.func.isRequired,
-  loadUsersRequest: PropTypes.func.isRequired,
-  loadCategoryRequest: PropTypes.func.isRequired,
-  addEditRequest: PropTypes.func.isRequired,
-  setOneValue: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
-  classes: PropTypes.object.isRequired,
   one: PropTypes.object.isRequired,
   category: PropTypes.array,
   tempTag: PropTypes.string,
-  push: PropTypes.func.isRequired,
 };
 
 export default QuickEdit;

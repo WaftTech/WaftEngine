@@ -9,10 +9,6 @@ import {
   TextField,
 } from '@material-ui/core';
 
-// const Transition = React.forwardRef(function Transition(props, ref) {
-//   <Slide direction="up" ref={ref} {...props} />;
-// });
-
 export default function DeleteDialog(props) {
   const { open, handleClose, handleUpdate } = props;
 
@@ -20,6 +16,7 @@ export default function DeleteDialog(props) {
     <div>
       <Dialog
         open={open}
+        fullWidth
         maxWidth="md"
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
