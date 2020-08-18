@@ -39,6 +39,7 @@ export const initialState = {
     tags: [],
     author: '',
   },
+  helper: { showQuickEdit: false },
   query: { find_title: '' },
   category: [],
   users: [],
@@ -49,9 +50,14 @@ export const initialState = {
   errors: { title: '', slug_url: '', description: '' },
 };
 
+/* eslint-disable default-case */
+/* eslint-disable no-param-reassign */
 const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case types.SET_VALUE:
+        draft[action.payload.name][action.payload.key] = action.payload.value;
+        break;
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         draft.errors[action.payload.key] = '';
@@ -113,6 +119,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.SET_ERROR_VALUE:
         draft.errors = action.payload;
+        break;
+      case types.ADD_EDIT_SUCCESS:
+        draft.helper.showQuickEdit = false;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;

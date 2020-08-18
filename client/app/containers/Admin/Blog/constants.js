@@ -3,6 +3,7 @@
  * BlogManagePage constants
  *
  */
+export const SET_VALUE = 'app/BlogManagePage/SET_VALUE';
 export const SET_ONE_VALUE = 'app/BlogManagePage/SET_ONE_VALUE';
 export const SET_QUERY_VALUE = 'app/BlogManagePage/SET_QUERY_VALUE';
 export const CLEAR_ONE = 'app/BlogManagePage/CLEAR_ONE';
