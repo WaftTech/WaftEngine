@@ -12,6 +12,8 @@ export const initialState = {
   },
   changePassword: '',
   errors: {},
+  twoFactor: { is_two_fa: false },
+  loading: { loadTwoFactor: false },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -20,6 +22,9 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
+        break;
+      case types.SET_VALUE:
+        draft[action.payload.name][action.payload.key] = action.payload.value;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
@@ -32,6 +37,20 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
         break;
       case types.CHANGE_PASSWORD_FAILURE:
         draft.errors = action.payload.errors;
+        break;
+
+      case types.LOAD_TWO_FACTOR_REQUEST:
+        draft.loading.loadTwoFactor = true;
+        break;
+      case types.LOAD_TWO_FACTOR_SUCCESS:
+        draft.loading.loadTwoFactor = false;
+        draft.twoFactor = action.payload.data;
+        break;
+      case types.LOAD_TWO_FACTOR_FAILURE:
+        draft.loading.loadTwoFactor = false;
+        break;
+      case types.ADD_TWO_FACTOR_SUCCESS:
+        draft.twoFactor = action.payload.data;
         break;
     }
   });

@@ -1,4 +1,5 @@
 export const SET_ONE_VALUE = 'app/UserPersonalInformation/SET_ONE_VALUE';
+export const SET_VALUE = 'app/UserPersonalInformation/SET_VALUE';
 
 export const DEFAULT_ACTION = 'app/UserPersonalInformation/DEFAULT_ACTION';
 
@@ -18,3 +19,17 @@ export const CHANGE_PASSWORD_FAILURE =
   'app/ChangePassword/CHANGE_PASSWORD_FAILURE';
 
 export const CLEAR_ERROR = 'app/UserPersonalInformation/CLEAR_ERROR';
+
+export const LOAD_TWO_FACTOR_REQUEST =
+  'app/UserPersonalInformation/LOAD_TWO_FACTOR_REQUEST';
+export const LOAD_TWO_FACTOR_SUCCESS =
+  'app/UserPersonalInformation/LOAD_TWO_FACTOR_SUCCESS';
+export const LOAD_TWO_FACTOR_FAILURE =
+  'app/UserPersonalInformation/LOAD_TWO_FACTOR_FAILURE';
+
+export const ADD_TWO_FACTOR_REQUEST =
+  'app/UserPersonalInformation/ADD_TWO_FACTOR_REQUEST';
+export const ADD_TWO_FACTOR_SUCCESS =
+  'app/UserPersonalInformation/ADD_TWO_FACTOR_SUCCESS';
+export const ADD_TWO_FACTOR_FAILURE =
+  'app/UserPersonalInformation/ADD_TWO_FACTOR_FAILURE';
