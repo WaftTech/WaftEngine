@@ -23,10 +23,7 @@ const PasswordInput = props => {
   return (
     <div className="mb-4">
       <div className="flex justify-between">
-        <label
-          className="label"
-          htmlFor="Password"
-        >
+        <label className="label" htmlFor="Password">
           Password
         </label>
       </div>
@@ -47,6 +44,7 @@ const PasswordInput = props => {
         >
           {isSecure ? <Visibility /> : <VisibilityOff />}
         </span>
+        {error && <div id="component-error-text">{error}</div>}
       </div>
     </div>
   );
