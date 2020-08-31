@@ -31,16 +31,19 @@ export const initialState = {
     image: null,
     is_published: true,
     is_active: false,
-    description: '',
     short_description: '',
     meta_description: '',
     meta_tag: [],
     keywords: [],
     tags: [],
     author: '',
+    is_highlight: false,
+    is_showcase: false,
+  },
+  query: {
+    find_title: '',
   },
   helper: { showQuickEdit: false },
-  query: { find_title: '' },
   category: [],
   users: [],
   tempTag: '',
@@ -113,6 +116,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.SET_CATEGORY_VALUE:
         draft.one.category = action.payload.value;
+        break;
+      case types.SET_AUTHOR_VALUE:
+        draft.one.author = action.payload.value;
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;

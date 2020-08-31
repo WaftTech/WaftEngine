@@ -96,6 +96,7 @@ function* addEdit() {
   const data = yield select(makeSelectOne());
   const errors = validate(data);
   if (errors.isValid) {
+    // const { image, ...dataObj } = data;
     yield fork(
       Api.multipartPost(
         'blog',

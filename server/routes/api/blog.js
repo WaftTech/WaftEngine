@@ -8,8 +8,12 @@ const { authorization, authentication } = require('../../middleware/authenticati
 const { catSanitize, catValidate, sanitize, validate } = require('../../modules/blog/blogValidation');
 
 router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
-router.get('/', blogModule.GetBlogNonAuthorize);
+router.get('/', authorization, blogModule.GetBlogNonAuthorize);
+router.get('/public', blogModule.GetBlogUnauthorize);
+router.get('/highlight', blogModule.getHighlightBlog);
 router.get('/latest', blogModule.getLatestBlog);
+router.get('/showcase', blogModule.getShowcaseBlog);
+router.get('/trending', blogModule.getTrendingBlog);
 router.get('/latest/:cat_id', blogModule.getLatestBlogByCat);
 router.get('/related/:slug_url', blogModule.getRelatedBlog);
 router.get('/category', blogModule.GetBlogCategory);
@@ -25,5 +29,7 @@ router.post('/', authorization, authentication, uploader.single('file'), sanitiz
 router.post('/category', authorization, authentication, uploader.single('file'), catSanitize, catValidate, blogModule.SaveBlogCategory);
 router.delete('/:id', authorization, authentication, blogModule.DeleteBlog);
 router.delete('/category/:id', authorization, authentication, blogModule.DeleteBlogCat);
+router.get('/htmlblog/:id', blogModule.getstaticBlog);
 
+router.get('/count/increase/:id', blogModule.updateViewCount);
 module.exports = router;

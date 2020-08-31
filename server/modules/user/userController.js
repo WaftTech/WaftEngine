@@ -13,7 +13,7 @@ const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
 const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginLogs = require('./loginlogs/loginlogController').internal;
-// const appSetting = require('../../config/settings');
+const appSetting = require('../../config/settings');
 
 const userController = {};
 

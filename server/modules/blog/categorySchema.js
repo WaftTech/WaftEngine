@@ -20,6 +20,9 @@ const categorySchema = new schema({
     required: true,
     default: true,
   },
+  order: {
+    type:Number
+  },
   is_deleted: {
     type: Boolean,
     default: false,
