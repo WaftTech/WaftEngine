@@ -76,6 +76,11 @@ const publicRoutes = [
     component: BlogPages,
   },
   {
+    exact: false,
+    path: '/news',
+    component: BlogPages,
+  },
+  {
     exact: true,
     path: '/subscribe',
     component: SubscribePage,
