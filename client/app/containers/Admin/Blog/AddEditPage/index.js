@@ -110,7 +110,6 @@ class AddEdit extends React.PureComponent {
     this.props.loadUsersRequest();
   }
 
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.one !== nextProps.one) {
       const { one } = nextProps;
@@ -132,8 +131,8 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
-  slugify = text => {
-    return text
+  slugify = text =>
+    text
       .toString()
       .toLowerCase()
       .replace(/\s+/g, '-') // Replace spaces with -
@@ -141,7 +140,6 @@ class AddEdit extends React.PureComponent {
       .replace(/\-\-+/g, '-') // Replace multiple - with single -
       .replace(/^-+/, '') // Trim - from start of text
       .replace(/-+$/, ''); // Trim - from end of text
-  };
 
   handleChange = name => event => {
     event.persist();
@@ -163,7 +161,7 @@ class AddEdit extends React.PureComponent {
   // };
 
   handleMultipleSelectCategoryChange = e => {
-    this.props.setCategoryValue({value: e && e.map(each=> each.value)});
+    this.props.setCategoryValue({ value: e && e.map(each => each.value) });
   };
 
   handleTempMetaKeyword = e => {
@@ -208,7 +206,8 @@ class AddEdit extends React.PureComponent {
     this.setState({ startDate: date });
     this.props.setOneValue({
       key: 'published_on',
-      value: moment(date).format('YYYY-MM-DD'),
+      // value: moment(date).format('YYYY-MM-DD'),
+      value: date,
     });
   };
 
@@ -301,7 +300,7 @@ class AddEdit extends React.PureComponent {
       errors,
     } = this.props;
     const { tempImage } = this.state;
-  
+
     let listCategoryNormalized = {};
     const listCategory = category.map(each => {
       const obj = {
@@ -323,7 +322,7 @@ class AddEdit extends React.PureComponent {
         },
       },
     };
-    let cats = {};
+    const cats = {};
     category.map(e => {
       cats[e._id] = e;
       return null;
@@ -415,16 +414,18 @@ class AddEdit extends React.PureComponent {
               className="React_Select"
               id="category"
               value={
-                one.category && one.category.map((each, index)=> {
-                  const catObj = listCategoryNormalized[each];
-                  if (!catObj) {
-                    return {
-                      label: 'loading',
-                      value: index,
+                (one.category &&
+                  one.category.map((each, index) => {
+                    const catObj = listCategoryNormalized[each];
+                    if (!catObj) {
+                      return {
+                        label: 'loading',
+                        value: index,
+                      };
                     }
-                  }
-                  return catObj;
-                }) || []
+                    return catObj;
+                  })) ||
+                []
               }
               name="category"
               placeholder="Select Blog Category"
@@ -434,7 +435,7 @@ class AddEdit extends React.PureComponent {
               options={listCategory}
               styles={customStyles}
             />
-              {/* <Select
+            {/* <Select
                 multiple
                 displayEmpty
                 name="template_key"
@@ -507,8 +508,11 @@ class AddEdit extends React.PureComponent {
               Published On
             </label>
             <DatePicker
+              showTimeSelect
               className="inputbox"
-              selected={this.state.startDate}
+              dateFormat="Pp"
+              selected={new Date(one.published_on)}
+              // selected={this.state.startDate}
               onChange={this.handlePublishedOn}
             />
             {/* <input
@@ -707,7 +711,7 @@ const customStyles = {
   menuList: () => ({
     background: '#FFFFFF',
     border: '1px solid #d4d9df',
-    boxShadow:'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+    boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
   }),
 
   indicatorSeparator: () => ({
