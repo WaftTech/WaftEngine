@@ -22,7 +22,7 @@ const TrendingList = props => {
           <div className="bg-gray-100 mt-10 md:mt-32">
             <div className="bg-primary h-14 flex items-center pl-8 mb-6">
               <h2 className="font-bold text-3xl text-white my-0">
-                ट्रेन्डिङ
+                Trending
             </h2>
             </div>
             {trending.map((each, index) => (

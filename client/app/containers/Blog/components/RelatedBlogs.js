@@ -29,7 +29,7 @@ function RelatedBlogs(props) {
           <div className="mt-10">
             <div className="bg-primary h-14 flex items-center pl-8 mb-4">
               <h2 className="font-bold text-3xl text-white my-0">
-                सम्बन्धित खवर
+                Related
         </h2>
             </div>
             {props.blogs.map(blog => (

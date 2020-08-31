@@ -22,7 +22,7 @@ function RelatedBlogs(props) {
     <div className="mt-5">
       {props.blogs.length > 0 && (
         <>
-          <h2 className="font-bold text-2xl font-mukta">सम्बन्धित खवर</h2>
+          <h2 className="font-bold text-2xl font-mukta">Related</h2>
           <div className="flex flex-wrap -mx-2">
             {props.blogs.map(blog => (
               <div
