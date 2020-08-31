@@ -12,4 +12,5 @@ module.exports = {
   csave: 'Blog category saved successfully.',
   cget: 'blogs category get successfully.',
   cdelete: 'Blog category deleted successfully!!',
+  image_base: 'https://www.nepalhomes.com/',
 };

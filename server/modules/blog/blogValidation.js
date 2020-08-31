@@ -60,15 +60,15 @@ validation.validate = (req, res, next) => {
         },
       ],
     },
-    {
-      field: 'author',
-      validate: [
-        {
-          condition: 'IsMongoId',
-          msg: blogConfig.validate.isMongoId,
-        },
-      ],
-    },
+    // {
+    //   field: 'author',
+    //   validate: [
+    //     {
+    //       condition: 'IsMongoId',
+    //       msg: blogConfig.validate.isMongoId,
+    //     },
+    //   ],
+    // },
   ];
   const errors = otherHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
@@ -85,6 +85,12 @@ validation.catSanitize = (req, res, next) => {
         trim: true,
       },
     },
+    {
+      field: 'order',
+      sanitize: {
+        trim: true,
+      },
+    },
   ]);
   next();
 };
@@ -93,6 +99,15 @@ validation.catValidate = (req, res, next) => {
   const validateArray = [
     {
       field: 'title',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+      ],
+    },
+    {
+      field: 'order',
       validate: [
         {
           condition: 'IsEmpty',
