@@ -7,8 +7,14 @@ function App() {
       <h2 className="text-2xl mb-4 font-bold">Profile</h2>
       <NavLink className="block text-primary" to="/admin/profile">
         Information
+      </NavLink>{' '}
+      <NavLink className="block text-primary" to="/admin/profile/two-factor">
+        Two Factor Authentication
       </NavLink>
-      <NavLink className="block text-primary" to="/admin/profile/change-password">
+      <NavLink
+        className="block text-primary"
+        to="/admin/profile/change-password"
+      >
         Change Password
       </NavLink>
     </div>

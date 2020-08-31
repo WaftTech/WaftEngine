@@ -16,6 +16,18 @@ export const makeSelectErrors = () =>
     substate => substate.errors,
   );
 
+export const makeSelectTwoFactor = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.twoFactor,
+  );
+
+export const makeSelectLoading = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.loading,
+  );
+
 const makeSelectUserPersonalInformationPage = () =>
   createSelector(
     selectUserPersonalInformationPageDomain,
