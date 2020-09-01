@@ -33,10 +33,10 @@
     }
   };
 
-  twoFactorAuthenticatorHelper.verifyMultiFactorAuthCode = (req, _tokenSecret) => {
+  twoFactorAuthenticatorHelper.verifyMultiFactorAuthCode = (userToken, _tokenSecret) => {
     // Verify a given token
 
-    const userToken = req.body.code;
+    // const userToken = req.body.code;
     try {
       const verified = speakeasy.totp.verify({
         secret: _tokenSecret,
