@@ -25,6 +25,11 @@ export const IMAGE_BASE =
     ? 'https://www.waftengine.com/'
     : 'http://localhost:5050/';
 
+export const URL_BASE =
+  process.env.NODE_ENV === 'production'
+    ? 'https://www.waftengine.com/'
+    : 'https://www.waftengine.com/';
+
 export const DATE_FORMAT = 'll';
 
 export const SET_USER = 'app/App/SET_USER';

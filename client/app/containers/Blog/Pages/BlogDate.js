@@ -67,7 +67,7 @@ export class BlogDatePage extends React.Component {
           </h1>
         </div>
         <div className="container mx-auto md:flex py-10">
-          <div className="md:w-3/4 px-5">
+          <div className="md:w-3/4 md:px-5">
             {data && data.length > 0 && (
               <RenderBlogs
                 loading={loading}
@@ -78,8 +78,8 @@ export class BlogDatePage extends React.Component {
             )}
           </div>
           <div className="md:w-1/4 pt-10 px-5">
-            <CategoryList />
-            <Archives />
+            {/* <CategoryList /> */}
+            {/* <Archives /> */}
           </div>
         </div>
       </React.Fragment>

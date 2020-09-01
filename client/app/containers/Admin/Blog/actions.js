@@ -34,6 +34,10 @@ export const setCategoryValue = payload => ({
   type: types.SET_CATEGORY_VALUE,
   payload,
 });
+export const setAuthorValue = payload => ({
+  type: types.SET_AUTHOR_VALUE,
+  payload,
+});
 export const clearOne = payload => ({
   type: types.CLEAR_ONE,
   payload,

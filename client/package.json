@@ -104,6 +104,7 @@
     "react-datepicker": "^2.10.1",
     "react-dom": "16.8.6",
     "react-dropzone": "^10.2.1",
+    "react-facebook": "^8.1.4",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.7",
     "react-google-recaptcha": "^1.1.0",
@@ -122,8 +123,8 @@
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "4.2.0",
-    "snyk": "^1.316.1"
+    "snyk": "^1.316.1",
+    "styled-components": "4.2.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

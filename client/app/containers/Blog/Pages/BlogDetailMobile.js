@@ -12,18 +12,13 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import * as mapDispatchToProps from '../actions';
-import {
-  makeSelectBlog,
-  makeSelectLoading,
-  makeSelectMessage,
-} from '../selectors';
-import { makeSelectComment } from '../../Comments/selectors';
+import { makeSelectBlog, makeSelectLoading } from '../selectors';
 import { makeSelectUser } from '../../App/selectors';
-import RelatedBlogs from '../components/RelatedBlogs';
+import RecentBlogs from '../components/RecentBlogs';
+import RelatedBlogs from '../components/RelatedBlogsMobile';
 import Archives from '../components/Archives';
-import BlogDetail from '../components/BlogDetail';
-import StaticContentDiv from '../../../components/StaticContentDiv';
-import CategoryElement from '../../../components/CategoryElement';
+import BlogDetailMobile from '../components/BlogDetailMobile';
+
 export class BlogPage extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
@@ -40,8 +35,6 @@ export class BlogPage extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.clearOne();
-    console.log('param', this.props.match.params);
-
     this.props.loadRecentBlogsRequest();
     this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
     this.props.loadBlogRequest(this.props.match.params.slug_url);
@@ -60,22 +53,15 @@ export class BlogPage extends React.Component {
       blog,
       loading,
       match: { url },
-      message,
-      comments,
     } = this.props;
-
     return (
       <>
         <Helmet>
           <title>{blog && blog.title}</title>
         </Helmet>
-        <div className="container mx-auto py-10 md:pt-16">
-          <BlogDetail
-            blog={blog}
-            loading={loading}
-            message={message}
-            comments={comments}
-          />
+        <div className="w-full flex-1 px-5">
+          <BlogDetailMobile blog={blog} loading={loading} />
+          <RelatedBlogs />
         </div>
       </>
     );
@@ -86,8 +72,6 @@ const mapStateToProps = createStructuredSelector({
   blog: makeSelectBlog(),
   loading: makeSelectLoading(),
   user: makeSelectUser(),
-  message: makeSelectMessage(),
-  comments: makeSelectComment(),
 });
 
 const withConnect = connect(
