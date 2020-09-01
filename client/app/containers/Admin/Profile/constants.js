@@ -33,3 +33,17 @@ export const ADD_TWO_FACTOR_SUCCESS =
   'app/UserPersonalInformation/ADD_TWO_FACTOR_SUCCESS';
 export const ADD_TWO_FACTOR_FAILURE =
   'app/UserPersonalInformation/ADD_TWO_FACTOR_FAILURE';
+
+export const ADD_EMAIL_TWO_FACTOR_REQUEST =
+  'app/UserPersonalInformation/ADD_EMAIL_TWO_FACTOR_REQUEST';
+export const ADD_EMAIL_TWO_FACTOR_SUCCESS =
+  'app/UserPersonalInformation/ADD_EMAIL_TWO_FACTOR_SUCCESS';
+export const ADD_EMAIL_TWO_FACTOR_FAILURE =
+  'app/UserPersonalInformation/ADD_EMAIL_TWO_FACTOR_FAILURE';
+
+export const ADD_GOOGLE_TWO_FACTOR_REQUEST =
+  'app/UserPersonalInformation/ADD_GOOGLE_TWO_FACTOR_REQUEST';
+export const ADD_GOOGLE_TWO_FACTOR_SUCCESS =
+  'app/UserPersonalInformation/ADD_GOOGLE_TWO_FACTOR_SUCCESS';
+export const ADD_GOOGLE_TWO_FACTOR_FAILURE =
+  'app/UserPersonalInformation/ADD_GOOGLE_TWO_FACTOR_FAILURE';
