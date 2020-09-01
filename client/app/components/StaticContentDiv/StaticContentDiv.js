@@ -43,6 +43,7 @@ class StaticContent extends React.PureComponent {
         )}
         {contentObj &&
           contentObj.image &&
+          contentObj.image[this.props.contentKey] &&
           contentObj.image[this.props.contentKey].path && (
             <div>
               <img
