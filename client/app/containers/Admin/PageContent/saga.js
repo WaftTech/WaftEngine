@@ -55,12 +55,18 @@ function* addEdit() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
+  let main_data = {};
+  if (data.image && data.image._id) {
+    main_data = { ...data, image: data.image._id };
+  } else {
+    main_data = { ...data };
+  }
   yield fork(
     Api.post(
       'contents',
       actions.addEditSuccess,
       actions.addEditFailure,
-      data,
+      main_data,
       token,
     ),
   );

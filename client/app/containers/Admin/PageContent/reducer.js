@@ -23,6 +23,7 @@ export const initialState = {
     is_feature: false,
     publish_to: '',
     meta_tag: [],
+    image:{},
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,
@@ -66,7 +67,7 @@ const reducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.one = action.payload.data;
+        draft.one = {...initialState.one, ...action.payload.data};
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
