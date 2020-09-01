@@ -214,7 +214,12 @@ blogController.getRelatedBlog = async (req, res, next) => {
     } else {
       filter_final = { ...filter_final, $or: { category: tages.category } };
     }
-    const data = await blogSch.find(filter_final).select({ slug_url: 1, title: 1, added_at: 1, image: 1 }).sort({ published_on: -1 }).skip(0).limit(3);
+    const data = await blogSch
+      .find(filter_final)
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
+      .sort({ published_on: -1 })
+      .skip(0)
+      .limit(3);
     return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog', null);
   } catch (err) {
     next(err);
@@ -231,7 +236,7 @@ blogController.GetBlogArchives = async (req, res, next) => {
       .skip(0)
       .limit(10);
     const month = [];
-    const months = blogArchives.map((each) => {
+    const months = blogArchives.map(each => {
       if (month.includes(each.added_at.getMonth())) {
         return null;
       } else {
@@ -429,8 +434,15 @@ blogController.SaveBlog = async (req, res, next) => {
       blogs.is_highlight === true;
     }
     if (req.file) {
-      req.file.destination = req.file.destination.split('\\').join('/').split('server/')[1] + '/';
-      req.file.path = req.file.path.split('\\').join('/').split('server/')[1];
+      req.file.destination =
+        req.file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      req.file.path = req.file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
     }
     if (blogs && blogs._id) {
       if (req.file) {
@@ -464,8 +476,15 @@ blogController.SaveBlogCategory = async (req, res, next) => {
   try {
     let blogcats = req.body;
     if (req.file) {
-      req.file.destination = req.file.destination.split('\\').join('/').split('server/')[1] + '/';
-      req.file.path = req.file.path.split('\\').join('/').split('server/')[1];
+      req.file.destination =
+        req.file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      req.file.path = req.file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
     }
     if (blogcats && blogcats._id) {
       blogcats.updated_at = new Date();
@@ -544,43 +563,46 @@ blogController.GetBlogByCat = async (req, res, next) => {
     const slug = req.params.slug_url;
     const current_date = new Date();
     const cat = await blogCatSch.findOne({ slug_url: slug, is_deleted: false }, { _id: 1, title: 1 });
-    populate = [
-      {
-        path: 'category',
-        select: 'title slug_url',
-      },
-      {
-        path: 'author',
-        select: 'name',
-      },
-    ];
-    selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
-    searchQuery = {
-      is_published: true,
-      is_active: true,
-      published_on: { $lte: current_date },
-      category: cat && cat._id,
-      ...searchQuery,
-    };
-    if (req.query.find_title) {
-      searchQuery = {
-        title: {
-          $regex: req.query.find_title,
-          $options: 'i',
+    let blogs = { data: [], totaldata: 0 };
+    if (cat && cat._id) {
+      populate = [
+        {
+          path: 'category',
+          select: 'title slug_url',
         },
+        {
+          path: 'author',
+          select: 'name',
+        },
+      ];
+      selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
+      searchQuery = {
+        is_published: true,
+        is_active: true,
+        published_on: { $lte: current_date },
+        category: cat && cat._id,
         ...searchQuery,
       };
+      if (req.query.find_title) {
+        searchQuery = {
+          title: {
+            $regex: req.query.find_title,
+            $options: 'i',
+          },
+          ...searchQuery,
+        };
+      }
+      if (req.query.find_published_on) {
+        searchQuery = {
+          published_on: {
+            $regex: req.query.find_published_on,
+            $options: 'i',
+          },
+          ...searchQuery,
+        };
+      }
+      blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     }
-    if (req.query.find_published_on) {
-      searchQuery = {
-        published_on: {
-          $regex: req.query.find_published_on,
-          $options: 'i',
-        },
-        ...searchQuery,
-      };
-    }
-    let blogs = await otherHelper.getquerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, (cat && cat.title) || 'Category', page, size, blogs.totaldata);
   } catch (err) {
     next(err);
