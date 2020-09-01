@@ -7,7 +7,7 @@ const fileController = {};
 fileController.GetFileAndFolder = async (req, res, next) => {
   try {
     let id = '';
-    if (req.params.id === 'root') {
+    if (req.params.id == 'undefined' || req.params.id === 'root') {
       const root = await folderSch.findOne({ is_root: true });
       id = root._id;
     } else {
@@ -65,6 +65,7 @@ fileController.UploadFiles = async (req, res, next) => {
     for (let i = 0; i < req.files.length; i++) {
       let file = req.files[i];
       file.added_by = req.user.id;
+      file.renamed_name = file.originalname;
       file.destination =
         file.destination
           .split('\\')
