@@ -56,3 +56,27 @@ export const makeSelectfolderRenameRequest = () =>
     selectDomain,
     state => state.folderRename,
   );
+
+export const makeSelectRenameFile = () =>
+  createSelector(
+    selectDomain,
+    state => state.rename_file,
+  );
+
+export const makeSelectShowRename = () =>
+  createSelector(
+    selectDomain,
+    state => state.showRename,
+  );
+
+export const makeSelectFileRenameLoading = () =>
+  createSelector(
+    selectDomain,
+    state => state.fileRenameLoading,
+  );
+
+export const makeSelectQuery = () =>
+  createSelector(
+    selectDomain,
+    state => state.query,
+  );
