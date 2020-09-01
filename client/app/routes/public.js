@@ -27,6 +27,11 @@ const publicRoutes = [
   },
   {
     exact: true,
+    path: '/verify/:email',
+    component: VerifyEmail,
+  },
+  {
+    exact: true,
     path: '/editor-file-select',
     component: EditorFileSelectPage,
   },
@@ -52,6 +57,11 @@ const publicRoutes = [
   },
   {
     exact: true,
+    path: '/reset-password/:email/:code',
+    component: ResetPasswordPage,
+  },
+  {
+    exact: true,
     path: '/reset-password/:email',
     component: ResetPasswordPage,
   },
@@ -63,6 +73,11 @@ const publicRoutes = [
   {
     exact: false,
     path: '/blog',
+    component: BlogPages,
+  },
+  {
+    exact: false,
+    path: '/news',
     component: BlogPages,
   },
   {

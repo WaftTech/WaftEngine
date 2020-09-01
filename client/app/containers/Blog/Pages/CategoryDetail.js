@@ -9,35 +9,53 @@ import {
   makeSelectBlogOfCat,
   makeSelectLoadingBlogOfCat,
   makeSelectCategoryTitle,
+  makeSelectLoadingMoreBlogOfCat,
 } from '../selectors';
 import CategoryList from '../components/CategoryList';
 import RenderBlogs from '../components/BlogList';
 import Archives from '../components/Archives';
+import StaticContentDiv from '../../../components/StaticContentDiv';
+import SubscriberPage from '../../SubscriberPage/index';
+import RecentBlogs from '../components/RecentBlogs';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import reducer from '../reducer';
+import saga from '../saga';
 
 class CategoryDetailPage extends React.Component {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const {
       params: { slug_url },
     } = this.props.match;
     this.props.loadBlogOfCatRequest({ key: slug_url, value: '' });
+    this.props.loadRecentBlogsRequest();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    window.scrollTo(0, 0);
     if (this.props.match.params.slug_url !== nextProps.match.params.slug_url) {
       this.props.loadBlogOfCatRequest({
         key: nextProps.match.params.slug_url,
         value: '',
       });
+      window.scrollTo(0, 0);
     }
   }
 
   componentWillUnmount() {
+    // window.scrollTo(0, 0);
     this.props.clearBlog();
   }
 
   handlePagination = paging => {
     this.props.loadBlogOfCatRequest({
+      key: this.props.match.params.slug_url,
+      value: paging,
+    });
+  };
+
+  handleLoadMore = paging => {
+    this.props.loadMoreBlogOfCatRequest({
       key: this.props.match.params.slug_url,
       value: paging,
     });
@@ -51,6 +69,7 @@ class CategoryDetailPage extends React.Component {
       match: {
         params: { slug_url },
       },
+      loading_more,
     } = this.props;
     const pagination = { page, size, totaldata };
     return (
@@ -58,30 +77,39 @@ class CategoryDetailPage extends React.Component {
         <Helmet>
           <title>{title}</title>
         </Helmet>
-        <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-gray-700 text-4xl font-bold">
-            {!loading && `Blogs related to ${title}`}
-          </h1>
+
+        <div className="relative py-6 bg-white shadow">
+          <div className="container mx-auto">
+            <h1 className="text-primary text-4xl font-bold">
+              {!loading && `${title}`}
+            </h1>
+          </div>
         </div>
 
-        <div className="container mx-auto md:flex py-10">
-          <div className="md:w-3/4 px-5">
-            <RenderBlogs
-              loading={loading}
-              currentBlogs={data}
-              pagination={pagination}
-              handlePagination={this.handlePagination}
-            />
-          </div>
-          <div className="md:w-1/4 pt-10 px-5">
-            <CategoryList />
-            <Archives />
+        <div className="container mx-auto py-10">
+          <div className="lg:flex flex-wrap">
+            <div className="lg:w-3/4 lg:pr-10">
+              <RenderBlogs
+                loading={loading}
+                currentBlogs={data}
+                pagination={pagination}
+                handlePagination={this.handlePagination}
+                loading_more={loading_more}
+                handleLoadMore={this.handleLoadMore}
+              />
+            </div>
+            <div className="lg:w-1/4">
+              <RecentBlogs />
+            </div>
           </div>
         </div>
       </React.Fragment>
     );
   }
 }
+
+const withSaga = injectSaga({ key: 'blogPage', saga });
+const withReducer = injectReducer({ key: 'blogPage', reducer });
 
 CategoryDetailPage.propTypes = {
   loadBlogRequest: PropTypes.func.isRequired,
@@ -92,10 +120,15 @@ const mapStateToProps = createStructuredSelector({
   blog: makeSelectBlogOfCat(),
   loading: makeSelectLoadingBlogOfCat(),
   title: makeSelectCategoryTitle(),
+  loading_more: makeSelectLoadingMoreBlogOfCat(),
 });
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-export default compose(withConnect)(CategoryDetailPage);
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(CategoryDetailPage);

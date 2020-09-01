@@ -16,66 +16,133 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectLoading,
+  makeSelectTwoFactor,
+  makeSelectErrors,
+  makeSelectHelperObj,
   makeSelectEmailError,
   makeSelectPasswordError,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 
+import { Input } from '../../components/customComponents';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import logo from '../../assets/img/logo.svg';
+import Modal from '../../components/Modal';
 import '../../assets/styles/loading.css';
 
-const LoginAdminPage = ({
-  classes,
-  loginRequest,
-  loading,
-  emailError,
-  passwordError,
-}) => {
+const LoginAdminPage = props => {
+  const {
+    classes,
+    loginRequest,
+    loading,
+    errors,
+    emailError,
+    passwordError,
+    twoFactor,
+    helperObj: { showTwoFactor },
+  } = props;
+
+  const handleClose = () => {
+    props.setValue({ name: 'helperObj', key: 'showTwoFactor', value: false });
+  };
+
+  React.useEffect(() => {
+    handleClose();
+    props.clearStore({ name: 'errors' });
+  }, []);
+
   const handleSubmit = e => {
     e.preventDefault();
     loginRequest();
   };
-  return (
-    <div className="flex h-screen">
-      <div className="hidden md:flex md:w-3/5 bg-primary items-center">
-        <div className="px-5 text-white lg:px-32">
-          <h1 className="font-bold text-4xl">WaftEngine</h1>
-          <p>A Powerful Mern Engine</p>
-          <ul className="mt-10">
-            <li>Quick Scaffolding</li>
-            <li>Instant feedback</li>
-            <li>Predictable state management</li>
-            <li>Next generation javascript</li>
-            <li>Next generation CSS</li>
-            <li>Industry-stand routing</li>
-            <li>Industry-standard internationalization support</li>
-            <li>Offline first</li>
-            <li>Static code analysis</li>
-          </ul>
-        </div>
-      </div>
 
-      <div className="w-full md:w-2/5 relative block">
-        <div
-          className="absolute top-1/2 px-10 md:px-12 lg:px-16 xl:px-24 w-full"
-          style={{ transform: 'translateY(-50%)' }}
-        >
-          <img src={logo} alt="WaftEngine" className="w-2/3" />
-          <form className="mt-4" onSubmit={handleSubmit}>
-            <UsernameInput />
-            <PasswordInput />
-            <button
-              className="btn mt-4 w-full bg-primary hover:bg-secondary"
-              type="submit"
-            >
-              {loading ?  <div className="btn_loading"><div></div><div></div><div></div><div></div><span className="ml-2">Login</span></div> : 'Login'}
-            </button>
-          </form>
+  const handleChange = e => {
+    props.setValue({
+      name: 'twoFactor',
+      key: e.target.name,
+      value: e.target.value,
+    });
+    props.setValue({
+      name: 'errors',
+      key: e.target.name,
+      value: '',
+    });
+  };
+
+  const handleSubmitCode = e => {
+    e.preventDefault();
+    props.addTwoFactorRequest();
+  };
+
+  return (
+    <>
+      <Modal
+        open={showTwoFactor}
+        handleClose={handleClose}
+        handleUpdate={handleSubmitCode}
+      >
+        <div className="">
+          <Input
+            id="code"
+            name="two_fa_code"
+            subLabel="Check inbox for the code"
+            label="Enter the code"
+            error={errors.two_fa_code}
+            value={twoFactor && twoFactor.two_fa_code}
+            onChange={handleChange}
+          />
+        </div>
+      </Modal>
+      <div className="flex h-screen">
+        <div className="hidden md:flex md:w-3/5 bg-primary items-center">
+          <div className="px-5 text-white lg:px-32">
+            <h1 className="font-bold text-4xl">WaftEngine</h1>
+            <p>A Powerful Mern Engine</p>
+            <ul className="mt-10">
+              <li>Quick Scaffolding</li>
+              <li>Instant feedback</li>
+              <li>Predictable state management</li>
+              <li>Next generation javascript</li>
+              <li>Next generation CSS</li>
+              <li>Industry-stand routing</li>
+              <li>Industry-standard internationalization support</li>
+              <li>Offline first</li>
+              <li>Static code analysis</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="w-full md:w-2/5 relative block">
+          <div
+            className="absolute top-1/2 px-10 md:px-12 lg:px-16 xl:px-24 w-full"
+            style={{ transform: 'translateY(-50%)' }}
+          >
+            <img src={logo} alt="WaftEngine" className="w-2/3" />
+            <form className="mt-4" onSubmit={handleSubmit}>
+              <UsernameInput />
+              <PasswordInput />
+              <button
+                className="btn mt-4 w-full bg-primary hover:bg-secondary"
+                type="submit"
+              >
+                {loading ? (
+                  <div className="btn_loading">
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <span className="ml-2">Login</span>
+                  </div>
+                ) : (
+                  'Login'
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -86,9 +153,12 @@ LoginAdminPage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  errors: makeSelectErrors(),
   loading: makeSelectLoading(),
   emailError: makeSelectEmailError(),
   passwordError: makeSelectPasswordError(),
+  twoFactor: makeSelectTwoFactor(),
+  helperObj: makeSelectHelperObj(),
 });
 
 const withConnect = connect(

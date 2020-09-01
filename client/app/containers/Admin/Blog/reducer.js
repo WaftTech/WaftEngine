@@ -31,15 +31,19 @@ export const initialState = {
     image: null,
     is_published: true,
     is_active: false,
-    description: '',
     short_description: '',
     meta_description: '',
     meta_tag: [],
     keywords: [],
     tags: [],
     author: '',
+    is_highlight: false,
+    is_showcase: false,
   },
-  query: { find_title: '' },
+  query: {
+    find_title: '',
+  },
+  helper: { showQuickEdit: false },
   category: [],
   users: [],
   tempTag: '',
@@ -49,9 +53,14 @@ export const initialState = {
   errors: { title: '', slug_url: '', description: '' },
 };
 
+/* eslint-disable default-case */
+/* eslint-disable no-param-reassign */
 const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case types.SET_VALUE:
+        draft[action.payload.name][action.payload.key] = action.payload.value;
+        break;
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
         draft.errors[action.payload.key] = '';
@@ -108,11 +117,17 @@ const reducer = (state = initialState, action) =>
       case types.SET_CATEGORY_VALUE:
         draft.one.category = action.payload.value;
         break;
+      case types.SET_AUTHOR_VALUE:
+        draft.one.author = action.payload.value;
+        break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
         break;
       case types.SET_ERROR_VALUE:
         draft.errors = action.payload;
+        break;
+      case types.ADD_EDIT_SUCCESS:
+        draft.helper.showQuickEdit = false;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;

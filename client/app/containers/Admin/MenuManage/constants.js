@@ -44,3 +44,10 @@ export const CLEAR_QUERY = 'app/MenuManage/CLEAR_QUERY';
 export const CLEAR_ERRORS = 'app/MenuManage/CLEAR_ERRORS';
 
 export const SHOW_SUB_MENU = 'app/MenuManage/SHOW_SUB_MENU';
+
+export const DELETE_MENU_ITEM_REQUEST =
+  'app/MenuManage/DELETE_MENU_ITEM_REQUEST';
+export const DELETE_MENU_ITEM_SUCCESS =
+  'app/MenuManage/DELETE_MENU_ITEM_SUCCESS';
+export const DELETE_MENU_ITEM_FAILURE =
+  'app/MenuManage/DELETE_MENU_ITEM_FAILURE';

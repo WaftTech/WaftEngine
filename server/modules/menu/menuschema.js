@@ -9,6 +9,7 @@ const menuItemSchema = new Schema({
   is_internal: { type: Boolean, required: true, default: true },
   url: { type: String, required: true },
   is_active: { type: Boolean, default: true, required: true },
+  is_deleted: { type: Boolean, required: true, default: false },
   target: { type: String, required: true, enum: ['_blank', '_self', '_parent', '_top'], default: '_self' },
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },
   updated_at: { type: Date },

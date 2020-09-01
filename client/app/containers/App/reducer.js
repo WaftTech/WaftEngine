@@ -19,7 +19,7 @@ import * as utils from './utils';
 export const initialState = {
   user: { isAdmin: false },
   token: '',
-  content: {},
+  content: { image: {} },
   media: {},
   slide: {},
   notifications: [],
@@ -77,6 +77,10 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         draft.content = {
           ...draft.content,
           [action.payload.data.key]: action.payload.data.description,
+          image: {
+            ...draft.content.image,
+            [action.payload.data.key]: action.payload.data.image,
+          },
         };
         break;
       case types.LOAD_MEDIA_SUCCESS:

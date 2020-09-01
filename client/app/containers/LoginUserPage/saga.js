@@ -90,6 +90,9 @@ export function* loginGoogleAction(action) {
 }
 
 function* loginFailureFunc(action) {
+  if (action.payload.data.email_verified === false) {
+    yield put(push(`/verify/${action.payload.data.email}`));
+  }
   const snackbarData = {
     message: action.payload.msg || 'Error while login!!',
     options: {

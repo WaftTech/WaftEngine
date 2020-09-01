@@ -12,6 +12,10 @@ const { authorization, authorizationForLogout, authentication, getClientInfo } =
 router.get('/', authorization, authentication, userModule.GetAllUser);
 
 router.post('/', userModule.CheckMail);
+router.get('/mfa', authorization, userModule.getMultiFAStatus);
+router.post('/mfa/email', authorization, userModule.postEmailFAStatus);
+router.post('/mfa/ga', authorization, userModule.postGoogleFAStatus);
+router.post('/mfa/ga/verify', authorization, userModule.verifyGoogleFAStatus);
 /**
  * @route GET api/user/grby
  * @description Check user is returning user group by or new  || for admin
@@ -75,7 +79,7 @@ router.post('/register/admin', authorization, authentication, uploader.single('f
  * @description Verify mail by user
  * @access Public
  */
-router.post('/verifymail', userModule.Verifymail);
+router.post('/verifymail', getClientInfo, userModule.Verifymail);
 
 /**
  * @route POST api/user/verifymail/resend
@@ -91,6 +95,9 @@ router.post('/verifymail/resend', userModule.ResendVerificationCode);
  */
 router.post('/login', validateRegisterInput.sanitizeLogin, validateRegisterInput.validateLoginInput, getClientInfo, userModule.Login);
 
+router.post('/login/mfa', getClientInfo, userModule.LoginAfterMultiFa);
+// router.post('/login/2fa', getClientInfo, userModule.LoginAfterTwoFa);
+// router.post('/login/2faga', getClientInfo, userModule.LoginAfterTwoFaGa);
 /**
  * @route POST api/user/forgotpassword
  * @description Forgot Password
@@ -103,7 +110,7 @@ router.post('/forgotpassword', userModule.ForgotPassword);
  * @description Forgot Password
  * @access Public
  */
-router.post('/resetpassword', userModule.ResetPassword);
+router.post('/resetpassword', getClientInfo, userModule.ResetPassword);
 
 /**
  * @route POST api/user/changepassword

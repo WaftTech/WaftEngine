@@ -7,6 +7,19 @@ const userSchema = new schema({
   password: { type: String, required: true },
   gender: { type: String, enum: ['male', 'female', 'other'] },
   avatar: { type: String },
+  multi_fa: {
+    email: {
+      is_authenticate: { type: Boolean, default: false },
+      code: { type: String },
+      time: { type: Date },
+    },
+    google_authenticate: {
+      is_authenticate: { type: Boolean, default: false },
+      auth_secret: { type: String },
+      setup: { type: Boolean, default: false },
+      auth_secret_setup: { type: String },
+    },
+  },
   image: { type: schema.Types.Mixed },
   date_of_birth: { type: Date },
   email_verification_code: { type: String },

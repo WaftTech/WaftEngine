@@ -25,14 +25,26 @@ const transporter = nodemailer.createTransport({
 });
 
 // send mail with defined transport object
-sendMail.send = (mailOptions) => {
+sendMail.send = mailOptions => {
   if (emailConf.channel === 'mailgun') {
-    mailgun.messages().send(mailOptions, function (error, info) {
+    mailgun.messages().send(mailOptions, function(error, info) {
       if (error) {
         return error;
       }
       return info;
     });
+  } else if (emailConf.channel === 'sendblue') {
+    const body = { sender: { name: emailConf.sendblue.sender_name, email: emailConf.sendblue.sender_email }, to: [{ email: mailOptions.to }], htmlContent: mailOptions.html, textContent: mailOptions.text, subject: mailOptions.subject };
+    apiCall.requestThirdPartyApi1(
+      'https://api.sendinblue.com/v3/smtp/email',
+      {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'api-key': emailConf.sendblue.api_key,
+      },
+      body,
+      'POST',
+    );
   } else if (emailConf.channel === 'sendgrid') {
     sgMail.setApiKey(emailConf.sendgrid.api_key);
     return sgMail.send(mailOptions);

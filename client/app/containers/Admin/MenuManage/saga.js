@@ -200,6 +200,43 @@ function* deleteOneFailureFunc(action) {
   yield put(enqueueSnackbar(defaultError));
 }
 
+function* deleteMenuItem(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.delete(
+      `menu/menuitem/${action.payload}`,
+      actions.deleteMenuItemSuccess,
+      actions.deleteMenuItemFailure,
+      token,
+    ),
+  );
+}
+
+function* deleteMenuItemSuccessFunc(action) {
+  const one = yield select(makeSelectOne());
+
+  yield put(actions.loadOneRequest(one._id));
+
+  const snackbarData = {
+    message: action.payload.msg || 'Update success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* deleteMenuItemFailureFunc(action) {
+  const defaultError = {
+    message: action.payload.msg || 'something went wrong',
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultError));
+}
+
 // Individual exports for testing
 export default function* menuManageSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
@@ -216,4 +253,8 @@ export default function* menuManageSaga() {
   yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
   yield takeLatest(types.DELETE_ONE_SUCCESS, deleteOneSuccessFunc);
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteOneFailureFunc);
+
+  yield takeLatest(types.DELETE_MENU_ITEM_REQUEST, deleteMenuItem);
+  yield takeLatest(types.DELETE_MENU_ITEM_SUCCESS, deleteMenuItemSuccessFunc);
+  yield takeLatest(types.DELETE_MENU_ITEM_FAILURE, deleteMenuItemFailureFunc);
 }

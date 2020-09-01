@@ -188,6 +188,18 @@ class AddEdit extends React.PureComponent {
               error={errors && errors.slug_url}
             />
           </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Order"
+              inputclassName="inputbox"
+              inputid="order"
+              inputType="text"
+              value={(one && one.order) || ''}
+              onChange={this.handleChange('order')}
+              error={errors && errors.order}
+            />
+          </div>
           <div className="pb-4">
             <label className="font-bold text-gray-700">
               Blog Category Description

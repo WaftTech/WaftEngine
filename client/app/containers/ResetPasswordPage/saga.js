@@ -13,7 +13,7 @@ import { makeSelectToken } from '../App/selectors';
 import { makeSelectDefaultData } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
-import { enqueueSnackbar } from '../App/actions';
+import { enqueueSnackbar, setToken, setUser } from '../App/actions';
 
 function confirmPassword(data) {
   let errors = {};
@@ -25,14 +25,17 @@ function confirmPassword(data) {
 }
 
 function* redirectOnSuccess() {
-  yield take(types.LOAD_RESET_SUCCESS);
-  yield put(push('/login-user'));
+  const { payload } = yield take(types.LOAD_RESET_SUCCESS);
+  const { token, data } = payload;
+  yield put(setUser(data));
+  yield put(setToken(token));
+  yield put(push('/'));
 }
 
 function* resetAction(action) {
   const successWatcher = yield fork(redirectOnSuccess);
   let data = yield select(makeSelectDefaultData());
-  data = { ...data, email: action.payload.email };
+  data = { ...data };
   const verified = confirmPassword(data);
   if (verified.verified) {
     yield fork(
