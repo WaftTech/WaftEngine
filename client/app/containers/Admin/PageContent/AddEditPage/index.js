@@ -38,6 +38,11 @@ import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
 import Input from '../../../../components/customComponents/Input';
+import { IMAGE_BASE } from '../../../App/constants';
+import EditorFileSelect from '../../../EditorFileSelect';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
 
 const styles = {
   backbtn: {
@@ -64,6 +69,8 @@ class AddEdit extends React.PureComponent {
     errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
+
+  state = { openMedia: false };
 
   componentDidMount() {
     this.props.clearErrors();
@@ -126,6 +133,19 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'meta_tag', value: chipData });
   };
 
+  handleClose = () => {
+    this.setState({ openMedia: false });
+  };
+
+  handleSetImage = () => {
+    this.setState({ openMedia: true });
+  };
+
+  handleImageChange = file => {
+    this.props.setOneValue({ key: 'image', value: file });
+    this.setState({ openMedia: false });
+  };
+
   render() {
     const { one, classes, match, loading, errors, tempMetaTag } = this.props;
     return loading && loading == true ? (
@@ -140,6 +160,23 @@ class AddEdit extends React.PureComponent {
               : 'Add Static Page'}
           </title>
         </Helmet>
+        <Dialog
+          open={this.state.openMedia}
+          onClose={this.handleClose}
+          fullWidth={true}
+          maxWidth={'lg'}
+        >
+          <DialogTitle>Select Image</DialogTitle>
+          <DialogContent>
+            <EditorFileSelect
+              location={location}
+              selectFile={file => this.handleImageChange(file)}
+            />
+            <div className="mt-2 text-xs">
+              Note: Please Double Click to open folder and select images.
+            </div>
+          </DialogContent>
+        </Dialog>
         <div>
           <div className="flex justify-between mt-3 mb-3">
             <PageHeader>
@@ -293,6 +330,28 @@ class AddEdit extends React.PureComponent {
                 </div>
               </div>
             </div>
+            <div className="w-full  pb-4 -mr-2">
+              <section
+                onClick={this.handleSetImage}
+                style={{ width: '100%' }}
+                className="text-black hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+              >
+                <button
+                  type="button"
+                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                >
+                  Featured Image
+                </button>
+              </section>
+              {errors && errors.image && (
+                <div id="component-error-text">{errors.image}</div>
+              )}
+            </div>
+            {one && one.image && one.image.path && (
+              <div>
+                <img src={`${IMAGE_BASE}${one.image.path}`} />
+              </div>
+            )}
 
             <FormControlLabel
               control={

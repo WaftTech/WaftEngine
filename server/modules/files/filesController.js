@@ -7,7 +7,7 @@ const fileController = {};
 fileController.GetFileAndFolder = async (req, res, next) => {
   try {
     let id = '';
-    if (req.params.id === 'root') {
+    if (req.params.id == 'undefined' || req.params.id === 'root') {
       const root = await folderSch.findOne({ is_root: true });
       id = root._id;
     } else {
@@ -41,6 +41,7 @@ fileController.AddFolders = async (req, res, next) => {
       added_by = req.user.id;
       data.path = [...folder.path, folder._id];
       data.parent_folder = folder._id;
+      data.added_by = added_by;
       const newFolder = new folderSch(data);
       await newFolder.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, newFolder, null, 'new folder created', null);
@@ -49,13 +50,22 @@ fileController.AddFolders = async (req, res, next) => {
     next(err);
   }
 };
-
+fileController.RenameFolder = async (req, res, next) => {
+  try {
+    const { renamed_name, _id } = req.body;
+    const file = await fileSch.findByIdAndUpdate(_id, { $set: { renamed_name } });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, file, null, 'File Renamed', null);
+  } catch (err) {
+    next(err);
+  }
+};
 fileController.UploadFiles = async (req, res, next) => {
   try {
     let files = [];
     for (let i = 0; i < req.files.length; i++) {
       let file = req.files[i];
       file.added_by = req.user.id;
+      file.renamed_name = file.originalname;
       file.destination =
         file.destination
           .split('\\')
@@ -75,7 +85,39 @@ fileController.UploadFiles = async (req, res, next) => {
     next(err);
   }
 };
-
+fileController.UploadFilesToRoot = async (req, res, next) => {
+  try {
+    let id = '';
+    const root = await folderSch.findOne({ is_root: true });
+    if (root && root._id) id = root._id;
+    else {
+      const rootFolder = new folderSch({ name: 'Root', is_root: true, path: [], added_by: req.user.id });
+      const root = await rootFolder.save();
+      id = root._id;
+    }
+    let files = [];
+    for (let i = 0; i < req.files.length; i++) {
+      let file = req.files[i];
+      file.added_by = req.user.id;
+      file.destination =
+        file.destination
+          .split('\\')
+          .join('/')
+          .split('server/')[1] + '/';
+      file.path = file.path
+        .split('\\')
+        .join('/')
+        .split('server/')[1];
+      if (id) file.folder_id = id;
+      const newFile = new fileSch(file);
+      const fileSave = await newFile.save();
+      files.push(fileSave);
+    }
+    return otherHelper.sendResponse(res, httpStatus.OK, true, files, null, 'File Saved Success !!', null);
+  } catch (err) {
+    next(err);
+  }
+};
 fileController.DeleteFolder = async (req, res, next) => {
   try {
     const id = req.params.id;

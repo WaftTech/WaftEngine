@@ -41,3 +41,4 @@ export const LOAD_USERS_FAILURE = 'app/BlogManagePage/LOAD_USERS_FAILURE';
 export const CLEAR_ERRORS = 'app/BlogManagePage/CLEAR_ERRORS';
 export const SET_ERROR_VALUE = 'app/BlogManagePage/SET_ERROR_VALUE';
 export const SET_CATEGORY_VALUE = 'app/BlogManagePage/SET_CATEGORY_VALUE';
+export const SET_AUTHOR_VALUE = 'app/BlogManagePage/SET_AUTHOR_VALUE';

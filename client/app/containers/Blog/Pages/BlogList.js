@@ -8,12 +8,18 @@ import {
   makeSelectBlogList,
   makeSelectLoading,
   makeSelectQuery,
+  makeSelectHighlight,
+  makeSelectShowcase,
+  makeSelectShowcaseLoading,
+  makeSelectTrending,
+  makeSelectHighlightLoading,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-// import Loading from '../../components/Loading';
-import RenderBlogs from '../components/BlogList';
-import CategoryList from '../components/CategoryList';
-import Archives from '../components/Archives';
+import HighLightList from '../components/HighlightList';
+import Showcase from '../components/Showcase';
+import Trending from '../components/Trending';
+import CategoryElement from '../../../components/CategoryElement';
+import RecentBlogs from '../components/RecentBlogs2';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogListPage extends React.Component {
@@ -23,7 +29,12 @@ export class BlogListPage extends React.Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.loadBlogListRequest();
+    this.props.loadHighlightRequest();
+    this.props.loadShowcaseRequest();
+    this.props.loadTrendingRequest();
+    this.props.loadRecentBlogsRequest();
   }
 
   handlePagination = paging => {
@@ -33,30 +44,48 @@ export class BlogListPage extends React.Component {
   render() {
     const {
       blogList: { data, page, size, totaldata },
-      loading,
+      highlight,
+      showcase,
+      showcaseLoading,
+      trending,
+      // loading,
+      highlightLoading,
     } = this.props;
     const pagination = { page, size, totaldata };
 
     return (
       <React.Fragment>
         <Helmet>
-          <title>Blog List</title>
+          <title>News</title>
         </Helmet>
-        <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="mb-4 text-gray-700 text-4xl font-bold">Blog</h1>
-        </div>
-        <div className="container mx-auto md:flex mb-10 py-10">
-          <div className="md:w-3/4 md:px-5">
-            <RenderBlogs
-              loading={loading}
-              currentBlogs={data}
-              pagination={pagination}
-              handlePagination={this.handlePagination}
-            />
+
+        <HighLightList
+          loading={highlightLoading}
+          currentBlogs={highlight}
+          pagination={pagination}
+          handlePagination={this.handlePagination}
+        />
+        <Showcase loading={showcaseLoading} showcase={showcase} />
+
+        <div className="container mx-auto lg:flex">
+          <div className="lg:w-3/4 lg:pr-10">
+            <div className="layout-2 no-container no-bg">
+              <CategoryElement cat_id="5d52700c8113842418772129" size={3} />
+            </div>
           </div>
-          <div className="md:w-1/4 pt-10 px-5">
-            <CategoryList />
-            <Archives />
+          <div className="lg:w-1/4 mt-16 lg:mt-32 headline-only">
+            <RecentBlogs />
+          </div>
+        </div>
+
+        <div className="container mx-auto lg:flex pb-12">
+          <div className="lg:w-3/4 lg:pr-4">
+            <div className="layout-7 no-container item4">
+              <CategoryElement cat_id="5d6f55f9846a9b0f58e2d2cd" size={4} />
+            </div>
+          </div>
+          <div className="lg:w-1/4">
+            <Trending loading={trending.length === 0} trending={trending} />
           </div>
         </div>
       </React.Fragment>
@@ -68,6 +97,11 @@ const mapStateToProps = createStructuredSelector({
   blogList: makeSelectBlogList(),
   loading: makeSelectLoading(),
   query: makeSelectQuery(),
+  highlight: makeSelectHighlight(),
+  showcase: makeSelectShowcase(),
+  showcaseLoading: makeSelectShowcaseLoading(),
+  trending: makeSelectTrending(),
+  highlightLoading: makeSelectHighlightLoading(),
 });
 
 const withConnect = connect(
