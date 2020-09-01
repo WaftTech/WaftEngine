@@ -9,6 +9,7 @@ import {
   makeSelectUserIsAdmin,
 } from '../../containers/App/selectors';
 import { loadContentRequest } from '../../containers/App/actions';
+import { IMAGE_BASE } from '../../containers/App/constants';
 
 /* eslint-disable react/no-danger */
 class StaticContent extends React.PureComponent {
@@ -40,6 +41,17 @@ class StaticContent extends React.PureComponent {
             <button className="underline text-blue-600">Edit</button>
           </Link>
         )}
+        {contentObj &&
+          contentObj.image &&
+          contentObj.image[this.props.contentKey].path && (
+            <div>
+              <img
+                src={`${IMAGE_BASE}${
+                  contentObj.image[this.props.contentKey].path
+                }`}
+              />
+            </div>
+          )}
         <div
           dangerouslySetInnerHTML={{
             __html: contentObj[this.props.contentKey],
