@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -16,7 +16,10 @@ const Blog = ({ match: { url } }) => {
 
   return (
     <Switch>
-      <Route exact path={`${url}`} component={Informtions} />
+      <Route exact path={`${url}`}>
+        <Redirect to={`${url}/information`} />
+      </Route>
+      <Route exact path={`${url}/information`} component={Informtions} />
       <Route
         exact
         path={`${url}/change-password`}

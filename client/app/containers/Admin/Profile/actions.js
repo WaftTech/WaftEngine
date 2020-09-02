@@ -78,3 +78,29 @@ export const addTwoFactorFailure = payload => ({
   type: types.ADD_TWO_FACTOR_FAILURE,
   payload,
 });
+
+export const addEmailTwoFactorRequest = payload => ({
+  type: types.ADD_EMAIL_TWO_FACTOR_REQUEST,
+  payload,
+});
+export const addEmailTwoFactorSuccess = payload => ({
+  type: types.ADD_EMAIL_TWO_FACTOR_SUCCESS,
+  payload,
+});
+export const addEmailTwoFactorFailure = payload => ({
+  type: types.ADD_EMAIL_TWO_FACTOR_FAILURE,
+  payload,
+});
+
+export const addGoogleTwoFactorRequest = payload => ({
+  type: types.ADD_GOOGLE_TWO_FACTOR_REQUEST,
+  payload,
+});
+export const addGoogleTwoFactorSuccess = payload => ({
+  type: types.ADD_GOOGLE_TWO_FACTOR_SUCCESS,
+  payload,
+});
+export const addGoogleTwoFactorFailure = payload => ({
+  type: types.ADD_GOOGLE_TWO_FACTOR_FAILURE,
+  payload,
+});

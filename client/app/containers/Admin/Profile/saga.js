@@ -87,7 +87,7 @@ function* loadTwoFactor() {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      'user/2fa',
+      'user/mfa',
       actions.loadTwoFactorSuccess,
       actions.loadTwoFactorFailure,
       token,
@@ -95,19 +95,50 @@ function* loadTwoFactor() {
   );
 }
 
+// use this to send the google code update
 function* addTwoFactor() {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectTwoFactor());
+  const { code } = data.google_authenticate;
   yield call(
     Api.post(
-      'user/2fa',
-      actions.loadTwoFactorSuccess,
-      actions.loadTwoFactorFailure,
-      data,
+      'user/mfa/ga/verify',
+      actions.addTwoFactorSuccess,
+      actions.addTwoFactorFailure,
+      { code },
       token,
     ),
   );
 }
+
+function* addEmailTwoFactor({ payload }) {
+  const token = yield select(makeSelectToken());
+  // const data = yield select(makeSelectTwoFactor());
+  yield call(
+    Api.post(
+      'user/mfa/email',
+      actions.addEmailTwoFactorSuccess,
+      actions.addEmailTwoFactorFailure,
+      payload,
+      token,
+    ),
+  );
+}
+
+function* addGoogleTwoFactor({ payload }) {
+  const token = yield select(makeSelectToken());
+  // const data = yield select(makeSelectTwoFactor());
+  yield call(
+    Api.post(
+      'user/mfa/ga',
+      actions.addGoogleTwoFactorSuccess,
+      actions.addGoogleTwoFactorFailure,
+      payload,
+      token,
+    ),
+  );
+}
+
 export default function* userPersonalInformationPageSaga() {
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
@@ -116,4 +147,6 @@ export default function* userPersonalInformationPageSaga() {
   yield takeLatest(types.CHANGE_PASSWORD_SUCCESS, addEditSuccessful);
   yield takeLatest(types.LOAD_TWO_FACTOR_REQUEST, loadTwoFactor);
   yield takeLatest(types.ADD_TWO_FACTOR_REQUEST, addTwoFactor);
+  yield takeLatest(types.ADD_EMAIL_TWO_FACTOR_REQUEST, addEmailTwoFactor);
+  yield takeLatest(types.ADD_GOOGLE_TWO_FACTOR_REQUEST, addGoogleTwoFactor);
 }
