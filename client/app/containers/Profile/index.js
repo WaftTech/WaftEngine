@@ -1,31 +1,37 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Informtions, ChangePasswords, VerifyEmail } from './Pages/Loadable.js';
+import { Information, ChangePasswords, VerifyEmail } from './Pages/Loadable';
 
 import reducer from './reducer';
 import saga from './saga';
+import Layout from './Components/Layout';
 
 const key = 'userPersonalInformationPage';
 
-const Blog = () => {
+const Blog = ({ match: { url } }) => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   return (
     <>
       {/* <Helmet>Profile</Helmet> */}
-      <Switch>
-        <Route exact path="/user/profile" component={Informtions} />
-        <Route exact path="/user/profile/verify" component={VerifyEmail} />
-        <Route
-          exact
-          path="/user/profile/change-password"
-          component={ChangePasswords}
-        />
-      </Switch>
+      <Layout>
+        <Switch>
+          <Route exact path={`${url}`}>
+            <Redirect to={`${url}/information`} />
+          </Route>
+          <Route exact path={`${url}/information`} component={Information} />
+          <Route exact path={`${url}/verify`} component={VerifyEmail} />
+          <Route
+            exact
+            path={`${url}/change-password`}
+            component={ChangePasswords}
+          />
+        </Switch>
+      </Layout>
     </>
   );
 };
