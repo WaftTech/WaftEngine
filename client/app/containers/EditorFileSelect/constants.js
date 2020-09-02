@@ -55,3 +55,13 @@ export const DELETE_MULTIPLE_SUCCESS =
   'app/EditorFileSelect/DELETE_MULTIPLE_SUCCESS';
 export const DELETE_MULTIPLE_FAILURE =
   'app/EditorFileSelect/DELETE_MULTIPLE_FAILURE';
+
+export const SET_RENAME_FILE_VALUE =
+  'app/EditorFileSelect/SET_RENAME_FILE_VALUE';
+export const SET_SHOW_RENAME = 'app/EditorFileSelect/SET_SHOW_RENAME';
+
+export const RENAME_FILE_REQUEST = 'app/EditorFileSelect/RENAME_FILE_REQUEST';
+export const RENAME_FILE_SUCCESS = 'app/EditorFileSelect/RENAME_FILE_SUCCESS';
+export const RENAME_FILE_FAILURE = 'app/EditorFileSelect/RENAME_FILE_FAILURE';
+
+export const SET_QUERY_VALUE = 'app/EditorFileSelect/SET_QUERY_VALUE';

@@ -31,6 +31,13 @@ export const initialState = {
   chosen: [],
   chosen_files: [],
   chosen_folders: [],
+  rename_file: {
+    renamed_name: '',
+    _id: '',
+  },
+  showRename: false,
+  fileRenameLoading: false,
+  query: { search: '' },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -162,6 +169,37 @@ const editorFileSelectReducer = (state = initialState, action) =>
       case types.DELETE_MULTIPLE_FAILURE:
         draft.loading = false;
 
+        break;
+
+      case types.SET_RENAME_FILE_VALUE:
+        draft.rename_file[action.payload.key] = action.payload.value;
+        break;
+
+      case types.RENAME_FILE_REQUEST:
+        draft.fileRenameLoading = true;
+        break;
+      case types.RENAME_FILE_SUCCESS:
+        draft.fileRenameLoading = false;
+        draft.showRename = false;
+
+        state.all.files.data.map((each, index) => {
+          if (each._id === state.rename_file._id) {
+            state.all.files.data[index].renamed_name =
+              state.rename_file.renamed_name;
+          }
+        });
+
+        break;
+      case types.RENAME_FILE_FAILURE:
+        draft.fileRenameLoading = false;
+        break;
+
+      case types.SET_SHOW_RENAME:
+        draft.showRename = action.payload;
+        break;
+
+      case types.SET_QUERY_VALUE:
+        draft.query[action.payload.key] = action.payload.value;
         break;
     }
   });
