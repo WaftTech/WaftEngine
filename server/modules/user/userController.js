@@ -99,7 +99,7 @@ userController.verifyGoogleFAStatus = async (req, res, next) => {
     let user = await userSch.findById(req.user.id);
     const code = req.body.code;
     if (user.multi_fa.google_authenticate.setup) {
-      const otp = await twoFaHelper.verifyMultiFactorAuthCode(req, user.multi_fa.google_authenticate.auth_secret_setup);
+      const otp = await twoFaHelper.verifyMultiFactorAuthCode(code, user.multi_fa.google_authenticate.auth_secret_setup);
       if (otp) {
         user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.google_authenticate.is_authenticate': true, 'multi_fa.google_authenticate.setup': false, 'multi_fa.google_authenticate.auth_secret': user.multi_fa.google_authenticate.auth_secret_setup, 'multi_fa.google_authenticate.auth_secret_setup': '' } });
         return otherHelper.sendResponse(res, httpStatus.OK, true, { is_authenticate: true }, null, 'Two FA setup success', null);
@@ -634,7 +634,7 @@ userController.LoginAfterTwoFaGa = async (req, res, next) => {
     let email = req.body.email.toLowerCase();
     const user = await userSch.findOne({ email, is_two_fa_ga: true });
     if (user) {
-      const otp = await twoFaHelper.verifyMultiFactorAuthCode(req, user.two_fa_ga_auth_secret);
+      const otp = await twoFaHelper.verifyMultiFactorAuthCode(req.body.code, user.two_fa_ga_auth_secret);
       if (otp) {
         const { token, payload } = await userController.validLoginResponse(req, user, next);
         const d = await userSch.findByIdAndUpdate(user._id, { $unset: { two_fa_code: 1, two_fa_time: 1 } });
