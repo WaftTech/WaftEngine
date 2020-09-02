@@ -42,6 +42,17 @@ export const makeSelectPasswordError = () =>
     state => state.password,
   );
 
+export const makeSelectTwoFactor = () =>
+  createSelector(
+    selectLoginUserPageDomain,
+    state => state.twoFactor,
+  );
+export const makeSelectHelperObj = () =>
+  createSelector(
+    selectLoginUserPageDomain,
+    state => state.helperObj,
+  );
+
 /**
  * Default selector used by LoginUserPage
  */
