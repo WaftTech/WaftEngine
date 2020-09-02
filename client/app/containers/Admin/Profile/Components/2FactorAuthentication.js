@@ -117,6 +117,24 @@ export const TwoFactor = props => {
           />
         </div>
         <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="250"
+            height="250"
+            fill="true"
+          >
+            <path
+              d={
+                twoFactor &&
+                twoFactor.google_authenticate &&
+                twoFactor.google_authenticate.qrcode &&
+                twoFactor.google_authenticate.qrcode.path
+              }
+              className="qr-code"
+            />
+          </svg>
+        </div>
+        <div>
           <Input
             id="code"
             name="code"

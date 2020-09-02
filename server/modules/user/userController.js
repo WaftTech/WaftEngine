@@ -85,7 +85,7 @@ userController.postGoogleFAStatus = async (req, res, next) => {
       const otp = await twoFaHelper.generateMultiFactorAuthCode(req);
       auth_secret = otp.secret;
       const user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.google_authenticate.setup': is_authenticate, 'multi_fa.google_authenticate.auth_secret_setup': auth_secret } });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, { email: req.user.email, multi_fa: { google_authenticate: { auth_secret_setup: auth_secret, setup: is_authenticate } } }, null, 'Two FA status', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, { email: req.user.email, multi_fa: { google_authenticate: { auth_secret_setup: auth_secret, setup: is_authenticate, qrcode: otp.qrcode } } }, null, 'Two FA status', null);
     } else {
       const user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.google_authenticate.is_authenticate': is_authenticate } });
       return otherHelper.sendResponse(res, httpStatus.OK, true, { email: req.user.email, multi_fa: { google_authenticate: { is_authenticate: is_authenticate } } }, null, 'Two FA status', null);
