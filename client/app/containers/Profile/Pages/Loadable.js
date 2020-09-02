@@ -17,3 +17,6 @@ export const ChangePasswords = loadable(() => import('./ChangePassword'), {
 export const VerifyEmail = loadable(() => import('./VerifyEmail'), {
   fallback: <Loading />,
 });
+export const TwoFactor = loadable(() => import('./2FactorAuthentication'), {
+  fallback: <Loading />,
+});

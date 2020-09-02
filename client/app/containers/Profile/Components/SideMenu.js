@@ -49,6 +49,12 @@ function App(props) {
         >
           Change Password
         </NavLink>
+        <NavLink
+          className="block text-gray-800 hover:text-primary"
+          to="/user/profile/two-factor"
+        >
+          Two Factor Authentication
+        </NavLink>
       </div>
     </>
   );
