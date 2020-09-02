@@ -33,14 +33,31 @@ class StaticContent extends React.PureComponent {
     return (
       <>
         {/* should be super admin */}
-        {is_Admin && (
-          <Link
-            to={`/admin/content-manage/edit/${this.props.contentKey}`}
-            target="_blank"
-          >
-            <button className="underline text-blue-600">Edit</button>
-          </Link>
-        )}
+        {is_Admin &&
+          contentObj &&
+          contentObj.ids &&
+          contentObj.ids[this.props.contentKey] &&
+          (contentObj &&
+          contentObj.is_page &&
+          contentObj.is_page[this.props.contentKey] === false ? (
+            <Link
+              to={`/admin/content-manage/edit/${
+                contentObj.ids[this.props.contentKey]
+              }`}
+              target="_blank"
+            >
+              <button className="underline text-blue-600">Edit</button>
+            </Link>
+          ) : (
+            <Link
+              to={`/admin/page-manage/edit/${
+                contentObj.ids[this.props.contentKey]
+              }`}
+              target="_blank"
+            >
+              <button className="underline text-blue-600">Edit</button>
+            </Link>
+          ))}
         {contentObj &&
           contentObj.image &&
           contentObj.image[this.props.contentKey] &&
