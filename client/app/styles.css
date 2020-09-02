@@ -188,6 +188,7 @@ div#component-error-text {
    color:#FFFFFF;
    border-radius: 0.25rem;
 }
+.qr-code { transform: scale(4);}
 
 
 
