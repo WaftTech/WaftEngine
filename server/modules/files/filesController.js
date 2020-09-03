@@ -99,6 +99,7 @@ fileController.UploadFilesToRoot = async (req, res, next) => {
     for (let i = 0; i < req.files.length; i++) {
       let file = req.files[i];
       file.added_by = req.user.id;
+      file.renamed_name = file.originalname;
       file.destination =
         file.destination
           .split('\\')

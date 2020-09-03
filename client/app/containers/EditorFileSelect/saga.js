@@ -6,6 +6,7 @@ import {
   makeSelectChosen,
   makeSelectChosenFolders,
   makeSelectAll,
+  makeSelectRenameFile,
 } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -135,6 +136,21 @@ function* multiDeleteFailureFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* renameFile(action) {
+  const token = yield select(makeSelectToken());
+  const data = yield select(makeSelectRenameFile());
+
+  yield call(
+    Api.post(
+      `files/rename/file`,
+      actions.renameFileSuccess,
+      actions.renameFileFailure,
+      data,
+      token,
+    ),
+  );
+}
+
 // Individual exports for testing
 export default function* editorFileSelectSaga() {
   yield takeLatest(types.LOAD_FILES_REQUEST, loadFiles);
@@ -146,4 +162,5 @@ export default function* editorFileSelectSaga() {
   yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multipleDelete);
   yield takeLatest(types.DELETE_MULTIPLE_SUCCESS, multiDeleteSuccessFunc);
   yield takeLatest(types.DELETE_MULTIPLE_FAILURE, multiDeleteFailureFunc);
+  yield takeLatest(types.RENAME_FILE_REQUEST, renameFile);
 }
