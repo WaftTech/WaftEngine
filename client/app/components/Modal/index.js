@@ -9,7 +9,7 @@ export default function DeleteDialog(props) {
     open,
     handleClose,
     handleUpdate,
-    width = 'md',
+    width = 'sm',
     buttonLabel1 = 'No',
     buttonLabel2 = 'Update',
   } = props;
