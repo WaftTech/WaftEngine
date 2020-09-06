@@ -116,11 +116,11 @@ export const TwoFactor = props => {
             value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
           />
         </div>
-        <div>
+        <div className="py-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="250"
-            height="250"
+            width="200"
+            height="200"
             fill="true"
           >
             <path
