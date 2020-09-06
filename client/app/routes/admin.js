@@ -36,6 +36,9 @@ import AddEditMenu from '../containers/Admin/MenuManage/AddEditPage/Loadable';
 import PageManage from '../containers/Admin/PageContent/Loadable';
 import AddEditPageManage from '../containers/Admin/PageContent/AddEditPage/Loadable';
 
+import SubModules from '../containers/Admin/SubModules/Loadable';
+import AddEditSubModules from '../containers/Admin/SubModules/AddEditPage/Loadable';
+
 const routes = [
   {
     path: '/admin/dashboard',
@@ -275,6 +278,22 @@ const routes = [
     exact: true,
     path: '/admin/menu-manage/add',
     component: AddEditMenu,
+  },
+
+  {
+    exact: true,
+    path: '/admin/sub-modules',
+    component: SubModules,
+  },
+  {
+    exact: true,
+    path: '/admin/sub-modules/edit/:id',
+    component: AddEditSubModules,
+  },
+  {
+    exact: true,
+    path: '/admin/sub-modules/add',
+    component: AddEditSubModules,
   },
 ];
 

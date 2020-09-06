@@ -106,6 +106,12 @@ const menu = [
         icon: 'extension',
         link: '/admin/module-manage',
       },
+      {
+        key: '3.4',
+        name: 'Sub Modules',
+        icon: 'extension',
+        link: '/admin/sub-modules',
+      },
     ],
   },
   {
