@@ -13,7 +13,12 @@ export const initialState = {
     size: 10,
     totaldata: 0,
   },
-  one: {},
+  one: {
+    module_group: '',
+    description: '',
+    // module_group_main: '',
+    order: '',
+  },
   query: { find_title: '', size: 10 },
 
   loading: false,

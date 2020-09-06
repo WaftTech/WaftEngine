@@ -104,12 +104,11 @@ export const SubModules = props => {
   const tablePagination = { page, size, totaldata };
 
   const tableData = data.map(
-    ({ value, order, is_active, title, description, _id }) => [
-      value,
+    ({ module_group, order, description, _id, module_group_main }) => [
+      module_group,
       order,
-      is_active ? 'Active' : 'In-active',
-      title,
       description,
+      module_group_main,
       <>
         <Tooltip
           id="tooltip-top"
@@ -198,11 +197,10 @@ export const SubModules = props => {
 
         <Table
           tableHead={[
-            'Value',
+            'Module Group',
             'Order',
-            'Is active',
-            'Title',
             'Description',
+            'Module Group Main',
             '',
           ]}
           tableData={tableData}

@@ -40,7 +40,7 @@ const styles = {
   },
 };
 
-const key = 'areaUnit';
+const key = 'subModules';
 
 const AddEdit = props => {
   const {
@@ -76,7 +76,7 @@ const AddEdit = props => {
   };
 
   const handleGoBack = () => {
-    push('/admin/area-unit');
+    push('/admin/sub-modules');
   };
 
   const handleSave = () => {
@@ -110,39 +110,29 @@ const AddEdit = props => {
               <BackIcon />
             </IconButton>
             {match && match.params && match.params.id
-              ? 'Edit Area Unit'
-              : 'Add Area Unit'}
+              ? 'Edit Sub Module'
+              : 'Add Sub Module'}
           </PageHeader>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <Input
-              label="Title"
+              label="Module Group"
               inputclassName="inputbox"
-              inputid="grid-title"
+              inputid="grid-group"
               inputType="text"
-              value={one.title}
-              onChange={handleChange('title')}
-              error={errors.title}
+              value={one.module_group}
+              onChange={handleChange('module_group')}
+              error={errors.module_group}
             />
           </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Value"
-              inputclassName="inputbox"
-              inputid="grid-value"
-              inputType="number"
-              value={one.value}
-              onChange={handleChange('value')}
-              error={errors.value}
-            />
-          </div>
+
           <div className="w-full md:w-1/2 pb-4">
             <Input
               label="Order"
               inputclassName="inputbox"
               inputid="grid-value"
-              inputType="number"
+              inputType="text"
               value={one.order}
               onChange={handleChange('order')}
               error={errors.order}
@@ -165,7 +155,19 @@ const AddEdit = props => {
             />
             <div id="component-error-text">{errors.description}</div>
           </div>
-          <FormControlLabel
+
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Module Group Main"
+              inputclassName="inputbox"
+              inputid="grid-group"
+              inputType="text"
+              value={one.module_group_main}
+              onChange={handleChange('module_group_main')}
+              error={errors.module_group_main}
+            />
+          </div>
+          {/* <FormControlLabel
             control={
               <Checkbox
                 checked={one.is_active || false}
@@ -175,7 +177,7 @@ const AddEdit = props => {
               />
             }
             label="Is Active"
-          />
+          /> */}
           <button
             type="button"
             className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
@@ -205,8 +207,6 @@ AddEdit.propTypes = {
 };
 
 const withStyle = withStyles(styles);
-// const withReducer = injectReducer({ key: 'areaUnit', reducer });
-// const withSaga = injectSaga({ key: 'areaUnit', saga });
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
