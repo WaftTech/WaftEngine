@@ -12,7 +12,7 @@ export const initialState = {
   errors: {},
   loading: false,
   twoFactor: {},
-  helperObj: { showTwoFactor: false },
+  helperObj: { showEmailTwoFactor: false, showGoogleTwoFactor: false },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -36,10 +36,18 @@ const loginAdminPageReducer = (state = initialState, action) =>
       case types.LOGIN_SUCCESS:
         draft.loading = false;
         draft.twoFactor = action.payload.data;
-        draft.helperObj.showTwoFactor =
+        draft.helperObj.showGoogleTwoFactor =
           action.payload &&
           action.payload.data &&
-          action.payload.data.is_two_fa;
+          action.payload.data.multi_fa &&
+          action.payload.data.multi_fa.google_authenticate &&
+          action.payload.data.multi_fa.google_authenticate.is_authenticate;
+        draft.helperObj.showEmailTwoFactor =
+          action.payload &&
+          action.payload.data &&
+          action.payload.data.multi_fa &&
+          action.payload.data.multi_fa.email &&
+          action.payload.data.multi_fa.email.is_authenticate;
         break;
       case types.LOGIN_FAILURE:
         draft.loading = false;
