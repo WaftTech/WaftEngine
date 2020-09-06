@@ -7,12 +7,13 @@ import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+import Tick from '@material-ui/icons/Done';
+import Clear from '@material-ui/icons/Clear';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectUser } from '../../App/selectors';
 import { makeSelectToken } from '../selectors';
-import Tick from '@material-ui/icons/Done';
-import Clear from '@material-ui/icons/Clear';
+import '../styles.css';
 
 function App(props) {
   const { user, token } = props;
@@ -38,7 +39,7 @@ function App(props) {
 
         <NavLink
           className="block text-gray-800 hover:text-primary"
-          to="/user/profile"
+          to="/user/profile/information"
         >
           Information
         </NavLink>
@@ -47,6 +48,12 @@ function App(props) {
           to="/user/profile/change-password"
         >
           Change Password
+        </NavLink>
+        <NavLink
+          className="block text-gray-800 hover:text-primary"
+          to="/user/profile/two-factor"
+        >
+          Two Factor Authentication
         </NavLink>
       </div>
     </>

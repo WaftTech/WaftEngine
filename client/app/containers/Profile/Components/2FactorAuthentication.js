@@ -29,10 +29,10 @@ import {
   Input,
   DatePicker,
   Checkbox,
-} from '../../../../components/customComponents';
-import Modal from '../../../../components/Modal';
+} from '../../../components/customComponents';
+import Modal from '../../../components/Modal';
 
-import { DATE_FORMAT } from '../../../App/constants';
+import { DATE_FORMAT } from '../../App/constants';
 
 const key = 'userPersonalInformationPage';
 
@@ -42,7 +42,7 @@ export const TwoFactor = props => {
     twoFactor,
     errors,
     helperObj: { showGoogleTwoFactor },
-    loading: { loadTwoFactor },
+    loading,
   } = props;
   useInjectSaga({ key, saga });
 
@@ -93,17 +93,19 @@ export const TwoFactor = props => {
   };
 
   const handleSubmitCode = () => {
-    props.addTwoFactorRequest();
+    props.setGoogleTwoFactorRequest();
   };
 
-  return loadTwoFactor ? (
-    <div className="ml-4 p-4 border">Loading</div>
+  return loading ? (
+    <div className="ml-4 p-4 ">Loading</div>
   ) : (
     <>
       <Modal
         open={showGoogleTwoFactor}
         handleClose={handleClose}
         handleUpdate={handleSubmitCode}
+        width="sm"
+        buttonLabel2="Send"
       >
         <div>
           <Input
@@ -116,7 +118,7 @@ export const TwoFactor = props => {
             value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
           />
         </div>
-        <div>
+        <div className="m-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="250"
@@ -148,7 +150,7 @@ export const TwoFactor = props => {
           </p>
         </div>
       </Modal>
-      <div className="ml-4 p-4 border">
+      <div className="ml-4 p-4">
         <div>
           <Checkbox
             label="Enable Email two factor authentication"
@@ -177,7 +179,7 @@ export const TwoFactor = props => {
 TwoFactor.propTypes = {
   loadTwoFactorRequest: PropTypes.func.isRequired,
   addTwoFactorRequest: PropTypes.func.isRequired,
-  setOneValue: PropTypes.func.isRequired,
+  setValue: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.object,
   }),

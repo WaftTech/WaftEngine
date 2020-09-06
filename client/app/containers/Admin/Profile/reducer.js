@@ -65,6 +65,7 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
         draft.twoFactor = {
           ...state.twoFactor,
           google_authenticate: {
+            qrcode: action.payload.data.multi_fa.google_authenticate.qrcode,
             email: action.payload.data.email,
             auth_secret_setup:
               action.payload.data.multi_fa.google_authenticate

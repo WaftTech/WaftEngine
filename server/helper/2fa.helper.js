@@ -2,30 +2,30 @@
   'use strict';
 
   const speakeasy = require('speakeasy');
+  const qrCode = require('qr-image');
 
   twoFactorAuthenticatorHelper.generateMultiFactorAuthCode = req => {
     try {
       let otpPathURLlabel = req.hostname + ':' + req.user.email;
       otpPathURLlabel = encodeURIComponent(otpPathURLlabel.trim().toLowerCase());
-      otpPathURLlabel = 'cva';
       const issuer = encodeURIComponent(req.hostname.trim().toLowerCase());
       const secret = speakeasy.generateSecret({
-        length: 10,
+        length: 32,
         name: otpPathURLlabel,
         symbols: false,
         otpauth_url: false,
       });
-      // secret.otpauth_url = speakeasy.otpauthURL({
-      //   secret: secret.base32,
-      //   label: otpPathURLlabel,
-      //   issuer: issuer,
-      //   encoding: 'base32',
-      // });
+      secret.otpauth_url = speakeasy.otpauthURL({
+        secret: secret.base32,
+        label: otpPathURLlabel,
+        issuer: issuer,
+        encoding: 'base32',
+      });
 
-      // const qr_svg = qrCode.svgObject(secret.otpauth_url, { type: 'svg' });
+      const qr_svg = qrCode.svgObject(secret.otpauth_url, { type: 'svg' });
       req.session.totpAuthConfig = secret;
       return Promise.resolve({
-        // qrcode: qr_svg,
+        qrcode: qr_svg,
         secret: secret.base32,
       });
     } catch (err) {
