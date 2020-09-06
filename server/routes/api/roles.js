@@ -12,6 +12,9 @@ router.delete('/role/:id', authorization, dModule.DeleteRole);
 router.get('/module', authorization, authentication, dModule.GetModule);
 router.get('/module/:id', authorization, authentication, dModule.GetModuleDetail);
 router.post('/module', authorization, authentication, validations.sanitizeModule, validations.validateModule, dModule.AddModuleList);
+router.get('/module-group', authorization, authentication, dModule.GetModuleGroup);
+router.get('/module-group/:id', authorization, authentication, dModule.GetModuleGroupDetail);
+router.post('/module-group', authorization, authentication, dModule.AddModuleGroupList);
 router.get('/access', authorization, authentication, dModule.GetAccessList);
 router.post('/access', authorization, authentication, validations.sanitizeAccess, validations.validateAccess, dModule.SaveAccessList);
 

@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const roleSch = require('./roleSchema');
 const moduleSch = require('./moduleSchema');
+const moduleGroupSch = require('./moduleGroupSchema');
 const accessSch = require('./accessSchema');
 const roleConfig = require('./roleConfig');
 const roleController = {};
@@ -78,6 +79,26 @@ roleController.GetModuleDetail = async (req, res, next) => {
   const modules = await moduleSch.findById(req.params.id);
   return otherHelper.sendResponse(res, httpStatus.OK, true, modules, null, roleConfig.moduleGet, null, 'Module Not Found');
 };
+roleController.GetModuleGroup = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
+
+    selectQuery = 'module_name description order path';
+
+    if (req.query.find_module_name) {
+      searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
+    }
+    let datas = await otherHelper.getquerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
+roleController.GetModuleGroupDetail = async (req, res, next) => {
+  const modules = await moduleGroupSch.findById(req.params.id);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, modules, null, roleConfig.moduleGet, null, 'Module Not Found');
+};
 roleController.AddModuleList = async (req, res, next) => {
   try {
     const modules = req.body;
@@ -89,6 +110,22 @@ roleController.AddModuleList = async (req, res, next) => {
       const newModules = new moduleSch(modules);
       await newModules.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, newModules, null, roleConfig.moduleSave, null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+roleController.AddModuleGroupList = async (req, res, next) => {
+  try {
+    const moduleGroup = req.body;
+    if (moduleGroup._id) {
+      const update = await moduleGroupSch.findByIdAndUpdate(moduleGroup._id, { $set: moduleGroup }, { new: true });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, roleConfig.moduleSave, null);
+    } else {
+      moduleGroup.added_by = req.user.id;
+      const newModuleGroup = new moduleGroupSch(moduleGroup);
+      await newModuleGroup.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, newModuleGroup, null, roleConfig.moduleSave, null);
     }
   } catch (err) {
     next(err);
