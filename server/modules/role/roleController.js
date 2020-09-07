@@ -83,7 +83,7 @@ roleController.GetModuleGroup = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
 
-    selectQuery = 'module_name description order path';
+    selectQuery = 'module_group module_group_main description order path';
 
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
