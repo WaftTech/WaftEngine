@@ -18,6 +18,7 @@ export const initialState = {
     module_name: '',
     description: '',
     path: [],
+    module_group: '',
   },
   access: {
     Access: [],
@@ -29,6 +30,7 @@ export const initialState = {
   query: { find_module_name: '' },
   loading: false,
   errors: { module_name: '', description: '' },
+  sub_module: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -66,7 +68,7 @@ const adminRoleReducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.one = action.payload.data;
+        draft.one = { ...initialState.one, ...action.payload.data };
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
@@ -80,6 +82,10 @@ const adminRoleReducer = (state = initialState, action) =>
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
+        break;
+
+      case types.LOAD_SUB_MODULE_SUCCESS:
+        draft.sub_module = action.payload.data;
         break;
     }
   });

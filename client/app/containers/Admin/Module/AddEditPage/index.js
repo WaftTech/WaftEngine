@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
+import Select from 'react-select';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -23,6 +24,7 @@ import {
   makeSelectOne,
   makeSelectLoading,
   makeSelectErrors,
+  makeSelectSubModules,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PathComponent from './components/Path';
@@ -49,11 +51,16 @@ class AddEdit extends React.PureComponent {
     if (this.props.match.params && this.props.match.params.id) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
+    this.props.loadSubModuleRequest();
   }
 
   handleChange = name => event => {
     event.persist();
     this.props.setOneValue({ key: name, value: event.target.value });
+  };
+
+  handleDropdownChange = name => event => {
+    this.props.setOneValue({ key: name, value: event.value });
   };
 
   handleChecked = name => event => {
@@ -210,7 +217,21 @@ class AddEdit extends React.PureComponent {
       one,
       loading,
       errors,
+      sub_modules,
     } = this.props;
+
+    let listSubModulesNormalized = {};
+    const listSubModules = sub_modules.map(each => {
+      const obj = {
+        label: each.description, //should be module_group
+        value: each._id,
+      };
+      listSubModulesNormalized = {
+        ...listSubModulesNormalized,
+        [each._id]: obj,
+      };
+      return obj;
+    });
 
     return loading && loading == true ? (
       <Loading />
@@ -268,6 +289,21 @@ class AddEdit extends React.PureComponent {
             )}
           </div>
 
+          <div className="w-full md:w-1/2 pb-2">
+            <label className="label">Sub Module</label>
+            <Select
+              className="React_Select"
+              id="category"
+              placeholder="Choose"
+              value={listSubModulesNormalized[one.module_group] || null}
+              classNamePrefix="select"
+              onChange={this.handleDropdownChange('module_group')}
+              isSearchable
+              options={listSubModules}
+              styles={customStyles}
+            />
+          </div>
+
           {one.path.map((each, pathIndex) => (
             <PathComponent
               key={`${each._id}-${pathIndex}`}
@@ -315,12 +351,33 @@ const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
   errors: makeSelectErrors(),
+  sub_modules: makeSelectSubModules(),
 });
 
 const withConnect = connect(
   mapStateToProps,
   { ...mapDispatchToProps, push },
 );
+
+const customStyles = {
+  control: (base, state) => ({
+    ...base,
+    background: '#fff',
+    borderColor: '#e0e3e8',
+    minHeight: '35px',
+    height: '35px',
+    width: '100%',
+    boxShadow: state.isFocused ? null : null,
+    marginRight: '8px',
+  }),
+  placeholder: state => ({
+    color: '#000',
+    fontSize: '15px',
+  }),
+  indicatorSeparator: state => ({
+    display: 'none',
+  }),
+};
 
 const styles = theme => ({
   fab: {
