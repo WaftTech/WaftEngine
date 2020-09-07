@@ -223,7 +223,7 @@ class AddEdit extends React.PureComponent {
     let listSubModulesNormalized = {};
     const listSubModules = sub_modules.map(each => {
       const obj = {
-        label: each.description, //should be module_group
+        label: each.module_group,
         value: each._id,
       };
       listSubModulesNormalized = {
