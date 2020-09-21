@@ -1,5 +1,9 @@
 import * as types from './constants';
 
+export const clearData = payload => ({
+  type: types.CLEAR_DATA,
+  payload,
+});
 export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,

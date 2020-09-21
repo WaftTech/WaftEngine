@@ -16,6 +16,12 @@ export const makeSelectLoading = () =>
     selectLoginUserPageDomain,
     state => state.loading,
   );
+
+export const makeSelectLoadingObj = () =>
+  createSelector(
+    selectLoginUserPageDomain,
+    state => state.loadingObj,
+  );
 export const makeSelectEmail = () =>
   createSelector(
     selectLoginUserPageDomain,

@@ -13,6 +13,7 @@ export const initialState = {
   loading: false,
   twoFactor: {},
   helperObj: { showEmailTwoFactor: false, showGoogleTwoFactor: false },
+  loadingObj: { loggingUser: false, sendingCode: false },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -53,8 +54,15 @@ const loginUserPageReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.errors = { ...action.payload.errors };
         break;
+      case types.ADD_TWO_FACTOR_REQUEST:
+        draft.loadingObj.sendingCode = true;
+        break;
       case types.ADD_TWO_FACTOR_FAILURE:
+        draft.loadingObj.sendingCode = false;
         draft.errors = { ...action.payload.errors };
+        break;
+      case types.ADD_TWO_FACTOR_SUCCESS:
+        draft.loadingObj.sendingCode = false;
         break;
     }
   });

@@ -23,6 +23,7 @@ import {
   makeSelectHelperObj,
   makeSelectLoading,
   makeSelectErrors,
+  makeSelectLoadingObj,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import {
@@ -43,6 +44,7 @@ export const TwoFactor = props => {
     errors,
     helperObj: { showGoogleTwoFactor },
     loading,
+    loadingObj: { loadTwoFactor, addEmailAuth, addGoogleAuth, setGoogleCode },
   } = props;
   useInjectSaga({ key, saga });
 
@@ -90,13 +92,14 @@ export const TwoFactor = props => {
       },
       // value:  event.target.checked ,
     });
+    props.clearData({ name: 'errors' });
   };
 
   const handleSubmitCode = () => {
     props.setGoogleTwoFactorRequest();
   };
 
-  return loading ? (
+  return loadTwoFactor ? (
     <div className="ml-4 p-4 ">Loading</div>
   ) : (
     <>
@@ -105,7 +108,7 @@ export const TwoFactor = props => {
         handleClose={handleClose}
         handleUpdate={handleSubmitCode}
         width="sm"
-        buttonLabel2="Send"
+        buttonLabel2={setGoogleCode ? 'Sending...' : 'Send'}
       >
         <div>
           <Input
@@ -160,6 +163,7 @@ export const TwoFactor = props => {
             color="primary"
             onChange={handleChecked}
           />
+          {addEmailAuth && 'Loading...'}
         </div>
         <div>
           <Checkbox
@@ -170,6 +174,7 @@ export const TwoFactor = props => {
             color="primary"
             onChange={handleChecked}
           />
+          {addGoogleAuth && 'Loading...'}
         </div>
       </div>
     </>
@@ -193,6 +198,7 @@ const mapStateToProps = createStructuredSelector({
   twoFactor: makeSelectTwoFactor(),
   loading: makeSelectLoading(),
   helperObj: makeSelectHelperObj(),
+  loadingObj: makeSelectLoadingObj(),
 });
 
 const withConnect = connect(

@@ -1,5 +1,6 @@
 export const SET_ONE_VALUE = 'app/UserPersonalInformation/SET_ONE_VALUE';
 export const SET_VALUE = 'app/UserPersonalInformation/SET_VALUE';
+export const CLEAR_DATA = 'app/UserPersonalInformation/CLEAR_DATA';
 
 export const DEFAULT_ACTION = 'app/UserPersonalInformation/DEFAULT_ACTION';
 

@@ -30,6 +30,7 @@ import {
   makeSelectEmailError,
   makeSelectPasswordError,
   makeSelectHelperObj,
+  makeSelectLoadingObj,
   makeSelectTwoFactor,
 } from './selectors';
 import Modal from '../../components/Modal';
@@ -46,6 +47,7 @@ const LoginUserPage = props => {
     emailErr,
     passwordErr,
     twoFactor,
+    loadingObj: { loggingUser, sendingCode },
     helperObj: { showEmailTwoFactor, showGoogleTwoFactor },
   } = props;
 
@@ -79,11 +81,14 @@ const LoginUserPage = props => {
         },
       },
     });
-    // props.setValue({
-    //   name: 'errors',
-    //   key: e.target.name,
-    //   value: '',
-    // });
+    props.setValue({
+      name: 'errors',
+      key: 'multi_fa',
+      value: {
+        ...errors.multi_fa,
+        [name]: { ...errors.multi_fa[name], [e.target.name]: '' },
+      },
+    });
   };
 
   const handleSubmit = e => {
@@ -102,7 +107,22 @@ const LoginUserPage = props => {
         open={showEmailTwoFactor || showGoogleTwoFactor}
         handleClose={handleClose}
         handleUpdate={handleSubmitCode}
-        buttonLabel2="Send"
+        buttonLabel2={
+          sendingCode ? (
+            <>
+              <div className="flex text-center justify-center">
+                <div className="loading_wrapper">
+                  <span className="font-bold mr-2 my-auto text-white">
+                    Sending
+                  </span>
+                  <div className="dot-elastic" />{' '}
+                </div>
+              </div>
+            </>
+          ) : (
+            'Continue'
+          )
+        }
         width="sm"
       >
         {showEmailTwoFactor && (
@@ -112,7 +132,7 @@ const LoginUserPage = props => {
               name="code"
               subLabel="Check inbox for the code"
               label="Enter the code"
-              error={errors.code}
+              error={errors && errors.multi_fa && errors.multi_fa.email.code}
               value={twoFactor && twoFactor.email && twoFactor.email.code}
               onChange={e => handleChange(e, 'email')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
@@ -127,7 +147,11 @@ const LoginUserPage = props => {
               name="code"
               subLabel="Copy code from Google Authentication App"
               label="Enter the code"
-              error={errors.code}
+              error={
+                errors &&
+                errors.multi_fa &&
+                errors.multi_fa.google_authenticate.code
+              }
               value={
                 twoFactor &&
                 twoFactor.google_authenticate &&
@@ -261,6 +285,7 @@ const mapStateToProps = createStructuredSelector({
   passwordErr: makeSelectPasswordError(),
   twoFactor: makeSelectTwoFactor(),
   helperObj: makeSelectHelperObj(),
+  loadingObj: makeSelectLoadingObj(),
 });
 
 const withConnect = connect(
