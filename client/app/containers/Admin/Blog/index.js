@@ -155,7 +155,7 @@ export class BlogManagePage extends React.Component {
     this.setState({ open: false });
   };
 
-  handleDelete = id => {
+  handleDeleteBlog = id => {
     this.props.deleteOneRequest(id);
     this.setState({ open: false });
   };
@@ -468,7 +468,7 @@ export class BlogManagePage extends React.Component {
         <DeleteDialog
           open={this.state.open}
           doClose={this.handleClose}
-          doDelete={() => this.handleDelete(this.state.deleteId)}
+          doDelete={() => this.handleDeleteBlog(this.state.deleteId)}
         />
         <Helmet>
           <title>News Listing</title>

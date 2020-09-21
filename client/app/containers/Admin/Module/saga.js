@@ -137,6 +137,18 @@ function* updateSuccessFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* loadSubModule(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `role/module-group?size=100`,
+      actions.loadSubModuleSuccess,
+      actions.loadSubModuleFailure,
+      token,
+    ),
+  );
+}
+
 export default function* adminRoleSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
@@ -147,4 +159,5 @@ export default function* adminRoleSaga() {
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
   yield takeLatest(types.UPDATE_ACCESS_SUCCESS, updateSuccessFunc);
   yield takeLatest(types.UPDATE_ACCESS_FAILURE, updateFailureFunc);
+  yield takeLatest(types.LOAD_SUB_MODULE_REQUEST, loadSubModule);
 }

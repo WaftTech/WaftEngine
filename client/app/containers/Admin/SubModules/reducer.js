@@ -1,6 +1,6 @@
 /*
  *
- * AdminRole reducer
+ * SubModules reducer
  *
  */
 import produce from 'immer';
@@ -12,37 +12,26 @@ export const initialState = {
     page: 1,
     size: 10,
     totaldata: 0,
-    msg: '',
   },
   one: {
-    module_name: '',
-    description: '',
-    path: [],
     module_group: '',
+    description: '',
+    // module_group_main: '',
+    order: '',
   },
-  access: {
-    Access: [],
-    Module: {
-      path: [],
-    },
-    Roles: [],
-  },
-  query: { find_module_name: '' },
+  query: { find_title: '', size: 10 },
+
   loading: false,
-  errors: { module_name: '', description: '' },
-  sub_module: [],
+  errors: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const adminRoleReducer = (state = initialState, action) =>
+const subModulesReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
-        draft.errors[action.payload.key] = ' ';
-        break;
-      case types.SET_ACCESS_VALUE:
-        draft.access[action.payload.key] = action.payload.value;
+        draft.errors[action.payload.errors] = ' ';
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
@@ -53,41 +42,41 @@ const adminRoleReducer = (state = initialState, action) =>
       case types.CLEAR_ONE:
         draft.one = initialState.one;
         break;
+      case types.SET_QUERY_VALUE:
+        draft.query[action.payload.key] = action.payload.value;
+        break;
+      case types.CLEAR_QUERY:
+        draft.query = initialState.query;
+        break;
+
       case types.LOAD_ALL_REQUEST:
         draft.loading = true;
         break;
       case types.LOAD_ALL_SUCCESS:
-        draft.loading = false;
         draft.all = action.payload;
-        break;
-      case types.LOAD_ALL_FAILURE:
         draft.loading = false;
         break;
+
       case types.LOAD_ONE_REQUEST:
-        draft.loading = true;
-        break;
-      case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.one = { ...initialState.one, ...action.payload.data };
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
         break;
-      case types.LOAD_ACCESS_SUCCESS:
+      case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.access = action.payload.data;
-        break;
-      case types.LOAD_ACCESS_REQUEST:
-        draft.loading = true;
-        break;
-      case types.SET_QUERY_VALUE:
-        draft.query[action.payload.key] = action.payload.value;
+        draft.one = action.payload.data;
         break;
 
-      case types.LOAD_SUB_MODULE_SUCCESS:
-        draft.sub_module = action.payload.data;
+      case types.DELETE_ONE_SUCCESS:
+        draft.all = {
+          ...draft.all,
+          data: draft.all.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
         break;
     }
   });
 
-export default adminRoleReducer;
+export default subModulesReducer;

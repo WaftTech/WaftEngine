@@ -38,3 +38,10 @@ export const DELETE_ONE_REQUEST = 'app/AdminModuleManage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/AdminModuleManage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/AdminModuleManage/DELETE_ONE_FAILURE';
 export const CLEAR_ERRORS = 'app/AdminModuleManage/CLEAR_ERRORS';
+
+export const LOAD_SUB_MODULE_REQUEST =
+  'app/AdminModuleManage/LOAD_SUB_MODULE_REQUEST';
+export const LOAD_SUB_MODULE_SUCCESS =
+  'app/AdminModuleManage/LOAD_SUB_MODULE_SUCCESS';
+export const LOAD_SUB_MODULE_FAILURE =
+  'app/AdminModuleManage/LOAD_SUB_MODULE_FAILURE';

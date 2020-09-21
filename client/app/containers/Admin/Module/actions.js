@@ -110,3 +110,16 @@ export const deleteOneFailure = payload => ({
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
 });
+
+export const loadSubModuleRequest = payload => ({
+  type: types.LOAD_SUB_MODULE_REQUEST,
+  payload,
+});
+export const loadSubModuleSuccess = payload => ({
+  type: types.LOAD_SUB_MODULE_SUCCESS,
+  payload,
+});
+export const loadSubModuleFailure = payload => ({
+  type: types.LOAD_SUB_MODULE_FAILURE,
+  payload,
+});
