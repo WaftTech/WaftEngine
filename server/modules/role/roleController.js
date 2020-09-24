@@ -208,7 +208,32 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
     next(err);
   }
 };
-
+roleController.GetModulesWithHierarchy = async (req, res, next) => {
+  try {
+    const moduleGroup = await moduleGroupSch
+      .find()
+      .select({ module_group: 1, description: 1 })
+      .sort({ order: 1 })
+      .lean();
+    const modules = await moduleSch
+      .find()
+      .select({ module_name: 1, module_group: 1, 'path.access_type': 1, 'path.access_type_description': 1, 'path._id': 1 })
+      .sort({ order: 1 })
+      .lean();
+    let result = [];
+    console.log(modules);
+    for (let i = 0; i < moduleGroup.length; i++) {
+      let d = moduleGroup[i];
+      const module_filter = modules.filter(x => (d._id.toString() == x.module_group ? x.module_group.toString() : ''));
+      d.modules = module_filter;
+      // for (let j = 0; j < module_filter.length; j++) {}
+      result.push(d);
+    }
+    return otherHelper.sendResponse(res, httpStatus.OK, true, result, null, '', null);
+  } catch (err) {
+    next(err);
+  }
+};
 roleController.GetAccessListForRole = async (req, res, next) => {
   try {
     const roleid = req.params.roleid;

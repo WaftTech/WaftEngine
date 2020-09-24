@@ -21,6 +21,7 @@ router.post('/access', authorization, authentication, validations.sanitizeAccess
 /**
  * Access Management of Role to all Module
  */
+router.get('/module-hierarchy', authorization, authentication, dModule.GetModulesWithHierarchy);
 router.get('/access/role/:roleid', authorization, authentication, dModule.GetAccessListForRole);
 router.post('/access/role/:roleid', authorization, authentication, dModule.SaveAccessListFromRole);
 
