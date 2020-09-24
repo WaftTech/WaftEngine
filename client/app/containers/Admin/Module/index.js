@@ -84,28 +84,35 @@ export class AdminModuleManage extends React.PureComponent {
       loading,
     } = this.props;
     const tablePagination = { page, size, totaldata };
-    const tableData = data.map(({ _id, module_name, description }) => [
-      module_name,
-      description,
-      <>
-
-<div className="flex">
+    const tableData = data.map(
+      ({ _id, module_name, description, module_group }) => [
+        (module_group && module_group.module_group) || '-',
+        module_name,
+        description,
+        <>
+          <div className="flex">
             <button
               aria-label="Edit"
               className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">edit</i>
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+                edit
+              </i>
             </button>
 
-            <button className="ml-2 px-1 text-center leading-none"
-               onClick={() => this.handleAccessEdit(_id)}
+            <button
+              className="ml-2 px-1 text-center leading-none"
+              onClick={() => this.handleAccessEdit(_id)}
             >
-              <i className="material-icons text-base text-green-400 hover:text-green-600">vpn_key</i>
+              <i className="material-icons text-base text-green-400 hover:text-green-600">
+                vpn_key
+              </i>
             </button>
           </div>
-      </>,
-    ]);
+        </>,
+      ],
+    );
 
     return (
       <>
@@ -147,7 +154,7 @@ export class AdminModuleManage extends React.PureComponent {
             </div>
           </div>
           <Table
-            tableHead={['Module Name', 'Description', 'Action']}
+            tableHead={['Module Group', 'Module Name', 'Description', 'Action']}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

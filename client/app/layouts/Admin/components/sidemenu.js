@@ -100,15 +100,22 @@ const menu = [
         icon: 'people',
         link: '/admin/role-manage',
       },
+    ],
+  },
+  {
+    key: '6',
+    name: 'Modules',
+    icon: 'extension',
+    menu: [
       {
-        key: '3.3',
+        key: '6.3',
         name: 'Modules',
         icon: 'extension',
         link: '/admin/module-manage',
       },
       {
-        key: '3.4',
-        name: 'Sub Modules',
+        key: '6.4',
+        name: 'Module Group',
         icon: 'extension',
         link: '/admin/sub-modules',
       },

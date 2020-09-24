@@ -63,13 +63,15 @@ roleController.GetModule = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
 
-    selectQuery = 'module_name description order path';
-
+    selectQuery = 'module_name description order path module_group';
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
+    populate = {
+      path: 'module_group',
+      select: 'module_group',
+    };
     let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
   } catch (err) {
     next(err);

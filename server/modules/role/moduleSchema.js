@@ -5,7 +5,7 @@ const moduleSchema = new schema({
   module_name: { type: String, required: true, unique: true },
   description: { type: String },
   order: { type: Number },
-  module_group: { type: schema.Types.ObjectId, path: 'moduleGroupAccess' },
+  module_group: { type: schema.Types.ObjectId, path: 'moduleGroup' },
   path: [
     {
       access_type: { type: String, required: true },
