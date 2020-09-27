@@ -83,15 +83,12 @@ const RoleAccess = props => {
         temp_index = index;
       }
     }
-    console.log(access_array, 'neforeChange');
-    console.log(event.target.name, 'value');
     let tempValue = [...access_array];
     if (event.target.checked) {
       tempValue = [...tempValue, event.target.name];
     } else {
       tempValue = tempValue.filter(each => each !== event.target.name);
     }
-    console.log(tempValue, 'afterChange');
     setAccessArray({ index: temp_index, value: tempValue });
   };
 

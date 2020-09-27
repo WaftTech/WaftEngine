@@ -103,7 +103,6 @@ const adminRoleReducer = (state = initialState, action) =>
         break;
 
       case types.SET_ACCESS_ARRAY:
-        console.log('reducer', action.payload.index);
         draft.role_data.Access[action.payload.index].access_type =
           action.payload.value;
         break;
