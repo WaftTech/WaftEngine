@@ -238,9 +238,10 @@ roleController.GetAccessListForRole = async (req, res, next) => {
   try {
     const roleid = req.params.roleid;
     const AccessForRole = await accessSch.find({ role_id: roleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
-    const ModulesForRole = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
-    const Roles = await roleSch.find({}, { _id: 1, role_title: 1, is_active: 1 });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForRole, Module: ModulesForRole, Roles: Roles }, null, 'Access Get Success !!', null);
+    // const ModulesForRole = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
+    // const Roles = await roleSch.find({}, { _id: 1, role_title: 1, is_active: 1 });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForRole }, null, 'Access Get Success !!', null);
+    //, Module: ModulesForRole, Roles: Roles
   } catch (err) {
     next(err);
   }
