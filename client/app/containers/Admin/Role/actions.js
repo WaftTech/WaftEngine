@@ -81,3 +81,34 @@ export const deleteOneFailure = payload => ({
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
 });
+
+export const loadModuleGroupRequest = payload => ({
+  type: types.LOAD_MODULE_GROUP_REQUEST,
+  payload,
+});
+export const loadModuleGroupSuccess = payload => ({
+  type: types.LOAD_MODULE_GROUP_SUCCESS,
+  payload,
+});
+export const loadModuleGroupFailure = payload => ({
+  type: types.LOAD_MODULE_GROUP_FAILURE,
+  payload,
+});
+
+export const loadRoleAccessRequest = payload => ({
+  type: types.LOAD_ROLE_ACCESS_REQUEST,
+  payload,
+});
+export const loadRoleAccessSuccess = payload => ({
+  type: types.LOAD_ROLE_ACCESS_SUCCESS,
+  payload,
+});
+export const loadRoleAccessFailure = payload => ({
+  type: types.LOAD_ROLE_ACCESS_FAILURE,
+  payload,
+});
+
+export const setAccessArray = payload => ({
+  type: types.SET_ACCESS_ARRAY,
+  payload,
+});

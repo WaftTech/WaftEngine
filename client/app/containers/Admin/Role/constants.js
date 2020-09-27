@@ -29,3 +29,19 @@ export const DELETE_ONE_SUCCESS = 'app/AdminRole/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/AdminRole/DELETE_ONE_FAILURE';
 
 export const CLEAR_ERRORS = 'app/AdminRole/CLEAR_ERRORS';
+
+export const LOAD_MODULE_GROUP_REQUEST =
+  'app/AdminRole/LOAD_MODULE_GROUP_REQUEST';
+export const LOAD_MODULE_GROUP_SUCCESS =
+  'app/AdminRole/LOAD_MODULE_GROUP_SUCCESS';
+export const LOAD_MODULE_GROUP_FAILURE =
+  'app/AdminRole/LOAD_MODULE_GROUP_FAILURE';
+
+export const LOAD_ROLE_ACCESS_REQUEST =
+  'app/AdminRole/LOAD_ROLE_ACCESS_REQUEST';
+export const LOAD_ROLE_ACCESS_SUCCESS =
+  'app/AdminRole/LOAD_ROLE_ACCESS_SUCCESS';
+export const LOAD_ROLE_ACCESS_FAILURE =
+  'app/AdminRole/LOAD_ROLE_ACCESS_FAILURE';
+
+export const SET_ACCESS_ARRAY = 'app/AdminRole/SET_ACCESS_ARRAY';

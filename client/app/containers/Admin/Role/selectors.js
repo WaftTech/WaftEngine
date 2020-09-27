@@ -5,8 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the adminRole state domain
  */
 
-export const selectAdminRoleDomain = state =>
-  state.adminRole || initialState;
+export const selectAdminRoleDomain = state => state.adminRole || initialState;
 
 /**
  * Other specific selectors
@@ -40,6 +39,24 @@ export const makeSelectErrors = () =>
   createSelector(
     selectAdminRoleDomain,
     state => state.errors,
+  );
+
+export const makeSelectModuleData = () =>
+  createSelector(
+    selectAdminRoleDomain,
+    state => state.module_data,
+  );
+
+export const makeSelectRoleData = () =>
+  createSelector(
+    selectAdminRoleDomain,
+    state => state.role_data,
+  );
+
+export const makeSelectLoaders = () =>
+  createSelector(
+    selectAdminRoleDomain,
+    state => state.loaders,
   );
 
 /**
