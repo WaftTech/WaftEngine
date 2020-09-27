@@ -133,7 +133,7 @@ const RoleAccess = props => {
                             control={
                               <Checkbox
                                 color="primary"
-                                name="is_active"
+                                name={each.__id}
                                 checked={getAccessArray(module._id).includes(
                                   module_path._id,
                                 )}
