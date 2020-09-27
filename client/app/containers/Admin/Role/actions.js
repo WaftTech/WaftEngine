@@ -107,3 +107,8 @@ export const loadRoleAccessFailure = payload => ({
   type: types.LOAD_ROLE_ACCESS_FAILURE,
   payload,
 });
+
+export const setAccessArray = payload => ({
+  type: types.SET_ACCESS_ARRAY,
+  payload,
+});

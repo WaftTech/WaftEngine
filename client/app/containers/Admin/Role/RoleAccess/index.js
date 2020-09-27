@@ -43,6 +43,7 @@ const RoleAccess = props => {
     loadModuleGroupRequest,
     loadRoleAccessRequest,
     role_data: { Access },
+    setAccessArray,
   } = props;
 
   const [loading, setLoading] = useState(false);
@@ -69,8 +70,29 @@ const RoleAccess = props => {
         access_array = Access[index].access_type;
       }
     }
-    console.log(access_array);
     return access_array;
+  };
+
+  const handleAccessChange = module_id => event => {
+    event.persist();
+    let access_array = [];
+    let temp_index = 0;
+    for (let index = 0; index < Access.length; index++) {
+      if (Access[index].module_id === module_id) {
+        access_array = Access[index].access_type;
+        temp_index = index;
+      }
+    }
+    console.log(access_array, 'neforeChange');
+    console.log(event.target.name, 'value');
+    let tempValue = [...access_array];
+    if (event.target.checked) {
+      tempValue = [...tempValue, event.target.name];
+    } else {
+      tempValue = tempValue.filter(each => each !== event.target.name);
+    }
+    console.log(tempValue, 'afterChange');
+    setAccessArray({ index: temp_index, value: tempValue });
   };
 
   const handleBack = () => {
@@ -133,10 +155,11 @@ const RoleAccess = props => {
                             control={
                               <Checkbox
                                 color="primary"
-                                name={each.__id}
+                                name={module_path._id}
                                 checked={getAccessArray(module._id).includes(
                                   module_path._id,
                                 )}
+                                onChange={handleAccessChange(module._id)}
                               />
                             }
                             label={module_path.access_type}

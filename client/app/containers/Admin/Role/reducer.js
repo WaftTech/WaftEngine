@@ -101,6 +101,12 @@ const adminRoleReducer = (state = initialState, action) =>
       case types.LOAD_ROLE_ACCESS_FAILURE:
         draft.loaders.role_loading = false;
         break;
+
+      case types.SET_ACCESS_ARRAY:
+        console.log('reducer', action.payload.index);
+        draft.role_data.Access[action.payload.index].access_type =
+          action.payload.value;
+        break;
     }
   });
 

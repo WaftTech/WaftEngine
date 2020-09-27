@@ -43,3 +43,5 @@ export const LOAD_ROLE_ACCESS_SUCCESS =
   'app/AdminRole/LOAD_ROLE_ACCESS_SUCCESS';
 export const LOAD_ROLE_ACCESS_FAILURE =
   'app/AdminRole/LOAD_ROLE_ACCESS_FAILURE';
+
+export const SET_ACCESS_ARRAY = 'app/AdminRole/SET_ACCESS_ARRAY';
