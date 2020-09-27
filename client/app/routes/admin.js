@@ -1,6 +1,8 @@
 import DashboardPage from '../containers/Admin/Dashboard/Loadable';
 import RolePage from '../containers/Admin/Role/Loadable';
 import RoleEditPage from '../containers/Admin/Role/AddEditPage/Loadable';
+import RoleAccess from '../containers/Admin/Role/RoleAccess/Loadable';
+
 import ModuleManagePage from '../containers/Admin/Module/Loadable';
 import ModuleManageEditPage from '../containers/Admin/Module/AddEditPage/Loadable';
 import ModuleAccessManagePage from '../containers/Admin/Module/AccessManagePage/Loadable';
@@ -68,6 +70,11 @@ const routes = [
   {
     path: '/admin/role-manage/edit/:id',
     component: RoleEditPage,
+    exact: true,
+  },
+  {
+    path: '/admin/role-manage/access/:id',
+    component: RoleAccess,
     exact: true,
   },
   {

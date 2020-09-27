@@ -64,6 +64,10 @@ export class AdminRole extends React.PureComponent {
     this.props.push('/admin/role-manage/add');
   };
 
+  handleAccess = id => {
+    this.props.push(`/admin/role-manage/access/${id}`);
+  };
+
   handleEdit = id => {
     this.props.push(`/admin/role-manage/edit/${id}`);
   };
@@ -114,7 +118,7 @@ export class AdminRole extends React.PureComponent {
           <div className="flex">
             <button
               className="ml-2 px-1 text-center leading-none"
-              onClick={() => this.handleAdd(_id)}
+              onClick={() => this.handleAccess(_id)}
             >
               <i className="material-icons text-base text-green-400 hover:text-green-600">
                 vpn_key

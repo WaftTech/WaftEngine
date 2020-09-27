@@ -120,6 +120,30 @@ function* addEditSuccessFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* loadModuleGroup(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `role/module-hierarchy`,
+      actions.loadModuleGroupSuccess,
+      actions.loadModuleGroupFailure,
+      token,
+    ),
+  );
+}
+
+function* loadRoleAccess(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `role/access/role/${action.payload}`,
+      actions.loadRoleAccessSuccess,
+      actions.loadRoleAccessFailure,
+      token,
+    ),
+  );
+}
+
 export default function* adminRoleSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
@@ -129,4 +153,7 @@ export default function* adminRoleSaga() {
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
+
+  yield takeLatest(types.LOAD_MODULE_GROUP_REQUEST, loadModuleGroup);
+  yield takeLatest(types.LOAD_ROLE_ACCESS_REQUEST, loadRoleAccess);
 }

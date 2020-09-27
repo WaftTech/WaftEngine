@@ -22,6 +22,12 @@ export const initialState = {
   query: { find_role_title: '' },
   loading: false,
   errors: { role_title: '', description: '' },
+  module_data: [],
+  role_data: { Access: [] },
+  loaders: {
+    module_loading: false,
+    role_loading: false,
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -72,6 +78,28 @@ const adminRoleReducer = (state = initialState, action) =>
           ...draft.all,
           data: draft.all.data.filter(e => e._id != action.payload.data._id),
         };
+        break;
+
+      case types.LOAD_MODULE_GROUP_REQUEST:
+        draft.loaders.module_loading = true;
+        break;
+      case types.LOAD_MODULE_GROUP_SUCCESS:
+        draft.loaders.module_loading = false;
+        draft.module_data = action.payload.data;
+        break;
+      case types.LOAD_MODULE_GROUP_FAILURE:
+        draft.loaders.module_loading = false;
+        break;
+
+      case types.LOAD_ROLE_ACCESS_REQUEST:
+        draft.loaders.role_loading = true;
+        break;
+      case types.LOAD_ROLE_ACCESS_SUCCESS:
+        draft.loaders.role_loading = false;
+        draft.role_data = action.payload.data;
+        break;
+      case types.LOAD_ROLE_ACCESS_FAILURE:
+        draft.loaders.role_loading = false;
         break;
     }
   });
