@@ -62,6 +62,17 @@ const RoleAccess = props => {
     }
   }, [loaders]);
 
+  const getAccessArray = module_id => {
+    let access_array = [];
+    for (let index = 0; index < Access.length; index++) {
+      if (Access[index].module_id === module_id) {
+        access_array = Access[index].access_type;
+      }
+    }
+    console.log(access_array);
+    return access_array;
+  };
+
   const handleBack = () => {
     push('/admin/role-manage');
   };
@@ -106,7 +117,10 @@ const RoleAccess = props => {
             <div className="ml-4 ">
               {each.modules.map(module => (
                 <div className="border-2 border-blue-600 mb-2 pb-2 rounded">
-                  <span className="text-lg p-2">
+                  <span
+                    className="text-lg p-2"
+                    onClick={() => getAccessArray(module._id)}
+                  >
                     Module: {module.module_name}
                   </span>
                   <ul className="ml-4 flex flex-wrap">
@@ -120,7 +134,9 @@ const RoleAccess = props => {
                               <Checkbox
                                 color="primary"
                                 name="is_active"
-                                // checked={one.is_active}
+                                checked={getAccessArray(module._id).includes(
+                                  module_path._id,
+                                )}
                               />
                             }
                             label={module_path.access_type}
