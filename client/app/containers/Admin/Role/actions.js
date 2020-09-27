@@ -112,3 +112,16 @@ export const setAccessArray = payload => ({
   type: types.SET_ACCESS_ARRAY,
   payload,
 });
+
+export const saveRoleAccessRequest = payload => ({
+  type: types.SAVE_ROLE_ACCESS_REQUEST,
+  payload,
+});
+export const saveRoleAccessSuccess = payload => ({
+  type: types.SAVE_ROLE_ACCESS_SUCCESS,
+  payload,
+});
+export const saveRoleAccessFailure = payload => ({
+  type: types.SAVE_ROLE_ACCESS_FAILURE,
+  payload,
+});

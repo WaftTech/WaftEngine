@@ -44,6 +44,7 @@ const RoleAccess = props => {
     loadRoleAccessRequest,
     role_data: { Access },
     setAccessArray,
+    saveRoleAccessRequest,
   } = props;
 
   const [loading, setLoading] = useState(false);
@@ -94,6 +95,10 @@ const RoleAccess = props => {
 
   const handleBack = () => {
     push('/admin/role-manage');
+  };
+
+  const handleSave = () => {
+    saveRoleAccessRequest(match.params.id);
   };
 
   return loading ? (
@@ -169,6 +174,12 @@ const RoleAccess = props => {
             </div>
           </div>
         ))}
+        <button
+          className="block btn bg-primary hover:bg-secondary"
+          onClick={handleSave}
+        >
+          Save
+        </button>
       </PageContent>
     </React.Fragment>
   );

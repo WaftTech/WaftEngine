@@ -12,7 +12,7 @@ import Api from 'utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
-import { makeSelectOne } from './selectors';
+import { makeSelectOne, makeSelectRoleData } from './selectors';
 import { enqueueSnackbar } from '../../App/actions';
 
 function* loadAll(action) {
@@ -144,6 +144,42 @@ function* loadRoleAccess(action) {
   );
 }
 
+function* saveRoleAccess(action) {
+  const token = yield select(makeSelectToken());
+  const data = yield select(makeSelectRoleData());
+  yield fork(
+    Api.post(
+      `role/access/role/${action.payload}`,
+      actions.saveRoleAccessSuccess,
+      actions.saveRoleAccessFailure,
+      data,
+      token,
+    ),
+  );
+}
+
+function* saveRoleAccessFailureFunc(action) {
+  const snackbarData = {
+    message: action.payload.msg || 'Something went wrong while updating!!',
+    options: {
+      variant: 'warning',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
+function* saveRoleAccessSuccessFunc(action) {
+  yield put(push('/admin/role-manage'));
+
+  const snackbarData = {
+    message: action.payload.msg || 'Update Success!!',
+    options: {
+      variant: 'success',
+    },
+  };
+  yield put(enqueueSnackbar(snackbarData));
+}
+
 export default function* adminRoleSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
@@ -156,4 +192,7 @@ export default function* adminRoleSaga() {
 
   yield takeLatest(types.LOAD_MODULE_GROUP_REQUEST, loadModuleGroup);
   yield takeLatest(types.LOAD_ROLE_ACCESS_REQUEST, loadRoleAccess);
+  yield takeLatest(types.SAVE_ROLE_ACCESS_REQUEST, saveRoleAccess);
+  yield takeLatest(types.SAVE_ROLE_ACCESS_SUCCESS, saveRoleAccessSuccessFunc);
+  yield takeLatest(types.SAVE_ROLE_ACCESS_FAILURE, saveRoleAccessFailureFunc);
 }
