@@ -122,7 +122,7 @@ class AddEdit extends React.PureComponent {
               <div id="component-error-text">{errors.description}</div>
             </div>
 
-            <button type="button" className="block btn bg-info hover:bg-secondary"  onClick={this.handleAddSlide}>Manage Modules</button>
+            {/* <button type="button" className="block btn bg-info hover:bg-secondary"  onClick={this.handleAddSlide}>Manage Modules</button>
             <div className="bg-white mt-2 shadow">
               <div className="p-2 border-b">
                 <div className="flex relative justify-end">
@@ -255,7 +255,7 @@ class AddEdit extends React.PureComponent {
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div> */}
 
             <FormControlLabel
               control={

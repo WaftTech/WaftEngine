@@ -22,6 +22,11 @@ import {
   makeSelectErrors,
   makeSelectRoleData,
 } from '../selectors';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
@@ -32,6 +37,7 @@ import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
 import '../../../../components/Table/table.css';
 import { each } from 'lodash';
+import './style.css';
 
 const RoleAccess = props => {
   const {
@@ -48,7 +54,12 @@ const RoleAccess = props => {
   } = props;
 
   const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState('panel1');
+  const [first, setFirst] = useState(true);
 
+  const handleFirst = () => {
+    setFirst(!first);
+  };
   useEffect(() => {
     loadModuleGroupRequest();
     if (match.params.id) {
@@ -63,6 +74,12 @@ const RoleAccess = props => {
       setLoading(true);
     }
   }, [loaders]);
+
+  useEffect(() => {
+    if (module_data && module_data.length > 0) {
+      setExpanded(module_data[0]._id);
+    }
+  }, [module_data]);
 
   const getAccessArray = module_id => {
     let access_array = [];
@@ -136,46 +153,66 @@ const RoleAccess = props => {
       </div>
       <PageContent>
         {module_data.map(each => (
-          <div className="border-2 border-black p-2 m-2 rounded bg-white">
-            <h4>Module Group: {each.module_group}</h4>
-            <div className="ml-4 ">
+          <ExpansionPanel
+            expanded={each._id === expanded}
+            onClick={() => setExpanded(each._id)}
+            className={classes.ExpansionPanelMainWrapper}
+          >
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+              classes={{
+                root: classes.roleRoot,
+                content: classes.roleContent,
+                expandIcon: classes.roleExpandIcon,
+                expanded: classes.roleExpanded,
+              }}
+            >
+              <Typography className={classes.heading}>
+                <h4 className="text-lg font-medium m-0">{each.module_group} Group</h4>
+              </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails style={{ display: 'block' }}>
               {each.modules.map(module => (
-                <div className="border-2 border-blue-600 mb-2 pb-2 rounded">
-                  <span
-                    className="text-lg p-2"
+                <fieldset className="formfieldset mb-2">
+                  <legend
+                    className="text-lg px-2"
                     onClick={() => getAccessArray(module._id)}
                   >
-                    Module: {module.module_name}
-                  </span>
-                  <ul className="ml-4 flex flex-wrap">
+                    {module.module_name}
+                  </legend>
+                  <ul className="flex flex-wrap">
                     {module.path.length > 0 &&
                       module.path.map(module_path => (
-                        <li>
-                          {' '}
-                          <FormControlLabel
-                            className="flex-1"
-                            control={
-                              <Checkbox
-                                color="primary"
-                                name={module_path._id}
-                                checked={getAccessArray(module._id).includes(
-                                  module_path._id,
-                                )}
-                                onChange={handleAccessChange(module._id)}
-                              />
-                            }
-                            label={module_path.access_type}
-                          />
+                        <li className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2">
+                          <div className="mr-2">
+                            <FormControlLabel
+                              style={{ margin: '0' }}
+                              className="w-full px-2 py-1 bg-gray-100 rounded"
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  name={module_path._id}
+                                  checked={getAccessArray(module._id).includes(
+                                    module_path._id,
+                                  )}
+                                  onChange={handleAccessChange(module._id)}
+                                />
+                              }
+                              label={module_path.access_type}
+                            />
+                          </div>
                         </li>
                       ))}
                   </ul>
-                </div>
+                </fieldset>
               ))}
-            </div>
-          </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         ))}
         <button
-          className="block btn bg-primary hover:bg-secondary"
+          className="block btn bg-primary hover:bg-secondary mt-4"
           onClick={handleSave}
         >
           Save
@@ -220,6 +257,57 @@ const styles = theme => ({
       background: 'transparent',
       color: '#404040',
     },
+  },
+  secondaryHeading: {
+    color: '#ff3b30',
+    textTransform: 'Capitalize',
+  },
+  paper: {
+    marginBottom: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 2,
+    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
+      marginBottom: theme.spacing.unit * 6,
+      padding: theme.spacing.unit * 3,
+    },
+  },
+
+  ExpansionPanelMainWrapper: {
+    marginBottom: '8px',
+    boxShadow: 'none',
+  },
+
+  roleRoot: {
+    minHeight: '44px',
+  },
+
+  roleContent: {
+    margin: '6px 0px',
+  },
+
+  roleExpandIcon: {
+    padding: '0px 12px',
+  },
+
+  // roleRoot : {
+  // 	'& > div' : {
+  // 		'&$expanded': {
+  // 			minHeight: '44px',
+  // 		  },
+  // 	},
+
+  // },
+
+  roleExpanded: {
+    borderBottom: '1px solid gainsboro',
+    margin: '6px 0px !important',
+    '& > div': {
+      borderBottom: 'none',
+      margin: '6px 0px',
+    },
+  },
+
+  topography: {
+    width: '100%',
   },
 });
 

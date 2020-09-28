@@ -110,7 +110,24 @@ export const SubModules = props => {
       description,
       module_group_main,
       <>
-        <Tooltip
+      <div className="flex">
+            <button
+              aria-label="Edit"
+              className=" px-1 text-center leading-none"
+              onClick={() => handleEdit(_id)}
+            >
+              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+                edit
+              </i>
+            </button>
+
+            <button className="ml-2 px-1 text-center leading-none"
+              onClick={() => handleOpen(_id)}
+            >
+              <i className="material-icons text-base text-red-400 hover:text-red-600">delete</i>
+            </button>
+          </div>
+        {/* <Tooltip
           id="tooltip-top"
           title="Edit"
           placement="top"
@@ -141,7 +158,7 @@ export const SubModules = props => {
               className={`${classes.tableActionButtonIcon} ${classes.close}`}
             />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
       </>,
     ],
   );
@@ -201,7 +218,7 @@ export const SubModules = props => {
             'Order',
             'Description',
             'Module Group Main',
-            '',
+            'Action',
           ]}
           tableData={tableData}
           pagination={tablePagination}
