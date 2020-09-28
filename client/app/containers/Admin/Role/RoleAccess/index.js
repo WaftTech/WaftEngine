@@ -164,7 +164,7 @@ const RoleAccess = props => {
                 expandIcon: classes.roleExpandIcon,
                 expanded: classes.roleExpanded,
               }}>
-              <Typography className={classes.heading}><h4 className="font-medium m-0">{each.module_group} Group</h4></Typography>
+              <Typography className={classes.heading}><h4 className="text-lg font-medium m-0">{each.module_group} Group</h4></Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails style={{display:'block'}}>
               {each.modules.map(module => (
