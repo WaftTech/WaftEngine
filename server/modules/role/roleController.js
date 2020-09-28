@@ -67,10 +67,12 @@ roleController.GetModule = async (req, res, next) => {
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
-    populate = {
-      path: 'module_group',
-      select: 'module_group',
-    };
+    populate = [
+      {
+        path: 'module_group',
+        select: '',
+      },
+    ];
     let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
   } catch (err) {
