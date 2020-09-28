@@ -204,7 +204,7 @@ const RoleAccess = props => {
           </ExpansionPanel>
         ))}
         <button
-          className="block btn bg-primary hover:bg-secondary ml-2 mt-2"
+          className="block btn bg-primary hover:bg-secondary mt-4"
           onClick={handleSave}
         >
           Save
