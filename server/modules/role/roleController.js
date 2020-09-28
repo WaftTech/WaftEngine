@@ -173,7 +173,7 @@ roleController.SaveAccessListFromRole = async (req, res, next) => {
           await newAccess.save();
         }
       }
-      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, false, access, null, roleConfig.accessSave, null);
+      return otherHelper.sendResponse(res, httpStatus.OK, false, access, null, roleConfig.accessSave, null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, false, null, 'Nothing to save!!', 'Nothing to save!!', null);
     }
@@ -221,12 +221,10 @@ roleController.GetModulesWithHierarchy = async (req, res, next) => {
       .sort({ order: 1 })
       .lean();
     let result = [];
-    console.log(modules);
     for (let i = 0; i < moduleGroup.length; i++) {
       let d = moduleGroup[i];
       const module_filter = modules.filter(x => (d._id.toString() == x.module_group ? x.module_group.toString() : ''));
       d.modules = module_filter;
-      // for (let j = 0; j < module_filter.length; j++) {}
       result.push(d);
     }
     return otherHelper.sendResponse(res, httpStatus.OK, true, result, null, '', null);
@@ -238,10 +236,17 @@ roleController.GetAccessListForRole = async (req, res, next) => {
   try {
     const roleid = req.params.roleid;
     const AccessForRole = await accessSch.find({ role_id: roleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
-    // const ModulesForRole = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
-    // const Roles = await roleSch.find({}, { _id: 1, role_title: 1, is_active: 1 });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForRole }, null, 'Access Get Success !!', null);
-    //, Module: ModulesForRole, Roles: Roles
+    const Module = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
+    let Access = [];
+    for (let i = 0; i < Module.length; i++) {
+      const one_access = AccessForRole.find(x => x.module_id.toString() == Module[i]._id.toString());
+      if (one_access) {
+        Access.push(one_access);
+      } else {
+        Access.push({ access_type: [], is_active: true, module_id: Module[i]._id, role_id: roleid });
+      }
+    }
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: Access }, null, 'Access Get Success !!', null);
   } catch (err) {
     next(err);
   }
