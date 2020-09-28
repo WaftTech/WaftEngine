@@ -159,12 +159,12 @@ const RoleAccess = props => {
               aria-controls="panel1bh-content"
               id="panel1bh-header"
               classes={{
-                root: classes.productRoot,
-                content: classes.productContent,
-                expandIcon: classes.productExpandIcon,
-                expanded: classes.productExpanded,
+                root: classes.roleRoot,
+                content: classes.roleContent,
+                expandIcon: classes.roleExpandIcon,
+                expanded: classes.roleExpanded,
               }}>
-              <Typography className={classes.heading}><h4 className="font-medium">{each.module_group} Group</h4></Typography>
+              <Typography className={classes.heading}><h4 className="font-medium m-0">{each.module_group} Group</h4></Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails style={{display:'block'}}>
               {each.modules.map(module => (
@@ -268,19 +268,19 @@ const styles = theme => ({
     boxShadow: 'none',
   },
 
-  productRoot: {
+  roleRoot: {
     minHeight: '44px',
   },
 
-  productContent: {
+  roleContent: {
     margin: '6px 0px',
   },
 
-  productExpandIcon: {
+  roleExpandIcon: {
     padding: '0px 12px',
   },
 
-  // productRoot : {
+  // roleRoot : {
   // 	'& > div' : {
   // 		'&$expanded': {
   // 			minHeight: '44px',
@@ -289,7 +289,7 @@ const styles = theme => ({
 
   // },
 
-  productExpanded: {
+  roleExpanded: {
     borderBottom: '1px solid gainsboro',
     margin: '6px 0px !important',
     '& > div': {
