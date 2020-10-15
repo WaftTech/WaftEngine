@@ -18,7 +18,7 @@ menuController.getMenu = async (req, res, next) => {
   }
 
   selectQuery = 'title key order is_active';
-  let data = await otherHelper.getquerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+  let data = await otherHelper.getQuerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
   return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
 };
 

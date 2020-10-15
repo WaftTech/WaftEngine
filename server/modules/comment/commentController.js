@@ -65,7 +65,7 @@ commentController.GetComment = async (req, res, next) => {
       searchQuery = { ...searchQuery, is_disapproved: req.query.find_is_disapproved };
     }
 
-    let blogComments = await otherHelper.getquerySendResponse(commentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let blogComments = await otherHelper.getQuerySendResponse(commentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogComments.data, 'comments get success!!', page, size, blogComments.totaldata);
   } catch (err) {
     next(err);

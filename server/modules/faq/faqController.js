@@ -75,7 +75,7 @@ faqController.GetFaq = async (req, res, next) => {
       };
     }
     populate = [{ path: 'category', select: '_id title' }];
-    let faq = await otherHelper.getquerySendResponse(faqSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let faq = await otherHelper.getQuerySendResponse(faqSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faq.data, faqConfig.faqGet, page, size, faq.totaldata);
   } catch (err) {
     next(err);
@@ -103,7 +103,7 @@ faqController.GetFaqCat = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    let faqcat = await otherHelper.getquerySendResponse(faqCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let faqcat = await otherHelper.getQuerySendResponse(faqCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faqcat.data, faqConfig.catGet, page, size, faqcat.totaldata);
   } catch (err) {
     next(err);

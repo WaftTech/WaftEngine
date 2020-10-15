@@ -8,4 +8,4 @@ const moduleGroupSchema = new schema({
   order: { type: Number },
 });
 
-module.exports = moduleGroup = mongoose.model('moduleGroup', moduleGroupSchema);
+module.exports = moduleGroup = mongoose.model('modulegroups', moduleGroupSchema,'modulegroups');

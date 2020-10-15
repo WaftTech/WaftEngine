@@ -23,7 +23,7 @@ roleController.GetRoles = async (req, res, next) => {
       searchQuery = { is_active: true, ...searchQuery };
     }
 
-    let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let datas = await otherHelper.getQuerySendResponse(roleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.roleGet, page, size, datas.totaldata);
   } catch (err) {
@@ -70,10 +70,11 @@ roleController.GetModule = async (req, res, next) => {
     populate = [
       {
         path: 'module_group',
-        select: '',
+        select: 'module_group',
+        model: 'modulegroups',
       },
     ];
-    let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let datas = await otherHelper.getQuerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
   } catch (err) {
     next(err);
@@ -92,7 +93,7 @@ roleController.GetModuleGroup = async (req, res, next) => {
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
-    let datas = await otherHelper.getquerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let datas = await otherHelper.getQuerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
   } catch (err) {

@@ -21,7 +21,7 @@ subscribeController.GetSubscribe = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    let subscriber = await otherHelper.getquerySendResponse(subscribeSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let subscriber = await otherHelper.getQuerySendResponse(subscribeSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, subscriber.data, 'subscriber get successful!!', page, size, subscriber.totaldata);
   } catch (err) {
     next(err);

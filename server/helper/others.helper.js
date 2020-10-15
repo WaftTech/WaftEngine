@@ -113,7 +113,7 @@ otherHelper.paginationSendResponse = (res, status, success, data, msg, pageno, p
   if (typeof totaldata === 'number') response.totaldata = totaldata;
   return res.status(status).json(response);
 };
-otherHelper.getquerySendResponse = async (model, page, size, sortQuery, searchQuery, selectQuery, next, populate) => {
+otherHelper.getQuerySendResponse = async (model, page, size, sortQuery, searchQuery, selectQuery, next, populate) => {
   let datas = {};
   try {
     datas.data = await model

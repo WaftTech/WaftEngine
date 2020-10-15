@@ -151,7 +151,7 @@ userController.GetAllUser = async (req, res, next) => {
     }
     selectQuery = 'name email password bio email_verified roles';
     populate = [{ path: 'roles', select: 'role_title' }];
-    const datas = await otherHelper.getquerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    const datas = await otherHelper.getQuerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
   } catch (err) {
     next(err);
