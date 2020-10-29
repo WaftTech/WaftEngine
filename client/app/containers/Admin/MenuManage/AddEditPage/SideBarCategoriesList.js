@@ -62,11 +62,11 @@ const SidebarCategoriesList = props => {
   };
 
   const categoryFunction = (e, parentId = '') => (
-    <ul key={`show-category-${e._id}`}>
+    <ul key={`show-category-${e._id}-${parentId}`}>
       {e.child_menu && e.child_menu.length ? (
         <>
           <li
-            key={e._id}
+            key={`${e._id}-${parentId}`}
             className="abc pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
             onClick={() => handleSetClick(e._id)}
           >
