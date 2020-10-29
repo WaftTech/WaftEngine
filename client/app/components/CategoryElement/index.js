@@ -99,7 +99,7 @@ const CategoryElement = props => {
       settings = JSON.parse(settings);
     }
   } catch (err) {
-    console.log(err);
+    console.log('something went wrong!', err);
   }
 
   return !hasCategory && loading ? (

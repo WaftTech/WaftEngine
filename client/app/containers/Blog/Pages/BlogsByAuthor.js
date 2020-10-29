@@ -43,7 +43,6 @@ export class BlogByAuthor extends React.Component {
   };
 
   handleLoadMore = paging => {
-    console.log('called', paging);
     this.props.loadMoreBlogByAuthorRequest({
       key: this.props.match.params.author,
       value: paging,

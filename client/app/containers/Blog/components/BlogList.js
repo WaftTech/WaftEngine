@@ -39,7 +39,6 @@ const RenderBlogs = props => {
   const lastDiv = useRef(null);
 
   const handleLoadMoreContent = () => {
-    console.log('called');
     handleLoadMore({ ...pagination, page: pagination.page + 1 });
     const top = lastDiv.current.offsetTop;
     setLastTop(top);
@@ -195,8 +194,8 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-    <div>No News Found</div>
-  );
+        <div>No News Found</div>
+      );
 };
 
 const withSaga = injectSaga({ key: 'blogPage', saga });

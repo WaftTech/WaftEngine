@@ -52,7 +52,7 @@ class SlickSlider extends React.PureComponent {
         settings = JSON.parse(slide.settings);
       }
     } catch (err) {
-      console.log(err);
+      console.log('something went wrong!', err);
     }
     if (!slide) return null; // maybe add a loader here
     return (

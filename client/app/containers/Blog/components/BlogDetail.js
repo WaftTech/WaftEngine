@@ -31,11 +31,9 @@ import Skeleton from 'react-loading-skeleton';
 const BlogDetail = props => {
   const { blog, loading, message, comments } = props;
   const url = window.location.href;
-  // console.log('BLOG', comments);
   return loading ? (
     <div>
       <Skeleton className="my-48" height={50} />
-      {/* <span className="pb-5 block"> <Skeleton width={200} height={40} /></span> */}
       <span className="pr-5 inline-block border-r border-gray-300">
         {' '}
         <Skeleton className="pr-5" width={100} height={20} />

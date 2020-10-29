@@ -519,7 +519,6 @@ userController.Login = async (req, res, next) => {
       if (isMatch) {
         let success = true;
         let responseData = { multi_fa: { google_authenticate: { is_authenticate: false }, email: { is_authenticate: false } } };
-        console.log(user.multi_fa.google_authenticate.is_authenticate, user.multi_fa.email.is_authenticate);
         if (user.multi_fa.google_authenticate.is_authenticate) {
           success = false;
           responseData.multi_fa.google_authenticate.is_authenticate = true;
@@ -544,7 +543,6 @@ userController.Login = async (req, res, next) => {
             console.log('render mail error: ', renderMail.error);
           } else {
             const da = await emailHelper.send(renderedMail);
-            console.log(da);
           }
           if (!success) {
           }

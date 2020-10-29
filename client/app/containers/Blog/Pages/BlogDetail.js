@@ -40,7 +40,6 @@ export class BlogPage extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.clearOne();
-    console.log('param', this.props.match.params);
 
     this.props.loadRecentBlogsRequest();
     this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
