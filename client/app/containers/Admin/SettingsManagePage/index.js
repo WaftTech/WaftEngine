@@ -14,9 +14,9 @@ import { compose } from 'redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -145,8 +145,8 @@ export const SettingsManagePage = props => {
         {loading && loading === true ? <Loading /> : <></>}
         <PageHeader>General Settings</PageHeader>
       </div>
-      <ExpansionPanel className={classes.ExpansionPanelMainWrapper}>
-        <ExpansionPanelSummary
+      <Accordion className={classes.ExpansionPanelMainWrapper}>
+        <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="comment-settings"
           id="comment-settings-header"
@@ -158,8 +158,8 @@ export const SettingsManagePage = props => {
           }}
         >
           <Typography className={classes.heading}>Common Setting</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <div className={classes.detail}>
             <div className="bg-white rounded p-4 shadow">
               <div className="flex items-center">
@@ -228,10 +228,10 @@ export const SettingsManagePage = props => {
               </div>
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel className={classes.ExpansionPanelMainWrapper}>
-        <ExpansionPanelSummary
+        </AccordionDetails>
+      </Accordion>
+      <Accordion className={classes.ExpansionPanelMainWrapper}>
+        <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="email-setting"
           id="email-setting-header"
@@ -243,8 +243,8 @@ export const SettingsManagePage = props => {
           }}
         >
           <Typography className={classes.heading}>Email Setting</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <div className={classes.detail}>
             <div className="bg-white rounded p-4 shadow">
               <div className="flex justify-between px-4">
@@ -487,10 +487,10 @@ export const SettingsManagePage = props => {
                 )}
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel className={classes.ExpansionPanelMainWrapper}>
-        <ExpansionPanelSummary
+        </AccordionDetails>
+      </Accordion>
+      <Accordion className={classes.ExpansionPanelMainWrapper}>
+        <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="login-settings"
           id="login-settings-header"
@@ -504,8 +504,8 @@ export const SettingsManagePage = props => {
           <Typography className={classes.heading}>
             Register & Login Setting
           </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <div className={classes.detail}>
             <div className="bg-white rounded p-4 shadow">
               <div>
@@ -702,10 +702,10 @@ export const SettingsManagePage = props => {
               </div>
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel className={classes.ExpansionPanelMainWrapper}>
-        <ExpansionPanelSummary
+        </AccordionDetails>
+      </Accordion>
+      <Accordion className={classes.ExpansionPanelMainWrapper}>
+        <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="captcha-keys"
           id="captcha-keys-header"
@@ -717,8 +717,8 @@ export const SettingsManagePage = props => {
           }}
         >
           <Typography className={classes.heading}>Captcha Keys</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <div className={classes.detail}>
             <div className="bg-white rounded p-4 shadow">
               <div className="flex justify-between px-4">
@@ -758,8 +758,8 @@ export const SettingsManagePage = props => {
               </div>
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
       <button
         className="block btn bg-primary hover:bg-secondary"
         onClick={handleSave}

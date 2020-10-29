@@ -84,7 +84,6 @@ class FAQPage extends React.Component {
                   faq.faq.filter(z => z.category == x._id).length !== 0 && (
                     <div key={`cat-${x._id}`} className="mb-6">
                       <h2 className="text-xl font-bold">{x.title}</h2>
-                      {/* <ExpansionPanelSummary /> */}
                       <AccordionDetails style={{ display: 'block', paddingLeft: 0 }}>
                         {faq.faq &&
                           faq.faq
