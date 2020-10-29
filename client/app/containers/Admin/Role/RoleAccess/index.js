@@ -135,91 +135,91 @@ const RoleAccess = props => {
       <h2>Loading</h2>
     </>
   ) : (
-    <React.Fragment>
-      <Helmet>
-        <title>Role Access</title>
-      </Helmet>
-      <div className="flex justify-between mt-3 mb-3">
-        <PageHeader>
-          <IconButton
-            className={`${classes.backbtn} cursor-pointer`}
-            onClick={handleBack}
-            aria-label="Back"
-          >
-            <BackIcon />
-          </IconButton>
+      <React.Fragment>
+        <Helmet>
+          <title>Role Access</title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <IconButton
+              className={`${classes.backbtn} cursor-pointer`}
+              onClick={handleBack}
+              aria-label="Back"
+            >
+              <BackIcon />
+            </IconButton>
           Role Access
         </PageHeader>
-      </div>
-      <PageContent>
-        {module_data.map(each => (
-          <ExpansionPanel
-            expanded={each._id === expanded}
-            onClick={() => setExpanded(each._id)}
-            className={classes.ExpansionPanelMainWrapper}
-          >
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-              classes={{
-                root: classes.roleRoot,
-                content: classes.roleContent,
-                expandIcon: classes.roleExpandIcon,
-                expanded: classes.roleExpanded,
-              }}
+        </div>
+        <PageContent>
+          {module_data.map(each => (
+            <ExpansionPanel
+              expanded={each._id === expanded}
+              onClick={() => setExpanded(each._id)}
+              className={classes.ExpansionPanelMainWrapper}
             >
-              <Typography className={classes.heading}>
-                <h4 className="text-lg font-medium m-0">{each.module_group} Group</h4>
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails style={{ display: 'block' }}>
-              {each.modules.map(module => (
-                <fieldset className="formfieldset mb-2">
-                  <legend
-                    className="text-lg px-2"
-                    onClick={() => getAccessArray(module._id)}
-                  >
-                    {module.module_name}
-                  </legend>
-                  <ul className="flex flex-wrap">
-                    {module.path.length > 0 &&
-                      module.path.map(module_path => (
-                        <li className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2">
-                          <div className="mr-2">
-                            <FormControlLabel
-                              style={{ margin: '0' }}
-                              className="w-full px-2 py-1 bg-gray-100 rounded"
-                              control={
-                                <Checkbox
-                                  color="primary"
-                                  name={module_path._id}
-                                  checked={getAccessArray(module._id).includes(
-                                    module_path._id,
-                                  )}
-                                  onChange={handleAccessChange(module._id)}
-                                />
-                              }
-                              label={module_path.access_type}
-                            />
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                </fieldset>
-              ))}
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        ))}
-        <button
-          className="block btn bg-primary hover:bg-secondary mt-4"
-          onClick={handleSave}
-        >
-          Save
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                classes={{
+                  root: classes.roleRoot,
+                  content: classes.roleContent,
+                  expandIcon: classes.roleExpandIcon,
+                  expanded: classes.roleExpanded,
+                }}
+              >
+                <Typography className={classes.heading}>
+                  <h4 className="text-lg font-medium m-0">{each.module_group} Group</h4>
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails style={{ display: 'block' }}>
+                {each.modules.map(module => (
+                  <fieldset className="formfieldset mb-2">
+                    <legend
+                      className="text-lg px-2"
+                      onClick={() => getAccessArray(module._id)}
+                    >
+                      {module.module_name}
+                    </legend>
+                    <ul className="flex flex-wrap">
+                      {module.path.length > 0 &&
+                        module.path.map(module_path => (
+                          <li className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2">
+                            <div className="mr-2">
+                              <FormControlLabel
+                                style={{ margin: '0' }}
+                                className="w-full px-2 py-1 bg-gray-100 rounded"
+                                control={
+                                  <Checkbox
+                                    color="primary"
+                                    name={module_path._id}
+                                    checked={getAccessArray(module._id).includes(
+                                      module_path._id,
+                                    )}
+                                    onChange={handleAccessChange(module._id)}
+                                  />
+                                }
+                                label={module_path.access_type}
+                              />
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                  </fieldset>
+                ))}
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          ))}
+          <button
+            className="block btn bg-primary hover:bg-secondary mt-4"
+            onClick={handleSave}
+          >
+            Save
         </button>
-      </PageContent>
-    </React.Fragment>
-  );
+        </PageContent>
+      </React.Fragment>
+    );
 };
 
 const withReducer = injectReducer({ key: 'adminRole', reducer });
@@ -263,11 +263,11 @@ const styles = theme => ({
     textTransform: 'Capitalize',
   },
   paper: {
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(6))]: {
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
     },
   },
 

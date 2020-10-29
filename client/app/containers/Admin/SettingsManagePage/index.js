@@ -59,11 +59,11 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   paper: {
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(6))]: {
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
     },
   },
 
@@ -572,7 +572,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                        setting_normalized.is_public_registration
+                          setting_normalized.is_public_registration
                           ? !setting_normalized.is_public_registration.value
                           : true
                       }
@@ -594,7 +594,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                        setting_normalized.is_public_registration
+                          setting_normalized.is_public_registration
                           ? !setting_normalized.is_public_registration.value
                           : true
                       }
@@ -622,7 +622,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                        setting_normalized.allow_google_login
+                          setting_normalized.allow_google_login
                           ? !setting_normalized.allow_google_login.value
                           : true
                       }
@@ -644,7 +644,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                        setting_normalized.allow_google_login
+                          setting_normalized.allow_google_login
                           ? !setting_normalized.allow_google_login.value
                           : true
                       }
@@ -668,7 +668,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                        setting_normalized.allow_facebook_login
+                          setting_normalized.allow_facebook_login
                           ? !setting_normalized.allow_facebook_login.value
                           : true
                       }
@@ -690,7 +690,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                        setting_normalized.allow_facebook_login
+                          setting_normalized.allow_facebook_login
                           ? !setting_normalized.allow_facebook_login.value
                           : true
                       }

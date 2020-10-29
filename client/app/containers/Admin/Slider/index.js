@@ -38,7 +38,7 @@ import Loading from '../../../components/Loading';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   fab: {
     width: '40px',
@@ -174,7 +174,7 @@ export class SliderPage extends React.Component {
         moment(added_at).format(DATE_FORMAT),
 
         <React.Fragment>
-           <div className="flex">
+          <div className="flex">
             <button
               aria-label="Edit"
               className=" px-1 text-center leading-none"

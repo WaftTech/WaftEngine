@@ -388,29 +388,29 @@ const FileList = ({
         </DialogActions>
       </Dialog>
       <div className="flex items-center justify-between mt-3 mb-3">
-      
-          <div className="flex">
-            <div className="waftformgroup flex relative">
-              <input
-                type="text"
-                id="contents-name"
-                placeholder="Search files by name"
-                className="m-auto inputbox"
-                value={query.search}
-                onChange={handleQueryChange('search')}
-                style={{ minWidth: '300px', paddingRight: '50px' }}
-                onKeyPress={handleQueryEnter}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+
+        <div className="flex">
+          <div className="waftformgroup flex relative">
+            <input
+              type="text"
+              id="contents-name"
+              placeholder="Search files by name"
+              className="m-auto inputbox"
+              value={query.search}
+              onChange={handleQueryChange('search')}
+              style={{ minWidth: '300px', paddingRight: '50px' }}
+              onKeyPress={handleQueryEnter}
+            />
+            <IconButton
+              aria-label="Search"
+              className={`${classes.waftsrch} waftsrchstyle`}
+              onClick={handleSearch}
+            >
+              <SearchIcon />
+            </IconButton>
           </div>
-        
+        </div>
+
         <div className="flex media_btn">
           {selectedButton === 'Multiple' && chosen_files.length > 0 ? (
             <button
@@ -421,14 +421,14 @@ const FileList = ({
               <span>Upload Multiple</span>
             </button>
           ) : (
-            <button
-              onClick={handleSelectMultipleButton}
-              className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
-            >
-              <i className="material-icons text-base mr-2">filter</i>
-              <span>Select Multiple</span>
-            </button>
-          )}
+              <button
+                onClick={handleSelectMultipleButton}
+                className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+              >
+                <i className="material-icons text-base mr-2">filter</i>
+                <span>Select Multiple</span>
+              </button>
+            )}
 
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
@@ -457,32 +457,32 @@ const FileList = ({
             <span>Rename</span>
           </button>
           {selectedButton === 'Delete' &&
-          (chosen_files.length > 0 || chosen_folders.length > 0) ? (
-            <button
-              onClick={confirmDelete}
-              className="blink items-center flex btn bg-red-600 hover:bg-red-500"
-            >
-              <i className="material-icons text-base mr-2">delete</i>
-              <span>Confirm Delete</span>
-            </button>
-          ) : (
-            <button
-              onClick={handleDeleteButton}
-              className="items-center flex btn bg-red-600 hover:bg-red-500"
-            >
-              <i className="material-icons text-base mr-2">delete</i>
-              <span>Delete</span>
-            </button>
-          )}
+            (chosen_files.length > 0 || chosen_folders.length > 0) ? (
+              <button
+                onClick={confirmDelete}
+                className="blink items-center flex btn bg-red-600 hover:bg-red-500"
+              >
+                <i className="material-icons text-base mr-2">delete</i>
+                <span>Confirm Delete</span>
+              </button>
+            ) : (
+              <button
+                onClick={handleDeleteButton}
+                className="items-center flex btn bg-red-600 hover:bg-red-500"
+              >
+                <i className="material-icons text-base mr-2">delete</i>
+                <span>Delete</span>
+              </button>
+            )}
         </div>
-        
-        </div>
-        <div className="my-auto">
-          <BreadCrumb
-            linkcomponent={LinkComponent}
-            routeList={routeList}
-            onClick={onClick}
-          />
+
+      </div>
+      <div className="my-auto">
+        <BreadCrumb
+          linkcomponent={LinkComponent}
+          routeList={routeList}
+          onClick={onClick}
+        />
       </div>
       {/* folder rename */}
       <Dialog
@@ -619,9 +619,8 @@ const FileList = ({
             </div>
             <div
               // data-tooltip={each.name}
-              className={`${
-                selected === each._id ? 'folder_media' : ''
-              } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
+              className={`${selected === each._id ? 'folder_media' : ''
+                } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
               onClick={() => handleSingleClick(each._id)}
               onDoubleClick={() => handleFolderLink(each._id)}
               onKeyDown={() => handleFolderLink(each._id)}
@@ -674,9 +673,8 @@ const FileList = ({
             </div>
             <div
               // data-tooltip={each.filename}
-              className={`${
-                selected === each._id ? 'folder_media' : ''
-              } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
+              className={`${selected === each._id ? 'folder_media' : ''
+                } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
             >
               <div className="flex h-24">
                 <img
@@ -733,7 +731,7 @@ const mapStateToProps = createStructuredSelector({
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   fab: {
     width: '40px',

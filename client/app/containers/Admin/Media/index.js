@@ -29,7 +29,7 @@ import Loading from '../../../components/Loading';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   fab: {
     width: '40px',

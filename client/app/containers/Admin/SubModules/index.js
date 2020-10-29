@@ -110,23 +110,26 @@ export const SubModules = props => {
       description,
       module_group_main,
       <>
-      <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
-              onClick={() => handleEdit(_id)}
-            >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                edit
-              </i>
-            </button>
+        <div className="flex">
+          <button
+            aria-label="Edit"
+            className=" px-1 text-center leading-none"
+            onClick={() => handleEdit(_id)}
+          >
+            <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+              edit
+            </i>
+          </button>
 
-            <button className="ml-2 px-1 text-center leading-none"
-              onClick={() => handleOpen(_id)}
-            >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">delete</i>
-            </button>
-          </div>
+          <button
+            className="ml-2 px-1 text-center leading-none"
+            onClick={() => handleOpen(_id)}
+          >
+            <i className="material-icons text-base text-red-400 hover:text-red-600">
+              delete
+            </i>
+          </button>
+        </div>
         {/* <Tooltip
           id="tooltip-top"
           title="Edit"
@@ -231,7 +234,7 @@ export const SubModules = props => {
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   fab: {
     width: '40px',
