@@ -31,6 +31,7 @@ export const SET_QUERY_VALUE = 'app/BlogList/SET_QUERY_VALUE';
 export const SET_SIZE_VALUE = 'app/BlogList/SET_SIZE_VALUE';
 export const CLEAR_ALL = 'app/BlogList/CLEAR_ALL';
 
+export const BY_AUTHORESS = 'app/BlogList/BY_AUTHORESS';
 export const LOAD_BLOG_BY_AUTHOR_REQUEST =
   'app/BlogList/LOAD_BLOG_BY_AUTHOR_REQUEST';
 export const LOAD_BLOG_BY_AUTHOR_SUCCESS =
