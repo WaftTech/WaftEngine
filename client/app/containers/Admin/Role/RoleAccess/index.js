@@ -22,9 +22,7 @@ import {
   makeSelectErrors,
   makeSelectRoleData,
 } from '../selectors';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as mapDispatchToProps from '../actions';
@@ -152,13 +150,14 @@ const RoleAccess = props => {
         </PageHeader>
         </div>
         <PageContent>
-          {module_data.map(each => (
-            <ExpansionPanel
-              expanded={each._id === expanded}
+          {module_data.map((each, index) => (
+            <Accordion
+              key={`${each._id}-${index}`}
+              // expanded={each._id === expanded}
               onClick={() => setExpanded(each._id)}
               className={classes.ExpansionPanelMainWrapper}
             >
-              <ExpansionPanelSummary
+              <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
@@ -170,12 +169,13 @@ const RoleAccess = props => {
                 }}
               >
                 <Typography className={classes.heading}>
-                  <h4 className="text-lg font-medium m-0">{each.module_group} Group</h4>
+                  <span className="text-lg font-medium m-0">{each.module_group} Group</span>
                 </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails style={{ display: 'block' }}>
+              </AccordionSummary >
+              <AccordionDetails style={{ display: 'block' }}>
                 {each.modules.map(module => (
-                  <fieldset className="formfieldset mb-2">
+                  <fieldset
+                    key={`${module._id}-${each._id}-${index}`} className="formfieldset mb-2">
                     <legend
                       className="text-lg px-2"
                       onClick={() => getAccessArray(module._id)}
@@ -185,7 +185,7 @@ const RoleAccess = props => {
                     <ul className="flex flex-wrap">
                       {module.path.length > 0 &&
                         module.path.map(module_path => (
-                          <li className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2">
+                          <li key={`${module_path._id}-${module._id}-${each._id}-${index}`} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2">
                             <div className="mr-2">
                               <FormControlLabel
                                 style={{ margin: '0' }}
@@ -208,8 +208,8 @@ const RoleAccess = props => {
                     </ul>
                   </fieldset>
                 ))}
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+              </AccordionDetails >
+            </Accordion>
           ))}
           <button
             className="block btn bg-primary hover:bg-secondary mt-4"

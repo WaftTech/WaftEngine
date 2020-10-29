@@ -66,7 +66,7 @@ const RenderBlogs = props => {
           <Link
             className="block pb-6 mb-6 border-b border-gray-300"
             to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
-            key={slug_url}
+            key={`${slug_url}-${_id}`}
           >
             <div
               key={_id}

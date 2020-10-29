@@ -45,7 +45,7 @@ class StaticMenu extends React.PureComponent {
           // <ul
           //   className={depth == 1 ? 'relative menu-child text-sm' : 'absolute'}
           // >
-          <li>
+          <li key={childElement._id}>
             <Link to={childElement.url} onClick={this.handleToggle}>
               {childElement.title}
             </Link>
@@ -89,33 +89,31 @@ class StaticMenu extends React.PureComponent {
               //   );
               // }
               return (
-                <>
-                  <NavLink
-                    to={each.url}
-                    className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-                    onClick={this.handleToggle}
-                  >
-                    {each.title}
-                    {each.child_menu && each.child_menu.length > 0 && (
-                      // each.child_menu[0]._id !== '' &&
-                      <ul className="relative menu-child text-sm">
-                        {this.getChildElement(each, 1)}
-                      </ul>
-                    )}
-                  </NavLink>
-                </>
+                <NavLink
+                  key={each._id}
+                  to={each.url}
+                  className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
+                  onClick={this.handleToggle}
+                >
+                  {each.title}
+                  {each.child_menu && each.child_menu.length > 0 && (
+                    // each.child_menu[0]._id !== '' &&
+                    <ul className="relative menu-child text-sm">
+                      {this.getChildElement(each, 1)}
+                    </ul>
+                  )}
+                </NavLink>
               );
             }
             return (
-              <>
-                <a
-                  className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-                  href={each.url}
-                  target={each.target}
-                >
-                  {each.title}
-                </a>
-              </>
+              <a
+                className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
+                key={each._id}
+                href={each.url}
+                target={each.target}
+              >
+                {each.title}
+              </a>
             );
           })}
         </div>

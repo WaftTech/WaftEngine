@@ -183,8 +183,8 @@ export const SettingsManagePage = props => {
                   <option value="" disabled>
                     None
                   </option>
-                  {commentStatus.map(each => (
-                    <option key={each} name="name" value={each}>
+                  {commentStatus.map((each, index) => (
+                    <option key={`${each}-${index}`} name="name" value={each}>
                       {each}
                     </option>
                   ))}
@@ -269,8 +269,8 @@ export const SettingsManagePage = props => {
                     <option value="" disabled>
                       None
                     </option>
-                    {emailChannel.map(each => (
-                      <option key={each} name="name" value={each}>
+                    {emailChannel.map((each, index) => (
+                      <option key={`${each}-${index}`} name="name" value={each}>
                         {each}
                       </option>
                     ))}
