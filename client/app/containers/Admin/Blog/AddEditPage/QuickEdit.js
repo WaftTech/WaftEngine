@@ -199,7 +199,7 @@ const QuickEdit = props => {
               onChange={handleTempTag}
             />
           </form>
-          <Paper>
+          <Paper elevation={2} >
             {one.tags.map((tag, index) => {
               const icon = null;
               return (
@@ -229,7 +229,7 @@ const QuickEdit = props => {
               onChange={handleTempMetaTag}
             />
           </form>
-          <Paper>
+          <Paper elevation={2} >
             {one.meta_tag.map((tag, index) => {
               const icon = null;
 
@@ -260,7 +260,7 @@ const QuickEdit = props => {
               onChange={handleTempMetaKeyword}
             />
           </form>
-          <Paper>
+          <Paper elevation={2} >
             {one.keywords.map((tag, index) => {
               const icon = null;
               return (

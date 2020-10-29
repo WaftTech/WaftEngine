@@ -11,9 +11,9 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -85,30 +85,30 @@ class FAQPage extends React.Component {
                     <div key={`cat-${x._id}`} className="mb-6">
                       <h2 className="text-xl font-bold">{x.title}</h2>
                       {/* <ExpansionPanelSummary /> */}
-                      <ExpansionPanelDetails style={{ display: 'block', paddingLeft: 0 }}>
+                      <AccordionDetails style={{ display: 'block', paddingLeft: 0 }}>
                         {faq.faq &&
                           faq.faq
                             .filter(z => z.category == x._id)
                             .map(y => (
-                              <ExpansionPanel
+                              <Accordion
                                 className={classes.FAQPanel}
                                 key={`faq-${y._id}`}
                                 expanded={qExpanded === y._id}
                                 onChange={this.handleQChange(y._id)}
                               >
-                                <ExpansionPanelSummary
+                                <AccordionSummary
                                   expandIcon={<ExpandMoreIcon />}
                                   aria-controls="panel2a-content"
                                   id="panel2a-header"
                                 >
                                   <p className="text-base">{y.question}</p>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
+                                </AccordionSummary>
+                                <AccordionDetails>
                                   <p className="text-base">{y.title}</p>
-                                </ExpansionPanelDetails>
-                              </ExpansionPanel>
+                                </AccordionDetails>
+                              </Accordion>
                             ))}
-                      </ExpansionPanelDetails>
+                      </AccordionDetails>
                     </div>
                   ),
               )}

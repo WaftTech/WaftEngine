@@ -25,7 +25,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing(4),
   },
 });
 
@@ -76,16 +76,16 @@ const SidebarCategoriesList = props => {
                 <FolderIcon />
               </div>
             ) : (
-              <div className="text-grey-darker hover:text-primary cursor-pointer">
-                {e.child_menu[0]._id !== '' ? (
-                  <AddBoxOutlinedIcon />
-                ) : (
-                  // <h1>Data</h1>
-                  <CheckBoxOutlineBlankOutlinedIcon />
-                )}
-                <FolderIcon />
-              </div>
-            )}
+                <div className="text-grey-darker hover:text-primary cursor-pointer">
+                  {e.child_menu[0]._id !== '' ? (
+                    <AddBoxOutlinedIcon />
+                  ) : (
+                      // <h1>Data</h1>
+                      <CheckBoxOutlineBlankOutlinedIcon />
+                    )}
+                  <FolderIcon />
+                </div>
+              )}
             <div className="flex items-center cursor-pointer">
               <span
                 onClick={() => handleClick(e._id)}
@@ -105,8 +105,8 @@ const SidebarCategoriesList = props => {
           </Collapse>
         </>
       ) : (
-        <>
-          {/* {e._id === '' ? (
+          <>
+            {/* {e._id === '' ? (
             <div
               onClick={() => handleChange('parent_category', parentId)}
               className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
@@ -115,18 +115,18 @@ const SidebarCategoriesList = props => {
               Add subcategory
             </div>
           ) : ( */}
-          {e._id !== '' && (
-            <div
-              onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
-            >
-              <DescriptionIcon />
-              {`${e.title}`}
-            </div>
-          )}
-          {/* )} */}
-        </>
-      )}
+            {e._id !== '' && (
+              <div
+                onClick={() => handleClick(e._id)}
+                className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+              >
+                <DescriptionIcon />
+                {`${e.title}`}
+              </div>
+            )}
+            {/* )} */}
+          </>
+        )}
     </ul>
   );
   // return <div>{category && category.map(each => <h1>{each.title}</h1>)}</div>;
@@ -162,8 +162,8 @@ const SidebarCategoriesList = props => {
         // />
         <h1 />
       ) : (
-        category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
-      )}
+          category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
+        )}
       {/* <div className="px-4 mt-5">
         <button
           className="btn-waft"

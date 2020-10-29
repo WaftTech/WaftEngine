@@ -368,58 +368,58 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit News'
-              : 'Add News'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
-            {match && match.params && match.params.id
-              ? 'Edit News'
-              : 'Add News'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <Inputs
-              label="Title"
-              inputclassName="inputbox"
-              inputid="blog-title"
-              inputType="text"
-              value={(one && one.title) || ''}
-              name="Blog Title"
-              onChange={this.handleChange('title')}
-              error={errors && errors.title}
-            />
+        <React.Fragment>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit News'
+                : 'Add News'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
+              {match && match.params && match.params.id
+                ? 'Edit News'
+                : 'Add News'}
+            </PageHeader>
           </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <Inputs
-              label="Slug"
-              inputclassName="inputbox"
-              inputid="blog-slug-url"
-              inputType="text"
-              value={(one && one.slug_url) || ''}
-              name="Blog Slug"
-              onChange={this.handleChange('slug_url')}
-              error={errors && errors.slug_url}
-              disabled
-            />
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="font-bold text-gray-700">Category</label>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <Inputs
+                label="Title"
+                inputclassName="inputbox"
+                inputid="blog-title"
+                inputType="text"
+                value={(one && one.title) || ''}
+                name="Blog Title"
+                onChange={this.handleChange('title')}
+                error={errors && errors.title}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <Inputs
+                label="Slug"
+                inputclassName="inputbox"
+                inputid="blog-slug-url"
+                inputType="text"
+                value={(one && one.slug_url) || ''}
+                name="Blog Slug"
+                onChange={this.handleChange('slug_url')}
+                error={errors && errors.slug_url}
+                disabled
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="font-bold text-gray-700">Category</label>
 
-            {/* <FormControl className={classes.formControl}>
+              {/* <FormControl className={classes.formControl}>
               <Select
                 // className="inputbox"
                 multiple
@@ -448,33 +448,33 @@ class AddEdit extends React.PureComponent {
               </Select>
             </FormControl> */}
 
-            {/* <FormControl className={classes.formControl}> */}
-            <Select
-              className="React_Select"
-              id="category"
-              value={
-                (one.category &&
-                  one.category.map((each, index) => {
-                    const catObj = listCategoryNormalized[each];
-                    if (!catObj) {
-                      return {
-                        label: 'loading',
-                        value: index,
-                      };
-                    }
-                    return catObj;
-                  })) ||
-                []
-              }
-              name="category"
-              placeholder="Select Blog Category"
-              onChange={this.handleMultipleSelectCategoryChange}
-              isSearchable
-              isMulti
-              options={listCategory}
-              styles={customStyles}
-            />
-            {/* <Select
+              {/* <FormControl className={classes.formControl}> */}
+              <Select
+                className="React_Select"
+                id="category"
+                value={
+                  (one.category &&
+                    one.category.map((each, index) => {
+                      const catObj = listCategoryNormalized[each];
+                      if (!catObj) {
+                        return {
+                          label: 'loading',
+                          value: index,
+                        };
+                      }
+                      return catObj;
+                    })) ||
+                  []
+                }
+                name="category"
+                placeholder="Select Blog Category"
+                onChange={this.handleMultipleSelectCategoryChange}
+                isSearchable
+                isMulti
+                options={listCategory}
+                styles={customStyles}
+              />
+              {/* <Select
                 multiple
                 displayEmpty
                 name="template_key"
@@ -496,68 +496,68 @@ class AddEdit extends React.PureComponent {
                   </MenuItem>
                 ))}
               </Select> */}
-            {/* </FormControl> */}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="font-bold text-gray-700"
-              htmlFor="grid-blog-title"
-            >
-              Short Description
+              {/* </FormControl> */}
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="font-bold text-gray-700"
+                htmlFor="grid-blog-title"
+              >
+                Short Description
             </label>
-            <textarea
-              className="inputbox"
-              id="short_description"
-              type="text"
-              value={one.short_description || ''}
-              name="short_description"
-              onChange={this.handleChange('short_description')}
-            />
-          </div>
-          <div>
-            <label className="font-bold text-gray-700">Blog Description</label>
-            <WECkEditior
-              description={one.description}
-              setOneValue={this.props.setOneValue}
-            />
+              <textarea
+                className="inputbox"
+                id="short_description"
+                type="text"
+                value={one.short_description || ''}
+                name="short_description"
+                onChange={this.handleChange('short_description')}
+              />
+            </div>
+            <div>
+              <label className="font-bold text-gray-700">Blog Description</label>
+              <WECkEditior
+                description={one.description}
+                setOneValue={this.props.setOneValue}
+              />
 
-            <div id="component-error-text">{errors && errors.description}</div>
-          </div>
+              <div id="component-error-text">{errors && errors.description}</div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label className="label" htmlFor="Image">
-              Image
+            <div className="w-full md:w-1/2 pb-4 mt-4">
+              <label className="label" htmlFor="Image">
+                Image
             </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <img
-                    className="inputbox cursor-pointer"
-                    src={tempImage}
-                    alt="Blogimage"
-                    style={{ height: '120px', width: '60%' }}
-                  />
-                </div>
-              )}
-            </Dropzone>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Published On
+              <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <img
+                      className="inputbox cursor-pointer"
+                      src={tempImage}
+                      alt="Blogimage"
+                      style={{ height: '120px', width: '60%' }}
+                    />
+                  </div>
+                )}
+              </Dropzone>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Published On
             </label>
-            <DatePicker
-              showTimeSelect
-              className="inputbox"
-              dateFormat="Pp"
-              // selected={new Date(one.published_on)}
-              selected={this.state.startDate}
-              onChange={this.handlePublishedOn}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              timeFormat="HH:mm"
-              showTimeInput
-            />
-            {/* <input
+              <DatePicker
+                showTimeSelect
+                className="inputbox"
+                dateFormat="Pp"
+                // selected={new Date(one.published_on)}
+                selected={this.state.startDate}
+                onChange={this.handlePublishedOn}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeFormat="HH:mm"
+                showTimeInput
+              />
+              {/* <input
               className="inputbox"
               id="blog-title"
               type="date"
@@ -569,122 +569,122 @@ class AddEdit extends React.PureComponent {
               name="published_on"
               onChange={this.handlePublishedOn}
             /> */}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Tags
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Tags
             </label>
-            <form onSubmit={this.insertTags}>
-              <input
+              <form onSubmit={this.insertTags}>
+                <input
+                  className="inputbox"
+                  id="blog-tags"
+                  type="text"
+                  value={tempTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempTag}
+                />
+              </form>
+              <Paper elevation={2} >
+                {one.tags.map((tag, index) => {
+                  const icon = null;
+                  return (
+                    <Chip
+                      key={`${tag}-${index}`}
+                      icon={icon}
+                      label={tag}
+                      onDelete={this.handleDelete(index)}
+                      className={classes.chip}
+                    />
+                  );
+                })}
+              </Paper>
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Meta Tags
+            </label>
+              <form onSubmit={this.insertMetaTags}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-tags"
+                  type="text"
+                  value={tempMetaTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaTag}
+                />
+              </form>
+              <Paper elevation={2} >
+                {one.meta_tag.map((tag, index) => {
+                  const icon = null;
+
+                  return (
+                    <Chip
+                      key={`meta-${tag}-${index}`}
+                      icon={icon}
+                      label={tag}
+                      onDelete={this.handleMetaTagDelete(index)}
+                      className={classes.chip}
+                    />
+                  );
+                })}
+              </Paper>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Meta Keywords
+            </label>
+
+              <form onSubmit={this.insertMetaKeywords}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-keyword"
+                  type="text"
+                  value={tempMetaKeyword || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaKeyword}
+                />
+              </form>
+              <Paper elevation={2} >
+                {one.keywords.map((tag, index) => {
+                  const icon = null;
+
+                  return (
+                    <Chip
+                      key={`metakeywords-${tag}-${index}`}
+                      icon={icon}
+                      label={tag}
+                      onDelete={this.handleMetaKeywordDelete(index)}
+                      className={classes.chip}
+                    />
+                  );
+                })}
+              </Paper>
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
+                htmlFor="grid-last-name"
+              >
+                Meta Description
+            </label>
+
+              <textarea
                 className="inputbox"
                 id="blog-tags"
                 type="text"
-                value={tempTag || ''}
-                name="Tags"
-                onChange={this.handleTempTag}
+                value={one.meta_description || ''}
+                name="meta-description"
+                onChange={this.handleChange('meta_description')}
               />
-            </form>
-            <Paper>
-              {one.tags.map((tag, index) => {
-                const icon = null;
-                return (
-                  <Chip
-                    key={`${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
-          </div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Meta Tags
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Author
             </label>
-            <form onSubmit={this.insertMetaTags}>
-              <input
-                className="inputbox"
-                id="blog-meta-tags"
-                type="text"
-                value={tempMetaTag || ''}
-                name="Tags"
-                onChange={this.handleTempMetaTag}
-              />
-            </form>
-            <Paper>
-              {one.meta_tag.map((tag, index) => {
-                const icon = null;
-
-                return (
-                  <Chip
-                    key={`meta-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaTagDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Meta Keywords
-            </label>
-
-            <form onSubmit={this.insertMetaKeywords}>
-              <input
-                className="inputbox"
-                id="blog-meta-keyword"
-                type="text"
-                value={tempMetaKeyword || ''}
-                name="Tags"
-                onChange={this.handleTempMetaKeyword}
-              />
-            </form>
-            <Paper>
-              {one.keywords.map((tag, index) => {
-                const icon = null;
-
-                return (
-                  <Chip
-                    key={`metakeywords-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaKeywordDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Meta Description
-            </label>
-
-            <textarea
-              className="inputbox"
-              id="blog-tags"
-              type="text"
-              value={one.meta_description || ''}
-              name="meta-description"
-              onChange={this.handleChange('meta_description')}
-            />
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Author
-            </label>
-            {/* 
+              {/* 
             <select
               className="inputbox"
               native="true"
@@ -702,92 +702,92 @@ class AddEdit extends React.PureComponent {
                 ))}
             </select> */}
 
-            <Select
-              className="React_Select"
-              id="category"
-              value={
-                (one.author &&
-                  one.author.map((each, index) => {
-                    const authorObj = listAuthorNormalized[each];
-                    if (!authorObj) {
-                      return {
-                        label: null,
-                        value: index,
-                      };
-                    }
-                    return authorObj;
-                  })) ||
-                []
-              }
-              name="author"
-              placeholder="Select News Author"
-              onChange={this.handleMultipleSelectAuthorChange}
-              isSearchable
-              isMulti
-              options={listAuthor}
-              styles={customStyles}
-            />
-          </div>
-          <div id="component-error-text">{errors && errors.author}</div>
-          <div>
-            {/* <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel> */}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_published || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_published')}
-                  color="primary"
-                />
-              }
-              label="Is Published"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_highlight || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_highlight')}
-                  color="primary"
-                />
-              }
-              label="Is Highlight"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_showcase || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_showcase')}
-                  color="primary"
-                />
-              }
-              label="Is Showcase"
-            />
-          </div>
+              <Select
+                className="React_Select"
+                id="category"
+                value={
+                  (one.author &&
+                    one.author.map((each, index) => {
+                      const authorObj = listAuthorNormalized[each];
+                      if (!authorObj) {
+                        return {
+                          label: null,
+                          value: index,
+                        };
+                      }
+                      return authorObj;
+                    })) ||
+                  []
+                }
+                name="author"
+                placeholder="Select News Author"
+                onChange={this.handleMultipleSelectAuthorChange}
+                isSearchable
+                isMulti
+                options={listAuthor}
+                styles={customStyles}
+              />
+            </div>
+            <div id="component-error-text">{errors && errors.author}</div>
+            <div>
+              {/* <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel> */}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_active || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_active')}
+                    color="primary"
+                  />
+                }
+                label="Is Active"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_published || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_published')}
+                    color="primary"
+                  />
+                }
+                label="Is Published"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_highlight || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_highlight')}
+                    color="primary"
+                  />
+                }
+                label="Is Highlight"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={one.is_showcase || false}
+                    tabIndex={-1}
+                    onClick={this.handleCheckedChange('is_showcase')}
+                    color="primary"
+                  />
+                }
+                label="Is Showcase"
+              />
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={this.handleSave}
-            >
-              Save
+            <div className="w-full md:w-1/2 pb-4">
+              <button
+                className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+                onClick={this.handleSave}
+              >
+                Save
             </button>
-          </div>
-        </PageContent>
-      </React.Fragment>
-    );
+            </div>
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 
