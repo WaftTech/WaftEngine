@@ -187,9 +187,9 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
               alt="waftengine" />
           </Link>
           <Link target="_blank" className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm bg-blue-900 hover:bg-blue-700" to="/">Visit Site <i className="material-icons text-sm ml-1">open_in_new</i></Link>
-          <Link className="px-4" to="/">Docs</Link>
-          <Link className="px-4" to="/">Blog</Link>
-          <Link className="px-4" to="/">Forum</Link>
+          <a className="px-4" target="_blank" href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine">Docs</a>
+          <a className="px-4" target="_blank" href="https://waftengine.org/blog">Blog</a>
+          <a className="px-4" target="_blank" href="https://waftengine.org">Forum</a>
         </div>
         <div>
           <button className="flex" onClick={handleMenu}>
