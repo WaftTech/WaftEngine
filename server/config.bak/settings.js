@@ -6,4 +6,5 @@ module.exports = {
   verify_mail_template: 'verify_mail',
   forgot_password_mail_template: 'forgot_password',
   force_allow_email_verify: true,
+  two_fa_email_template: 'two_fa_email',
 };
