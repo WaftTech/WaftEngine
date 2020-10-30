@@ -15,6 +15,7 @@ import {
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
+import './header.css';
 
 const styles = theme => ({});
 

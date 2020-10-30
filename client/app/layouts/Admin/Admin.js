@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import MenuItem from '@material-ui/core/MenuItem';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
 import Logo from '../../assets/img/logo-white.svg';
+
 import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
@@ -138,7 +138,6 @@ const styles = theme => ({
 });
 
 const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
-  // const [open, setOpen] = useState(true);
   const [anchorel, setAnchorel] = useState(null);
   const anchorOpen = Boolean(anchorel);
   const handleMenu = event => {
