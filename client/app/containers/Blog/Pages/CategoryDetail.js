@@ -11,11 +11,7 @@ import {
   makeSelectCategoryTitle,
   makeSelectLoadingMoreBlogOfCat,
 } from '../selectors';
-import CategoryList from '../components/CategoryList';
 import RenderBlogs from '../components/BlogList';
-import Archives from '../components/Archives';
-import StaticContentDiv from '../../../components/StaticContentDiv';
-import SubscriberPage from '../../SubscriberPage/index';
 import RecentBlogs from '../components/RecentBlogs';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';

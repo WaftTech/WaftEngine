@@ -1,33 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
-import Dialog from '@material-ui/core/Dialog';
+import React from 'react';
 import LinkBoth from '../../../components/LinkBoth';
-import { IMAGE_BASE, DATE_FORMAT, URL_BASE } from '../../App/constants';
+import { IMAGE_BASE, URL_BASE } from '../../App/constants';
 import BlogDetailSkeleton from '../Skeleton/BlogDetail';
-// import BlogComments from '../../CommentsNepali';
 import tempAuthor from '../../../assets/img/user.svg';
 import RecentBlogs from './RecentBlogs';
 import RelatedBlogs from './RelatedBlogs';
 import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailShareButton,
   FacebookIcon,
   LinkedinIcon,
   TwitterIcon,
-  WhatsappIcon,
-  EmailIcon,
-  // FacebookShareCount,
 } from 'react-share';
-import { FacebookProvider, Comments, CommentsCount } from 'react-facebook';
+import { FacebookProvider, CommentsCount } from 'react-facebook';
 import NotFoundPage from '../../NotFoundPage/Loadable';
 import comment from '../../../assets/img/comment.svg';
 import Skeleton from 'react-loading-skeleton';
 
-// @material
-// import DialogTitle from '@material-ui/core/DialogTitle';
 const BlogDetail = props => {
   const { blog, loading, message, comments } = props;
   const url = window.location.href;
@@ -59,29 +46,12 @@ const BlogDetail = props => {
         ) : (
             <>
               <div>
-                {/* {blog && blog.category && blog.category.length > 0 && (
-                  <div className="mt-0">
-                    {blog.category.map(
-                      (each, index) =>
-                        each._id !== '5d0a07f3f305de105c4fc674' && (
-                          <LinkBoth
-                            className="text-secondary hover:underline leading-normal text-sm capitalize"
-                            key={index}
-                            to={`/news/category/${each.slug_url}`}
-                          >
-                            {`${index === 0 ? '' : ', '}${each.title}`}
-                          </LinkBoth>
-                        ),
-                    )}
-                  </div>
-                )} */}
+
                 <h1 className="text-4xl lg:text-6xl font-bold text-gray-700 leading-tight">
                   {blog && blog.title}
                 </h1>
                 <div className="md:flex py-5 md:py-10 mb-5 md:mb-10 border-b border-gray-300">
-                  {/* <p className="text-gray-700">
-                {blog && moment(blog.added_at).format('MMM DD, YYYY')}
-              </p> */}
+
                   {blog &&
                     blog.author &&
                     blog.author.map((each, index) => (
@@ -121,22 +91,6 @@ const BlogDetail = props => {
                     </div>
                   </div>
                   <div className="py-5 md:py-0 items-center md:ml-10 flex relative z-50">
-                    {/* <FacebookShareButton className="ml-2" url={url}>
-                      <FacebookIcon size={32} round />
-                    </FacebookShareButton>
-                    <LinkedinShareButton className="ml-2" url={url}>
-                      <LinkedinIcon size={32} round />
-                    </LinkedinShareButton>
-                    <TwitterShareButton className="ml-2" url={url}>
-                      <TwitterIcon size={32} round />
-                    </TwitterShareButton>
-                    <EmailShareButton className="ml-2" url={url}>
-                      <EmailIcon size={32} round />
-                    </EmailShareButton>
-                    <WhatsappShareButton className="ml-2" url={url}>
-                      <WhatsappIcon size={32} round />
-                    </WhatsappShareButton> */}
-                    {/* <FacebookShareCount url="https://www.youtube.com/" /> */}
                   </div>
                 </div>
                 <div className="lg:flex">
@@ -246,14 +200,6 @@ const BlogDetail = props => {
                           </div>
                         </div>
                       ))}
-                    {/* {blog && (
-                      <FacebookProvider appId="403635297248992">
-                        <Comments
-                          href={`${URL_BASE}detail/${blog.slug_url}`}
-                          width="100%"
-                        />
-                      </FacebookProvider>
-                    )} */}
                   </div>
                   <div className="lg:w-1/4">
                     <RecentBlogs />

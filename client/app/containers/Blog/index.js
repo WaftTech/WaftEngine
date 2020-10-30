@@ -15,7 +15,6 @@ import {
 
 import reducer from './reducer';
 import saga from './saga';
-import style from './blogLayout.css';
 
 const key = 'blogPage';
 
@@ -44,7 +43,6 @@ const Blog = () => {
         <Route exact path="/news/author/:author" component={BlogsByAuthor} />
         <Route exact path="/news/date/:date" component={BlogDate} />
         <Route exact path="/blog" component={BlogList} />
-        {/* <Route exact path="/news/:slug_url" component={BlogDetail} /> */}
         <Route
           exact
           path="/news/category/:slug_url"

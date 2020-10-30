@@ -12,7 +12,6 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { loadArchivesRequest } from '../actions';
 import { makeSelectArchives, makeSelectArchiveLoading } from '../selectors';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
 import ArchiveSkeleton from '../Skeleton/Archive';
 
 function Archives(props) {

@@ -1,14 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { IMAGE_BASE } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
-import * as mapDispatchToProps from '../actions';
 import moment from 'moment';
+import * as mapDispatchToProps from '../actions';
 
 const HighLightList = props => {
   const { currentBlogs, loading } = props;

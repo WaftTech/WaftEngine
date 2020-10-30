@@ -12,7 +12,6 @@ import saga from '../saga';
 
 const key = 'blogPage';
 
-/* eslint-disable react/prefer-stateless-function */
 const CategoryListingPage = props => {
   useInjectSaga({ key, saga });
   useEffect(() => {

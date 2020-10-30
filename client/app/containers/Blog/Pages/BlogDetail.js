@@ -19,11 +19,7 @@ import {
 } from '../selectors';
 import { makeSelectComment } from '../../Comments/selectors';
 import { makeSelectUser } from '../../App/selectors';
-import RelatedBlogs from '../components/RelatedBlogs';
-import Archives from '../components/Archives';
 import BlogDetail from '../components/BlogDetail';
-import StaticContentDiv from '../../../components/StaticContentDiv';
-import CategoryElement from '../../../components/CategoryElement';
 export class BlogPage extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,

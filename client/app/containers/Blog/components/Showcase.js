@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -13,11 +13,9 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 
 import { Link } from 'react-router-dom';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
+import { IMAGE_BASE } from '../../App/constants';
 import * as mapDispatchToProps from '../actions';
 
-import Skeleton from '../../../components/CategoryElement/skeleton';
-// import style from '../../../components/CategoryElement/category.css';
 import clock from '../../../assets/img/clock.svg';
 
 const ShowCase = props => {

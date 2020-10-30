@@ -21,7 +21,6 @@ const CkEditor = props => {
       <CKEditor
         name="description"
         content={description}
-        // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
         config={{
           allowedContent: true,
           image_previewText: ' ',

@@ -53,13 +53,6 @@ const ForgotPasswordUser = ({
           SUBMIT
         </button>
       </form>
-
-      {/* <Link className={classes.smallFont} to="/login-user">
-        LOGIN?
-        </Link>
-      <Link className={classes.smallFont} to="/signup-user">
-        Not a user?
-        </Link> */}
     </div>
   );
 };

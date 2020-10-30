@@ -31,7 +31,6 @@ export class BlogDatePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // window.scrollTo(0, 0)
     if (nextProps.match.params.date !== this.props.match.params.date) {
       this.props.loadBlogDateRequest({
         key: nextProps.match.params.date,
@@ -78,8 +77,6 @@ export class BlogDatePage extends React.Component {
             )}
           </div>
           <div className="md:w-1/4 pt-10 px-5">
-            {/* <CategoryList /> */}
-            {/* <Archives /> */}
           </div>
         </div>
       </React.Fragment>

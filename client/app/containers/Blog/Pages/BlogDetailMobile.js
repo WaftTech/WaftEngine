@@ -14,9 +14,7 @@ import { compose } from 'redux';
 import * as mapDispatchToProps from '../actions';
 import { makeSelectBlog, makeSelectLoading } from '../selectors';
 import { makeSelectUser } from '../../App/selectors';
-import RecentBlogs from '../components/RecentBlogs';
 import RelatedBlogs from '../components/RelatedBlogsMobile';
-import Archives from '../components/Archives';
 import BlogDetailMobile from '../components/BlogDetailMobile';
 
 export class BlogPage extends React.Component {

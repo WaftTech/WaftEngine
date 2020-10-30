@@ -7,8 +7,6 @@ import {
   dangerColor,
   roseColor,
   whiteColor,
-  blackColor,
-  hexToRgb,
 } from '../colors';
 
 const buttonStyle = {

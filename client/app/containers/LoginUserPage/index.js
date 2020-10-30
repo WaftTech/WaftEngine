@@ -120,8 +120,8 @@ const LoginUserPage = props => {
               </div>
             </>
           ) : (
-            'Continue'
-          )
+              'Continue'
+            )
         }
         width="sm"
       >
@@ -163,28 +163,6 @@ const LoginUserPage = props => {
           </div>
         )}
       </Modal>
-      {/* <Modal
-        open={showGoogleTwoFactor}
-        handleClose={handleClose}
-        handleUpdate={handleSubmitCode}
-        width="sm"
-      >
-        <div className="">
-          <Input
-            id="code"
-            name="code"
-            subLabel="Check inbox for the code"
-            label="Enter the code"
-            error={errors.code}
-            value={
-              twoFactor &&
-              twoFactor.google_authenticate &&
-              twoFactor.google_authenticate.code
-            }
-            onChange={e => handleChange(e, 'google_authenticate')}
-          />
-        </div>
-      </Modal> */}
       <div className="container mx-auto mb-10">
         <div className="mx-auto max-w-md p-5 md:p-16">
           <h1 className="font-bold text-2xl">LOGIN</h1>{' '}
@@ -204,8 +182,8 @@ const LoginUserPage = props => {
                   <span className="ml-2">Login</span>
                 </div>
               ) : (
-                'Login'
-              )}
+                  'Login'
+                )}
             </button>
           </form>
           <Link

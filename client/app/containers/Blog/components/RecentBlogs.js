@@ -10,8 +10,7 @@ import {
   makeSelectRecentBlogsIsLoading,
   makeSelectRecentBlogs,
 } from '../selectors';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
-import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
+import { IMAGE_BASE } from '../../App/constants';
 import clock from '../../../assets/img/clock.svg';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -26,20 +25,15 @@ function RecentBlogs(props) {
     <div className="">
       <div className="bg-primary h-14 flex items-center pl-8 mb-4">
         <h2 className="font-bold text-3xl text-white my-0">
-         Recent Posts
+          Recent Posts
         </h2>
       </div>
       {props.blogs.map(blog => (
         <div key={`recents-${blog._id}`} className="flex py-4">
-          {/* <div className="w-2">
-          <span className="w-2 h-3 inline-block bg-primary" />
-            <span className="w-2 h-3 inline-block bg-secondary" />
-</div> */}
           <div className="flex-1 mr-7">
             <Link
               className="no-underline hover:text-secondary text-xl block text-gray-700"
-              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
-                blog._id
+              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
                 }`}
             >
               {blog.title}
@@ -51,8 +45,7 @@ function RecentBlogs(props) {
           </div>
           <Link
             className="block overflow-hidden w-24 h-24 article-img-container"
-            to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
-              blog._id
+            to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
               }`}
           >
             <img

@@ -48,7 +48,6 @@ export class BlogListPage extends React.Component {
       showcase,
       showcaseLoading,
       trending,
-      // loading,
       highlightLoading,
     } = this.props;
     const pagination = { page, size, totaldata };

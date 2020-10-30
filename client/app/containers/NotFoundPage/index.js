@@ -26,12 +26,7 @@ export default class NotFound extends React.PureComponent {
         </h1>
         <div className="logo-swing">
           <img src={logo} className="logo opacity-25" />
-          <img
-            id="hinge"
-            src={logo}
-            className="logo hinge"
-          // style={{ display: 'none' }}
-          />
+          <img id="hinge" src={logo} className="logo hinge" />
         </div>
       </div>
     );

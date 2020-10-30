@@ -484,7 +484,6 @@ const FileList = ({
           onClick={onClick}
         />
       </div>
-      {/* folder rename */}
       <Dialog
         open={show}
         onClose={handleRenameClose}
@@ -518,9 +517,6 @@ const FileList = ({
         </DialogActions>
       </Dialog>
 
-      {/* folder rename end */}
-
-      {/* file rename dialog */}
       <Dialog
         open={showRename}
         onClose={closeFileRename}
@@ -577,28 +573,10 @@ const FileList = ({
           <div
             className="mediaCont border p-1 relative overflow-hidden mr-4 hover:border-primary"
             key={each._id}
-            // className="w-56 h-30 mb-8 p-2"
             onMouseOver={() => handleMouseOver(each._id)}
             onMouseLeave={() => handleMouseOver('')}
           >
-            {/* {over === each._id ? (
-              <div className="w-full flex absolute justify-center">
-                <button
-                  className="hover:text-blue-500"
-                  onClick={() => handleRename(each._id, each.name)}
-                >
-                  <Edit />
-                </button>
-                <button
-                  className="hover:text-primary"
-                  onClick={() => handleDeleteFolder(each._id)}
-                >
-                  <Cancel />
-                </button>
-              </div>
-            ) : (
-              ''
-            )} */}
+
             <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
               {selectedButton === 'Rename' && (
                 <button

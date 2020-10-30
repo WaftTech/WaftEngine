@@ -22,14 +22,6 @@ export const validate = data => {
 
 export function* redirectOnSuccess() {
   const { payload } = yield take(types.FORGOT_PASSWORD_SUCCESS);
-  // const { token, data } = payload;
-  // yield put(setUser(data));
-  // yield put(setToken(token));
-  // if (redirect) {
-  //   yield put(push(redirect));
-  // } else {
-  //   yield put(push('/'));
-  // }
   const email = yield select(makeSelectEmail());
 
   yield put(push(`/reset-password/${email}`));

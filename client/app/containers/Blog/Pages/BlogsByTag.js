@@ -11,10 +11,7 @@ import {
   makeSelectLoadingMoreBlogOfCat,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-// import Loading from '../../components/Loading';
 import RenderBlogs from '../components/BlogList';
-import CategoryList from '../components/CategoryList';
-import Archives from '../components/Archives';
 import RecentBlogs from '../components/RecentBlogs';
 /* eslint-disable react/prefer-stateless-function */
 export class BlogsByTag extends React.Component {

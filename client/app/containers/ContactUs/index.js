@@ -46,7 +46,6 @@ class ContactUs extends React.Component {
   state = { name: '', email: '', subject: '', message: '', reCaptcha: '' };
 
   componentDidMount() {
-    // this.props.ContactDetailRequest();
   }
 
   handleChange = name => event => {
@@ -86,95 +85,95 @@ class ContactUs extends React.Component {
           <title>Contact Us</title>
         </Helmet>
         <div className="bg-star h-48 relative text-center py-12">
-            <h1 className="text-4xl mb-4">Contact Us</h1>
+          <h1 className="text-4xl mb-4">Contact Us</h1>
         </div>
-         <div className="container mx-auto my-10">
-         <div className="flex flex-wrap">
-           <div className="w-full sm:w-full md:w-1/2">
-          <h2 className="text-xl font-bold">GET IN TOUCH</h2>
-        <div className="flex">
-                  <div className="w-full md:w-1/2 pr-2">
-                    <TextField
-                      id="name"
-                      fullWidth
-                      label="Name"
-                      type="name"
-                      name="name"
-                      margin="normal"
-                      variant="outlined"
-                      value={name}
-                      onChange={this.handleChange('name')}
-                    />
-                  </div>
-                  <div className="w-full md:w-1/2  pl-2">
-                    <TextField
-                      id="email"
-                      fullWidth
-                      label="Email"
-                      type="email"
-                      name="email"
-                      margin="normal"
-                      variant="outlined"
-                      value={email}
-                      onChange={this.handleChange('email')}
-                    />
-                  </div>
+        <div className="container mx-auto my-10">
+          <div className="flex flex-wrap">
+            <div className="w-full sm:w-full md:w-1/2">
+              <h2 className="text-xl font-bold">GET IN TOUCH</h2>
+              <div className="flex">
+                <div className="w-full md:w-1/2 pr-2">
+                  <TextField
+                    id="name"
+                    fullWidth
+                    label="Name"
+                    type="name"
+                    name="name"
+                    margin="normal"
+                    variant="outlined"
+                    value={name}
+                    onChange={this.handleChange('name')}
+                  />
                 </div>
-                 
-                <TextField
-                  id="subject"
-                  label="Subject"
-                  type="subject"
-                  name="subject"
-                  margin="normal"
-                  variant="outlined"
-                  fullWidth
-                  value={subject}
-                  onChange={this.handleChange('subject')}
-                />
-                <TextField
-                  id="message"
-                  label="Message"
-                  fullWidth
-                  multiline
-                  rows="4"
-                  margin="normal"
-                  placeholder="Message"
-                  variant="outlined"
-                  value={message}
-                  onChange={this.handleChange('message')}
-                />
-                 
-                      {isRequesting && isRequesting == true ? (
-                        <CircularProgress color="primary" disableShrink />
-                      ) : (
-                        <form onSubmit={this.onSubmit}>
-                          <ReCAPTCHA
-                            ref={recaptchaRef}
-                            sitekey={RECAPTCHA_SITE_KEY}
-                            onChange={this.onChange}
-                          />
-                        </form>
-                      )}
-                   
-                   <button
-                  type="button"
-                  className="text-white py-2 px-4 rounded mt-4 bg-primary font-bold"
-                  disabled={isRequesting}
-                  onClick={this.handleSave}
-                >
-                  Save Message
-                </button>
-                  <div>
-                    <h1>{this.props.error}</h1>
-                  </div>
-                  </div>
-                  
-                  <div
-                  className="w-full mt-10 sm:w-full md:w-1/2 md:pl-10 md:mt-0">
-              <StaticContentDiv contentKey="contactdetail" />
+                <div className="w-full md:w-1/2  pl-2">
+                  <TextField
+                    id="email"
+                    fullWidth
+                    label="Email"
+                    type="email"
+                    name="email"
+                    margin="normal"
+                    variant="outlined"
+                    value={email}
+                    onChange={this.handleChange('email')}
+                  />
+                </div>
               </div>
-          
+
+              <TextField
+                id="subject"
+                label="Subject"
+                type="subject"
+                name="subject"
+                margin="normal"
+                variant="outlined"
+                fullWidth
+                value={subject}
+                onChange={this.handleChange('subject')}
+              />
+              <TextField
+                id="message"
+                label="Message"
+                fullWidth
+                multiline
+                rows="4"
+                margin="normal"
+                placeholder="Message"
+                variant="outlined"
+                value={message}
+                onChange={this.handleChange('message')}
+              />
+
+              {isRequesting && isRequesting == true ? (
+                <CircularProgress color="primary" disableShrink />
+              ) : (
+                  <form onSubmit={this.onSubmit}>
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={RECAPTCHA_SITE_KEY}
+                      onChange={this.onChange}
+                    />
+                  </form>
+                )}
+
+              <button
+                type="button"
+                className="text-white py-2 px-4 rounded mt-4 bg-primary font-bold"
+                disabled={isRequesting}
+                onClick={this.handleSave}
+              >
+                Save Message
+                </button>
+              <div>
+                <h1>{this.props.error}</h1>
+              </div>
+            </div>
+
+            <div
+              className="w-full mt-10 sm:w-full md:w-1/2 md:pl-10 md:mt-0">
+              <StaticContentDiv contentKey="contactdetail" />
+            </div>
+
             {/* <Grid item xs={6} sm={6} md={6}>
                 {contactDetail.description && (
                   <div
@@ -184,10 +183,10 @@ class ContactUs extends React.Component {
                   />
                 )}
               </Grid> */}
-              </div>
-              </div>
-              </div>
-      
+          </div>
+        </div>
+      </div>
+
     );
   }
 }

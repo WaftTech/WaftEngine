@@ -8,9 +8,6 @@ import {
   makeSelectRecentBlogsIsLoading,
   makeSelectRecentBlogs,
 } from '../selectors';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
-import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
-import clock from '../../../assets/img/clock.svg';
 
 function RecentBlogs(props) {
   if (props.loading) {
@@ -19,9 +16,7 @@ function RecentBlogs(props) {
   return (
     <div className="">
       <div className="bg-primary h-14 flex items-center pl-8">
-        <h2 className="font-bold text-3xl text-white my-0">
-        Recent Posts
-        </h2>
+        <h2 className="font-bold text-3xl text-white my-0">Recent Posts</h2>
       </div>
       {props.blogs.map(blog => (
         <div
@@ -35,8 +30,7 @@ function RecentBlogs(props) {
           <div className="flex-1 px-4">
             <Link
               className="no-underline hover:text-secondary text-xl block leading-tight text-gray-800 font-bold md:font-normal"
-              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
-                blog._id
+              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
                 }`}
             >
               {blog.title}

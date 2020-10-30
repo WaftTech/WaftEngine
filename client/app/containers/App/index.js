@@ -18,7 +18,6 @@ import RoutesPublic from '../../layouts/Public';
 import RoutesAdmin from '../../layouts/Admin';
 import RoutesUser from '../../layouts/User';
 
-// import GlobalStyle from '../../global-styles';
 import AdminRoute from '../../components/Routes/AdminRoute';
 import UserRoute from '../../components/Routes/UserRoute';
 import ErrorBoundary from '../../components/ErrorBoundary';
@@ -34,7 +33,6 @@ const App = ({ location }) => (
       <AdminRoute path="/admin" component={RoutesAdmin} />
       <Route path="/" component={RoutesPublic} />
     </Switch>
-    {/* <GlobalStyle /> */}
   </ErrorBoundary>
 );
 

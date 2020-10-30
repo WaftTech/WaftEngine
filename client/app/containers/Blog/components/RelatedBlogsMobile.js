@@ -15,9 +15,6 @@ function RelatedBlogs(props) {
   if (props.loading) {
     return null;
   }
-  // if (props.blogs.length === 0) {
-  //   return null;
-  // }
   return (
     <div className="mt-5">
       {props.blogs.length > 0 && (
@@ -25,13 +22,12 @@ function RelatedBlogs(props) {
           <h2 className="font-bold text-2xl font-mukta">Related</h2>
           <div className="flex flex-wrap -mx-2">
             {props.blogs.map(blog => (
-              <div
-                key={`relateds-${blog._id}`}
-                className="px-2 mt-4"
-              >
-
+              <div key={`relateds-${blog._id}`} className="px-2 mt-4">
                 <div className="bg-white shadow rounded-sm overflow-hidden">
-                  <Link className="block h-40" to={`/news/mobile/${blog.slug_url}`}>
+                  <Link
+                    className="block h-40"
+                    to={`/news/mobile/${blog.slug_url}`}
+                  >
                     <img
                       src={`${IMAGE_BASE}${blog.image.path}`}
                       alt={blog.title}
@@ -47,7 +43,6 @@ function RelatedBlogs(props) {
                         {blog.title}
                       </Link>
                     </h3>
-                    {/* <time>{moment(blog.added_at).format(DATE_FORMAT)}</time> */}
                   </div>
                 </div>
               </div>

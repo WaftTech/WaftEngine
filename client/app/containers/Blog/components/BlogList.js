@@ -1,16 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes, { number } from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { IMAGE_BASE, DATE_FORMAT } from 'containers/App/constants';
+import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import * as mapDispatchToProps from '../actions';
-import BlogListSkeleton from '../Skeleton/BlogList';
-import clock from '../../../assets/img/clock.svg';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -85,102 +82,19 @@ const RenderBlogs = props => {
                 <h2 className="text-xl md:text-3xl hover:text-secondary font-normal">
                   {title}
                 </h2>
-                {/* <span className="m-2 text-sm">
-                  {author && author.name ? (
-                    <Link
-                      to={`/news/author/${author._id}`}
-                      className="text-primary font-bold no-underline hover:underline"
-                    >
-                      {author.name}
-                    </Link>
-                  ) : (
-                    'unknown'
-                  )}
-                </span> */}
+
                 <div className="inline-flex items-center text-gray-600 md:text-gray-800 text-sm sans-serif mt-3 article-date">
                   <img className="mr-2 clock" src={clock} />
                   {moment(each.added_at).fromNow()}
                 </div>
-                {/* <div className="article-details"> */}
 
-                {/* {tags && tags.length > 0 ? (
-                <Link
-                  className="text-blue-700 no-underline article-tag"
-                  to={`/news/${each.slug_url}`}
-                >
-                  <span> {tags.join(', ') || ''} </span>
-                </Link>
-              ) : (
-                  ''
-                )} */}
-                {/* {short_description && (
-                    <div
-                      className="leading-loose overflow-hidden h-24 text-gray-700"
-                      dangerouslySetInnerHTML={{ __html: short_description }}
-                    />
-                  )} */}
-                {/* </div> */}
               </div>
             </div>
           </Link>
         );
       })}
       <div className="flex clearfix w-full pagination ">
-        {/* <div className="flex my-3">
-          {pagination.page !== 1 && (
-            <span className="inline-block pr-2">
-              <button
-                className="border border-gray-500 hover:bg-gray-600
-                 hover:border-gray-600 hover:text-white text-gray-800 
-                 font-bold w-10 h-10 rounded flex items-center justify-center"
-                type="button"
-                onClick={() =>
-                  handlePagination({
-                    ...pagination,
-                    page: pagination.page - 1,
-                  })
-                }
-              >
-                <i className="material-icons">keyboard_arrow_left</i>
-              </button>
-            </span>
-          )}
-          {pagenumber.length > 0 &&
-            pagenumber.map(each => (
-              <span className="inline-block pr-2" key={each}>
-                <button
-                  id={each}
-                  className={`border 
-                  font-bold w-10 h-10 rounded ${
-                    each === pagination.page
-                      ? 'text-white bg-secondary border-secondary'
-                      : 'text-gray-800 border-gray-500'
-                  }`}
-                  type="button"
-                  onClick={e => {
-                    handlePagination({
-                      ...pagination,
-                      page: e.target.id,
-                    });
-                  }}
-                >
-                  {each}
-                </button>
-              </span>
-            ))}
-          <span className="inline-block pr-2">
-            <button
-              className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 
-               hover:text-white text-gray-800 font-bold w-10 h-10 rounded flex items-center justify-center"
-              disabled={pagination.page === maxPage}
-              onClick={() =>
-                handlePagination({ ...pagination, page: pagination.page + 1 })
-              }
-            >
-              <i className="material-icons">keyboard_arrow_right</i>
-            </button>
-          </span>
-        </div> */}
+
         {loading_more && '....'}
         {currentBlogs.length < pagination.totaldata && (
           <button

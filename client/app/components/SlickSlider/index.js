@@ -14,7 +14,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { makeSelectSlide } from '../../containers/App/selectors';
 import { loadSlideRequest } from '../../containers/App/actions';
-import MediaElement from '../MediaElement';
 import LinkBoth from '../LinkBoth';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import './index.css';
@@ -69,11 +68,6 @@ class SlickSlider extends React.PureComponent {
                 {show_caption && <h6>{image.caption}</h6>}
               </>
             </LinkBoth>
-            // <MediaElement
-            //   mediaKey={image.image}
-            //   key={image._id}
-            //   link={image.link}
-            // />
           ))}
         </Slider>
       </div>
