@@ -31,9 +31,9 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
   - `npm install`
   - `cd ../server`
   - `npm install`
-- Import Default data into MongoDB server from `db` folder
-  - `cd db`
-  - `mongorestore -h <server>:<port> -d <dbname> -u <user> -p <password> ./`
+- Import Default data into MongoDB server from `database/waftengine` folder
+  - `cd ../database/waftengine`
+  - `run mongoimport command for all json file`
 - Configure Server
   - Rename `config.bak` folder to `config`
   - Update `keys.js` file in `mongoURI` section as your `MongoDB credential`
