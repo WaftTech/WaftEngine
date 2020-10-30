@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -29,12 +28,9 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
-import SearchIcon from '@material-ui/icons/Search';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import '../../../../components/Table/table.css';
-import { each } from 'lodash';
 import './style.css';
 
 const RoleAccess = props => {
@@ -131,6 +127,7 @@ const RoleAccess = props => {
         </PageHeader>
       </div>
       <h2>Loading</h2>
+      <Loading />
     </>
   ) : (
       <React.Fragment>
