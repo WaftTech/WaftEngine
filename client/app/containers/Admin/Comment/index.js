@@ -14,9 +14,7 @@ import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import ViewIcon from '@material-ui/icons/RemoveRedEyeOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';

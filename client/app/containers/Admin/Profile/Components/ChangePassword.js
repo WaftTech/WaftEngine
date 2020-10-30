@@ -51,18 +51,6 @@ export class ChangePassword extends React.Component {
     return { errors, isValid: !Object.keys(errors).length };
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   const { errors, isValid } = this.validate();
-  //   this.setState({ errors });
-  //   // const { oldPassword, newPassword, newPassword2 } = this.state;
-  //   // this.props.changePasswordRequest({ oldPassword, newPassword, newPassword2 });
-  //   if (isValid) {
-  //     const { oldPassword, newPassword, newPassword2 } = this.state;
-  //     this.props.changePasswordRequest({ oldPassword, newPassword, newPassword2 });
-  //   }
-  // };
-
   handleSave = e => {
     e.preventDefault();
     const { errors, isValid } = this.validate();

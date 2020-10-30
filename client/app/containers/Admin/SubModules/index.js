@@ -14,12 +14,9 @@ import { Helmet } from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
-import Close from '@material-ui/icons/Close';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -130,38 +127,6 @@ export const SubModules = props => {
             </i>
           </button>
         </div>
-        {/* <Tooltip
-          id="tooltip-top"
-          title="Edit"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <IconButton
-            aria-label="Edit"
-            className={classes.tableActionButton}
-            onClick={() => handleEdit(_id)}
-          >
-            <Edit
-              className={`${classes.tableActionButtonIcon} ${classes.edit}`}
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip
-          id="tooltip-top-start"
-          title="Remove"
-          placement="top"
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <IconButton
-            aria-label="Close"
-            className={classes.tableActionButton}
-            onClick={() => handleOpen(_id)}
-          >
-            <Close
-              className={`${classes.tableActionButtonIcon} ${classes.close}`}
-            />
-          </IconButton>
-        </Tooltip> */}
       </>,
     ],
   );

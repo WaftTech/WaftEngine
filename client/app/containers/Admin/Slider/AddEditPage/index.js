@@ -34,7 +34,6 @@ import { IMAGE_BASE } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import MediaElement from '../../../../components/MediaElement';
 import EditorFileSelect from '../../../EditorFileSelect';
 import Input from '../../../../components/customComponents/Input';
 
@@ -83,22 +82,14 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
                 onClick={_this.handleSetImage(index)}
               />
             ) : (
-              // <MediaElement
-              //   mediaKey={
-              //     typeof value.image === 'string'
-              //       ? value.image
-              //       : value.image._id
-              //   }
-              //   onClick={_this.handleSetImage(index)}
-              // />
-              <button
-                type="button"
-                className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
-                onClick={_this.handleSetImage(index)}
-              >
-                Click To Set Image
-              </button>
-            )}
+                <button
+                  type="button"
+                  className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
+                  onClick={_this.handleSetImage(index)}
+                >
+                  Click To Set Image
+                </button>
+              )}
           </div>
 
           <div className="w-1/4 text-center mr-2">
@@ -269,123 +260,111 @@ class AddEdit extends React.PureComponent {
     return loading ? (
       <Loading />
     ) : (
-      <>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
-            {match && match.params && match.params.id
-              ? 'Edit Slider'
-              : 'Add Slider'}
-          </PageHeader>
-        </div>
-        <Dialog
-          className={classes.modal}
-          aria-labelledby="max-width-dialog-title"
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth={this.state.fullWidth}
-          maxWidth={this.state.maxWidth}
-        >
-          <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
-          <DialogContent>
-            {/* {media.data.map((each, index) => (
-              <div
-                key={each._id}
-                className={classes.media}
-                onClick={() => this.handleImageImageChange(each._id)}
-                onKeyDown={() => this.handleImageImageChange(each._id)}
-                role="menuitem"
-                tabIndex={index}
+        <>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
               >
-                <img src={`${IMAGE_BASE}${each.path}`} alt={each.caption} />
-              </div>
-            ))} */}
-            <EditorFileSelect
-              location={location}
-              selectFile={file => this.handleImageImageChange(file)}
-            />
-          </DialogContent>
-        </Dialog>
-
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit Slider'
-              : 'Add Slider'}
-          </title>
-        </Helmet>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Slider Name"
-              inputclassName="inputbox"
-              inputid="slider-name"
-              inputType="text"
-              value={one.slider_name}
-              name="slider_name"
-              onChange={this.handleChange('slider_name')}
-              error={errors.slider_name}
-            />
+                <BackIcon />
+              </IconButton>
+              {match && match.params && match.params.id
+                ? 'Edit Slider'
+                : 'Add Slider'}
+            </PageHeader>
           </div>
+          <Dialog
+            className={classes.modal}
+            aria-labelledby="max-width-dialog-title"
+            open={this.state.open}
+            onClose={this.handleClose}
+            fullWidth={this.state.fullWidth}
+            maxWidth={this.state.maxWidth}
+          >
+            <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
+            <DialogContent>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageImageChange(file)}
+              />
+            </DialogContent>
+          </Dialog>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Slider Key"
-              inputclassName="inputbox"
-              inputid="slider-key"
-              inputType="text"
-              value={one.slider_key}
-              name="slider_key"
-              onChange={this.handleChange('slider_key')}
-              error={errors.slider_key}
-            />
-          </div>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Slider'
+                : 'Add Slider'}
+            </title>
+          </Helmet>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Slider Name"
+                inputclassName="inputbox"
+                inputid="slider-name"
+                inputType="text"
+                value={one.slider_name}
+                name="slider_name"
+                onChange={this.handleChange('slider_name')}
+                error={errors.slider_name}
+              />
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="font-bold text-gray-700" htmlFor="grid-last-name">
-              Slider Settings
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Slider Key"
+                inputclassName="inputbox"
+                inputid="slider-key"
+                inputType="text"
+                value={one.slider_key}
+                name="slider_key"
+                onChange={this.handleChange('slider_key')}
+                error={errors.slider_key}
+              />
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="font-bold text-gray-700" htmlFor="grid-last-name">
+                Slider Settings
             </label>
-            <textarea
-              name="slider settings"
-              id="slider_setting"
-              className="inputbox"
-              cols="50"
-              rows="5"
-              onChange={this.handleChange('settings')}
-              value={one.settings || ''}
-            />
-          </div>
+              <textarea
+                name="slider settings"
+                id="slider_setting"
+                className="inputbox"
+                cols="50"
+                rows="5"
+                onChange={this.handleChange('settings')}
+                value={one.settings || ''}
+              />
+            </div>
 
-          <button
-            type="button"
-            className="block btn bg-info hover:bg-secondary"
-            onClick={this.handleAddSlide}
-          >
-            Add Slide
+            <button
+              type="button"
+              className="block btn bg-info hover:bg-secondary"
+              onClick={this.handleAddSlide}
+            >
+              Add Slide
           </button>
-          <div>
-            <SortableImageList
-              items={one.images}
-              _this={this}
-              onSortEnd={this.onImageSortEnd}
-            />
-          </div>
-          <button
-            type="button"
-            className="block btn bg-primary hover:bg-secondary"
-            onClick={this.handleSave}
-          >
-            Save
+            <div>
+              <SortableImageList
+                items={one.images}
+                _this={this}
+                onSortEnd={this.onImageSortEnd}
+              />
+            </div>
+            <button
+              type="button"
+              className="block btn bg-primary hover:bg-secondary"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </>
-    );
+          </PageContent>
+        </>
+      );
   }
 }
 

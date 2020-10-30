@@ -288,14 +288,7 @@ const styles = theme => ({
     padding: '0px 12px',
   },
 
-  // roleRoot : {
-  // 	'& > div' : {
-  // 		'&$expanded': {
-  // 			minHeight: '44px',
-  // 		  },
-  // 	},
 
-  // },
 
   roleExpanded: {
     borderBottom: '1px solid gainsboro',

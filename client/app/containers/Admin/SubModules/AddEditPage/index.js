@@ -8,8 +8,6 @@ import { push } from 'connected-react-router';
 import 'react-datepicker/dist/react-datepicker.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 
@@ -91,104 +89,87 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-    <>
-      {/* <Helmet>
-        <title>
-          {match && match.params && match.params.id
-            ? 'Edit Country'
-            : 'Add Country'}
-        </title>
-      </Helmet> */}
-      <div>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
-            {match && match.params && match.params.id
-              ? 'Edit Sub Module'
-              : 'Add Sub Module'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Module Group"
-              inputclassName="inputbox"
-              inputid="grid-group"
-              inputType="text"
-              value={one.module_group}
-              onChange={handleChange('module_group')}
-              error={errors.module_group}
-            />
+      <>
+        <div>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
+              {match && match.params && match.params.id
+                ? 'Edit Sub Module'
+                : 'Add Sub Module'}
+            </PageHeader>
           </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Order"
-              inputclassName="inputbox"
-              inputid="grid-value"
-              inputType="text"
-              value={one.order}
-              onChange={handleChange('order')}
-              error={errors.order}
-            />
-          </div>
-
-          <div className="w-full md:w-1/2">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-country-code-2"
-            >
-              Description
-            </label>
-            <textarea
-              className="inputbox"
-              id="grid-description"
-              type="text"
-              value={one.description}
-              onChange={handleChange('description')}
-            />
-            <div id="component-error-text">{errors.description}</div>
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Module Group Main"
-              inputclassName="inputbox"
-              inputid="grid-group"
-              inputType="text"
-              value={one.module_group_main}
-              onChange={handleChange('module_group_main')}
-              error={errors.module_group_main}
-            />
-          </div>
-          {/* <FormControlLabel
-            control={
-              <Checkbox
-                checked={one.is_active || false}
-                tabIndex={-1}
-                onClick={handleCheckedChange('is_active')}
-                color="primary"
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Module Group"
+                inputclassName="inputbox"
+                inputid="grid-group"
+                inputType="text"
+                value={one.module_group}
+                onChange={handleChange('module_group')}
+                error={errors.module_group}
               />
-            }
-            label="Is Active"
-          /> */}
-          <button
-            type="button"
-            className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
-            onClick={handleSave}
-          >
-            Save
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Order"
+                inputclassName="inputbox"
+                inputid="grid-value"
+                inputType="text"
+                value={one.order}
+                onChange={handleChange('order')}
+                error={errors.order}
+              />
+            </div>
+
+            <div className="w-full md:w-1/2">
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-country-code-2"
+              >
+                Description
+            </label>
+              <textarea
+                className="inputbox"
+                id="grid-description"
+                type="text"
+                value={one.description}
+                onChange={handleChange('description')}
+              />
+              <div id="component-error-text">{errors.description}</div>
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Module Group Main"
+                inputclassName="inputbox"
+                inputid="grid-group"
+                inputType="text"
+                value={one.module_group_main}
+                onChange={handleChange('module_group_main')}
+                error={errors.module_group_main}
+              />
+            </div>
+
+            <button
+              type="button"
+              className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
+              onClick={handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </div>
-    </>
-  );
+          </PageContent>
+        </div>
+      </>
+    );
 };
 
 AddEdit.propTypes = {
@@ -222,7 +203,5 @@ const withConnect = connect(
 export default compose(
   withRouter,
   withStyle,
-  // withReducer,
-  // withSaga,
   withConnect,
 )(AddEdit);

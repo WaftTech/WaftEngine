@@ -13,10 +13,8 @@ import { push } from 'connected-react-router';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-// import Close from '@material-ui/icons/Close';
 
 // core components
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectAll, makeSelectOne, makeSelectLoading } from './selectors';
@@ -178,7 +176,6 @@ export function Template({
             />
           </div>
 
-          {/* <div dangerouslySetInnerHTML={{ __html: one.body }} /> */}
 
           <div className="w-full pb-4">
             <label className="label">Body</label>

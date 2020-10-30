@@ -5,14 +5,10 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import moment from 'moment';
 
 // @material-ui/core
 import withStyles from '@material-ui/core/styles/withStyles';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import injectSaga, { useInjectSaga } from 'utils/injectSaga';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import { useInjectSaga } from 'utils/injectSaga';
 
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -99,79 +95,79 @@ export const TwoFactor = props => {
   return loadTwoFactor ? (
     <div className="ml-4 p-4 border">Loading</div>
   ) : (
-    <>
-      <Modal
-        open={showGoogleTwoFactor}
-        handleClose={handleClose}
-        handleUpdate={handleSubmitCode}
-      >
-        <div>
-          <Input
-            id="two_factor_authentication"
-            name="two_factor_authentication"
-            label="Google Two factor authentication code"
-            disabled
-            readOnly
-            error={errors.two_fa_ga_auth_secret}
-            value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
-          />
-        </div>
-        <div className="py-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="200"
-            height="200"
-            fill="true"
-          >
-            <path
-              d={
-                twoFactor &&
-                twoFactor.google_authenticate &&
-                twoFactor.google_authenticate.qrcode &&
-                twoFactor.google_authenticate.qrcode.path
-              }
-              className="qr-code"
+      <>
+        <Modal
+          open={showGoogleTwoFactor}
+          handleClose={handleClose}
+          handleUpdate={handleSubmitCode}
+        >
+          <div>
+            <Input
+              id="two_factor_authentication"
+              name="two_factor_authentication"
+              label="Google Two factor authentication code"
+              disabled
+              readOnly
+              error={errors.two_fa_ga_auth_secret}
+              value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
             />
-          </svg>
-        </div>
-        <div>
-          <Input
-            id="code"
-            name="code"
-            label="Enter Your code"
-            error={errors.code}
-            value={twoFactor && twoFactor.code}
-            onChange={e => handleChange(e, 'google_authenticate')}
-          />
-          <p className="italic mt-2">
-            Note : Enter the code from Authentication App
+          </div>
+          <div className="py-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="200"
+              height="200"
+              fill="true"
+            >
+              <path
+                d={
+                  twoFactor &&
+                  twoFactor.google_authenticate &&
+                  twoFactor.google_authenticate.qrcode &&
+                  twoFactor.google_authenticate.qrcode.path
+                }
+                className="qr-code"
+              />
+            </svg>
+          </div>
+          <div>
+            <Input
+              id="code"
+              name="code"
+              label="Enter Your code"
+              error={errors.code}
+              value={twoFactor && twoFactor.code}
+              onChange={e => handleChange(e, 'google_authenticate')}
+            />
+            <p className="italic mt-2">
+              Note : Enter the code from Authentication App
           </p>
+          </div>
+        </Modal>
+        <div className="ml-4 p-4 border">
+          <div>
+            <Checkbox
+              label="Enable Email two factor authentication"
+              checked={twoFactor.email.is_authenticate}
+              name="email"
+              type="checkbox"
+              color="primary"
+              onChange={handleChecked}
+            />
+          </div>
+          <div>
+            <Checkbox
+              label="Enable Google two factor authentication"
+              checked={twoFactor.google_authenticate.is_authenticate}
+              name="google_authenticate"
+              type="checkbox"
+              color="primary"
+              onChange={handleChecked}
+            />
+          </div>
         </div>
-      </Modal>
-      <div className="ml-4 p-4 border">
-        <div>
-          <Checkbox
-            label="Enable Email two factor authentication"
-            checked={twoFactor.email.is_authenticate}
-            name="email"
-            type="checkbox"
-            color="primary"
-            onChange={handleChecked}
-          />
-        </div>
-        <div>
-          <Checkbox
-            label="Enable Google two factor authentication"
-            checked={twoFactor.google_authenticate.is_authenticate}
-            name="google_authenticate"
-            type="checkbox"
-            color="primary"
-            onChange={handleChecked}
-          />
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
 };
 
 TwoFactor.propTypes = {

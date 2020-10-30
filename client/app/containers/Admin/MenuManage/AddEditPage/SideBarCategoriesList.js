@@ -8,12 +8,8 @@ import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import IndeterminateCheckBoxOutlinedIcon from '@material-ui/icons/IndeterminateCheckBoxOutlined';
 import Collapse from '@material-ui/core/Collapse';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import StopIcon from '@material-ui/icons/Stop';
-// import Loader from '../../assets/img/loader.gif';
 import FolderIcon from '@material-ui/icons/Folder';
 import DescriptionIcon from '@material-ui/icons/Description';
-import AddIcon from '@material-ui/icons/Add';
 import * as mapDispatchToProps from '../actions';
 
 import { makeSelectCategory, makeSelectLoading } from '../selectors';
@@ -47,7 +43,6 @@ const SidebarCategoriesList = props => {
   };
 
   const handleClick = id => {
-    // setChildValue({ key: 'parent_menu', value: id });
     clearSubMenu();
     loadMenuRequest(id);
   };
@@ -80,7 +75,6 @@ const SidebarCategoriesList = props => {
                   {e.child_menu[0]._id !== '' ? (
                     <AddBoxOutlinedIcon />
                   ) : (
-                      // <h1>Data</h1>
                       <CheckBoxOutlineBlankOutlinedIcon />
                     )}
                   <FolderIcon />
@@ -106,15 +100,6 @@ const SidebarCategoriesList = props => {
         </>
       ) : (
           <>
-            {/* {e._id === '' ? (
-            <div
-              onClick={() => handleChange('parent_category', parentId)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
-            >
-              <AddIcon />
-              Add subcategory
-            </div>
-          ) : ( */}
             {e._id !== '' && (
               <div
                 onClick={() => handleClick(e._id)}
@@ -124,27 +109,13 @@ const SidebarCategoriesList = props => {
                 {`${e.title}`}
               </div>
             )}
-            {/* )} */}
           </>
         )}
     </ul>
   );
-  // return <div>{category && category.map(each => <h1>{each.title}</h1>)}</div>;
 
   return (
     <div className="list-reset">
-      {/* <div className="p-4">
-        <input type="text" placeholder="Search" className="inputbox" />
-      </div>
-      <div className="px-4">
-        <button className="mb-2" type="button" onClick={handleCollapse}>
-          Collapse All
-        </button>
-        <span className="text-gray-800 px-4">|</span>
-        <button className="mb-2" type="button" onClick={handleExpand}>
-          Expand All
-        </button>
-      </div> */}
       <button
         type="button"
         onClick={() => clearSubMenu()}
@@ -153,27 +124,10 @@ const SidebarCategoriesList = props => {
         Add New
       </button>
       {category.length <= 0 ? (
-        // <img
-        //   src={Loader}
-        //   alt="loader"
-        //   className="m-auto mt-10"
-        //   height="100px"
-        //   width="100px"
-        // />
         <h1 />
       ) : (
           category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
         )}
-      {/* <div className="px-4 mt-5">
-        <button
-          className="btn-waft"
-          style={{ width: '100%' }}
-          type="button"
-          onClick={() => clearGeneralInfo()}
-        >
-          Add New Category
-        </button>
-      </div> */}
     </div>
   );
 };
@@ -197,15 +151,3 @@ export default compose(
   withConnect,
   withStyle,
 )(SidebarCategoriesList);
-
-// {e.child_category[0]._id.length <= 0 && (
-//             <>
-//               <div
-//                 onClick={() => handleClick(e._id)}
-//                 className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-grey-darker hover:text-primary text-sm"
-//               >
-//                 {/* {e.title} */}
-//                 "Add Sub-category"
-//               </div>
-//             </>
-//           )}

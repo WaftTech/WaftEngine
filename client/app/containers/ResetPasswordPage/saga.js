@@ -9,14 +9,13 @@ import {
 } from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { push, LOCATION_CHANGE } from 'connected-react-router';
-import { makeSelectToken } from '../App/selectors';
 import { makeSelectDefaultData } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
 import { enqueueSnackbar, setToken, setUser } from '../App/actions';
 
 function confirmPassword(data) {
-  let errors = {};
+  const errors = {};
   if (!data.code) errors.code = 'This field is required!!';
   if (!data.password) errors.password = 'This field is required!!';
   if (data.password != data.confirm_password)

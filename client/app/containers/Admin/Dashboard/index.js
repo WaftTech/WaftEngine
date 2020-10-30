@@ -73,22 +73,6 @@ export class Dashboard extends React.PureComponent {
             </div>
           ))}
         </div>
-
-        {/* <div className="bg-white rounded my-4 p-4 ">
-          <h3 className="border-b text-2xl font-bold border-gray-300  pb-2">Latest Blogs</h3>
-          {blogs.map(each => (
-            <LinkBoth
-              className="mt-2 bg-gray-200 flex flex-wrap justify-between p-2 rounded"
-              key={each._id}
-              to={`https://waftengine.org/blog/${each.slug_url}`}
-            >
-              <div>
-                <h4>{each.title}</h4>
-              </div>
-            </LinkBoth>
-          ))}
-        </div> */}
-
         <div className="flex justify-between mx-8 my-4">
           <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black shadow">
             <LinkBoth
@@ -179,12 +163,12 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-between">
-                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                      No Errors
+                    <div className="flex justify-between">
+                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                        No Errors
                     </h2>
-                  </div>
-                )}
+                    </div>
+                  )}
               </div>
             </div>
           </div>

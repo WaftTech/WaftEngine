@@ -29,7 +29,6 @@ import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
 import BlogCommentManagePage from '../containers/Admin/Comment/Loadable';
 import ViewCommentManagePage from '../containers/Admin/Comment/ViewComment/Loadable';
 import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadable';
-// import Report from '../containers/Admin/Report/Loadable';
 import Integration from '../containers/Admin/Integration/Loadable';
 import UserProfilePage from '../containers/Admin/Profile/index';
 import SettingsManage from '../containers/Admin/SettingsManagePage';

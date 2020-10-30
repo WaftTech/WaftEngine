@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Button, Grid, Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import {
   makeSelectToken,
@@ -15,7 +15,6 @@ import {
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
-import style from './header.css';
 
 const styles = theme => ({});
 

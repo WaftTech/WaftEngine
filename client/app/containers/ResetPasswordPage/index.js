@@ -55,7 +55,6 @@ export const ResetPasswordPage = props => {
   };
 
   const handleSubmit = () => {
-    // e.preventDefault();
     loadResetRequest();
   };
 

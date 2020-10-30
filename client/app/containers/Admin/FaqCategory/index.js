@@ -15,13 +15,10 @@ import { Helmet } from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table';
-import Close from '@material-ui/icons/Close';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
