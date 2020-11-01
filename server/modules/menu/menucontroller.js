@@ -183,26 +183,23 @@ menuController.deleteMenu = async (req, res, next) => {
 };
 
 menuController.getMenuForUser = async (req, res, next) => {
-  const id = await menuSch.findOne({ key: req.params.key }).select('key');
-  let all_menu = [];
-  if (id && id._id) {
-    all_menu = await menu_item
-      .find({ menu_sch_id: id._id, is_deleted: false })
-      .sort({ order: 1 })
-      .lean();
-  }
+  const id = await menuSch.findOne({ key: req.params.key, is_active: true }).select('key');
   const baseParents = [];
   const childrens = [];
-  all_menu.forEach(each => {
-    if (each.parent_menu == null) {
-      baseParents.push(each);
-    } else {
-      childrens.push(each);
-    }
-  });
-
+  let key = req.params.key;
+  if (id && id._id) {
+    key = id.key;
+    const all_menu = await menu_item.find({ menu_sch_id: id._id, is_deleted: false }).sort({ order: 1 }).lean();
+    all_menu.forEach((each) => {
+      if (each.parent_menu == null) {
+        baseParents.push(each);
+      } else {
+        childrens.push(each);
+      }
+    });
+  }
   const child = utils.recursiveChildFinder(baseParents, childrens);
-  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: req.params.key }, null, 'Child menu get success!!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!!', null);
 };
 
 module.exports = { menuController, menuItemController };
