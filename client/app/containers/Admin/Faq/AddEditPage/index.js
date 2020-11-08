@@ -84,93 +84,92 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
-          </title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
-            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-          <Input
-              label="Question"
-              inputclassName="inputbox"
-              inputid="faq"
-              inputType="text"
-              name="Question"
-              value={one.question || ''}
-              onChange={this.handleChange('question')}
-            />
+        <>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
+            </title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
+              {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
+            </PageHeader>
           </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="font-bold text-gray-700"
-              htmlFor="grid-last-name"
-            >
-              Answer
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Question"
+                inputclassName="inputbox"
+                inputid="faq"
+                inputType="text"
+                name="Question"
+                value={one.question || ''}
+                onChange={this.handleChange('question')}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="font-bold text-gray-700"
+                htmlFor="grid-last-name"
+              >
+                Answer
             </label>
-            <textarea
-              className="inputbox"
-              multiline="true"
-              rows="5"
-              name="Answer"
-              id="faq-answer"
-              value={one.title || ''}
-              onChange={this.handleChange('title')}
-            />
-            {/* <div id="component-error-text">{errors.title}</div> */}
-          </div>
+              <textarea
+                className="inputbox"
+                multiline="true"
+                rows="5"
+                name="Answer"
+                id="faq-answer"
+                value={one.title || ''}
+                onChange={this.handleChange('title')}
+              />
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
-              htmlFor="category"
-            >
-              Category
+            <div className="w-full md:w-1/2 pb-4">
+              <label
+                className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
+                htmlFor="category"
+              >
+                Category
             </label>
-            <select
-              className="inputbox"
-              value={one.category || ''}
-              onChange={this.handleChange('category')}
-              inputprops={{
-                name: 'category',
-                id: 'category-title',
-              }}
-            >
-              <option value="" disabled>
-                None
+              <select
+                className="inputbox"
+                value={one.category || ''}
+                onChange={this.handleChange('category')}
+                inputprops={{
+                  name: 'category',
+                  id: 'category-title',
+                }}
+              >
+                <option value="" disabled>
+                  None
               </option>
-              {category &&
-                category.length &&
-                category.map(each => (
-                  <option key={each._id} value={each._id}>
-                    {each.title}
-                  </option>
-                ))}
-            </select>
-          </div>
+                {category &&
+                  category.length &&
+                  category.map(each => (
+                    <option key={each._id} value={each._id}>
+                      {each.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
-          <button
-            className="block btn bg-primary hover:bg-secondary"
-            onClick={this.handleSave}
-          >
-            Save
+            <button
+              className="block btn bg-primary hover:bg-secondary"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </>
-    );
+          </PageContent>
+        </>
+      );
   }
 }
 

@@ -99,7 +99,7 @@ blogController.getShowcaseBlog = async (req, res, next) => {
           select: '_id name',
         },
       ])
-      .select({ slug_url: 1, title: 1, added_at: 1, image: 1, short_description: 1 })
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1, published_on: 1, short_description: 1 })
       .sort({ published_on: -1 })
       .skip(0)
       .limit(5);
@@ -211,15 +211,10 @@ blogController.getRelatedBlog = async (req, res, next) => {
     };
     if (f && f.length) {
       filter_final = { ...filter_final, $or: f };
-    } else {
-      filter_final = { ...filter_final, $or: { category: tages.category } };
+    } else if (tages && tages.category) {
+      filter_final = { ...filter_final, $or: [{ category: tages.category }] };
     }
-    const data = await blogSch
-      .find(filter_final)
-      .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
-      .sort({ published_on: -1 })
-      .skip(0)
-      .limit(3);
+    const data = await blogSch.find(filter_final).select({ slug_url: 1, title: 1, added_at: 1, image: 1 }).sort({ published_on: -1 }).skip(0).limit(3);
     return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog', null);
   } catch (err) {
     next(err);

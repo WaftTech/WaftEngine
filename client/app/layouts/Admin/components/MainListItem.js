@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import menus from './sidemenu';
 
 import {
@@ -59,9 +57,8 @@ const MainListItem = ({ location: { pathname }, access }) => {
                 <span className="dropdown-title text-gray-100">{e.name}</span>
               </div>
               <i
-                className={`material-icons text-gray-200 opacity-50 ease-in-out ${
-                  !openSet[e.key] ? 'rotate-90' : ''
-                }`}
+                className={`material-icons text-gray-200 opacity-50 ease-in-out ${!openSet[e.key] ? 'rotate-90' : ''
+                  }`}
               >
                 arrow_drop_down
               </i>
@@ -73,23 +70,23 @@ const MainListItem = ({ location: { pathname }, access }) => {
             </Collapse>
           </>
         ) : (
-          <div
-            selected={pathname === e.link}
-            className={e.key.split('.').length === 1 ? '' : ''}
-          >
-            <Link
-              to={`${e.link}`}
-              className={`text-gray-200 text-sm no-underline flex items-center hover:bg-gray-800 py-2 pl-${e.key.split(
-                '.',
-              ).length * 2}`}
+            <div
+              selected={pathname === e.link}
+              className={e.key.split('.').length === 1 ? '' : ''}
             >
-              <i key={e} className="material-icons mr-3 text-sm">
-                {e.icon}
-              </i>
-              {e.name}
-            </Link>
-          </div>
-        )}
+              <Link
+                to={`${e.link}`}
+                className={`text-gray-200 text-sm no-underline flex items-center hover:bg-gray-800 py-2 pl-${e.key.split(
+                  '.',
+                ).length * 2}`}
+              >
+                <i key={e} className="material-icons mr-3 text-sm">
+                  {e.icon}
+                </i>
+                {e.name}
+              </Link>
+            </div>
+          )}
       </div>
     );
   };

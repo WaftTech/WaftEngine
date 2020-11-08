@@ -87,45 +87,22 @@ const AddEdit = props => {
 
   const handleCheckedChange = name => event => {
     event.persist();
-    // if (index) {
     props.setOneValue({ key: name, value: event.target.checked });
-    // }
-    // props.setOneValue({ key: name, value: event.target.checked });
   };
 
   const handleCheckedChildChange = name => event => {
     event.persist();
-    // if (index) {
     props.setChildValue({ key: name, value: event.target.checked });
-    // }
-    // props.setOneValue({ key: name, value: event.target.checked });
   };
 
   const handleChange = name => event => {
     event.persist();
-    // if (index) {
     props.setOneValue({ key: name, value: event.target.value });
-    // }
-    // props.setOneValue({ key: name, value: event.target.value });
   };
-  // const handleCheckedChange = name => event => {
-  //   event.persist();
-  //   props.setOneValue({ key: name, value: !event.target.value });
-  // };
-
-  // const handleDateChange = name => date => {
-  //   props.setOneValue({
-  //     key: name,
-  //     value: moment(date).format(DATE_FORMAT),
-  //   });
-  // };
 
   const handleChildChange = name => event => {
     event.persist();
-    // if (index) {
     props.setChildValue({ key: name, value: event.target.value });
-    // }
-    // props.setOneValue({ key: name, value: event.target.value });
   };
 
   const handleGoBack = () => {
@@ -144,10 +121,6 @@ const AddEdit = props => {
   const handleAddChildMenuSave = () => {
     props.addEditRequest2();
   };
-
-  // const handleSubMenuAdd = () => {
-  //   props.addSubMenu();
-  // };
 
   const handleTitleChange = event => {
     const {
@@ -218,7 +191,6 @@ const AddEdit = props => {
         value={subMenu.parent_menu}
         name="parent_category"
         onChange={handleChildChange('parent_menu')}
-      // onBlur={handleChildChange('parent_menu')}
       >
         <option disabled="" value="">
           Parent Category
@@ -229,7 +201,7 @@ const AddEdit = props => {
               {`${each.title}`}
             </option>
             {each.child_menu && each.child_menu.length > 0
-              ? //  && each.child_menu[0]._id !== ''
+              ?
               (resetChildContent(),
                 getChildCategory(each, 1).map(eachChild => eachChild))
               : null}
@@ -392,13 +364,7 @@ const AddEdit = props => {
                             <option value>Same Site</option>
                             <option value={false}>Other Site</option>
                           </select>
-                          {/* <input
-                        className="inputbox"
-                        id="grid-last-name"
-                        type="text"
-                        value={one.title || ''}
-                        onChange={handleChange('title', null)}
-                      /> */}
+
                           {errors && errors.title && (
                             <div id="component-error-text">
                               {errors.is_internal}
@@ -412,10 +378,6 @@ const AddEdit = props => {
                           <select
                             className="inputbox"
                             id="product_type"
-                            // value={
-                            //   listProductTypeNormalized[generalInfo.product_type] ||
-                            //   null
-                            // }
                             value={subMenu.target}
                             name="target"
                             onChange={handleChildChange('target')}
@@ -425,13 +387,6 @@ const AddEdit = props => {
                             <option value="_top">_top</option>
                             <option value="_parent">_parent</option>
                           </select>
-                          {/* <input
-                        className="inputbox"
-                        id="grid-last-name"
-                        type="text"
-                        value={one.title || ''}
-                        onChange={handleChange('title', null)}
-                      /> */}
                           {errors && errors.title && (
                             <div id="component-error-text">{errors.target}</div>
                           )}
@@ -441,8 +396,7 @@ const AddEdit = props => {
                           className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
                           onClick={handleChildSave}
                         >
-                          {/* chid save button */}
-                        Save
+                          Save
                       </button>
                         {subMenu._id && (
                           <button

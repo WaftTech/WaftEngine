@@ -17,7 +17,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
-// import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';

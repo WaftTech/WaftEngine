@@ -4,21 +4,11 @@ import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 import { withStyles } from '@material-ui/core/styles';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import MainListItems from './components/MainListItem';
@@ -29,7 +19,6 @@ import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
-import Breadcrumb from '../../components/Breadcrumb';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -149,7 +138,6 @@ const styles = theme => ({
 });
 
 const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
-  // const [open, setOpen] = useState(true);
   const [anchorel, setAnchorel] = useState(null);
   const anchorOpen = Boolean(anchorel);
   const handleMenu = event => {
@@ -246,7 +234,6 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           <MainListItems />
         </ColoredScrollbars>
         <main className="h-screen flex-1 overflow-auto px-4 pt-12 flex flex-col justify-between">
-          {/* <Breadcrumb /> */}
           <div className="flex-1">{switchRoutes(roles)}</div>
           <p className="text-gray-700 py-4">version 1.0.1</p>
         </main>

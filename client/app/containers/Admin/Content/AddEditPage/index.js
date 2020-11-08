@@ -184,20 +184,6 @@ class AddEdit extends React.PureComponent {
                   description={one.description}
                   setOneValue={this.props.setOneValue}
                 />
-                {/* <CKEditor
-                name="description"
-                content={one.description}
-                // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
-                config={{
-                  allowedContent: true,
-                  // filebrowserBrowseUrl: '/editor-file-select',
-                  // filebrowserUploadUrl: '/api/media/multiple',
-                }}
-                events={{
-                  change: e => this.handleEditorChange(e, 'description'),
-                  value: one.description,
-                }}
-              /> */}
                 <div id="component-error-text">{errors.description}</div>
               </div>
 

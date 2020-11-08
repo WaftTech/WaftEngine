@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import TrashIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
@@ -55,9 +54,7 @@ const Path = props => {
 
       <div className="flex justify-between">
         <div className="clientRoute w-1/2 border-r">
-          <label className="label border-b pl-4">
-            Client Route
-          </label>
+          <label className="label border-b pl-4">Client Route</label>
           {(each.admin_routes || []).map((eachAdminRoute, index) => (
             <div
               className="w-full pb-1 pl-4"
@@ -106,9 +103,8 @@ const Path = props => {
           {(each.server_routes || []).map((eachServerRoute, index) => (
             <div
               className="w-full pb-1 pl-4"
-              key={`${each._id}-${pathIndex}-${
-                eachServerRoute._id
-              }-each-server-route-${index}`}
+              key={`${each._id}-${pathIndex}-${eachServerRoute._id
+                }-each-server-route-${index}`}
             >
               <div className="flex">
                 <div className="mr-2">
@@ -119,17 +115,15 @@ const Path = props => {
                     onChange={handleServerRoutesMethodChange(pathIndex, index)}
                     inputprops={{
                       name: 'Method',
-                      id: `${each._id}-${
-                        eachServerRoute._id
-                      }-each-server-route-${index}-method`,
+                      id: `${each._id}-${eachServerRoute._id
+                        }-each-server-route-${index}-method`,
                     }}
                     style={{ minWidth: '80px', background: '#FFFFFF' }}
                   >
                     {methods.map(eachMethod => (
                       <option
-                        key={`${eachMethod._id}-${pathIndex}-${
-                          eachServerRoute._id
-                        }-each-server-route-method-${eachMethod}`}
+                        key={`${eachMethod._id}-${pathIndex}-${eachServerRoute._id
+                          }-each-server-route-method-${eachMethod}`}
                         value={eachMethod}
                       >
                         {eachMethod}
@@ -142,9 +136,8 @@ const Path = props => {
                     type="text"
                     className="inputbox mr-2 flex-1"
                     style={{ background: '#FFFFFF' }}
-                    id={`${each._id}-${
-                      eachServerRoute._id
-                    }-each-admin-server-route-route-access-type-${index}`}
+                    id={`${each._id}-${eachServerRoute._id
+                      }-each-admin-server-route-route-access-type-${index}`}
                     value={eachServerRoute.route}
                     onChange={handleServerRoutesRouteChange(pathIndex, index)}
                   />

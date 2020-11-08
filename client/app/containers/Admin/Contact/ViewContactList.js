@@ -9,10 +9,6 @@ import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-import blue from '@material-ui/core/colors/blue';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -53,52 +49,52 @@ export class ViewContacts extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title> Contact Details </title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+        <React.Fragment>
+          <Helmet>
+            <title> Contact Details </title>
+          </Helmet>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
             Contact Details
           </PageHeader>
-        </div>
-        <PageContent>
-          <div className="bg-white mt-2 shadow p-2">
-          <div className="mb-2 capitalize">
-            <b>Name: </b>
-            {one && one.name ? one.name : ''}
           </div>
+          <PageContent>
+            <div className="bg-white mt-2 shadow p-2">
+              <div className="mb-2 capitalize">
+                <b>Name: </b>
+                {one && one.name ? one.name : ''}
+              </div>
 
-          <div className="mb-2 capitalize">
-            <b>Email: </b>
-            {one && one.email ? one.email : ''}
-          </div>
+              <div className="mb-2 capitalize">
+                <b>Email: </b>
+                {one && one.email ? one.email : ''}
+              </div>
 
-          <div className="mb-2 capitalize">
-            <b>Message: </b>
-            {one && one.message ? one.message : ''}
-          </div>
+              <div className="mb-2 capitalize">
+                <b>Message: </b>
+                {one && one.message ? one.message : ''}
+              </div>
 
-          <div className="mb-2 capitalize">
-            <b>Subject: </b>
-            {one && one.subject ? one.subject : ''}
-          </div>
+              <div className="mb-2 capitalize">
+                <b>Subject: </b>
+                {one && one.subject ? one.subject : ''}
+              </div>
 
-          <div className="mb-2">
-            <b>Added At: </b>
-            {moment(one && one.added_at).format(DATE_FORMAT)}
-          </div>
-          </div>
-        </PageContent>
-      </React.Fragment>
-    );
+              <div className="mb-2">
+                <b>Added At: </b>
+                {moment(one && one.added_at).format(DATE_FORMAT)}
+              </div>
+            </div>
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 

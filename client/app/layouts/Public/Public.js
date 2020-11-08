@@ -8,7 +8,6 @@ import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import { makeSelectLocation } from '../../containers/App/selectors';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Breadcrumb from '../../components/Breadcrumb';
 
 const switchRoutes = (
   <Switch>
