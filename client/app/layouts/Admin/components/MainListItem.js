@@ -7,7 +7,6 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Collapse from '@material-ui/core/Collapse';
 import menus from './sidemenu';
-import { FaBeer } from 'react-icons/fa';
 
 import {
   makeSelectLocation,
@@ -49,12 +48,8 @@ const MainListItem = ({ location: { pathname }, access }) => {
               onClick={() => handleSetClick(e.key)}
             >
               <div className="flex items-center">
-                <i
-                  key={e}
-                  className="material-icons mr-3 text-sm text-gray-100"
-                >
-                  {e.icon}
-                </i>
+                {e.icon}
+
                 <span className="dropdown-title text-gray-100">{e.name}</span>
               </div>
               <i
@@ -82,9 +77,10 @@ const MainListItem = ({ location: { pathname }, access }) => {
                 '.',
               ).length * 2}`}
             >
-              <i key={e} className="material-icons mr-3 text-sm">
+              {/* <i key={e} className="material-icons mr-3 text-sm">
                 {e.icon}
-              </i>
+              </i> */}
+              {e.icon}
               {e.name}
             </Link>
           </div>
