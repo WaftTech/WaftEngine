@@ -109,6 +109,7 @@
     "react-google-login": "^5.1.22",
     "react-google-recaptcha": "^1.1.0",
     "react-helmet": "6.0.0-beta",
+    "react-icons": "^3.11.0",
     "react-intl": "2.8.0",
     "react-loading-skeleton": "^1.3.0",
     "react-redux": "7.0.2",

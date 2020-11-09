@@ -17,13 +17,13 @@ module.exports = {
 
       primary: '#2A3C85',
       secondary: '#4d62ba',
-      success:'#28a745',
-      danger:'#dc3545',
-      warning:'#ffc107',
-      info:'#17a2b8',
-      light:'#f8f9fa',
-      dark:'#343a40',
-      link:'transparent',
+      success: '#28a745',
+      danger: '#dc3545',
+      warning: '#ffc107',
+      info: '#17a2b8',
+      light: '#f8f9fa',
+      dark: '#343a40',
+      link: 'transparent',
 
       gray: {
         100: '#F4F6F8',
@@ -259,9 +259,9 @@ module.exports = {
       ],
     },
     fontSize: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      base: '1rem',
+      xs: '0.7rem',
+      sm: '0.8rem',
+      base: '0.9rem',
       lg: '1.125rem',
       xl: '1.25rem',
       '2xl': '1.5rem',

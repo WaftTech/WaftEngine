@@ -1,10 +1,12 @@
 // https://material.io/tools/icons
+import { FaBeer } from 'react-icons/fa';
+
 const menu = [
-  { key: '1', name: 'Dashboard', icon: 'dashboard', link: '/admin/dashboard' },
+  { key: '1', name: 'Dashboard', icon: 'FaBeer', link: '/admin/dashboard' },
   {
     key: '2',
     name: 'Content',
-    icon: 'text_fields',
+    icon: 'FaBeer',
     menu: [
       {
         key: '2.1',
