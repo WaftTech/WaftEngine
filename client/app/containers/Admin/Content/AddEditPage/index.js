@@ -66,8 +66,8 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOneRequest(this.props.match.params.id);
+    if (this.props.edit_id && this.props.edit_id !== '') {
+      this.props.loadOneRequest(this.props.edit_id);
     }
   }
 
@@ -126,7 +126,15 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one, classes, match, loading, errors, tempMetaTag } = this.props;
+    const {
+      one,
+      classes,
+      match,
+      loading,
+      errors,
+      tempMetaTag,
+      edit_id,
+    } = this.props;
     return loading && loading == true ? (
       <Loading />
     ) : (
@@ -134,7 +142,7 @@ class AddEdit extends React.PureComponent {
         <Helmet>
           <title>
             {' '}
-            {match && match.params && match.params.id
+            {edit_id && edit_id !== ''
               ? 'Edit Section Content'
               : 'Add Section Content'}
           </title>

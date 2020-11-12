@@ -28,6 +28,7 @@ export const initialState = {
   loading: false,
   errors: { name: '', key: '', description: '' },
   tempMetaTag: '',
+  showForm: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -40,6 +41,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
+        break;
+      case types.ADD_EDIT_SUCCESS:
+        draft.showForm = false;
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
@@ -81,6 +85,10 @@ const reducer = (state = initialState, action) =>
         break;
       case types.SET_META_TAG_VALUE:
         draft.tempMetaTag = action.payload;
+        break;
+
+      case types.SET_SHOW_FORM:
+        draft.showForm = action.payload;
         break;
     }
   });
