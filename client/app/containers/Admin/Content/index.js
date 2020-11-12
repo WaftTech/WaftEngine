@@ -34,6 +34,7 @@ import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import { Link } from 'react-router-dom';
 
+import { FaRegQuestionCircle, FaPlus } from 'react-icons/fa';
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
@@ -152,7 +153,7 @@ export class ContentsListingPage extends React.Component {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
+              <i className="material-icons text-base text-blue-500 hover:text-blue-700">
                 edit
               </i>
             </button>
@@ -177,34 +178,56 @@ export class ContentsListingPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>Static Content</title>
+          <title>HTML Content</title>
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           {loading && loading === true ? <Loading /> : <></>}
-          <PageHeader>Static Content</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+          <PageHeader>Section Content</PageHeader>
+
+          <div className="flex items-center">
+            <span className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5">
+              <FaRegQuestionCircle />
+            </span>
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
+
+        <div className="bg-white border rounded p-6 mb-6">
+          <p>
+            Section content a piece of content which can be inserted inside a
+            page single or multiple times.
+          </p>
+          <pre className="block overflow-x-auto mt-6 text-gray-600">
+            <span className="font-bold">import</span> StaticContentDiv{' '}
+            <span className="font-bold">from</span>{' '}
+            <span className="text-indigo-700">
+              '../../components/StaticContentDiv';
+            </span>
+            <br />
+            ....
+            <br />
+            &lt;StaticContentDiv contentKey=
+            <span className="text-indigo-700">"about"</span> /&gt;
+          </pre>
+        </div>
+
         <PageContent loading={loading}>
           <div className="flex">
-            <div className="flex relative mr-2">
+            <div className="flex relative mr-4">
               <input
                 type="text"
                 name="find_name"
                 id="contents-name"
-                placeholder="Search Contents by name"
-                className="m-auto inputbox"
+                placeholder="Search by name"
+                className="m-auto inputbox pr-6"
                 value={query.find_name}
                 onChange={this.handleQueryChange}
-                style={{ paddingRight: '50px' }}
               />
               <IconButton
                 aria-label="Search"
@@ -220,11 +243,10 @@ export class ContentsListingPage extends React.Component {
                 type="text"
                 name="find_key"
                 id="contents-key"
-                placeholder="Search Contents  by key"
+                placeholder="Search by key"
                 className="m-auto inputbox pr-6"
                 value={query.find_key}
                 onChange={this.handleQueryChange}
-                style={{ paddingRight: '50px' }}
               />
               <IconButton
                 aria-label="Search"

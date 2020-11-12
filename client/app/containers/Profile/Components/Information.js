@@ -102,7 +102,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="md:w-1/2 pb-4">
-          <label className="font-bold text-gray-700">Date Of Birth</label>
+          <label className="text-sm">Date Of Birth</label>
 
           <DatePicker
             name="date_of_birth"
@@ -125,7 +125,7 @@ class UserPersonalInformationPage extends React.PureComponent {
 
         <div className="w-full pb-4">
           <div>
-            <span className="font-bold text-gray-700">Role :</span>{' '}
+            <span className="text-sm">Role :</span>{' '}
             {one.roles.map(each => (
               <span key={each._id} className="rounded border px-4 py-2 mr-2">
                 {each.role_title}{' '}
@@ -139,7 +139,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div> */}
 
         <button
-          className="block btn bg-primary hover:bg-secondary"
+          className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
           onClick={this.handleSave}
         >
           Save

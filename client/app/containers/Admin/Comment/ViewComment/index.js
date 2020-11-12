@@ -80,42 +80,42 @@ export class ViewComment extends React.PureComponent {
           Comment Details
         </PageHeader>
         <PageContent>
-        <div className="bg-white mt-2 shadow p-2">
-          <div className="print-fluid">
-            {one && one.blog_id ? (
-              <p className="mb-2">
-                <b> Blog: </b>
-                {one.blog_id.title || ''}
-              </p>
-            ) : null}
-            {one && one.added_by ? (
-              <p className="mb-2">
-                <b> Commented By: </b>
-                {one.added_by.name || ''}
-              </p>
-            ) : null}
-            {one && one.status ? (
-              <p className="mb-2">
-                <b>Status: </b>
-                {one.status || ''}
-              </p>
-            ) : null}
-            {one && one.added_at ? (
-              <p className="mb-2">
-                <b>Added At: </b>
-                {moment(one.added_at).format('ll') || ''}
-              </p>
-            ) : null}
+          <div className="bg-white mt-2 p-2">
+            <div className="print-fluid">
+              {one && one.blog_id ? (
+                <p className="mb-2">
+                  <b> Blog: </b>
+                  {one.blog_id.title || ''}
+                </p>
+              ) : null}
+              {one && one.added_by ? (
+                <p className="mb-2">
+                  <b> Commented By: </b>
+                  {one.added_by.name || ''}
+                </p>
+              ) : null}
+              {one && one.status ? (
+                <p className="mb-2">
+                  <b>Status: </b>
+                  {one.status || ''}
+                </p>
+              ) : null}
+              {one && one.added_at ? (
+                <p className="mb-2">
+                  <b>Added At: </b>
+                  {moment(one.added_at).format('ll') || ''}
+                </p>
+              ) : null}
 
-            <div>
-              <b>Is Approved: {''}</b>
-              {one && one.is_approved ? <b>Yes</b> : <b>No</b>}
-            </div>
-            <div>
-              <b>Is Disapproved: {''}</b>
-              {one && one.is_disapproved ? <b>Yes</b> : <b>No</b>}
-            </div>
-            {/* <div>
+              <div>
+                <b>Is Approved: {''}</b>
+                {one && one.is_approved ? <b>Yes</b> : <b>No</b>}
+              </div>
+              <div>
+                <b>Is Disapproved: {''}</b>
+                {one && one.is_disapproved ? <b>Yes</b> : <b>No</b>}
+              </div>
+              {/* <div>
               <FormControlLabel
                 className="ml-2"
                 control={
@@ -146,7 +146,7 @@ export class ViewComment extends React.PureComponent {
             >
               Save
               </button> */}
-          </div>
+            </div>
           </div>
         </PageContent>
       </React.Fragment>

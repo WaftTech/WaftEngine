@@ -14,7 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
 import Logo from '../../assets/img/logo-white.svg';
-
+import LogoIcon from '../../assets/img/logo-icon-white.svg';
+import { FaAngleDown } from 'react-icons/fa';
 import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
@@ -167,78 +168,125 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
-      <div className="flex justify-between px-4 text-white h-12 fixed z-50 w-full left-0 top-0 items-center bg-primary" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <div className="flex-1 flex items-center">
-          <Link target="_blank" to="/">
-            <img style={{ height: 28 }}
-              src={Logo}
-              alt="waftengine" />
-          </Link>
-          <Link target="_blank" className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm bg-blue-900 hover:bg-blue-700" to="/">Visit Site <i className="material-icons text-sm ml-1">open_in_new</i></Link>
-          <a className="px-4" target="_blank" href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine">Docs</a>
-          <a className="px-4" target="_blank" href="https://waftengine.org/blog">Blog</a>
-          <a className="px-4" target="_blank" href="https://waftengine.org">Forum</a>
-        </div>
-        <div>
-          <button className="flex" onClick={handleMenu}>
-            <div className="m-auto mr-1">{users.name}</div>
-            <AccountCircle />
-            <i className="material-icons text-gray-200 opacity-50">arrow_drop_down</i>
-          </button>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorel}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={anchorOpen}
-            onClose={handleClose}
-          ><Link
-            to="/admin/dashboard"
-            style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-          >
-              <MenuItem>
-                Dashboard
-                </MenuItem>
-            </Link>
-            <Link
-              to="/admin/profile"
-              style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-            >
-              <MenuItem >
-                Profile
-                  </MenuItem>
-            </Link>
-            <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-          </Menu>
-        </div>
-      </div>
-      <div className="flex overflow-y-hidden bg-gray-200">
+      <div className="flex overflow-y-hidden bg-gray-100">
         <ColoredScrollbars
           autoHide
           autoHideTimeout={1000}
           autoHideDuration={200}
           style={{
-            width: 220,
+            width: 240,
             height: '100vh',
+            backgroundColor: '#2D3446',
           }}
-          className="bg-gray-900"
         >
-
+          <div
+            className="flex items-center px-4 py-3 fixed top-0 z-40"
+            style={{ width: 240, backgroundColor: '#1F2430' }}
+          >
+            <Link target="_blank" to="/">
+              <img
+                className="opacity-75"
+                style={{ height: 28 }}
+                src={Logo}
+                alt="waftengine"
+              />
+              <p className="text-xs text-white opacity-25 leading-none text-right">
+                v1.0.1
+              </p>
+            </Link>
+          </div>
 
           <MainListItems />
         </ColoredScrollbars>
-        <main className="h-screen flex-1 overflow-auto px-4 pt-12 flex flex-col justify-between">
-          <div className="flex-1">{switchRoutes(roles)}</div>
-          <p className="text-gray-700 py-4">version 1.0.1</p>
+        <main className="h-screen flex-1 overflow-auto flex flex-col justify-between pt-16">
+          <div
+            className="bg-white border-b flex top-0 justify-between fixed z-40"
+            style={{ width: 'calc(100% - 240px)' }}
+          >
+            <div className="flex-1 flex items-center h-16">
+              <Link
+                target="_blank"
+                className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 hover:bg-blue-700"
+                to="/"
+              >
+                Visit Site
+                <i className="material-icons text-sm ml-1">open_in_new</i>
+              </Link>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
+              >
+                Docs
+              </a>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org/blog"
+              >
+                Blog
+              </a>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org"
+              >
+                Forum
+              </a>
+            </div>
+
+            <button
+              className="flex items-center justify-end px-6 hover:bg-gray-100"
+              onClick={handleMenu}
+            >
+              <img
+                className="w-8 h-8 rounded-full overflow-hidden"
+                src={LogoIcon}
+                alt="profile image"
+              />
+              <div className="px-3 text-left">
+                <span className="block capitalize text-sm">{users.name}</span>
+                <span className="block leading-none truncate capitalize text-xs text-gray-600">
+                  superadmin
+                </span>
+              </div>
+              <FaAngleDown className="opacity-50" />
+            </button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorel}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={anchorOpen}
+              onClose={handleClose}
+            >
+              <Link
+                to="/admin/dashboard"
+                style={{ textDecoration: 'none', color: 'black' }}
+                onClick={handleClose}
+              >
+                <MenuItem>Dashboard</MenuItem>
+              </Link>
+              <Link
+                to="/admin/profile"
+                style={{ textDecoration: 'none', color: 'black' }}
+                onClick={handleClose}
+              >
+                <MenuItem>Profile</MenuItem>
+              </Link>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+            </Menu>
+          </div>
+          <div className="flex-1 m-4">{switchRoutes(roles)}</div>
         </main>
-      </div >
-    </React.Fragment >
+      </div>
+    </React.Fragment>
   );
 };
 

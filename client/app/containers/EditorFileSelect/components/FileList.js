@@ -388,7 +388,6 @@ const FileList = ({
         </DialogActions>
       </Dialog>
       <div className="flex items-center justify-between mt-3 mb-3">
-
         <div className="flex">
           <div className="waftformgroup flex relative">
             <input
@@ -421,14 +420,14 @@ const FileList = ({
               <span>Upload Multiple</span>
             </button>
           ) : (
-              <button
-                onClick={handleSelectMultipleButton}
-                className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
-              >
-                <i className="material-icons text-base mr-2">filter</i>
-                <span>Select Multiple</span>
-              </button>
-            )}
+            <button
+              onClick={handleSelectMultipleButton}
+              className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+            >
+              <i className="material-icons text-base mr-2">filter</i>
+              <span>Select Multiple</span>
+            </button>
+          )}
 
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
@@ -443,7 +442,7 @@ const FileList = ({
           </Dropzone>
           <button
             onClick={handleAdd}
-            className="items-center flex btn bg-primary hover:bg-secondary mr-2"
+            className="items-center flex btn bg-blue-500 border border-blue-600 hover:bg-blue-600 mr-2"
           >
             <i className="material-icons text-base mr-2">add</i>
             <span>New Folder</span>
@@ -457,25 +456,24 @@ const FileList = ({
             <span>Rename</span>
           </button>
           {selectedButton === 'Delete' &&
-            (chosen_files.length > 0 || chosen_folders.length > 0) ? (
-              <button
-                onClick={confirmDelete}
-                className="blink items-center flex btn bg-red-600 hover:bg-red-500"
-              >
-                <i className="material-icons text-base mr-2">delete</i>
-                <span>Confirm Delete</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleDeleteButton}
-                className="items-center flex btn bg-red-600 hover:bg-red-500"
-              >
-                <i className="material-icons text-base mr-2">delete</i>
-                <span>Delete</span>
-              </button>
-            )}
+          (chosen_files.length > 0 || chosen_folders.length > 0) ? (
+            <button
+              onClick={confirmDelete}
+              className="blink items-center flex btn bg-red-600 hover:bg-red-500"
+            >
+              <i className="material-icons text-base mr-2">delete</i>
+              <span>Confirm Delete</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDeleteButton}
+              className="items-center flex btn bg-red-600 hover:bg-red-500"
+            >
+              <i className="material-icons text-base mr-2">delete</i>
+              <span>Delete</span>
+            </button>
+          )}
         </div>
-
       </div>
       <div className="my-auto">
         <BreadCrumb
@@ -561,7 +559,7 @@ const FileList = ({
         doClose={handleFileClose}
         doDelete={handleFileDel}
       />
-      <div className="flex flex-wrap bg-white mt-2 shadow p-4">
+      <div className="flex flex-wrap bg-white mt-2 p-4">
         <p className="italic w-full block py-2">
           Note : Please Click the given button first for selecting{' '}
           <span className="font-bold">
@@ -576,7 +574,6 @@ const FileList = ({
             onMouseOver={() => handleMouseOver(each._id)}
             onMouseLeave={() => handleMouseOver('')}
           >
-
             <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
               {selectedButton === 'Rename' && (
                 <button
@@ -597,8 +594,9 @@ const FileList = ({
             </div>
             <div
               // data-tooltip={each.name}
-              className={`${selected === each._id ? 'folder_media' : ''
-                } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
+              className={`${
+                selected === each._id ? 'folder_media' : ''
+              } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
               onClick={() => handleSingleClick(each._id)}
               onDoubleClick={() => handleFolderLink(each._id)}
               onKeyDown={() => handleFolderLink(each._id)}
@@ -651,8 +649,9 @@ const FileList = ({
             </div>
             <div
               // data-tooltip={each.filename}
-              className={`${selected === each._id ? 'folder_media' : ''
-                } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
+              className={`${
+                selected === each._id ? 'folder_media' : ''
+              } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
             >
               <div className="flex h-24">
                 <img

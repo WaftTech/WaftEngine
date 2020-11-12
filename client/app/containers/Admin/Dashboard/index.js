@@ -60,7 +60,7 @@ export class Dashboard extends React.PureComponent {
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>Dashboard</PageHeader>
         </div>
-        <div className="bg-white rounded p-4 shadow">
+        <div className="bg-white rounded p-4">
           {info.map(each => (
             <div key={each._id}>
               <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">
@@ -74,7 +74,7 @@ export class Dashboard extends React.PureComponent {
           ))}
         </div>
         <div className="flex justify-between mx-8 my-4">
-          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black shadow">
+          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black">
             <LinkBoth
               to="/admin/blog-manage/add/"
               className="text-gray-800 no-underline hover:text-black font-bold"
@@ -83,7 +83,7 @@ export class Dashboard extends React.PureComponent {
               Write Post
             </LinkBoth>
           </div>
-          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black shadow">
+          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black">
             <LinkBoth
               className="text-gray-800 no-underline hover:text-black font-bold"
               to="https://waftengine.org/documentation"
@@ -93,7 +93,7 @@ export class Dashboard extends React.PureComponent {
               View Doc
             </LinkBoth>
           </div>
-          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black shadow">
+          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
               <AccountBox className={classes.dashicon} />
               Total Users{' '}
@@ -102,7 +102,7 @@ export class Dashboard extends React.PureComponent {
               {users.totaldata}
             </span>
           </div>
-          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black shadow">
+          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
               <Error className={classes.dashicon} />
               Total Errors
@@ -163,12 +163,12 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                    <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                        No Errors
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Errors
                     </h2>
-                    </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

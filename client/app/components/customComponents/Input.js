@@ -12,10 +12,7 @@ export const Input = ({
 }) => (
   <>
     {label && (
-      <label
-        className="font-bold text-gray-700"
-        htmlFor={`grid-last-name-${id}`}
-      >
+      <label className="text-sm" htmlFor={`grid-last-name-${id}`}>
         {label}
       </label>
     )}
@@ -57,10 +54,7 @@ const CustomInput = ({
 }) => (
   <React.Fragment>
     {label && (
-      <label
-        className="font-bold text-gray-700"
-        htmlFor={`grid-last-name-${inputid}`}
-      >
+      <label className="text-sm" htmlFor={`grid-last-name-${inputid}`}>
         {label}
       </label>
     )}

@@ -17,7 +17,7 @@ function CustomTable({ ...props }) {
     handlePagination,
   } = props;
   return (
-    <div className="bg-white mt-2 shadow">
+    <div className="bg-white mt-4 border-t">
       <table className="w-full text-left table table-auto">
         {tableHead !== undefined ? (
           <thead>

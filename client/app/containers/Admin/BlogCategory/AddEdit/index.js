@@ -201,9 +201,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="pb-4">
-            <label className="font-bold text-gray-700">
-              Blog Category Description
-            </label>
+            <label className="text-sm">Blog Category Description</label>
             <CKEditor
               name="cat-description"
               content={one && one.description}
@@ -247,7 +245,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
-            className="block btn bg-primary hover:bg-secondary"
+            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
             Save

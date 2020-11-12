@@ -161,12 +161,9 @@ export const SettingsManagePage = props => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.detail}>
-            <div className="bg-white rounded p-4 shadow">
+            <div className="bg-white rounded p-4">
               <div className="flex items-center">
-                <label
-                  className="font-bold text-gray-700 mr-2"
-                  htmlFor="grid-comment-status"
-                >
+                <label className="text-sm mr-2" htmlFor="grid-comment-status">
                   Default status of comment :
                 </label>
                 <select
@@ -246,13 +243,10 @@ export const SettingsManagePage = props => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.detail}>
-            <div className="bg-white rounded p-4 shadow">
+            <div className="bg-white rounded p-4">
               <div className="flex justify-between px-4">
                 <div className="w-1/3 -ml-4 pb-4">
-                  <label
-                    className="font-bold text-gray-700"
-                    htmlFor="grid-email-channel"
-                  >
+                  <label className="text-sm" htmlFor="grid-email-channel">
                     Email Channel
                   </label>
                   <select
@@ -293,7 +287,7 @@ export const SettingsManagePage = props => {
                   />
                   <button
                     type="button"
-                    className="block btn bg-primary hover:bg-secondary"
+                    className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
                     onClick={sendTestMail}
                   >
                     Send Test Mail
@@ -402,7 +396,7 @@ export const SettingsManagePage = props => {
                       />
                     </div>
                     <div className="w-1/2 pb-4 ">
-                      <label className="font-bold text-gray-700">Secure</label>
+                      <label className="text-sm">Secure</label>
                       <select
                         className="inputbox"
                         native="true"
@@ -507,7 +501,7 @@ export const SettingsManagePage = props => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.detail}>
-            <div className="bg-white rounded p-4 shadow">
+            <div className="bg-white rounded p-4">
               <div>
                 <FormControlLabel
                   control={
@@ -572,7 +566,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                          setting_normalized.is_public_registration
+                        setting_normalized.is_public_registration
                           ? !setting_normalized.is_public_registration.value
                           : true
                       }
@@ -594,7 +588,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                          setting_normalized.is_public_registration
+                        setting_normalized.is_public_registration
                           ? !setting_normalized.is_public_registration.value
                           : true
                       }
@@ -622,7 +616,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                          setting_normalized.allow_google_login
+                        setting_normalized.allow_google_login
                           ? !setting_normalized.allow_google_login.value
                           : true
                       }
@@ -644,7 +638,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                          setting_normalized.allow_google_login
+                        setting_normalized.allow_google_login
                           ? !setting_normalized.allow_google_login.value
                           : true
                       }
@@ -668,7 +662,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                          setting_normalized.allow_facebook_login
+                        setting_normalized.allow_facebook_login
                           ? !setting_normalized.allow_facebook_login.value
                           : true
                       }
@@ -690,7 +684,7 @@ export const SettingsManagePage = props => {
                       }
                       disabled={
                         Object.keys(setting_normalized).length &&
-                          setting_normalized.allow_facebook_login
+                        setting_normalized.allow_facebook_login
                           ? !setting_normalized.allow_facebook_login.value
                           : true
                       }
@@ -720,7 +714,7 @@ export const SettingsManagePage = props => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.detail}>
-            <div className="bg-white rounded p-4 shadow">
+            <div className="bg-white rounded p-4">
               <div className="flex justify-between px-4">
                 <div className="w-1/2 pb-4 -ml-4">
                   <Input
@@ -761,7 +755,7 @@ export const SettingsManagePage = props => {
         </AccordionDetails>
       </Accordion>
       <button
-        className="block btn bg-primary hover:bg-secondary"
+        className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
         onClick={handleSave}
       >
         Save

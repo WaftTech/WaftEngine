@@ -100,8 +100,7 @@ h6,
 
 body {
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  color: #333;
+  color: #555;
 }
 
 button:focus,
@@ -115,7 +114,7 @@ div.react-datepicker__input-container {
 }
 .select-none .active {
   color: #fff;
-  background-color: #43414d;
+  background-color: #2d3446;
 }
 
 .inputbox {
@@ -123,14 +122,14 @@ div.react-datepicker__input-container {
   width: 100%;
   padding: 6px 12px;
   transition: all 0.2s ease-in-out;
-  font-size: 0.875rem;
   background: #ffffff;
   border: 1px solid #d4d9df;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
 }
 .inputbox:focus {
   outline: 0;
-  box-shadow: none;
+  box-shadow: 0 0 0 2px #bee3f8;
+  border: 1px solid #63b3ed;
 }
 .inputbox.bg-white {
   background: #ffffff;
