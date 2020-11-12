@@ -274,7 +274,7 @@ export class ContentsListingPage extends React.Component {
           />
         </PageContent>
 
-        {/* <div
+        <div
           className="absolute right-0 top-0 left-0 bottom-0 flex"
           style={{ marginLeft: 240, backdropFilter: 'blur(10px)' }}
         >
@@ -282,7 +282,7 @@ export class ContentsListingPage extends React.Component {
           <div className="w-2/3 h-full overflow-auto pt-20">
             <AddEdit />
           </div>
-        </div> */}
+        </div>
       </>
     );
   }

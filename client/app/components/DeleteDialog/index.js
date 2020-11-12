@@ -30,20 +30,23 @@ export default function DeleteDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {'Do you really want to delete this item??'}
+          {'Are you sure to delete?'}
         </DialogTitle>
-        <DialogActions style={{ justifyContent: 'center' }}>
+        <DialogActions
+          style={{ justifyContent: 'space-between', alignItems: 'center' }}
+        >
           <button
-            className="btn bg-info hover:bg-secondary"
+            className="bg-gray-100 border flex-1 rounded px-3 py-2 text-sm leading-none font-bold hover:bg-gray-300"
             onClick={handleClose}
           >
-            No
+            Don't Delete
           </button>
           <button
-            className="btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            className="bg-red-100"
+            className="bg-red-100 text-red-600 flex-1 px-3 py-2 text-sm font-bold leading-none border border-red-300 hover:bg-red-600 rounded"
             onClick={handleDialogDelete}
           >
-            Yes
+            Delete
           </button>
         </DialogActions>
       </Dialog>
