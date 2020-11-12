@@ -416,7 +416,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="font-bold text-gray-700">Category</label>
+            <label className="text-sm">Category</label>
 
             {/* <FormControl className={classes.formControl}>
               <Select
@@ -498,10 +498,7 @@ class AddEdit extends React.PureComponent {
             {/* </FormControl> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="font-bold text-gray-700"
-              htmlFor="grid-blog-title"
-            >
+            <label className="text-sm" htmlFor="grid-blog-title">
               Short Description
             </label>
             <textarea
@@ -514,7 +511,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div>
-            <label className="font-bold text-gray-700">Blog Description</label>
+            <label className="text-sm">Blog Description</label>
             <WECkEditior
               description={one.description}
               setOneValue={this.props.setOneValue}

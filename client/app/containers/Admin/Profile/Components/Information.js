@@ -64,7 +64,7 @@ class UserPersonalInformationPage extends React.PureComponent {
     return (
       <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Name</label>
+          <label className="block text-sm">Name</label>
           <FormControl
             className="md:w-1/2"
             error={errors && errors.name && errors.name.length > 0}
@@ -83,7 +83,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Email</label>
+          <label className="block text-sm">Email</label>
 
           <FormControl
             className="md:w-1/2"
@@ -103,7 +103,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Date Of Birth</label>
+          <label className="block text-sm">Date Of Birth</label>
 
           <DatePicker
             name="date_of_birth"

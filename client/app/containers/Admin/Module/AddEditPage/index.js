@@ -332,7 +332,7 @@ class AddEdit extends React.PureComponent {
             </button>
 
             <button
-              className="block btn bg-primary hover:bg-secondary"
+              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
             >
               Save

@@ -78,7 +78,7 @@ export class ChangePassword extends React.Component {
     return (
       <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label className="font-bold text-gray-700" htmlFor="oldPassword">
+          <label className="text-sm" htmlFor="oldPassword">
             Old Password
           </label>
           <input
@@ -94,7 +94,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="font-bold text-gray-700" htmlFor="newPassword">
+          <label className="text-sm" htmlFor="newPassword">
             New Password
           </label>
           <input
@@ -110,7 +110,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="font-bold text-gray-700" htmlFor="newPassword">
+          <label className="text-sm" htmlFor="newPassword">
             Confirm New Password
           </label>
           <input

@@ -66,7 +66,7 @@ export class ViewSubscriber extends React.Component {
           </PageHeader>
         </div>
         <PageContent>
-          <div className="bg-white mt-2 shadow p-2">
+          <div className="bg-white mt-2 p-2">
             <div className="mb-2 Capitalize">
               <b>Email: </b>
               {one && one.email ? one.email : ''}

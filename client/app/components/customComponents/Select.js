@@ -15,7 +15,7 @@ export const Select = ({
 }) => (
   <>
     {label && (
-      <label htmlFor={id} className="font-bold text-gray-700">
+      <label htmlFor={id} className="text-sm">
         {label}
       </label>
     )}
@@ -54,7 +54,7 @@ const CustomSelect = ({
   ...restProps
 }) => (
   <React.Fragment>
-    {label && <label className="font-bold text-gray-700">{label}</label>}
+    {label && <label className="text-sm">{label}</label>}
     <select
       className={inputclassName}
       value={value || ''}
@@ -86,7 +86,7 @@ export function DatePicker({
   return (
     <>
       {label && (
-        <label htmlFor={id} className="font-bold text-gray-700">
+        <label htmlFor={id} className="text-sm">
           {label}
         </label>
       )}
@@ -113,7 +113,7 @@ export function ReactSelect({
 }) {
   return (
     <>
-      {label && <label className="font-bold text-gray-700">{label}</label>}
+      {label && <label className="text-sm">{label}</label>}
       <ReactSelectLibrary
         name={name}
         inputclassName="inputbox"

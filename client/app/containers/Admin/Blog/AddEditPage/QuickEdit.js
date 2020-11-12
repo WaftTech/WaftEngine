@@ -9,7 +9,7 @@ import Inputs from '../../../../components/customComponents/Input';
 import Select from '../../../../components/Select';
 
 const customStyles = {
-  chip: () => { },
+  chip: () => {},
   option: (provided, state) => ({
     ...provided,
     background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
@@ -99,7 +99,7 @@ const QuickEdit = props => {
         </div>
 
         <div className="w-full  pb-4">
-          <label htmlFor="category" className="font-bold text-gray-700">
+          <label htmlFor="category" className="text-sm">
             Category
           </label>
           <Select
