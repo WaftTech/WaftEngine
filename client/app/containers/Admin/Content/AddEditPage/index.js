@@ -140,7 +140,7 @@ class AddEdit extends React.PureComponent {
           </title>
         </Helmet>
         <div>
-          <div className="flex justify-between mt-3 mb-3">
+          {/* <div className="flex justify-between mt-3 mb-3">
             <PageHeader>
               <IconButton
                 className={`${classes.backbtn} cursor-pointer`}
@@ -149,12 +149,15 @@ class AddEdit extends React.PureComponent {
               >
                 <BackIcon />
               </IconButton>
+              
+            </PageHeader>
+          </div> */}
+          <PageContent>
+            <h2>
               {match && match.params && match.params.id
                 ? 'Edit Static Content'
                 : 'Add Static Content'}
-            </PageHeader>
-          </div>
-          <PageContent>
+            </h2>
             <div className="w-full md:w-1/2 pb-4">
               <Input
                 label="Content Title"

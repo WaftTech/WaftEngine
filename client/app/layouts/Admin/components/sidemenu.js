@@ -1,7 +1,35 @@
 // https://material.io/tools/icons
 import React from 'react';
 
-import { FaChartPie, FaCode } from 'react-icons/fa';
+import {
+  FaChartPie,
+  FaRegFile,
+  FaFileAlt,
+  FaAlignLeft,
+  FaLink,
+  FaImages,
+  FaPhotoVideo,
+  FaPencilAlt,
+  FaThLarge,
+  FaRss,
+  FaQuestionCircle,
+  FaQuestion,
+  FaArchive,
+  FaShieldAlt,
+  FaSitemap,
+  FaUserShield,
+  FaBoxOpen,
+  FaBoxes,
+  FaPuzzlePiece,
+  FaCog,
+  FaCogs,
+  FaEnvelope,
+  FaChartBar,
+  FaAddressCard,
+  FaMailBulk,
+  FaExclamationTriangle,
+  FaCommentDots,
+} from 'react-icons/fa';
 
 const menu = [
   {
@@ -13,53 +41,53 @@ const menu = [
   {
     key: '2',
     name: 'Content',
-    icon: <FaChartPie />,
+    icon: <FaFileAlt />,
     menu: [
       {
         key: '2.1',
         name: 'Section',
         link: '/admin/content-manage',
-        icon: <FaChartPie />,
+        icon: <FaAlignLeft />,
       },
       {
         key: '2.2',
         name: 'Page',
-        icon: <FaChartPie />,
+        icon: <FaRegFile />,
         link: '/admin/page-manage',
       },
       {
         key: '2.7',
         name: 'Menu',
-        icon: <FaChartPie />,
+        icon: <FaLink />,
         link: '/admin/menu-manage',
       },
       {
         key: '2.3',
         name: 'Media',
-        icon: <FaChartPie />,
+        icon: <FaImages />,
         link: '/admin/media-manage',
       },
       {
         key: '2.4',
         name: 'Slider',
-        icon: <FaChartPie />,
+        icon: <FaPhotoVideo />,
         link: '/admin/slider-manage',
       },
       {
         key: '2.5',
         name: 'Blog',
-        icon: <FaChartPie />,
+        icon: <FaRss />,
         menu: [
           {
             key: '2.5.1',
             name: 'Blog',
             link: '/admin/blog-manage',
-            icon: <FaChartPie />,
+            icon: <FaPencilAlt />,
           },
           {
             key: '2.5.2',
             name: 'Category',
-            icon: <FaChartPie />,
+            icon: <FaThLarge />,
             link: '/admin/blog-cat-manage',
           },
         ],
@@ -67,18 +95,18 @@ const menu = [
       {
         key: '2.2',
         name: 'FAQ',
-        icon: 'question_answer',
+        icon: <FaQuestionCircle />,
         menu: [
           {
             key: '2.2.1',
             name: 'Faq',
-            icon: <FaChartPie />,
+            icon: <FaQuestion />,
             link: '/admin/faq-manage',
           },
           {
             key: '2.2.2',
             name: 'Category',
-            icon: <FaChartPie />,
+            icon: <FaArchive />,
             link: '/admin/faq-cat-manage',
           },
         ],
@@ -88,18 +116,18 @@ const menu = [
   {
     key: '3',
     name: 'Access',
-    icon: <FaChartPie />,
+    icon: <FaShieldAlt />,
     menu: [
       {
         key: '3.1',
         name: 'Users',
-        icon: <FaChartPie />,
+        icon: <FaUserShield />,
         link: '/admin/user-manage',
       },
       {
         key: '3.2',
         name: 'Roles',
-        icon: <FaChartPie />,
+        icon: <FaSitemap />,
         link: '/admin/role-manage',
       },
     ],
@@ -107,18 +135,18 @@ const menu = [
   {
     key: '6',
     name: 'Modules',
-    icon: <FaChartPie />,
+    icon: <FaPuzzlePiece />,
     menu: [
       {
         key: '6.3',
         name: 'Modules',
-        icon: <FaChartPie />,
+        icon: <FaBoxOpen />,
         link: '/admin/module-manage',
       },
       {
         key: '6.4',
         name: 'Module Group',
-        icon: <FaChartPie />,
+        icon: <FaBoxes />,
         link: '/admin/sub-modules',
       },
     ],
@@ -126,18 +154,18 @@ const menu = [
   {
     key: '4',
     name: 'Settings',
-    icon: <FaChartPie />,
+    icon: <FaCogs />,
     menu: [
       {
         key: '4.1',
         name: 'Email Template',
-        icon: <FaChartPie />,
+        icon: <FaEnvelope />,
         link: '/admin/template-manage',
       },
       {
         key: '4.2',
         name: 'General Settings',
-        icon: <FaChartPie />,
+        icon: <FaCog />,
         link: '/admin/settings',
       },
     ],
@@ -145,30 +173,30 @@ const menu = [
   {
     key: '5',
     name: 'Reports',
-    icon: <FaChartPie />,
+    icon: <FaChartBar />,
     menu: [
       {
         key: '5.1',
         name: 'Contacts',
-        icon: <FaChartPie />,
+        icon: <FaAddressCard />,
         link: '/admin/contact-manage',
       },
       {
         key: '5.2',
         name: 'Subscribes',
-        icon: <FaChartPie />,
+        icon: <FaMailBulk />,
         link: '/admin/subscribe-manage',
       },
       {
         key: '5.4',
         name: 'Errors',
-        icon: <FaChartPie />,
+        icon: <FaExclamationTriangle />,
         link: '/admin/errors',
       },
       {
         key: '5.5',
         name: 'Comment',
-        icon: <FaChartPie />,
+        icon: <FaCommentDots />,
         link: '/admin/blog-comment-manage',
       },
     ],

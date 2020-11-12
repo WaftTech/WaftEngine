@@ -113,18 +113,20 @@ div.react-datepicker__input-container {
   display: block;
 }
 .select-none .active {
-  color: #fff;
-  background-color: #2d3446;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  box-shadow: inset 4px 0 0 #4299e1;
 }
 
 .inputbox {
   display: block;
   width: 100%;
-  padding: 6px 12px;
-  transition: all 0.2s ease-in-out;
+  padding: 8px 12px;
+  transition: all 0.1s ease-in;
   background: #ffffff;
-  border: 1px solid #d4d9df;
-  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 0.875rem;
 }
 .inputbox:focus {
   outline: 0;

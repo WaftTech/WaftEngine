@@ -15,7 +15,7 @@ import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
 import Logo from '../../assets/img/logo-white.svg';
 import LogoIcon from '../../assets/img/logo-icon-white.svg';
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown, FaExternalLinkAlt } from 'react-icons/fa';
 import routes from '../../routes/admin';
 
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
@@ -206,11 +206,11 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
             <div className="flex-1 flex items-center h-16">
               <Link
                 target="_blank"
-                className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 hover:bg-blue-700"
+                className="rounded px-2 py-2 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 border border-blue-600 hover:bg-blue-600 transition-all duration-100 ease-in"
                 to="/"
               >
                 Visit Site
-                <i className="material-icons text-sm ml-1">open_in_new</i>
+                <FaExternalLinkAlt className="ml-2 text-xs" />
               </Link>
               <a
                 className="pl-8 text-sm"

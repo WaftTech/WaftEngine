@@ -33,8 +33,9 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import { Link } from 'react-router-dom';
+import AddEdit from './AddEditPage/Loadable.js';
 
-import { FaRegQuestionCircle, FaPlus } from 'react-icons/fa';
+import { FaRegQuestionCircle, FaPlus, FaSearch } from 'react-icons/fa';
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
@@ -180,6 +181,7 @@ export class ContentsListingPage extends React.Component {
         <Helmet>
           <title>HTML Content</title>
         </Helmet>
+
         <div className="flex justify-between mt-3 mb-3">
           {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Section Content</PageHeader>
@@ -229,13 +231,12 @@ export class ContentsListingPage extends React.Component {
                 value={query.find_name}
                 onChange={this.handleQueryChange}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
 
             <div className="waftformgroup relative flex">
@@ -248,13 +249,12 @@ export class ContentsListingPage extends React.Component {
                 value={query.find_key}
                 onChange={this.handleQueryChange}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
           </div>
 
@@ -273,6 +273,16 @@ export class ContentsListingPage extends React.Component {
             handlePagination={this.handlePagination}
           />
         </PageContent>
+
+        {/* <div
+          className="absolute right-0 top-0 left-0 bottom-0 flex"
+          style={{ marginLeft: 240, backdropFilter: 'blur(10px)' }}
+        >
+          <div className="w-1/3" />
+          <div className="w-2/3 h-full overflow-auto pt-20">
+            <AddEdit />
+          </div>
+        </div> */}
       </>
     );
   }
