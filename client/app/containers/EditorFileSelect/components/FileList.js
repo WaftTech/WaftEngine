@@ -7,11 +7,6 @@ import queryString from 'query-string';
 import { createStructuredSelector } from 'reselect';
 import Dropzone from 'react-dropzone';
 
-// material
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Edit from '@material-ui/icons/Edit';
-import Cancel from '@material-ui/icons/Delete';
 import InputBase from '@material-ui/core/InputBase';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -41,6 +36,15 @@ import {
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
 import DeleteDialog from '../../../components/DeleteDialog';
+import {
+  FaPlusCircle,
+  FaImages,
+  FaImage,
+  FaPenSquare,
+  FaTrash,
+  FaFolder,
+  FaSearch,
+} from 'react-icons/fa';
 
 const LinkComponent = ({ children, staticContext, ...props }) => (
   <div {...props}>{children}</div>
@@ -389,24 +393,23 @@ const FileList = ({
       </Dialog>
       <div className="flex items-center justify-between mt-3 mb-3">
         <div className="flex">
-          <div className="waftformgroup flex relative">
+          <div className="flex relative">
             <input
               type="text"
               id="contents-name"
               placeholder="Search files by name"
-              className="m-auto inputbox"
+              className="m-auto inputbox pr-6"
               value={query.search}
               onChange={handleQueryChange('search')}
-              style={{ minWidth: '300px', paddingRight: '50px' }}
+              style={{ minWidth: '300px' }}
               onKeyPress={handleQueryEnter}
             />
-            <IconButton
-              aria-label="Search"
-              className={`${classes.waftsrch} waftsrchstyle`}
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
               onClick={handleSearch}
             >
-              <SearchIcon />
-            </IconButton>
+              <FaSearch />
+            </span>
           </div>
         </div>
 
@@ -416,15 +419,15 @@ const FileList = ({
               onClick={handleUploadMultiple}
               className="blink items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
             >
-              <i className="material-icons text-base mr-2">filter</i>
+              <FaImages className="text-base mr-2" />
               <span>Upload Multiple</span>
             </button>
           ) : (
             <button
               onClick={handleSelectMultipleButton}
-              className="items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+              className="items-center text-pink-600 flex btn bg-pink-100 border-pink-200 hover:bg-pink-400 mr-2"
             >
-              <i className="material-icons text-base mr-2">filter</i>
+              <FaImages className="text-base mr-2" />
               <span>Select Multiple</span>
             </button>
           )}
@@ -434,7 +437,7 @@ const FileList = ({
               <section className="btn bg-info hover:bg-secondary mr-2 cursor-pointer">
                 <div className="flex items-center " {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <i className="material-icons text-base mr-2">add_to_photos</i>
+                  <FaImage className="text-base mr-2" />
                   <span>Choose File</span>
                 </div>
               </section>
@@ -444,15 +447,14 @@ const FileList = ({
             onClick={handleAdd}
             className="items-center flex btn bg-blue-500 border border-blue-600 hover:bg-blue-600 mr-2"
           >
-            <i className="material-icons text-base mr-2">add</i>
+            <FaPlusCircle className="text-base mr-2" />
             <span>New Folder</span>
           </button>
           <button
             onClick={handleRenameButton}
             className="items-center flex bg-yellow-600 hover:bg-yellow-400 btn mr-2"
           >
-            {' '}
-            <i className="material-icons text-base mr-2">edit</i>
+            <FaPenSquare className="text-base mr-2" />
             <span>Rename</span>
           </button>
           {selectedButton === 'Delete' &&
@@ -461,7 +463,7 @@ const FileList = ({
               onClick={confirmDelete}
               className="blink items-center flex btn bg-red-600 hover:bg-red-500"
             >
-              <i className="material-icons text-base mr-2">delete</i>
+              <FaTrash className="text-base mr-2" />
               <span>Confirm Delete</span>
             </button>
           ) : (
@@ -469,7 +471,7 @@ const FileList = ({
               onClick={handleDeleteButton}
               className="items-center flex btn bg-red-600 hover:bg-red-500"
             >
-              <i className="material-icons text-base mr-2">delete</i>
+              <FaTrash className="text-base mr-2" />
               <span>Delete</span>
             </button>
           )}
@@ -603,12 +605,10 @@ const FileList = ({
               role="presentation"
             >
               <div className="flex h-24 justify-center">
-                <i
-                  className="material-icons text-yellow-500 self-center"
+                <FaFolder
+                  className="text-yellow-500 self-center"
                   style={{ fontSize: '6rem' }}
-                >
-                  folder
-                </i>
+                />
               </div>
               <div className="block text-sm truncate">{each.name}</div>
             </div>

@@ -4,41 +4,6 @@
 
 @tailwind utilities;
 
-@font-face {
-  font-family: 'MaterialIcons-Regular';
-  src: url('../app/assets/font/MaterialIcons-Regular.eot')
-      format('embedded-opentype'),
-    url('../app/assets/font/MaterialIcons-Regular.woff') format('woff'),
-    url('../app/assets/font/MaterialIcons-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-.material-icons {
-  font-family: 'MaterialIcons-Regular';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 18px; /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-}
-
 /* /* General Css Starts */
 
 h1,
@@ -169,6 +134,7 @@ div#component-error-text {
   left: 0;
   right: 0;
   height: 2px;
+  z-index: 9000;
   background: repeating-linear-gradient(
     to right,
     #1c2260 0%,
@@ -208,4 +174,25 @@ div#component-error-text {
 }
 .qr-code {
   transform: scale(4);
+}
+
+@keyframes arrowtip {
+  from {
+    top: 32px;
+  }
+  to {
+    top: 20px;
+  }
+}
+
+.arrow_box {
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #1e1e1e;
+  border-width: 10px;
+  animation: arrowtip 0.5s cubic-bezier(0, 1.1, 0.26, 1.08) 1s;
 }

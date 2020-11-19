@@ -40,6 +40,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
+import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
 const styles = theme => ({
   tableActionButton: {
@@ -166,18 +167,14 @@ export class Error extends React.Component {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleShow(_id, error_stack)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                visibility
-              </i>
+              <FaRegEye className="text-base text-blue-500 hover:text-blue-600" />
             </button>
 
             <button
               className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
+              <FaTrashAlt className="text-base text-red-500 hover:text-red-600" />
             </button>
           </div>
         </React.Fragment>,
@@ -221,17 +218,17 @@ export class Error extends React.Component {
                 name="find_errors"
                 id="error-message"
                 placeholder="Search Errors"
-                className="m-auto inputbox"
+                className="m-auto inputbox pr-6"
                 value={query.find_errors}
                 onChange={this.handleQueryChange}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
           </div>
           <Table

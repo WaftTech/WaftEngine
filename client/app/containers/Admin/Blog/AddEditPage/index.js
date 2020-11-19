@@ -585,12 +585,9 @@ class AddEdit extends React.PureComponent {
               return (
                 <label key={`${tag}-${index}`}>
                   {tag}
-                  <i
-                    onClick={this.handleDelete(index)}
-                    className="material-icons"
-                  >
-                    close
-                  </i>
+                  <span onClick={this.handleDelete(index)}>
+                    <FaTimes />
+                  </span>
                 </label>
               );
             })}

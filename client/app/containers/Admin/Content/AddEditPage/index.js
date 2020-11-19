@@ -160,7 +160,7 @@ class AddEdit extends React.PureComponent {
               
             </PageHeader>
           </div> */}
-          <PageContent>
+          <div className="bg-white border-l p-4">
             <h2>
               {match && match.params && match.params.id
                 ? 'Edit Static Content'
@@ -310,7 +310,7 @@ class AddEdit extends React.PureComponent {
             >
               Save
             </button>
-          </PageContent>
+          </div>
         </div>
       </>
     );

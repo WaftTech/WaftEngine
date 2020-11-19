@@ -39,8 +39,13 @@ import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import { Link } from 'react-router-dom';
 import AddEdit from './AddEditPage/Loadable.js';
-
-import { FaRegQuestionCircle, FaPlus, FaSearch } from 'react-icons/fa';
+import lid from '../../../assets/img/lid.svg';
+import {
+  FaRegQuestionCircle,
+  FaPlus,
+  FaSearch,
+  FaPencilAlt,
+} from 'react-icons/fa';
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
@@ -169,7 +174,11 @@ export class ContentsListingPage extends React.Component {
       ({ name, key, is_active, publish_from, publish_to, _id }) => [
         name,
         key,
-        <Link to={`/page/${key}`} target="_blank">
+        <Link
+          className="text-blue-500 hover:underline"
+          to={`/page/${key}`}
+          target="_blank"
+        >
           {`/page/${key}`}
         </Link>,
         moment(publish_from).format(DATE_FORMAT),
@@ -177,24 +186,23 @@ export class ContentsListingPage extends React.Component {
         `${is_active}`,
         <>
           <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+            <span
+              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-blue-500 hover:text-blue-700">
-                edit
-              </i>
-            </button>
+              <FaPencilAlt className="pencil" />
 
-            <button
-              className="ml-2 px-1 text-center leading-none"
+              {/* <img className="pencil" src={pencil} alt="" /> */}
+              <span className="bg-blue-500 dash" />
+            </span>
+
+            <span
+              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
-            </button>
+              <img className="trash-lid" src={lid} alt="trash-id" />
+              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+            </span>
           </div>
         </>,
       ],
@@ -216,10 +224,12 @@ export class ContentsListingPage extends React.Component {
 
           <div className="flex items-center">
             <span
-              className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5"
+              className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5 cursor-pointer"
               onClick={this.toggleHelp}
             >
               <FaRegQuestionCircle />
+
+              {this.state.help && <span className="arrow_box" />}
             </span>
             <button
               className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
@@ -232,22 +242,24 @@ export class ContentsListingPage extends React.Component {
         </div>
 
         {this.state.help && (
-          <div className="bg-white border rounded p-6 mb-6">
-            <p>
-              Section content a piece of content which can be inserted inside a
-              page single or multiple times.
-            </p>
-            <pre className="block overflow-x-auto mt-6 text-gray-600">
-              <span className="font-bold">import</span> StaticContentDiv{' '}
-              <span className="font-bold">from</span>{' '}
-              <span className="text-indigo-700">
+          <div
+            className="rounded p-6 mb-6"
+            style={{ backgroundColor: '#1E1E1E' }}
+          >
+            <pre className="block overflow-x-auto text-gray-200 font-bold">
+              <span style={{ color: '#529BD8' }}>import</span> StaticContentDiv{' '}
+              <span style={{ color: '#529BD8' }}>from</span>{' '}
+              <span style={{ color: '#CE9076' }}>
                 '../../components/StaticContentDiv';
               </span>
               <br />
-              ....
               <br />
-              &lt;StaticContentDiv contentKey=
-              <span className="text-indigo-700">"about"</span> /&gt;
+              &lt;<span style={{ color: '#529BD8' }}>
+                StaticContentDiv
+              </span>{' '}
+              <span style={{ color: '#9ADCFF' }} />
+              contentKey=
+              <span style={{ color: '#CE9076' }}>"about"</span> /&gt;
             </pre>
           </div>
         )}
@@ -311,7 +323,6 @@ export class ContentsListingPage extends React.Component {
           <div
             className="absolute right-0 top-0 left-0 bottom-0 flex"
             style={{
-              marginLeft: 240,
               backdropFilter: 'blur(10px)',
             }}
           >

@@ -35,7 +35,8 @@ import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Loading from '../../../components/Loading';
-
+import lid from '../../../assets/img/lid.svg';
+import { FaPencilAlt } from 'react-icons/fa';
 /* eslint-disable react/prefer-stateless-function */
 export class User extends React.PureComponent {
   static propTypes = {
@@ -118,13 +119,13 @@ export class User extends React.PureComponent {
         `${email_verified}`,
         <>
           <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+            <span
+              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">edit</i>
-            </button>
+              <FaPencilAlt className="pencil" />
+              <span className="bg-blue-500 dash" />
+            </span>
           </div>
         </>,
       ],

@@ -43,7 +43,7 @@ const MainListItem = ({ location: { pathname }, access }) => {
           <>
             <div
               key={e.key}
-              className={`py-3 cursor-pointer flex items-center justify-between ease-in transition-opacity duration-100 opacity-50 hover:opacity-75 text-base pl-${e.key.split(
+              className={`py-3 cursor-pointer flex items-center justify-between ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 text-base pl-${e.key.split(
                 '.',
               ).length * 4}`}
               onClick={() => handleSetClick(e.key)}
@@ -71,7 +71,7 @@ const MainListItem = ({ location: { pathname }, access }) => {
           >
             <Link
               to={`${e.link}`}
-              className={`text-gray-200 text-base no-underline flex items-center ease-in transition-opacity duration-100 opacity-50 hover:opacity-75 py-3 pl-${e.key.split(
+              className={`text-gray-200 text-base no-underline flex items-center ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 py-3 pl-${e.key.split(
                 '.',
               ).length * 4}`}
             >

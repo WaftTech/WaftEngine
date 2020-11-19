@@ -9,7 +9,6 @@ import { push } from 'connected-react-router';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
@@ -174,14 +173,14 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
           autoHideTimeout={1000}
           autoHideDuration={200}
           style={{
-            width: 240,
+            width: 260,
             height: '100vh',
             backgroundColor: '#2D3446',
           }}
         >
           <div
             className="flex items-center px-4 py-3 fixed top-0 z-40"
-            style={{ width: 240, backgroundColor: '#1F2430' }}
+            style={{ width: 260, backgroundColor: '#1F2430' }}
           >
             <Link target="_blank" to="/">
               <img
@@ -198,93 +197,103 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
 
           <MainListItems />
         </ColoredScrollbars>
-        <main className="h-screen flex-1 overflow-auto flex flex-col justify-between pt-16">
-          <div
-            className="bg-white border-b flex top-0 justify-between fixed z-40"
-            style={{ width: 'calc(100% - 240px)' }}
-          >
-            <div className="flex-1 flex items-center h-16">
-              <Link
-                target="_blank"
-                className="rounded px-2 py-2 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 border border-blue-600 hover:bg-blue-600 transition-all duration-100 ease-in"
-                to="/"
-              >
-                Visit Site
-                <FaExternalLinkAlt className="ml-2 text-xs" />
-              </Link>
-              <a
-                className="pl-8 text-sm"
-                target="_blank"
-                href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
-              >
-                Docs
-              </a>
-              <a
-                className="pl-8 text-sm"
-                target="_blank"
-                href="https://waftengine.org/blog"
-              >
-                Blog
-              </a>
-              <a
-                className="pl-8 text-sm"
-                target="_blank"
-                href="https://waftengine.org"
-              >
-                Forum
-              </a>
-            </div>
-
-            <button
-              className="flex items-center justify-end px-6 hover:bg-gray-100"
-              onClick={handleMenu}
+        <ColoredScrollbars
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+          style={{
+            height: '100vh',
+            backgroundColor: '#f9f9f9',
+          }}
+        >
+          <main className="flex-1 flex flex-col justify-between pt-16">
+            <div
+              className="bg-white border-b flex top-0 justify-between fixed z-40"
+              style={{ width: 'calc(100% - 220px)' }}
             >
-              <img
-                className="w-8 h-8 rounded-full overflow-hidden"
-                src={LogoIcon}
-                alt="profile image"
-              />
-              <div className="px-3 text-left">
-                <span className="block capitalize text-sm">{users.name}</span>
-                <span className="block leading-none truncate capitalize text-xs text-gray-600">
-                  superadmin
-                </span>
+              <div className="flex-1 flex items-center h-16">
+                <Link
+                  target="_blank"
+                  className="rounded px-2 py-2 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 border border-blue-600 hover:bg-blue-600 transition-all duration-100 ease-in"
+                  to="/"
+                >
+                  Visit Site
+                  <FaExternalLinkAlt className="ml-2 text-xs" />
+                </Link>
+                <a
+                  className="pl-8 text-sm"
+                  target="_blank"
+                  href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
+                >
+                  Docs
+                </a>
+                <a
+                  className="pl-8 text-sm"
+                  target="_blank"
+                  href="https://waftengine.org/blog"
+                >
+                  Blog
+                </a>
+                <a
+                  className="pl-8 text-sm"
+                  target="_blank"
+                  href="https://waftengine.org"
+                >
+                  Forum
+                </a>
               </div>
-              <FaAngleDown className="opacity-50" />
-            </button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorel}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={anchorOpen}
-              onClose={handleClose}
-            >
-              <Link
-                to="/admin/dashboard"
-                style={{ textDecoration: 'none', color: 'black' }}
-                onClick={handleClose}
+
+              <button
+                className="flex items-center justify-end px-6 hover:bg-gray-100"
+                onClick={handleMenu}
               >
-                <MenuItem>Dashboard</MenuItem>
-              </Link>
-              <Link
-                to="/admin/profile"
-                style={{ textDecoration: 'none', color: 'black' }}
-                onClick={handleClose}
+                <img
+                  className="w-8 h-8 rounded-full overflow-hidden"
+                  src={LogoIcon}
+                  alt="profile image"
+                />
+                <div className="px-3 text-left">
+                  <span className="block capitalize text-sm">{users.name}</span>
+                  <span className="block leading-none truncate capitalize text-xs text-gray-600">
+                    superadmin
+                  </span>
+                </div>
+                <FaAngleDown className="opacity-50" />
+              </button>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorel}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={anchorOpen}
+                onClose={handleClose}
               >
-                <MenuItem>Profile</MenuItem>
-              </Link>
-              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-            </Menu>
-          </div>
-          <div className="flex-1 m-4">{switchRoutes(roles)}</div>
-        </main>
+                <Link
+                  to="/admin/dashboard"
+                  style={{ textDecoration: 'none', color: 'black' }}
+                  onClick={handleClose}
+                >
+                  <MenuItem>Dashboard</MenuItem>
+                </Link>
+                <Link
+                  to="/admin/profile"
+                  style={{ textDecoration: 'none', color: 'black' }}
+                  onClick={handleClose}
+                >
+                  <MenuItem>Profile</MenuItem>
+                </Link>
+                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+              </Menu>
+            </div>
+            <div className="flex-1 m-6">{switchRoutes(roles)}</div>
+          </main>
+        </ColoredScrollbars>
       </div>
     </React.Fragment>
   );

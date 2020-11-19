@@ -27,6 +27,8 @@ import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Loading from '../../../components/Loading';
+import lid from '../../../assets/img/lid.svg';
+import { FaPlus, FaSearch, FaPencilAlt, FaKey } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminModuleManage extends React.PureComponent {
@@ -94,18 +96,14 @@ export class AdminModuleManage extends React.PureComponent {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                edit
-              </i>
+              <FaPencilAlt className="text-base text-blue-500 hover:text-blue-600" />
             </button>
 
             <button
               className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleAccessEdit(_id)}
             >
-              <i className="material-icons text-base text-green-400 hover:text-green-600">
-                vpn_key
-              </i>
+              <FaKey className="text-base text-green-500 hover:text-green-600" />
             </button>
           </div>
         </>,
@@ -120,14 +118,15 @@ export class AdminModuleManage extends React.PureComponent {
         <div className="flex justify-between mt-3 mb-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Module Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            onClick={this.handleAdd}
-          >
-            <AddIcon />
-          </Fab>
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
 
         <PageContent loading={loading}>
@@ -137,18 +136,17 @@ export class AdminModuleManage extends React.PureComponent {
                 type="text"
                 name="find_module_name"
                 id="module-name"
-                placeholder="Search modules by name"
-                className="m-auto inputbox"
+                placeholder="Search by name"
+                className="m-auto inputbox pr-6"
                 value={query.find_module_name}
                 onChange={this.handleQueryChange}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
           </div>
           <Table

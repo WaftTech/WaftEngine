@@ -41,6 +41,8 @@ import Loading from '../../../components/Loading';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
+import { FaRegEye } from 'react-icons/fa';
+
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
@@ -236,9 +238,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleView(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                visibility
-              </i>
+              <FaRegEye className="text-base text-indigo-500 hover:text-indigo-700" />
             </button>
           </div>
         </>,

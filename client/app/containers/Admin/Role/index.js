@@ -32,6 +32,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
+import { FaTrashAlt, FaKey, FaPencilAlt } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRole extends React.PureComponent {
@@ -120,27 +121,21 @@ export class AdminRole extends React.PureComponent {
               className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleAccess(_id)}
             >
-              <i className="material-icons text-base text-green-400 hover:text-green-600">
-                vpn_key
-              </i>
+              <FaKey className="text-base text-green-500 hover:text-green-600" />
             </button>
             <button
               aria-label="Edit"
               className=" px-1 text-center leading-none"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                edit
-              </i>
+              <FaPencilAlt className="text-base text-blue-500 hover:text-blue-600" />
             </button>
 
             <button
               className="ml-2 px-1 text-center leading-none"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
+              <FaTrashAlt className="text-base text-red-400 hover:text-red-600" />
             </button>
           </div>
         </>,

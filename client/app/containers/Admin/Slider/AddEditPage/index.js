@@ -36,6 +36,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import EditorFileSelect from '../../../EditorFileSelect';
 import Input from '../../../../components/customComponents/Input';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
@@ -120,9 +121,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
               className="px-1 text-center leading-none"
               onClick={() => _this.handleRemoveSlide(index)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
+              <FaTrashAlt className="text-base text-red-400 hover:text-red-600" />
             </button>
           </div>
         </div>

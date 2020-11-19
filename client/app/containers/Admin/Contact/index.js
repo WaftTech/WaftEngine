@@ -15,11 +15,6 @@ import { Helmet } from 'react-helmet';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
 
 // core components
 import Table from 'components/Table/Table';
@@ -36,6 +31,8 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
+
+import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
 const styles = theme => ({
   button: {
@@ -146,18 +143,14 @@ export class Contact extends React.Component {
           className=" px-1 text-center leading-none"
           onClick={() => this.handleView(_id)}
         >
-          <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-            visibility
-          </i>
+          <FaRegEye className="text-base text-blue-500 hover:text-blue-600" />
         </button>
 
         <button
           className="ml-2 px-1 text-center leading-none"
           onClick={() => this.handleOpen(_id)}
         >
-          <i className="material-icons text-base text-red-400 hover:text-red-600">
-            delete
-          </i>
+          <FaTrashAlt className="text-base text-red-500 hover:text-red-600" />
         </button>
       </div>,
     ]);
@@ -184,17 +177,16 @@ export class Contact extends React.Component {
                 name="find_name"
                 id="contact-name"
                 placeholder="Search Contacts"
-                className="m-auto inputbox"
+                className="m-auto inputbox pr-6"
                 value={query.find_name}
                 onChange={this.handleQueryChange}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
           </div>
 

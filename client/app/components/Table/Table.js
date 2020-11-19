@@ -38,7 +38,7 @@ function CustomTable({ ...props }) {
             <tr key={key}>
               {prop.map((each, index) => (
                 <td
-                  className="px-2 py-3 text-sm border-gray-200 text-gray-700"
+                  className="px-2 py-1 text-sm border-gray-200 text-gray-700"
                   key={index}
                 >
                   {each}

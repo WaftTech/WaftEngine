@@ -32,6 +32,13 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
+import lid from '../../../assets/img/lid.svg';
+import {
+  FaRegQuestionCircle,
+  FaPlus,
+  FaSearch,
+  FaPencilAlt,
+} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -139,7 +146,11 @@ export class ContentsListingPage extends React.Component {
       ({ name, key, is_active, publish_from, publish_to, _id }) => [
         name,
         key,
-        <Link to={`/page/${key}`} target="_blank">
+        <Link
+          className="text-blue-500 hover:underline"
+          to={`/page/${key}`}
+          target="_blank"
+        >
           {`/page/${key}`}
         </Link>,
         moment(publish_from).format(DATE_FORMAT),
@@ -147,24 +158,20 @@ export class ContentsListingPage extends React.Component {
         `${is_active}`,
         <>
           <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+            <span
+              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                edit
-              </i>
-            </button>
-
-            <button
-              className="ml-2 px-1 text-center leading-none"
+              <FaPencilAlt className="pencil" />
+              <span className="bg-blue-500 dash" />
+            </span>
+            <span
+              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
-            </button>
+              <img className="trash-lid" src={lid} alt="trash-id" />
+              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+            </span>
           </div>
         </>,
       ],
@@ -182,16 +189,13 @@ export class ContentsListingPage extends React.Component {
         <div className="flex justify-between mt-3 mb-3">
           {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Page Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
+          <button
+            className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
             onClick={this.handleAdd}
-            elevation={0}
           >
-            <AddIcon />
-          </Fab>
+            <FaPlus />
+            <span className="pl-2">Add New</span>
+          </button>
         </div>
         <PageContent loading={loading}>
           <div className="flex">
@@ -200,19 +204,18 @@ export class ContentsListingPage extends React.Component {
                 type="text"
                 name="find_name"
                 id="page-name"
-                placeholder="Search page by name"
-                className="m-auto inputbox"
+                placeholder="Search by name"
+                className="m-auto inputbox pr-6"
                 value={query.find_name}
                 onChange={this.handleQueryChange}
                 style={{ paddingRight: '50px' }}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
 
             <div className="waftformgroup relative flex">
@@ -220,19 +223,17 @@ export class ContentsListingPage extends React.Component {
                 type="text"
                 name="find_key"
                 id="page-key"
-                placeholder="Search page by key"
+                placeholder="Search by key"
                 className="m-auto inputbox pr-6"
                 value={query.find_key}
                 onChange={this.handleQueryChange}
-                style={{ paddingRight: '50px' }}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
           </div>
 
