@@ -22,6 +22,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../components/Loading';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export class ViewContacts extends React.Component {
   static propTypes = {
@@ -55,13 +56,9 @@ export class ViewContacts extends React.Component {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             Contact Details
           </PageHeader>
         </div>

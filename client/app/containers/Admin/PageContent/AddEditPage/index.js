@@ -43,6 +43,7 @@ import EditorFileSelect from '../../../EditorFileSelect';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 const styles = {
   backbtn: {
@@ -180,13 +181,9 @@ class AddEdit extends React.PureComponent {
         <div>
           <div className="flex justify-between mt-3 mb-3">
             <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
               {match && match.params && match.params.id
                 ? 'Edit Static Page'
                 : 'Add Static Page'}
@@ -339,30 +336,35 @@ class AddEdit extends React.PureComponent {
               </div>
             )}
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_page || false}
-                  onClick={this.handleCheckedChange('is_page')}
-                  value="is_page"
-                  color="primary"
-                />
-              }
-              label="Is Page"
-            />
+            <div className="checkbox">
+              <input
+                checked={one.is_active || false}
+                onClick={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Active
+              </label>
+            </div>
 
-            <br />
+            <div className="checkbox">
+              <input
+                checked={one.is_page || false}
+                onClick={this.handleCheckedChange('is_page')}
+                id="is_page"
+                type="checkbox"
+              />
+              <label htmlFor="is_page">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Page
+              </label>
+            </div>
             <button
               className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}

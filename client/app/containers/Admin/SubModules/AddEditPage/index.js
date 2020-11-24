@@ -25,6 +25,7 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const styles = {
   backbtn: {
@@ -89,87 +90,83 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-      <>
-        <div>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
-              {match && match.params && match.params.id
-                ? 'Edit Sub Module'
-                : 'Add Sub Module'}
-            </PageHeader>
-          </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Module Group"
-                inputclassName="inputbox"
-                inputid="grid-group"
-                inputType="text"
-                value={one.module_group}
-                onChange={handleChange('module_group')}
-                error={errors.module_group}
-              />
-            </div>
-
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Order"
-                inputclassName="inputbox"
-                inputid="grid-value"
-                inputType="text"
-                value={one.order}
-                onChange={handleChange('order')}
-                error={errors.order}
-              />
-            </div>
-
-            <div className="w-full md:w-1/2">
-              <label
-                className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-                htmlFor="grid-country-code-2"
-              >
-                Description
-            </label>
-              <textarea
-                className="inputbox"
-                id="grid-description"
-                type="text"
-                value={one.description}
-                onChange={handleChange('description')}
-              />
-              <div id="component-error-text">{errors.description}</div>
-            </div>
-
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Module Group Main"
-                inputclassName="inputbox"
-                inputid="grid-group"
-                inputType="text"
-                value={one.module_group_main}
-                onChange={handleChange('module_group_main')}
-                error={errors.module_group_main}
-              />
-            </div>
-
-            <button
-              type="button"
-              className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
-              onClick={handleSave}
-            >
-              Save
-          </button>
-          </PageContent>
+    <>
+      <div>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <span className="backbtn" onClick={handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Sub Module'
+              : 'Add Sub Module'}
+          </PageHeader>
         </div>
-      </>
-    );
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Module Group"
+              inputclassName="inputbox"
+              inputid="grid-group"
+              inputType="text"
+              value={one.module_group}
+              onChange={handleChange('module_group')}
+              error={errors.module_group}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Order"
+              inputclassName="inputbox"
+              inputid="grid-value"
+              inputType="text"
+              value={one.order}
+              onChange={handleChange('order')}
+              error={errors.order}
+            />
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <label
+              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+              htmlFor="grid-country-code-2"
+            >
+              Description
+            </label>
+            <textarea
+              className="inputbox"
+              id="grid-description"
+              type="text"
+              value={one.description}
+              onChange={handleChange('description')}
+            />
+            <div id="component-error-text">{errors.description}</div>
+          </div>
+
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Module Group Main"
+              inputclassName="inputbox"
+              inputid="grid-group"
+              inputType="text"
+              value={one.module_group_main}
+              onChange={handleChange('module_group_main')}
+              error={errors.module_group_main}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+        </PageContent>
+      </div>
+    </>
+  );
 };
 
 AddEdit.propTypes = {

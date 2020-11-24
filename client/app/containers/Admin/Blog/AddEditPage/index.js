@@ -46,6 +46,7 @@ import Loading from '../../../../components/Loading';
 import WECkEditior from '../../../../components/CkEditor';
 import Inputs from '../../../../components/customComponents/Input';
 import Select from '../../../../components/Select';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 const styles = theme => ({
   cardCategoryWhite: {
@@ -377,13 +378,9 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
               ? 'Edit News'
               : 'Add News'}
@@ -521,7 +518,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label className="label" htmlFor="Image">
+            <label className="text-sm" htmlFor="Image">
               Image
             </label>
             <Dropzone onDrop={files => this.onDrop(files, 'image')}>
@@ -539,7 +536,7 @@ class AddEdit extends React.PureComponent {
             </Dropzone>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
+            <label className="text-sm" htmlFor="grid-last-name">
               Published On
             </label>
             <DatePicker
@@ -567,7 +564,7 @@ class AddEdit extends React.PureComponent {
             /> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
+            <label className="text-sm" htmlFor="grid-last-name">
               Tags
             </label>
             <form onSubmit={this.insertTags}>
@@ -594,7 +591,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
+            <label className="text-sm" htmlFor="grid-last-name">
               Meta Tags
             </label>
             <form onSubmit={this.insertMetaTags}>
@@ -624,7 +621,7 @@ class AddEdit extends React.PureComponent {
             </Paper>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
+            <label className="text-sm" htmlFor="grid-last-name">
               Meta Keywords
             </label>
 
@@ -656,10 +653,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
+            <label className="text-sm" htmlFor="grid-last-name">
               Meta Description
             </label>
 
@@ -674,7 +668,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
+            <label className="text-sm" htmlFor="grid-last-name">
               Author
             </label>
             {/* 
@@ -723,61 +717,63 @@ class AddEdit extends React.PureComponent {
           </div>
           <div id="component-error-text">{errors && errors.author}</div>
           <div className="checkbox">
-            {/* <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel> */}
-            <div>
-              <input
-                className
-                onClick={this.handleCheckedChange('is_active')}
-                checked={one.is_active || false}
-                id="is_active"
-                type="checkbox"
-              />
-              <label htmlFor="is_active">checkbox text</label>
-            </div>
-            {/* <FormControlLabel
-                control={
-                  <Checkbox
-                    
-                    tabIndex={-1}
-                    
-                    color="primary"
-                  />
-                }
-                label="Is Active"
-              /> */}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_published || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_published')}
-                  color="primary"
-                />
-              }
-              label="Is Published"
+            <input
+              onClick={this.handleCheckedChange('is_active')}
+              checked={one.is_active || false}
+              id="is_active"
+              type="checkbox"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_highlight || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_highlight')}
-                  color="primary"
-                />
-              }
-              label="Is Highlight"
+            <label htmlFor="is_active">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Active
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <input
+              checked={one.is_published || false}
+              onClick={this.handleCheckedChange('is_published')}
+              id="is_published"
+              type="checkbox"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_showcase || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_showcase')}
-                  color="primary"
-                />
-              }
-              label="Is Showcase"
+            <label htmlFor="is_published">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Published
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <input
+              checked={one.is_highlight || false}
+              onClick={this.handleCheckedChange('is_highlight')}
+              id="is_highlight"
+              type="checkbox"
             />
+            <label htmlFor="is_highlight">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Highlighted
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <input
+              checked={one.is_showcase || false}
+              onClick={this.handleCheckedChange('is_showcase')}
+              id="is_showcased"
+              type="checkbox"
+            />
+            <label htmlFor="is_showcased">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Showcase
+            </label>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">

@@ -96,12 +96,9 @@ class AccessManagePage extends React.PureComponent {
 
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {`Edit Access for ${Module.module_name}`}
           </PageHeader>
           <Fab

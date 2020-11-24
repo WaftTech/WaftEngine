@@ -31,6 +31,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
+import { FaArrowLeft } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -123,13 +124,9 @@ class AddEdit extends React.PureComponent {
 
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {id ? 'Edit' : 'Add'} User
           </PageHeader>
         </div>

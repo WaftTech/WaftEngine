@@ -36,7 +36,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import EditorFileSelect from '../../../EditorFileSelect';
 import Input from '../../../../components/customComponents/Input';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaArrowLeft } from 'react-icons/fa';
 
 const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
@@ -262,13 +262,9 @@ class AddEdit extends React.PureComponent {
       <>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
               ? 'Edit Slider'
               : 'Add Slider'}

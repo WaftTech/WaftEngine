@@ -23,6 +23,8 @@ import saga from '../saga';
 import { makeSelectOne, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
+import { FaCheck } from 'react-icons/fa';
+
 import { DATE_FORMAT } from '../../../App/constants';
 
 class UserPersonalInformationPage extends React.PureComponent {
@@ -117,12 +119,19 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        <FormControlLabel
-          control={
-            <CheckBox checked={one.email_verified || false} color="primary" />
-          }
-          label="Email Verified"
-        />
+        <div className="checkbox">
+          <input
+            checked={one.email_verified || false}
+            id="is_active"
+            type="checkbox"
+          />
+          <label htmlFor="is_active">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Email Verified
+          </label>
+        </div>
 
         <div className="w-full pb-2">
           You are one of{' '}

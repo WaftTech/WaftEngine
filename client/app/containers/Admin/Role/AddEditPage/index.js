@@ -30,6 +30,7 @@ import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
 import '../../../../components/Table/table.css';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -84,13 +85,9 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
               ? 'Edit Role'
               : 'Add Role'}
@@ -121,17 +118,22 @@ class AddEdit extends React.PureComponent {
             />
             <div id="component-error-text">{errors.description}</div>
           </div>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                name="is_active"
-                checked={one.is_active}
-                onChange={this.handleChecked('is_active')}
-              />
-            }
-            label="Is Active"
-          />
+
+          <div className="checkbox">
+            <input
+              checked={one.is_active}
+              onClick={this.handleCheckedChange('is_active')}
+              id="is_active"
+              type="checkbox"
+            />
+            <label htmlFor="is_active">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Active
+            </label>
+          </div>
+
           <button
             className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}

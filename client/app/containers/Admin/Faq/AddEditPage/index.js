@@ -25,6 +25,7 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const styles = theme => ({
   backbtn: {
@@ -92,13 +93,9 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
           </PageHeader>
         </div>

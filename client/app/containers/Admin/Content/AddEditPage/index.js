@@ -38,6 +38,8 @@ import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
 import Input from '../../../../components/customComponents/Input';
+import { FaCheck } from 'react-icons/fa';
+
 const styles = {
   backbtn: {
     padding: 0,
@@ -292,17 +294,20 @@ class AddEdit extends React.PureComponent {
               </div>
             </div>
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
-            />
+            <div className="checkbox">
+              <input
+                checked={one.is_active || false}
+                onClick={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Active
+              </label>
+            </div>
 
             <button
               className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"

@@ -28,6 +28,8 @@ import { DATE_FORMAT } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
+import { FaCheck } from 'react-icons/fa';
+
 import {
   makeSelectOne,
   makeSelectLoading,
@@ -40,6 +42,7 @@ import {
 import SidebarCategoriesList from './SideBarCategoriesList';
 import WECkEditior from '../../../../components/CkEditor';
 import DeleteDialog from '../../../../components/DeleteDialog';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const styles = {
   backbtn: {
@@ -222,13 +225,9 @@ const AddEdit = props => {
       <div>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
               ? showSubMenuBool
                 ? 'Edit Sub Menu'
@@ -335,15 +334,20 @@ const AddEdit = props => {
                         </div>
                       </div>
                       <div className="w-full md:w-1/2 ">
-                        <Checkbox
-                          color="primary"
-                          checked={subMenu.is_active || false}
-                          name="is_active"
-                          onChange={handleCheckedChildChange('is_active')}
-                        />
-                        <label className="label" htmlFor="grid-last-name">
-                          Is Active
-                        </label>
+                        <div className="checkbox">
+                          <input
+                            checked={subMenu.is_active || false}
+                            onChange={handleCheckedChildChange('is_active')}
+                            id="is_active"
+                            type="checkbox"
+                          />
+                          <label htmlFor="is_active">
+                            <span className="box">
+                              <FaCheck className="check-icon" />
+                            </span>
+                            Is Active
+                          </label>
+                        </div>
                       </div>
                       <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
@@ -460,15 +464,20 @@ const AddEdit = props => {
                   )}
                 </div>
                 <div className="w-full md:w-1/2 pb-4">
-                  <Checkbox
-                    color="primary"
-                    checked={one.is_active || false}
-                    name="is_active"
-                    onChange={handleCheckedChange('is_active', null)}
-                  />
-                  <label className="label" htmlFor="grid-last-name">
-                    Is Active
-                  </label>
+                  <div className="checkbox">
+                    <input
+                      checked={one.is_active || false}
+                      onClick={this.handleCheckedChange('is_active', null)}
+                      id="is_active"
+                      type="checkbox"
+                    />
+                    <label htmlFor="is_active">
+                      <span className="box">
+                        <FaCheck className="check-icon" />
+                      </span>
+                      Is Active
+                    </label>
+                  </div>{' '}
                 </div>
 
                 <button

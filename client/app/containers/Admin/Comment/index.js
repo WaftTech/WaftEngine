@@ -279,26 +279,36 @@ export class BlogCommentManagePage extends React.PureComponent {
         </Dialog>
         <PageContent loading={loading}>
           <div className="flex">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={query.find_is_approved}
-                  onChange={this.handleCheckedQueryChange('find_is_approved')}
-                />
-              }
-              label="Approved"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={query.find_is_disapproved}
-                  onChange={this.handleCheckedQueryChange(
-                    'find_is_disapproved',
-                  )}
-                />
-              }
-              label="Disapproved"
-            />
+            <div className="checkbox">
+              <input
+                checked={query.find_is_approved}
+                onChange={this.handleCheckedQueryChange('find_is_approved')}
+                id="is_approved"
+                type="checkbox"
+              />
+              <label htmlFor="is_approved">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Approved
+              </label>
+            </div>
+
+            <div className="checkbox">
+              <input
+                checked={query.find_is_disapproved}
+                onChange={this.handleCheckedQueryChange('find_is_disapproved')}
+                id="is_disapprove"
+                type="checkbox"
+              />
+              <label htmlFor="is_disapprove">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Disapproved
+              </label>
+            </div>
+
             <div className="flex relative mr-2">
               <input
                 type="text"
