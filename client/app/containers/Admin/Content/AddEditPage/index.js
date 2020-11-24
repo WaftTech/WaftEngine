@@ -38,6 +38,8 @@ import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
 import Input from '../../../../components/customComponents/Input';
+import { FaCheck } from 'react-icons/fa';
+
 const styles = {
   backbtn: {
     padding: 0,
@@ -66,8 +68,8 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.id) {
-      this.props.loadOneRequest(this.props.match.params.id);
+    if (this.props.edit_id && this.props.edit_id !== '') {
+      this.props.loadOneRequest(this.props.edit_id);
     }
   }
 
@@ -126,189 +128,197 @@ class AddEdit extends React.PureComponent {
   };
 
   render() {
-    const { one, classes, match, loading, errors, tempMetaTag } = this.props;
+    const {
+      one,
+      classes,
+      match,
+      loading,
+      errors,
+      tempMetaTag,
+      edit_id,
+    } = this.props;
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <>
-          <Helmet>
-            <title>
-              {' '}
+      <>
+        <Helmet>
+          <title>
+            {' '}
+            {edit_id && edit_id !== ''
+              ? 'Edit Section Content'
+              : 'Add Section Content'}
+          </title>
+        </Helmet>
+        <div>
+          {/* <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <IconButton
+                className={`${classes.backbtn} cursor-pointer`}
+                onClick={this.handleGoBack}
+                aria-label="Back"
+              >
+                <BackIcon />
+              </IconButton>
+              
+            </PageHeader>
+          </div> */}
+          <div className="bg-white border-l p-4">
+            <h2>
               {match && match.params && match.params.id
                 ? 'Edit Static Content'
                 : 'Add Static Content'}
-            </title>
-          </Helmet>
-          <div>
-            <div className="flex justify-between mt-3 mb-3">
-              <PageHeader>
-                <IconButton
-                  className={`${classes.backbtn} cursor-pointer`}
-                  onClick={this.handleGoBack}
-                  aria-label="Back"
-                >
-                  <BackIcon />
-                </IconButton>
-                {match && match.params && match.params.id
-                  ? 'Edit Static Content'
-                  : 'Add Static Content'}
-              </PageHeader>
-            </div>
-            <PageContent>
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Content Title"
-                  inputclassName="inputbox"
-                  inputid="grid-last-name"
-                  inputType="text"
-                  value={one.name}
-                  onChange={this.handleChange('name')}
-                  error={errors.name}
-                />
-              </div>
-
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Content Key"
-                  inputclassName="inputbox"
-                  inputid="grid-last-name"
-                  inputType="text"
-                  value={one.key}
-                  onChange={this.handleChange('key')}
-                  error={errors.key}
-                />{' '}
-              </div>
-
-              <div>
-                <WECkEditior
-                  description={one.description}
-                  setOneValue={this.props.setOneValue}
-                />
-                <div id="component-error-text">{errors.description}</div>
-              </div>
-
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Meta Title"
-                  inputclassName="inputbox"
-                  inputid="grid-last-meta_title"
-                  inputType="text"
-                  value={one.meta_title}
-                  onChange={this.handleChange('meta_title')}
-                  error={errors.meta_title}
-                />
-              </div>
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Meta Description"
-                  inputclassName="inputbox"
-                  inputid="grid-last-meta_description"
-                  inputType="text"
-                  value={one.meta_description}
-                  onChange={this.handleChange('meta_description')}
-                  error={errors.meta_description}
-                />
-              </div>
-              <div className="w-full md:w-1/2 pb-4">
-                <label className="label" htmlFor="grid-last-name">
-                  Meta Tags
-              </label>
-                <form onSubmit={this.insertMetaTags}>
-                  <input
-                    className="inputbox"
-                    id="blog-meta-tags"
-                    type="text"
-                    value={tempMetaTag || ''}
-                    name="Tags"
-                    onChange={this.handleTempMetaTag}
-                  />
-                </form>
-                <Paper elevation={2} >
-                  {one.meta_tag &&
-                    one.meta_tag.map((tag, index) => {
-                      const icon = null;
-
-                      return (
-                        <Chip
-                          key={`meta-${tag}-${index}`}
-                          icon={icon}
-                          label={tag}
-                          onDelete={this.handleMetaTagDelete(index)}
-                          className={classes.chip}
-                        />
-                      );
-                    })}
-                </Paper>
-              </div>
-
-              <div className="flex w-full justify-between md:w-1/2 px-2">
-                <div className="w-full md:w-1/2 -ml-2">
-                  <div margin="normal" className={classes.formControl}>
-                    <label
-                      className="font-bold text-gray-700"
-                      htmlFor="grid-last-name"
-                    >
-                      Published From
-                  </label>
-                    <DatePicker
-                      margin="normal"
-                      name="publish_from"
-                      className={[classes.textField, 'inputbox']}
-                      value={
-                        (one.publish_from &&
-                          moment(one.publish_from).format(DATE_FORMAT)) ||
-                        ''
-                      }
-                      onChange={this.handleDateChange('publish_from')}
-                    />
-                  </div>
-                </div>
-
-                <div className="w-full md:w-1/2 -mr-2">
-                  <div margin="normal" className={classes.formControl}>
-                    <label
-                      className="font-bold text-gray-700"
-                      htmlFor="grid-last-name"
-                    >
-                      Published To
-                  </label>
-                    <DatePicker
-                      margin="normal"
-                      name="publish_to"
-                      className={[classes.textField, 'inputbox']}
-                      value={
-                        (one.publish_to &&
-                          moment(one.publish_to).format(DATE_FORMAT)) ||
-                        ''
-                      }
-                      onChange={this.handleDateChange('publish_to')}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_active || false}
-                    tabIndex={-1}
-                    onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Active"
+            </h2>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Content Title"
+                inputclassName="inputbox"
+                inputid="grid-last-name"
+                inputType="text"
+                value={one.name}
+                onChange={this.handleChange('name')}
+                error={errors.name}
               />
+            </div>
 
-              <button
-                className="block btn bg-primary hover:bg-secondary"
-                onClick={this.handleSave}
-              >
-                Save
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Content Key"
+                inputclassName="inputbox"
+                inputid="grid-last-name"
+                inputType="text"
+                value={one.key}
+                onChange={this.handleChange('key')}
+                error={errors.key}
+              />{' '}
+            </div>
+
+            <div>
+              <WECkEditior
+                description={one.description}
+                setOneValue={this.props.setOneValue}
+              />
+              <div id="component-error-text">{errors.description}</div>
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Meta Title"
+                inputclassName="inputbox"
+                inputid="grid-last-meta_title"
+                inputType="text"
+                value={one.meta_title}
+                onChange={this.handleChange('meta_title')}
+                error={errors.meta_title}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Meta Description"
+                inputclassName="inputbox"
+                inputid="grid-last-meta_description"
+                inputType="text"
+                value={one.meta_description}
+                onChange={this.handleChange('meta_description')}
+                error={errors.meta_description}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="text-sm" htmlFor="grid-last-name">
+                Meta Tags
+              </label>
+              <form onSubmit={this.insertMetaTags}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-tags"
+                  type="text"
+                  value={tempMetaTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaTag}
+                />
+              </form>
+              <Paper elevation={2}>
+                {one.meta_tag &&
+                  one.meta_tag.map((tag, index) => {
+                    const icon = null;
+
+                    return (
+                      <Chip
+                        key={`meta-${tag}-${index}`}
+                        icon={icon}
+                        label={tag}
+                        onDelete={this.handleMetaTagDelete(index)}
+                        className={classes.chip}
+                      />
+                    );
+                  })}
+              </Paper>
+            </div>
+
+            <div className="flex w-full justify-between md:w-1/2 px-2">
+              <div className="w-full md:w-1/2 -ml-2">
+                <div margin="normal" className={classes.formControl}>
+                  <label className="text-sm" htmlFor="grid-last-name">
+                    Published From
+                  </label>
+                  <DatePicker
+                    margin="normal"
+                    name="publish_from"
+                    className={[classes.textField, 'inputbox']}
+                    value={
+                      (one.publish_from &&
+                        moment(one.publish_from).format(DATE_FORMAT)) ||
+                      ''
+                    }
+                    onChange={this.handleDateChange('publish_from')}
+                  />
+                </div>
+              </div>
+
+              <div className="w-full md:w-1/2 -mr-2">
+                <div margin="normal" className={classes.formControl}>
+                  <label className="text-sm" htmlFor="grid-last-name">
+                    Published To
+                  </label>
+                  <DatePicker
+                    margin="normal"
+                    name="publish_to"
+                    className={[classes.textField, 'inputbox']}
+                    value={
+                      (one.publish_to &&
+                        moment(one.publish_to).format(DATE_FORMAT)) ||
+                      ''
+                    }
+                    onChange={this.handleDateChange('publish_to')}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="checkbox">
+              <input
+                checked={one.is_active || false}
+                onClick={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Active
+              </label>
+            </div>
+
+            <button
+              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Save
             </button>
-            </PageContent>
           </div>
-        </>
-      );
+        </div>
+      </>
+    );
   }
 }
 

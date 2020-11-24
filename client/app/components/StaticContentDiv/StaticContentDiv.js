@@ -10,7 +10,7 @@ import {
 } from '../../containers/App/selectors';
 import { loadContentRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
-
+import { FaPen } from 'react-icons/fa';
 /* eslint-disable react/no-danger */
 class StaticContent extends React.PureComponent {
   static propTypes = {
@@ -38,41 +38,35 @@ class StaticContent extends React.PureComponent {
           contentObj.ids &&
           contentObj.ids[this.props.contentKey] &&
           (contentObj &&
-            contentObj.is_page &&
-            contentObj.is_page[this.props.contentKey] === false ? (
-              <Link
-                to={`/admin/content-manage/edit/${contentObj.ids[this.props.contentKey]
-                  }`}
-                target="_blank"
-              >
-                <button>
-                  <i className="material-icons text-xl hover:text-indigo-700">
-                    edit
-                  </i>
-                </button>
-              </Link>
-            ) : (
-              <Link
-                to={`/admin/page-manage/edit/${contentObj.ids[this.props.contentKey]
-                  }`}
-                target="_blank"
-              >
-                <button>
-                  {' '}
-                  <i className="material-icons text-xl hover:text-indigo-700">
-                    edit
-                  </i>
-                </button>
-              </Link>
-            ))}
+          contentObj.is_page &&
+          contentObj.is_page[this.props.contentKey] === false ? (
+            <Link
+              to={`/admin/content-manage/edit/${
+                contentObj.ids[this.props.contentKey]
+              }`}
+              target="_blank"
+            >
+              <FaPen />
+            </Link>
+          ) : (
+            <Link
+              to={`/admin/page-manage/edit/${
+                contentObj.ids[this.props.contentKey]
+              }`}
+              target="_blank"
+            >
+              <FaPen />
+            </Link>
+          ))}
         {contentObj &&
           contentObj.image &&
           contentObj.image[this.props.contentKey] &&
           contentObj.image[this.props.contentKey].path && (
             <div>
               <img
-                src={`${IMAGE_BASE}${contentObj.image[this.props.contentKey].path
-                  }`}
+                src={`${IMAGE_BASE}${
+                  contentObj.image[this.props.contentKey].path
+                }`}
               />
             </div>
           )}

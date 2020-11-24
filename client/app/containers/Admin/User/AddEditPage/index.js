@@ -31,6 +31,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
+import { FaArrowLeft } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -116,124 +117,120 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <>
-          <Helmet>
-            <title>{id ? 'Edit User' : 'Add User'}</title>
-          </Helmet>
+      <>
+        <Helmet>
+          <title>{id ? 'Edit User' : 'Add User'}</title>
+        </Helmet>
 
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
-              {id ? 'Edit' : 'Add'} User
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {id ? 'Edit' : 'Add'} User
           </PageHeader>
+        </div>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <h3 className="text-lg font-bold mb-2">Basic Information</h3>
+            <Input
+              label="Email"
+              inputclassName="inputbox"
+              inputid="email"
+              inputType="text"
+              value={users.email || ''}
+              onChange={this.handleChange('email')}
+            />
           </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <h3 className="text-lg font-bold mb-2">Basic Information</h3>
-              <Input
-                label="Email"
-                inputclassName="inputbox"
-                inputid="email"
-                inputType="text"
-                value={users.email || ''}
-                onChange={this.handleChange('email')}
-              />
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Name"
-                inputclassName="inputbox"
-                inputid="name"
-                inputType="text"
-                value={users.name || ''}
-                onChange={this.handleChange('name')}
-                error={(errors && errors.name) || ''}
-              />
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="font-bold text-gray-700">Bio</label>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Name"
+              inputclassName="inputbox"
+              inputid="name"
+              inputType="text"
+              value={users.name || ''}
+              onChange={this.handleChange('name')}
+              error={(errors && errors.name) || ''}
+            />
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="text-sm">Bio</label>
 
-              <textarea
-                className="inputbox"
-                id="bio"
-                type="text"
-                value={(users && users.bio) || ''}
-                onChange={this.handleChange('bio')}
-              />
-            </div>
-            {roless.map(each => (
-              <FormControlLabel
-                key={each._id}
-                control={
-                  <Checkbox
-                    key={each}
-                    color="primary"
-                    checked={users.roles.includes(each._id)}
-                    onChange={() => this.handleRolesChecked(each._id)}
-                  />
-                }
-                label={each.role_title || ''}
-              />
-            ))}
-            <div id="component-error-text">{(errors && errors.roles) || ''}</div>
+            <textarea
+              className="inputbox"
+              id="bio"
+              type="text"
+              value={(users && users.bio) || ''}
+              onChange={this.handleChange('bio')}
+            />
+          </div>
+          {roless.map(each => (
             <FormControlLabel
+              key={each._id}
               control={
                 <Checkbox
+                  key={each}
                   color="primary"
-                  disabled
-                  name="email_verified"
-                  checked={users.email_verified || false}
-                  onChange={this.handleChecked('email_verified')}
+                  checked={users.roles.includes(each._id)}
+                  onChange={() => this.handleRolesChecked(each._id)}
                 />
               }
-              label="Email Verified"
+              label={each.role_title || ''}
             />
-            {id ? (
-              <button
-                className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-                onClick={this.handleSave}
-              >
-                Save
-              </button>
-            ) : (
-                <></>
-              )}
-            <h3 className="text-lg font-bold mt-3">Reset Password</h3>
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="label">Password</label>
-              <div className="relative">
-                <input
-                  className="inputbox"
-                  id="password"
-                  type={this.state.isSecure ? 'password' : 'text'}
-                  value={users.password || ''}
-                  onChange={this.handleChange('password')}
-                />
-                <span
-                  className={classes.EyeIcon}
-                  aria-label="Toggle password visibility"
-                  onClick={this.handleTogglePassword}
-                >
-                  {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
-                </span>
-              </div>
-              <div id="component-error-text">{errors.password || ''}</div>
-            </div>
+          ))}
+          <div id="component-error-text">{(errors && errors.roles) || ''}</div>
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                disabled
+                name="email_verified"
+                checked={users.email_verified || false}
+                onChange={this.handleChecked('email_verified')}
+              />
+            }
+            label="Email Verified"
+          />
+          {id ? (
             <button
-              className="block btn bg-primary hover:bg-secondary"
-              onClick={this.handleUpdate}
+              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              onClick={this.handleSave}
             >
-              {id ? 'Update Password' : 'Save'}
+              Save
             </button>
-          </PageContent>
-        </>
-      );
+          ) : (
+            <></>
+          )}
+          <h3 className="text-lg font-bold mt-3">Reset Password</h3>
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="label">Password</label>
+            <div className="relative">
+              <input
+                className="inputbox"
+                id="password"
+                type={this.state.isSecure ? 'password' : 'text'}
+                value={users.password || ''}
+                onChange={this.handleChange('password')}
+              />
+              <span
+                className={classes.EyeIcon}
+                aria-label="Toggle password visibility"
+                onClick={this.handleTogglePassword}
+              >
+                {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
+              </span>
+            </div>
+            <div id="component-error-text">{errors.password || ''}</div>
+          </div>
+          <button
+            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleUpdate}
+          >
+            {id ? 'Update Password' : 'Save'}
+          </button>
+        </PageContent>
+      </>
+    );
   }
 }
 

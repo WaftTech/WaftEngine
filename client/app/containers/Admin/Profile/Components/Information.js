@@ -23,6 +23,8 @@ import saga from '../saga';
 import { makeSelectOne, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
+import { FaCheck } from 'react-icons/fa';
+
 import { DATE_FORMAT } from '../../../App/constants';
 
 class UserPersonalInformationPage extends React.PureComponent {
@@ -64,7 +66,7 @@ class UserPersonalInformationPage extends React.PureComponent {
     return (
       <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Name</label>
+          <label className="block text-sm">Name</label>
           <FormControl
             className="md:w-1/2"
             error={errors && errors.name && errors.name.length > 0}
@@ -83,7 +85,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Email</label>
+          <label className="block text-sm">Email</label>
 
           <FormControl
             className="md:w-1/2"
@@ -103,7 +105,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Date Of Birth</label>
+          <label className="block text-sm">Date Of Birth</label>
 
           <DatePicker
             name="date_of_birth"
@@ -117,12 +119,19 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        <FormControlLabel
-          control={
-            <CheckBox checked={one.email_verified || false} color="primary" />
-          }
-          label="Email Verified"
-        />
+        <div className="checkbox">
+          <input
+            checked={one.email_verified || false}
+            id="is_active"
+            type="checkbox"
+          />
+          <label htmlFor="is_active">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Email Verified
+          </label>
+        </div>
 
         <div className="w-full pb-2">
           You are one of{' '}

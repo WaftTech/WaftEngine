@@ -31,6 +31,7 @@ import PathComponent from './components/Path';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
+import { FaArrowLeft } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -242,13 +243,9 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>{' '}
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {id ? `Edit for ${one.module_name}` : 'Add Module'}
           </PageHeader>
           <Fab
@@ -332,7 +329,7 @@ class AddEdit extends React.PureComponent {
             </button>
 
             <button
-              className="block btn bg-primary hover:bg-secondary"
+              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
             >
               Save

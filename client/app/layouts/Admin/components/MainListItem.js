@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Collapse from '@material-ui/core/Collapse';
 import menus from './sidemenu';
+import { FaAngleDown } from 'react-icons/fa';
 
 import {
   makeSelectLocation,
@@ -42,26 +43,20 @@ const MainListItem = ({ location: { pathname }, access }) => {
           <>
             <div
               key={e.key}
-              className={`p-2 cursor-pointer flex items-center justify-between text-gray-200 hover:bg-gray-800 text-sm pl-${e.key.split(
+              className={`py-3 cursor-pointer flex items-center justify-between ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 text-base pl-${e.key.split(
                 '.',
-              ).length * 2}`}
+              ).length * 4}`}
               onClick={() => handleSetClick(e.key)}
             >
               <div className="flex items-center">
-                <i
-                  key={e}
-                  className="material-icons mr-3 text-sm text-gray-100"
-                >
-                  {e.icon}
-                </i>
-                <span className="dropdown-title text-gray-100">{e.name}</span>
+                <span className="inline-block text-white">{e.icon}</span>
+                <span className="dropdown-title text-white pl-4">{e.name}</span>
               </div>
-              <i
-                className={`material-icons text-gray-200 opacity-50 ease-in-out ${!openSet[e.key] ? 'rotate-90' : ''
-                  }`}
-              >
-                arrow_drop_down
-              </i>
+              <FaAngleDown
+                className={`text-sm text-white mr-4 transition-all duration-100 ease-in-out ${
+                  !openSet[e.key] ? 'rotate-90' : ''
+                }`}
+              />
             </div>
             <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
               {e.menu.map(el => (
@@ -70,28 +65,26 @@ const MainListItem = ({ location: { pathname }, access }) => {
             </Collapse>
           </>
         ) : (
-            <div
-              selected={pathname === e.link}
-              className={e.key.split('.').length === 1 ? '' : ''}
+          <div
+            selected={pathname === e.link}
+            className={e.key.split('.').length === 1 ? '' : ''}
+          >
+            <Link
+              to={`${e.link}`}
+              className={`text-gray-200 text-base no-underline flex items-center ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 py-3 pl-${e.key.split(
+                '.',
+              ).length * 4}`}
             >
-              <Link
-                to={`${e.link}`}
-                className={`text-gray-200 text-sm no-underline flex items-center hover:bg-gray-800 py-2 pl-${e.key.split(
-                  '.',
-                ).length * 2}`}
-              >
-                <i key={e} className="material-icons mr-3 text-sm">
-                  {e.icon}
-                </i>
-                {e.name}
-              </Link>
-            </div>
-          )}
+              <span className="inline-block">{e.icon}</span>
+              <span className="pl-4">{e.name}</span>
+            </Link>
+          </div>
+        )}
       </div>
     );
   };
   return (
-    <div className="select-none pt-12 pb-8">
+    <div className="select-none pt-16 mt-6">
       {menus.map(e => (
         <div key={e.key}>{menuFunction(e)}</div>
       ))}

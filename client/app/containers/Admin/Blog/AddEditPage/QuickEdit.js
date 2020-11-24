@@ -7,9 +7,10 @@ import { Checkbox } from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Inputs from '../../../../components/customComponents/Input';
 import Select from '../../../../components/Select';
+import { FaCheck } from 'react-icons/fa';
 
 const customStyles = {
-  chip: () => { },
+  chip: () => {},
   option: (provided, state) => ({
     ...provided,
     background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
@@ -99,7 +100,7 @@ const QuickEdit = props => {
         </div>
 
         <div className="w-full  pb-4">
-          <label htmlFor="category" className="font-bold text-gray-700">
+          <label htmlFor="category" className="text-sm">
             Category
           </label>
           <Select
@@ -168,28 +169,34 @@ const QuickEdit = props => {
           </select>
         </div>
         <div id="component-error-text">{errors && errors.author}</div>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={one.is_active || false}
-              tabIndex={-1}
-              onClick={handleCheckedChange('is_active')}
-              color="primary"
-            />
-          }
-          label="Is Active"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={one.is_published || false}
-              tabIndex={-1}
-              onClick={handleCheckedChange('is_published')}
-              color="primary"
-            />
-          }
-          label="Is Published"
-        />
+        <div className="checkbox">
+          <input
+            checked={one.is_active || false}
+            onClick={handleCheckedChange('is_active')}
+            id="is_active"
+            type="checkbox"
+          />
+          <label htmlFor="is_active">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Is Active
+          </label>
+        </div>
+        <div className="checkbox">
+          <input
+            checked={one.is_published || false}
+            onClick={this.handleCheckedChange('is_published')}
+            id="is_published"
+            type="checkbox"
+          />
+          <label htmlFor="is_published">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Is Published
+          </label>
+        </div>
       </div>
     </>
   );

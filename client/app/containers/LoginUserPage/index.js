@@ -120,8 +120,8 @@ const LoginUserPage = props => {
               </div>
             </>
           ) : (
-              'Continue'
-            )
+            'Continue'
+          )
         }
         width="sm"
       >
@@ -170,7 +170,7 @@ const LoginUserPage = props => {
             <UsernameInput />
             <PasswordInput />
             <button
-              className="btn mt-4 w-full bg-primary hover:bg-secondary"
+              className="btn mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
               type="submit"
             >
               {loading ? (
@@ -182,8 +182,8 @@ const LoginUserPage = props => {
                   <span className="ml-2">Login</span>
                 </div>
               ) : (
-                  'Login'
-                )}
+                'Login'
+              )}
             </button>
           </form>
           <Link

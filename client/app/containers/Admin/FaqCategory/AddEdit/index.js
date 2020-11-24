@@ -27,7 +27,7 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
-
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 const styles = theme => ({
   backbtn: {
     padding: 0,
@@ -93,13 +93,9 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>{' '}
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
               ? 'Edit Faq Category'
               : 'Add Faq Category'}
@@ -107,7 +103,7 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-          <Input
+            <Input
               label="Title"
               inputclassName="inputbox"
               inputid="title"
@@ -118,22 +114,23 @@ class AddEdit extends React.PureComponent {
               error={errors.title}
             />
           </div>
-          <div>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
+          <div className="checkbox">
+            <input
+              checked={one.is_active || false}
+              onClick={this.handleCheckedChange('is_active')}
+              id="is_active"
+              type="checkbox"
             />
+            <label htmlFor="is_active">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Active
+            </label>
           </div>
 
           <button
-            className="block btn bg-primary hover:bg-secondary"
+            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
             Save

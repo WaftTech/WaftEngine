@@ -157,7 +157,7 @@ const LoginAdminPage = props => {
               <UsernameInput />
               <PasswordInput />
               <button
-                className="btn mt-4 w-full bg-primary hover:bg-secondary"
+                className="btn mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
                 type="submit"
               >
                 {loading ? (

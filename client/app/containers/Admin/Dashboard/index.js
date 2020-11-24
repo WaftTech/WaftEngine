@@ -15,10 +15,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import AccountBox from '@material-ui/icons/AccountBox';
-import Error from '@material-ui/icons/Error';
-import NoteAdd from '@material-ui/icons/NoteAdd';
-import Note from '@material-ui/icons/Note';
 import {
   makeSelectErrors,
   makeSelectUsers,
@@ -30,6 +26,13 @@ import reducer from './reducer';
 import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import LinkBoth from '../../../components/LinkBoth';
+
+import {
+  FaStickyNote,
+  FaExclamationCircle,
+  FaUser,
+  FaNewspaper,
+} from 'react-icons/fa';
 
 const styles = theme => ({
   dashicon: {
@@ -60,7 +63,7 @@ export class Dashboard extends React.PureComponent {
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>Dashboard</PageHeader>
         </div>
-        <div className="bg-white rounded p-4 shadow">
+        <div className="bg-white rounded p-4">
           {info.map(each => (
             <div key={each._id}>
               <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">
@@ -74,37 +77,37 @@ export class Dashboard extends React.PureComponent {
           ))}
         </div>
         <div className="flex justify-between mx-8 my-4">
-          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black shadow">
+          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black">
             <LinkBoth
               to="/admin/blog-manage/add/"
               className="text-gray-800 no-underline hover:text-black font-bold"
             >
-              <NoteAdd className={classes.dashicon} />
+              <FaStickyNote className="text-5xl mx-auto" />
               Write Post
             </LinkBoth>
           </div>
-          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black shadow">
+          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black">
             <LinkBoth
               className="text-gray-800 no-underline hover:text-black font-bold"
               to="https://waftengine.org/documentation"
               target="_blank"
             >
-              <Note className={classes.dashicon} />
+              <FaNewspaper className="text-5xl mx-auto" />
               View Doc
             </LinkBoth>
           </div>
-          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black shadow">
+          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <AccountBox className={classes.dashicon} />
+              <FaUser className="text-5xl mx-auto" />
               Total Users{' '}
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
               {users.totaldata}
             </span>
           </div>
-          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black shadow">
+          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <Error className={classes.dashicon} />
+              <FaExclamationCircle className={classes.dashicon} />
               Total Errors
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
@@ -163,12 +166,12 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                    <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                        No Errors
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Errors
                     </h2>
-                    </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

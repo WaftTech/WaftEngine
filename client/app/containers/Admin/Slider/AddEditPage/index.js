@@ -36,6 +36,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import EditorFileSelect from '../../../EditorFileSelect';
 import Input from '../../../../components/customComponents/Input';
+import { FaTrashAlt, FaArrowLeft } from 'react-icons/fa';
 
 const styles = () => ({
   modal: { backgroundColor: '#fff', padding: '20' },
@@ -82,14 +83,14 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
                 onClick={_this.handleSetImage(index)}
               />
             ) : (
-                <button
-                  type="button"
-                  className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
-                  onClick={_this.handleSetImage(index)}
-                >
-                  Click To Set Image
-                </button>
-              )}
+              <button
+                type="button"
+                className="bg-gray-300 py-2 px-4 rounded text-gray-800 hover:bg-gray-300 border"
+                onClick={_this.handleSetImage(index)}
+              >
+                Click To Set Image
+              </button>
+            )}
           </div>
 
           <div className="w-1/4 text-center mr-2">
@@ -120,9 +121,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
               className="px-1 text-center leading-none"
               onClick={() => _this.handleRemoveSlide(index)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
+              <FaTrashAlt className="text-base text-red-400 hover:text-red-600" />
             </button>
           </div>
         </div>
@@ -260,111 +259,107 @@ class AddEdit extends React.PureComponent {
     return loading ? (
       <Loading />
     ) : (
-        <>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </PageHeader>
+      <>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </PageHeader>
+        </div>
+        <Dialog
+          className={classes.modal}
+          aria-labelledby="max-width-dialog-title"
+          open={this.state.open}
+          onClose={this.handleClose}
+          fullWidth={this.state.fullWidth}
+          maxWidth={this.state.maxWidth}
+        >
+          <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
+          <DialogContent>
+            <EditorFileSelect
+              location={location}
+              selectFile={file => this.handleImageImageChange(file)}
+            />
+          </DialogContent>
+        </Dialog>
+
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </title>
+        </Helmet>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Slider Name"
+              inputclassName="inputbox"
+              inputid="slider-name"
+              inputType="text"
+              value={one.slider_name}
+              name="slider_name"
+              onChange={this.handleChange('slider_name')}
+              error={errors.slider_name}
+            />
           </div>
-          <Dialog
-            className={classes.modal}
-            aria-labelledby="max-width-dialog-title"
-            open={this.state.open}
-            onClose={this.handleClose}
-            fullWidth={this.state.fullWidth}
-            maxWidth={this.state.maxWidth}
-          >
-            <DialogTitle id="htmlForm-dialog-title">Select Media</DialogTitle>
-            <DialogContent>
-              <EditorFileSelect
-                location={location}
-                selectFile={file => this.handleImageImageChange(file)}
-              />
-            </DialogContent>
-          </Dialog>
 
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </title>
-          </Helmet>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Slider Name"
-                inputclassName="inputbox"
-                inputid="slider-name"
-                inputType="text"
-                value={one.slider_name}
-                name="slider_name"
-                onChange={this.handleChange('slider_name')}
-                error={errors.slider_name}
-              />
-            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Slider Key"
+              inputclassName="inputbox"
+              inputid="slider-key"
+              inputType="text"
+              value={one.slider_key}
+              name="slider_key"
+              onChange={this.handleChange('slider_key')}
+              error={errors.slider_key}
+            />
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Slider Key"
-                inputclassName="inputbox"
-                inputid="slider-key"
-                inputType="text"
-                value={one.slider_key}
-                name="slider_key"
-                onChange={this.handleChange('slider_key')}
-                error={errors.slider_key}
-              />
-            </div>
-
-            <div className="w-full md:w-1/2 pb-4">
-              <label className="font-bold text-gray-700" htmlFor="grid-last-name">
-                Slider Settings
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="text-sm" htmlFor="grid-last-name">
+              Slider Settings
             </label>
-              <textarea
-                name="slider settings"
-                id="slider_setting"
-                className="inputbox"
-                cols="50"
-                rows="5"
-                onChange={this.handleChange('settings')}
-                value={one.settings || ''}
-              />
-            </div>
+            <textarea
+              name="slider settings"
+              id="slider_setting"
+              className="inputbox"
+              cols="50"
+              rows="5"
+              onChange={this.handleChange('settings')}
+              value={one.settings || ''}
+            />
+          </div>
 
-            <button
-              type="button"
-              className="block btn bg-info hover:bg-secondary"
-              onClick={this.handleAddSlide}
-            >
-              Add Slide
+          <button
+            type="button"
+            className="block btn bg-info hover:bg-secondary"
+            onClick={this.handleAddSlide}
+          >
+            Add Slide
           </button>
-            <div>
-              <SortableImageList
-                items={one.images}
-                _this={this}
-                onSortEnd={this.onImageSortEnd}
-              />
-            </div>
-            <button
-              type="button"
-              className="block btn bg-primary hover:bg-secondary"
-              onClick={this.handleSave}
-            >
-              Save
+          <div>
+            <SortableImageList
+              items={one.images}
+              _this={this}
+              onSortEnd={this.onImageSortEnd}
+            />
+          </div>
+          <button
+            type="button"
+            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </>
-      );
+        </PageContent>
+      </>
+    );
   }
 }
 

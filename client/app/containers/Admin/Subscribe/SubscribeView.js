@@ -22,6 +22,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Loading from '../../../components/Loading';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export class ViewSubscriber extends React.Component {
   static propTypes = {
@@ -55,18 +56,14 @@ export class ViewSubscriber extends React.Component {
         </Helmet>
         <div className="flex justify-between mt-3 mb-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>{' '}
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             Subscribe Details
           </PageHeader>
         </div>
         <PageContent>
-          <div className="bg-white mt-2 shadow p-2">
+          <div className="bg-white mt-2 p-2">
             <div className="mb-2 Capitalize">
               <b>Email: </b>
               {one && one.email ? one.email : ''}

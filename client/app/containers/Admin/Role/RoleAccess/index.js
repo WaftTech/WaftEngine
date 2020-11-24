@@ -21,7 +21,11 @@ import {
   makeSelectErrors,
   makeSelectRoleData,
 } from '../selectors';
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as mapDispatchToProps from '../actions';
@@ -32,6 +36,7 @@ import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import '../../../../components/Table/table.css';
 import './style.css';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const RoleAccess = props => {
   const {
@@ -116,13 +121,9 @@ const RoleAccess = props => {
     <>
       <div className="flex justify-between mt-3 mb-3">
         <PageHeader>
-          <IconButton
-            className={`${classes.backbtn} cursor-pointer`}
-            onClick={handleBack}
-            aria-label="Back"
-          >
-            <BackIcon />
-          </IconButton>
+          <span className="backbtn" onClick={this.handleGoBack}>
+            <FaArrowLeft className="text-xl" />
+          </span>
           Role Access
         </PageHeader>
       </div>
@@ -130,93 +131,100 @@ const RoleAccess = props => {
       <Loading />
     </>
   ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>Role Access</title>
-        </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+    <React.Fragment>
+      <Helmet>
+        <title>Role Access</title>
+      </Helmet>
+      <div className="flex justify-between mt-3 mb-3">
+        <PageHeader>
+          <span className="backbtn" onClick={handleBack}>
+            <FaArrowLeft className="text-xl" />
+          </span>
           Role Access
         </PageHeader>
-        </div>
-        <PageContent>
-          {module_data.map((each, index) => (
-            <Accordion
-              key={`${each._id}-${index}`}
-              // expanded={each._id === expanded}
-              onClick={() => setExpanded(each._id)}
-              className={classes.ExpansionPanelMainWrapper}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-                classes={{
-                  root: classes.roleRoot,
-                  content: classes.roleContent,
-                  expandIcon: classes.roleExpandIcon,
-                  expanded: classes.roleExpanded,
-                }}
-              >
-                <Typography className={classes.heading}>
-                  <span className="text-lg font-medium m-0">{each.module_group} Group</span>
-                </Typography>
-              </AccordionSummary >
-              <AccordionDetails style={{ display: 'block' }}>
-                {each.modules.map(module => (
-                  <fieldset
-                    key={`${module._id}-${each._id}-${index}`} className="formfieldset mb-2">
-                    <legend
-                      className="text-lg px-2"
-                      onClick={() => getAccessArray(module._id)}
-                    >
-                      {module.module_name}
-                    </legend>
-                    <ul className="flex flex-wrap">
-                      {module.path.length > 0 &&
-                        module.path.map(module_path => (
-                          <li key={`${module_path._id}-${module._id}-${each._id}-${index}`} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2">
-                            <div className="mr-2">
-                              <FormControlLabel
-                                style={{ margin: '0' }}
-                                className="w-full px-2 py-1 bg-gray-100 rounded"
-                                control={
-                                  <Checkbox
-                                    color="primary"
-                                    name={module_path._id}
-                                    checked={getAccessArray(module._id).includes(
-                                      module_path._id,
-                                    )}
-                                    onChange={handleAccessChange(module._id)}
-                                  />
-                                }
-                                label={module_path.access_type}
-                              />
-                            </div>
-                          </li>
-                        ))}
-                    </ul>
-                  </fieldset>
-                ))}
-              </AccordionDetails >
-            </Accordion>
-          ))}
-          <button
-            className="block btn bg-primary hover:bg-secondary mt-4"
-            onClick={handleSave}
+      </div>
+      <PageContent>
+        {module_data.map((each, index) => (
+          <Accordion
+            key={`${each._id}-${index}`}
+            // expanded={each._id === expanded}
+            onClick={() => setExpanded(each._id)}
+            className={classes.ExpansionPanelMainWrapper}
           >
-            Save
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+              classes={{
+                root: classes.roleRoot,
+                content: classes.roleContent,
+                expandIcon: classes.roleExpandIcon,
+                expanded: classes.roleExpanded,
+              }}
+            >
+              <Typography className={classes.heading}>
+                <span className="text-lg font-medium m-0">
+                  {each.module_group} Group
+                </span>
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails style={{ display: 'block' }}>
+              {each.modules.map(module => (
+                <fieldset
+                  key={`${module._id}-${each._id}-${index}`}
+                  className="formfieldset mb-2"
+                >
+                  <legend
+                    className="text-lg px-2"
+                    onClick={() => getAccessArray(module._id)}
+                  >
+                    {module.module_name}
+                  </legend>
+                  <ul className="flex flex-wrap">
+                    {module.path.length > 0 &&
+                      module.path.map(module_path => (
+                        <li
+                          key={`${module_path._id}-${module._id}-${
+                            each._id
+                          }-${index}`}
+                          className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2"
+                        >
+                          <div className="mr-2">
+                            <div className="checkbox">
+                              <input
+                                name={module_path._id}
+                                checked={getAccessArray(module._id).includes(
+                                  module_path._id,
+                                )}
+                                onChange={handleAccessChange(module._id)}
+                                id={module_path._id}
+                                type="checkbox"
+                              />
+                              <label htmlFor={module_path._id}>
+                                <span className="box">
+                                  <FaCheck className="check-icon" />
+                                </span>
+                                {module_path.access_type}
+                              </label>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                  </ul>
+                </fieldset>
+              ))}
+            </AccordionDetails>
+          </Accordion>
+        ))}
+        <button
+          className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600 mt-4"
+          onClick={handleSave}
+        >
+          Save
         </button>
-        </PageContent>
-      </React.Fragment>
-    );
+      </PageContent>
+    </React.Fragment>
+  );
 };
 
 const withReducer = injectReducer({ key: 'adminRole', reducer });
@@ -284,8 +292,6 @@ const styles = theme => ({
   roleExpandIcon: {
     padding: '0px 12px',
   },
-
-
 
   roleExpanded: {
     borderBottom: '1px solid gainsboro',

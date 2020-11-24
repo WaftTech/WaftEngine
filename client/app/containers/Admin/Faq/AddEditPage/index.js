@@ -25,6 +25,7 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const styles = theme => ({
   backbtn: {
@@ -84,92 +85,85 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <>
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
-            </title>
-          </Helmet>
-          <div className="flex justify-between mt-3 mb-3">
-            <PageHeader>
-              <IconButton
-                className={`${classes.backbtn} cursor-pointer`}
-                onClick={this.handleGoBack}
-                aria-label="Back"
-              >
-                <BackIcon />
-              </IconButton>
-              {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
-            </PageHeader>
+      <>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
+          </title>
+        </Helmet>
+        <div className="flex justify-between mt-3 mb-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
+          </PageHeader>
+        </div>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <Input
+              label="Question"
+              inputclassName="inputbox"
+              inputid="faq"
+              inputType="text"
+              name="Question"
+              value={one.question || ''}
+              onChange={this.handleChange('question')}
+            />
           </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <Input
-                label="Question"
-                inputclassName="inputbox"
-                inputid="faq"
-                inputType="text"
-                name="Question"
-                value={one.question || ''}
-                onChange={this.handleChange('question')}
-              />
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="font-bold text-gray-700"
-                htmlFor="grid-last-name"
-              >
-                Answer
+          <div className="w-full md:w-1/2 pb-4">
+            <label className="text-sm" htmlFor="grid-last-name">
+              Answer
             </label>
-              <textarea
-                className="inputbox"
-                multiline="true"
-                rows="5"
-                name="Answer"
-                id="faq-answer"
-                value={one.title || ''}
-                onChange={this.handleChange('title')}
-              />
-            </div>
+            <textarea
+              className="inputbox"
+              multiline="true"
+              rows="5"
+              name="Answer"
+              id="faq-answer"
+              value={one.title || ''}
+              onChange={this.handleChange('title')}
+            />
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label
-                className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
-                htmlFor="category"
-              >
-                Category
-            </label>
-              <select
-                className="inputbox"
-                value={one.category || ''}
-                onChange={this.handleChange('category')}
-                inputprops={{
-                  name: 'category',
-                  id: 'category-title',
-                }}
-              >
-                <option value="" disabled>
-                  None
-              </option>
-                {category &&
-                  category.length &&
-                  category.map(each => (
-                    <option key={each._id} value={each._id}>
-                      {each.title}
-                    </option>
-                  ))}
-              </select>
-            </div>
-
-            <button
-              className="block btn bg-primary hover:bg-secondary"
-              onClick={this.handleSave}
+          <div className="w-full md:w-1/2 pb-4">
+            <label
+              className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
+              htmlFor="category"
             >
-              Save
+              Category
+            </label>
+            <select
+              className="inputbox"
+              value={one.category || ''}
+              onChange={this.handleChange('category')}
+              inputprops={{
+                name: 'category',
+                id: 'category-title',
+              }}
+            >
+              <option value="" disabled>
+                None
+              </option>
+              {category &&
+                category.length &&
+                category.map(each => (
+                  <option key={each._id} value={each._id}>
+                    {each.title}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          <button
+            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </>
-      );
+        </PageContent>
+      </>
+    );
   }
 }
 

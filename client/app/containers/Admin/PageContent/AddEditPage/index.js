@@ -43,6 +43,7 @@ import EditorFileSelect from '../../../EditorFileSelect';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 const styles = {
   backbtn: {
@@ -151,228 +152,229 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <>
-          <Helmet>
-            <title>
-              {' '}
+      <>
+        <Helmet>
+          <title>
+            {' '}
+            {match && match.params && match.params.id
+              ? 'Edit Static Page'
+              : 'Add Static Page'}
+          </title>
+        </Helmet>
+        <Dialog
+          open={this.state.openMedia}
+          onClose={this.handleClose}
+          fullWidth={true}
+          maxWidth={'lg'}
+        >
+          <DialogTitle>Select Image</DialogTitle>
+          <DialogContent>
+            <EditorFileSelect
+              location={location}
+              selectFile={file => this.handleImageChange(file)}
+            />
+            <div className="mt-2 text-xs">
+              Note: Please Double Click to open folder and select images.
+            </div>
+          </DialogContent>
+        </Dialog>
+        <div>
+          <div className="flex justify-between mt-3 mb-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
               {match && match.params && match.params.id
                 ? 'Edit Static Page'
                 : 'Add Static Page'}
-            </title>
-          </Helmet>
-          <Dialog
-            open={this.state.openMedia}
-            onClose={this.handleClose}
-            fullWidth={true}
-            maxWidth={'lg'}
-          >
-            <DialogTitle>Select Image</DialogTitle>
-            <DialogContent>
-              <EditorFileSelect
-                location={location}
-                selectFile={file => this.handleImageChange(file)}
-              />
-              <div className="mt-2 text-xs">
-                Note: Please Double Click to open folder and select images.
-            </div>
-            </DialogContent>
-          </Dialog>
-          <div>
-            <div className="flex justify-between mt-3 mb-3">
-              <PageHeader>
-                <IconButton
-                  className={`${classes.backbtn} cursor-pointer`}
-                  onClick={this.handleGoBack}
-                  aria-label="Back"
-                >
-                  <BackIcon />
-                </IconButton>
-                {match && match.params && match.params.id
-                  ? 'Edit Static Page'
-                  : 'Add Static Page'}
-              </PageHeader>
-            </div>
-            <PageContent>
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Page Title"
-                  inputclassName="inputbox"
-                  inputid="grid-last-name"
-                  inputType="text"
-                  value={one.name}
-                  onChange={this.handleChange('name')}
-                  error={errors.name}
-                />
-              </div>
-
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Page Key"
-                  inputclassName="inputbox"
-                  inputid="grid-last-name"
-                  inputType="text"
-                  value={one.key}
-                  onChange={this.handleChange('key')}
-                  error={errors.key}
-                />
-              </div>
-              <div>
-                <WECkEditior
-                  description={one.description}
-                  setOneValue={this.props.setOneValue}
-                />
-                <div id="component-error-text">{errors.description}</div>
-              </div>
-
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Meta Title"
-                  inputclassName="inputbox"
-                  inputid="grid-last-meta_title"
-                  inputType="text"
-                  value={one.meta_title}
-                  onChange={this.handleChange('meta_title')}
-                  error={errors.meta_title}
-                />
-              </div>
-              <div className="w-full md:w-1/2 pb-4">
-                <Input
-                  label="Meta Description"
-                  inputclassName="inputbox"
-                  inputid="grid-last-meta_description"
-                  inputType="text"
-                  value={one.meta_description}
-                  onChange={this.handleChange('meta_description')}
-                  error={errors.meta_description}
-                />
-              </div>
-              <div className="w-full md:w-1/2 pb-4">
-                <label className="label" htmlFor="grid-last-name">
-                  Meta Tags
-              </label>
-                <form onSubmit={this.insertMetaTags}>
-                  <input
-                    className="inputbox"
-                    id="blog-meta-tags"
-                    type="text"
-                    value={tempMetaTag || ''}
-                    name="Tags"
-                    onChange={this.handleTempMetaTag}
-                  />
-                </form>
-                <Paper elevation={2} >
-                  {one.meta_tag &&
-                    one.meta_tag.map((tag, index) => {
-                      const icon = null;
-
-                      return (
-                        <Chip
-                          key={`meta-${tag}-${index}`}
-                          icon={icon}
-                          label={tag}
-                          onDelete={this.handleMetaTagDelete(index)}
-                          className={classes.chip}
-                        />
-                      );
-                    })}
-                </Paper>
-              </div>
-
-              <div className="flex w-full justify-between md:w-1/2 px-2">
-                <div className="w-full md:w-1/2 -ml-2">
-                  <div margin="normal" className={classes.formControl}>
-                    <label className="label" htmlFor="grid-last-name">
-                      Published From
-                  </label>
-                    <DatePicker
-                      margin="normal"
-                      name="publish_from"
-                      className={[classes.textField, 'inputbox']}
-                      value={
-                        (one.publish_from &&
-                          moment(one.publish_from).format(DATE_FORMAT)) ||
-                        ''
-                      }
-                      onChange={this.handleDateChange('publish_from')}
-                    />
-                  </div>
-                </div>
-                <div className="w-full md:w-1/2 -mr-2">
-                  <div margin="normal" className={classes.formControl}>
-                    <label className="label" htmlFor="grid-last-name">
-                      Published To
-                  </label>
-                    <DatePicker
-                      margin="normal"
-                      name="publish_to"
-                      className={[classes.textField, 'inputbox']}
-                      value={
-                        (one.publish_to &&
-                          moment(one.publish_to).format(DATE_FORMAT)) ||
-                        ''
-                      }
-                      onChange={this.handleDateChange('publish_to')}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full  pb-4 -mr-2">
-                <section
-                  onClick={this.handleSetImage}
-                  style={{ width: '100%' }}
-                  className="text-black hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
-                >
-                  <button
-                    type="button"
-                    className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
-                  >
-                    Featured Image
-                </button>
-                </section>
-                {errors && errors.image && (
-                  <div id="component-error-text">{errors.image}</div>
-                )}
-              </div>
-              {one && one.image && one.image.path && (
-                <div>
-                  <img src={`${IMAGE_BASE}${one.image.path}`} />
-                </div>
-              )}
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_active || false}
-                    tabIndex={-1}
-                    onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Active"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={one.is_page || false}
-                    onClick={this.handleCheckedChange('is_page')}
-                    value="is_page"
-                    color="primary"
-                  />
-                }
-                label="Is Page"
-              />
-
-              <br />
-              <button
-                className="block btn bg-primary hover:bg-secondary"
-                onClick={this.handleSave}
-              >
-                Save
-            </button>
-            </PageContent>
+            </PageHeader>
           </div>
-        </>
-      );
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Page Title"
+                inputclassName="inputbox"
+                inputid="grid-last-name"
+                inputType="text"
+                value={one.name}
+                onChange={this.handleChange('name')}
+                error={errors.name}
+              />
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Page Key"
+                inputclassName="inputbox"
+                inputid="grid-last-name"
+                inputType="text"
+                value={one.key}
+                onChange={this.handleChange('key')}
+                error={errors.key}
+              />
+            </div>
+            <div>
+              <WECkEditior
+                description={one.description}
+                setOneValue={this.props.setOneValue}
+              />
+              <div id="component-error-text">{errors.description}</div>
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Meta Title"
+                inputclassName="inputbox"
+                inputid="grid-last-meta_title"
+                inputType="text"
+                value={one.meta_title}
+                onChange={this.handleChange('meta_title')}
+                error={errors.meta_title}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <Input
+                label="Meta Description"
+                inputclassName="inputbox"
+                inputid="grid-last-meta_description"
+                inputType="text"
+                value={one.meta_description}
+                onChange={this.handleChange('meta_description')}
+                error={errors.meta_description}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label className="label" htmlFor="grid-last-name">
+                Meta Tags
+              </label>
+              <form onSubmit={this.insertMetaTags}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-tags"
+                  type="text"
+                  value={tempMetaTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaTag}
+                />
+              </form>
+              <Paper elevation={2}>
+                {one.meta_tag &&
+                  one.meta_tag.map((tag, index) => {
+                    const icon = null;
+
+                    return (
+                      <Chip
+                        key={`meta-${tag}-${index}`}
+                        icon={icon}
+                        label={tag}
+                        onDelete={this.handleMetaTagDelete(index)}
+                        className={classes.chip}
+                      />
+                    );
+                  })}
+              </Paper>
+            </div>
+
+            <div className="flex w-full justify-between md:w-1/2 px-2">
+              <div className="w-full md:w-1/2 -ml-2">
+                <div margin="normal" className={classes.formControl}>
+                  <label className="label" htmlFor="grid-last-name">
+                    Published From
+                  </label>
+                  <DatePicker
+                    margin="normal"
+                    name="publish_from"
+                    className={[classes.textField, 'inputbox']}
+                    value={
+                      (one.publish_from &&
+                        moment(one.publish_from).format(DATE_FORMAT)) ||
+                      ''
+                    }
+                    onChange={this.handleDateChange('publish_from')}
+                  />
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 -mr-2">
+                <div margin="normal" className={classes.formControl}>
+                  <label className="label" htmlFor="grid-last-name">
+                    Published To
+                  </label>
+                  <DatePicker
+                    margin="normal"
+                    name="publish_to"
+                    className={[classes.textField, 'inputbox']}
+                    value={
+                      (one.publish_to &&
+                        moment(one.publish_to).format(DATE_FORMAT)) ||
+                      ''
+                    }
+                    onChange={this.handleDateChange('publish_to')}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="w-full  pb-4 -mr-2">
+              <section
+                onClick={this.handleSetImage}
+                style={{ width: '100%' }}
+                className="text-black hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+              >
+                <button
+                  type="button"
+                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                >
+                  Featured Image
+                </button>
+              </section>
+              {errors && errors.image && (
+                <div id="component-error-text">{errors.image}</div>
+              )}
+            </div>
+            {one && one.image && one.image.path && (
+              <div>
+                <img src={`${IMAGE_BASE}${one.image.path}`} />
+              </div>
+            )}
+
+            <div className="checkbox">
+              <input
+                checked={one.is_active || false}
+                onClick={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Active
+              </label>
+            </div>
+
+            <div className="checkbox">
+              <input
+                checked={one.is_page || false}
+                onClick={this.handleCheckedChange('is_page')}
+                id="is_page"
+                type="checkbox"
+              />
+              <label htmlFor="is_page">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Page
+              </label>
+            </div>
+            <button
+              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Save
+            </button>
+          </PageContent>
+        </div>
+      </>
+    );
   }
 }
 

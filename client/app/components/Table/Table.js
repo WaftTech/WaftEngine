@@ -17,7 +17,7 @@ function CustomTable({ ...props }) {
     handlePagination,
   } = props;
   return (
-    <div className="bg-white mt-2 shadow">
+    <div className="bg-white mt-4 border-t">
       <table className="w-full text-left table table-auto">
         {tableHead !== undefined ? (
           <thead>
@@ -38,7 +38,7 @@ function CustomTable({ ...props }) {
             <tr key={key}>
               {prop.map((each, index) => (
                 <td
-                  className="px-2 py-1 text-sm border-gray-300 text-gray-800"
+                  className="px-2 py-1 text-sm border-gray-200 text-gray-700"
                   key={index}
                 >
                   {each}

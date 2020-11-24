@@ -48,11 +48,21 @@ const SignupUserPage = ({
           <EmailInput />
           <PasswordInput />
           <button
-              className="btn mt-4 w-full bg-primary hover:bg-secondary"
-              type="submit"
-            >
-              {loading ?  <div className="btn_loading"><div></div><div></div><div></div><div></div><span className="ml-2">Sing Up</span></div> : 'Sign Up'}
-            </button>
+            className="btn mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            type="submit"
+          >
+            {loading ? (
+              <div className="btn_loading">
+                <div />
+                <div />
+                <div />
+                <div />
+                <span className="ml-2">Sing Up</span>
+              </div>
+            ) : (
+              'Sign Up'
+            )}
+          </button>
           <Link
             className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
             to="/login-user"

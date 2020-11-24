@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import IconButton from '@material-ui/core/IconButton';
+import { FaRegTrashAlt } from 'react-icons/fa';
 
 const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
@@ -42,13 +42,9 @@ const Path = props => {
           />
         </div>
         <div className="w-full md:w-2/5 text-right">
-          <IconButton
-            size="small"
-            aria-label="Delete client route"
-            onClick={handleRemovePath(pathIndex)}
-          >
-            <i className="material-icons text-red-600">close</i>
-          </IconButton>
+          <button onClick={handleRemovePath(pathIndex)}>
+            <FaRegTrashAlt className="text-red-500" />
+          </button>
         </div>
       </div>
 
@@ -74,10 +70,7 @@ const Path = props => {
                   aria-label="Delete client route"
                   onClick={handleRemoveAdminRoute(pathIndex, index)}
                 >
-                  <i className="material-icons text-red-500 cursor-pointer mr-2 mt-1">
-                    delete
-                  </i>
-                  {/* <TrashIcon className="text-red-500 text-sm" /> */}
+                  <FaRegTrashAlt className="text-red-500 cursor-pointer mr-2 mt-1" />
                 </span>
               </div>
             </div>
@@ -103,8 +96,9 @@ const Path = props => {
           {(each.server_routes || []).map((eachServerRoute, index) => (
             <div
               className="w-full pb-1 pl-4"
-              key={`${each._id}-${pathIndex}-${eachServerRoute._id
-                }-each-server-route-${index}`}
+              key={`${each._id}-${pathIndex}-${
+                eachServerRoute._id
+              }-each-server-route-${index}`}
             >
               <div className="flex">
                 <div className="mr-2">
@@ -115,15 +109,17 @@ const Path = props => {
                     onChange={handleServerRoutesMethodChange(pathIndex, index)}
                     inputprops={{
                       name: 'Method',
-                      id: `${each._id}-${eachServerRoute._id
-                        }-each-server-route-${index}-method`,
+                      id: `${each._id}-${
+                        eachServerRoute._id
+                      }-each-server-route-${index}-method`,
                     }}
                     style={{ minWidth: '80px', background: '#FFFFFF' }}
                   >
                     {methods.map(eachMethod => (
                       <option
-                        key={`${eachMethod._id}-${pathIndex}-${eachServerRoute._id
-                          }-each-server-route-method-${eachMethod}`}
+                        key={`${eachMethod._id}-${pathIndex}-${
+                          eachServerRoute._id
+                        }-each-server-route-method-${eachMethod}`}
                         value={eachMethod}
                       >
                         {eachMethod}
@@ -136,15 +132,14 @@ const Path = props => {
                     type="text"
                     className="inputbox mr-2 flex-1"
                     style={{ background: '#FFFFFF' }}
-                    id={`${each._id}-${eachServerRoute._id
-                      }-each-admin-server-route-route-access-type-${index}`}
+                    id={`${each._id}-${
+                      eachServerRoute._id
+                    }-each-admin-server-route-route-access-type-${index}`}
                     value={eachServerRoute.route}
                     onChange={handleServerRoutesRouteChange(pathIndex, index)}
                   />
                   <span onClick={handleRemoveServerRoute(pathIndex, index)}>
-                    <i className="material-icons text-red-500 cursor-pointer mr-2 mt-1">
-                      delete
-                    </i>
+                    <FaRegTrashAlt className="text-red-500 cursor-pointer mr-2 mt-1" />
                   </span>
                 </div>
               </div>

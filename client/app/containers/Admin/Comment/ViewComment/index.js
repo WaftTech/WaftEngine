@@ -23,6 +23,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Loading from '../../../../components/Loading';
 import moment from 'moment';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export class ViewComment extends React.PureComponent {
   static propTypes = {
@@ -70,83 +71,48 @@ export class ViewComment extends React.PureComponent {
           <title> Comment Details </title>
         </Helmet>
         <PageHeader>
-          <IconButton
-            className={`${classes.backbtn} cursor-pointer`}
-            onClick={this.handleBack}
-            aria-label="Back"
-          >
-            <BackIcon />
-          </IconButton>
+          <span className="backbtn" onClick={this.handleGoBack}>
+            <FaArrowLeft className="text-xl" />
+          </span>
           Comment Details
         </PageHeader>
         <PageContent>
-        <div className="bg-white mt-2 shadow p-2">
-          <div className="print-fluid">
-            {one && one.blog_id ? (
-              <p className="mb-2">
-                <b> Blog: </b>
-                {one.blog_id.title || ''}
-              </p>
-            ) : null}
-            {one && one.added_by ? (
-              <p className="mb-2">
-                <b> Commented By: </b>
-                {one.added_by.name || ''}
-              </p>
-            ) : null}
-            {one && one.status ? (
-              <p className="mb-2">
-                <b>Status: </b>
-                {one.status || ''}
-              </p>
-            ) : null}
-            {one && one.added_at ? (
-              <p className="mb-2">
-                <b>Added At: </b>
-                {moment(one.added_at).format('ll') || ''}
-              </p>
-            ) : null}
+          <div className="bg-white mt-2 p-2">
+            <div className="print-fluid">
+              {one && one.blog_id ? (
+                <p className="mb-2">
+                  <b> Blog: </b>
+                  {one.blog_id.title || ''}
+                </p>
+              ) : null}
+              {one && one.added_by ? (
+                <p className="mb-2">
+                  <b> Commented By: </b>
+                  {one.added_by.name || ''}
+                </p>
+              ) : null}
+              {one && one.status ? (
+                <p className="mb-2">
+                  <b>Status: </b>
+                  {one.status || ''}
+                </p>
+              ) : null}
+              {one && one.added_at ? (
+                <p className="mb-2">
+                  <b>Added At: </b>
+                  {moment(one.added_at).format('ll') || ''}
+                </p>
+              ) : null}
 
-            <div>
-              <b>Is Approved: {''}</b>
-              {one && one.is_approved ? <b>Yes</b> : <b>No</b>}
+              <div>
+                <b>Is Approved: {''}</b>
+                {one && one.is_approved ? <b>Yes</b> : <b>No</b>}
+              </div>
+              <div>
+                <b>Is Disapproved: {''}</b>
+                {one && one.is_disapproved ? <b>Yes</b> : <b>No</b>}
+              </div>
             </div>
-            <div>
-              <b>Is Disapproved: {''}</b>
-              {one && one.is_disapproved ? <b>Yes</b> : <b>No</b>}
-            </div>
-            {/* <div>
-              <FormControlLabel
-                className="ml-2"
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={(one && one.is_approved) || false}
-                    onClick={this.handleCheckedChange('is_approved')}
-                  />
-                }
-                label="Is Approved"
-              />
-              <FormControlLabel
-                className="ml-2"
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={(one && one.is_disapproved) || false}
-                    onClick={this.handleCheckedChange('is_disapproved')}
-                  />
-                }
-                label="Is Disapproved"
-              />
-            </div>
-
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-600 hover:bg-blue-700 btn-theme"
-              onClick={this.handleSave}
-            >
-              Save
-              </button> */}
-          </div>
           </div>
         </PageContent>
       </React.Fragment>

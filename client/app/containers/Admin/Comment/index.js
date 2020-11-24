@@ -41,6 +41,8 @@ import Loading from '../../../components/Loading';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
+import { FaRegEye } from 'react-icons/fa';
+
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
@@ -236,9 +238,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleView(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                visibility
-              </i>
+              <FaRegEye className="text-base text-indigo-500 hover:text-indigo-700" />
             </button>
           </div>
         </>,
@@ -279,26 +279,36 @@ export class BlogCommentManagePage extends React.PureComponent {
         </Dialog>
         <PageContent loading={loading}>
           <div className="flex">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={query.find_is_approved}
-                  onChange={this.handleCheckedQueryChange('find_is_approved')}
-                />
-              }
-              label="Approved"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={query.find_is_disapproved}
-                  onChange={this.handleCheckedQueryChange(
-                    'find_is_disapproved',
-                  )}
-                />
-              }
-              label="Disapproved"
-            />
+            <div className="checkbox">
+              <input
+                checked={query.find_is_approved}
+                onChange={this.handleCheckedQueryChange('find_is_approved')}
+                id="is_approved"
+                type="checkbox"
+              />
+              <label htmlFor="is_approved">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Approved
+              </label>
+            </div>
+
+            <div className="checkbox">
+              <input
+                checked={query.find_is_disapproved}
+                onChange={this.handleCheckedQueryChange('find_is_disapproved')}
+                id="is_disapprove"
+                type="checkbox"
+              />
+              <label htmlFor="is_disapprove">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Disapproved
+              </label>
+            </div>
+
             <div className="flex relative mr-2">
               <input
                 type="text"

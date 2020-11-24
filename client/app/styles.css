@@ -2,89 +2,66 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
-@font-face { font-family: 'MaterialIcons-Regular'; 
-  src: url('../app/assets/font/MaterialIcons-Regular.eot') 
-  format('embedded-opentype'), 
-  url('../app/assets/font/MaterialIcons-Regular.woff') 
-  format('woff'), 
-  url('../app/assets/font/MaterialIcons-Regular.ttf') 
-  format('truetype'); 
-  font-weight: normal; font-style: normal; }
-
-  .material-icons {
-    font-family: 'MaterialIcons-Regular';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 18px;  /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-  
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-  
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-  
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-
-
-/* /* General Css Starts */
-
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  margin-top:0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-top: 0;
   margin-bottom: 0.5rem;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   color: inherit;
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: 2.5rem;
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: 2rem;
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: 1.75rem;
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: 1.5rem;
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: 1.25rem;
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-size: 1rem;
 }
 
-.list-circle{
+.list-circle {
   list-style-type: circle;
-  padding-left:40px;
-} 
+  padding-left: 40px;
+}
 
 /* custom css starts */
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  color: #555;
 }
 
 button:focus,
@@ -97,29 +74,34 @@ div.react-datepicker__input-container {
   display: block;
 }
 .select-none .active {
-  color: #fff;
-  background-color: #43414d;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  box-shadow: inset 4px 0 0 #4299e1;
 }
 
 .inputbox {
   display: block;
   width: 100%;
-  padding: 6px 12px;
-  transition: all 0.2s ease-in-out;
-  font-size: 0.875rem;
+  padding: 8px 12px;
+  transition: all 0.1s ease-in;
   background: #ffffff;
-  border: 1px solid #d4d9df;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem;
 }
 .inputbox:focus {
   outline: 0;
-  box-shadow: none;
+  box-shadow: 0 0 0 2px #bee3f8;
+  border: 1px solid #63b3ed;
 }
 .inputbox.bg-white {
   background: #ffffff;
 }
 select.inputbox {
   height: 36px;
+}
+.inputbox[disabled] {
+  opacity: 0.5;
 }
 
 .waftsrchstyle {
@@ -151,6 +133,7 @@ div#component-error-text {
   left: 0;
   right: 0;
   height: 2px;
+  z-index: 9000;
   background: repeating-linear-gradient(
     to right,
     #1c2260 0%,
@@ -183,12 +166,110 @@ div#component-error-text {
   transform: rotate(-90deg);
 }
 
-.btn{
-   padding: 0.5rem 1rem;
-   color:#FFFFFF;
-   border-radius: 0.25rem;
+.btn {
+  @apply py-2 px-4 rounded text-white text-sm mt-4;
 }
-.qr-code { transform: scale(4);}
+.qr-code {
+  transform: scale(4);
+}
 
+@keyframes arrowtip {
+  from {
+    top: 32px;
+  }
+  to {
+    top: 20px;
+  }
+}
 
+.arrow_box {
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #1e1e1e;
+  border-width: 10px;
+  animation: arrowtip 0.5s cubic-bezier(0, 1.1, 0.26, 1.08) 1s;
+}
 
+.pageheader {
+  display: flex;
+  align-items: center;
+}
+
+.backbtn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+  margin-right: 20px;
+  justify-content: center;
+}
+.backbtn:hover {
+  background-color: #fff;
+}
+
+.checkbox {
+  @apply relative select-none inline-flex items-center mr-5 justify-start;
+}
+
+.checkbox input[type='checkbox'] {
+  @apply hidden;
+}
+
+.checkbox .box {
+  @apply w-5 h-5 rounded-sm border border-gray-400 mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
+}
+
+.checkbox label {
+  @apply flex items-center justify-center cursor-pointer text-sm;
+}
+
+.checkbox label:hover .box {
+  @apply border-blue-500;
+}
+
+.checkbox .check-icon {
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+  transform: scale(0);
+  @apply text-white text-xs;
+}
+
+.checkbox input[type='checkbox']:checked + label .box {
+  @apply bg-blue-500 border-blue-500;
+}
+
+.checkbox input:checked + label > .box > .check-icon {
+  transform: scale(1);
+}
+.checkbox input:checked + label .box:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #1890ff;
+  border-radius: 2px;
+  animation: CheckboxEffect 0.36s ease-in-out;
+  content: '';
+  @apply border-blue-500;
+}
+
+@keyframes CheckboxEffect {
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@tailwind utilities;

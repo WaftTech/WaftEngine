@@ -32,7 +32,8 @@ import Loading from '../../../components/Loading';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
-
+import lid from '../../../assets/img/lid.svg';
+import { FaPencilAlt } from 'react-icons/fa';
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
@@ -137,24 +138,23 @@ export class BlogCategory extends React.PureComponent {
         moment(updated_at ? updated_at : added_at).format(DATE_FORMAT),
         <>
           <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+            <span
+              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                edit
-              </i>
-            </button>
+              <FaPencilAlt className="pencil" />
 
-            <button
-              className="ml-2 px-1 text-center leading-none"
+              {/* <img className="pencil" src={pencil} alt="" /> */}
+              <span className="bg-blue-500 dash" />
+            </span>
+
+            <span
+              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
-            </button>
+              <img className="trash-lid" src={lid} alt="trash-id" />
+              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+            </span>
           </div>
         </>,
       ],

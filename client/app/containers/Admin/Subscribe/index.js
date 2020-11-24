@@ -33,6 +33,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
+import { FaTrashAlt, FaRegEye } from 'react-icons/fa';
 
 const styles = theme => ({
   tableActionButton: {
@@ -123,26 +124,22 @@ export class Subscribe extends React.PureComponent {
       moment(added_at).format(DATE_FORMAT),
 
       <React.Fragment>
-       <div className="flex">
-        <button
-          aria-label="Edit"
-          className=" px-1 text-center leading-none"
-          onClick={() => this.handleView(_id)}
-        >
-          <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-            visibility
-          </i>
-        </button>
+        <div className="flex">
+          <button
+            aria-label="Edit"
+            className=" px-1 text-center leading-none"
+            onClick={() => this.handleView(_id)}
+          >
+            <FaRegEye className="text-base text-blue-500 hover:text-blue-700" />
+          </button>
 
-        <button
-          className="ml-2 px-1 text-center leading-none"
-          onClick={() => this.handleOpen(_id)}
-        >
-          <i className="material-icons text-base text-red-400 hover:text-red-600">
-            delete
-          </i>
-        </button>
-      </div>
+          <button
+            className="ml-2 px-1 text-center leading-none"
+            onClick={() => this.handleOpen(_id)}
+          >
+            <FaTrashAlt className="text-base text-red-400 hover:text-red-600" />
+          </button>
+        </div>
       </React.Fragment>,
     ]);
     return (

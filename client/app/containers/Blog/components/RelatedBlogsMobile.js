@@ -23,7 +23,7 @@ function RelatedBlogs(props) {
           <div className="flex flex-wrap -mx-2">
             {props.blogs.map(blog => (
               <div key={`relateds-${blog._id}`} className="px-2 mt-4">
-                <div className="bg-white shadow rounded-sm overflow-hidden">
+                <div className="bg-white shadow rounded overflow-hidden">
                   <Link
                     className="block h-40"
                     to={`/news/mobile/${blog.slug_url}`}
