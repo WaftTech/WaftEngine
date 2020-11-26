@@ -506,7 +506,7 @@ userController.Login = async (req, res, next) => {
     let errors = {};
     const password = req.body.password;
     let email = req.body.email.toLowerCase();
-    const user = await userSch.findOne({ email });
+    const user = await userSch.findOne({ email }).populate([{ path: 'roles', select: 'role_title' }]);
     if (!user) {
       errors.email = 'User not found';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
