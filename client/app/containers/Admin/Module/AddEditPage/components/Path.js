@@ -77,7 +77,7 @@ const Path = props => {
           ))}
           <div className="border-t pt-1">
             <button
-              className="py-1 px-2 text-sm rounded font-bold hover:text-black text-indigo-500  ml-4"
+              className="py-1 px-2 text-sm rounded font-bold hover:text-black text-blue-500  ml-4"
               onClick={handleAddAdminRoute(pathIndex)}
             >
               Add Client Route
@@ -148,7 +148,7 @@ const Path = props => {
 
           <div className="border-t pt-1">
             <button
-              className="py-1 text-sm rounded font-bold hover:text-black text-indigo-500  ml-4"
+              className="py-1 text-sm rounded font-bold hover:text-black text-blue-500  ml-4"
               onClick={handleAddServerRoute(pathIndex)}
             >
               Add Server Route

@@ -26,6 +26,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import '../style.css';
+import { FaPencilAlt, FaArrowLeft, FaSearch, FaPlus } from 'react-icons/fa';
 
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
@@ -101,14 +102,16 @@ class AccessManagePage extends React.PureComponent {
             </span>
             {`Edit Access for ${Module.module_name}`}
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Edit Access"
-            className={classes.fab}
-            onClick={this.handleEditAccess}
-          >
-            <EditIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleEditAccess}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <PageContent>
           {Roles.map(role => {
@@ -122,28 +125,27 @@ class AccessManagePage extends React.PureComponent {
             return (
               <div className="mb-4 border rounded mt-6 p-2" key={role._id}>
                 <h3
-                  className="font-bold bg-white px-2 relative ml-2 inline-block"
+                  className="font-bold bg-white px-2 relative text-lg ml-2 inline-block"
                   style={{ top: -21 }}
                 >
                   {role.role_title}
                 </h3>
-                <ToggleButtonGroup
-                  className={classes.accesslist}
+                <div
                   value={accesses}
                   onChange={(_, module_id) =>
                     this.handleAccessUpdate(module_id, role._id, Module._id)
                   }
                 >
                   {Module.path.map(eachPath => (
-                    <ToggleButton
-                      className={classes.accessbtn}
+                    <div
+                      className="bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500"
                       key={`${eachPath._id}-${role._id}`}
                       value={eachPath._id}
                     >
                       {eachPath.access_type}
-                    </ToggleButton>
+                    </div>
                   ))}
-                </ToggleButtonGroup>
+                </div>
               </div>
             );
           })}
@@ -152,7 +154,7 @@ class AccessManagePage extends React.PureComponent {
             className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
-            Save
+            Save Changes
           </button>
         </PageContent>
       </React.Fragment>

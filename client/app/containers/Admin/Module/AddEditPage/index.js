@@ -31,7 +31,7 @@ import PathComponent from './components/Path';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaExchangeAlt } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -248,14 +248,16 @@ class AddEdit extends React.PureComponent {
             </span>
             {id ? `Edit for ${one.module_name}` : 'Add Module'}
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Change Access"
-            className={classes.fab}
-            onClick={this.handleChangeAccess}
-          >
-            <SwapIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleChangeAccess}
+            >
+              <FaExchangeAlt />
+              <span className="pl-2">Change Accesss</span>
+            </button>
+          </div>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-2">

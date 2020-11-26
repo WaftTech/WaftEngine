@@ -238,7 +238,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               className=" px-1 text-center leading-none"
               onClick={() => this.handleView(_id)}
             >
-              <FaRegEye className="text-base text-indigo-500 hover:text-indigo-700" />
+              <FaRegEye className="text-base text-blue-500 hover:text-blue-600" />
             </button>
           </div>
         </>,

@@ -66,54 +66,48 @@ class FAQPage extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <div>
-          <Helmet>
-            <title> FAQs </title>
-          </Helmet>
-          <div className="bg-star h-48 relative text-center py-12">
-            <h1 className="text-4xl mb-4">Frequently Asked Questions</h1>
-            <p className="text-gray-700">
-              feel free to visit answers you looking for.
-          </p>
-          </div>
-          <div className="my-10 max-w-xl mx-auto">
-            {faq.cat &&
-              faq.cat.map(
-                x =>
-                  faq.faq &&
-                  faq.faq.filter(z => z.category == x._id).length !== 0 && (
-                    <div key={`cat-${x._id}`} className="mb-6">
-                      <h2 className="text-xl font-bold">{x.title}</h2>
-                      <AccordionDetails style={{ display: 'block', paddingLeft: 0 }}>
-                        {faq.faq &&
-                          faq.faq
-                            .filter(z => z.category == x._id)
-                            .map(y => (
-                              <Accordion
-                                className={classes.FAQPanel}
-                                key={`faq-${y._id}`}
-                                expanded={qExpanded === y._id}
-                                onChange={this.handleQChange(y._id)}
+      <div>
+        <Helmet>
+          <title> FAQs </title>
+        </Helmet>
+        <div className="my-10 container mx-auto">
+          {faq.cat &&
+            faq.cat.map(
+              x =>
+                faq.faq &&
+                faq.faq.filter(z => z.category == x._id).length !== 0 && (
+                  <div key={`cat-${x._id}`} className="mb-10">
+                    <h2 className="text-xl font-bold">{x.title}</h2>
+                    <div style={{ display: 'block', paddingLeft: 0 }}>
+                      {faq.faq &&
+                        faq.faq
+                          .filter(z => z.category == x._id)
+                          .map(y => (
+                            <div
+                              className="border rounded mb-4"
+                              key={`faq-${y._id}`}
+                              onChange={this.handleQChange(y._id)}
+                            >
+                              <div
+                                aria-controls="panel2a-content"
+                                id="panel2a-header"
                               >
-                                <AccordionSummary
-                                  expandIcon={<ExpandMoreIcon />}
-                                  aria-controls="panel2a-content"
-                                  id="panel2a-header"
-                                >
-                                  <p className="text-base">{y.question}</p>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                  <p className="text-base">{y.title}</p>
-                                </AccordionDetails>
-                              </Accordion>
-                            ))}
-                      </AccordionDetails>
+                                <h3 className="text-bold text-base px-4 py-3 border-b">
+                                  {y.question}
+                                </h3>
+                              </div>
+                              <p className="text-base p-3 leading-loose">
+                                {y.title}
+                              </p>
+                            </div>
+                          ))}
                     </div>
-                  ),
-              )}
-          </div>
+                  </div>
+                ),
+            )}
         </div>
-      );
+      </div>
+    );
   }
 }
 

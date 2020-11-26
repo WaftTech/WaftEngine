@@ -54,7 +54,7 @@ import Modal from '../../../components/Modal';
 import Loading from '../../../components/Loading';
 import LinkBoth from '../../../components/LinkBoth';
 import QuickEdit from './AddEditPage/QuickEdit';
-import { FaBan, FaRegCheckCircle } from 'react-icons/fa';
+import { FaBan, FaRegCheckCircle, FaPlus } from 'react-icons/fa';
 
 const styles = theme => ({
   button: {
@@ -441,7 +441,13 @@ export class BlogManagePage extends React.Component {
         // `${is_highlight}`,
         // `${is_showcase}`,
         // `${is_active}`,
-        <>{is_published ? <FaRegCheckCircle /> : <FaBan />} </>,
+        <>
+          {is_published ? (
+            <FaRegCheckCircle className="text-green-500" />
+          ) : (
+            <FaBan className="text-red-400" />
+          )}{' '}
+        </>,
         // tags.join(','),
         (
           <p className="">
@@ -524,16 +530,16 @@ export class BlogManagePage extends React.Component {
               Showcase({msg && msg.showcase ? msg.showcase : null})
             </span>
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <div className="bg-white rounded p-2 mb-4">
           <div className="flex -mx-1 items-center">

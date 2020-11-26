@@ -32,7 +32,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
-import { FaTrashAlt, FaKey, FaPencilAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaKey, FaPencilAlt, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRole extends React.PureComponent {
@@ -155,14 +155,16 @@ export class AdminRole extends React.PureComponent {
         <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Role Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            onClick={this.handleAdd}
-          >
-            <AddIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add Role</span>
+            </button>
+          </div>
         </div>
         <PageContent loading={loading}>
           <div className="flex">

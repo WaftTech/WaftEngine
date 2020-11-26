@@ -26,6 +26,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
 import Loading from '../../../components/Loading';
+import { FaTrashAlt, FaKey, FaPencilAlt, FaPlus } from 'react-icons/fa';
 
 const styles = theme => ({
   button: {
@@ -107,15 +108,15 @@ export class Media extends React.Component {
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <Fab
-                  color="primary"
-                  aria-label="Add"
-                  className={classes.fab}
-                  round="true"
-                  elevation={0}
-                >
-                  <AddIcon />
-                </Fab>
+                <div className="flex items-center">
+                  <button
+                    className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+                    onClick={this.handleAdd}
+                  >
+                    <FaPlus />
+                    <span className="pl-2">Add Image/File</span>
+                  </button>
+                </div>
               </div>
             )}
           </Dropzone>

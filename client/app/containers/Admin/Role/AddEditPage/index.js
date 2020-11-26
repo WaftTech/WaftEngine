@@ -122,7 +122,7 @@ class AddEdit extends React.PureComponent {
           <div className="checkbox">
             <input
               checked={one.is_active}
-              onClick={this.handleCheckedChange('is_active')}
+              onChange={this.handleChecked('is_active')}
               id="is_active"
               type="checkbox"
             />

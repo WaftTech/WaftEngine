@@ -36,7 +36,7 @@ import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import '../../../../components/Table/table.css';
 import './style.css';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 const RoleAccess = props => {
   const {
@@ -119,15 +119,6 @@ const RoleAccess = props => {
 
   return loading ? (
     <>
-      <div className="flex justify-between my-3">
-        <PageHeader>
-          <span className="backbtn" onClick={this.handleGoBack}>
-            <FaArrowLeft className="text-xl" />
-          </span>
-          Role Access
-        </PageHeader>
-      </div>
-      <h2>Loading</h2>
       <Loading />
     </>
   ) : (
@@ -217,10 +208,10 @@ const RoleAccess = props => {
           </Accordion>
         ))}
         <button
-          className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600 mt-4"
+          className="btn bg-blue-500 hover:bg-blue-600 mt-4"
           onClick={handleSave}
         >
-          Save
+          Save Role Access
         </button>
       </PageContent>
     </React.Fragment>

@@ -36,7 +36,12 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt, FaPlus, FaRegQuestionCircle } from 'react-icons/fa';
+import {
+  FaPencilAlt,
+  FaPlus,
+  FaRegQuestionCircle,
+  FaSearch,
+} from 'react-icons/fa';
 
 const styles = theme => ({
   button: {
@@ -255,25 +260,22 @@ export class SliderPage extends React.Component {
         )}
 
         <PageContent loading={loading}>
-          <div className="flex justify-between">
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_slider_name"
-                id="slider-name"
-                placeholder="Search Slider"
-                className="m-auto inputbox"
-                value={query.find_slider_name}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="flex relative mr-4 max-w-sm">
+            <input
+              type="text"
+              name="find_slider_name"
+              id="slider-name"
+              placeholder="Search Slider"
+              className="m-auto inputbox pr-6"
+              value={query.find_slider_name}
+              onChange={this.handleQueryChange}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
 
           <Table

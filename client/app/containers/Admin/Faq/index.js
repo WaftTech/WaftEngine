@@ -9,15 +9,7 @@ import moment from 'moment';
 import { Helmet } from 'react-helmet';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table';
-
 import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -31,7 +23,7 @@ import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
 
 const styles = theme => ({
   fab: {
@@ -171,37 +163,33 @@ export class FAQManagePage extends React.PureComponent {
         <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>FAQ Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative">
-              <input
-                type="text"
-                name="find_question"
-                id="faq-question"
-                placeholder="Search FAQs by question"
-                className="m-auto inputbox"
-                value={query.find_question}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="flex relative mr-4 max-w-sm">
+            <input
+              type="text"
+              name="find_question"
+              id="faq-question"
+              placeholder="Search Questions"
+              className="m-auto inputbox pr-6"
+              value={query.find_question}
+              onChange={this.handleQueryChange}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
           <Table
             tableHead={[

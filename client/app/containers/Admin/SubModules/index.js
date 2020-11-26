@@ -31,7 +31,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Table from '../../../components/Table';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 const key = 'subModules';
 
 export const SubModules = props => {
@@ -141,16 +141,15 @@ export const SubModules = props => {
       <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Sub Modules Manage</PageHeader>
-        <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.fab}
-          round="true"
-          onClick={handleAdd}
-          elevation={0}
-        >
-          <AddIcon />
-        </Fab>
+        <div className="flex items-center">
+          <button
+            className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+            onClick={handleAdd}
+          >
+            <FaPlus />
+            <span className="pl-2">Add Sub-Module</span>
+          </button>
+        </div>
       </div>
       <PageContent loading={loading}>
         <div className="flex justify-end">
