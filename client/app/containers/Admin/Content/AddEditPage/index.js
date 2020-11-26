@@ -68,9 +68,10 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.edit_id && this.props.edit_id !== '') {
-      this.props.loadOneRequest(this.props.edit_id);
+    if (this.props.match.params && this.props.match.params.id !== '') {
+      this.props.loadOneRequest(this.props.match.params.id);
     }
+    console.log(this.props.match.id);
   }
 
   handleEditorChange = (e, name) => {
