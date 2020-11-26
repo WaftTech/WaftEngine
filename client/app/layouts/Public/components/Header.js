@@ -103,7 +103,7 @@ const Header = props => {
           </div>
         ) : (
           <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
-            <button className={classes.dropDown} onClick={handleMenu}>
+            <button onClick={handleMenu}>
               <div className="text-base flex">
                 <span className="ml-2 mr-2">{user.name} | </span>
                 <AccountCircle />

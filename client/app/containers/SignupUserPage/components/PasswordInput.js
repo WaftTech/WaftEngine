@@ -37,7 +37,6 @@ const PasswordInput = props => {
           className="inputbox"
         />
         <span
-          className={classes.EyeIcon}
           aria-label="Toggle password visibility"
           onClick={handleTogglePassword}
         >

@@ -92,7 +92,7 @@ export class Dashboard extends React.PureComponent {
           </div>
           <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <FaExclamationCircle className={classes.dashicon} />
+              <FaExclamationCircle />
               Total Errors
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
