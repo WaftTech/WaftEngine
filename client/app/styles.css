@@ -83,7 +83,7 @@ div.react-datepicker__input-container {
   display: block;
   width: 100%;
   padding: 8px 12px;
-  transition: all 0.1s ease-in;
+  transition: all 0.2s ease-out;
   background: #ffffff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -167,7 +167,7 @@ div#component-error-text {
 }
 
 .btn {
-  @apply py-2 px-4 rounded text-white text-sm mt-4;
+  @apply py-2 px-4 rounded text-white text-sm mt-4 transition-all duration-200;
 }
 .qr-code {
   transform: scale(4);
@@ -206,17 +206,20 @@ div#component-error-text {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  transition: 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   margin-right: 20px;
   justify-content: center;
+  box-shadow: inset 0 0 0 20px #fff;
+  @apply bg-blue-500;
 }
 .backbtn:hover {
-  background-color: #fff;
+  box-shadow: inset 0 0 0 0px #fff;
+  @apply text-white;
 }
 
 .checkbox {
-  @apply relative select-none inline-flex items-center mr-5 justify-start;
+  @apply relative select-none inline-flex items-center mr-5 justify-start mt-4;
 }
 
 .checkbox input[type='checkbox'] {
@@ -271,5 +274,16 @@ div#component-error-text {
     opacity: 0;
   }
 }
+.label-inactive,
+.label-active {
+  @apply inline-block rounded-full py-px px-2 border bg-gray-100 text-xs text-gray-400;
+}
+.label-active {
+  @apply bg-green-100 text-green-500 border-green-200;
+}
 
 @tailwind utilities;
+
+.font-bold {
+  font-weight: 500;
+}

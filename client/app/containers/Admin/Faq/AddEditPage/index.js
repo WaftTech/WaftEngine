@@ -91,7 +91,7 @@ class AddEdit extends React.PureComponent {
             {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
           </title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
             <span className="backbtn" onClick={this.handleGoBack}>
               <FaArrowLeft className="text-xl" />

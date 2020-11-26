@@ -29,9 +29,10 @@ function RecentBlogs(props) {
           </div>
           <div className="flex-1 px-4">
             <Link
-              className="no-underline hover:text-secondary text-xl block leading-tight text-gray-800 font-bold md:font-normal"
-              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
-                }`}
+              className="no-underline hover:text-blue-500 text-xl block leading-tight text-gray-800 font-bold md:font-normal"
+              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
+                blog._id
+              }`}
             >
               {blog.title}
             </Link>

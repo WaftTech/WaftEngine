@@ -165,7 +165,7 @@ export class Contact extends React.Component {
         <Helmet>
           <title>Contact List</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Contact List</PageHeader>
         </div>

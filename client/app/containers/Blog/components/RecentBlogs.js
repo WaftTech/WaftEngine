@@ -24,17 +24,16 @@ function RecentBlogs(props) {
   return (
     <div className="">
       <div className="bg-primary h-14 flex items-center pl-8 mb-4">
-        <h2 className="font-bold text-3xl text-white my-0">
-          Recent Posts
-        </h2>
+        <h2 className="font-bold text-3xl text-white my-0">Recent Posts</h2>
       </div>
       {props.blogs.map(blog => (
         <div key={`recents-${blog._id}`} className="flex py-4">
           <div className="flex-1 mr-7">
             <Link
-              className="no-underline hover:text-secondary text-xl block text-gray-700"
-              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
-                }`}
+              className="no-underline hover:text-blue-500 text-xl block text-gray-700"
+              to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
+                blog._id
+              }`}
             >
               {blog.title}
             </Link>
@@ -45,8 +44,9 @@ function RecentBlogs(props) {
           </div>
           <Link
             className="block overflow-hidden w-24 h-24 article-img-container"
-            to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
-              }`}
+            to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
+              blog._id
+            }`}
           >
             <img
               src={`${IMAGE_BASE}${blog && blog.image && blog.image.path}`}

@@ -223,7 +223,7 @@ const AddEdit = props => {
         </title>
       </Helmet>
       <div>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
             <span className="backbtn" onClick={handleGoBack}>
               <FaArrowLeft className="text-xl" />
@@ -467,7 +467,7 @@ const AddEdit = props => {
                   <div className="checkbox">
                     <input
                       checked={one.is_active || false}
-                      onClick={this.handleCheckedChange('is_active', null)}
+                      onClick={handleCheckedChange('is_active', null)}
                       id="is_active"
                       type="checkbox"
                     />

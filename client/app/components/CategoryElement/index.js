@@ -156,7 +156,7 @@ const CategoryElement = props => {
                       to={`/news/${moment(each.added_at).format(
                         'YYYY/MM/DD',
                       )}/${each._id}`}
-                      className="text-xl leading-normal hover:text-secondary pointer no-underline article-title font-mukta font-bold md:font-normal"
+                      className="text-xl leading-normal hover:text-blue-500 pointer no-underline article-title font-mukta font-bold md:font-normal"
                     >
                       {each.title}
                     </Link>
@@ -215,7 +215,7 @@ const CategoryElement = props => {
                       to={`/news/${moment(each.added_at).format(
                         'YYYY/MM/DD',
                       )}/${each._id}`}
-                      className="text-xl leading-normal hover:text-secondary pointer no-underline article-title font-mukta font-bold md:font-normal"
+                      className="text-xl leading-normal hover:text-blue-500 pointer no-underline article-title font-mukta font-bold md:font-normal"
                     >
                       {each.title}
                     </Link>

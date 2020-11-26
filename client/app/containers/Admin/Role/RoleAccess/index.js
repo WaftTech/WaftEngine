@@ -119,7 +119,7 @@ const RoleAccess = props => {
 
   return loading ? (
     <>
-      <div className="flex justify-between mt-3 mb-3">
+      <div className="flex justify-between my-3">
         <PageHeader>
           <span className="backbtn" onClick={this.handleGoBack}>
             <FaArrowLeft className="text-xl" />
@@ -135,7 +135,7 @@ const RoleAccess = props => {
       <Helmet>
         <title>Role Access</title>
       </Helmet>
-      <div className="flex justify-between mt-3 mb-3">
+      <div className="flex justify-between my-3">
         <PageHeader>
           <span className="backbtn" onClick={handleBack}>
             <FaArrowLeft className="text-xl" />

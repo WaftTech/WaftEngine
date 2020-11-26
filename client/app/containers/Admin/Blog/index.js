@@ -400,7 +400,7 @@ export class BlogManagePage extends React.Component {
           <Link
             to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
             target="_blank"
-            className="block font-bold text-base text-secondary cursor-pointer hover:underline"
+            className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
           >
             {title}
           </Link>{' '}
@@ -408,7 +408,7 @@ export class BlogManagePage extends React.Component {
             <button
               aria-label="Edit"
               type="button"
-              className="border-r px-1 text-center leading-none hover:text-secondary whitespace-no-wrap text-sm"
+              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
               onClick={() => this.handleEdit(_id)}
             >
               Edit
@@ -416,7 +416,7 @@ export class BlogManagePage extends React.Component {
             <button
               aria-label="Edit"
               type="button"
-              className="border-r px-1 text-center leading-none hover:text-secondary whitespace-no-wrap text-sm"
+              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
               onClick={() => this.handleLoadOne(_id)}
             >
               Quick Edit
@@ -507,7 +507,7 @@ export class BlogManagePage extends React.Component {
             errors={errors}
           />
         </Modal>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>
             News

@@ -94,7 +94,7 @@ class AccessManagePage extends React.PureComponent {
           <title>Access Listing</title>
         </Helmet>
 
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
             <span className="backbtn" onClick={this.handleBack}>
               <FaArrowLeft className="text-xl" />

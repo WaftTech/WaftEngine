@@ -148,7 +148,7 @@ const BlogDetail = props => {
                           )}
                           {each && each && each._id && (
                             <LinkBoth
-                              className="text-secondary"
+                              className="text-blue-500"
                               to={`/news/author/${each._id}`}
                             >
                               Read more from author

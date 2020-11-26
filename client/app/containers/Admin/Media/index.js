@@ -70,7 +70,7 @@ export class Media extends React.Component {
   }
 
   handleAdd = files => {
-    this.props.addMediaRequest(files)
+    this.props.addMediaRequest(files);
   };
 
   copyToClipboard = textField => {
@@ -100,7 +100,7 @@ export class Media extends React.Component {
         <Helmet>
           <title>Media Manage</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Media Manage</PageHeader>
           <Dropzone onDrop={this.handleAdd}>
