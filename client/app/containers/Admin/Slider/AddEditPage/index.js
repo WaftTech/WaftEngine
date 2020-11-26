@@ -48,7 +48,6 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
           <div className="w-1/4 text-center -ml-8">
             {value.image ? (
               <img
-                className={_this.props.classes.media}
                 src={
                   typeof value.image === 'string'
                     ? `${IMAGE_BASE}${_this.state.files[value.image].path}`
@@ -245,7 +244,6 @@ class AddEdit extends React.PureComponent {
           </PageHeader>
         </div>
         <Dialog
-          className={classes.modal}
           aria-labelledby="max-width-dialog-title"
           open={this.state.open}
           onClose={this.handleClose}

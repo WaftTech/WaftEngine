@@ -35,7 +35,7 @@ import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
 import WECkEditior from '../../../../components/CkEditor';
 import Select from '../../../../components/Select';
-import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck, FaTimes } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -367,36 +367,6 @@ class AddEdit extends React.PureComponent {
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm">Category</label>
 
-            {/* <FormControl className={classes.formControl}>
-              <Select
-                // className="inputbox"
-                multiple
-                displayEmpty
-                name="template_key"
-                value={one.category || []}
-                input={<input />}
-                onChange={this.handleMultipleSelectChange}
-                renderValue={selected => {
-                  if (selected.length === 0) {
-                    return <em>Select Categories</em>;
-                  } else {
-                    return selected.join(', ');
-                  }
-                }}
-                MenuProps={menuProps}
-              >
-                <MenuItem value="" name="none" disabled>
-                  None
-                </MenuItem>
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id} name={each.title}>
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl> */}
-
-            {/* <FormControl className={classes.formControl}> */}
             <Select
               className="React_Select"
               id="category"
@@ -507,11 +477,14 @@ class AddEdit extends React.PureComponent {
               />
             </form>
             {one.tags.map((tag, index) => {
-              const icon = null;
               return (
-                <label key={`${tag}-${index}`}>
+                <label
+                  onClick={this.handleDelete(index)}
+                  className="tag"
+                  key={`${tag}-${index}`}
+                >
                   {tag}
-                  <span onClick={this.handleDelete(index)}>
+                  <span>
                     <FaTimes />
                   </span>
                 </label>
@@ -537,13 +510,16 @@ class AddEdit extends React.PureComponent {
               const icon = null;
 
               return (
-                <Chip
-                  key={`meta-${tag}-${index}`}
-                  icon={icon}
-                  label={tag}
+                <label
                   onDelete={this.handleMetaTagDelete(index)}
-                  className={classes.chip}
-                />
+                  className="tag"
+                  key={`meta-${tag}-${index}`}
+                >
+                  {tag}
+                  <span>
+                    <FaTimes />
+                  </span>
+                </label>
               );
             })}
           </div>
@@ -566,13 +542,16 @@ class AddEdit extends React.PureComponent {
               const icon = null;
 
               return (
-                <Chip
-                  key={`metakeywords-${tag}-${index}`}
-                  icon={icon}
-                  label={tag}
+                <label
                   onDelete={this.handleMetaKeywordDelete(index)}
-                  className={classes.chip}
-                />
+                  className="tag"
+                  key={`metakeywords-${tag}-${index}`}
+                >
+                  {tag}
+                  <span>
+                    <FaTimes />
+                  </span>
+                </label>
               );
             })}
           </div>
