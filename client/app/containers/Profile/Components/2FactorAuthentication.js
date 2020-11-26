@@ -6,11 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
-
-// @material-ui/core
-
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import injectSaga, { useInjectSaga } from 'utils/injectSaga';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
@@ -26,11 +21,6 @@ import {
   makeSelectLoadingObj,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-import {
-  Input,
-  DatePicker,
-  Checkbox,
-} from '../../../components/customComponents';
 import Modal from '../../../components/Modal';
 
 import { DATE_FORMAT } from '../../App/constants';
@@ -111,7 +101,7 @@ export const TwoFactor = props => {
         buttonLabel2={setGoogleCode ? 'Sending...' : 'Send'}
       >
         <div>
-          <Input
+          <input
             id="two_factor_authentication"
             name="two_factor_authentication"
             label="Google Two factor authentication code"
@@ -140,7 +130,7 @@ export const TwoFactor = props => {
           </svg>
         </div>
         <div>
-          <Input
+          <input
             id="code"
             name="code"
             label="Enter Your code"

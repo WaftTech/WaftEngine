@@ -34,26 +34,6 @@ import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
-const styles = theme => ({
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
-
 /* eslint-disable react/prefer-stateless-function */
 export class Error extends React.Component {
   static propTypes = {

@@ -31,7 +31,6 @@ import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
-import Input from '../../../../components/customComponents/Input';
 import { IMAGE_BASE } from '../../../App/constants';
 import EditorFileSelect from '../../../EditorFileSelect';
 import Dialog from '@material-ui/core/Dialog';
@@ -173,11 +172,11 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
-              <Input
+              <input
                 label="Page Title"
-                inputclassName="inputbox"
-                inputid="grid-last-name"
-                inputType="text"
+                className="inputbox"
+                id="grid-last-name"
+                type="text"
                 value={one.name}
                 onChange={this.handleChange('name')}
                 error={errors.name}
@@ -185,11 +184,11 @@ class AddEdit extends React.PureComponent {
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
-              <Input
+              <input
                 label="Page Key"
-                inputclassName="inputbox"
-                inputid="grid-last-name"
-                inputType="text"
+                className="inputbox"
+                id="grid-last-name"
+                type="text"
                 value={one.key}
                 onChange={this.handleChange('key')}
                 error={errors.key}
@@ -204,22 +203,22 @@ class AddEdit extends React.PureComponent {
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
-              <Input
+              <input
                 label="Meta Title"
-                inputclassName="inputbox"
-                inputid="grid-last-meta_title"
-                inputType="text"
+                className="inputbox"
+                id="grid-last-meta_title"
+                type="text"
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
                 error={errors.meta_title}
               />
             </div>
             <div className="w-full md:w-1/2 pb-4">
-              <Input
+              <input
                 label="Meta Description"
-                inputclassName="inputbox"
-                inputid="grid-last-meta_description"
-                inputType="text"
+                className="inputbox"
+                id="grid-last-meta_description"
+                type="text"
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
                 error={errors.meta_description}

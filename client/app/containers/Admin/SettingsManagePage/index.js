@@ -21,8 +21,6 @@ import {
 import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../../components/Loading';
-import Input from '../../../components/customComponents/Input';
-import Select from '../../../components/customComponents/Select';
 import { FaCheck } from 'react-icons/fa';
 
 const key = 'settingsManagePage';
@@ -173,11 +171,11 @@ export const SettingsManagePage = props => {
               </select>
             </div>
             <div className="pt-4">
-              <Input
+              <input
                 label="Email to send test mail"
-                inputclassName="inputbox"
-                inputid="email-to-send-test-mail"
-                inputType="email"
+                className="inputbox"
+                id="email-to-send-test-mail"
+                type="email"
                 value={
                   (Object.keys(setting_normalized).length &&
                     setting_normalized.email_to_send_test_mail &&
@@ -201,11 +199,11 @@ export const SettingsManagePage = props => {
             setting_normalized.email_channel.value === 'smtp' && (
               <div className="flex-wrap px-4">
                 <div className="w-1/2 pb-4  ">
-                  <Input
+                  <input
                     label="Protocol"
-                    inputclassName="inputbox"
-                    inputid="protocol"
-                    inputType="text"
+                    className="inputbox"
+                    id="protocol"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.protocol &&
@@ -217,11 +215,11 @@ export const SettingsManagePage = props => {
                   />
                 </div>
                 <div className="w-1/2 pb-4 ">
-                  <Input
+                  <input
                     label="Email"
-                    inputclassName="inputbox"
-                    inputid="email"
-                    inputType="text"
+                    className="inputbox"
+                    id="email"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.email &&
@@ -233,11 +231,11 @@ export const SettingsManagePage = props => {
                   />
                 </div>
                 <div className="w-1/2 pb-4 ">
-                  <Input
+                  <input
                     label="Password"
-                    inputclassName="inputbox"
-                    inputid="password"
-                    inputType="text"
+                    className="inputbox"
+                    id="password"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.password &&
@@ -249,11 +247,11 @@ export const SettingsManagePage = props => {
                   />
                 </div>
                 <div className="w-1/2 pb-4  ">
-                  <Input
+                  <input
                     label="Server"
-                    inputclassName="inputbox"
-                    inputid="server"
-                    inputType="text"
+                    className="inputbox"
+                    id="server"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.server &&
@@ -266,11 +264,11 @@ export const SettingsManagePage = props => {
                 </div>
 
                 <div className="w-1/2 pb-4  ">
-                  <Input
+                  <input
                     label="Port"
-                    inputclassName="inputbox"
-                    inputid="port"
-                    inputType="text"
+                    className="inputbox"
+                    id="port"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.port &&
@@ -282,11 +280,11 @@ export const SettingsManagePage = props => {
                   />
                 </div>
                 <div className="w-1/2 pb-4 ">
-                  <Input
+                  <input
                     label="Security"
-                    inputclassName="inputbox"
-                    inputid="security"
-                    inputType="text"
+                    className="inputbox"
+                    id="security"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.security &&
@@ -326,11 +324,11 @@ export const SettingsManagePage = props => {
             setting_normalized.email_channel.value === 'mailgun' && (
               <div className="flex justify-between px-4 flex">
                 <div className="w-1/3 pb-4 -ml-4">
-                  <Input
+                  <input
                     label="Api Key"
-                    inputclassName="inputbox"
-                    inputid="api-key"
-                    inputType="text"
+                    className="inputbox"
+                    id="api-key"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.api_key &&
@@ -342,11 +340,11 @@ export const SettingsManagePage = props => {
                   />
                 </div>
                 <div className="w-1/3 pb-4 ">
-                  <Input
+                  <input
                     label="Domain"
-                    inputclassName="inputbox"
-                    inputid="domain"
-                    inputType="text"
+                    className="inputbox"
+                    id="domain"
+                    type="text"
                     value={
                       (Object.keys(setting_normalized).length &&
                         setting_normalized.domain &&
@@ -411,11 +409,11 @@ export const SettingsManagePage = props => {
           </div>
           <div className="flex justify-between px-4">
             <div className="w-1/2 -ml-4">
-              <Input
+              <input
                 label="SecretKey"
-                inputclassName="inputbox"
-                inputid="secret-key"
-                inputType="text"
+                className="inputbox"
+                id="secret-key"
+                type="text"
                 value={
                   (Object.keys(setting_normalized).length &&
                     setting_normalized.secret_key &&
@@ -427,11 +425,11 @@ export const SettingsManagePage = props => {
               />
             </div>
             <div className="w-1/2 -mr-4">
-              <Input
+              <input
                 label="Token Expire Time"
-                inputclassName="inputbox"
-                inputid="token-expire-time"
-                inputType="text"
+                className="inputbox"
+                id="token-expire-time"
+                type="text"
                 value={
                   (Object.keys(setting_normalized).length &&
                     setting_normalized.token_expire_time &&
@@ -500,11 +498,11 @@ export const SettingsManagePage = props => {
           <div className="flex justify-between px-4">
             <div className="w-1/2 pb-4 -ml-4">
               <div>
-                <Input
+                <input
                   label="Client Id"
-                  inputclassName="inputbox"
-                  inputid="client-id"
-                  inputType="text"
+                  className="inputbox"
+                  id="client-id"
+                  type="text"
                   value={
                     (Object.keys(setting_normalized).length &&
                       setting_normalized.client_id &&
@@ -522,11 +520,11 @@ export const SettingsManagePage = props => {
                 />
               </div>
               <div>
-                <Input
+                <input
                   label="Client Secret"
-                  inputclassName="inputbox"
-                  inputid="client-secret"
-                  inputType="text"
+                  className="inputbox"
+                  id="client-secret"
+                  type="text"
                   value={
                     (Object.keys(setting_normalized).length &&
                       setting_normalized.client_secret &&
@@ -546,11 +544,11 @@ export const SettingsManagePage = props => {
             </div>
             <div className="w-1/2 pb-4 -mr-4">
               <div>
-                <Input
+                <input
                   label="App Id"
-                  inputclassName="inputbox"
-                  inputid="app-id"
-                  inputType="text"
+                  className="inputbox"
+                  id="app-id"
+                  type="text"
                   value={
                     (Object.keys(setting_normalized).length &&
                       setting_normalized.app_id &&
@@ -568,11 +566,11 @@ export const SettingsManagePage = props => {
                 />
               </div>
               <div>
-                <Input
+                <input
                   label="App Secret"
-                  inputclassName="inputbox"
-                  inputid="app-secret"
-                  inputType="text"
+                  className="inputbox"
+                  id="app-secret"
+                  type="text"
                   value={
                     (Object.keys(setting_normalized).length &&
                       setting_normalized.app_secret &&
@@ -599,11 +597,11 @@ export const SettingsManagePage = props => {
         <div className="max-w-xl">
           <div className="flex justify-between px-4">
             <div className="w-1/2 pb-4 -ml-4">
-              <Input
+              <input
                 label="Secret Key"
-                inputclassName="inputbox"
-                inputid="secret-key"
-                inputType="text"
+                className="inputbox"
+                id="secret-key"
+                type="text"
                 value={
                   (Object.keys(setting_normalized).length &&
                     setting_normalized.captcha_secret_key &&
@@ -616,11 +614,11 @@ export const SettingsManagePage = props => {
             </div>
 
             <div className="w-1/2 pb-4 -mr-4">
-              <Input
+              <input
                 label="Site Key"
-                inputclassName="inputbox"
-                inputid="site-key"
-                inputType="text"
+                className="inputbox"
+                id="site-key"
+                type="text"
                 value={
                   (Object.keys(setting_normalized).length &&
                     setting_normalized.captcha_site_key &&

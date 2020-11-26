@@ -19,7 +19,6 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import '../../../../components/Table/table.css';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
@@ -86,11 +85,11 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Role Title"
-              inputclassName="inputbox"
-              inputid="role_title"
-              inputType="text"
+              className="inputbox"
+              id="role_title"
+              type="text"
               value={one.role_title}
               onChange={this.handleChange('role_title')}
               error={errors.role_title}

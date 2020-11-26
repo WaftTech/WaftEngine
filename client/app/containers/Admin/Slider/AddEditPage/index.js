@@ -35,7 +35,6 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import EditorFileSelect from '../../../EditorFileSelect';
-import Input from '../../../../components/customComponents/Input';
 import { FaTrashAlt, FaArrowLeft } from 'react-icons/fa';
 
 const SortableImageItem = SortableElement(() => <div>***</div>);
@@ -271,11 +270,11 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Slider Name"
-              inputclassName="inputbox"
-              inputid="slider-name"
-              inputType="text"
+              className="inputbox"
+              id="slider-name"
+              type="text"
               value={one.slider_name}
               name="slider_name"
               onChange={this.handleChange('slider_name')}
@@ -284,11 +283,11 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Slider Key"
-              inputclassName="inputbox"
-              inputid="slider-key"
-              inputType="text"
+              className="inputbox"
+              id="slider-key"
+              type="text"
               value={one.slider_key}
               name="slider_key"
               onChange={this.handleChange('slider_key')}

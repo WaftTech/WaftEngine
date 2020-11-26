@@ -37,7 +37,6 @@ import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
 import WECkEditior from '../../../../components/CkEditor';
-import Inputs from '../../../../components/customComponents/Input';
 import Select from '../../../../components/Select';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
@@ -352,11 +351,11 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Inputs
+            <input
               label="Title"
-              inputclassName="inputbox"
-              inputid="blog-title"
-              inputType="text"
+              className="inputbox"
+              id="blog-title"
+              type="text"
               value={(one && one.title) || ''}
               name="Blog Title"
               onChange={this.handleChange('title')}
@@ -364,11 +363,11 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <Inputs
+            <input
               label="Slug"
-              inputclassName="inputbox"
-              inputid="blog-slug-url"
-              inputType="text"
+              className="inputbox"
+              id="blog-slug-url"
+              type="text"
               value={(one && one.slug_url) || ''}
               name="Blog Slug"
               onChange={this.handleChange('slug_url')}
@@ -386,7 +385,7 @@ class AddEdit extends React.PureComponent {
                 displayEmpty
                 name="template_key"
                 value={one.category || []}
-                input={<Input />}
+                input={<input />}
                 onChange={this.handleMultipleSelectChange}
                 renderValue={selected => {
                   if (selected.length === 0) {
@@ -612,24 +611,6 @@ class AddEdit extends React.PureComponent {
             <label className="text-sm" htmlFor="grid-last-name">
               Author
             </label>
-            {/* 
-            <select
-              className="inputbox"
-              native="true"
-              value={(one && one.author) || ''}
-              onChange={this.handleDropDownChange('author')}
-            >
-              <option value="" disabled>
-                None
-              </option>
-              {users &&
-                users.map(each => (
-                  <option key={each._id} name={each.name} value={each._id}>
-                    {each.name}
-                  </option>
-                ))}
-            </select> */}
-
             <Select
               className="React_Select"
               id="category"

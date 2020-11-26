@@ -24,7 +24,6 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import { FaArrowLeft } from 'react-icons/fa';
 
 const key = 'subModules';
@@ -92,11 +91,11 @@ const AddEdit = props => {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Module Group"
-              inputclassName="inputbox"
-              inputid="grid-group"
-              inputType="text"
+              className="inputbox"
+              id="grid-group"
+              type="text"
               value={one.module_group}
               onChange={handleChange('module_group')}
               error={errors.module_group}
@@ -104,11 +103,11 @@ const AddEdit = props => {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Order"
-              inputclassName="inputbox"
-              inputid="grid-value"
-              inputType="text"
+              className="inputbox"
+              id="grid-value"
+              type="text"
               value={one.order}
               onChange={handleChange('order')}
               error={errors.order}
@@ -133,11 +132,11 @@ const AddEdit = props => {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Module Group Main"
-              inputclassName="inputbox"
-              inputid="grid-group"
-              inputType="text"
+              className="inputbox"
+              id="grid-group"
+              type="text"
               value={one.module_group_main}
               onChange={handleChange('module_group_main')}
               error={errors.module_group_main}

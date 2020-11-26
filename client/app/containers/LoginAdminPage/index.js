@@ -24,7 +24,6 @@ import {
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 
-import { Input } from '../../components/customComponents';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import logo from '../../assets/img/logo.svg';
@@ -96,7 +95,7 @@ const LoginAdminPage = props => {
       >
         {showEmailTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <input
               id="code"
               name="code"
               subLabel="Check inbox for the code"
@@ -111,7 +110,7 @@ const LoginAdminPage = props => {
 
         {showGoogleTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <input
               id="code"
               name="code"
               subLabel="Copy code from Google Authentication App"

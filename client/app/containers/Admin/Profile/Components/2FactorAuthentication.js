@@ -96,7 +96,7 @@ export const TwoFactor = props => {
         handleUpdate={handleSubmitCode}
       >
         <div>
-          <Input
+          <input
             id="two_factor_authentication"
             name="two_factor_authentication"
             label="Google Two factor authentication code"
@@ -125,7 +125,7 @@ export const TwoFactor = props => {
           </svg>
         </div>
         <div>
-          <Input
+          <input
             id="code"
             name="code"
             label="Enter Your code"

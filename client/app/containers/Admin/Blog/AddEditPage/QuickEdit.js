@@ -5,7 +5,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 // @material-ui/core components
 import { Checkbox } from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Inputs from '../../../../components/customComponents/Input';
 import Select from '../../../../components/Select';
 import { FaCheck } from 'react-icons/fa';
 
@@ -87,11 +86,11 @@ const QuickEdit = props => {
       <div>
         <h2 className="text-2xl mb-4">Quick Edit</h2>
         <div className="w-full  pb-4">
-          <Inputs
+          <inputs
             label="Title"
-            inputclassName="inputbox"
-            inputid="blog-title"
-            inputType="text"
+            className="inputbox"
+            id="blog-title"
+            type="text"
             value={(one && one.title) || ''}
             name="Blog Title"
             onChange={handleChange('title')}

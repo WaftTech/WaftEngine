@@ -723,28 +723,6 @@ const mapStateToProps = createStructuredSelector({
   query: makeSelectQuery(),
 });
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
-
 const withConnect = connect(
   mapStateToProps,
   { ...mapDispatchToProps, push },

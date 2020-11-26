@@ -26,7 +26,6 @@ import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
@@ -129,21 +128,21 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <h3 className="text-lg font-bold mb-2">Basic Information</h3>
-            <Input
+            <input
               label="Email"
-              inputclassName="inputbox"
-              inputid="email"
-              inputType="text"
+              className="inputbox"
+              id="email"
+              type="text"
               value={users.email || ''}
               onChange={this.handleChange('email')}
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Name"
-              inputclassName="inputbox"
-              inputid="name"
-              inputType="text"
+              className="inputbox"
+              id="name"
+              type="text"
               value={users.name || ''}
               onChange={this.handleChange('name')}
               error={(errors && errors.name) || ''}
