@@ -391,7 +391,7 @@ const FileList = ({
           </button>
         </DialogActions>
       </Dialog>
-      <div className="flex items-center justify-between mt-3 mb-3">
+      <div className="flex items-center justify-between my-3">
         <div className="flex">
           <div className="flex relative">
             <input
@@ -413,11 +413,11 @@ const FileList = ({
           </div>
         </div>
 
-        <div className="flex media_btn">
+        <div className="flex items-center media_btn -mt-4">
           {selectedButton === 'Multiple' && chosen_files.length > 0 ? (
             <button
               onClick={handleUploadMultiple}
-              className="blink items-center flex btn bg-pink-500 hover:bg-pink-400 mr-2"
+              className="blink items-center text-pink-500 flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
             >
               <FaImages className="text-base mr-2" />
               <span>Upload Multiple</span>
@@ -425,7 +425,7 @@ const FileList = ({
           ) : (
             <button
               onClick={handleSelectMultipleButton}
-              className="items-center text-pink-600 flex btn bg-pink-100 border-pink-200 hover:bg-pink-400 mr-2"
+              className="items-center text-pink-500 flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
             >
               <FaImages className="text-base mr-2" />
               <span>Select Multiple</span>
@@ -434,25 +434,26 @@ const FileList = ({
 
           <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
             {({ getRootProps, getInputProps }) => (
-              <section className="btn bg-info hover:bg-secondary mr-2 cursor-pointer">
-                <div className="flex items-center " {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <FaImage className="text-base mr-2" />
-                  <span>Choose File</span>
-                </div>
-              </section>
+              <div
+                className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                <FaImage className="text-base mr-2" />
+                <span>Choose File</span>
+              </div>
             )}
           </Dropzone>
           <button
             onClick={handleAdd}
-            className="items-center flex btn bg-blue-500 border border-blue-600 hover:bg-blue-600 mr-2"
+            className="items-center flex btn text-blue-500 bg-blue-100 border border-blue-200 hover:bg-blue-500 hover:border-blue-500 mr-2 hover:text-white"
           >
             <FaPlusCircle className="text-base mr-2" />
             <span>New Folder</span>
           </button>
           <button
             onClick={handleRenameButton}
-            className="items-center flex bg-yellow-600 hover:bg-yellow-400 btn mr-2"
+            className="items-center flex text-orange-500 bg-orange-100 border border-orange-200 hover:border-orange-500 hover:bg-orange-500 btn mr-2 hover:text-white"
           >
             <FaPenSquare className="text-base mr-2" />
             <span>Rename</span>
@@ -461,7 +462,7 @@ const FileList = ({
           (chosen_files.length > 0 || chosen_folders.length > 0) ? (
             <button
               onClick={confirmDelete}
-              className="blink items-center flex btn bg-red-600 hover:bg-red-500"
+              className="blink items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
             >
               <FaTrash className="text-base mr-2" />
               <span>Confirm Delete</span>
@@ -469,7 +470,7 @@ const FileList = ({
           ) : (
             <button
               onClick={handleDeleteButton}
-              className="items-center flex btn bg-red-600 hover:bg-red-500"
+              className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
             >
               <FaTrash className="text-base mr-2" />
               <span>Delete</span>
@@ -571,7 +572,7 @@ const FileList = ({
         </p>
         {folders.data.map(each => (
           <div
-            className="mediaCont border p-1 relative overflow-hidden mr-4 hover:border-primary"
+            className="mediaCont border rounded p-1 relative overflow-hidden mr-4 hover:border-primary"
             key={each._id}
             onMouseOver={() => handleMouseOver(each._id)}
             onMouseLeave={() => handleMouseOver('')}

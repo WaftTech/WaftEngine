@@ -6,9 +6,7 @@ const PageContent = props => {
   return (
     <div
       className={`${
-        loading
-          ? 'opacity-25 bg-white border p-4 rounded'
-          : 'bg-white border p-4 rounded'
+        loading ? 'bg-white border p-4 rounded' : 'bg-white border p-4 rounded'
       }`}
     >
       {children}

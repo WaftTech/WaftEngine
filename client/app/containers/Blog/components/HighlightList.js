@@ -35,7 +35,7 @@ const HighLightList = props => {
                 key={slug_url}
               >
                 <div key={_id} className="">
-                  <h1 className="max-w-6xl mx-auto text-center text-4xl md:text-6xl px-5 md:px-10 pt-10 md:pt-20 hover:text-secondary leading-tighter font-bold md:font-normal">
+                  <h1 className="max-w-6xl mx-auto text-center text-4xl md:text-6xl px-5 md:px-10 pt-10 md:pt-20 hover:text-blue-500 leading-tighter font-bold md:font-normal">
                     {title}
                   </h1>
                   <div className="py-6 md:py-10">
@@ -53,8 +53,8 @@ const HighLightList = props => {
       })}
     </>
   ) : (
-      <p />
-    );
+    <p />
+  );
 };
 
 HighLightList.propTypes = {

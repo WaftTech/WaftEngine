@@ -37,7 +37,7 @@ function RelatedBlogs(props) {
                   <div className="p-4">
                     <h3 className="text-xl leading-normal font-bold font-mukta">
                       <Link
-                        className="text-black no-underline hover:text-secondary"
+                        className="text-black no-underline hover:text-blue-500"
                         to={`/news/mobile/${blog.slug_url}`}
                       >
                         {blog.title}

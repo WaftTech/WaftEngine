@@ -249,7 +249,7 @@ export class BlogCommentManagePage extends React.PureComponent {
         <Helmet>
           <title>Blog Comments</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading === true ? <Loading /> : <></>}
           <PageHeader>Blog Comment Listing</PageHeader>
         </div>

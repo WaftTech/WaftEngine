@@ -60,7 +60,7 @@ export class Dashboard extends React.PureComponent {
     const { classes, users, info, errors, blogs } = this.props;
     return (
       <>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>Dashboard</PageHeader>
         </div>
         <div className="bg-white rounded p-4">

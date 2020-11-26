@@ -179,7 +179,7 @@ class AddEdit extends React.PureComponent {
           </DialogContent>
         </Dialog>
         <div>
-          <div className="flex justify-between mt-3 mb-3">
+          <div className="flex justify-between my-3">
             <PageHeader>
               <span className="backbtn" onClick={this.handleGoBack}>
                 <FaArrowLeft className="text-xl" />

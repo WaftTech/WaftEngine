@@ -200,7 +200,7 @@ export class Error extends React.Component {
         <Helmet>
           <title>Error Listing</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Error Manage</PageHeader>
           <button

@@ -29,8 +29,9 @@ function RecentBlogs(props) {
             <div className="article-container bg-gray-100 h-full">
               <div className="article-img-container">
                 <Link
-                  to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
-                    }`}
+                  to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
+                    blog._id
+                  }`}
                 >
                   <img
                     src={`${IMAGE_BASE}${blog &&
@@ -43,9 +44,10 @@ function RecentBlogs(props) {
               </div>
               <div className="p-4 textpart">
                 <Link
-                  to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
-                    }`}
-                  className="text-xl leading-normal hover:text-secondary pointer no-underline article-title font-mukta"
+                  to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
+                    blog._id
+                  }`}
+                  className="text-xl leading-normal hover:text-blue-500 pointer no-underline article-title font-mukta"
                 >
                   {blog.title}
                 </Link>

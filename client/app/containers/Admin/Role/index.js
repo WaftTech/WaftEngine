@@ -152,7 +152,7 @@ export class AdminRole extends React.PureComponent {
         <Helmet>
           <title>Role Manage</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Role Manage</PageHeader>
           <Fab

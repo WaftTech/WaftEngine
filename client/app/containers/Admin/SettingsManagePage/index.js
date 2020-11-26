@@ -142,7 +142,7 @@ export const SettingsManagePage = props => {
 
   return (
     <>
-      <div className="flex justify-between mt-3 mb-3">
+      <div className="flex justify-between my-3">
         {loading && loading === true ? <Loading /> : <></>}
       </div>
 

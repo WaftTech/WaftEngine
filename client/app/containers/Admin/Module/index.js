@@ -115,7 +115,7 @@ export class AdminModuleManage extends React.PureComponent {
         <Helmet>
           <title>Module Manage</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Module Manage</PageHeader>
           <div className="flex items-center">

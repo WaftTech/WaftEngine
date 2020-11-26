@@ -99,8 +99,8 @@ export class ContentsListingPage extends React.Component {
     open: false,
     deleteId: '',
     help: false,
-    showForm: false,
-    edit_id: '',
+    // showForm: false,
+    // edit_id: '',
   };
 
   componentDidMount() {
@@ -113,9 +113,9 @@ export class ContentsListingPage extends React.Component {
   };
 
   handleEdit = id => {
-    //  this.props.push(`/admin/content-manage/edit/${id}`);
-    this.setState({ edit_id: id });
-    this.props.setShowForm(true);
+    this.props.push(`/admin/content-manage/edit/${id}`);
+    // this.setState({ edit_id: id });
+    // this.props.setShowForm(true);
   };
 
   handleQueryChange = e => {
@@ -151,15 +151,15 @@ export class ContentsListingPage extends React.Component {
     this.setState({ help: !this.state.help });
   };
 
-  handleShowForm = () => {
-    this.props.clearOne();
+  // handleShowForm = () => {
+  //   this.props.clearOne();
 
-    this.props.setShowForm(true);
-  };
+  //   this.props.setShowForm(true);
+  // };
 
-  handleCloseForm = () => {
-    this.props.setShowForm(false);
-  };
+  // handleCloseForm = () => {
+  //   this.props.setShowForm(false);
+  // };
 
   render() {
     const { classes } = this.props;
@@ -174,16 +174,22 @@ export class ContentsListingPage extends React.Component {
       ({ name, key, is_active, publish_from, publish_to, _id }) => [
         name,
         key,
-        <Link
-          className="text-blue-500 hover:underline"
-          to={`/page/${key}`}
-          target="_blank"
-        >
-          {`/page/${key}`}
-        </Link>,
+        // <Link
+        //   className="text-blue-500 hover:underline"
+        //   to={`/page/${key}`}
+        //   target="_blank"
+        // >
+        //   {`/page/${key}`}
+        // </Link>,
         moment(publish_from).format(DATE_FORMAT),
         moment(publish_to).format(DATE_FORMAT),
-        `${is_active}`,
+        <>
+          {is_active ? (
+            <span className="label-active">active</span>
+          ) : (
+            <span className="label-inactive">inactive</span>
+          )}
+        </>,
         <>
           <div className="flex">
             <span
@@ -217,11 +223,9 @@ export class ContentsListingPage extends React.Component {
         <Helmet>
           <title>HTML Content</title>
         </Helmet>
-
-        <div className="flex justify-between mt-3 mb-3">
-          {loading && loading === true ? <Loading /> : <></>}
+        {loading && loading === true ? <Loading /> : <></>}
+        <div className="flex justify-between my-3">
           <PageHeader>Section Content </PageHeader>
-
           <div className="flex items-center">
             <span
               className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5 cursor-pointer"
@@ -233,7 +237,7 @@ export class ContentsListingPage extends React.Component {
             </span>
             <button
               className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
-              onClick={this.handleShowForm}
+              onClick={this.handleAdd}
             >
               <FaPlus />
               <span className="pl-2">Add New</span>
@@ -307,7 +311,6 @@ export class ContentsListingPage extends React.Component {
             tableHead={[
               'Name',
               'Key',
-              'Link',
               'Pub From',
               'Pub To',
               'Is Active',
@@ -319,7 +322,7 @@ export class ContentsListingPage extends React.Component {
           />
         </PageContent>
 
-        {showForm && (
+        {/* {showForm && (
           <div
             className="absolute right-0 top-0 left-0 bottom-0 flex"
             style={{
@@ -331,7 +334,7 @@ export class ContentsListingPage extends React.Component {
               <AddEdit edit_id={this.state.edit_id} />
             </div>
           </div>
-        )}
+        )} */}
 
         {/*  */}
       </>
@@ -343,7 +346,7 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
   loading: makeSelectLoading(),
-  showForm: makeSelectShowForm(),
+  // showForm: makeSelectShowForm(),
 });
 
 const withConnect = connect(

@@ -292,6 +292,11 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
               </Menu>
             </div>
             <div className="flex-1 m-6">{switchRoutes(roles)}</div>
+            {/* <div className="border-t bg-white h-16 flex items-center justify-center">
+              <p className="text-center text-gray-500 text-sm">
+                WaftEngine v1.0.1
+              </p>
+            </div> */}
           </main>
         </ColoredScrollbars>
       </div>

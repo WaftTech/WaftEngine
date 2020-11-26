@@ -77,7 +77,7 @@ export function Template({
   };
   return (
     <>
-      <div className="flex justify-between mt-3 mb-3">
+      <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Email Template Manage</PageHeader>
       </div>
@@ -175,7 +175,6 @@ export function Template({
               onChange={handleChange}
             />
           </div>
-
 
           <div className="w-full pb-4">
             <label className="label">Body</label>

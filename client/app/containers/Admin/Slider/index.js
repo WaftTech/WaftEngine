@@ -36,7 +36,7 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaRegQuestionCircle } from 'react-icons/fa';
 
 const styles = theme => ({
   button: {
@@ -88,6 +88,7 @@ export class SliderPage extends React.Component {
     display: false,
     open: false,
     deleteId: '',
+    help: false,
   };
 
   componentDidMount() {
@@ -158,6 +159,10 @@ export class SliderPage extends React.Component {
     this.setState(state => ({ display: !state.display }));
   };
 
+  toggleHelp = () => {
+    this.setState({ help: !this.state.help });
+  };
+
   render() {
     const { display } = this.state;
 
@@ -206,10 +211,48 @@ export class SliderPage extends React.Component {
         <Helmet>
           <title>Slider Listing</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          {loading && loading == true ? <Loading /> : <></>}
-          <PageHeader>Slider Manage</PageHeader>
+        {loading && loading == true ? <Loading /> : <></>}
+        <div className="flex justify-between my-3">
+          <PageHeader>Slider Manage </PageHeader>
+          <div className="flex items-center">
+            <span
+              className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5 cursor-pointer"
+              onClick={this.toggleHelp}
+            >
+              <FaRegQuestionCircle />
+
+              {this.state.help && <span className="arrow_box" />}
+            </span>
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
+
+        {this.state.help && (
+          <div
+            className="rounded p-6 mb-6"
+            style={{ backgroundColor: '#1E1E1E' }}
+          >
+            <pre className="block overflow-x-auto text-gray-200 font-bold">
+              <span style={{ color: '#529BD8' }}>import</span> SlickSlider{' '}
+              <span style={{ color: '#529BD8' }}>from</span>{' '}
+              <span style={{ color: '#CE9076' }}>
+                '../../components/SlickSlider';
+              </span>
+              <br />
+              <br />
+              &lt;<span style={{ color: '#529BD8' }}>SlickSlider</span>{' '}
+              <span style={{ color: '#9ADCFF' }} />
+              slideKey=
+              <span style={{ color: '#CE9076' }}>"homebanner"</span> /&gt;
+            </pre>
+          </div>
+        )}
 
         <PageContent loading={loading}>
           <div className="flex justify-between">
@@ -231,20 +274,6 @@ export class SliderPage extends React.Component {
                 <SearchIcon />
               </IconButton>
             </div>
-          </div>
-
-          <div className="bg-gray-900 h-32 my-2 py-2 px-4 text-white font-mono">
-            <code className="">
-              ...
-              <br />
-              import SlickSlider from 'client/app/components/SlickSlider';
-              <br />
-              ...
-              <br />
-              SlickSlider slideKey="key" />
-              <br />
-              ...
-            </code>
           </div>
 
           <Table

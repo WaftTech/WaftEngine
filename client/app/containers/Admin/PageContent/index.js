@@ -93,6 +93,7 @@ export class ContentsListingPage extends React.Component {
   state = {
     open: false,
     deleteId: '',
+    help: false,
   };
 
   componentDidMount() {
@@ -133,6 +134,9 @@ export class ContentsListingPage extends React.Component {
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
+  toggleHelp = () => {
+    this.setState({ help: !this.state.help });
+  };
 
   render() {
     const { classes } = this.props;
@@ -155,7 +159,13 @@ export class ContentsListingPage extends React.Component {
         </Link>,
         moment(publish_from).format(DATE_FORMAT),
         moment(publish_to).format(DATE_FORMAT),
-        `${is_active}`,
+        <>
+          {is_active ? (
+            <span className="label-active">active</span>
+          ) : (
+            <span className="label-inactive">inactive</span>
+          )}
+        </>,
         <>
           <div className="flex">
             <span
@@ -184,19 +194,51 @@ export class ContentsListingPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>Page Management</title>
+          <title>Page Content</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
-          {loading && loading === true ? <Loading /> : <></>}
-          <PageHeader>Page Manage</PageHeader>
-          <button
-            className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
-            onClick={this.handleAdd}
-          >
-            <FaPlus />
-            <span className="pl-2">Add New</span>
-          </button>
+        {loading && loading === true ? <Loading /> : <></>}
+        <div className="flex justify-between my-3">
+          <PageHeader>Page Content </PageHeader>
+          <div className="flex items-center">
+            <span
+              className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5 cursor-pointer"
+              onClick={this.toggleHelp}
+            >
+              <FaRegQuestionCircle />
+
+              {this.state.help && <span className="arrow_box" />}
+            </span>
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
+        {this.state.help && (
+          <div
+            className="rounded p-6 mb-6"
+            style={{ backgroundColor: '#1E1E1E' }}
+          >
+            <pre className="block overflow-x-auto text-gray-200 font-bold">
+              <span style={{ color: '#529BD8' }}>import</span> StaticContentDiv{' '}
+              <span style={{ color: '#529BD8' }}>from</span>{' '}
+              <span style={{ color: '#CE9076' }}>
+                '../../components/StaticContentDiv';
+              </span>
+              <br />
+              <br />
+              &lt;<span style={{ color: '#529BD8' }}>
+                StaticContentDiv
+              </span>{' '}
+              <span style={{ color: '#9ADCFF' }} />
+              contentKey=
+              <span style={{ color: '#CE9076' }}>"about"</span> /&gt;
+            </pre>
+          </div>
+        )}
         <PageContent loading={loading}>
           <div className="flex">
             <div className="flex relative mr-2">

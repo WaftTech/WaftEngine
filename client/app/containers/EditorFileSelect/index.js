@@ -37,13 +37,11 @@ export const EditorFileSelect = ({
   }, [queryObj.path]);
 
   return (
-    <div className="container mx-auto h-screen">
-      <FileList
-        queryObj={queryObj}
-        selectFile={selectFile}
-        uploadMultiple={uploadMultiple}
-      />
-    </div>
+    <FileList
+      queryObj={queryObj}
+      selectFile={selectFile}
+      uploadMultiple={uploadMultiple}
+    />
   );
 };
 

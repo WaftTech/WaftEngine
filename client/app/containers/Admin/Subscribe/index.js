@@ -152,7 +152,7 @@ export class Subscribe extends React.PureComponent {
         <Helmet>
           <title>Subscriber List</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Subscribe Manage</PageHeader>
         </div>

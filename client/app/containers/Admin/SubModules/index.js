@@ -138,7 +138,7 @@ export const SubModules = props => {
         doClose={handleClose}
         doDelete={() => handleDelete(deletedId)}
       />
-      <div className="flex justify-between mt-3 mb-3">
+      <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Sub Modules Manage</PageHeader>
         <Fab

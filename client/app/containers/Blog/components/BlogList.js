@@ -79,7 +79,7 @@ const RenderBlogs = props => {
               </div>
 
               <div className="flex-1 px-4 md:px-10">
-                <h2 className="text-xl md:text-3xl hover:text-secondary font-normal">
+                <h2 className="text-xl md:text-3xl hover:text-blue-500 font-normal">
                   {title}
                 </h2>
 
@@ -87,19 +87,17 @@ const RenderBlogs = props => {
                   <img className="mr-2 clock" src={clock} />
                   {moment(each.added_at).fromNow()}
                 </div>
-
               </div>
             </div>
           </Link>
         );
       })}
       <div className="flex clearfix w-full pagination ">
-
         {loading_more && '....'}
         {currentBlogs.length < pagination.totaldata && (
           <button
             type="button"
-            className="btn w-full border border-secondary bg-blue-100 mb-8 text-secondary mt-4"
+            className="btn w-full border border-secondary bg-blue-100 mb-8 text-blue-500 mt-4"
             onClick={handleLoadMoreContent}
           >
             Load More
@@ -108,8 +106,8 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-        <div>No News Found</div>
-      );
+    <div>No News Found</div>
+  );
 };
 
 const withSaga = injectSaga({ key: 'blogPage', saga });
