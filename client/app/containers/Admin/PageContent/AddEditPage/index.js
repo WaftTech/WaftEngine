@@ -168,8 +168,8 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
+              <label>Title</label>
               <input
-                label="Page Title"
                 className="inputbox"
                 id="grid-last-name"
                 type="text"
@@ -180,8 +180,8 @@ class AddEdit extends React.PureComponent {
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
+              <label>Page Key</label>
               <input
-                label="Page Key"
                 className="inputbox"
                 id="grid-last-name"
                 type="text"
@@ -199,8 +199,8 @@ class AddEdit extends React.PureComponent {
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
+              <label>Meta Title</label>
               <input
-                label="Meta Title"
                 className="inputbox"
                 id="grid-last-meta_title"
                 type="text"
@@ -210,8 +210,8 @@ class AddEdit extends React.PureComponent {
               />
             </div>
             <div className="w-full md:w-1/2 pb-4">
+              <label>Meta Description</label>
               <input
-                label="Meta Description"
                 className="inputbox"
                 id="grid-last-meta_description"
                 type="text"

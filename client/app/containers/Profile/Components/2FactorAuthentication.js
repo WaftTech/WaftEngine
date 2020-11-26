@@ -101,10 +101,10 @@ export const TwoFactor = props => {
         buttonLabel2={setGoogleCode ? 'Sending...' : 'Send'}
       >
         <div>
+          <label>Google Two factor authentication code</label>
           <input
             id="two_factor_authentication"
             name="two_factor_authentication"
-            label="Google Two factor authentication code"
             disabled
             readOnly
             error={errors.two_fa_ga_auth_secret}
@@ -130,10 +130,10 @@ export const TwoFactor = props => {
           </svg>
         </div>
         <div>
+          <label>Enter Your Code</label>
           <input
             id="code"
             name="code"
-            label="Enter Your code"
             error={errors.code}
             value={twoFactor && twoFactor.code}
             onChange={e => handleChange(e, 'google_authenticate')}

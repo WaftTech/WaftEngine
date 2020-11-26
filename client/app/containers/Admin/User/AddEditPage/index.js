@@ -128,8 +128,8 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <h3 className="text-lg font-bold mb-2">Basic Information</h3>
+            <label>Email</label>
             <input
-              label="Email"
               className="inputbox"
               id="email"
               type="text"
@@ -138,8 +138,8 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Name</label>
             <input
-              label="Name"
               className="inputbox"
               id="name"
               type="text"
@@ -150,7 +150,6 @@ class AddEdit extends React.PureComponent {
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm">Bio</label>
-
             <textarea
               className="inputbox"
               id="bio"

@@ -71,8 +71,8 @@ export const VerifyEmail = props => {
       ) : (
         <div className="mt-4">
           <div className="m-auto w-1/2">
+            <label>Email</label>
             <input
-              label="Email"
               className="inputbox"
               onChange={handleEmail('email')}
               value={form_email}
@@ -82,8 +82,8 @@ export const VerifyEmail = props => {
             />
           </div>
           <div className="m-auto w-1/2 mt-2">
+            <label>Code</label>
             <input
-              label="Code"
               className="inputbox"
               onChange={handleCode('code')}
               value={form_code}

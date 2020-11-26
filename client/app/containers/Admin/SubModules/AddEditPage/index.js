@@ -91,8 +91,8 @@ const AddEdit = props => {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Module Group</label>
             <input
-              label="Module Group"
               className="inputbox"
               id="grid-group"
               type="text"
@@ -103,8 +103,8 @@ const AddEdit = props => {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
+            <label>Order</label>
             <input
-              label="Order"
               className="inputbox"
               id="grid-value"
               type="text"
@@ -132,8 +132,8 @@ const AddEdit = props => {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
+            <label>Module Group Main</label>
             <input
-              label="Module Group Main"
               className="inputbox"
               id="grid-group"
               type="text"

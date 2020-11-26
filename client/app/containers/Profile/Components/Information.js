@@ -68,12 +68,9 @@ class UserPersonalInformationPage extends React.PureComponent {
       <div>Loading</div>
     ) : (
       <React.Fragment>
-        <div
-          className="w-full md:w-1/2 pb-4"
-          error={errors && errors.name && errors.name.length > 0}
-        >
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Name</label>
           <input
-            label="Name"
             className="inputbox"
             id="name"
             type="text"
@@ -84,12 +81,9 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        <div
-          className="w-full md:w-1/2 pb-4"
-          error={errors && errors.email && errors.email.length > 0}
-        >
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Email</label>
           <input
-            label="Email"
             className="inputbox"
             id="email"
             type="text"
@@ -102,7 +96,6 @@ class UserPersonalInformationPage extends React.PureComponent {
 
         <div className="md:w-1/2 pb-4">
           <label className="text-sm">Date Of Birth</label>
-
           <DatePicker
             name="date_of_birth"
             className="inputbox"
@@ -115,16 +108,9 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        {/* <FormControlLabel
-          control={
-            <CheckBox checked={one.email_verified || false} color="primary" />
-          }
-          label="Email Verified"
-        /> */}
-
         <div className="w-full pb-4">
           <div>
-            <span className="text-sm">Role :</span>{' '}
+            <label className="text-sm">Role :</label>{' '}
             {one.roles.map(each => (
               <span key={each._id} className="rounded border px-4 py-2 mr-2">
                 {each.role_title}{' '}
@@ -141,7 +127,7 @@ class UserPersonalInformationPage extends React.PureComponent {
           className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
           onClick={this.handleSave}
         >
-          Save
+          Save Changes
         </button>
       </React.Fragment>
     );

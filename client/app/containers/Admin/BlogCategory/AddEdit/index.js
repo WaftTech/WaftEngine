@@ -142,8 +142,8 @@ class AddEdit extends React.PureComponent {
 
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Blog Title</label>
             <input
-              label="Blog Title"
               className="inputbox"
               id="title"
               type="text"
@@ -153,8 +153,8 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Slug</label>
             <input
-              label="Slug"
               className="inputbox"
               id="slug"
               type="text"
@@ -166,8 +166,8 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
+            <label>Order</label>
             <input
-              label="Order"
               className="inputbox"
               id="order"
               type="text"

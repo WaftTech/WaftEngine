@@ -171,8 +171,8 @@ export const SettingsManagePage = props => {
               </select>
             </div>
             <div className="pt-4">
+              <label>Email to send test mail</label>
               <input
-                label="Email to send test mail"
                 className="inputbox"
                 id="email-to-send-test-mail"
                 type="email"
@@ -198,9 +198,9 @@ export const SettingsManagePage = props => {
             setting_normalized.email_channel &&
             setting_normalized.email_channel.value === 'smtp' && (
               <div className="flex-wrap px-4">
-                <div className="w-1/2 pb-4  ">
-                  <input
-                    label="Protocol"
+                <div className="w-1/2 pb-4">
+                  <label>Protocal</label>
+                  <Input
                     className="inputbox"
                     id="protocol"
                     type="text"
@@ -214,9 +214,9 @@ export const SettingsManagePage = props => {
                     onChange={handleChange('protocol')}
                   />
                 </div>
-                <div className="w-1/2 pb-4 ">
+                <div className="w-1/2 pb-4">
+                  <label>Email</label>
                   <input
-                    label="Email"
                     className="inputbox"
                     id="email"
                     type="text"
@@ -230,9 +230,9 @@ export const SettingsManagePage = props => {
                     onChange={handleChange('email')}
                   />
                 </div>
-                <div className="w-1/2 pb-4 ">
+                <div className="w-1/2 pb-4">
+                  <label>Password</label>
                   <input
-                    label="Password"
                     className="inputbox"
                     id="password"
                     type="text"
@@ -246,9 +246,9 @@ export const SettingsManagePage = props => {
                     onChange={handleChange('password')}
                   />
                 </div>
-                <div className="w-1/2 pb-4  ">
+                <div className="w-1/2 pb-4">
+                  <label>Server</label>
                   <input
-                    label="Server"
                     className="inputbox"
                     id="server"
                     type="text"
@@ -263,9 +263,9 @@ export const SettingsManagePage = props => {
                   />
                 </div>
 
-                <div className="w-1/2 pb-4  ">
+                <div className="w-1/2 pb-4">
+                  <label>Port</label>
                   <input
-                    label="Port"
                     className="inputbox"
                     id="port"
                     type="text"
@@ -279,9 +279,9 @@ export const SettingsManagePage = props => {
                     onChange={handleChange('port')}
                   />
                 </div>
-                <div className="w-1/2 pb-4 ">
+                <div className="w-1/2 pb-4">
+                  <label>Security</label>
                   <input
-                    label="Security"
                     className="inputbox"
                     id="security"
                     type="text"
@@ -295,7 +295,7 @@ export const SettingsManagePage = props => {
                     onChange={handleChange('security')}
                   />
                 </div>
-                <div className="w-1/2 pb-4 ">
+                <div className="w-1/2 pb-4">
                   <label className="text-sm mt-4">Secure</label>
                   <select
                     className="inputbox"
@@ -322,10 +322,10 @@ export const SettingsManagePage = props => {
           {Object.keys(setting_normalized).length &&
             setting_normalized.email_channel &&
             setting_normalized.email_channel.value === 'mailgun' && (
-              <div className="flex justify-between px-4 flex">
+              <div className="flex justify-between px-4">
                 <div className="w-1/3 pb-4 -ml-4">
+                  <label>API Key</label>
                   <input
-                    label="Api Key"
                     className="inputbox"
                     id="api-key"
                     type="text"
@@ -339,9 +339,9 @@ export const SettingsManagePage = props => {
                     onChange={handleChange('api_key')}
                   />
                 </div>
-                <div className="w-1/3 pb-4 ">
+                <div className="w-1/3 pb-4">
+                  <label>Domain</label>
                   <input
-                    label="Domain"
                     className="inputbox"
                     id="domain"
                     type="text"
@@ -360,7 +360,7 @@ export const SettingsManagePage = props => {
           {Object.keys(setting_normalized).length &&
             setting_normalized.email_channel &&
             setting_normalized.email_channel.value === 'sendgrid' && (
-              <div className="flex justify-between px-4 flex">
+              <div className="flex justify-between px-4">
                 <label className="label" htmlFor="grid-sendgrid-api-key">
                   Api Key
                 </label>
@@ -409,8 +409,8 @@ export const SettingsManagePage = props => {
           </div>
           <div className="flex justify-between px-4">
             <div className="w-1/2 -ml-4">
+              <label>Secret Key</label>
               <input
-                label="SecretKey"
                 className="inputbox"
                 id="secret-key"
                 type="text"
@@ -425,8 +425,8 @@ export const SettingsManagePage = props => {
               />
             </div>
             <div className="w-1/2 -mr-4">
+              <label>Token Expire Time</label>
               <input
-                label="Token Expire Time"
                 className="inputbox"
                 id="token-expire-time"
                 type="text"
@@ -498,8 +498,8 @@ export const SettingsManagePage = props => {
           <div className="flex justify-between px-4">
             <div className="w-1/2 pb-4 -ml-4">
               <div>
+                <label>Client ID</label>
                 <input
-                  label="Client Id"
                   className="inputbox"
                   id="client-id"
                   type="text"
@@ -520,8 +520,8 @@ export const SettingsManagePage = props => {
                 />
               </div>
               <div>
+                <label>Client Secret</label>
                 <input
-                  label="Client Secret"
                   className="inputbox"
                   id="client-secret"
                   type="text"
@@ -544,8 +544,8 @@ export const SettingsManagePage = props => {
             </div>
             <div className="w-1/2 pb-4 -mr-4">
               <div>
+                <label>App ID</label>
                 <input
-                  label="App Id"
                   className="inputbox"
                   id="app-id"
                   type="text"
@@ -566,8 +566,8 @@ export const SettingsManagePage = props => {
                 />
               </div>
               <div>
+                <label>App Secret</label>
                 <input
-                  label="App Secret"
                   className="inputbox"
                   id="app-secret"
                   type="text"
@@ -597,8 +597,8 @@ export const SettingsManagePage = props => {
         <div className="max-w-xl">
           <div className="flex justify-between px-4">
             <div className="w-1/2 pb-4 -ml-4">
+              <label>Secret Key</label>
               <input
-                label="Secret Key"
                 className="inputbox"
                 id="secret-key"
                 type="text"
@@ -614,8 +614,8 @@ export const SettingsManagePage = props => {
             </div>
 
             <div className="w-1/2 pb-4 -mr-4">
+              <label>Site Key</label>
               <input
-                label="Site Key"
                 className="inputbox"
                 id="site-key"
                 type="text"

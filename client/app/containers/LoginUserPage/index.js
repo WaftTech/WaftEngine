@@ -126,11 +126,11 @@ const LoginUserPage = props => {
       >
         {showEmailTwoFactor && (
           <div className="border p-2 m-2">
+            <label>Enter the code</label>
+            <label className="text-xs">Check inbox for the code</label>
             <input
               id="code"
               name="code"
-              subLabel="Check inbox for the code"
-              label="Enter the code"
               error={errors && errors.multi_fa && errors.multi_fa.email.code}
               value={twoFactor && twoFactor.email && twoFactor.email.code}
               onChange={e => handleChange(e, 'email')}
@@ -141,11 +141,13 @@ const LoginUserPage = props => {
 
         {showGoogleTwoFactor && (
           <div className="border p-2 m-2">
+            <label>Enter the code</label>
+            <label className="text-xs">
+              Copy code from Google Authentication App
+            </label>
             <input
               id="code"
               name="code"
-              subLabel="Copy code from Google Authentication App"
-              label="Enter the code"
               error={
                 errors &&
                 errors.multi_fa &&
