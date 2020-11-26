@@ -255,7 +255,9 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 <div className="px-3 text-left">
                   <span className="block capitalize text-sm">{users.name}</span>
                   <span className="block leading-none truncate capitalize text-xs text-gray-600">
-                    superadmin
+                    {users.roles && users.roles[0] && users.roles[0].role_title
+                      ? users.roles[0].role_title
+                      : ''}
                   </span>
                 </div>
                 <FaAngleDown className="opacity-50" />
