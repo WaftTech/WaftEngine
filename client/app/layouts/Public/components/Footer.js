@@ -2,17 +2,13 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import { compose } from 'redux';
 
 import SubscriberPage from '../../../containers/SubscriberPage/Loadable';
-import logo from '../../../assets/img/logo.svg';
 import fb from '../../../assets/img/fb.png';
-import instagram from '../../../assets/img/Instagram.png';
-import tw from '../../../assets/img/tw.png';
 import mail from '../../../assets/img/mail.png';
 
-const styles = {};
 class Footer extends React.Component {
   state = { email: '' };
 
@@ -33,16 +29,18 @@ class Footer extends React.Component {
         <div className="w-full bg-gray-900 border-b border-gray-800 p-2 text-center">
           <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">
             Get updates
-            </h1>
+          </h1>
           <p className="mb-5 text-gray-700">
             Never miss any updates from WaftEngine.
-            </p>
+          </p>
           <SubscriberPage />
         </div>
         <div className="container mx-auto">
           <div className="flex flex-wrap p-3">
             <div className="w-full lg:w-1/2 crorder my-auto">
-              <p className="text-gray-700 m-0">Designed and built by the WaftTech Team</p>
+              <p className="text-gray-700 m-0">
+                Designed and built by the WaftTech Team
+              </p>
             </div>
 
             <div className="w-full lg:w-1/2 lg:flex lg:justify-end my-auto">
@@ -73,9 +71,4 @@ class Footer extends React.Component {
 
 Footer.propTypes = {};
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withRouter,
-  withStyle,
-)(Footer);
+export default compose(withRouter)(Footer);

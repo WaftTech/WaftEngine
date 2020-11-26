@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 // @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -81,10 +81,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
   reducer,
@@ -95,5 +91,4 @@ export default compose(
   withConnect,
   withReducer,
   withSaga,
-  withStyle,
 )(VerifyEmail);

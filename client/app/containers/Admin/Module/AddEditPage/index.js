@@ -7,14 +7,6 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 import Select from 'react-select';
-
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import IconButton from '@material-ui/core/IconButton';
-import Fab from '@material-ui/core/Fab';
-import SwapIcon from '@material-ui/icons/SwapHoriz';
-import BackIcon from '@material-ui/icons/ArrowBack';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -31,7 +23,7 @@ import PathComponent from './components/Path';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaExchangeAlt } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -248,14 +240,16 @@ class AddEdit extends React.PureComponent {
             </span>
             {id ? `Edit for ${one.module_name}` : 'Add Module'}
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Change Access"
-            className={classes.fab}
-            onClick={this.handleChangeAccess}
-          >
-            <SwapIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleChangeAccess}
+            >
+              <FaExchangeAlt />
+              <span className="pl-2">Change Accesss</span>
+            </button>
+          </div>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-2">
@@ -376,29 +370,8 @@ const customStyles = {
   }),
 };
 
-const styles = theme => ({
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(AddEdit);

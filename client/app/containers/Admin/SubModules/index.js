@@ -12,12 +12,6 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Fab from '@material-ui/core/Fab';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
@@ -31,7 +25,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Table from '../../../components/Table';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaSearch } from 'react-icons/fa';
 const key = 'subModules';
 
 export const SubModules = props => {
@@ -141,40 +135,35 @@ export const SubModules = props => {
       <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Sub Modules Manage</PageHeader>
-        <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.fab}
-          round="true"
-          onClick={handleAdd}
-          elevation={0}
-        >
-          <AddIcon />
-        </Fab>
+        <div className="flex items-center">
+          <button
+            className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+            onClick={handleAdd}
+          >
+            <FaPlus />
+            <span className="pl-2">Add Sub-Module</span>
+          </button>
+        </div>
       </div>
       <PageContent loading={loading}>
-        <div className="flex justify-end">
-          <div className="waftformgroup flex relative mr-2">
-            <input
-              type="text"
-              name="find_title"
-              id="contents-title"
-              placeholder="Search by title"
-              className="m-auto inputbox"
-              value={query.find_title}
-              // value="test"
-              onChange={handleQueryChange}
-              style={{ paddingRight: '50px' }}
-              onKeyPress={handleKeyPress}
-            />
-            <IconButton
-              aria-label="Search"
-              className="waftsrchstyle"
-              onClick={handleSearch}
-            >
-              <SearchIcon />
-            </IconButton>
-          </div>
+        <div className="inline-flex relative mr-4 w-64 mt-4">
+          <input
+            type="text"
+            name="find_title"
+            id="contents-title"
+            placeholder="Search by title"
+            className="m-auto inputbox pr-6"
+            value={query.find_title}
+            // value="test"
+            onChange={handleQueryChange}
+            onKeyPress={handleKeyPress}
+          />
+          <span
+            className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+            onClick={handleSearch}
+          >
+            <FaSearch />
+          </span>
         </div>
 
         <Table
@@ -193,36 +182,6 @@ export const SubModules = props => {
     </>
   );
 };
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 SubModules.propTypes = {
   loadAllRequest: PropTypes.func.isRequired,
@@ -246,10 +205,7 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withConnect,
   memo,
 )(SubModules);

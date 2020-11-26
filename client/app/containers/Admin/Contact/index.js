@@ -13,9 +13,6 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-
 // core components
 import Table from 'components/Table/Table';
 
@@ -33,35 +30,6 @@ import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 
 import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class Contact extends React.Component {
@@ -216,11 +184,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
 const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -8,18 +8,6 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 import qs from 'query-string';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Edit from '@material-ui/icons/Edit';
-import Close from '@material-ui/icons/Close';
-
-// core components
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table/Table';
 
 import { DATE_FORMAT } from '../../App/constants';
@@ -36,37 +24,12 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt, FaPlus, FaRegQuestionCircle } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import {
+  FaPencilAlt,
+  FaPlus,
+  FaRegQuestionCircle,
+  FaSearch,
+} from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class SliderPage extends React.Component {
@@ -255,25 +218,22 @@ export class SliderPage extends React.Component {
         )}
 
         <PageContent loading={loading}>
-          <div className="flex justify-between">
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_slider_name"
-                id="slider-name"
-                placeholder="Search Slider"
-                className="m-auto inputbox"
-                value={query.find_slider_name}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="flex relative mr-4 max-w-sm">
+            <input
+              type="text"
+              name="find_slider_name"
+              id="slider-name"
+              placeholder="Search Slider"
+              className="m-auto inputbox pr-6"
+              value={query.find_slider_name}
+              onChange={this.handleQueryChange}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
 
           <Table
@@ -308,11 +268,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'sliderManagePage', reducer });
 const withSaga = injectSaga({ key: 'sliderManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -10,11 +10,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-
-// core components
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectAll, makeSelectOne, makeSelectLoading } from './selectors';
@@ -25,23 +20,6 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Loading from '../../../components/Loading';
 import WECkEditior from '../../../components/CkEditor';
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-});
 
 export function Template({
   classes,
@@ -215,13 +193,11 @@ const withConnect = connect(
   mapStateToProps,
   { ...mapDispatchToProps, push },
 );
-const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'adminTemplateListingPage', reducer });
 const withSaga = injectSaga({ key: 'adminTemplateListingPage', saga });
 
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -7,13 +7,9 @@ import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 
 // @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import IconButton from '@material-ui/core/IconButton';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -30,8 +26,7 @@ import * as mapDispatchToProps from '../actions';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -133,21 +128,21 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <h3 className="text-lg font-bold mb-2">Basic Information</h3>
-            <Input
+            <input
               label="Email"
-              inputclassName="inputbox"
-              inputid="email"
-              inputType="text"
+              className="inputbox"
+              id="email"
+              type="text"
               value={users.email || ''}
               onChange={this.handleChange('email')}
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Name"
-              inputclassName="inputbox"
-              inputid="name"
-              inputType="text"
+              className="inputbox"
+              id="name"
+              type="text"
               value={users.name || ''}
               onChange={this.handleChange('name')}
               error={(errors && errors.name) || ''}
@@ -165,32 +160,40 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           {roless.map(each => (
-            <FormControlLabel
-              key={each._id}
-              control={
-                <Checkbox
-                  key={each}
-                  color="primary"
-                  checked={users.roles.includes(each._id)}
-                  onChange={() => this.handleRolesChecked(each._id)}
-                />
-              }
-              label={each.role_title || ''}
-            />
+            <div className="checkbox">
+              <input
+                key={each._id}
+                checked={users.roles.includes(each._id)}
+                onChange={() => this.handleRolesChecked(each._id)}
+                type="checkbox"
+                id={each._id}
+              />
+              <label htmlFor={each._id}>
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                {each.role_title || ''}
+              </label>
+            </div>
           ))}
           <div id="component-error-text">{(errors && errors.roles) || ''}</div>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                disabled
-                name="email_verified"
-                checked={users.email_verified || false}
-                onChange={this.handleChecked('email_verified')}
-              />
-            }
-            label="Email Verified"
-          />
+
+          <div className="checkbox">
+            <input
+              disabled
+              name="email_verified"
+              checked={users.email_verified || false}
+              onChange={this.handleChecked('email_verified')}
+              type="checkbox"
+            />
+            <label>
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Email Verified
+            </label>
+          </div>
+
           {id ? (
             <button
               className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
@@ -213,7 +216,6 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('password')}
               />
               <span
-                className={classes.EyeIcon}
                 aria-label="Toggle password visibility"
                 onClick={this.handleTogglePassword}
               >
@@ -249,43 +251,8 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(6))]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-  EyeIcon: { position: 'absolute', right: 12, top: 6 },
-});
-
-const withStyle = withStyles(styles);
-
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(AddEdit);

@@ -6,18 +6,6 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
-import Fab from '@material-ui/core/Fab';
-import Close from '@material-ui/icons/Close';
-
-// core components
 import Table from 'components/Table';
 
 import injectSaga from '../../../utils/injectSaga';
@@ -40,36 +28,6 @@ import {
   FaPencilAlt,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class ContentsListingPage extends React.Component {
@@ -313,10 +271,7 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'PagecontentListing', reducer });
 const withSaga = injectSaga({ key: 'PagecontentListing', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

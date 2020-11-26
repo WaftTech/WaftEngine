@@ -15,14 +15,10 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-
 // core components
 import Table from 'components/Table';
 import * as mapDispatchToProps from './actions';
 
-import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
@@ -146,14 +142,6 @@ export const MenuManage = props => {
         {loading && loading === true ? <Loading /> : <></>}
         <PageHeader>Menu Manage</PageHeader>
         <div className="flex items-center">
-          {/* <span
-            className="inline-block text-blue-500 hover:text-blue-600 h text-xl px-5 cursor-pointer"
-            onClick={this.toggleHelp}
-          >
-            <FaRegQuestionCircle />
-
-            {this.state.help && <span className="arrow_box" />}
-          </span> */}
           <button
             className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
             onClick={handleAdd}
@@ -213,36 +201,6 @@ export const MenuManage = props => {
   );
 };
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
-
 MenuManage.propTypes = {
   // defaultActionRequest: PropTypes.func.isRequired,
   // defaultData: PropTypes.string.isRequired,
@@ -254,8 +212,6 @@ const mapStateToProps = createStructuredSelector({
   query: makeSelectQuery(),
 });
 
-const withStyle = withStyles(styles);
-
 const withConnect = connect(
   mapStateToProps,
   { ...mapDispatchToProps, push },
@@ -263,5 +219,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-  withStyle,
 )(MenuManage);

@@ -12,12 +12,6 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table';
 
 import injectSaga from 'utils/injectSaga';
@@ -34,37 +28,7 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class FaqCategory extends React.PureComponent {
@@ -173,39 +137,34 @@ export class FaqCategory extends React.PureComponent {
         <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>FAQ Category Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative">
-              <input
-                type="text"
-                name="find_title"
-                id="faq-title"
-                placeholder="Search Category"
-                className="m-auto inputbox"
-                value={query.find_title}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="flex relative mr-4 max-w-sm">
+            <input
+              type="text"
+              name="find_title"
+              id="faq-title"
+              placeholder="Search Category"
+              className="m-auto inputbox pr-6"
+              value={query.find_title}
+              onChange={this.handleQueryChange}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
-
           <Table
             tableHead={[
               'Title',
@@ -241,10 +200,7 @@ const withReducer = injectReducer({
 });
 const withSaga = injectSaga({ key: 'adminFaqCategoryManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

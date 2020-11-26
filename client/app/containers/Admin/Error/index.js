@@ -13,14 +13,6 @@ import moment from 'moment';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import { Button } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -41,26 +33,6 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
-
-const styles = theme => ({
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class Error extends React.Component {
@@ -265,10 +237,7 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'adminErrorManagePage', reducer });
 const withSaga = injectSaga({ key: 'adminErrorManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

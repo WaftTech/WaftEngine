@@ -10,22 +10,7 @@ import { Helmet } from 'react-helmet';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import Fab from '@material-ui/core/Fab';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import { Checkbox } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-// core components
 import Table from 'components/Table';
-
 import { DATE_FORMAT } from '../../App/constants';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
@@ -54,37 +39,7 @@ import Modal from '../../../components/Modal';
 import Loading from '../../../components/Loading';
 import LinkBoth from '../../../components/LinkBoth';
 import QuickEdit from './AddEditPage/QuickEdit';
-import { FaBan, FaRegCheckCircle } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaBan, FaRegCheckCircle, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogManagePage extends React.Component {
@@ -441,7 +396,13 @@ export class BlogManagePage extends React.Component {
         // `${is_highlight}`,
         // `${is_showcase}`,
         // `${is_active}`,
-        <>{is_published ? <FaRegCheckCircle /> : <FaBan />} </>,
+        <>
+          {is_published ? (
+            <FaRegCheckCircle className="text-green-500" />
+          ) : (
+            <FaBan className="text-red-400" />
+          )}{' '}
+        </>,
         // tags.join(','),
         (
           <p className="">
@@ -524,16 +485,16 @@ export class BlogManagePage extends React.Component {
               Showcase({msg && msg.showcase ? msg.showcase : null})
             </span>
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <div className="bg-white rounded p-2 mb-4">
           <div className="flex -mx-1 items-center">
@@ -714,11 +675,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

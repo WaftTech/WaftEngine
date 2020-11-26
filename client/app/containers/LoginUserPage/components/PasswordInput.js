@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
@@ -23,10 +22,7 @@ const PasswordInput = props => {
   const hasError = Boolean(errors);
   return (
     <div className="mb-4">
-      <label
-        className="label"
-        htmlFor="Password"
-      >
+      <label className="label" htmlFor="Password">
         Password
       </label>
       <div className="relative">
@@ -39,7 +35,6 @@ const PasswordInput = props => {
           className="inputbox"
         />
         <span
-          className={classes.EyeIcon}
           aria-label="Toggle password visibility"
           onClick={handleTogglePassword}
         >
@@ -75,13 +70,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const styles = theme => ({
-  EyeIcon: { position: 'absolute', right: 12, top: 6 },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(PasswordInput);
+export default compose(withConnect)(PasswordInput);

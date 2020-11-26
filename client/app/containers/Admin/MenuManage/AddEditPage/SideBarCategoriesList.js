@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -11,19 +10,7 @@ import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutline
 import FolderIcon from '@material-ui/icons/Folder';
 import DescriptionIcon from '@material-ui/icons/Description';
 import * as mapDispatchToProps from '../actions';
-
 import { makeSelectCategory, makeSelectLoading } from '../selectors';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-});
 
 const SidebarCategoriesList = props => {
   const {
@@ -71,15 +58,15 @@ const SidebarCategoriesList = props => {
                 <FolderIcon />
               </div>
             ) : (
-                <div className="text-grey-darker hover:text-primary cursor-pointer">
-                  {e.child_menu[0]._id !== '' ? (
-                    <AddBoxOutlinedIcon />
-                  ) : (
-                      <CheckBoxOutlineBlankOutlinedIcon />
-                    )}
-                  <FolderIcon />
-                </div>
-              )}
+              <div className="text-grey-darker hover:text-primary cursor-pointer">
+                {e.child_menu[0]._id !== '' ? (
+                  <AddBoxOutlinedIcon />
+                ) : (
+                  <CheckBoxOutlineBlankOutlinedIcon />
+                )}
+                <FolderIcon />
+              </div>
+            )}
             <div className="flex items-center cursor-pointer">
               <span
                 onClick={() => handleClick(e._id)}
@@ -99,18 +86,18 @@ const SidebarCategoriesList = props => {
           </Collapse>
         </>
       ) : (
-          <>
-            {e._id !== '' && (
-              <div
-                onClick={() => handleClick(e._id)}
-                className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
-              >
-                <DescriptionIcon />
-                {`${e.title}`}
-              </div>
-            )}
-          </>
-        )}
+        <>
+          {e._id !== '' && (
+            <div
+              onClick={() => handleClick(e._id)}
+              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+            >
+              <DescriptionIcon />
+              {`${e.title}`}
+            </div>
+          )}
+        </>
+      )}
     </ul>
   );
 
@@ -126,8 +113,8 @@ const SidebarCategoriesList = props => {
       {category.length <= 0 ? (
         <h1 />
       ) : (
-          category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
-        )}
+        category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
+      )}
     </div>
   );
 };
@@ -145,9 +132,5 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-const withStyle = withStyles(styles);
 
-export default compose(
-  withConnect,
-  withStyle,
-)(SidebarCategoriesList);
+export default compose(withConnect)(SidebarCategoriesList);

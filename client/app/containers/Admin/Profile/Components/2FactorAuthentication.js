@@ -6,8 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
 import { useInjectSaga } from 'utils/injectSaga';
 
 import injectReducer from 'utils/injectReducer';
@@ -21,11 +19,6 @@ import {
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-import {
-  Input,
-  DatePicker,
-  Checkbox,
-} from '../../../../components/customComponents';
 import Modal from '../../../../components/Modal';
 import { FaCheck } from 'react-icons/fa';
 
@@ -103,7 +96,7 @@ export const TwoFactor = props => {
         handleUpdate={handleSubmitCode}
       >
         <div>
-          <Input
+          <input
             id="two_factor_authentication"
             name="two_factor_authentication"
             label="Google Two factor authentication code"
@@ -132,7 +125,7 @@ export const TwoFactor = props => {
           </svg>
         </div>
         <div>
-          <Input
+          <input
             id="code"
             name="code"
             label="Enter Your code"
@@ -204,11 +197,4 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(TwoFactor);
+export default compose(withConnect)(TwoFactor);

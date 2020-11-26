@@ -7,14 +7,8 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton, Button } from '@material-ui/core';
 import reducer from '../reducer';
 import * as mapDispatchToProps from '../actions';
 import saga from '../saga';
@@ -133,23 +127,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'blogCommentManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogCommentManagePage', saga });
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(ViewComment);

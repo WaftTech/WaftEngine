@@ -192,7 +192,7 @@ Together these two methods work like magic. When you type something in the textb
 2.  The Redux store will consult with its corresponding reducer, since a reducer knows what to do with the data.
 3.  When a reducer computes a new state tree, the store will update its state with the newly typed data.
 4.  An update has occured in the state, therefore `mapStateToProps()` will be triggered and your react component will get the new data.
-5.  The updated data will be set as the `value` to your `<Input />`.
+5.  The updated data will be set as the `value` to your `<input />`.
 
 _So you see, if you type something in the textbox, it will not be directly reflected in the DOM. It must pass through redux. Redux will update the state and return it to the component. It's the component's responsibility to show the updated data._
 
