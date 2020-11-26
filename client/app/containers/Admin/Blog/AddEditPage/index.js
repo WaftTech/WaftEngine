@@ -10,9 +10,6 @@ import { Helmet } from 'react-helmet';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-// @material-ui/core components
-import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import BackIcon from '@material-ui/icons/ArrowBack';
@@ -315,14 +312,6 @@ class AddEdit extends React.PureComponent {
       return obj;
     });
 
-    const menuProps = {
-      PaperProps: {
-        style: {
-          maxHeight: 48 * 4.5 + 8,
-          width: 250,
-        },
-      },
-    };
     const cats = {};
     category.map(e => {
       cats[e._id] = e;
@@ -544,21 +533,19 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempMetaTag}
               />
             </form>
-            <Paper elevation={2}>
-              {one.meta_tag.map((tag, index) => {
-                const icon = null;
+            {one.meta_tag.map((tag, index) => {
+              const icon = null;
 
-                return (
-                  <Chip
-                    key={`meta-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaTagDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
+              return (
+                <Chip
+                  key={`meta-${tag}-${index}`}
+                  icon={icon}
+                  label={tag}
+                  onDelete={this.handleMetaTagDelete(index)}
+                  className={classes.chip}
+                />
+              );
+            })}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm" htmlFor="grid-last-name">
@@ -575,21 +562,19 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempMetaKeyword}
               />
             </form>
-            <Paper elevation={2}>
-              {one.keywords.map((tag, index) => {
-                const icon = null;
+            {one.keywords.map((tag, index) => {
+              const icon = null;
 
-                return (
-                  <Chip
-                    key={`metakeywords-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaKeywordDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
+              return (
+                <Chip
+                  key={`metakeywords-${tag}-${index}`}
+                  icon={icon}
+                  label={tag}
+                  onDelete={this.handleMetaKeywordDelete(index)}
+                  className={classes.chip}
+                />
+              );
+            })}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">

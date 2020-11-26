@@ -66,15 +66,6 @@ const QuickEdit = props => {
     };
     return obj;
   });
-
-  const menuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 48 * 4.5 + 8,
-        width: 250,
-      },
-    },
-  };
   const cats = {};
   category.map(e => {
     cats[e._id] = e;

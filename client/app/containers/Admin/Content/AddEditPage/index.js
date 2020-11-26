@@ -210,22 +210,20 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempMetaTag}
               />
             </form>
-            <Paper elevation={2}>
-              {one.meta_tag &&
-                one.meta_tag.map((tag, index) => {
-                  const icon = null;
+            {one.meta_tag &&
+              one.meta_tag.map((tag, index) => {
+                const icon = null;
 
-                  return (
-                    <Chip
-                      key={`meta-${tag}-${index}`}
-                      icon={icon}
-                      label={tag}
-                      onDelete={this.handleMetaTagDelete(index)}
-                      className={classes.chip}
-                    />
-                  );
-                })}
-            </Paper>
+                return (
+                  <Chip
+                    key={`meta-${tag}-${index}`}
+                    icon={icon}
+                    label={tag}
+                    onDelete={this.handleMetaTagDelete(index)}
+                    className={classes.chip}
+                  />
+                );
+              })}
           </div>
 
           <div className="flex w-full justify-between md:w-1/2 px-2">
