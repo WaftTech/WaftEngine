@@ -11,13 +11,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Checkbox, IconButton } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Input from '@material-ui/core/Input';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import injectSaga from 'utils/injectSaga';
@@ -47,35 +40,6 @@ import WECkEditior from '../../../../components/CkEditor';
 import Inputs from '../../../../components/customComponents/Input';
 import Select from '../../../../components/Select';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
-
-const styles = theme => ({
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -470,29 +434,6 @@ class AddEdit extends React.PureComponent {
               options={listCategory}
               styles={customStyles}
             />
-            {/* <Select
-                multiple
-                displayEmpty
-                name="template_key"
-                value={one.category || []}
-                input={<Input />}
-                onChange={this.handleMultipleSelectChange}
-                renderValue={selected =>
-                  this.handleSelectedValue(selected, cats)
-                }
-                MenuProps={menuProps}
-              >
-                <MenuItem value="" name="none" disabled>
-                  None
-                </MenuItem>
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id} name={each.title}>
-                    <Checkbox checked={one.category.indexOf(each._id) > -1} />
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </Select> */}
-            {/* </FormControl> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm" htmlFor="grid-blog-title">
@@ -790,7 +731,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
 
@@ -837,7 +777,6 @@ const withConnect = connect(
 );
 
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

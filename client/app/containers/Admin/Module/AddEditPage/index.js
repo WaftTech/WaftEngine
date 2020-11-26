@@ -7,14 +7,6 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 import Select from 'react-select';
-
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import IconButton from '@material-ui/core/IconButton';
-import Fab from '@material-ui/core/Fab';
-import SwapIcon from '@material-ui/icons/SwapHoriz';
-import BackIcon from '@material-ui/icons/ArrowBack';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -378,29 +370,8 @@ const customStyles = {
   }),
 };
 
-const styles = theme => ({
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(AddEdit);

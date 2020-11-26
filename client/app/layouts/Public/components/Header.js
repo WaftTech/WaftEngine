@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import { NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -16,8 +16,6 @@ import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
 import './header.css';
-
-const styles = theme => ({});
 
 const Header = props => {
   const { classes, token, user, logoutRequest: logout } = props;
@@ -104,47 +102,47 @@ const Header = props => {
             </button>
           </div>
         ) : (
-            <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
-              <button className={classes.dropDown} onClick={handleMenu}>
-                <div className="text-base flex">
-                  <span className="ml-2 mr-2">{user.name} | </span>
-                  <AccountCircle />
-                </div>
-              </button>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                {user.isAdmin && (
-                  <Link
-                    to="/admin/dashboard"
-                    style={{ textDecoration: 'none', color: 'black' }}
-                    onClick={handleClose}
-                  >
-                    <MenuItem>Dashboard</MenuItem>
-                  </Link>
-                )}
+          <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
+            <button className={classes.dropDown} onClick={handleMenu}>
+              <div className="text-base flex">
+                <span className="ml-2 mr-2">{user.name} | </span>
+                <AccountCircle />
+              </div>
+            </button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              {user.isAdmin && (
                 <Link
-                  to="/user/profile"
+                  to="/admin/dashboard"
                   style={{ textDecoration: 'none', color: 'black' }}
                   onClick={handleClose}
                 >
-                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>Dashboard</MenuItem>
                 </Link>
-                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-              </Menu>
-            </div>
-          )}
+              )}
+              <Link
+                to="/user/profile"
+                style={{ textDecoration: 'none', color: 'black' }}
+                onClick={handleClose}
+              >
+                <MenuItem>Profile</MenuItem>
+              </Link>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+            </Menu>
+          </div>
+        )}
       </div>
     </header>
   );
@@ -168,9 +166,4 @@ const withConnect = connect(
   { push, logoutRequest },
 );
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(Header);
+export default compose(withConnect)(Header);

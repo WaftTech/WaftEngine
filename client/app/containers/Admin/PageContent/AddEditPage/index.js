@@ -10,12 +10,6 @@ import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-// core components
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
@@ -44,18 +38,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
-
-const styles = {
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-};
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -378,7 +360,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'PagecontentListing', reducer });
 const withSaga = injectSaga({ key: 'PagecontentListing', saga });
 
@@ -397,7 +378,6 @@ const withConnect = connect(
 
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

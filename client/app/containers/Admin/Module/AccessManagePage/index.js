@@ -6,25 +6,15 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 
-import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-// core components
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectAccess, makeSelectLoading } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import '../style.css';
 import { FaPencilAlt, FaArrowLeft, FaSearch, FaPlus } from 'react-icons/fa';
 
@@ -175,43 +165,8 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  toggleContainer: {
-    height: 56,
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin: `${theme.spacing(1)}px 0`,
-    background: theme.palette.background.default,
-  },
-
-  accesslist: {
-    boxShadow: 'none',
-  },
-});
-
-const withStyle = withStyles(styles);
-
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(AccessManagePage);

@@ -8,8 +8,6 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -19,8 +17,6 @@ import { makeSelectOne, makeSelectLoading } from './selectors';
 import { DATE_FORMAT } from '../../App/constants';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../components/Loading';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -108,23 +104,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
 const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(ViewContacts);

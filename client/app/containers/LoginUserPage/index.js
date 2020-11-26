@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { createStructuredSelector } from 'reselect';
@@ -16,7 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { withStyles } from '@material-ui/core/styles';
 import { Input } from '../../components/customComponents';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';

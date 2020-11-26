@@ -13,11 +13,6 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -41,37 +36,7 @@ import Loading from '../../../components/Loading';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 
-import { FaRegEye } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaRegEye, FaCheck, FaSearch } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogCommentManagePage extends React.PureComponent {
@@ -215,16 +180,19 @@ export class BlogCommentManagePage extends React.PureComponent {
     const selectAll = data.map(e => e._id);
     const tableData = data.map(
       ({ title, blog_id, status, added_at, added_by, updated_at, _id }) => [
-        <>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.selected.includes(_id) ? true : false}
-                onChange={() => this.handleCheckedChange(_id)}
-              />
-            }
+        <div className="checkbox">
+          <input
+            checked={this.state.selected.includes(_id) ? true : false}
+            onChange={() => this.handleCheckedChange(_id)}
+            type="checkbox"
+            id={_id}
           />
-        </>,
+          <label htmlFor={_id}>
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+          </label>
+        </div>,
         title,
         blog_id && blog_id.title,
         status || 'onhold',
@@ -265,20 +233,58 @@ export class BlogCommentManagePage extends React.PureComponent {
             {/* <div> */}
             <button
               onClick={this.handleClose}
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              className="btn text-white bg-primary uppercase btn-theme"
             >
               No
             </button>
             <button
               onClick={this.handleSave}
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-500 uppercase btn-theme"
+              className="btn text-white bg-blue-500 uppercase btn-theme"
             >
               Yes
             </button>
           </DialogActions>
         </Dialog>
         <PageContent loading={loading}>
-          <div className="flex">
+          <div className="flex items-center">
+            <div className="inline-flex relative mr-4 w-64 mt-4">
+              <input
+                type="text"
+                name="find_title"
+                id="comment-title"
+                placeholder="Search Blog Comment"
+                className="m-auto inputbox pr-6"
+                value={query.find_title}
+                onChange={this.handleQueryChange}
+                onKeyDown={this.handleEnter}
+              />
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                onClick={this.handleSearch}
+              >
+                <FaSearch />
+              </span>
+            </div>
+
+            <div className="inline-flex relative mr-4 w-64 mt-4">
+              <input
+                type="text"
+                name="find_blog_id"
+                id="blog-of-comment"
+                placeholder="Search Blogs"
+                className="m-auto inputbox pr-6"
+                value={query.find_blog_id}
+                onChange={this.handleQueryChange}
+                onKeyDown={this.handleEnter}
+              />
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                onClick={this.handleSearch}
+              >
+                <FaSearch />
+              </span>
+            </div>
+
             <div className="checkbox">
               <input
                 checked={query.find_is_approved}
@@ -309,65 +315,37 @@ export class BlogCommentManagePage extends React.PureComponent {
               </label>
             </div>
 
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_title"
-                id="comment-title"
-                placeholder="Search Blog Comment"
-                className="m-auto inputbox"
-                value={query.find_title}
-                onChange={this.handleQueryChange}
-                onKeyDown={this.handleEnter}
-              />
-            </div>
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_blog_id"
-                id="blog-of-comment"
-                placeholder="Search Blogs"
-                className="m-auto inputbox"
-                value={query.find_blog_id}
-                onChange={this.handleQueryChange}
-                onKeyDown={this.handleEnter}
-              />
-            </div>
-            <div className="flex relative mr-2">
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
+            <div className="flex-1 text-right">
+              <button
+                className="btn text-green-500 bg-green-100 border border-green-200 mr-2"
+                onClick={() => this.handleOpen('Approve')}
               >
-                <SearchIcon />
-              </IconButton>
+                Approve
+              </button>
+              <button
+                className="btn text-red-500 bg-red-100 border border-red-200"
+                onClick={() => this.handleOpen('Disapprove')}
+              >
+                Disapprove
+              </button>
             </div>
-          </div>
-          <div className="float-right">
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-blue-500 uppercase btn-theme"
-              onClick={() => this.handleOpen('Approve')}
-            >
-              Approve
-            </button>
-            <button
-              className="py-2 px-6 rounded mt-4 ml-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={() => this.handleOpen('Disapprove')}
-            >
-              Disapprove
-            </button>
           </div>
 
           <Table
             tableHead={[
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.selectAll}
-                    onChange={() => this.handleSelectAll(selectAll)}
-                  />
-                }
-              />,
+              <div className="checkbox">
+                <input
+                  id="select-all"
+                  checked={this.state.selectAll}
+                  onChange={() => this.handleSelectAll(selectAll)}
+                  type="checkbox"
+                />
+                <label htmlFor="select-all">
+                  <span className="box">
+                    <FaCheck className="check-icon" />
+                  </span>
+                </label>
+              </div>,
               'Comment Title',
               'Blog',
               'Status',
@@ -404,10 +382,7 @@ const withReducer = injectReducer({
 });
 const withSaga = injectSaga({ key: 'blogCommentManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

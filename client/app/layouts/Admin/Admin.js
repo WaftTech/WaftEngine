@@ -6,10 +6,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { withStyles } from '@material-ui/core/styles';
 import MainListItems from './components/MainListItem';
 import { logoutRequest } from '../../containers/App/actions';
 import Logo from '../../assets/img/logo-white.svg';

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import 'react-datepicker/dist/react-datepicker.css';
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 
@@ -26,18 +26,6 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import Input from '../../../../components/customComponents/Input';
 import { FaArrowLeft } from 'react-icons/fa';
-
-const styles = {
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-};
 
 const key = 'subModules';
 
@@ -184,8 +172,6 @@ AddEdit.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-const withStyle = withStyles(styles);
-
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
@@ -199,6 +185,5 @@ const withConnect = connect(
 
 export default compose(
   withRouter,
-  withStyle,
   withConnect,
 )(AddEdit);

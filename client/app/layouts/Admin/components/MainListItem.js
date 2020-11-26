@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { NavLink as Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,8 +12,6 @@ import {
   makeSelectLocation,
   makeSelectAccess,
 } from '../../../containers/App/selectors';
-
-const styles = theme => ({});
 
 const MainListItem = ({ location: { pathname }, access }) => {
   const [openSet, setOpenSet] = useState({});
@@ -103,9 +100,5 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const withConnect = connect(mapStateToProps);
-const withStyle = withStyles(styles);
 
-export default compose(
-  withConnect,
-  withStyle,
-)(MainListItem);
+export default compose(withConnect)(MainListItem);

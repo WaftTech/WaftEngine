@@ -10,18 +10,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-// @material components
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
@@ -32,72 +20,12 @@ import {
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import PageHeader from '../../../components/PageHeader/PageHeader';
 import Loading from '../../../components/Loading';
 import Input from '../../../components/customComponents/Input';
 import Select from '../../../components/customComponents/Select';
 import { FaCheck } from 'react-icons/fa';
 
 const key = 'settingsManagePage';
-
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  paper: {
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(6))]: {
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-
-  ExpansionPanelMainWrapper: {
-    marginBottom: '8px',
-    boxShadow: 'none',
-  },
-
-  productRoot: {
-    minHeight: '44px',
-  },
-
-  productContent: {
-    margin: '6px 0px',
-  },
-
-  productExpandIcon: {
-    padding: '0px 12px',
-  },
-
-  productExpanded: {
-    borderBottom: '1px solid gainsboro',
-    margin: '6px 0px !important',
-    '& > div': {
-      borderBottom: 'none',
-      margin: '6px 0px',
-    },
-  },
-
-  detail: {
-    width: '100%',
-  },
-});
 
 export const SettingsManagePage = props => {
   const {
@@ -716,8 +644,6 @@ export const SettingsManagePage = props => {
   );
 };
 
-const withStyle = withStyles(styles);
-
 SettingsManagePage.propTypes = {
   loadAllSettingsRequest: PropTypes.func.isRequired,
   settings: PropTypes.object.isRequired,
@@ -736,6 +662,5 @@ const withConnect = connect(
 );
 export default compose(
   withConnect,
-  withStyle,
   memo,
 )(SettingsManagePage);

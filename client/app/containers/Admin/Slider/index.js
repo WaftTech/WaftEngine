@@ -8,18 +8,6 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 import qs from 'query-string';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Edit from '@material-ui/icons/Edit';
-import Close from '@material-ui/icons/Close';
-
-// core components
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table/Table';
 
 import { DATE_FORMAT } from '../../App/constants';
@@ -42,36 +30,6 @@ import {
   FaRegQuestionCircle,
   FaSearch,
 } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class SliderPage extends React.Component {
@@ -310,11 +268,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'sliderManagePage', reducer });
 const withSaga = injectSaga({ key: 'sliderManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

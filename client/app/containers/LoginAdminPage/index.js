@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -203,12 +203,7 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
 const withSaga = injectSaga({ key: 'loginAdminPage', saga });
 
-const styles = {};
-
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

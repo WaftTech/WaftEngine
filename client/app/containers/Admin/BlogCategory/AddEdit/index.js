@@ -10,12 +10,6 @@ import CKEditor from 'react-ckeditor-component';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-// core components
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-import Checkbox from '@material-ui/core/Checkbox';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -26,8 +20,6 @@ import {
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
@@ -255,8 +247,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({
   key: 'BlogCategory',
   reducer,
@@ -274,7 +264,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

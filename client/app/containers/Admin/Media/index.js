@@ -6,10 +6,6 @@ import { compose } from 'redux';
 import Dropzone from 'react-dropzone';
 import { Helmet } from 'react-helmet';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -27,28 +23,6 @@ import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
 import Loading from '../../../components/Loading';
 import { FaTrashAlt, FaKey, FaPencilAlt, FaPlus } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class Media extends React.Component {
@@ -185,10 +159,7 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'adminMediaPage', reducer });
 const withSaga = injectSaga({ key: 'adminMediaPage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

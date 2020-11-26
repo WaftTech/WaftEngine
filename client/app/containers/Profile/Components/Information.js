@@ -10,7 +10,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import CheckBox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -160,10 +160,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
   reducer,
@@ -174,5 +170,4 @@ export default compose(
   withConnect,
   withReducer,
   withSaga,
-  withStyle,
 )(UserPersonalInformationPage);

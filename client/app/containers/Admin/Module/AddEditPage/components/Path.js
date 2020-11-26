@@ -4,12 +4,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import { FaRegTrashAlt } from 'react-icons/fa';
 
 const methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
-
-const styles = {};
 
 const Path = props => {
   const {
@@ -174,9 +171,4 @@ Path.propTypes = {
   handleRemovePath: PropTypes.func.isRequired,
 };
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withRouter,
-  withStyle,
-)(Path);
+export default compose(withRouter)(Path);

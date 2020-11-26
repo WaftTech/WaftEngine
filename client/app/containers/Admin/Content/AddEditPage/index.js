@@ -10,13 +10,8 @@ import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 // core components
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -32,25 +27,11 @@ import * as mapDispatchToProps from '../actions';
 import { DATE_FORMAT } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
 import Input from '../../../../components/customComponents/Input';
 import { FaCheck, FaArrowLeft } from 'react-icons/fa';
-
-const styles = {
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-};
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -315,7 +296,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
 const withSaga = injectSaga({ key: 'contentsListingPage', saga });
 
@@ -334,7 +314,6 @@ const withConnect = connect(
 
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -13,12 +13,6 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
 import Table from 'components/Table/Table';
 
 import injectSaga from 'utils/injectSaga';
@@ -33,27 +27,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
-import { FaTrashAlt, FaRegEye } from 'react-icons/fa';
-
-const styles = theme => ({
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaTrashAlt, FaRegEye, FaSearch } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Subscribe extends React.PureComponent {
@@ -157,25 +131,22 @@ export class Subscribe extends React.PureComponent {
           <PageHeader>Subscribe Manage</PageHeader>
         </div>
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_email"
-                id="email"
-                placeholder="Search Subscriber"
-                className="m-auto inputbox"
-                value={query.find_email}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="inline-flex relative mr-4 w-64 mt-4">
+            <input
+              type="text"
+              name="find_email"
+              id="email"
+              placeholder="Search Subscriber"
+              className="m-auto inputbox pr-6"
+              value={query.find_email}
+              onChange={this.handleQueryChange}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
 
           <Table
@@ -204,10 +175,7 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'adminSubscribePage', reducer });
 const withSaga = injectSaga({ key: 'adminSubscribePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

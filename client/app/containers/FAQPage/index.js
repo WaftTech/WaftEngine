@@ -1,22 +1,9 @@
-/** *********
- *
- * FAQPage
- *
- *********** */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import withStyles from '@material-ui/core/styles/withStyles';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { makeSelectFAQ, makeSelectLoading } from './selectors';
@@ -24,8 +11,6 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../components/Loading';
-
-const styles = {};
 
 class FAQPage extends React.Component {
   static propTypes = {
@@ -123,10 +108,8 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-const withStyle = withStyles(styles);
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(FAQPage);

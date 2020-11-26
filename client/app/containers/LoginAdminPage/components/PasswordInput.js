@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -67,13 +66,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const styles = theme => ({
-  EyeIcon: { position: 'absolute', right: 12, top: 6 },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(PasswordInput);
+export default compose(withConnect)(PasswordInput);

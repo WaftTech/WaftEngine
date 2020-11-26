@@ -7,8 +7,6 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import Table from 'components/Table';
 import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
@@ -24,34 +22,6 @@ import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
 import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
-
-const styles = theme => ({
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class FAQManagePage extends React.PureComponent {
@@ -174,7 +144,7 @@ export class FAQManagePage extends React.PureComponent {
           </div>
         </div>
         <PageContent loading={loading}>
-          <div className="flex relative mr-4 max-w-sm">
+          <div className="flex relative mr-4 max-w-lg">
             <input
               type="text"
               name="find_question"
@@ -227,11 +197,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'faqManagePage', reducer });
 const withSaga = injectSaga({ key: 'faqManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

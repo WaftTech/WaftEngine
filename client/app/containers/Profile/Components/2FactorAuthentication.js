@@ -8,7 +8,7 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 
 // @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import injectSaga, { useInjectSaga } from 'utils/injectSaga';
@@ -154,28 +154,38 @@ export const TwoFactor = props => {
         </div>
       </Modal>
       <div className="ml-4 p-4">
-        <div>
-          <Checkbox
-            label="Enable Email two factor authentication"
+        <div className="checkbox">
+          <input
             checked={twoFactor.email.is_authenticate}
-            name="email"
+            id="email"
             type="checkbox"
-            color="primary"
             onChange={handleChecked}
           />
-          {addEmailAuth && 'Loading...'}
+          <label htmlFor="email">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Enable Email two factor authentication
+          </label>
         </div>
-        <div>
-          <Checkbox
-            label="Enable Google two factor authentication"
+
+        {addEmailAuth && 'Loading...'}
+
+        <div className="checkbox">
+          <input
             checked={twoFactor.google_authenticate.is_authenticate}
-            name="google_authenticate"
+            id="google_authenticate"
             type="checkbox"
-            color="primary"
             onChange={handleChecked}
           />
-          {addGoogleAuth && 'Loading...'}
+          <label htmlFor="google_authenticate">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Enable Google two factor authentication
+          </label>
         </div>
+        {addGoogleAuth && 'Loading...'}
       </div>
     </>
   );
@@ -206,11 +216,4 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(TwoFactor);
+export default compose(withConnect)(TwoFactor);
