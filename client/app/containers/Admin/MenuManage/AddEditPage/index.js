@@ -9,18 +9,9 @@ import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-// core components
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import {
-  IconButton,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-} from '@material-ui/core';
-import BackIcon from '@material-ui/icons/ArrowBack';
+
 import reducer from '../reducer';
 import saga from '../saga';
 import * as mapDispatchToProps from '../actions';
@@ -44,17 +35,6 @@ import WECkEditior from '../../../../components/CkEditor';
 import DeleteDialog from '../../../../components/DeleteDialog';
 import { FaArrowLeft } from 'react-icons/fa';
 
-const styles = {
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-};
 const key = 'menuManage';
 
 const AddEdit = props => {
@@ -518,8 +498,6 @@ const AddEdit = props => {
   );
 };
 
-const withStyle = withStyles(styles);
-
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
   loading: makeSelectLoading(),
@@ -548,6 +526,5 @@ AddEdit.propTypes = {
 };
 export default compose(
   withRouter,
-  withStyle,
   withConnect,
 )(AddEdit);

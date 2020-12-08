@@ -10,13 +10,8 @@ import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 // core components
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -32,25 +27,10 @@ import * as mapDispatchToProps from '../actions';
 import { DATE_FORMAT } from '../../../App/constants';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
-import Input from '../../../../components/customComponents/Input';
 import { FaCheck, FaArrowLeft } from 'react-icons/fa';
-
-const styles = {
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-};
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -68,9 +48,10 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.edit_id && this.props.edit_id !== '') {
-      this.props.loadOneRequest(this.props.edit_id);
+    if (this.props.match.params && this.props.match.params.id !== '') {
+      this.props.loadOneRequest(this.props.match.params.id);
     }
+    console.log(this.props.match.id);
   }
 
   handleEditorChange = (e, name) => {
@@ -162,11 +143,11 @@ class AddEdit extends React.PureComponent {
 
         <PageContent className="bg-white border- p-4">
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Content Title"
-              inputclassName="inputbox"
-              inputid="grid-last-name"
-              inputType="text"
+              className="inputbox"
+              id="grid-last-name"
+              type="text"
               value={one.name}
               onChange={this.handleChange('name')}
               error={errors.name}
@@ -174,11 +155,11 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Content Key"
-              inputclassName="inputbox"
-              inputid="grid-last-name"
-              inputType="text"
+              className="inputbox"
+              id="grid-last-name"
+              type="text"
               value={one.key}
               onChange={this.handleChange('key')}
               error={errors.key}
@@ -194,22 +175,22 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Meta Title"
-              inputclassName="inputbox"
-              inputid="grid-last-meta_title"
-              inputType="text"
+              className="inputbox"
+              id="grid-last-meta_title"
+              type="text"
               value={one.meta_title}
               onChange={this.handleChange('meta_title')}
               error={errors.meta_title}
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Meta Description"
-              inputclassName="inputbox"
-              inputid="grid-last-meta_description"
-              inputType="text"
+              className="inputbox"
+              id="grid-last-meta_description"
+              type="text"
               value={one.meta_description}
               onChange={this.handleChange('meta_description')}
               error={errors.meta_description}
@@ -229,22 +210,20 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempMetaTag}
               />
             </form>
-            <Paper elevation={2}>
-              {one.meta_tag &&
-                one.meta_tag.map((tag, index) => {
-                  const icon = null;
+            {one.meta_tag &&
+              one.meta_tag.map((tag, index) => {
+                const icon = null;
 
-                  return (
-                    <Chip
-                      key={`meta-${tag}-${index}`}
-                      icon={icon}
-                      label={tag}
-                      onDelete={this.handleMetaTagDelete(index)}
-                      className={classes.chip}
-                    />
-                  );
-                })}
-            </Paper>
+                return (
+                  <Chip
+                    key={`meta-${tag}-${index}`}
+                    icon={icon}
+                    label={tag}
+                    onDelete={this.handleMetaTagDelete(index)}
+                    className={classes.chip}
+                  />
+                );
+              })}
           </div>
 
           <div className="flex w-full justify-between md:w-1/2 px-2">
@@ -314,7 +293,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
 const withSaga = injectSaga({ key: 'contentsListingPage', saga });
 
@@ -333,7 +311,6 @@ const withConnect = connect(
 
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -6,8 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
@@ -19,25 +17,10 @@ import {
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import { FaArrowLeft } from 'react-icons/fa';
-
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -101,11 +84,11 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Question"
-              inputclassName="inputbox"
-              inputid="faq"
-              inputType="text"
+              className="inputbox"
+              id="faq"
+              type="text"
               name="Question"
               value={one.question || ''}
               onChange={this.handleChange('question')}
@@ -167,8 +150,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({ key: 'faqManagePage', reducer });
 const withSaga = injectSaga({ key: 'faqManagePage', saga });
 
@@ -184,7 +165,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -10,7 +10,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import CheckBox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -27,7 +27,6 @@ import {
 } from '../selectors';
 import { DATE_FORMAT } from '../../App/constants';
 import * as mapDispatchToProps from '../actions';
-import Input from '../../../components/customComponents/Input';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -73,11 +72,11 @@ class UserPersonalInformationPage extends React.PureComponent {
           className="w-full md:w-1/2 pb-4"
           error={errors && errors.name && errors.name.length > 0}
         >
-          <Input
+          <input
             label="Name"
-            inputclassName="inputbox"
-            inputid="name"
-            inputType="text"
+            className="inputbox"
+            id="name"
+            type="text"
             name="Name"
             value={one.name || ''}
             onChange={this.handleChange('name')}
@@ -89,11 +88,11 @@ class UserPersonalInformationPage extends React.PureComponent {
           className="w-full md:w-1/2 pb-4"
           error={errors && errors.email && errors.email.length > 0}
         >
-          <Input
+          <input
             label="Email"
-            inputclassName="inputbox"
-            inputid="email"
-            inputType="text"
+            className="inputbox"
+            id="email"
+            type="text"
             name="Email"
             value={one.email || ''}
             onChange={this.handleChange('name')}
@@ -160,10 +159,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
   reducer,
@@ -174,5 +169,4 @@ export default compose(
   withConnect,
   withReducer,
   withSaga,
-  withStyle,
 )(UserPersonalInformationPage);

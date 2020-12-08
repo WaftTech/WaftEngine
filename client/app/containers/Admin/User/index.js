@@ -14,18 +14,9 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import qs from 'query-string';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Table from 'components/Table';
-import CreateIcon from '@material-ui/icons/Create';
 import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
@@ -36,7 +27,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaSearch } from 'react-icons/fa';
 /* eslint-disable react/prefer-stateless-function */
 export class User extends React.PureComponent {
   static propTypes = {
@@ -140,36 +131,36 @@ export class User extends React.PureComponent {
           {loading && loading == true ? <Loading /> : <></>}
 
           <PageHeader>User Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            onClick={this.handleAdd}
-          >
-            <AddIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add User</span>
+            </button>
+          </div>
         </div>
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_name"
-                id="user-name"
-                placeholder="Search User"
-                className="m-auto inputbox"
-                value={query.find_name}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="inline-flex relative mr-4 w-64 mt-4">
+            <input
+              type="text"
+              name="find_name"
+              id="user-name"
+              placeholder="Search User"
+              className="m-auto inputbox pr-6"
+              value={query.find_name}
+              onChange={this.handleQueryChange}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
+
           <Table
             tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
             tableData={tableData}
@@ -193,34 +184,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
-
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({ key: 'adminUserManagePage', reducer });
 const withSaga = injectSaga({ key: 'adminUserManagePage', saga });
 
@@ -228,5 +191,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(User);

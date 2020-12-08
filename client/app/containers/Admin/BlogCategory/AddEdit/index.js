@@ -10,12 +10,6 @@ import CKEditor from 'react-ckeditor-component';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-// core components
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-import Checkbox from '@material-ui/core/Checkbox';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -26,25 +20,10 @@ import {
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
-import Input from '../../../../components/customComponents/Input';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
-
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -163,22 +142,22 @@ class AddEdit extends React.PureComponent {
 
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Blog Title"
-              inputclassName="inputbox"
-              inputid="title"
-              inputType="text"
+              className="inputbox"
+              id="title"
+              type="text"
               value={(one && one.title) || ''}
               onChange={this.handleChange('title')}
               error={errors && errors.title}
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Slug"
-              inputclassName="inputbox"
-              inputid="slug"
-              inputType="text"
+              className="inputbox"
+              id="slug"
+              type="text"
               value={(one && one.slug_url) || ''}
               name="slug"
               onChange={this.handleChange('slug_url')}
@@ -187,11 +166,11 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Order"
-              inputclassName="inputbox"
-              inputid="order"
-              inputType="text"
+              className="inputbox"
+              id="order"
+              type="text"
               value={(one && one.order) || ''}
               onChange={this.handleChange('order')}
               error={errors && errors.order}
@@ -255,8 +234,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({
   key: 'BlogCategory',
   reducer,
@@ -274,7 +251,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

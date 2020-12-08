@@ -8,9 +8,7 @@ import { Helmet } from 'react-helmet';
 
 import injectSaga from '../../../../utils/injectSaga';
 import injectReducer from '../../../../utils/injectReducer';
-// core components
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import reducer from '../reducer';
@@ -21,24 +19,10 @@ import {
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -103,12 +87,12 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
+            <input
               label="Title"
-              inputclassName="inputbox"
-              inputid="title"
+              className="inputbox"
+              id="title"
               name="Title"
-              inputType="text"
+              type="text"
               value={one.title}
               onChange={this.handleChange('title')}
               error={errors.title}
@@ -141,8 +125,6 @@ class AddEdit extends React.PureComponent {
   }
 }
 
-const withStyle = withStyles(styles);
-
 const withReducer = injectReducer({
   key: 'adminFaqCategoryManagePage',
   reducer,
@@ -160,7 +142,6 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

@@ -6,13 +6,10 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 
 // core components
 import * as mapDispatchToProps from '../actions';
 import { makeSelectErrors } from '../selectors';
-
-const styles = theme => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 export class ChangePassword extends React.Component {
@@ -165,9 +162,4 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withConnect,
-)(ChangePassword);
+export default compose(withConnect)(ChangePassword);

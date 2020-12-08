@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import withStyles from '@material-ui/core/styles/withStyles';
+
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { createStructuredSelector } from 'reselect';
@@ -16,8 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
-import { Input } from '../../components/customComponents';
+import { withStyles } from '@material-ui/core/styles';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
@@ -127,7 +126,7 @@ const LoginUserPage = props => {
       >
         {showEmailTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <input
               id="code"
               name="code"
               subLabel="Check inbox for the code"
@@ -142,7 +141,7 @@ const LoginUserPage = props => {
 
         {showGoogleTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <input
               id="code"
               name="code"
               subLabel="Copy code from Google Authentication App"
