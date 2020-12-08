@@ -215,6 +215,7 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('password')}
               />
               <span
+                className="absolute right-0 top-0 mt-2 mr-2"
                 aria-label="Toggle password visibility"
                 onClick={this.handleTogglePassword}
               >
