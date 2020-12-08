@@ -200,7 +200,7 @@ export const SettingsManagePage = props => {
               <div className="flex-wrap px-4">
                 <div className="w-1/2 pb-4">
                   <label>Protocal</label>
-                  <Input
+                  <input
                     className="inputbox"
                     id="protocol"
                     type="text"

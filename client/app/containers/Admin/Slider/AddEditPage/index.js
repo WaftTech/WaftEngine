@@ -276,8 +276,8 @@ class AddEdit extends React.PureComponent {
               value={one.slider_name}
               name="slider_name"
               onChange={this.handleChange('slider_name')}
-              error={errors.slider_name}
             />
+            <div className="error">{errors.slider_name}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -289,8 +289,8 @@ class AddEdit extends React.PureComponent {
               value={one.slider_key}
               name="slider_key"
               onChange={this.handleChange('slider_key')}
-              error={errors.slider_key}
             />
+            <div className="error">{errors.slider_key}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">

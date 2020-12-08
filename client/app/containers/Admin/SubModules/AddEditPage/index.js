@@ -98,8 +98,8 @@ const AddEdit = props => {
               type="text"
               value={one.module_group}
               onChange={handleChange('module_group')}
-              error={errors.module_group}
             />
+            <div className="error">{errors.module_group}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -110,8 +110,8 @@ const AddEdit = props => {
               type="text"
               value={one.order}
               onChange={handleChange('order')}
-              error={errors.order}
             />
+            <div className="error">{errors.order}</div>
           </div>
 
           <div className="w-full md:w-1/2">
@@ -128,7 +128,7 @@ const AddEdit = props => {
               value={one.description}
               onChange={handleChange('description')}
             />
-            <div id="component-error-text">{errors.description}</div>
+            <div className="error">{errors.description}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -139,8 +139,8 @@ const AddEdit = props => {
               type="text"
               value={one.module_group_main}
               onChange={handleChange('module_group_main')}
-              error={errors.module_group_main}
             />
+            <div className="error">{errors.module_group_main}</div>
           </div>
 
           <button

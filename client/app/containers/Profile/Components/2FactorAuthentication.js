@@ -107,9 +107,9 @@ export const TwoFactor = props => {
             name="two_factor_authentication"
             disabled
             readOnly
-            error={errors.two_fa_ga_auth_secret}
             value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
           />
+          <div className="error">{errors.two_fa_ga_auth_secret}</div>
         </div>
         <div className="m-2">
           <svg
@@ -134,10 +134,11 @@ export const TwoFactor = props => {
           <input
             id="code"
             name="code"
-            error={errors.code}
             value={twoFactor && twoFactor.code}
             onChange={e => handleChange(e, 'google_authenticate')}
           />
+          <div className="error">{errors.code}</div>
+
           <p className="italic mt-2">
             Note : Enter the code from Authentication App
           </p>

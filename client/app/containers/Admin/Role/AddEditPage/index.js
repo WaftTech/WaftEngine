@@ -92,8 +92,8 @@ class AddEdit extends React.PureComponent {
               type="text"
               value={one.role_title}
               onChange={this.handleChange('role_title')}
-              error={errors.role_title}
             />
+            <div className="error">{errors.role_title}</div>
           </div>
 
           <div className="w-full md:w-1/2">
@@ -106,7 +106,7 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('description')}
               required
             />
-            <div id="component-error-text">{errors.description}</div>
+            <div className="error">{errors.description}</div>
           </div>
 
           <div className="checkbox">

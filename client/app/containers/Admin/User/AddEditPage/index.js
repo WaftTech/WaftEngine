@@ -145,8 +145,8 @@ class AddEdit extends React.PureComponent {
               type="text"
               value={users.name || ''}
               onChange={this.handleChange('name')}
-              error={(errors && errors.name) || ''}
             />
+            <div className="error">{(errors && errors.name) || ''}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm">Bio</label>
@@ -175,7 +175,7 @@ class AddEdit extends React.PureComponent {
               </label>
             </div>
           ))}
-          <div id="component-error-text">{(errors && errors.roles) || ''}</div>
+          <div className="error">{(errors && errors.roles) || ''}</div>
 
           <div className="checkbox">
             <input
@@ -222,7 +222,7 @@ class AddEdit extends React.PureComponent {
                 {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
               </span>
             </div>
-            <div id="component-error-text">{errors.password || ''}</div>
+            <div className="error">{errors.password || ''}</div>
           </div>
           <button
             className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"

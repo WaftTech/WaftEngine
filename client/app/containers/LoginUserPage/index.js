@@ -131,11 +131,13 @@ const LoginUserPage = props => {
             <input
               id="code"
               name="code"
-              error={errors && errors.multi_fa && errors.multi_fa.email.code}
               value={twoFactor && twoFactor.email && twoFactor.email.code}
               onChange={e => handleChange(e, 'email')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">
+              {errors && errors.multi_fa && errors.multi_fa.email.code}
+            </div>
           </div>
         )}
 
@@ -148,11 +150,6 @@ const LoginUserPage = props => {
             <input
               id="code"
               name="code"
-              error={
-                errors &&
-                errors.multi_fa &&
-                errors.multi_fa.google_authenticate.code
-              }
               value={
                 twoFactor &&
                 twoFactor.google_authenticate &&
@@ -161,6 +158,11 @@ const LoginUserPage = props => {
               onChange={e => handleChange(e, 'google_authenticate')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">
+              {errors &&
+                errors.multi_fa &&
+                errors.multi_fa.google_authenticate.code}
+            </div>
           </div>
         )}
       </Modal>

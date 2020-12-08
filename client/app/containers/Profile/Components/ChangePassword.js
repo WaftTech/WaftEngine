@@ -102,7 +102,7 @@ export class ChangePassword extends React.Component {
             type={showPassword ? 'text' : 'password'}
           />
           {errors.oldPassword && (
-            <div id="component-error-text">{errors.oldPassword}</div>
+            <div className="error">{errors.oldPassword}</div>
           )}
         </div>
 
@@ -120,7 +120,7 @@ export class ChangePassword extends React.Component {
             type={showPassword ? 'text' : 'password'}
           />
           {errors.newPassword && (
-            <div id="component-error-text">{errors.newPassword}</div>
+            <div className="error">{errors.newPassword}</div>
           )}
         </div>
 
@@ -138,7 +138,7 @@ export class ChangePassword extends React.Component {
             type={showPassword ? 'text' : 'password'}
           />
           {errors.newPassword2 && (
-            <div id="component-error-text">{errors.newPassword2}</div>
+            <div className="error">{errors.newPassword2}</div>
           )}
         </div>
 

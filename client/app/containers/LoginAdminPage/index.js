@@ -100,11 +100,11 @@ const LoginAdminPage = props => {
             <input
               id="code"
               name="code"
-              error={errors.code}
               value={twoFactor && twoFactor.email && twoFactor.email.code}
               onChange={e => handleChange(e, 'email')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">{errors.code}</div>
           </div>
         )}
 
@@ -117,7 +117,6 @@ const LoginAdminPage = props => {
             <input
               id="code"
               name="code"
-              error={errors.code}
               value={
                 twoFactor &&
                 twoFactor.google_authenticate &&
@@ -126,6 +125,7 @@ const LoginAdminPage = props => {
               onChange={e => handleChange(e, 'google_authenticate')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">{errors.code}</div>
           </div>
         )}
       </Modal>

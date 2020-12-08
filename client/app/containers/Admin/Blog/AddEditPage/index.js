@@ -34,7 +34,7 @@ import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import Loading from '../../../../components/Loading';
 import WECkEditior from '../../../../components/CkEditor';
-// import Select from '../../../../components/Select';
+import Select from '../../../../components/Select';
 import { FaArrowLeft, FaCheck, FaTimes } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
@@ -348,8 +348,8 @@ class AddEdit extends React.PureComponent {
               value={(one && one.title) || ''}
               name="Blog Title"
               onChange={this.handleChange('title')}
-              error={errors && errors.title}
             />
+            <div className="error">{errors && errors.title}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label>Slug</label>
@@ -360,13 +360,13 @@ class AddEdit extends React.PureComponent {
               value={(one && one.slug_url) || ''}
               name="Blog Slug"
               onChange={this.handleChange('slug_url')}
-              error={errors && errors.slug_url}
               disabled
             />
+            <div className="error">{errors && errors.slug_url}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm">Category</label>
-            {/* <Select
+            <Select
               className="React_Select"
               id="category"
               value={
@@ -390,7 +390,7 @@ class AddEdit extends React.PureComponent {
               isMulti
               options={listCategory}
               styles={customStyles}
-            /> */}
+            />
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm" htmlFor="grid-blog-title">
@@ -412,7 +412,7 @@ class AddEdit extends React.PureComponent {
               setOneValue={this.props.setOneValue}
             />
 
-            <div id="component-error-text">{errors && errors.description}</div>
+            <div className="error">{errors && errors.description}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4 mt-4">
@@ -574,7 +574,7 @@ class AddEdit extends React.PureComponent {
             <label className="text-sm" htmlFor="grid-last-name">
               Author
             </label>
-            {/* <Select
+            <Select
               className="React_Select"
               id="category"
               value={
@@ -598,9 +598,9 @@ class AddEdit extends React.PureComponent {
               isMulti
               options={listAuthor}
               styles={customStyles}
-            /> */}
+            />
           </div>
-          <div id="component-error-text">{errors && errors.author}</div>
+          <div className="error">{errors && errors.author}</div>
           <div className="checkbox">
             <input
               onClick={this.handleCheckedChange('is_active')}

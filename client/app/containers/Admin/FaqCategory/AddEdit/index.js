@@ -95,8 +95,8 @@ class AddEdit extends React.PureComponent {
               type="text"
               value={one.title}
               onChange={this.handleChange('title')}
-              error={errors.title}
             />
+            <div className="error">{errors && errors.title}</div>
           </div>
           <div className="checkbox">
             <input

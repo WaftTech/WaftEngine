@@ -175,8 +175,8 @@ class AddEdit extends React.PureComponent {
                 type="text"
                 value={one.name}
                 onChange={this.handleChange('name')}
-                error={errors.name}
               />
+              <div className="error">{errors.name}</div>
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -187,15 +187,15 @@ class AddEdit extends React.PureComponent {
                 type="text"
                 value={one.key}
                 onChange={this.handleChange('key')}
-                error={errors.key}
               />
+              <div className="error">{errors.key}</div>
             </div>
             <div>
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
               />
-              <div id="component-error-text">{errors.description}</div>
+              <div className="error">{errors.description}</div>
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -206,8 +206,8 @@ class AddEdit extends React.PureComponent {
                 type="text"
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
-                error={errors.meta_title}
               />
+              <div className="error">{errors.meta_title}</div>
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Description</label>
@@ -217,8 +217,8 @@ class AddEdit extends React.PureComponent {
                 type="text"
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
-                error={errors.meta_description}
               />
+              <div className="error">{errors.meta_description}</div>
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label className="label" htmlFor="grid-last-name">
@@ -301,7 +301,7 @@ class AddEdit extends React.PureComponent {
                 </button>
               </section>
               {errors && errors.image && (
-                <div id="component-error-text">{errors.image}</div>
+                <div className="error">{errors.image}</div>
               )}
             </div>
             {one && one.image && one.image.path && (

@@ -77,8 +77,8 @@ class UserPersonalInformationPage extends React.PureComponent {
             name="Name"
             value={one.name || ''}
             onChange={this.handleChange('name')}
-            error={errors.name}
           />
+          <div className="error">{errors.name}</div>
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
@@ -90,8 +90,8 @@ class UserPersonalInformationPage extends React.PureComponent {
             name="Email"
             value={one.email || ''}
             onChange={this.handleChange('name')}
-            error={errors.email}
           />
+          <div className="error">{errors.email}</div>
         </div>
 
         <div className="md:w-1/2 pb-4">
