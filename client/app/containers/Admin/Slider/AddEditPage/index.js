@@ -48,7 +48,6 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
           <div className="w-1/4 text-center -ml-8">
             {value.image ? (
               <img
-                className={_this.props.classes.media}
                 src={
                   typeof value.image === 'string'
                     ? `${IMAGE_BASE}${_this.state.files[value.image].path}`
@@ -245,7 +244,6 @@ class AddEdit extends React.PureComponent {
           </PageHeader>
         </div>
         <Dialog
-          className={classes.modal}
           aria-labelledby="max-width-dialog-title"
           open={this.state.open}
           onClose={this.handleClose}
@@ -270,29 +268,29 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Name</label>
             <input
-              label="Slider Name"
               className="inputbox"
               id="slider-name"
               type="text"
               value={one.slider_name}
               name="slider_name"
               onChange={this.handleChange('slider_name')}
-              error={errors.slider_name}
             />
+            <div className="error">{errors.slider_name}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Key</label>
             <input
-              label="Slider Key"
               className="inputbox"
               id="slider-key"
               type="text"
               value={one.slider_key}
               name="slider_key"
               onChange={this.handleChange('slider_key')}
-              error={errors.slider_key}
             />
+            <div className="error">{errors.slider_key}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">

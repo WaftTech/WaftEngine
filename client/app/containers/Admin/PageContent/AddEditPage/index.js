@@ -168,57 +168,57 @@ class AddEdit extends React.PureComponent {
           </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
+              <label>Title</label>
               <input
-                label="Page Title"
                 className="inputbox"
                 id="grid-last-name"
                 type="text"
                 value={one.name}
                 onChange={this.handleChange('name')}
-                error={errors.name}
               />
+              <div className="error">{errors.name}</div>
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
+              <label>Page Key</label>
               <input
-                label="Page Key"
                 className="inputbox"
                 id="grid-last-name"
                 type="text"
                 value={one.key}
                 onChange={this.handleChange('key')}
-                error={errors.key}
               />
+              <div className="error">{errors.key}</div>
             </div>
             <div>
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
               />
-              <div id="component-error-text">{errors.description}</div>
+              <div className="error">{errors.description}</div>
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
+              <label>Meta Title</label>
               <input
-                label="Meta Title"
                 className="inputbox"
                 id="grid-last-meta_title"
                 type="text"
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
-                error={errors.meta_title}
               />
+              <div className="error">{errors.meta_title}</div>
             </div>
             <div className="w-full md:w-1/2 pb-4">
+              <label>Meta Description</label>
               <input
-                label="Meta Description"
                 className="inputbox"
                 id="grid-last-meta_description"
                 type="text"
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
-                error={errors.meta_description}
               />
+              <div className="error">{errors.meta_description}</div>
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label className="label" htmlFor="grid-last-name">
@@ -239,53 +239,52 @@ class AddEdit extends React.PureComponent {
                   const icon = null;
 
                   return (
-                    <Chip
-                      key={`meta-${tag}-${index}`}
-                      icon={icon}
-                      label={tag}
+                    <label
                       onDelete={this.handleMetaTagDelete(index)}
-                      className={classes.chip}
-                    />
+                      className="tag"
+                      key={`meta-${tag}-${index}`}
+                    >
+                      {tag}
+                      <span>
+                        <FaTimes />
+                      </span>
+                    </label>
                   );
                 })}
             </div>
 
             <div className="flex w-full justify-between md:w-1/2 px-2">
               <div className="w-full md:w-1/2 -ml-2">
-                <div margin="normal" className={classes.formControl}>
-                  <label className="label" htmlFor="grid-last-name">
-                    Published From
-                  </label>
-                  <DatePicker
-                    margin="normal"
-                    name="publish_from"
-                    className={[classes.textField, 'inputbox']}
-                    value={
-                      (one.publish_from &&
-                        moment(one.publish_from).format(DATE_FORMAT)) ||
-                      ''
-                    }
-                    onChange={this.handleDateChange('publish_from')}
-                  />
-                </div>
+                <label className="label" htmlFor="grid-last-name">
+                  Published From
+                </label>
+                <DatePicker
+                  margin="normal"
+                  name="publish_from"
+                  className="inputbox"
+                  value={
+                    (one.publish_from &&
+                      moment(one.publish_from).format(DATE_FORMAT)) ||
+                    ''
+                  }
+                  onChange={this.handleDateChange('publish_from')}
+                />
               </div>
               <div className="w-full md:w-1/2 -mr-2">
-                <div margin="normal" className={classes.formControl}>
-                  <label className="label" htmlFor="grid-last-name">
-                    Published To
-                  </label>
-                  <DatePicker
-                    margin="normal"
-                    name="publish_to"
-                    className={[classes.textField, 'inputbox']}
-                    value={
-                      (one.publish_to &&
-                        moment(one.publish_to).format(DATE_FORMAT)) ||
-                      ''
-                    }
-                    onChange={this.handleDateChange('publish_to')}
-                  />
-                </div>
+                <label className="label" htmlFor="grid-last-name">
+                  Published To
+                </label>
+                <DatePicker
+                  margin="normal"
+                  name="publish_to"
+                  className="inputbox"
+                  value={
+                    (one.publish_to &&
+                      moment(one.publish_to).format(DATE_FORMAT)) ||
+                    ''
+                  }
+                  onChange={this.handleDateChange('publish_to')}
+                />
               </div>
             </div>
             <div className="w-full  pb-4 -mr-2">
@@ -302,7 +301,7 @@ class AddEdit extends React.PureComponent {
                 </button>
               </section>
               {errors && errors.image && (
-                <div id="component-error-text">{errors.image}</div>
+                <div className="error">{errors.image}</div>
               )}
             </div>
             {one && one.image && one.image.path && (

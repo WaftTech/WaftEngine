@@ -73,7 +73,7 @@ export const ResetPasswordPage = props => {
         onChange={handleChange}
         disabled
       />
-      <div id="component-error-text">{errors && errors.email}</div>
+      <div className="error">{errors && errors.email}</div>
 
       <input
         className="inputbox w-full"
@@ -84,7 +84,7 @@ export const ResetPasswordPage = props => {
         placeholder="Enter code"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.code}</div>
+      <div className="error">{errors && errors.code}</div>
       <input
         className="inputbox w-full mt-4"
         id="password"
@@ -94,7 +94,7 @@ export const ResetPasswordPage = props => {
         placeholder="Enter password"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.password}</div>
+      <div className="error">{errors && errors.password}</div>
       <input
         className="inputbox w-full mt-4"
         id="confirm-password"
@@ -104,7 +104,7 @@ export const ResetPasswordPage = props => {
         placeholder="Confirm password"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.confirm_password}</div>
+      <div className="error">{errors && errors.confirm_password}</div>
       <button
         className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
         onClick={handleSubmit}

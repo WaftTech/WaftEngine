@@ -149,7 +149,6 @@ const Header = props => {
 };
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   push: PropTypes.func.isRequired,

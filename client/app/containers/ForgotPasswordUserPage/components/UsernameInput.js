@@ -19,7 +19,7 @@ const EmailInput = props => {
         placeholder="Enter Email"
         onChange={handleChange}
       />
-      {error && <div id="component-error-text">{error}</div>}
+      {error && <div className="error">{error}</div>}
     </>
   );
 };

@@ -30,6 +30,7 @@ import Loading from '../../../../components/Loading';
 import '../../../../components/Table/table.css';
 import './style.css';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import Panel from '../../../../components/Panel';
 
 const RoleAccess = props => {
   const {
@@ -129,76 +130,53 @@ const RoleAccess = props => {
       </div>
       <PageContent>
         {module_data.map((each, index) => (
-          <Accordion
-            key={`${each._id}-${index}`}
-            // expanded={each._id === expanded}
-            onClick={() => setExpanded(each._id)}
-            className={classes.ExpansionPanelMainWrapper}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-              classes={{
-                root: classes.roleRoot,
-                content: classes.roleContent,
-                expandIcon: classes.roleExpandIcon,
-                expanded: classes.roleExpanded,
-              }}
-            >
-              <Typography className={classes.heading}>
-                <span className="text-lg font-medium m-0">
-                  {each.module_group} Group
-                </span>
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails style={{ display: 'block' }}>
-              {each.modules.map(module => (
-                <fieldset
-                  key={`${module._id}-${each._id}-${index}`}
-                  className="formfieldset mb-2"
+          <Panel
+            title={`${each.module_group} Group`}
+            body={each.modules.map(module => (
+              <fieldset
+                key={`${module._id}-${each._id}-${index}`}
+                className="formfieldset mb-2"
+              >
+                <legend
+                  className="text-lg px-2"
+                  onClick={() => getAccessArray(module._id)}
                 >
-                  <legend
-                    className="text-lg px-2"
-                    onClick={() => getAccessArray(module._id)}
-                  >
-                    {module.module_name}
-                  </legend>
-                  <ul className="flex flex-wrap">
-                    {module.path.length > 0 &&
-                      module.path.map(module_path => (
-                        <li
-                          key={`${module_path._id}-${module._id}-${
-                            each._id
-                          }-${index}`}
-                          className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2"
-                        >
-                          <div className="mr-2">
-                            <div className="checkbox">
-                              <input
-                                name={module_path._id}
-                                checked={getAccessArray(module._id).includes(
-                                  module_path._id,
-                                )}
-                                onChange={handleAccessChange(module._id)}
-                                id={module_path._id}
-                                type="checkbox"
-                              />
-                              <label htmlFor={module_path._id}>
-                                <span className="box">
-                                  <FaCheck className="check-icon" />
-                                </span>
-                                {module_path.access_type}
-                              </label>
-                            </div>
+                  {module.module_name}
+                </legend>
+                <ul className="flex flex-wrap">
+                  {module.path.length > 0 &&
+                    module.path.map(module_path => (
+                      <li
+                        key={`${module_path._id}-${module._id}-${
+                          each._id
+                        }-${index}`}
+                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2"
+                      >
+                        <div className="mr-2">
+                          <div className="checkbox">
+                            <input
+                              name={module_path._id}
+                              checked={getAccessArray(module._id).includes(
+                                module_path._id,
+                              )}
+                              onChange={handleAccessChange(module._id)}
+                              id={module_path._id}
+                              type="checkbox"
+                            />
+                            <label htmlFor={module_path._id}>
+                              <span className="box">
+                                <FaCheck className="check-icon" />
+                              </span>
+                              {module_path.access_type}
+                            </label>
                           </div>
-                        </li>
-                      ))}
-                  </ul>
-                </fieldset>
-              ))}
-            </AccordionDetails>
-          </Accordion>
+                        </div>
+                      </li>
+                    ))}
+                </ul>
+              </fieldset>
+            ))}
+          />
         ))}
         <button
           className="btn bg-blue-500 hover:bg-blue-600 mt-4"

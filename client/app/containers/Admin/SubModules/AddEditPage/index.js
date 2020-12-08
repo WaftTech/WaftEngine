@@ -91,27 +91,27 @@ const AddEdit = props => {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Module Group</label>
             <input
-              label="Module Group"
               className="inputbox"
               id="grid-group"
               type="text"
               value={one.module_group}
               onChange={handleChange('module_group')}
-              error={errors.module_group}
             />
+            <div className="error">{errors.module_group}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
+            <label>Order</label>
             <input
-              label="Order"
               className="inputbox"
               id="grid-value"
               type="text"
               value={one.order}
               onChange={handleChange('order')}
-              error={errors.order}
             />
+            <div className="error">{errors.order}</div>
           </div>
 
           <div className="w-full md:w-1/2">
@@ -128,19 +128,19 @@ const AddEdit = props => {
               value={one.description}
               onChange={handleChange('description')}
             />
-            <div id="component-error-text">{errors.description}</div>
+            <div className="error">{errors.description}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
+            <label>Module Group Main</label>
             <input
-              label="Module Group Main"
               className="inputbox"
               id="grid-group"
               type="text"
               value={one.module_group_main}
               onChange={handleChange('module_group_main')}
-              error={errors.module_group_main}
             />
+            <div className="error">{errors.module_group_main}</div>
           </div>
 
           <button

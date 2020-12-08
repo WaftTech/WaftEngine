@@ -77,16 +77,16 @@ const QuickEdit = props => {
       <div>
         <h2 className="text-2xl mb-4">Quick Edit</h2>
         <div className="w-full  pb-4">
-          <inputs
-            label="Title"
+          <label>Title</label>
+          <input
             className="inputbox"
             id="blog-title"
             type="text"
             value={(one && one.title) || ''}
             name="Blog Title"
             onChange={handleChange('title')}
-            error={errors && errors.title}
           />
+          <div className="error">{errors && errors.title}</div>
         </div>
 
         <div className="w-full  pb-4">
@@ -158,7 +158,7 @@ const QuickEdit = props => {
               ))}
           </select>
         </div>
-        <div id="component-error-text">{errors && errors.author}</div>
+        <div className="error">{errors && errors.author}</div>
         <div className="checkbox">
           <input
             checked={one.is_active || false}
