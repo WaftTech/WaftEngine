@@ -97,9 +97,9 @@ export class FaqCategory extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ title, is_active, added_at, updated_at, _id }) => [
+      ({ title, key, is_active, added_at, updated_at, _id }) => [
         title,
-
+        key,
         `${is_active}`,
         moment(added_at).format(DATE_FORMAT),
         moment(updated_at).format(DATE_FORMAT),
@@ -168,6 +168,7 @@ export class FaqCategory extends React.PureComponent {
           <Table
             tableHead={[
               'Title',
+              'Key',
               'Is Active',
               'Added At',
               'Updated At',
