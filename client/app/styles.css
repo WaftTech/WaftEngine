@@ -118,7 +118,7 @@ select.inputbox {
   min-width: 300px;
 }
 
-div#component-error-text {
+.error {
   color: #ff3b30;
   margin: 0;
   font-size: 0.75rem;

@@ -41,7 +41,7 @@ const PasswordInput = props => {
           {isSecure ? <Visibility /> : <VisibilityOff />}
         </span>
 
-        <div className="error">{hasError.toString()}</div>
+        {/* <div className="error">{hasError.toString()}</div> */}
       </div>
 
       {errors && <div className="error">{errors}</div>}
