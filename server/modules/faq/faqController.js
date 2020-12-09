@@ -121,6 +121,7 @@ faqController.GetFaqCatById = async (req, res, next) => {
     next(err);
   }
 };
+
 faqController.GetFaqByCat = async (req, res, next) => {
   try {
     let page;
@@ -179,6 +180,23 @@ faqController.GetFaqAndCat = async (req, res, next) => {
   const cat = await faqCatSch.find().select('title');
   const faq = await faqSch.find({ is_deleted: false }).select('title question category');
   return otherHelper.sendResponse(res, httpStatus.OK, true, { cat, faq }, null, null, null);
+};
+
+faqController.GetCatByKey = async (req, res, next) => {
+  try {
+    const key = req.params.key;
+    const cat = await faqCatSch.findOne({
+      key,
+      is_deleted: false,
+    })
+    if (!cat) return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, null, "Key not Found", null);
+
+    const faq = await faqSch.find({ is_deleted: false, category: cat }).select('title question category');
+
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { cat, faq }, null, faqConfig.catGet, null);
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = faqController;

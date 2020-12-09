@@ -3,6 +3,7 @@ const schema = mongoose.Schema;
 
 const faqCatSchema = new schema({
   title: { type: String, required: true },
+  key: { type: String, required: true, unique: true },
   slug_url: { type: String },
   is_active: { type: Boolean, required: true, default: true },
   is_deleted: { type: Boolean, default: false },
