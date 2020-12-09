@@ -71,6 +71,7 @@ class StaticContent extends React.PureComponent {
             </div>
           )}
         <div
+          className="ckEditor"
           dangerouslySetInnerHTML={{
             __html: contentObj[this.props.contentKey],
           }}

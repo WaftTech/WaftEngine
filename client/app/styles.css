@@ -2,6 +2,8 @@
 
 @tailwind components;
 
+@tailwind utilities;
+
 h1,
 h2,
 h3,
@@ -288,8 +290,78 @@ select.inputbox {
   @apply bg-green-100 text-green-500 border-green-200;
 }
 
-@tailwind utilities;
+.ckEditor h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.ckEditor h2 {
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.ckEditor h3 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
 
-.font-bold {
-  font-weight: 500;
+.ckEditor p,
+.ckEditor span {
+  font-family: sans-serif !important;
+  font-size: 17px !important;
+  line-height: 170% !important;
+  font-weight: 400;
+  margin-bottom: 20px !important;
+}
+
+.ckEditor p > img {
+  margin-right: 40px;
+  margin-bottom: 40px;
+}
+.ckEditor a {
+  color: #0291dd !important;
+}
+.ckEditor li {
+  list-style-position: outside !important;
+  font-size: 16px !important;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+.ckEditor ol {
+  list-style-type: decimal !important;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+.ckEditor ul {
+  list-style-type: disc !important;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+.ckEditor .marker {
+  background: yellow !important;
+}
+.ckEditor blockquote {
+  border-left: 4px solid #0291dd;
+  padding: 0 20px;
+  margin: 20x;
+}
+.ckEditor blockquote p {
+  font-size: 24px !important;
+}
+.ckEditor ol p,
+.ckEditor ul p {
+  display: inline !important;
+}
+.ckEditor img {
+  width: auto !important;
+  height: auto !important;
+}
+.ckEditor table,
+.ckEditor td {
+  border: 1px solid #ccc;
+  padding: 4px;
 }
