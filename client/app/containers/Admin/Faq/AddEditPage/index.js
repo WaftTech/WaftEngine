@@ -84,8 +84,8 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Question</label>
             <input
-              label="Question"
               className="inputbox"
               id="faq"
               type="text"

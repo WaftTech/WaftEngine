@@ -128,8 +128,8 @@ class AddEdit extends React.PureComponent {
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
             <h3 className="text-lg font-bold mb-2">Basic Information</h3>
+            <label>Email</label>
             <input
-              label="Email"
               className="inputbox"
               id="email"
               type="text"
@@ -138,19 +138,18 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
+            <label>Name</label>
             <input
-              label="Name"
               className="inputbox"
               id="name"
               type="text"
               value={users.name || ''}
               onChange={this.handleChange('name')}
-              error={(errors && errors.name) || ''}
             />
+            <div className="error">{(errors && errors.name) || ''}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm">Bio</label>
-
             <textarea
               className="inputbox"
               id="bio"
@@ -176,7 +175,7 @@ class AddEdit extends React.PureComponent {
               </label>
             </div>
           ))}
-          <div id="component-error-text">{(errors && errors.roles) || ''}</div>
+          <div className="error">{(errors && errors.roles) || ''}</div>
 
           <div className="checkbox">
             <input
@@ -216,13 +215,14 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('password')}
               />
               <span
+                className="absolute right-0 top-0 mt-2 mr-2"
                 aria-label="Toggle password visibility"
                 onClick={this.handleTogglePassword}
               >
                 {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
               </span>
             </div>
-            <div id="component-error-text">{errors.password || ''}</div>
+            <div className="error">{errors.password || ''}</div>
           </div>
           <button
             className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"

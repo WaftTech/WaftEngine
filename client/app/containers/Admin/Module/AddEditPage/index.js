@@ -262,7 +262,7 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('module_name')}
             />
             {errors.module_name && (
-              <div id="component-error-text">{errors.module_name}</div>
+              <div className="error">{errors.module_name}</div>
             )}
           </div>
 
@@ -276,7 +276,7 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('description')}
             />
             {errors.description && (
-              <div id="component-error-text">{errors.description}</div>
+              <div className="error">{errors.description}</div>
             )}
           </div>
 

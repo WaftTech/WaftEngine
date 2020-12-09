@@ -11,6 +11,7 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../components/Loading';
+import Panel from '../../components/Panel';
 
 class FAQPage extends React.Component {
   static propTypes = {
@@ -68,23 +69,24 @@ class FAQPage extends React.Component {
                         faq.faq
                           .filter(z => z.category == x._id)
                           .map(y => (
-                            <div
-                              className="border rounded mb-4"
-                              key={`faq-${y._id}`}
-                              onChange={this.handleQChange(y._id)}
-                            >
-                              <div
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                              >
-                                <h3 className="text-bold text-base px-4 py-3 border-b">
-                                  {y.question}
-                                </h3>
-                              </div>
-                              <p className="text-base p-3 leading-loose">
-                                {y.title}
-                              </p>
-                            </div>
+                            <Panel title={y.question} body={y.title} />
+                            // <div
+                            //   className="border rounded mb-4"
+                            //   key={`faq-${y._id}`}
+                            //   onChange={this.handleQChange(y._id)}
+                            // >
+                            //   <div
+                            //     aria-controls="panel2a-content"
+                            //     id="panel2a-header"
+                            //   >
+                            //     <h3 className="text-bold text-base px-4 py-3 border-b">
+                            //       {y.question}
+                            //     </h3>
+                            //   </div>
+                            //   <p className="text-base p-3 leading-loose">
+                            //     {y.title}
+                            //   </p>
+                            // </div>
                           ))}
                     </div>
                   </div>

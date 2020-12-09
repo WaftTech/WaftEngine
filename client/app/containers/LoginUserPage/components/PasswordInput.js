@@ -27,7 +27,6 @@ const PasswordInput = props => {
       </label>
       <div className="relative">
         <input
-          error={hasError.toString()}
           onChange={handleChange}
           value={password}
           id="Password"
@@ -35,14 +34,17 @@ const PasswordInput = props => {
           className="inputbox"
         />
         <span
+          className="absolute right-0 top-0 mt-2 mr-2"
           aria-label="Toggle password visibility"
           onClick={handleTogglePassword}
         >
           {isSecure ? <Visibility /> : <VisibilityOff />}
         </span>
+
+        {/* <div className="error">{hasError.toString()}</div> */}
       </div>
 
-      {errors && <div id="component-error-text">{errors}</div>}
+      {errors && <div className="error">{errors}</div>}
       <Link
         className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
         to="/forgot-password-user"

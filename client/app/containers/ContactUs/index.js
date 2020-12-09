@@ -71,56 +71,41 @@ class ContactUs extends React.Component {
         <div className="container mx-auto my-10">
           <div className="flex flex-wrap">
             <div className="w-full sm:w-full md:w-1/2">
-              <h2 className="text-xl font-bold">GET IN TOUCH</h2>
               <div className="flex">
                 <div className="w-full md:w-1/2 pr-2">
+                  <label>Name</label>
                   <TextField
                     id="name"
-                    fullWidth
-                    label="Name"
                     type="name"
                     name="name"
-                    margin="normal"
-                    variant="outlined"
                     value={name}
                     onChange={this.handleChange('name')}
                   />
                 </div>
                 <div className="w-full md:w-1/2  pl-2">
-                  <TextField
+                  <label>Email</label>
+                  <input
                     id="email"
-                    fullWidth
-                    label="Email"
                     type="email"
                     name="email"
-                    margin="normal"
-                    variant="outlined"
                     value={email}
                     onChange={this.handleChange('email')}
                   />
                 </div>
               </div>
-
-              <TextField
+              <label>Subject</label>
+              <input
                 id="subject"
-                label="Subject"
                 type="subject"
                 name="subject"
-                margin="normal"
-                variant="outlined"
-                fullWidth
                 value={subject}
                 onChange={this.handleChange('subject')}
               />
-              <TextField
+              <label>Message</label>
+              <textarea
                 id="message"
-                label="Message"
-                fullWidth
-                multiline
                 rows="4"
-                margin="normal"
                 placeholder="Message"
-                variant="outlined"
                 value={message}
                 onChange={this.handleChange('message')}
               />
