@@ -126,3 +126,16 @@ export const loadMenuFailure = payload => ({
   type: types.LOAD_MENU_FAILURE,
   payload,
 });
+
+export const loadFaqRequest = payload => ({
+  type: types.LOAD_FAQ_REQUEST,
+  payload,
+});
+export const loadFaqSuccess = payload => ({
+  type: types.LOAD_FAQ_SUCCESS,
+  payload,
+});
+export const loadFaqFailure = payload => ({
+  type: types.LOAD_FAQ_FAILURE,
+  payload,
+});
