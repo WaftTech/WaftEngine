@@ -98,6 +98,18 @@ class AddEdit extends React.PureComponent {
             />
             <div className="error">{errors && errors.title}</div>
           </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Key</label>
+            <input
+              className="inputbox"
+              id="key"
+              name="key"
+              type="text"
+              value={one.key}
+              onChange={this.handleChange('key')}
+            />
+            <div className="error">{errors && errors.key}</div>
+          </div>
           <div className="checkbox">
             <input
               checked={one.is_active || false}

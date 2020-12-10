@@ -12,6 +12,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../components/Loading';
 import Panel from '../../components/Panel';
+import FaqContent from '../../components/FaqContent';
 
 class FAQPage extends React.Component {
   static propTypes = {
@@ -92,6 +93,9 @@ class FAQPage extends React.Component {
                   </div>
                 ),
             )}
+        </div>
+        <div className="my-10 container mx-auto">
+          <FaqContent faqKey="prod_company" />
         </div>
       </div>
     );
