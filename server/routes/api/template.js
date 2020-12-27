@@ -3,10 +3,10 @@ const router = express.Router();
 
 const validations = require('../../modules/template/templateValidation');
 const templateModule = require('../../modules/template/templateController').templateController;
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 
-router.get('/', authorization, authentication, templateModule.getTemplateName);
-router.get('/:key', authorization, authentication, templateModule.getTemplateDetail);
-router.post('/', authorization, authentication, validations.sanitized, validations.validate, templateModule.postTemplate);
+router.get('/', authentication, authorization, templateModule.getTemplateName);
+router.get('/:key', authentication, authorization, templateModule.getTemplateDetail);
+router.post('/', authentication, authorization, validations.sanitized, validations.validate, templateModule.postTemplate);
 
 module.exports = router;

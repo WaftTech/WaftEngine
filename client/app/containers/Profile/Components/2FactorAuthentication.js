@@ -101,10 +101,10 @@ export const TwoFactor = props => {
         buttonLabel2={setGoogleCode ? 'Sending...' : 'Send'}
       >
         <div>
-          <label>Google Two factor authentication code</label>
+          <label>Google Two factor authorization code</label>
           <input
-            id="two_factor_authentication"
-            name="two_factor_authentication"
+            id="two_factor_authorization"
+            name="two_factor_authorization"
             disabled
             readOnly
             value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
@@ -156,7 +156,7 @@ export const TwoFactor = props => {
             <span className="box">
               <FaCheck className="check-icon" />
             </span>
-            Enable Email two factor authentication
+            Enable Email two factor authorization
           </label>
         </div>
 
@@ -173,7 +173,7 @@ export const TwoFactor = props => {
             <span className="box">
               <FaCheck className="check-icon" />
             </span>
-            Enable Google two factor authentication
+            Enable Google two factor authorization
           </label>
         </div>
         {addGoogleAuth && 'Loading...'}

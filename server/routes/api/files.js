@@ -4,14 +4,14 @@ const fileUpload = require('../../helper/upload.helper')('public/files/');
 const uploader = fileUpload.uploader;
 
 const dModule = require('../../modules/files/filesController');
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/authentication.middleware');
 
-router.get('/folder/:id', authorization, dModule.GetFileAndFolder);
-router.post('/folder/:id', authorization, dModule.AddFolders);
-router.post('/file/:folder_id', authorization, uploader.any('file'), dModule.UploadFiles);
-router.post('/rename/file', authorization, dModule.RenameFolder);
-router.post('/file/type/:type', authorization, uploader.any('file'), dModule.UploadFilesToRoot);
-router.delete('/folder/:id', authorization, dModule.DeleteFolder);
-router.delete('/file/:id', authorization, dModule.DeleteFile);
+router.get('/folder/:id', authentication, dModule.GetFileAndFolder);
+router.post('/folder/:id', authentication, dModule.AddFolders);
+router.post('/file/:folder_id', authentication, uploader.any('file'), dModule.UploadFiles);
+router.post('/rename/file', authentication, dModule.RenameFolder);
+router.post('/file/type/:type', authentication, uploader.any('file'), dModule.UploadFilesToRoot);
+router.delete('/folder/:id', authentication, dModule.DeleteFolder);
+router.delete('/file/:id', authentication, dModule.DeleteFile);
 
 module.exports = router;
