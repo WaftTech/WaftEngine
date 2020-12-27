@@ -5,7 +5,7 @@ const uploader = fileUpload.uploader;
 
 const blogModule = require('../../modules/blog/blogController');
 const { authorization, authentication } = require('../../middleware/authentication.middleware');
-const { catSanitize, catValidate, sanitize, validate } = require('../../modules/blog/blogValidation');
+const { catSanitize, catValidate, sanitize, validate, countValidate, countSanitize } = require('../../modules/blog/blogValidation');
 
 router.get('/auth', authorization, authentication, blogModule.GetBlogAuthorize);
 router.get('/', authorization, blogModule.GetBlogNonAuthorize);
@@ -31,5 +31,5 @@ router.delete('/:id', authorization, authentication, blogModule.DeleteBlog);
 router.delete('/category/:id', authorization, authentication, blogModule.DeleteBlogCat);
 router.get('/htmlblog/:id', blogModule.getstaticBlog);
 
-router.get('/count/increase/:id', blogModule.updateViewCount);
+router.get('/count/increase/:id', countSanitize, countValidate, blogModule.updateViewCount);
 module.exports = router;

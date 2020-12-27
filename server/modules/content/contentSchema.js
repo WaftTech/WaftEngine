@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const contentSchema = new schema({
   name: { type: String, required: true },
-  key: { type: String, required: true, unique: true },
+  key: { type: String, required: true},
   description: { type: String, required: true },
   image: { type: schema.Types.ObjectId, ref: 'file' },
   publish_from: { type: Date },

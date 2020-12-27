@@ -21,18 +21,6 @@ faqValidation.Sanitize = (req, res, next) => {
   otherHelper.sanitize(req, sanitizeArray);
   next();
 };
-faqValidation.catSanitize = (req, res, next) => {
-  const sanitizeArray = [
-    {
-      field: 'title',
-      sanitize: {
-        trim: true,
-      },
-    },
-  ];
-  otherHelper.sanitize(req, sanitizeArray);
-  next();
-};
 
 faqValidation.Validation = (req, res, next) => {
   const validateArray = [
@@ -62,33 +50,19 @@ faqValidation.Validation = (req, res, next) => {
         },
       ],
     },
-  ];
-  const errors = otherHelper.validation(req.body, validateArray);
-  if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
-  } else {
-    next();
-  }
-};
-faqValidation.catValidation = (req, res, next) => {
-  const validateArray = [
     {
-      field: 'title',
+      field: 'category',
       validate: [
         {
-          condition: 'IsEmpty',
-          msg: faqConfig.validate.isEmpty,
-        },
-        {
-          condition: 'IsLength',
-          msg: faqConfig.validate.isLength,
-        },
+          condition: 'IsMongoId',
+          msg: faqConfig.validate.isMongoId,
+        }
       ],
     },
   ];
   const errors = otherHelper.validation(req.body, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, faqConfig.errorIn.inputError, null);
   } else {
     next();
   }

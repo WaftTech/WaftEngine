@@ -448,6 +448,7 @@ blogController.SaveBlog = async (req, res, next) => {
       if (!blogs.tags) blogs.tags = [];
       if (!blogs.keywords) blogs.keywords = [];
       if (!blogs.author) blogs.author = req.user.id;
+
       const update = await blogSch.findByIdAndUpdate(
         blogs._id,
         {
@@ -457,6 +458,7 @@ blogController.SaveBlog = async (req, res, next) => {
       );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.save, null);
     } else {
+      blogs.added_by = req.user.id;
       blogs.published_on = new Date();
       blogs.image = req.file;
       const newBlog = new blogSch(blogs);

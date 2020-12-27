@@ -26,6 +26,14 @@ validation.validateComment = (req, res, next) => {
           msg: 'This field is required!!',
         },
       ],
+    },{
+      field: 'blog_id',
+      validate: [
+        {
+          condition: 'IsMongoId',
+          msg: 'This field is required!!',
+        },
+      ],
     },
   ];
   const errors = otherHelper.validation(data, validateArray);

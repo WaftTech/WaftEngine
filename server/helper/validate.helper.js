@@ -69,7 +69,7 @@ validationHelper.validate = (data1, val) => {
             !pn.isValid() ? (errors[field] = validate[j].msg) : null;
           }
           break;
-        case 'IsMONGOID':
+        case 'IsMongoId':
           if (!isEmpty(fdata)) {
             !Validator.isMongoId(fdata) ? (errors[field] = validate[j].msg) : null;
           }

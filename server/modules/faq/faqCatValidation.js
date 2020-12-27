@@ -2,8 +2,11 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
 const faqConfig = require('./faqConfig');
-const faqValidation = {};
-faqValidation.Sanitize = (req, res, next) => {
+const faqCategorySchema = require('./faqCategorySchema');
+const faqCatValidation = {};
+
+
+faqCatValidation.Sanitize = (req, res, next) => {
     const sanitizeArray = [
         {
             field: 'title',
@@ -12,25 +15,13 @@ faqValidation.Sanitize = (req, res, next) => {
             },
         },
         {
-            field: 'question',
+            field: 'slug_url',
             sanitize: {
                 trim: true,
             },
         },
         {
             field: 'key',
-            sanitize: {
-                trim: true,
-            },
-        },
-    ];
-    otherHelper.sanitize(req, sanitizeArray);
-    next();
-};
-faqValidation.catSanitize = (req, res, next) => {
-    const sanitizeArray = [
-        {
-            field: 'title',
             sanitize: {
                 trim: true,
             },
@@ -40,23 +31,10 @@ faqValidation.catSanitize = (req, res, next) => {
     next();
 };
 
-faqValidation.Validation = (req, res, next) => {
+faqCatValidation.Validation = async (req, res, next) => {
     const validateArray = [
         {
             field: 'title',
-            validate: [
-                {
-                    condition: 'IsEmpty',
-                    msg: faqConfig.validate.isEmpty,
-                },
-                {
-                    condition: 'IsLength',
-                    msg: faqConfig.validate.isLength,
-                },
-            ],
-        },
-        {
-            field: 'question',
             validate: [
                 {
                     condition: 'IsEmpty',
@@ -73,29 +51,6 @@ faqValidation.Validation = (req, res, next) => {
             validate: [
                 {
                     condition: 'IsEmpty',
-                    msg: faqConfig.validate.empty,
-                },
-                {
-                    condition: 'IsLength',
-                    msg: faqConfig.validate.length,
-                },
-            ],
-        },
-    ];
-    const errors = otherHelper.validation(req.body, validateArray);
-    if (!isEmpty(errors)) {
-        return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
-    } else {
-        next();
-    }
-};
-faqValidation.catValidation = (req, res, next) => {
-    const validateArray = [
-        {
-            field: 'title',
-            validate: [
-                {
-                    condition: 'IsEmpty',
                     msg: faqConfig.validate.isEmpty,
                 },
                 {
@@ -106,10 +61,19 @@ faqValidation.catValidation = (req, res, next) => {
         },
     ];
     const errors = otherHelper.validation(req.body, validateArray);
+
+    let key_filter = { is_deleted: false, key: data.key }
+    if (data._id) {
+        key_filter = { ...key_filter, _id: { $ne: data._id } }
+    }
+    const already_key = await faqCategorySchema.findOne(key_filter);
+    if (already_key && already_key._id) {
+        errors = { ...errors, key: 'key already exist' }
+    }
     if (!isEmpty(errors)) {
-        return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+        return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, faqConfig.errorIn.inputError, null);
     } else {
         next();
     }
 };
-module.exports = faqValidation;
+module.exports = faqCatValidation;

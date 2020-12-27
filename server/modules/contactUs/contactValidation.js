@@ -28,6 +28,12 @@ validateInput.sanitize = (req, res, next) => {
         trim: true,
       },
     },
+    {
+      field: 'subject',
+      sanitize: {
+        trim: true,
+      },
+    },
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
