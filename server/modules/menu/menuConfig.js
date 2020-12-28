@@ -5,6 +5,9 @@ module.exports = {
     descriptionLength: 'This field should be between 5 to 2000',
     isMongoId: 'Please select an One Option!!',
     invalid: 'Invalid entry',
+    isInt: 'in not an integer',
+  }, errorIn: {
+    invalidInputs: 'not valid inputs',
   },
   save: 'menu saved successfully.',
   get: 'menus get successfully.',
