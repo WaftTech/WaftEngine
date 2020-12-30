@@ -3,6 +3,9 @@ module.exports = {
     empty: 'This field is required',
     descLength: 'This field should be be minimum 3 character',
   },
+  errorIn:{
+    inputErrors:'invalid input',
+  },
   save: 'Meta Data saved successfully.',
   update: 'Meta Data updated successfully',
   get: 'Meta Datas get successfully.',

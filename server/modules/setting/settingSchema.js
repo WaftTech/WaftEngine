@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const settingSchema = new schema({
   title: { type: String, required: true },
-  key: { type: String, unique: true },
+  key: { type: String, required: true },
   value: { type: schema.Types.Mixed },
   email_setting: { type: schema.Types.Mixed },
   is_active: { type: Boolean, default: false },

@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const templateSchema = new schema({
   template_name: { type: String, required: true },
-  template_key: { type: String, required: true, unique: true },
+  template_key: { type: String, required: true},
   information: { type: String, required: true },
   variables: [{ type: String, required: true }],
   from: { type: String, required: true },

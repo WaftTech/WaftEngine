@@ -69,7 +69,7 @@ metaValidation.Validate = (req, res, next) => {
   ];
   const errors = otherHelper.validation(req.body, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, metaConfig.errorIn.inputErrors, null);
   } else {
     next();
   }

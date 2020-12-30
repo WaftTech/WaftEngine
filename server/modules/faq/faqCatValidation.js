@@ -52,15 +52,11 @@ faqCatValidation.Validation = async (req, res, next) => {
                 {
                     condition: 'IsEmpty',
                     msg: faqConfig.validate.isEmpty,
-                },
-                {
-                    condition: 'IsLength',
-                    msg: faqConfig.validate.isLength,
-                },
+                }
             ],
         },
     ];
-    const errors = otherHelper.validation(req.body, validateArray);
+    let errors = otherHelper.validation(req.body, validateArray);
 
     let key_filter = { is_deleted: false, key: data.key }
     if (data._id) {

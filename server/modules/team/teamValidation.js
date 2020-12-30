@@ -12,6 +12,25 @@ validation.sanitize = (req, res, next) => {
         trim: true,
       },
     },
+    {
+      field: 'email',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'position',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'description',
+      sanitize: {
+        trim: true,
+      },
+    },
+
   ];
   otherHelper.sanitize(req, sanitizeArray);
   next();
@@ -53,12 +72,47 @@ validation.validate = (req, res, next) => {
           },
         },
       ],
+    }, {
+      field: 'date_of_birth',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'email',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'position',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'gender',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
     },
   ];
   const errors = otherHelper.validation(data, validateArray);
 
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, teamConfig.errorIn.inputErrors, null);
   } else {
     next();
   }

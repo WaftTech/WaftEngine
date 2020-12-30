@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const sliderSchema = new schema({
   slider_name: { type: String, required: true },
-  slider_key: { type: String, required: true, unique: true },
+  slider_key: { type: String, required: true },
   slug_url: { type: String },
   images: [
     {

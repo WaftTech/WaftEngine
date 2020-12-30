@@ -81,7 +81,7 @@ validations.validation = async (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  let errors = otherHelper.validation(data, validateArray);
 
   let key_filter = { is_deleted: false, key: data.key }
   if (data._id) {

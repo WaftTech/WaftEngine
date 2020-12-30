@@ -70,7 +70,7 @@ validation.validate = async (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  let errors = otherHelper.validation(data, validateArray);
 
   let key_filter = { is_deleted: false, key: data.key }
   if (data._id) {
@@ -196,7 +196,7 @@ validation.itemValidate = (req, res, next) => {
   const errors = otherHelper.validation(data, validateArray);
 
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, menuConfig.errorIn.invalidInputs, null);
   } else {
     next();
   }

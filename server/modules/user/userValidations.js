@@ -275,7 +275,7 @@ validations.validateUpdateProfile = (req, res, next) => {
           msg: config.validate.empty,
         },
         {
-          condition: 'IsMONGOID',
+          condition: 'IsMongoId',
           msg: config.validate.invalid,
         },
       ],
@@ -513,7 +513,7 @@ validations.validateLogsLogoutAction = (req, res, next) => {
           msg: config.validate.empty,
         },
         {
-          condition: 'IsMONGOID',
+          condition: 'IsMongoId',
           msg: config.validate.invalidInput,
         },
       ],
