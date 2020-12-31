@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
 const sliderConfig = require('./sliderConfig');
-const sliderSchema = require('./sliderSchema');
+const sliderSch = require('./sliderSchema');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
@@ -55,7 +55,7 @@ validations.validate = async (req, res, next) => {
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
-  const already_key = await sliderSchema.findOne(key_filter);
+  const already_key = await sliderSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, slider_key: 'slider_key already exist' }
   }

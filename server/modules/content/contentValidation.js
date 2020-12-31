@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const contentConfig = require('./contentConfig');
 const otherHelper = require('../../helper/others.helper');
-const contentSchema = require('./contentSchema');
+const contentSch = require('./contentSchema');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
@@ -87,7 +87,7 @@ validations.validation = async (req, res, next) => {
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
-  const already_key = await contentSchema.findOne(key_filter);
+  const already_key = await contentSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, key: 'key already exist' }
   }

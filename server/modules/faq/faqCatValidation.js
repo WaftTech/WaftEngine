@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
 const faqConfig = require('./faqConfig');
-const faqCategorySchema = require('./faqCategorySchema');
+const faqCategorySch = require('./faqCategorySchema');
 const faqCatValidation = {};
 
 
@@ -62,7 +62,7 @@ faqCatValidation.Validation = async (req, res, next) => {
     if (data._id) {
         key_filter = { ...key_filter, _id: { $ne: data._id } }
     }
-    const already_key = await faqCategorySchema.findOne(key_filter);
+    const already_key = await faqCategorySch.findOne(key_filter);
     if (already_key && already_key._id) {
         errors = { ...errors, key: 'key already exist' }
     }

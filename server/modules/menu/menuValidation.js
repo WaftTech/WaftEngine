@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const menuConfig = require('./menuConfig');
 const otherHelper = require('../../helper/others.helper');
-const menuSchema = require('./menuschema')
+const menuSch = require('./menuschema')
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
@@ -76,7 +76,7 @@ validation.validate = async (req, res, next) => {
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
-  const already_key = await menuSchema.findOne(key_filter);
+  const already_key = await menuSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, key: 'key already exist' }
   }

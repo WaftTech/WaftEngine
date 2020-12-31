@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
 const templateConfig = require('./templateConfig');
-const templateSchema = require('./templateSchema');
+const templateSch = require('./templateSchema');
 const templateValidation = {};
 
 templateValidation.sanitized = (req, res, next) => {
@@ -189,7 +189,7 @@ templateValidation.validate = async (req, res, next) => {
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
-  const already_key = await templateSchema.findOne(key_filter);
+  const already_key = await templateSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, template_key: 'template_key already exist' }
   }

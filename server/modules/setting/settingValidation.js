@@ -2,7 +2,7 @@ const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
 const httpStatus = require('http-status');
 const settingConfig = require('./settingConfig');
-const settingSchema = require('./settingSchema');
+const settingSch = require('./settingSchema');
 const settingValidation = {};
 
 settingValidation.validate = async (req, res, next) => {
@@ -41,7 +41,7 @@ settingValidation.validate = async (req, res, next) => {
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
-  const already_key = await settingSchema.findOne(key_filter);
+  const already_key = await settingSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, key: 'key already exist' }
   }

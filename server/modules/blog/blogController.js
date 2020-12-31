@@ -5,7 +5,6 @@ const blogSch = require('./blogSchema');
 const blogViewCountSch = require('./blogViewCountSchema');
 const blogCatSch = require('./categorySchema');
 const moment = require('moment');
-const blogViewCountSchema = require('./blogViewCountSchema');
 const blogController = {};
 const objectId = require('mongoose').Types.ObjectId;
 

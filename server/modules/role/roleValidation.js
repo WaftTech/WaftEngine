@@ -3,7 +3,7 @@ const isEmpty = require('../../validation/isEmpty');
 const config = require('./roleConfig');
 const otherHelper = require('../../helper/others.helper');
 const roleConfig = require('./roleConfig');
-const moduleGroupSchema = require('./moduleGroupSchema');
+const moduleGroupSch = require('./moduleGroupSchema');
 const validations = {};
 
 validations.validateRole = (req, res, next) => {
@@ -155,7 +155,7 @@ validations.validateModuleGroup = async (req, res, next) => {
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
-  const already_key = await moduleGroupSchema.findOne(key_filter);
+  const already_key = await moduleGroupSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, module_group: 'module_group already exist' }
   }
