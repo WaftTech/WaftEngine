@@ -34,6 +34,7 @@ contentController.GetContent = async (req, res, next) => {
 contentController.SaveContent = async (req, res, next) => {
   try {
     const contents = req.body;
+    console.log(contents)
     if (contents && contents._id) {
       const update = await contentSch.findByIdAndUpdate(contents._id, { $set: contents }, { new: true });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, contentConfig.save, null);

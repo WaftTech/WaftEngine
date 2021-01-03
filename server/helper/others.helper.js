@@ -207,7 +207,6 @@ otherHelper.validation = (data, validationArray) => {
           break;
         case 'IsMongoId':
           if (!Validator.isEmpty(value)) {
-
           if (!Validator.isMongoId(value)) {
             errors[validationObj.field] = val.msg;
           }
