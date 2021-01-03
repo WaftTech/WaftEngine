@@ -18,7 +18,7 @@ import * as mapDispatchToProps from '../actions';
 import HighLightList from '../components/HighlightList';
 import Showcase from '../components/Showcase';
 import Trending from '../components/Trending';
-import CategoryElement from '../../../components/CategoryElement';
+// import CategoryElement from '../../../components/CategoryElement';
 import RecentBlogs from '../components/RecentBlogs2';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -69,7 +69,7 @@ export class BlogListPage extends React.Component {
         <div className="container mx-auto lg:flex">
           <div className="lg:w-3/4 lg:pr-10">
             <div className="layout-2 no-container no-bg">
-              <CategoryElement cat_id="5d52700c8113842418772129" size={3} />
+              {/* <CategoryElement cat_id="5d8354aed17b367dfc7182b4" size={3} /> */}
             </div>
           </div>
           <div className="lg:w-1/4 mt-16 lg:mt-32 headline-only">
@@ -80,7 +80,7 @@ export class BlogListPage extends React.Component {
         <div className="container mx-auto lg:flex pb-12">
           <div className="lg:w-3/4 lg:pr-4">
             <div className="layout-7 no-container item4">
-              <CategoryElement cat_id="5d6f55f9846a9b0f58e2d2cd" size={4} />
+              {/* <CategoryElement cat_id="5d835644d17b367dfc7182b7" size={4} /> */}
             </div>
           </div>
           <div className="lg:w-1/4">
