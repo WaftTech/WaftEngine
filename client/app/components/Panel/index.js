@@ -6,17 +6,13 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 
 const Panel = ({ title, body, open, key }) => {
   const [panelOpen, setPanelOpen] = useState(false);
 
-  const [openVal, setOpenVal] = useState(open ? open : panelOpen);
+  const [openVal, setOpenVal] = useState(open || panelOpen);
 
   const handlePanel = () => {
     setPanelOpen(!panelOpen);
@@ -35,9 +31,8 @@ const Panel = ({ title, body, open, key }) => {
         <h3 className="text-bold text-base px-4 py-3 border-b">
           {title}
           <span
-            className={`float-right text-lg ${
-              openVal ? 'transform rotate-180' : ''
-            }`}
+            className={`float-right text-lg ${openVal ? 'transform rotate-180' : ''
+              }`}
           >
             {' '}
             ^
