@@ -1,19 +1,11 @@
-import {
-  takeLatest,
-  take,
-  call,
-  fork,
-  put,
-  select,
-  cancel,
-} from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
+import { LOCATION_CHANGE, push } from 'connected-react-router';
+import { call, cancel, fork, put, select, take, takeLatest } from 'redux-saga/effects';
 import Api from 'utils/Api';
-import { makeSelectOne } from './selectors';
-import { makeSelectToken } from '../../App/selectors';
 import { enqueueSnackbar } from '../../App/actions';
-import * as types from './constants';
+import { makeSelectToken } from '../../App/selectors';
 import * as actions from './actions';
+import * as types from './constants';
+import { makeSelectOne } from './selectors';
 
 function* loadCategory(action) {
   const token = yield select(makeSelectToken());

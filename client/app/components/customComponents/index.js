@@ -1,5 +1,5 @@
-import { Select, DatePicker, ReactSelect } from './Select';
-import { Input } from './Input';
 import { Checkbox } from './Checkbox';
+import { Input } from './Input';
+import { DatePicker, ReactSelect, Select } from './Select';
 
 export { Input, Select, DatePicker, ReactSelect, Checkbox };

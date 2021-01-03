@@ -5,11 +5,11 @@
  *
  */
 
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { loadFaqRequest } from '../../containers/App/actions';
 import { makeSelectFaqData } from '../../containers/App/selectors';
 import Panel from '../Panel';

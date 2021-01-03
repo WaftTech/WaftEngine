@@ -1,45 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import moment from 'moment';
+import Table from 'components/Table';
 import { push } from 'connected-react-router';
-import { Helmet } from 'react-helmet';
-import Select from 'react-select';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Table from 'components/Table';
-import { DATE_FORMAT } from '../../App/constants';
-import injectSaga from '../../../utils/injectSaga';
+import { Helmet } from 'react-helmet';
+import { FaBan, FaPlus, FaRegCheckCircle } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import Select from 'react-select';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import DeleteDialog from '../../../components/DeleteDialog';
+import Loading from '../../../components/Loading';
+import Modal from '../../../components/Modal';
+import PageContent from '../../../components/PageContent/PageContent';
+import PageHeader from '../../../components/PageHeader/PageHeader';
 import injectReducer from '../../../utils/injectReducer';
+import injectSaga from '../../../utils/injectSaga';
+import { DATE_FORMAT } from '../../App/constants';
+import * as mapDispatchToProps from './actions';
+import QuickEdit from './AddEditPage/QuickEdit';
 import reducer from './reducer';
 import saga from './saga';
-import * as mapDispatchToProps from './actions';
-import {
-  makeSelectAll,
-  makeSelectQuery,
-  makeSelectHelper,
-  makeSelectLoading,
-  makeSelectOne,
-  makeSelectUsers,
-  makeSelectCategory,
-  makeSelectChip,
-  makeSelectTag,
-  makeSelectMetaTag,
-  makeSelectMetaKeyword,
-  makeSelectErrors,
-} from './selectors';
+import { makeSelectAll, makeSelectCategory, makeSelectChip, makeSelectErrors, makeSelectHelper, makeSelectLoading, makeSelectMetaKeyword, makeSelectMetaTag, makeSelectOne, makeSelectQuery, makeSelectTag, makeSelectUsers } from './selectors';
 
-import PageHeader from '../../../components/PageHeader/PageHeader';
-import PageContent from '../../../components/PageContent/PageContent';
-import DeleteDialog from '../../../components/DeleteDialog';
-import Modal from '../../../components/Modal';
-import Loading from '../../../components/Loading';
-import LinkBoth from '../../../components/LinkBoth';
-import QuickEdit from './AddEditPage/QuickEdit';
-import { FaBan, FaRegCheckCircle, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogManagePage extends React.Component {
@@ -351,67 +337,67 @@ export class BlogManagePage extends React.Component {
         author,
         _id,
       }) => [
-        <>
-          <Link
-            to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
-            target="_blank"
-            className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
-          >
-            {title}
-          </Link>{' '}
-          <div className="flex py-2">
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
-              onClick={() => this.handleEdit(_id)}
+          <>
+            <Link
+              to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+              target="_blank"
+              className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
             >
-              Edit
+              {title}
+            </Link>{' '}
+            <div className="flex py-2">
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
+                onClick={() => this.handleEdit(_id)}
+              >
+                Edit
             </button>
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
-              onClick={() => this.handleLoadOne(_id)}
-            >
-              Quick Edit
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
+                onClick={() => this.handleLoadOne(_id)}
+              >
+                Quick Edit
             </button>
 
-            <button
-              className="px-1 text-center leading-none text-red-500 whitespace-no-wrap text-sm"
-              type="button"
-              onClick={() => this.handleOpen(_id)}
-            >
-              Delete
+              <button
+                className="px-1 text-center leading-none text-red-500 whitespace-no-wrap text-sm"
+                type="button"
+                onClick={() => this.handleOpen(_id)}
+              >
+                Delete
             </button>
-          </div>
-        </>,
-        (category && category.map(each => each.title).join(', ')) || 'No',
-        <span className="whitespace-no-wrap">
-          {moment(added_at).format(DATE_FORMAT)}
-        </span>,
-        <span className="whitespace-no-wrap">
-          {moment(published_on).format('YYYY-MM-DD HH:mm')}
-        </span>,
-        // `${is_highlight}`,
-        // `${is_showcase}`,
-        // `${is_active}`,
-        <>
-          {is_published ? (
-            <FaRegCheckCircle className="text-green-500" />
-          ) : (
-            <FaBan className="text-red-400" />
-          )}{' '}
-        </>,
-        // tags.join(','),
-        (
-          <p className="">
-            {author &&
-              author.length > 0 &&
-              author.map(author => author.name).join(', ')}
-          </p>
-        ) || '',
-      ],
+            </div>
+          </>,
+          (category && category.map(each => each.title).join(', ')) || 'No',
+          <span className="whitespace-no-wrap">
+            {moment(added_at).format(DATE_FORMAT)}
+          </span>,
+          <span className="whitespace-no-wrap">
+            {moment(published_on).format('YYYY-MM-DD HH:mm')}
+          </span>,
+          // `${is_highlight}`,
+          // `${is_showcase}`,
+          // `${is_active}`,
+          <>
+            {is_published ? (
+              <FaRegCheckCircle className="text-green-500" />
+            ) : (
+                <FaBan className="text-red-400" />
+              )}{' '}
+          </>,
+          // tags.join(','),
+          (
+            <p className="">
+              {author &&
+                author.length > 0 &&
+                author.map(author => author.name).join(', ')}
+            </p>
+          ) || '',
+        ],
     );
 
     const activeData =

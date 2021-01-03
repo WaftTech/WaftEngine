@@ -1,13 +1,11 @@
-import React from 'react';
-
 import {
   Dialog,
-  DialogTitle,
   DialogActions,
-  DialogContent,
+  DialogContent, DialogTitle
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import ClearIcon from '@material-ui/icons/Clear';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function DeleteDialog(props) {
   const {

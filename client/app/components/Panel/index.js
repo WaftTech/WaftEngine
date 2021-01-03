@@ -6,8 +6,8 @@
  *
  */
 
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
 const Panel = ({ title, body, open, key }) => {
   const [panelOpen, setPanelOpen] = useState(false);

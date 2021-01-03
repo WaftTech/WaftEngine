@@ -1,12 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeSelectToken,
-  makeSelectUserIsAdmin,
-  makeSelectLocation,
+  makeSelectLocation, makeSelectToken,
+  makeSelectUserIsAdmin
 } from '../../../containers/App/selectors';
 import NotFoundPage from '../../../containers/NotFoundPage';
 

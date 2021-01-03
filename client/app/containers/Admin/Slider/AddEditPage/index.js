@@ -1,41 +1,34 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import arrayMove from 'utils/arrayMove';
-import { Helmet } from 'react-helmet';
-
 // @material-ui/core components
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import BackIcon from '@material-ui/icons/ArrowBack';
-
-import injectSaga from 'utils/injectSaga';
+import { push } from 'connected-react-router';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { FaArrowLeft, FaTrashAlt } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import arrayMove from 'utils/arrayMove';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import Loading from '../../../../components/Loading';
+import PageContent from '../../../../components/PageContent/PageContent';
+import PageHeader from '../../../../components/PageHeader/PageHeader';
+import { IMAGE_BASE } from '../../../App/constants';
+import EditorFileSelect from '../../../EditorFileSelect';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOne,
-  makeSelectMedia,
-  makeSelectLoading,
-  makeSelectErrors,
+  makeSelectErrors, makeSelectLoading, makeSelectMedia, makeSelectOne
 } from '../selectors';
-import * as mapDispatchToProps from '../actions';
-import { IMAGE_BASE } from '../../../App/constants';
-import PageHeader from '../../../../components/PageHeader/PageHeader';
-import PageContent from '../../../../components/PageContent/PageContent';
-import Loading from '../../../../components/Loading';
-import EditorFileSelect from '../../../EditorFileSelect';
-import { FaTrashAlt, FaArrowLeft } from 'react-icons/fa';
+
+
 
 const SortableImageItem = SortableElement(() => <div>***</div>);
 

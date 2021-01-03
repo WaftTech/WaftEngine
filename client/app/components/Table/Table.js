@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 // @material-ui/core components
 import TablePagination from '@material-ui/core/TablePagination';
-import style from './table.css';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 // core components
 

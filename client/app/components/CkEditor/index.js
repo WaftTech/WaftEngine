@@ -4,9 +4,9 @@
  *
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import CKEditor from 'react-ckeditor-component';
-import PropTypes, { oneOfType } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 const CkEditor = props => {

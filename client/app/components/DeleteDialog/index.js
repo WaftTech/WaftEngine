@@ -1,12 +1,9 @@
-import React from 'react';
 import {
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
+  DialogTitle
 } from '@material-ui/core';
+import React from 'react';
 
 // const Transition = React.forwardRef(function Transition(props, ref) {
 //   <Slide direction="up" ref={ref} {...props} />;
@@ -42,7 +39,6 @@ export default function DeleteDialog(props) {
             Don't Delete
           </button>
           <button
-            className="bg-red-100"
             className="bg-red-100 text-red-600 flex-1 px-3 py-2 text-sm font-bold leading-none border border-red-300 hover:bg-red-600 rounded"
             onClick={handleDialogDelete}
           >
