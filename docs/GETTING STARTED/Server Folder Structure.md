@@ -11,7 +11,7 @@
    * **other.helper.js**: common function which is necessary for WaftEngine are their
 
 3. **middleware:**
-   * **authentication.middleware.js**: use for the WaftEngine API authentication and authorization
+   * **authentication.middleware.js**: use for the WaftEngine API authorization and authentication
 
 4. **module:** Can know the module which is needed for WaftEngine. The structure of module folder(e.g.Content module).
    * **content.config.js**: module related configuration are here.(e.g. Success msg, validation msg, config key etc)

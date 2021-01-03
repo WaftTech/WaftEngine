@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const settingModule = require('../../modules/setting/settingController');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/authentication.middleware');
 
-router.get('/', authorization, authentication, settingModule.GetSetting);
-router.post('/all', authorization, settingModule.EditSetting);
-router.post('/', authorization, authentication, settingModule.SaveSetting);
+router.get('/', authentication, authorization, settingModule.GetSetting);
+router.post('/all', authentication, settingModule.EditSetting);
+router.post('/', authentication, authorization, settingModule.SaveSetting);
 
 module.exports = router;

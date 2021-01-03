@@ -20,7 +20,7 @@ internal.addloginlog = async (req, token, next) => {
 
 loginLogController.logout = async (req, res, next) => {
   try {
-    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authentication || req.headers.token;
     token = token.replace('Bearer ', '');
     let deactivelog = await loginLogSch.findOneAndUpdate({ token }, { $set: { is_active: false, logout_date: Date.now() } });
     if (deactivelog) {

@@ -7,39 +7,39 @@ const loginLogs = require('../../modules/user/loginlogs/loginlogController').log
 const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
 const userModule = require('../../modules/user/userController');
-const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
+const { authentication, authenticationForLogout, authorization, getClientInfo } = require('../../middleware/authentication.middleware');
 
-router.get('/', authorization, authentication, userModule.GetAllUser);
+router.get('/', authentication, authorization, userModule.GetAllUser);
 
 router.post('/', userModule.CheckMail);
-router.get('/mfa', authorization, userModule.getMultiFAStatus);
-router.post('/mfa/email', authorization, userModule.postEmailFAStatus);
-router.post('/mfa/ga', authorization, userModule.postGoogleFAStatus);
-router.post('/mfa/ga/verify', authorization, userModule.verifyGoogleFAStatus);
+router.get('/mfa', authentication, userModule.getMultiFAStatus);
+router.post('/mfa/email', authentication, userModule.postEmailFAStatus);
+router.post('/mfa/ga', authentication, userModule.postGoogleFAStatus);
+router.post('/mfa/ga/verify', authentication, userModule.verifyGoogleFAStatus);
 /**
  * @route GET api/user/grby
  * @description Check user is returning user group by or new  || for admin
  * @access Public
  */
-router.get('/grby', authorization, authentication, userModule.GetAllUserGroupBy);
+router.get('/grby', authentication, authorization, userModule.GetAllUserGroupBy);
 
-router.get('/detail/:id', authorization, authentication, userModule.GetUserDetail);
+router.get('/detail/:id', authentication, authorization, userModule.GetUserDetail);
 
-router.post('/detail/:id', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
+router.post('/detail/:id', authentication, authorization, uploader.single('file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
 
 /**
  * @route POST api/user/change
  * @description update basic information of user
  * @access User
  */
-router.post('/change', authorization, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateEdit, userModule.PostUser);
+router.post('/change', authentication, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateEdit, userModule.PostUser);
 
 /**
  * @route POST api/user/changepw
  * @description Update user is returning user or new
  * @access Public
  */
-router.post('/changepw', authorization, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateAdd, userModule.PostUserPwd);
+router.post('/changepw', authentication, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateAdd, userModule.PostUserPwd);
 
 /**
  * @route POST api/user/register
@@ -72,7 +72,7 @@ router.post('/login/github/', getClientInfo, passport.authenticate('github-token
  * @description Register user route || for admin
  * @access Public
  */
-router.post('/register/admin', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
+router.post('/register/admin', authentication, authorization, uploader.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
 
 /**
  * @route POST api/user/verifymail
@@ -117,48 +117,48 @@ router.post('/resetpassword', getClientInfo, userModule.ResetPassword);
  * @description change Password
  * @access Public
  */
-router.post('/changepassword', authorization, validateRegisterInput.validateChangePassword, userModule.changePassword);
+router.post('/changepassword', authentication, validateRegisterInput.validateChangePassword, userModule.changePassword);
 
 /**
  * @route POST api/user/info
  * @description returns the user info
  * @access Public
  */
-router.get('/info', authorization, userModule.Info);
+router.get('/info', authentication, userModule.Info);
 
 /**
  * @route POST api/user/loginlogs
  * @description returns the loginlogs
  * @access Private
  */
-router.get('/loginlogs', authorization, authentication, loginLogs.getLogList);
+router.get('/loginlogs', authentication, authorization, loginLogs.getLogList);
 
 /**
  * @route POST api/user/loginlogs/logout
  * @description remove token from loginlog
  * @access Private
  */
-router.post('/loginlogs/logout', authorization, validateRegisterInput.validateLogsLogoutAction, loginLogs.removeToken);
+router.post('/loginlogs/logout', authentication, validateRegisterInput.validateLogsLogoutAction, loginLogs.removeToken);
 
 /**
  * @route POST api/user/logout
  * @description remove token from loginlog
  * @access Public
  */
-router.get('/logout', authorizationForLogout, loginLogs.logout);
+router.get('/logout', authenticationForLogout, loginLogs.logout);
 
 /**
  * @route GET api/user/profile
  * @description get user profile info
  * @access Public
  */
-router.get('/profile', authorization, userModule.GetProfile);
+router.get('/profile', authentication, userModule.GetProfile);
 
 /**
  * @route POST api/user/profile
  * @description POST user profile info
  * @access Public
  */
-router.post('/profile', authorization, uploader.single('file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
+router.post('/profile', authentication, uploader.single('file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
 
 module.exports = router;
