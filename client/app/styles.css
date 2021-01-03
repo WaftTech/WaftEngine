@@ -290,33 +290,6 @@ select.inputbox {
   @apply bg-green-100 text-green-500 border-green-200;
 }
 
-.ckEditor h1 {
-  font-size: 2rem;
-  margin-bottom: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-.ckEditor h2 {
-  font-size: 1.6rem;
-  margin-bottom: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-.ckEditor h3 {
-  font-size: 1.3rem;
-  margin-bottom: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-.ckEditor p,
-.ckEditor span {
-  font-family: sans-serif !important;
-  font-size: 17px !important;
-  line-height: 170% !important;
-  font-weight: 400;
-  margin-bottom: 20px !important;
-}
 
 .ckEditor p > img {
   margin-right: 40px;
