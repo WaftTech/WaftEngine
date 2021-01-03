@@ -1,7 +1,0 @@
-{"_id":{"$oid":"5f54773332d63109d87a27e2"},"module_group":"Content","description":"Content Related Modules","order":1,"__v":0}
-{"_id":{"$oid":"5f6c7c0c891cc83d708d55fc"},"module_group":"Access","description":"Access Related modules","order":2,"__v":0}
-{"_id":{"$oid":"5f6c7c3a891cc83d708d55fd"},"module_group":"Module","description":"Module Management Related Modules","order":3,"__v":0}
-{"_id":{"$oid":"5f6c7c53891cc83d708d55fe"},"module_group":"Settings","description":"Settings Related Module","order":4,"__v":0}
-{"_id":{"$oid":"5f6c7c69891cc83d708d55ff"},"module_group":"Reports","description":"Report Related Modules","order":5,"__v":0}
-{"_id":{"$oid":"5f701b42c8ed000f783c1b9e"},"module_group":"Profile","description":"Profile Management","order":6,"__v":0}
-{"_id":{"$oid":"5f701b57c8ed000f783c1b9f"},"module_group":"Others","description":"Other Modues ","order":7,"__v":0}
