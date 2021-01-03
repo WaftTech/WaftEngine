@@ -46,14 +46,14 @@ router.post('/changepw', authentication, validateRegisterInput.sanitizeAdd, vali
  * @description Register user route
  * @access Public
  */
-router.post('/register', validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, getClientInfo, userModule.Register);
+router.post('/register', validateRegisterInput.sanitizeRegister, reCaptchaValidator.validate, validateRegisterInput.validateRegisterInput, getClientInfo, userModule.Register);
 
 /**
  * @route POST api/user/login/google/
  * @description Register user route
  * @access Public
  */
-router.post('/login/google/', getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
+router.post('/login/google/', isPublicGoogleRegistrationAllow, getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
 
 /**
  * @route POST api/user/login/facebook/
