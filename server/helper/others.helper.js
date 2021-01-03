@@ -167,6 +167,7 @@ otherHelper.sanitize = (req, sanitizeArray) => {
     if (sanitization.toDate) {
       sanitizefield = Validator.toDate(sanitizefield);
     }
+    req.body[sanitizeObj.field] = sanitizefield;
   });
   return true;
 };
