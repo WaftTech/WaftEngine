@@ -2,8 +2,9 @@ const {
   oauthConfig: { googleAuth, facebookAuth },
   isOauthConfig: { isGoogleAuth, isFacebookAuth },
 } = require('../config/keys');
+const settingSch = require('../modules/setting/settingSchema')
 
-module.exports = passport => {
+module.exports = async passport => {
   passport.serializeUser((user, done) => {
     done(null, user);
   });
@@ -18,8 +19,8 @@ module.exports = passport => {
     passport.use(
       new GoogleTokenStrategy(
         {
-          clientID: client_id.value,
-          clientSecret: client_secret.value,
+          clientID: googleAuth.client_id,
+          clientSecret: googleAuth.client_secret,
         },
         async (accessToken, refreshToken, profile, cb, req) => {
           try {

@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const validateRegisterInput = require('../../modules/user/userValidations');
+const reCaptchaValidator = require('../../middleware/recaptcha.middleware')
 
 const loginLogs = require('../../modules/user/loginlogs/loginlogController').loginLogController;
 const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
 const userModule = require('../../modules/user/userController');
-const { authentication, authenticationForLogout, authorization, getClientInfo } = require('../../middleware/authentication.middleware');
+const { authentication, authenticationForLogout, authorization, getClientInfo, isPublicGoogleRegistrationAllow } = require('../../middleware/authentication.middleware');
 
 router.get('/', authentication, authorization, userModule.GetAllUser);
 
