@@ -1,11 +1,12 @@
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const subscribeSch = require('./subscribeSchema');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
-  otherHelper.sanitize(req, [
+  sanitizeHelper.sanitize(req, [
     {
       field: 'email',
       sanitize: {

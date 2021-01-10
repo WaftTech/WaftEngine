@@ -129,48 +129,6 @@ otherHelper.getQuerySendResponse = async (model, page, size, sortQuery, searchQu
     next(err);
   }
 };
-otherHelper.sanitize = (req, sanitizeArray) => {
-  sanitizeArray.forEach(sanitizeObj => {
-    let sanitizefield = req.body[sanitizeObj.field];
-    sanitizefield = !isEmpty(sanitizefield) ? sanitizefield + '' : '';
-    const sanitization = sanitizeObj.sanitize;
-    if (sanitization.rtrim) {
-      sanitizefield = Validator.rtrim(sanitizefield);
-    }
-    if (sanitization.ltrim) {
-      sanitizefield = Validator.ltrim(sanitizefield);
-    }
-    if (sanitization.blacklist) {
-      sanitizefield = Validator.blacklist(sanitizefield);
-    }
-    if (sanitization.whitelist) {
-      sanitizefield = Validator.whitelist(sanitizefield);
-    }
-    if (sanitization.trim) {
-      sanitizefield = Validator.trim(sanitizefield);
-    }
-    if (sanitization.escape) {
-      sanitizefield = Validator.escape(sanitizefield);
-    }
-    if (sanitization.unescape) {
-      sanitizefield = Validator.unescape(sanitizefield);
-    }
-    if (sanitization.toBoolean) {
-      sanitizefield = Validator.toBoolean(sanitizefield);
-    }
-    if (sanitization.toInt) {
-      sanitizefield = Validator.toInt(sanitizefield);
-    }
-    if (sanitization.toFloat) {
-      sanitizefield = Validator.toFloat(sanitizefield);
-    }
-    if (sanitization.toDate) {
-      sanitizefield = Validator.toDate(sanitizefield);
-    }
-    req.body[sanitizeObj.field] = sanitizefield;
-  });
-  return true;
-};
 otherHelper.validation = (data, validationArray) => {
   let errors = {};
   validationArray.forEach(validationObj => {
@@ -209,10 +167,10 @@ otherHelper.validation = (data, validationArray) => {
         case 'IsMongoId':
           if (!Validator.isEmpty(value)) {
 
-          if (!Validator.isMongoId(value)) {
-            errors[validationObj.field] = val.msg;
+            if (!Validator.isMongoId(value)) {
+              errors[validationObj.field] = val.msg;
+            }
           }
-        }
           break;
         case 'IsIn':
           if (val.option) {

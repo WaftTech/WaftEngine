@@ -1,12 +1,13 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const sliderConfig = require('./sliderConfig');
 const sliderSch = require('./sliderSchema');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
-  otherHelper.sanitize(req, [
+  sanitizeHelper.sanitize(req, [
     {
       field: 'slider_name',
       sanitize: {

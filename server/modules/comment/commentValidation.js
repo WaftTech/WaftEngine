@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const validation = {};
 
 validation.sanitizeComment = (req, res, next) => {
@@ -12,7 +13,7 @@ validation.sanitizeComment = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validation.validateComment = (req, res, next) => {
@@ -26,7 +27,7 @@ validation.validateComment = (req, res, next) => {
           msg: 'This field is required!!',
         },
       ],
-    },{
+    }, {
       field: 'blog_id',
       validate: [
         {

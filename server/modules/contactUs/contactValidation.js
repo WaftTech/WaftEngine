@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const config = require('./contactConfig');
 const apiCallHelper = require('../../helper/apicall.helper');
 const {
@@ -35,7 +36,7 @@ validateInput.sanitize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validateInput.validate = async (req, res, next) => {

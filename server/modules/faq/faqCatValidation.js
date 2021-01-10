@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const otherHelper = require('../../helper/others.helper');
 const faqConfig = require('./faqConfig');
 const faqCategorySch = require('./faqCategorySchema');
@@ -27,7 +28,7 @@ faqCatValidation.Sanitize = (req, res, next) => {
             },
         },
     ];
-    otherHelper.sanitize(req, sanitizeArray);
+    sanitizeHelper.sanitize(req, sanitizeArray);
     next();
 };
 

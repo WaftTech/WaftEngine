@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const config = require('./userConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const validations = {};
 
 validations.sanitizeRegister = (req, res, next) => {
@@ -19,7 +20,7 @@ validations.sanitizeRegister = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.sanitizeUpdateProfile = (req, res, next) => {
@@ -61,7 +62,7 @@ validations.sanitizeUpdateProfile = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.sanitizeLogin = (req, res, next) => {
@@ -73,7 +74,7 @@ validations.sanitizeLogin = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.sanitizeUserScan = (req, res, next) => {
@@ -85,7 +86,7 @@ validations.sanitizeUserScan = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -98,7 +99,7 @@ validations.sanitizeAdd = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.sanitizeUpdateUserProfile = (req, res, next) => {
@@ -134,7 +135,7 @@ validations.sanitizeUpdateUserProfile = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.validateUpdateUserProfile = (req, res, next) => {

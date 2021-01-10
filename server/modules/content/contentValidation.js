@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const contentConfig = require('./contentConfig');
 const otherHelper = require('../../helper/others.helper');
+
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const contentSch = require('./contentSchema');
 const validations = {};
 
@@ -26,7 +28,7 @@ validations.sanitize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.validation = async (req, res, next) => {

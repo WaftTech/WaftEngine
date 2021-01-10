@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const formConfig = require('./formConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
@@ -25,7 +26,7 @@ validations.sanitize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.validation = (req, res, next) => {
@@ -47,7 +48,7 @@ validations.validation = (req, res, next) => {
           },
         },
       ],
-    
+
     },
     {
       field: 'email',
@@ -59,10 +60,10 @@ validations.validation = (req, res, next) => {
         {
           condition: 'IsEmail',
           msg: formConfig.validate.email,
-          
+
         },
       ],
-    
+
     },
     {
       field: 'mobile',
@@ -74,10 +75,10 @@ validations.validation = (req, res, next) => {
         {
           condition: 'IsPhone',
           msg: formConfig.validate.phone,
-          
+
         },
       ],
-    
+
     },
     {
       field: 'is_identified',
@@ -91,8 +92,8 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.boolean
         }
       ],
-    
-    },  
+
+    },
 
     {
       field: 'type_of_property',
@@ -102,7 +103,7 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.empty,
         },
       ],
-    
+
     },
     //
     {
@@ -113,7 +114,7 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.empty,
         },
       ],
-    
+
     },
     {
       field: 'resident_status',
@@ -123,7 +124,7 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.empty,
         },
       ],
-    
+
     },
     {
       field: 'employment_type',
@@ -133,7 +134,7 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.empty,
         },
       ],
-    
+
     },
     {
       field: 'monthly_income',
@@ -143,7 +144,7 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.empty,
         },
       ],
-    
+
     },
     {
       field: 'is_co_borrower',
@@ -157,7 +158,7 @@ validations.validation = (req, res, next) => {
           msg: formConfig.validate.boolean,
         }
       ],
-    
+
     },
   ];
   const errors = otherHelper.validation(data, validateArray);

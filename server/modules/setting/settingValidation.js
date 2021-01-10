@@ -1,5 +1,6 @@
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const httpStatus = require('http-status');
 const settingConfig = require('./settingConfig');
 const settingSch = require('./settingSchema');
@@ -55,7 +56,7 @@ settingValidation.validate = async (req, res, next) => {
 };
 
 settingValidation.sanitize = async (req, res, next) => {
-  await otherHelper.sanitize(req, [
+  await sanitizeHelper.sanitize(req, [
     {
       field: 'title',
       sanitize: {

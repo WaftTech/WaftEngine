@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const config = require('./roleConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
 const roleConfig = require('./roleConfig');
 const moduleGroupSch = require('./moduleGroupSchema');
 const validations = {};
@@ -182,7 +183,7 @@ validations.sanitizeRole = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.sanitizeModule = (req, res, next) => {
@@ -200,7 +201,7 @@ validations.sanitizeModule = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -219,7 +220,7 @@ validations.sanitizeModuleGroup = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -238,7 +239,7 @@ validations.sanitizeAccess = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 module.exports = validations;
