@@ -22,17 +22,18 @@ const Panel = ({ title, body, open, key }) => {
   };
 
   return (
-    <div
-      className="border rounded mb-4"
-      key={key}
-      onClick={() => handlePanel()}
-    >
-      <div aria-controls="panel2a-content" id="panel2a-header">
+    <div className="border rounded mb-4" key={key}>
+      <div
+        aria-controls="panel2a-content"
+        id="panel2a-header"
+        onClick={() => handlePanel()}
+      >
         <h3 className="text-bold text-base px-4 py-3 border-b">
           {title}
           <span
-            className={`float-right text-lg ${openVal ? 'transform rotate-180' : ''
-              }`}
+            className={`float-right text-lg ${
+              openVal ? 'transform rotate-180' : ''
+            }`}
           >
             {' '}
             ^
