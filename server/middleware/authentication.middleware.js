@@ -18,7 +18,7 @@ const isEmpty = require('../validation/isEmpty');
 
 authMiddleware.authentication = async (req, res, next) => {
   try {
-    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authentication || req.headers.token;
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
       const d = await jwt.verify(token, secretOrKey);
@@ -38,7 +38,7 @@ authMiddleware.authentication = async (req, res, next) => {
 
 authMiddleware.authenticationForLogout = async (req, res, next) => {
   try {
-    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authentication || req.headers.token;
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
       const d = await jwt.verify(token, secretOrKey);
