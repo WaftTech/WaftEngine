@@ -40,6 +40,7 @@ import {
   FaTrash,
   FaFolder,
   FaSearch,
+  FaEdit
 } from 'react-icons/fa';
 
 const LinkComponent = ({ children, staticContext, ...props }) => (
@@ -579,7 +580,7 @@ const FileList = ({
                   className="hover:text-blue-500"
                   onClick={() => handleRename(each._id, each.name)}
                 >
-                  <Edit />
+                  <FaEdit />
                 </button>
               )}
               {selectedButton === 'Delete' && (
@@ -631,7 +632,7 @@ const FileList = ({
                 className="hover:text-blue-500"
                 onClick={() => handleRenameFile(each._id, each.renamed_name)}
               >
-                <Edit />
+                <FaEdit />
               </button>
             )}
             <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
