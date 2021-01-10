@@ -106,7 +106,118 @@ validationHelper.validate = (data1, val) => {
   }
   return errors;
 };
+validationHelper.validation = (data, validationArray) => {
+  let errors = {};
+  validationArray.forEach(validationObj => {
+    let value = data[validationObj.field];
+    value = !isEmpty(value) ? value + '' : '';
+    const validation = validationObj.validate;
+    for (let i = 0; i < validation.length; i++) {
+      const val = validation[i];
+      switch (val.condition) {
+        case 'IsEmpty':
+          if (Validator.isEmpty(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsLength':
+          if (val.option) {
+            if (!Validator.isLength(value, val.option)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsInt':
+          if (val.option) {
+            if (!Validator.isInt(value, val.option)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsEqual':
+          if (val.option) {
+            if (!Validator.equals(val.option.one, val.option.two)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsMongoId':
+          if (!Validator.isEmpty(value)) {
 
+            if (!Validator.isMongoId(value)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsIn':
+          if (val.option) {
+            if (!Validator.isIn(value, val.option)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsDate':
+          if (!Validator.isISO8601(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsEmail':
+          if (!Validator.isEmail(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsBoolean':
+          if (!Validator.isBoolean(value.toString())) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsAfter':
+          if (val.option) {
+            if (!Validator.isAfter(value, val.option.date)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsURL':
+          if (val.option) {
+            if (!Validator.isURL(value, val.option.protocols)) {
+              errors[validationObj.field] = val.msg;
+            }
+          }
+          break;
+        case 'IsUppercase':
+          if (!Validator.isUppercase(value)) {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        case 'IsPhone':
+          let pn = new PhoneNumber(value);
+          if (pn.isValid()) {
+            if (val.option) {
+              if (val.option.isMobile) {
+                if (!pn.isMobile()) {
+                  errors[validationObj.field] = 'Enter mobile number';
+                }
+              } else {
+                if (!pn.isFixedLine()) {
+                  errors[validationObj.field] = 'Enter landline number';
+                }
+              }
+            }
+          } else {
+            errors[validationObj.field] = val.msg;
+          }
+          break;
+        default:
+          break;
+      }
+      if (errors[validationObj.field]) {
+        i = validation.length;
+      }
+    }
+  });
+  return errors;
+};
 validationHelper.sanitize = (req, san) => {
   for (i = 0; i < san.length; i++) {
     let field = san[i].field;

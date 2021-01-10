@@ -1,5 +1,6 @@
 const otherHelper = require('../../helper/others.helper');
 const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const subscribeSch = require('./subscribeSchema');
@@ -18,7 +19,7 @@ validations.sanitize = (req, res, next) => {
 };
 validations.validate = async (req, res, next) => {
   const data = await subscribeSch.countDocuments({ email: req.body.email });
-  let errors = otherHelper.validation(req.body, [
+  let errors = validateHelper.validation(req.body, [
     {
       field: 'email',
       validate: [

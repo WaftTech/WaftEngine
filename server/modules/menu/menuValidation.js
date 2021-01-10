@@ -3,6 +3,7 @@ const isEmpty = require('../../validation/isEmpty');
 const menuConfig = require('./menuConfig');
 const otherHelper = require('../../helper/others.helper');
 const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const menuSch = require('./menuschema')
 const validation = {};
 
@@ -71,7 +72,7 @@ validation.validate = async (req, res, next) => {
       ],
     },
   ];
-  let errors = otherHelper.validation(data, validateArray);
+  let errors = validateHelper.validation(data, validateArray);
 
   let key_filter = { is_deleted: false, key: data.key }
   if (data._id) {
@@ -194,7 +195,7 @@ validation.itemValidate = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
 
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, menuConfig.errorIn.invalidInputs, null);

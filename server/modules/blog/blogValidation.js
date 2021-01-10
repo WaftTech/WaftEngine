@@ -3,6 +3,7 @@ const isEmpty = require('../../validation/isEmpty');
 const blogConfig = require('./blogConfig');
 const otherHelper = require('../../helper/others.helper');
 const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
@@ -80,7 +81,7 @@ validation.validate = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, blogConfig.errorIn.inputErrors, null);
   } else {
@@ -148,7 +149,7 @@ validation.catValidate = (req, res, next) => {
     },
 
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, blogConfig.errorIn.inputErrors, null);
   } else {
@@ -199,7 +200,7 @@ validation.countValidate = (req, res, next) => {
     },
 
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, blogConfig.errorIn.inputErrors, null);
   } else {

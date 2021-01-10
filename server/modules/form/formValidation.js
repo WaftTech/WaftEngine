@@ -3,6 +3,7 @@ const isEmpty = require('../../validation/isEmpty');
 const formConfig = require('./formConfig');
 const otherHelper = require('../../helper/others.helper');
 const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
@@ -161,7 +162,7 @@ validations.validation = (req, res, next) => {
 
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input error', null);
   } else {

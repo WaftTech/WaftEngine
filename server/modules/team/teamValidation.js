@@ -3,6 +3,7 @@ const isEmpty = require('../../validation/isEmpty');
 const teamConfig = require('./teamConfig');
 const otherHelper = require('../../helper/others.helper');
 const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
@@ -110,7 +111,7 @@ validation.validate = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
 
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, teamConfig.errorIn.inputErrors, null);
