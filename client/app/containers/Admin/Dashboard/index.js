@@ -24,6 +24,7 @@ import reducer from './reducer';
 import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import LinkBoth from '../../../components/LinkBoth';
+import Dialog from '../../../components/Dialog/index';
 
 import {
   FaStickyNote,
@@ -41,12 +42,29 @@ export class Dashboard extends React.PureComponent {
     this.props.loadBlogRequest();
   }
 
+  state = { open: false };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { classes, users, info, errors, blogs } = this.props;
     return (
       <>
         <div className="flex justify-between my-3">
-          <PageHeader>Dashboard</PageHeader>
+          <PageHeader>Dashboard </PageHeader>
+          <button
+            type="button"
+            className="bg-primary text-white p-2"
+            onClick={this.handleOpen}
+          >
+            Show Dialog
+          </button>
         </div>
         <div className="bg-white rounded p-4">
           {info.map(each => (
@@ -161,6 +179,34 @@ export class Dashboard extends React.PureComponent {
             </div>
           </div>
         </div>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          title={<h2> Demo Dialog </h2>}
+          body={
+            <div>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </div>
+          }
+          actions={
+            <button
+              type="button"
+              className="bg-red-400 p-2 text-white"
+              onClick={this.handleClose}
+            >
+              Close
+            </button>
+          }
+        />
       </>
     );
   }
