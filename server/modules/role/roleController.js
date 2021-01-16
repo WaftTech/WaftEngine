@@ -206,7 +206,7 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
       }
       return otherHelper.sendResponse(res, httpStatus.OK, true, d, null, 'Access update success!!', null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, true, update, null, '', null);
+      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, true, null, null, 'not found', null);
     }
   } catch (err) {
     next(err);
