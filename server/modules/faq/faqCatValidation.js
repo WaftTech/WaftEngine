@@ -1,5 +1,7 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const otherHelper = require('../../helper/others.helper');
 const faqConfig = require('./faqConfig');
 const faqCategorySch = require('./faqCategorySchema');
@@ -27,7 +29,7 @@ faqCatValidation.Sanitize = (req, res, next) => {
             },
         },
     ];
-    otherHelper.sanitize(req, sanitizeArray);
+    sanitizeHelper.sanitize(req, sanitizeArray);
     next();
 };
 
@@ -57,7 +59,7 @@ faqCatValidation.Validation = async (req, res, next) => {
             ],
         },
     ];
-    let errors = otherHelper.validation(req.body, validateArray);
+    let errors = validateHelper.validation(req.body, validateArray);
 
     let key_filter = { is_deleted: false, key: data.key }
     if (data._id) {

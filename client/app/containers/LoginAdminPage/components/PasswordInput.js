@@ -53,7 +53,6 @@ PasswordInput.propTypes = {
   password: PropTypes.string.isRequired,
   setStoreValue: PropTypes.func.isRequired,
   error: PropTypes.string,
-  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

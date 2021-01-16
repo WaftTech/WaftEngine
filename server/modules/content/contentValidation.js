@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const contentConfig = require('./contentConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const contentSch = require('./contentSchema');
 const validations = {};
 
@@ -26,7 +28,7 @@ validations.sanitize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.validation = async (req, res, next) => {
@@ -81,7 +83,7 @@ validations.validation = async (req, res, next) => {
       ],
     },
   ];
-  let errors = otherHelper.validation(data, validateArray);
+  let errors = validateHelper.validation(data, validateArray);
 
   let key_filter = { is_deleted: false, key: data.key }
   if (data._id) {

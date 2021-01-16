@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const config = require('./roleConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const roleConfig = require('./roleConfig');
 const moduleGroupSch = require('./moduleGroupSchema');
 const validations = {};
@@ -38,7 +40,7 @@ validations.validateRole = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validationArray);
+  const errors = validateHelper.validation(data, validationArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, roleConfig.errorIn.inputErrors, null);
   } else {
@@ -86,7 +88,7 @@ validations.validateModule = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validationArray);
+  const errors = validateHelper.validation(data, validationArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, roleConfig.errorIn.inputErrors, null);
   } else {
@@ -115,7 +117,7 @@ validations.validateAccess = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, nul, errors, 'invalid object id', null);
   } else {
@@ -149,7 +151,7 @@ validations.validateModuleGroup = async (req, res, next) => {
       ],
     },
   ];
-  let errors = otherHelper.validation(data, validateArray);
+  let errors = validateHelper.validation(data, validateArray);
 
   let key_filter = { is_deleted: false, module_group: data.module_group }
   if (data._id) {
@@ -182,7 +184,7 @@ validations.sanitizeRole = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 validations.sanitizeModule = (req, res, next) => {
@@ -200,7 +202,7 @@ validations.sanitizeModule = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -219,7 +221,7 @@ validations.sanitizeModuleGroup = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -238,7 +240,7 @@ validations.sanitizeAccess = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 module.exports = validations;

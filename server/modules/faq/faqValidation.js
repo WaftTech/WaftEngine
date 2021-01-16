@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const faqConfig = require('./faqConfig');
 const faqValidation = {};
 faqValidation.Sanitize = (req, res, next) => {
@@ -18,7 +20,7 @@ faqValidation.Sanitize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -60,7 +62,7 @@ faqValidation.Validation = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(req.body, validateArray);
+  const errors = validateHelper.validation(req.body, validateArray);
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, faqConfig.errorIn.inputError, null);
   } else {
