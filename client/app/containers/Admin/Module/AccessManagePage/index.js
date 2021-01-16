@@ -1,22 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { Helmet } from 'react-helmet';
-
 import CircularProgress from '@material-ui/core/CircularProgress';
-import injectSaga from 'utils/injectSaga';
+import { push } from 'connected-react-router';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { FaArrowLeft, FaPlus } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import PageContent from '../../../../components/PageContent/PageContent';
+import PageHeader from '../../../../components/PageHeader/PageHeader';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectAccess, makeSelectLoading } from '../selectors';
-import * as mapDispatchToProps from '../actions';
-import PageHeader from '../../../../components/PageHeader/PageHeader';
-import PageContent from '../../../../components/PageContent/PageContent';
 import '../style.css';
-import { FaPencilAlt, FaArrowLeft, FaSearch, FaPlus } from 'react-icons/fa';
+
 
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
@@ -80,75 +80,75 @@ class AccessManagePage extends React.PureComponent {
     return loading && loading == true ? (
       <CircularProgress color="primary" disableShrink />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>Access Listing</title>
-        </Helmet>
+        <React.Fragment>
+          <Helmet>
+            <title>Access Listing</title>
+          </Helmet>
 
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {`Edit Access for ${Module.module_name}`}
-          </PageHeader>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {`Edit Access for ${Module.module_name}`}
+            </PageHeader>
 
-          <div className="flex items-center">
-            <button
-              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
-              onClick={this.handleEditAccess}
-            >
-              <FaPlus />
-              <span className="pl-2">Add New</span>
-            </button>
+            <div className="flex items-center">
+              <button
+                className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+                onClick={this.handleEditAccess}
+              >
+                <FaPlus />
+                <span className="pl-2">Add New</span>
+              </button>
+            </div>
           </div>
-        </div>
-        <PageContent>
-          {Roles.map(role => {
-            const accessFiltered = Access.filter(
-              each => each.role_id === role._id,
-            );
-            let accesses = [];
-            if (accessFiltered.length > 0) {
-              accesses = [...accessFiltered[0].access_type];
-            }
-            return (
-              <div className="mb-4 border rounded mt-6 p-2" key={role._id}>
-                <h3
-                  className="font-bold bg-white px-2 relative text-lg ml-2 inline-block"
-                  style={{ top: -21 }}
-                >
-                  {role.role_title}
-                </h3>
-                <div
-                  value={accesses}
-                  onChange={(_, module_id) =>
-                    this.handleAccessUpdate(module_id, role._id, Module._id)
-                  }
-                >
-                  {Module.path.map(eachPath => (
-                    <div
-                      className="bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500"
-                      key={`${eachPath._id}-${role._id}`}
-                      value={eachPath._id}
-                    >
-                      {eachPath.access_type}
-                    </div>
-                  ))}
+          <PageContent>
+            {Roles.map(role => {
+              const accessFiltered = Access.filter(
+                each => each.role_id === role._id,
+              );
+              let accesses = [];
+              if (accessFiltered.length > 0) {
+                accesses = [...accessFiltered[0].access_type];
+              }
+              return (
+                <div className="mb-4 border rounded mt-6 p-2" key={role._id}>
+                  <h3
+                    className="font-bold bg-white px-2 relative text-lg ml-2 inline-block"
+                    style={{ top: -21 }}
+                  >
+                    {role.role_title}
+                  </h3>
+                  <div
+                    value={accesses}
+                    onChange={(_, module_id) =>
+                      this.handleAccessUpdate(module_id, role._id, Module._id)
+                    }
+                  >
+                    {Module.path.map(eachPath => (
+                      <div
+                        className="bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500"
+                        key={`${eachPath._id}-${role._id}`}
+                        value={eachPath._id}
+                      >
+                        {eachPath.access_type}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
 
-          <button
-            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            onClick={this.handleSave}
-          >
-            Save Changes
+            <button
+              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Save Changes
           </button>
-        </PageContent>
-      </React.Fragment>
-    );
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 

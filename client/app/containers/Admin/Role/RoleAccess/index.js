@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -191,76 +190,9 @@ const withConnect = connect(
   { ...mapDispatchToProps, push },
 );
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  secondaryHeading: {
-    color: '#ff3b30',
-    textTransform: 'Capitalize',
-  },
-  paper: {
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(6))]: {
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-
-  ExpansionPanelMainWrapper: {
-    marginBottom: '8px',
-    boxShadow: 'none',
-  },
-
-  roleRoot: {
-    minHeight: '44px',
-  },
-
-  roleContent: {
-    margin: '6px 0px',
-  },
-
-  roleExpandIcon: {
-    padding: '0px 12px',
-  },
-
-  roleExpanded: {
-    borderBottom: '1px solid gainsboro',
-    margin: '6px 0px !important',
-    '& > div': {
-      borderBottom: 'none',
-      margin: '6px 0px',
-    },
-  },
-
-  topography: {
-    width: '100%',
-  },
-});
-
-const withStyle = withStyles(styles);
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyle,
 )(RoleAccess);

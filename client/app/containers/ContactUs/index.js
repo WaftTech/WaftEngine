@@ -1,33 +1,31 @@
-import React from 'react';
-
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { Helmet } from 'react-helmet';
-import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
-import ReCAPTCHA from 'react-google-recaptcha';
-import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import StaticContentDiv from '../../components/StaticContentDiv';
-import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import saga from './saga';
-import reducer from './reducer';
-import {
-  makeSelectIsRequesting,
-  makeSelectSuccess,
-  makeSelectErrorMsg,
-  makeSelectContactDetail,
-} from './selectors';
-import * as mapDispatchToProps from './actions';
+import injectSaga from '../../utils/injectSaga';
 import { RECAPTCHA_SITE_KEY } from '../App/constants';
+import * as mapDispatchToProps from './actions';
+import reducer from './reducer';
+import saga from './saga';
+import {
+  makeSelectContactDetail, makeSelectErrorMsg, makeSelectIsRequesting,
+  makeSelectSuccess
+} from './selectors';
+
 
 const recaptchaRef = React.createRef();
 class ContactUs extends React.Component {
   state = { name: '', email: '', subject: '', message: '', reCaptcha: '' };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -113,14 +111,14 @@ class ContactUs extends React.Component {
               {isRequesting && isRequesting == true ? (
                 <CircularProgress color="primary" disableShrink />
               ) : (
-                <form onSubmit={this.onSubmit}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={RECAPTCHA_SITE_KEY}
-                    onChange={this.onChange}
-                  />
-                </form>
-              )}
+                  <form onSubmit={this.onSubmit}>
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={RECAPTCHA_SITE_KEY}
+                      onChange={this.onChange}
+                    />
+                  </form>
+                )}
 
               <button
                 type="button"
@@ -138,16 +136,6 @@ class ContactUs extends React.Component {
             <div className="w-full mt-10 sm:w-full md:w-1/2 md:pl-10 md:mt-0">
               <StaticContentDiv contentKey="contactdetail" />
             </div>
-
-            {/* <Grid item xs={6} sm={6} md={6}>
-                {contactDetail.description && (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: contactDetail.description,
-                    }}
-                  />
-                )}
-              </Grid> */}
           </div>
         </div>
       </div>

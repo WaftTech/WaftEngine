@@ -1,29 +1,22 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import moment from 'moment';
-import injectSaga, { useInjectSaga } from 'utils/injectSaga';
-import FormHelperText from '@material-ui/core/FormHelperText';
-
-import injectReducer from 'utils/injectReducer';
-// core components
-import reducer from '../reducer';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { useInjectSaga } from 'utils/injectSaga';
+import Modal from '../../../components/Modal';
+import * as mapDispatchToProps from '../actions';
 import saga from '../saga';
 import {
-  makeSelectTwoFactor,
-  makeSelectHelperObj,
+  makeSelectErrors, makeSelectHelperObj,
   makeSelectLoading,
-  makeSelectErrors,
-  makeSelectLoadingObj,
-} from '../selectors';
-import * as mapDispatchToProps from '../actions';
-import Modal from '../../../components/Modal';
 
-import { DATE_FORMAT } from '../../App/constants';
+  makeSelectLoadingObj, makeSelectTwoFactor
+} from '../selectors';
+
+
 
 const key = 'userPersonalInformationPage';
 
@@ -92,94 +85,94 @@ export const TwoFactor = props => {
   return loadTwoFactor ? (
     <div className="ml-4 p-4 ">Loading</div>
   ) : (
-    <>
-      <Modal
-        open={showGoogleTwoFactor}
-        handleClose={handleClose}
-        handleUpdate={handleSubmitCode}
-        width="sm"
-        buttonLabel2={setGoogleCode ? 'Sending...' : 'Send'}
-      >
-        <div>
-          <label>Google Two factor authorization code</label>
-          <input
-            id="two_factor_authorization"
-            name="two_factor_authorization"
-            disabled
-            readOnly
-            value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
-          />
-          <div className="error">{errors.two_fa_ga_auth_secret}</div>
-        </div>
-        <div className="m-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="250"
-            height="250"
-            fill="true"
-          >
-            <path
-              d={
-                twoFactor &&
-                twoFactor.google_authenticate &&
-                twoFactor.google_authenticate.qrcode &&
-                twoFactor.google_authenticate.qrcode.path
-              }
-              className="qr-code"
+      <>
+        <Modal
+          open={showGoogleTwoFactor}
+          handleClose={handleClose}
+          handleUpdate={handleSubmitCode}
+          width="sm"
+          buttonLabel2={setGoogleCode ? 'Sending...' : 'Send'}
+        >
+          <div>
+            <label>Google Two factor authorization code</label>
+            <input
+              id="two_factor_authorization"
+              name="two_factor_authorization"
+              disabled
+              readOnly
+              value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
             />
-          </svg>
-        </div>
-        <div>
-          <label>Enter Your Code</label>
-          <input
-            id="code"
-            name="code"
-            value={twoFactor && twoFactor.code}
-            onChange={e => handleChange(e, 'google_authenticate')}
-          />
-          <div className="error">{errors.code}</div>
+            <div className="error">{errors.two_fa_ga_auth_secret}</div>
+          </div>
+          <div className="m-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="250"
+              height="250"
+              fill="true"
+            >
+              <path
+                d={
+                  twoFactor &&
+                  twoFactor.google_authenticate &&
+                  twoFactor.google_authenticate.qrcode &&
+                  twoFactor.google_authenticate.qrcode.path
+                }
+                className="qr-code"
+              />
+            </svg>
+          </div>
+          <div>
+            <label>Enter Your Code</label>
+            <input
+              id="code"
+              name="code"
+              value={twoFactor && twoFactor.code}
+              onChange={e => handleChange(e, 'google_authenticate')}
+            />
+            <div className="error">{errors.code}</div>
 
-          <p className="italic mt-2">
-            Note : Enter the code from Authentication App
+            <p className="italic mt-2">
+              Note : Enter the code from Authentication App
           </p>
-        </div>
-      </Modal>
-      <div className="ml-4 p-4">
-        <div className="checkbox">
-          <input
-            checked={twoFactor.email.is_authenticate}
-            id="email"
-            type="checkbox"
-            onChange={handleChecked}
-          />
-          <label htmlFor="email">
-            <span className="box">
-              <FaCheck className="check-icon" />
-            </span>
+          </div>
+        </Modal>
+        <div className="ml-4 p-4">
+          <div className="checkbox">
+            <input
+              checked={twoFactor.email.is_authenticate}
+              id="email"
+              type="checkbox"
+              onChange={handleChecked}
+            />
+            <label htmlFor="email">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
             Enable Email two factor authorization
           </label>
-        </div>
+          </div>
 
-        {addEmailAuth && 'Loading...'}
+          {addEmailAuth && 'Loading...'}
 
-        <div className="checkbox">
-          <input
-            checked={twoFactor.google_authenticate.is_authenticate}
-            id="google_authenticate"
-            type="checkbox"
-            onChange={handleChecked}
-          />
-          <label htmlFor="google_authenticate">
-            <span className="box">
-              <FaCheck className="check-icon" />
-            </span>
+          <div className="checkbox">
+            <input
+              checked={twoFactor.google_authenticate.is_authenticate}
+              id="google_authenticate"
+              type="checkbox"
+              onChange={handleChecked}
+            />
+            <label htmlFor="google_authenticate">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
             Enable Google two factor authorization
           </label>
+          </div>
+          {addGoogleAuth && 'Loading...'}
         </div>
-        {addGoogleAuth && 'Loading...'}
-      </div>
-    </>
-  );
+      </>
+    );
 };
 
 TwoFactor.propTypes = {

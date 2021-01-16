@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-// @material-ui/core components
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';

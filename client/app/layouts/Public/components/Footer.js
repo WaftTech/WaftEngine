@@ -1,13 +1,9 @@
 // import PropTypes from 'prop-types';
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-
 import SubscriberPage from '../../../containers/SubscriberPage/Loadable';
-import fb from '../../../assets/img/fb.png';
-import mail from '../../../assets/img/mail.png';
+
 
 class Footer extends React.Component {
   state = { email: '' };
@@ -41,26 +37,6 @@ class Footer extends React.Component {
               <p className="text-gray-700 m-0">
                 Designed and built by the WaftTech Team
               </p>
-            </div>
-
-            <div className="w-full lg:w-1/2 lg:flex lg:justify-end my-auto">
-              <ul className="flex list-none p-0 m-0">
-                <li className="pr-2 lg:m-auto lg:pr-2">
-                  <a
-                    href="https://www.facebook.com/waftengine/?__tn__=%2Cd%2CP-R&eid=ARAX_40QP9563fc6KG5lw6J6gUpVNZYGxmuY-DGkVQv4ZDHe_P40ZA3eBvyrqpM0Q17rniO7GpVujCKW"
-                    target="_blank"
-                    rel="noopener"
-                    title="Facebook"
-                  >
-                    <img src={fb} alt="facebook" />
-                  </a>
-                </li>
-                <li className="pr-2 lg:m-auto lg:pr-2">
-                  <a href="mailto:info@waftengine.com" title="E-mail">
-                    <img src={mail} alt="email" />
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

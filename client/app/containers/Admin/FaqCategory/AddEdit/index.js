@@ -1,28 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-
-import injectSaga from '../../../../utils/injectSaga';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import Loading from '../../../../components/Loading';
+import PageContent from '../../../../components/PageContent/PageContent';
+import PageHeader from '../../../../components/PageHeader/PageHeader';
 import injectReducer from '../../../../utils/injectReducer';
-
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import injectSaga from '../../../../utils/injectSaga';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOne,
-  makeSelectLoading,
-  makeSelectErrors,
+  makeSelectErrors, makeSelectLoading, makeSelectOne
 } from '../selectors';
-import * as mapDispatchToProps from '../actions';
-import PageHeader from '../../../../components/PageHeader/PageHeader';
-import PageContent from '../../../../components/PageContent/PageContent';
-import Loading from '../../../../components/Loading';
-import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+
+
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -67,73 +63,73 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit Faq Category'
-              : 'Add Faq Category'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id
-              ? 'Edit Faq Category'
-              : 'Add Faq Category'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Title</label>
-            <input
-              className="inputbox"
-              id="title"
-              name="Title"
-              type="text"
-              value={one.title}
-              onChange={this.handleChange('title')}
-            />
-            <div className="error">{errors && errors.title}</div>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Key</label>
-            <input
-              className="inputbox"
-              id="key"
-              name="key"
-              type="text"
-              value={one.key}
-              onChange={this.handleChange('key')}
-            />
-            <div className="error">{errors && errors.key}</div>
-          </div>
-          <div className="checkbox">
-            <input
-              checked={one.is_active || false}
-              onClick={this.handleCheckedChange('is_active')}
-              id="is_active"
-              type="checkbox"
-            />
-            <label htmlFor="is_active">
-              <span className="box">
-                <FaCheck className="check-icon" />
+        <div>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Faq Category'
+                : 'Add Faq Category'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
               </span>
+              {match && match.params && match.params.id
+                ? 'Edit Faq Category'
+                : 'Add Faq Category'}
+            </PageHeader>
+          </div>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Title</label>
+              <input
+                className="inputbox"
+                id="title"
+                name="Title"
+                type="text"
+                value={one.title}
+                onChange={this.handleChange('title')}
+              />
+              <div className="error">{errors && errors.title}</div>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Key</label>
+              <input
+                className="inputbox"
+                id="key"
+                name="key"
+                type="text"
+                value={one.key}
+                onChange={this.handleChange('key')}
+              />
+              <div className="error">{errors && errors.key}</div>
+            </div>
+            <div className="checkbox">
+              <input
+                checked={one.is_active || false}
+                onClick={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Active
             </label>
-          </div>
+            </div>
 
-          <button
-            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            onClick={this.handleSave}
-          >
-            Save
+            <button
+              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </div>
-    );
+          </PageContent>
+        </div>
+      );
   }
 }
 

@@ -1,9 +1,6 @@
-// @material-ui/core components
 import TablePagination from '@material-ui/core/TablePagination';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-// core components
 
 /* eslint-disable react/no-array-index-key */
 function CustomTable({ ...props }) {

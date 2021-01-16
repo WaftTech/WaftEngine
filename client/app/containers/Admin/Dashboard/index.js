@@ -58,13 +58,7 @@ export class Dashboard extends React.PureComponent {
       <>
         <div className="flex justify-between my-3">
           <PageHeader>Dashboard </PageHeader>
-          <button
-            type="button"
-            className="bg-primary text-white p-2"
-            onClick={this.handleOpen}
-          >
-            Show Dialog
-          </button>
+
         </div>
         <div className="bg-white rounded p-4">
           {info.map(each => (
@@ -169,12 +163,12 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-between">
-                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                      No Errors
+                    <div className="flex justify-between">
+                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                        No Errors
                     </h2>
-                  </div>
-                )}
+                    </div>
+                  )}
               </div>
             </div>
           </div>

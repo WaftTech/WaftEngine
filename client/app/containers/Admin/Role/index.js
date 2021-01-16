@@ -4,34 +4,32 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { push } from 'connected-react-router';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import Table from 'components/Table';
-import CreateIcon from '@material-ui/icons/Create';
-import reducer from './reducer';
-import saga from './saga';
-import * as mapDispatchToProps from './actions';
-import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
-
-import PageHeader from '../../../components/PageHeader/PageHeader';
-import PageContent from '../../../components/PageContent/PageContent';
-import DeleteDialog from '../../../components/DeleteDialog';
-import Loading from '../../../components/Loading';
+import { push } from 'connected-react-router';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Helmet } from 'react-helmet';
 import {
-  FaTrashAlt,
   FaKey,
   FaPencilAlt,
   FaPlus,
-  FaSearch,
+  FaSearch, FaTrashAlt
 } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import DeleteDialog from '../../../components/DeleteDialog';
+import Loading from '../../../components/Loading';
+import PageContent from '../../../components/PageContent/PageContent';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import * as mapDispatchToProps from './actions';
+import reducer from './reducer';
+import saga from './saga';
+import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
+
+
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminRole extends React.PureComponent {

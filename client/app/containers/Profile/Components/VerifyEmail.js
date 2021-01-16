@@ -1,20 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-
-// @material-ui/core
-
-import injectSaga from 'utils/injectSaga';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-// core components
+import injectSaga from 'utils/injectSaga';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectCode } from '../selectors';
-import * as mapDispatchToProps from '../actions';
+
 
 class VerifyEmail extends React.PureComponent {
   static propTypes = {

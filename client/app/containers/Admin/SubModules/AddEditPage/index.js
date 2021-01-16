@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import 'react-datepicker/dist/react-datepicker.css';
-// @material-ui/core components
 
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
@@ -77,83 +76,83 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-    <>
-      <div>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id
-              ? 'Edit Sub Module'
-              : 'Add Sub Module'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Module Group</label>
-            <input
-              className="inputbox"
-              id="grid-group"
-              type="text"
-              value={one.module_group}
-              onChange={handleChange('module_group')}
-            />
-            <div className="error">{errors.module_group}</div>
+      <>
+        <div>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {match && match.params && match.params.id
+                ? 'Edit Sub Module'
+                : 'Add Sub Module'}
+            </PageHeader>
           </div>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Module Group</label>
+              <input
+                className="inputbox"
+                id="grid-group"
+                type="text"
+                value={one.module_group}
+                onChange={handleChange('module_group')}
+              />
+              <div className="error">{errors.module_group}</div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Order</label>
-            <input
-              className="inputbox"
-              id="grid-value"
-              type="text"
-              value={one.order}
-              onChange={handleChange('order')}
-            />
-            <div className="error">{errors.order}</div>
-          </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Order</label>
+              <input
+                className="inputbox"
+                id="grid-value"
+                type="text"
+                value={one.order}
+                onChange={handleChange('order')}
+              />
+              <div className="error">{errors.order}</div>
+            </div>
 
-          <div className="w-full md:w-1/2">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-country-code-2"
-            >
-              Description
+            <div className="w-full md:w-1/2">
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-country-code-2"
+              >
+                Description
             </label>
-            <textarea
-              className="inputbox"
-              id="grid-description"
-              type="text"
-              value={one.description}
-              onChange={handleChange('description')}
-            />
-            <div className="error">{errors.description}</div>
-          </div>
+              <textarea
+                className="inputbox"
+                id="grid-description"
+                type="text"
+                value={one.description}
+                onChange={handleChange('description')}
+              />
+              <div className="error">{errors.description}</div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Module Group Main</label>
-            <input
-              className="inputbox"
-              id="grid-group"
-              type="text"
-              value={one.module_group_main}
-              onChange={handleChange('module_group_main')}
-            />
-            <div className="error">{errors.module_group_main}</div>
-          </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Module Group Main</label>
+              <input
+                className="inputbox"
+                id="grid-group"
+                type="text"
+                value={one.module_group_main}
+                onChange={handleChange('module_group_main')}
+              />
+              <div className="error">{errors.module_group_main}</div>
+            </div>
 
-          <button
-            type="button"
-            className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
-            onClick={handleSave}
-          >
-            Save
+            <button
+              type="button"
+              className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
+              onClick={handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </div>
-    </>
-  );
+          </PageContent>
+        </div>
+      </>
+    );
 };
 
 AddEdit.propTypes = {

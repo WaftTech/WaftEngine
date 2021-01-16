@@ -16,7 +16,6 @@ import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { withStyles } from '@material-ui/core/styles';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
@@ -119,8 +118,8 @@ const LoginUserPage = props => {
               </div>
             </>
           ) : (
-            'Continue'
-          )
+              'Continue'
+            )
         }
         width="sm"
       >
@@ -185,8 +184,8 @@ const LoginUserPage = props => {
                   <span className="ml-2">Login</span>
                 </div>
               ) : (
-                'Login'
-              )}
+                  'Login'
+                )}
             </button>
           </form>
           <Link
@@ -285,10 +284,7 @@ const styles = {
   },
 };
 
-const withStyle = withStyles(styles);
-
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,
