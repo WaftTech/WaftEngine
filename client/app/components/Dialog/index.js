@@ -78,7 +78,7 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
 
 Dialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   className: PropTypes.string,
   title: PropTypes.any,
   body: PropTypes.any,
