@@ -171,9 +171,10 @@ class AddEdit extends React.PureComponent {
             <input
               className="inputbox"
               id="order"
-              type="text"
+              type="number"
               value={(one && one.order) || ''}
               onChange={this.handleChange('order')}
+              min="0"
             />
             <div className="error">{errors && errors.order}</div>
           </div>
