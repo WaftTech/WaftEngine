@@ -226,6 +226,7 @@ class AddEdit extends React.PureComponent {
           <button
             className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
+            disabled={loading}
           >
             Save
           </button>
