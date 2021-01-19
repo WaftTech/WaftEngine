@@ -66,7 +66,11 @@ const AddEdit = props => {
   };
 
   const handleSave = () => {
-    addEditRequest();
+    if (one.module_group === '') {
+      props.setErrors({ key: 'module_group', value: 'This field is required' });
+    } else {
+      addEditRequest();
+    }
   };
 
   const handleCheckedChange = name => event => {

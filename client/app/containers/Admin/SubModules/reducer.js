@@ -76,6 +76,10 @@ const subModulesReducer = (state = initialState, action) =>
           ),
         };
         break;
+
+      case types.SET_ERRORS:
+        draft.errors[action.payload.key] = action.payload.value;
+        break;
     }
   });
 
