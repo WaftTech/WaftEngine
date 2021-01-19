@@ -176,7 +176,7 @@ const QuickEdit = props => {
         <div className="checkbox">
           <input
             checked={one.is_published || false}
-            onClick={this.handleCheckedChange('is_published')}
+            onClick={handleCheckedChange('is_published')}
             id="is_published"
             type="checkbox"
           />
