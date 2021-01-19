@@ -132,7 +132,7 @@ class AddEdit extends React.PureComponent {
             <input
               className="inputbox"
               id="email"
-              type="text"
+              type="email"
               value={users.email || ''}
               onChange={this.handleChange('email')}
             />
