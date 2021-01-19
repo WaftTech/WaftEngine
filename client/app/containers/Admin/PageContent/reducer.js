@@ -23,6 +23,7 @@ export const initialState = {
     is_feature: false,
     publish_to: '',
     meta_tag: [],
+    is_page: true,
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,
