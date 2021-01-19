@@ -131,9 +131,11 @@ const reducer = (state = initialState, action) =>
         break;
       case types.ADD_EDIT_SUCCESS:
         draft.helper.showQuickEdit = false;
+        draft.loading = false;
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
+        draft.loading = false;
         break;
     }
   });
