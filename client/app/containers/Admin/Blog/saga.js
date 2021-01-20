@@ -39,12 +39,9 @@ function* loadAll(action) {
     });
   }
 
-  if (action.payload.sort) {
-    sort = `&sort=${action.payload.sort}`;
-  }
   yield call(
     Api.get(
-      `blog/auth?${query}&${sort}`,
+      `blog/auth?${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
@@ -122,6 +119,7 @@ function* addEditSuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
+  yield put(actions.loadAllRequest());
 }
 
 function* addEditFailureFunc(action) {

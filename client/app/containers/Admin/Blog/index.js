@@ -36,6 +36,7 @@ import {
   makeSelectOne,
   makeSelectQuery,
   makeSelectTag,
+  makeSelectUpateCalled,
   makeSelectUsers,
 } from './selectors';
 
@@ -85,6 +86,7 @@ export class BlogManagePage extends React.Component {
     ) {
       props.loadAllRequest(props.query);
     }
+
     return true;
   }
 
@@ -141,6 +143,7 @@ export class BlogManagePage extends React.Component {
     this.props.loadCategoryRequest();
     this.props.loadUsersRequest();
     this.props.setValue({ name: 'helper', key: 'showQuickEdit', value: true });
+    this.props.setUpdateCalled(false);
   };
 
   handleEditorChange = (e, name) => {
@@ -220,6 +223,7 @@ export class BlogManagePage extends React.Component {
 
   handleSave = () => {
     this.props.addEditRequest();
+    this.props.setUpdateCalled(true);
   };
 
   handleMetaKeywordDelete = index => () => {
@@ -465,6 +469,7 @@ export class BlogManagePage extends React.Component {
             tempMetaTag={tempMetaTag}
             tempMetaKeyword={tempMetaKeyword}
             errors={errors}
+            setUpdateCalled={this.props.setUpdateCalled}
           />
         </Modal>
         <div className="flex justify-between my-3">
@@ -664,6 +669,7 @@ const mapStateToProps = createStructuredSelector({
   tempMetaKeyword: makeSelectMetaKeyword(),
   users: makeSelectUsers(),
   errors: makeSelectErrors(),
+  updateCalled: makeSelectUpateCalled(),
 });
 
 const withConnect = connect(
