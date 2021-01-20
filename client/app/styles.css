@@ -169,13 +169,13 @@ select.inputbox {
 }
 
 .btn {
-  @apply py-2 px-4 rounded text-white text-sm mt-4 transition-all duration-200;
+  @apply py-2 px-4 text-white text-sm mt-4 transition-all duration-200;
 }
 .qr-code {
   transform: scale(4);
 }
 .tag {
-  @apply cursor-pointer border rounded bg-gray-200 mt-2 mr-1 px-2 py-1 text-sm inline-flex items-center;
+  @apply cursor-pointer bg-gray-200 mt-2 mr-1 px-2 py-1 text-sm inline-flex items-center;
 }
 .tag span {
   @apply text-xs p-1;
@@ -235,7 +235,7 @@ select.inputbox {
 }
 
 .checkbox .box {
-  @apply w-5 h-5 rounded-sm border border-gray-400 mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
+  @apply w-5 border-gray-400 mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
 }
 
 .checkbox label {
@@ -284,7 +284,7 @@ select.inputbox {
 }
 .label-inactive,
 .label-active {
-  @apply inline-block rounded-full py-px px-2 border bg-gray-100 text-xs text-gray-400;
+  @apply inline-block py-px px-2 bg-gray-100 text-xs text-gray-400;
 }
 .label-active {
   @apply bg-green-100 text-green-500 border-green-200;

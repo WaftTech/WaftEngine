@@ -69,6 +69,7 @@
     "@babel/polyfill": "7.4.3",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "autoprefixer": "^10.2.3",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
@@ -86,6 +87,7 @@
     "minimist": "^1.2.5",
     "moment": "^2.29.1",
     "notistack": "0.5.1",
+    "postcss": "^8.2.4",
     "prop-types": "15.7.2",
     "query-string": "^6.13.6",
     "react": "16.8.6",
@@ -114,7 +116,8 @@
     "reselect": "4.0.0",
     "slick-carousel": "^1.8.1",
     "snyk": "^1.421.0",
-    "styled-components": "4.2.0"
+    "styled-components": "4.2.0",
+    "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",
@@ -183,7 +186,6 @@
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-processor-styled-components": "1.6.0",
     "svg-url-loader": "2.3.2",
-    "tailwindcss": "^1.9.6",
     "terser-webpack-plugin": "1.2.3",
     "url-loader": "1.1.2",
     "webpack": "4.30.0",
