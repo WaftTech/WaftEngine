@@ -135,7 +135,7 @@ const AddEdit = props => {
             <div className="error">{errors.description}</div>
           </div>
 
-          <div className="w-full md:w-1/2 pb-4">
+          {/* <div className="w-full md:w-1/2 pb-4">
             <label>Module Group Main</label>
             <input
               className="inputbox"
@@ -145,7 +145,7 @@ const AddEdit = props => {
               onChange={handleChange('module_group_main')}
             />
             <div className="error">{errors.module_group_main}</div>
-          </div>
+          </div> */}
 
           <button
             type="button"
