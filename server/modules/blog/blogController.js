@@ -778,15 +778,6 @@ blogController.GetBlogCategoryActive = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     selectQuery = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
-    if (req.query.find_title) {
-      searchQuery = {
-        title: {
-          $regex: req.query.find_title,
-          $options: 'i',
-        },
-        ...searchQuery,
-      };
-    }
 
     searchQuery = { is_active: true, ...searchQuery };
 
