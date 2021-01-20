@@ -100,7 +100,6 @@ export const SubModules = props => {
       module_group,
       order,
       description,
-      module_group_main,
       <>
         <div className="flex">
           <span
@@ -167,13 +166,7 @@ export const SubModules = props => {
         </div>
 
         <Table
-          tableHead={[
-            'Module Group',
-            'Order',
-            'Description',
-            'Module Group Main',
-            'Action',
-          ]}
+          tableHead={['Module Group', 'Order', 'Description', 'Action']}
           tableData={tableData}
           pagination={tablePagination}
           handlePagination={handlePagination}
