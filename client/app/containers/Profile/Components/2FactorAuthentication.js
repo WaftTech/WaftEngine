@@ -24,6 +24,7 @@ import * as mapDispatchToProps from '../actions';
 import Modal from '../../../components/Modal';
 
 import { DATE_FORMAT } from '../../App/constants';
+import { FaCheck } from 'react-icons/fa';
 
 const key = 'userPersonalInformationPage';
 

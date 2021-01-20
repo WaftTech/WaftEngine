@@ -30,7 +30,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
-import { FaCheck, FaArrowLeft } from 'react-icons/fa';
+import { FaCheck, FaArrowLeft, FaTimes } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -51,7 +51,6 @@ class AddEdit extends React.PureComponent {
     if (this.props.match.params && this.props.match.params.id !== '') {
       this.props.loadOneRequest(this.props.match.params.id);
     }
-    console.log(this.props.match.id);
   }
 
   handleEditorChange = (e, name) => {
@@ -216,7 +215,7 @@ class AddEdit extends React.PureComponent {
 
                 return (
                   <label
-                    onDelete={this.handleMetaTagDelete(index)}
+                    onClick={this.handleMetaTagDelete(index)}
                     className="tag"
                     key={`meta-${tag}-${index}`}
                   >

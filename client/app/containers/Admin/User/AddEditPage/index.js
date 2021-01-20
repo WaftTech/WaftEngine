@@ -43,7 +43,7 @@ class AddEdit extends React.PureComponent {
   };
 
   state = {
-    isSecure: false,
+    isSecure: true,
   };
 
   componentDidMount() {
@@ -132,7 +132,7 @@ class AddEdit extends React.PureComponent {
             <input
               className="inputbox"
               id="email"
-              type="text"
+              type="email"
               value={users.email || ''}
               onChange={this.handleChange('email')}
             />
@@ -219,7 +219,7 @@ class AddEdit extends React.PureComponent {
                 aria-label="Toggle password visibility"
                 onClick={this.handleTogglePassword}
               >
-                {this.state.isSecure ? <Visibility /> : <VisibilityOff />}
+                {this.state.isSecure ? <VisibilityOff /> : <Visibility />}
               </span>
             </div>
             <div className="error">{errors.password || ''}</div>

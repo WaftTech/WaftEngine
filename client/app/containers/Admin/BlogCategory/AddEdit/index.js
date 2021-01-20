@@ -171,9 +171,10 @@ class AddEdit extends React.PureComponent {
             <input
               className="inputbox"
               id="order"
-              type="text"
+              type="number"
               value={(one && one.order) || ''}
               onChange={this.handleChange('order')}
+              min="0"
             />
             <div className="error">{errors && errors.order}</div>
           </div>
@@ -226,6 +227,7 @@ class AddEdit extends React.PureComponent {
           <button
             className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
+            disabled={loading}
           >
             Save
           </button>
