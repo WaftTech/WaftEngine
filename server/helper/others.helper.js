@@ -129,7 +129,6 @@ otherHelper.getQuerySendResponse = async (model, page, size, sortQuery, searchQu
     next(err);
   }
 };
-
 otherHelper.slugify = text => {
   return text
     .toString()

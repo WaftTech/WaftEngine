@@ -164,7 +164,7 @@ validations.validateModuleGroup = async (req, res, next) => {
 
 
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, nul, errors, roleConfig.errorIn.inputErrors, null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, roleConfig.errorIn.inputErrors, null);
   } else {
     next();
   }
