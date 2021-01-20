@@ -51,7 +51,15 @@ class AccessManagePage extends React.PureComponent {
     this.props.push(`/admin/module-manage/edit/${this.props.match.params.id}`);
   };
 
-  handleAccessUpdate = (module_id, roleId, ModuleId) => {
+  handleAccessUpdate = (module_id, roleId, ModuleId, singlePath) => {
+    const pathIndex = module_id.indexOf(singlePath);
+
+    if (pathIndex > -1) {
+      module_id.splice(pathIndex, 1);
+    } else {
+      module_id.push(singlePath);
+    }
+
     let tempAccess = [...this.props.access.Access];
     const index = tempAccess.findIndex(
       each => each.module_id === ModuleId && each.role_id === roleId,
@@ -120,19 +128,26 @@ class AccessManagePage extends React.PureComponent {
                 >
                   {role.role_title}
                 </h3>
-                <div
-                  value={accesses}
-                  onChange={(_, module_id) =>
-                    this.handleAccessUpdate(module_id, role._id, Module._id)
-                  }
-                >
+                <div value={accesses}>
                   {Module.path.map(eachPath => (
                     <div
-                      className="bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500"
+                      className={`bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500 ${
+                        accesses.includes(eachPath._id)
+                          ? 'bg-secondary text-white'
+                          : ''
+                      }`}
                       key={`${eachPath._id}-${role._id}`}
                       value={eachPath._id}
+                      onClick={(_, module_id) =>
+                        this.handleAccessUpdate(
+                          accesses,
+                          role._id,
+                          Module._id,
+                          eachPath._id,
+                        )
+                      }
                     >
-                      {eachPath.access_type}
+                      {eachPath.access_type}{' '}
                     </div>
                   ))}
                 </div>
