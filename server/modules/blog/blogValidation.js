@@ -4,6 +4,7 @@ const blogConfig = require('./blogConfig');
 const otherHelper = require('../../helper/others.helper');
 const sanitizeHelper = require('../../helper/sanitize.helper');
 const validateHelper = require('../../helper/validate.helper');
+const categorySch = require('./categorySchema');
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
@@ -71,15 +72,6 @@ validation.validate = (req, res, next) => {
         },
       ],
     },
-    {
-      field: 'category',
-      validate: [
-        {
-          condition: 'IsMongoId',
-          msg: blogConfig.validate.isMongoId,
-        },
-      ],
-    },
   ];
   const errors = validateHelper.validation(data, validateArray);
   if (!isEmpty(errors)) {
@@ -105,7 +97,7 @@ validation.catSanitize = (req, res, next) => {
   ]);
   next();
 };
-validation.catValidate = (req, res, next) => {
+validation.catValidate = async (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
@@ -149,7 +141,16 @@ validation.catValidate = (req, res, next) => {
     },
 
   ];
-  const errors = validateHelper.validation(data, validateArray);
+  let errors = validateHelper.validation(data, validateArray);
+
+  let slug_url_filter = { is_deleted: false, slug_url: data.slug_url }
+  if (data._id) {
+    slug_url_filter = { ...slug_url_filter, _id: { $ne: data._id } }
+  }
+  const already_slug_url = await categorySch.findOne(slug_url_filter);
+  if (already_slug_url && already_slug_url._id) {
+    errors = { ...errors, slug_url: 'slug_url already exist' }
+  }
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, blogConfig.errorIn.inputErrors, null);
   } else {
@@ -200,7 +201,9 @@ validation.countValidate = (req, res, next) => {
     },
 
   ];
+
   const errors = validateHelper.validation(data, validateArray);
+
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, blogConfig.errorIn.inputErrors, null);
   } else {

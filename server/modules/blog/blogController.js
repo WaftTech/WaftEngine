@@ -495,12 +495,12 @@ blogController.SaveBlogCategory = async (req, res, next) => {
         },
         { new: true },
       );
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.csave, null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.categoryUpdate, null);
     } else {
       blogcats.image = req.file;
       const newBlog = new blogCatSch(blogcats);
       const catSave = await newBlog.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, catSave, null, blogConfig.csave, null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, catSave, null, blogConfig.categorySave, null);
     }
   } catch (err) {
     next(err);
@@ -769,6 +769,29 @@ blogController.updateViewCount = async (req, res, next) => {
       d = await newBlogCount.save();
     }
     return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, null, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+blogController.GetBlogCategoryActive = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+    selectQuery = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
+    if (req.query.find_title) {
+      searchQuery = {
+        title: {
+          $regex: req.query.find_title,
+          $options: 'i',
+        },
+        ...searchQuery,
+      };
+    }
+
+    searchQuery = { is_active: true, ...searchQuery };
+
+    let blogCategories = await otherHelper.getQuerySendResponse(blogCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogCategories.data, blogConfig.cget, page, size, blogCategories.totaldata);
   } catch (err) {
     next(err);
   }

@@ -17,6 +17,7 @@ router.get('/trending', blogModule.getTrendingBlog);
 router.get('/latest/:cat_id', blogModule.getLatestBlogByCat);
 router.get('/related/:slug_url', blogModule.getRelatedBlog);
 router.get('/category', blogModule.GetBlogCategory);
+router.get('/category/active', blogModule.GetBlogCategoryActive);
 router.get('/category/:id', blogModule.GetBlogCatById);
 router.get('/blog/:slug_url', blogModule.GetBlogBySlug);
 router.get('/blogbyid/:id', blogModule.GetBlogById);

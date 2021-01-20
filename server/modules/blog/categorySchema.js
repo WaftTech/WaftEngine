@@ -5,6 +5,7 @@ const categorySchema = new schema({
   title: { type: String, required: true, },
   description: { type: String, },
   image: { type: schema.Types.Mixed, },
+  slug_url: { type: String, },
   is_active: { type: Boolean, required: true, default: true, },
   order: { type: Number },
   is_deleted: { type: Boolean, default: false, },
