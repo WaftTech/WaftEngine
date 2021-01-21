@@ -136,6 +136,7 @@ class AddEdit extends React.PureComponent {
               value={users.email || ''}
               onChange={this.handleChange('email')}
             />
+            <div className="error">{(errors && errors.email) || ''}</div>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label>Name</label>
