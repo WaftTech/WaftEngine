@@ -349,7 +349,7 @@ export class BlogManagePage extends React.Component {
               <button
                 aria-label="Edit"
                 type="button"
-                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
                 onClick={() => this.handleEdit(_id)}
               >
                 Edit
@@ -357,14 +357,14 @@ export class BlogManagePage extends React.Component {
               <button
                 aria-label="Edit"
                 type="button"
-                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
                 onClick={() => this.handleLoadOne(_id)}
               >
                 Quick Edit
             </button>
 
               <button
-                className="px-1 text-center leading-none text-red-500 whitespace-no-wrap text-sm"
+                className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
                 type="button"
                 onClick={() => this.handleOpen(_id)}
               >
@@ -373,10 +373,10 @@ export class BlogManagePage extends React.Component {
             </div>
           </>,
           (category && category.map(each => each.title).join(', ')) || 'No',
-          <span className="whitespace-no-wrap">
+          <span className="whitespace-nowrap">
             {moment(added_at).format(DATE_FORMAT)}
           </span>,
-          <span className="whitespace-no-wrap">
+          <span className="whitespace-nowrap">
             {moment(published_on).format('YYYY-MM-DD HH:mm')}
           </span>,
           // `${is_highlight}`,
