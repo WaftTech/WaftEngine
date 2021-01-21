@@ -395,6 +395,19 @@ validations.validateAdd = (req, res, next) => {
       ],
     },
     {
+      field: 'email',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsEmail',
+          msg: config.validate.isEmail,
+        },
+      ],
+    },
+    {
       field: 'roles',
       validate: [
         {
