@@ -355,7 +355,7 @@ select.inputbox {
   position: relative;
   right: 0;
   color: #4299e1;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .trash-icon:hover .trash-lid {
