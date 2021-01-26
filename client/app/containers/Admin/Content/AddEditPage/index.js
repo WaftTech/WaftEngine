@@ -146,24 +146,10 @@ class AddEdit extends React.PureComponent {
                 value={one.name}
                 onChange={this.handleChange('name')}
               />
-            {one.meta_tag &&
-              one.meta_tag.map((tag, index) => {
-                const icon = null;
-
-                return (
-                  <label
-                    onClick={this.handleMetaTagDelete(index)}
-                    className="tag"
-                    key={`meta-${tag}-${index}`}
-                  >
-                    {tag}
-                    <span>
-                      <FaTimes />
-                    </span>
-                  </label>
-                );
-              })}
-          </div>
+             {errors && errors.name && errors.name.trim() !== '' && (
+              <div className="error">{errors.name}</div>
+             )}
+            </div>
 
             <div className="w-full md:w-1/2 pb-4">
               <label>Content Key</label>
@@ -173,16 +159,20 @@ class AddEdit extends React.PureComponent {
                 type="text"
                 value={one.key}
                 onChange={this.handleChange('key')}
-              />{' '}
+              />
+              {errors && errors.key && errors.key.trim() !== '' && (
               <div className="error">{errors && errors.key}</div>
+              )}   
             </div>
 
-            <div>
+            <div className="pb-4">
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
               />
+              {errors && errors.description && errors.description.trim() !== '' && (
               <div className="error">{errors.description}</div>
+              )}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -194,7 +184,9 @@ class AddEdit extends React.PureComponent {
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
               />
-              <div className="error">{errors && errors.meta_title}</div>
+              {errors && errors.meta_title && errors.meta_title.trim() !== '' && (
+              <div className="error">{errors.meta_title}</div>)
+               }
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Description</label>
@@ -205,7 +197,9 @@ class AddEdit extends React.PureComponent {
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
               />
-              <div className="error">{errors && errors.meta_description}</div>
+              {errors && errors.meta_description && (
+              <div className="error">{errors.meta_description}</div>
+              )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label className="text-sm" htmlFor="grid-last-name">

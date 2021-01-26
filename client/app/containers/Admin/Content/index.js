@@ -154,7 +154,7 @@ export class ContentsListingPage extends React.Component {
         <>
           <div className="flex">
             <span
-              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
               <FaPencilAlt className="pencil" />
@@ -164,7 +164,7 @@ export class ContentsListingPage extends React.Component {
             </span>
 
             <span
-              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
               <img className="trash-lid" src={lid} alt="trash-id" />

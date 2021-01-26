@@ -121,12 +121,12 @@ select.inputbox {
 }
 
 .error {
+  position: relative;
+  top:4px;
   color: #ff3b30;
   margin: 0;
   font-size: 0.75rem;
   text-align: left;
-  margin-top: 8px;
-  min-height: 1em;
 }
 
 .waft-gradient {
@@ -337,4 +337,41 @@ select.inputbox {
 .ckEditor td {
   border: 1px solid #ccc;
   padding: 4px;
+}
+
+/* admin icons */
+
+.trash-lid {
+  position: absolute;
+  left: 8px;
+  top: 9px;
+}
+.pencil,
+.trash-lid,
+.dash {
+  transition: all 0.1s ease-in-out;
+}
+.pencil {
+  position: relative;
+  right: 0;
+  color: #4299e1;
+  font-size: 14px;
+}
+
+.trash-icon:hover .trash-lid {
+  top: 7px;
+}
+.dash {
+  position: absolute;
+  height: 2px;
+  width: 0px;
+  background: #4299e1;
+  left: 6px;
+  bottom: 8px;
+}
+.edit-icon:hover .dash {
+  width: 8px;
+}
+.edit-icon:hover .pencil {
+  right: -3px;
 }

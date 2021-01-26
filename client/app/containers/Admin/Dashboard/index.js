@@ -98,7 +98,7 @@ export class Dashboard extends React.PureComponent {
               <FaUser className="text-5xl mx-auto" />
               Total Users{' '}
             </span>
-            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
+            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-8 h-8 text-center rounded-full bg-waftprimary-light leading-loose">
               {users.totaldata}
             </span>
           </div>
@@ -107,7 +107,7 @@ export class Dashboard extends React.PureComponent {
               <FaExclamationCircle />
               Total Errors
             </span>
-            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
+            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-8 h-8 text-center rounded-full bg-waftprimary-light leading-loose">
               {errors.totaldata}
             </span>
           </div>

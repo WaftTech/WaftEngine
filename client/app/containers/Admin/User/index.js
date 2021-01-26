@@ -111,7 +111,7 @@ export class User extends React.PureComponent {
         <>
           <div className="flex">
             <span
-              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
               <FaPencilAlt className="pencil" />
