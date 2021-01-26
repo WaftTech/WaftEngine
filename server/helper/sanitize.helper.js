@@ -43,6 +43,9 @@ sanitizeHelper.sanitize = (req, sanitizeArray) => {
     if (sanitization.toDate) {
       sanitizefield = Validator.toDate(sanitizefield);
     }
+    if (sanitization.toProperPrice) {
+      sanitizefield = parseInt(sanitizefield.replace(',', ''));
+    }
     req.body[sanitizeObj.field] = sanitizefield;
   });
   return true;

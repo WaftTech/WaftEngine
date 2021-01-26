@@ -5,7 +5,6 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Helmet } from 'react-helmet';
-import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -16,9 +15,7 @@ import WECkEditior from '../../../../components/CkEditor';
 import Loading from '../../../../components/Loading';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
-import { DATE_FORMAT } from '../../../App/constants';
 import { makeSelectToken } from '../../../App/selectors';
-import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -27,6 +24,9 @@ import {
   makeSelectMetaTag, makeSelectOne
 } from '../selectors';
 
+import * as mapDispatchToProps from '../actions';
+import { DATE_FORMAT } from '../../../App/constants';
+import { FaCheck, FaArrowLeft, FaTimes } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -47,7 +47,6 @@ class AddEdit extends React.PureComponent {
     if (this.props.match.params && this.props.match.params.id !== '') {
       this.props.loadOneRequest(this.props.match.params.id);
     }
-    console.log(this.props.match.id);
   }
 
   handleEditorChange = (e, name) => {
@@ -147,8 +146,24 @@ class AddEdit extends React.PureComponent {
                 value={one.name}
                 onChange={this.handleChange('name')}
               />
-              <div className="error">{errors && errors.name}</div>
-            </div>
+            {one.meta_tag &&
+              one.meta_tag.map((tag, index) => {
+                const icon = null;
+
+                return (
+                  <label
+                    onClick={this.handleMetaTagDelete(index)}
+                    className="tag"
+                    key={`meta-${tag}-${index}`}
+                  >
+                    {tag}
+                    <span>
+                      <FaTimes />
+                    </span>
+                  </label>
+                );
+              })}
+          </div>
 
             <div className="w-full md:w-1/2 pb-4">
               <label>Content Key</label>

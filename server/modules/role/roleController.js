@@ -81,6 +81,30 @@ roleController.GetModule = async (req, res, next) => {
     next(err);
   }
 };
+
+
+roleController.GetModuleActive = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
+    searchQuery = { ...searchQuery, is_active: true }
+    selectQuery = 'module_name description order path module_group';
+    if (req.query.find_module_name) {
+      searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
+    }
+    populate = [
+      {
+        path: 'module_group',
+        select: 'module_group',
+        model: 'modulegroups',
+      },
+    ];
+    sortQuery = { module_group: 1 }
+    let datas = await otherHelper.getQuerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
+  } catch (err) {
+    next(err);
+  }
+};
 roleController.GetModuleDetail = async (req, res, next) => {
   const modules = await moduleSch.findById(req.params.id);
   return otherHelper.sendResponse(res, httpStatus.OK, true, modules, null, roleConfig.moduleGet, null, 'Module Not Found');
@@ -129,6 +153,7 @@ roleController.AddModuleGroupList = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, roleConfig.moduleSave, null);
     } else {
       moduleGroup.added_by = req.user.id;
+      moduleGroup.is_deleted = false
       const newModuleGroup = new moduleGroupSch(moduleGroup);
       await newModuleGroup.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, newModuleGroup, null, roleConfig.moduleSave, null);
@@ -262,6 +287,17 @@ roleController.GetAccessListForModule = async (req, res, next) => {
     const ModulesForRole = await moduleSch.findOne({ _id: moduleid }, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
     const Roles = await roleSch.find({ is_deleted: false }, { _id: 1, role_title: 1, is_active: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForModule, Module: ModulesForRole, Roles: Roles }, null, roleConfig.accessGet, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+roleController.deleteModuleGroupList = async (req, res, next) => {
+  try {
+    const moduleGroupId = req.params.id;
+    moduleGroupSch.findByIdAndUpdate(moduleGroupId, { $set: { is_deleted: true, deleted_at: new Date() } });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, roleConfig.gModuleDelete, null);
+
   } catch (err) {
     next(err);
   }

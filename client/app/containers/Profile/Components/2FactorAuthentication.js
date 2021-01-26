@@ -16,7 +16,8 @@ import {
   makeSelectLoadingObj, makeSelectTwoFactor
 } from '../selectors';
 
-
+import { DATE_FORMAT } from '../../App/constants';
+import { FaCheck } from 'react-icons/fa';
 
 const key = 'userPersonalInformationPage';
 

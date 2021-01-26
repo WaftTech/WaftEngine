@@ -1,5 +1,13 @@
 import { LOCATION_CHANGE, push } from 'connected-react-router';
-import { call, cancel, fork, put, select, take, takeLatest } from 'redux-saga/effects';
+import {
+  call,
+  cancel,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
+} from 'redux-saga/effects';
 import Api from 'utils/Api';
 import { enqueueSnackbar } from '../../App/actions';
 import { makeSelectToken } from '../../App/selectors';
@@ -11,7 +19,7 @@ function* loadCategory(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      'blog/category',
+      'blog/category/active',
       actions.loadCategorySuccess,
       actions.loadCategoryFailure,
       token,
@@ -31,12 +39,9 @@ function* loadAll(action) {
     });
   }
 
-  if (action.payload.sort) {
-    sort = `&sort=${action.payload.sort}`;
-  }
   yield call(
     Api.get(
-      `blog/auth?${query}&${sort}`,
+      `blog/auth?${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
@@ -114,6 +119,7 @@ function* addEditSuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
+  yield put(actions.loadAllRequest());
 }
 
 function* addEditFailureFunc(action) {

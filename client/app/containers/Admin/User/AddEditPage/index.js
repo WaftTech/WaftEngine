@@ -37,7 +37,7 @@ class AddEdit extends React.PureComponent {
   };
 
   state = {
-    isSecure: false,
+    isSecure: true,
   };
 
   componentDidMount() {
@@ -118,7 +118,7 @@ class AddEdit extends React.PureComponent {
               </span>
               {id ? 'Edit' : 'Add'} User
           </PageHeader>
-          </div>
+        </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
               <h3 className="text-lg font-bold mb-2">Basic Information</h3>

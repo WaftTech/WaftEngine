@@ -51,7 +51,15 @@ class AccessManagePage extends React.PureComponent {
     this.props.push(`/admin/module-manage/edit/${this.props.match.params.id}`);
   };
 
-  handleAccessUpdate = (module_id, roleId, ModuleId) => {
+  handleAccessUpdate = (module_id, roleId, ModuleId, singlePath) => {
+    const pathIndex = module_id.indexOf(singlePath);
+
+    if (pathIndex > -1) {
+      module_id.splice(pathIndex, 1);
+    } else {
+      module_id.push(singlePath);
+    }
+
     let tempAccess = [...this.props.access.Access];
     const index = tempAccess.findIndex(
       each => each.module_id === ModuleId && each.role_id === roleId,
@@ -102,40 +110,47 @@ class AccessManagePage extends React.PureComponent {
                 <span className="pl-2">Add New</span>
               </button>
             </div>
-          </div>
-          <PageContent>
-            {Roles.map(role => {
-              const accessFiltered = Access.filter(
-                each => each.role_id === role._id,
-              );
-              let accesses = [];
-              if (accessFiltered.length > 0) {
-                accesses = [...accessFiltered[0].access_type];
-              }
-              return (
-                <div className="mb-4 border rounded mt-6 p-2" key={role._id}>
-                  <h3
-                    className="font-bold bg-white px-2 relative text-lg ml-2 inline-block"
-                    style={{ top: -21 }}
-                  >
-                    {role.role_title}
-                  </h3>
-                  <div
-                    value={accesses}
-                    onChange={(_, module_id) =>
-                      this.handleAccessUpdate(module_id, role._id, Module._id)
-                    }
-                  >
-                    {Module.path.map(eachPath => (
-                      <div
-                        className="bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500"
-                        key={`${eachPath._id}-${role._id}`}
-                        value={eachPath._id}
-                      >
-                        {eachPath.access_type}
-                      </div>
-                    ))}
-                  </div>
+            </div>
+        <PageContent>
+          {Roles.map(role => {
+            const accessFiltered = Access.filter(
+              each => each.role_id === role._id,
+            );
+            let accesses = [];
+            if (accessFiltered.length > 0) {
+              accesses = [...accessFiltered[0].access_type];
+            }
+            return (
+              <div className="mb-4 border rounded mt-6 p-2" key={role._id}>
+                <h3
+                  className="font-bold bg-white px-2 relative text-lg ml-2 inline-block"
+                  style={{ top: -21 }}
+                >
+                  {role.role_title}
+                </h3>
+                <div value={accesses}>
+                  {Module.path.map(eachPath => (
+                    <div
+                      className={`bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500 ${
+                        accesses.includes(eachPath._id)
+                          ? 'bg-secondary text-white'
+                          : ''
+                      }`}
+                      key={`${eachPath._id}-${role._id}`}
+                      value={eachPath._id}
+                      onClick={(_, module_id) =>
+                        this.handleAccessUpdate(
+                          accesses,
+                          role._id,
+                          Module._id,
+                          eachPath._id,
+                        )
+                      }
+                    >
+                      {eachPath.access_type}{' '}
+                    </div>
+                  ))}
+                </div>
                 </div>
               );
             })}
