@@ -111,7 +111,7 @@ const AddEdit = props => {
             <input
               className="inputbox"
               id="grid-value"
-              type="text"
+              type="number"
               value={one.order}
               onChange={handleChange('order')}
             />
