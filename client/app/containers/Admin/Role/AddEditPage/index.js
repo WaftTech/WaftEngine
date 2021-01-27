@@ -93,7 +93,9 @@ class AddEdit extends React.PureComponent {
               value={one.role_title}
               onChange={this.handleChange('role_title')}
             />
+              {errors && errors.role_title && errors.role_title.trim() !== '' && (
             <div className="error">{errors.role_title}</div>
+              )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -106,7 +108,9 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('description')}
               required
             />
+            {errors && errors.description && errors.description.trim() !== '' && (
             <div className="error">{errors.description}</div>
+            )}
           </div>
 
           <div className="checkbox">
@@ -125,7 +129,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
-            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
             Save

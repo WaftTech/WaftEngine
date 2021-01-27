@@ -25,9 +25,9 @@ const Path = props => {
   } = props;
   return (
     <section className="rounded py-1 bg-gray-100 mb-2">
-      <div className="flex">
-        <div className="w-full md:w-3/5 pb-1 px-4">
-          <label className="block uppercase tracking-wide text-gray-800 text-xs mb-1 ">
+      <div className="flex items-center">
+        <div className="flex-1 pb-1 pl-4 mr-2">
+          <label className="block uppercase tracking-wide text-gray-800 mb-1 ">
             Access Type
           </label>
           <input
@@ -38,7 +38,7 @@ const Path = props => {
             onChange={handleAccessTypeChange(pathIndex)}
           />
         </div>
-        <div className="w-full md:w-2/5 text-right">
+        <div className="flex justify-center w-8 text-center h-8 mt-6">
           <button onClick={handleRemovePath(pathIndex)}>
             <FaRegTrashAlt className="text-red-500" />
           </button>
@@ -47,13 +47,15 @@ const Path = props => {
 
       <div className="flex justify-between">
         <div className="clientRoute w-1/2 border-r">
-          <label className="label border-b pl-4">Client Route</label>
+          <div className="flex mb-2">
+          <label className="label uppercase tracking-wide text-gray-800 text-xs pl-4">Client Route</label>
+          </div>
           {(each.admin_routes || []).map((eachAdminRoute, index) => (
             <div
               className="w-full pb-1 pl-4"
               key={`${each._id}-${pathIndex}-each-admin-route-${index}`}
             >
-              <div className="flex items-start">
+              <div className="flex items-center">
                 <input
                   className="inputbox mr-2"
                   id={`${each._id}-each-admin-route-access-type-${index}`}
@@ -81,9 +83,9 @@ const Path = props => {
             </button>
           </div>
         </div>
-        <div className="serverRoute w-1/2 ">
-          <div className="flex border-b mb-2">
-            <label className=" uppercase tracking-wide text-gray-800 text-xs pl-4">
+        <div className="serverRoute w-1/2">
+          <div className="flex mb-2">
+            <label className="uppercase tracking-wide text-gray-800 text-xs pl-4">
               Method
             </label>
             <label className=" uppercase tracking-wide text-gray-800 text-xs pl-16">
@@ -124,7 +126,7 @@ const Path = props => {
                     ))}
                   </select>
                 </div>
-                <div className="flex items-start w-full">
+                <div className="flex items-center w-full">
                   <input
                     type="text"
                     className="inputbox mr-2 flex-1"

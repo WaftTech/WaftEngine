@@ -346,7 +346,9 @@ class AddEdit extends React.PureComponent {
               name="Blog Title"
               onChange={this.handleChange('title')}
             />
+               {errors && errors.title && errors.title.trim() !== '' && (
             <div className="error">{errors && errors.title}</div>
+               )}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label>Slug</label>
@@ -359,10 +361,12 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('slug_url')}
               disabled
             />
+              {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
             <div className="error">{errors && errors.slug_url}</div>
+              )}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm">Category</label>
+            <label>Category</label>
             <Select
               className="React_Select"
               id="category"
@@ -390,7 +394,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-blog-title">
+            <label htmlFor="short_description">
               Short Description
             </label>
             <textarea
@@ -403,17 +407,18 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div>
-            <label className="text-sm">Blog Description</label>
+            <label>Blog Description</label>
             <WECkEditior
               description={one.description}
               setOneValue={this.props.setOneValue}
             />
-
+             {errors && errors.description && errors.description.trim() !== '' && (
             <div className="error">{errors && errors.description}</div>
+             )}
           </div>
 
           <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label className="text-sm" htmlFor="Image">
+            <label htmlFor="Image">
               Image
             </label>
             <Dropzone onDrop={files => this.onDrop(files, 'image')}>
@@ -431,7 +436,7 @@ class AddEdit extends React.PureComponent {
             </Dropzone>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
+            <label htmlFor="published_on">
               Published On
             </label>
             <DatePicker
@@ -459,7 +464,7 @@ class AddEdit extends React.PureComponent {
             /> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
+            <label htmlFor="blog-tags">
               Tags
             </label>
             <form onSubmit={this.insertTags}>
@@ -489,7 +494,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
+            <label htmlFor="blog-meta-tags">
               Meta Tags
             </label>
             <form onSubmit={this.insertMetaTags}>
@@ -520,7 +525,7 @@ class AddEdit extends React.PureComponent {
             })}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
+            <label htmlFor="blog-meta-keyword">
               Meta Keywords
             </label>
 
@@ -553,13 +558,13 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
+            <label htmlFor="blog-meta-description">
               Meta Description
             </label>
 
             <textarea
               className="inputbox"
-              id="blog-tags"
+              id="blog-meta-description"
               type="text"
               value={one.meta_description || ''}
               name="meta-description"
@@ -568,7 +573,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
+            <label  htmlFor="blog_author">
               Author
             </label>
             <Select
@@ -597,7 +602,9 @@ class AddEdit extends React.PureComponent {
               styles={customStyles}
             />
           </div>
+          {errors && errors.author && errors.author.trim() !== '' && (
           <div className="error">{errors && errors.author}</div>
+          )}
           <div className="checkbox">
             <input
               onClick={this.handleCheckedChange('is_active')}
@@ -660,7 +667,7 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-1/2 pb-4">
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
               disabled={loading}
             >

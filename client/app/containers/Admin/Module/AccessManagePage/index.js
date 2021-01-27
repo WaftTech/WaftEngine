@@ -133,7 +133,7 @@ class AccessManagePage extends React.PureComponent {
                     <div
                       className={`bg-white text-sm px-2 py-1 inline-flex mr-2 mb-2 rounded border lowercase cursor-pointer hover:bg-blue-100 hover:border-blue-200 hover:text-blue-500 ${
                         accesses.includes(eachPath._id)
-                          ? 'bg-secondary text-white'
+                          ? 'border-secondary bg-secondary text-white'
                           : ''
                       }`}
                       key={`${eachPath._id}-${role._id}`}
@@ -156,7 +156,7 @@ class AccessManagePage extends React.PureComponent {
             })}
 
             <button
-              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
             >
               Save Changes
