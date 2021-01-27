@@ -285,7 +285,7 @@ const AddEdit = props => {
                         <input
                           className="inputbox"
                           id="grid-last-name"
-                          type="text"
+                          type="number"
                           value={subMenu.order || ''}
                           onChange={handleChildChange('order')}
                         />
