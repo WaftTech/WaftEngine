@@ -373,7 +373,7 @@ const AddEdit = props => {
                       </div>
                       <button
                         type="button"
-                        className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+                        className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                         onClick={handleChildSave}
                       >
                         Save
@@ -381,7 +381,7 @@ const AddEdit = props => {
                       {subMenu._id && (
                         <button
                           type="button"
-                          className="py-2 px-6 rounded mt-4 text-sm text-white uppercase btn-theme ml-2 bg-danger"
+                          className="text-white btn-waft btn-red"
                           onClick={() => handleOpen(subMenu._id)}
                         >
                           Delete
@@ -459,7 +459,7 @@ const AddEdit = props => {
 
                 <button
                   type="button"
-                  className="btn bg-blue-500 border border-blue-600 hover:bg-blue-600 mr-2"
+                  className="btn text-white  bg-green-500 border border-green-600 hover:bg-green-600 mr-2"
                   onClick={handleAddChildMenuSave}
                 >
                   Add Child Menu
@@ -467,7 +467,7 @@ const AddEdit = props => {
 
                 <button
                   type="button"
-                  className="btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                  className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                   onClick={handleSave}
                 >
                   Save
@@ -475,7 +475,7 @@ const AddEdit = props => {
                 {subMenu._id && (
                   <button
                     type="button"
-                    className="btn-waft btn-red"
+                    className="text-white btn-waft btn-red"
                     onClick={() => handleOpen(subMenu._id)}
                   >
                     Delete
