@@ -297,8 +297,7 @@ const AddEdit = props => {
                             </div>
                           )}
                       </div>
-                      <div className="flex flex-wrap justify-between px-2">
-                        <div className="w-full md:w-1/2 pb-4 -ml-2">
+                        <div className="w-full md:w-1/2 pb-4">
                           <label className="label" htmlFor="grid-last-name">
                             Category
                           </label>
@@ -312,23 +311,7 @@ const AddEdit = props => {
                               </div>
                             )}
                         </div>
-                      </div>
-                      <div className="w-full md:w-1/2 ">
-                        <div className="checkbox">
-                          <input
-                            checked={subMenu.is_active || false}
-                            onChange={handleCheckedChildChange('is_active')}
-                            id="is_active"
-                            type="checkbox"
-                          />
-                          <label htmlFor="is_active">
-                            <span className="box">
-                              <FaCheck className="check-icon" />
-                            </span>
-                            Is Active
-                          </label>
-                        </div>
-                      </div>
+                      
                       <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
                           Link Type
@@ -353,7 +336,7 @@ const AddEdit = props => {
                         )}
                       </div>
                       <div className="w-full md:w-1/2 pb-4">
-                        <label className="label" htmlFor="grid-last-name">
+                        <label className="label" htmlFor="product_type">
                           Target
                         </label>
                         <select
@@ -363,14 +346,30 @@ const AddEdit = props => {
                           name="target"
                           onChange={handleChildChange('target')}
                         >
-                          <option value="_blank">_blank</option>
                           <option value="_self">_self</option>
+                          <option value="_blank">_blank</option>
                           <option value="_top">_top</option>
                           <option value="_parent">_parent</option>
                         </select>
                         {errors && errors.title && (
                           <div className="error">{errors.target}</div>
                         )}
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <div className="checkbox">
+                          <input
+                            checked={subMenu.is_active || false}
+                            onChange={handleCheckedChildChange('is_active')}
+                            id="is_active"
+                            type="checkbox"
+                          />
+                          <label htmlFor="is_active">
+                            <span className="box">
+                              <FaCheck className="check-icon" />
+                            </span>
+                            Is Active
+                          </label>
+                        </div>
                       </div>
                       <button
                         type="button"
@@ -395,12 +394,12 @@ const AddEdit = props => {
             ) : (
               <>
                 <div className="w-full md:w-1/2 pb-4">
-                  <label className="label" htmlFor="grid-last-name">
+                  <label className="label" htmlFor="menu_title">
                     Title
                   </label>
                   <input
                     className="inputbox"
-                    id="grid-last-name"
+                    id="menu_title"
                     type="text"
                     value={one.title || ''}
                     onChange={handleTitleChange}
@@ -411,12 +410,12 @@ const AddEdit = props => {
                 </div>
 
                 <div className="w-full md:w-1/2 pb-4">
-                  <label className="label" htmlFor="grid-last-name">
+                  <label className="label" htmlFor="menu_key">
                     Key
                   </label>
                   <input
                     className="inputbox"
-                    id="grid-last-name"
+                    id="menu_key"
                     type="text"
                     value={one.key || ''}
                     onChange={handleChange('key')}
@@ -427,12 +426,12 @@ const AddEdit = props => {
                 </div>
 
                 <div className="w-full md:w-1/2 pb-4">
-                  <label className="label" htmlFor="grid-last-name">
+                  <label className="label" htmlFor="menu_order">
                     Order
                   </label>
                   <input
                     className="inputbox"
-                    id="grid-last-name"
+                    id="menu_order"
                     type="number"
                     value={one.order || ''}
                     onChange={handleChange('order')}

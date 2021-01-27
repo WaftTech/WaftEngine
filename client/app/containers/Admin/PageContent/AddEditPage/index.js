@@ -171,63 +171,71 @@ class AddEdit extends React.PureComponent {
               <label>Title</label>
               <input
                 className="inputbox"
-                id="grid-last-name"
+                id="page_title"
                 type="text"
                 value={one.name}
                 onChange={this.handleChange('name')}
               />
-              <div className="error">{errors.name}</div>
+                {errors && errors.name && errors.name.trim() !== '' && (
+              <div className="error">{errors.name}</div>)}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
               <label>Page Key</label>
               <input
                 className="inputbox"
-                id="grid-last-name"
+                id="page_key"
                 type="text"
                 value={one.key}
                 onChange={this.handleChange('key')}
               />
-              <div className="error">{errors.key}</div>
+                {errors && errors.key && errors.key.trim() !== '' && (
+              <div className="error">{errors.key}</div>)}
             </div>
-            <div>
+            <div className="pb-4">
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
               />
+              {errors && errors.description && errors.description.trim() !== '' && (
               <div className="error">{errors.description}</div>
+              )}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Title</label>
               <input
                 className="inputbox"
-                id="grid-last-meta_title"
+                id="page_meta_title"
                 type="text"
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
               />
+               {errors && errors.meta_title && errors.meta_title.trim() !== '' && (
               <div className="error">{errors.meta_title}</div>
+               )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Description</label>
               <input
                 className="inputbox"
-                id="grid-last-meta_description"
+                id="page_meta_description"
                 type="text"
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
               />
+                {errors && errors.meta_description && errors.meta_description.trim() !== '' && (
               <div className="error">{errors.meta_description}</div>
+                )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
-              <label className="label" htmlFor="grid-last-name">
+              <label className="label" htmlFor="page_meta_tags">
                 Meta Tags
               </label>
               <form onSubmit={this.insertMetaTags}>
                 <input
                   className="inputbox"
-                  id="blog-meta-tags"
+                  id="page_meta_tags"
                   type="text"
                   value={tempMetaTag || ''}
                   name="Tags"
@@ -255,7 +263,7 @@ class AddEdit extends React.PureComponent {
 
             <div className="flex w-full justify-between md:w-1/2 px-2">
               <div className="w-full md:w-1/2 -ml-2">
-                <label className="label" htmlFor="grid-last-name">
+                <label className="label" htmlFor="publish_from">
                   Published From
                 </label>
                 <DatePicker
@@ -271,7 +279,7 @@ class AddEdit extends React.PureComponent {
                 />
               </div>
               <div className="w-full md:w-1/2 -mr-2">
-                <label className="label" htmlFor="grid-last-name">
+                <label className="label" htmlFor="publish_to">
                   Published To
                 </label>
                 <DatePicker
@@ -290,7 +298,7 @@ class AddEdit extends React.PureComponent {
             <div className="w-1/2 pb-4 -mr-2 mt-4">
               <section
                 onClick={this.handleSetImage}
-                className="text-black hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+                className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
               >
                 <button
                   type="button"

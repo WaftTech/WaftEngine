@@ -141,7 +141,7 @@ class AddEdit extends React.PureComponent {
               <label>Content Title</label>
               <input
                 className="inputbox"
-                id="grid-last-name"
+                id="content_title"
                 type="text"
                 value={one.name}
                 onChange={this.handleChange('name')}
@@ -155,7 +155,7 @@ class AddEdit extends React.PureComponent {
               <label>Content Key</label>
               <input
                 className="inputbox"
-                id="grid-last-name"
+                id="content_key"
                 type="text"
                 value={one.key}
                 onChange={this.handleChange('key')}
@@ -179,7 +179,7 @@ class AddEdit extends React.PureComponent {
               <label>Meta Title</label>
               <input
                 className="inputbox"
-                id="grid-last-meta_title"
+                id="meta_title"
                 type="text"
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
@@ -192,7 +192,7 @@ class AddEdit extends React.PureComponent {
               <label>Meta Description</label>
               <input
                 className="inputbox"
-                id="grid-last-meta_description"
+                id="meta_description"
                 type="text"
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
@@ -208,7 +208,7 @@ class AddEdit extends React.PureComponent {
               <form onSubmit={this.insertMetaTags}>
                 <input
                   className="inputbox"
-                  id="blog-meta-tags"
+                  id="meta-tags"
                   type="text"
                   value={tempMetaTag || ''}
                   name="Tags"

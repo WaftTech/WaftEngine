@@ -415,7 +415,7 @@ const FileList = ({
           {selectedButton === 'Multiple' && chosen_files.length > 0 ? (
             <button
               onClick={handleUploadMultiple}
-              className="blink items-center text-pink-500 flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
+              className="blink items-center text-black flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
             >
               <FaImages className="text-base mr-2" />
               <span>Upload Multiple</span>
@@ -423,7 +423,7 @@ const FileList = ({
           ) : (
             <button
               onClick={handleSelectMultipleButton}
-              className="items-center text-pink-500 flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
+              className="items-center text-black flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
             >
               <FaImages className="text-base mr-2" />
               <span>Select Multiple</span>
@@ -476,6 +476,15 @@ const FileList = ({
           )}
         </div>
       </div>
+      <div className="mb-2 w-full py-2 px-4 bg-gray-100 rounded border border-gray-200">
+      <p className="text-sm italic w-full block">
+          Note : Please Click the given button first for selecting{' '}
+          <span className="font-bold">
+            Multiple Images, Renaming folders and Deleting files
+          </span>
+          !!!
+        </p>
+        </div>
       <div className="my-auto">
         <BreadCrumb
           linkcomponent={LinkComponent}
@@ -560,17 +569,11 @@ const FileList = ({
         doClose={handleFileClose}
         doDelete={handleFileDel}
       />
-      <div className="flex flex-wrap bg-white mt-2 p-4">
-        <p className="italic w-full block py-2">
-          Note : Please Click the given button first for selecting{' '}
-          <span className="font-bold">
-            Multiple Images, Renaming folders and Deleting files
-          </span>
-          !!!
-        </p>
+      <div className="flex flex-wrap bg-white mt-1">
         {folders.data.map(each => (
+          <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
           <div
-            className="mediaCont border rounded p-1 relative overflow-hidden mr-4 hover:border-primary"
+            className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100"
             key={each._id}
             onMouseOver={() => handleMouseOver(each._id)}
             onMouseLeave={() => handleMouseOver('')}
@@ -605,36 +608,40 @@ const FileList = ({
               // data-tooltip={each.name}
               className={`${
                 selected === each._id ? 'folder_media' : ''
-              } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
+              } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
               onClick={() => handleSingleClick(each._id)}
               onDoubleClick={() => handleFolderLink(each._id)}
               onKeyDown={() => handleFolderLink(each._id)}
               role="presentation"
             >
-              <div className="flex h-24 justify-center">
+              <div className="flex justify-center">
                 <FaFolder
-                  className="text-yellow-500 self-center"
+                  className="text-yellow-500"
                   style={{ fontSize: '6rem' }}
                 />
               </div>
-              <div className="block text-sm truncate">{each.name}</div>
+              <div className="block text-sm truncate py-1">{each.name}</div>
             </div>
+          </div>
           </div>
         ))}
         {files.data.map((each, index) => (
+           <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
           <div
-            className="mediaCont border p-1 relative overflow-hidden mr-4 hover:border-primary"
+            className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100"
             key={each._id}
             onMouseOver={() => handleMouseOverFile(each._id)}
             onMouseLeave={() => handleMouseOverFile('')}
           >
             {selectedButton === 'Rename' && (
+              <div className="absolute">
               <button
                 className="hover:text-blue-500"
                 onClick={() => handleRenameFile(each._id, each.renamed_name)}
               >
                 <FaEdit />
               </button>
+              </div>
             )}
             <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
               {selectedButton === 'Multiple' && (
@@ -670,9 +677,9 @@ const FileList = ({
               // data-tooltip={each.filename}
               className={`${
                 selected === each._id ? 'folder_media' : ''
-              } flex flex-col w-32 h-32 text-center cursor-pointer overflow-hidden mt-8`}
+              } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
             >
-              <div className="flex h-24">
+              <div className="flex">
                 <img
                   className="w-full h-24 object-contain"
                   src={`${IMAGE_BASE}${each.path}`}
@@ -683,8 +690,9 @@ const FileList = ({
                   role="presentation"
                 />
               </div>
-              <div className="truncate text-sm">{each.renamed_name}</div>
+              <div className="truncate text-sm py-1">{each.renamed_name}</div>
             </div>
+          </div>
           </div>
         ))}
         {folders.data.length < 1 && files.data.length < 1 && (
