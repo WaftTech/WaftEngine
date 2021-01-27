@@ -139,28 +139,6 @@ export class AdminRole extends React.PureComponent {
               <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
             </span>
           </div>
-          {/* <div className="flex">
-            <button
-              className="ml-2 px-1 text-center leading-none"
-              onClick={() => this.handleAccess(_id)}
-            >
-              <FaKey className="text-base text-green-500 hover:text-green-600" />
-            </button>
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
-              onClick={() => this.handleEdit(_id)}
-            >
-              <FaPencilAlt className="text-base text-blue-500 hover:text-blue-600" />
-            </button>
-
-            <button
-              className="ml-2 px-1 text-center leading-none"
-              onClick={() => this.handleOpen(_id)}
-            >
-              <FaTrashAlt className="text-base text-red-400 hover:text-red-600" />
-            </button>
-          </div> */}
         </>,
       ],
     );
