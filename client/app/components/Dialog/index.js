@@ -9,6 +9,40 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 
+
+function useComponentVisible(initialIsVisible, setShowList) {
+  const [isComponentVisible, setIsComponentVisible] = useState(
+    initialIsVisible,
+  );
+  const ref = useRef(null);
+
+  const handleClickOutside = event => {
+    // uses ref to check if outside of Div is clicked
+    if (ref.current && !ref.current.contains(event.target)) {
+      setIsComponentVisible(false);
+      if (setShowList === undefined) {
+        console.log('!! onClose function not passed to dialog component. !!');
+      } else {
+        setShowList(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // document.addEventListener('keydown', handleHideDropdown, true);
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      // document.removeEventListener('keydown', handleHideDropdown, true);
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  });
+
+  return { ref, isComponentVisible, setIsComponentVisible };
+}
+
+
+
+
 const Dialog = ({ open, onClose, className, title, body, actions }) => {
   const {
     ref,
