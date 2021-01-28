@@ -7,38 +7,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { FaTimes } from 'react-icons/fa';
 
 const Dialog = ({ open, onClose, className, title, body, actions }) => {
   return open ? (
-    <div className=" w-full flex  h-screen my-auto justify-center items-center z-10 fixed top-0 left-0 bg-black bg-opacity-25">
-      <div
-        className={`shadow-md bg-white   ${
-          className && className !== '' ? className : 'w-1/2'
-        } `}
-      >
+    <>
+      <div className="w-screen h-screen z-40 fixed top-0 left-0 bg-black bg-opacity-25" onClick={onClose} />
+      <div className={`fixed left-2/4 z-50 shadow-lg transform -translate-x-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
+        } `}>
         {title !== undefined && (
-          <div className="flex flex-wrap justify-between p-2 border-b border-2">
-            {title}{' '}
+          <div className="flex flex-wrap items-center justify-between px-2 py-4 border-b">
+            <h3 className="text-xl">{title}</h3>
             <button
               type="button"
-              className="underline text-red-400 "
+              className="text-gray-500"
               onClick={onClose}
             >
-              Close
+              <FaTimes />
             </button>
           </div>
         )}
         {body !== undefined && <div className="p-4">{body}</div>}
         {actions !== undefined && (
-          <div className="border-t border-2 p-2 flex justify-center">
+          <div className="border-t p-2 flex justify-center">
             {actions}
           </div>
         )}
       </div>
-    </div>
+    </>
   ) : null;
 };
 

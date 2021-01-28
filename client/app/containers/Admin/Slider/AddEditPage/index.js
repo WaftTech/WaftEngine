@@ -1,6 +1,3 @@
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -25,6 +22,9 @@ import saga from '../saga';
 import {
   makeSelectErrors, makeSelectLoading, makeSelectMedia, makeSelectOne
 } from '../selectors';
+
+
+import Dialog from '../../../../components/Dialog/index';
 
 
 
@@ -234,7 +234,22 @@ class AddEdit extends React.PureComponent {
                 : 'Add Slider'}
             </PageHeader>
           </div>
+
           <Dialog
+            className="max-w-4xl"
+            open={this.state.open}
+            onClose={this.handleClose}
+            title={`Select Media`}
+            body={
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageImageChange(file)}
+              />
+            }
+          />
+
+
+          {/* <Dialog
             aria-labelledby="max-width-dialog-title"
             open={this.state.open}
             onClose={this.handleClose}
@@ -248,7 +263,7 @@ class AddEdit extends React.PureComponent {
                 selectFile={file => this.handleImageImageChange(file)}
               />
             </DialogContent>
-          </Dialog>
+          </Dialog> */}
 
           <Helmet>
             <title>
