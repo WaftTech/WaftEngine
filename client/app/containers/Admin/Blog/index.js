@@ -353,14 +353,14 @@ export class BlogManagePage extends React.Component {
         author,
         _id,
       }) => [
-        <>
-          <Link
-            to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
-            target="_blank"
-            className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
-          >
-            {title}
-          </Link>{' '}
+          <>
+            <Link
+              to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+              target="_blank"
+              className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
+            >
+              {title}
+            </Link>{' '}
             <div className="flex py-2">
               <button
                 aria-label="Edit"
@@ -595,13 +595,13 @@ export class BlogManagePage extends React.Component {
               />
             </div>
             <div className="px-1 w-1/6">
-            <label></label>
+              <label></label>
               <button
                 aria-label="Search"
                 className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                 onClick={this.handleSearch}
                 type="button"
-                style={{marginTop:'1.5rem'}}
+                style={{ marginTop: '1.5rem' }}
               >
                 Search
               </button>
