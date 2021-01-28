@@ -78,14 +78,14 @@ export const GlobalSetting = props => {
     <>
       <div className="flex">
         <span
-          className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+          className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
           onClick={() => handleEdit(key)}
         >
           <FaPencilAlt className="pencil" />
           <span className="bg-blue-500 dash" />
         </span>
         {/* <span
-              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => handleOpen(_id)}
             >
               <FaTrashAlt className="text-red-400 text-lg" />

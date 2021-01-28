@@ -30,4 +30,5 @@ export const CLEAR_ONE = 'app/SubModules/CLEAR_ONE';
 export const SET_QUERY_VALUE = 'app/SubModules/SET_QUERY_VALUE';
 export const CLEAR_QUERY = 'app/SubModules/CLEAR_QUERY';
 
+export const SET_ERRORS = 'app/SubModules/SET_ERRORS';
 export const CLEAR_ERRORS = 'app/SubModules/CLEAR_ERRORS';

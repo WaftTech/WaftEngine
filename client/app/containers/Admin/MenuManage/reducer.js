@@ -36,7 +36,7 @@ export const initialState = {
     parent_menu: '',
     menu_sch_id: '',
     is_active: true,
-    target: '_blank',
+    target: '_self',
   },
   query: { find_title: '', find_key: '', size: 10 },
   loading: false,

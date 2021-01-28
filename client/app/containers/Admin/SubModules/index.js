@@ -100,19 +100,18 @@ export const SubModules = props => {
       module_group,
       order,
       description,
-      module_group_main,
       <>
         <div className="flex">
           <span
-            className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
-            onClick={() => this.handleEdit(_id)}
+            className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+            onClick={() => handleEdit(_id)}
           >
             <FaPencilAlt className="pencil" />
             <span className="bg-blue-500 dash" />
           </span>
           <span
-            className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
-            onClick={() => this.handleOpen(_id)}
+            className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+            onClick={() => handleOpen(_id)}
           >
             <img className="trash-lid" src={lid} alt="trash-id" />
             <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
@@ -167,13 +166,7 @@ export const SubModules = props => {
         </div>
 
         <Table
-          tableHead={[
-            'Module Group',
-            'Order',
-            'Description',
-            'Module Group Main',
-            'Action',
-          ]}
+          tableHead={['Module Group', 'Order', 'Description', 'Action']}
           tableData={tableData}
           pagination={tablePagination}
           handlePagination={handlePagination}

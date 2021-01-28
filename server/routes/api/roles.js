@@ -17,7 +17,6 @@ router.get('/module-group/:id', authentication, authorization, dModule.GetModule
 router.post('/module-group', authentication, authorization, dModule.AddModuleGroupList);
 router.get('/access', authentication, authorization, dModule.GetAccessList);
 router.post('/access', authentication, authorization, validations.sanitizeAccess, validations.validateAccess, dModule.SaveAccessList);
-
 /**
  * Access Management of Role to all Module
  */
@@ -31,4 +30,6 @@ router.post('/access/role/:roleid', authentication, authorization, dModule.SaveA
 router.get('/access/module/:moduleid', authentication, authorization, dModule.GetAccessListForModule);
 router.post('/access/module/:moduleid', authentication, authorization, dModule.SaveAccessListForModule);
 
+// router.get('/active', authentication, authorization, dModule.GetModuleActive)
+router.delete('/module-group/:id', authentication, authorization, dModule.deleteModuleGroupList)
 module.exports = router;

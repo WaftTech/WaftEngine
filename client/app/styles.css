@@ -63,12 +63,12 @@ select.inputbox {
 }
 
 .error {
+  position: relative;
+  top:4px;
   color: #ff3b30;
   margin: 0;
   font-size: 0.75rem;
   text-align: left;
-  margin-top: 8px;
-  min-height: 1em;
 }
 
 .waft-gradient {
@@ -111,7 +111,7 @@ select.inputbox {
 }
 
 .btn {
-  @apply py-2 px-4 text-white text-sm mt-4 transition-all duration-200;
+  @apply py-2 px-4 rounded text-sm mt-4 transition-all duration-200;
 }
 .qr-code {
   transform: scale(4);
@@ -298,5 +298,41 @@ select.inputbox {
   padding: 4px;
 }
 
+/* admin icons */
+
+.trash-lid {
+  position: absolute;
+  left: 8px;
+  top: 9px;
+}
+.pencil,
+.trash-lid,
+.dash {
+  transition: all 0.1s ease-in-out;
+}
+.pencil {
+  position: relative;
+  right: 0;
+  color: #4299e1;
+  font-size: 16px;
+}
+
+.trash-icon:hover .trash-lid {
+  top: 7px;
+}
+.dash {
+  position: absolute;
+  height: 2px;
+  width: 0px;
+  background: #4299e1;
+  left: 6px;
+  bottom: 8px;
+}
+.edit-icon:hover .dash {
+  width: 8px;
+}
+.edit-icon:hover .pencil {
+  right: -3px;
+}
 
 @tailwind utilities;

@@ -135,7 +135,7 @@ export const Comments = props => {
                       each.added_by._id === user.id ? (
                         <div className="flex">
                           <span
-                            className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+                            className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
                             onClick={() => handleEditComment(each._id)}
                           >
                             <FaPencilAlt className="pencil" />
@@ -143,7 +143,7 @@ export const Comments = props => {
                           </span>
 
                           <span
-                            className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+                            className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
                             onClick={() => handledelOpen(each._id)}
                           >
                             <img className="trash-lid" src={lid} alt="trash-id" />

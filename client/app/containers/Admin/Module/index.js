@@ -85,21 +85,22 @@ export class AdminModuleManage extends React.PureComponent {
         module_name,
         description,
         <>
-          <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
-              onClick={() => this.handleEdit(_id)}
-            >
-              <FaPencilAlt className="text-base text-blue-500 hover:text-blue-600" />
-            </button>
-
-            <button
-              className="ml-2 px-1 text-center leading-none"
+        <div className="flex">
+         <span
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-green-100 rounded-full relative edit-icon"
               onClick={() => this.handleAccessEdit(_id)}
             >
               <FaKey className="text-base text-green-500 hover:text-green-600" />
-            </button>
+            </span>
+            <span
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              onClick={() => this.handleEdit(_id)}
+            >
+              <FaPencilAlt className="pencil" />
+
+              {/* <img className="pencil" src={pencil} alt="" /> */}
+              <span className="bg-blue-500 dash" />
+            </span>
           </div>
         </>,
       ],

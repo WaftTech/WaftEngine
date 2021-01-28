@@ -5,42 +5,4 @@
 .table tr td {
   border-bottom: 1px solid #e9e9e9;
 }
-/* 
-.table tr:hover td {
-  background: #F4F6F8;
-} */
 
-.trash-lid {
-  position: absolute;
-  left: 16px;
-  top: 15px;
-}
-.pencil,
-.trash-lid,
-.dash {
-  transition: all 0.1s ease-in-out;
-}
-.pencil {
-  position: relative;
-  right: 0;
-  color: #4299e1;
-  font-size: 20px;
-}
-
-.trash-icon:hover .trash-lid {
-  top: 13px;
-}
-.dash {
-  position: absolute;
-  height: 2px;
-  width: 0px;
-  background: #4299e1;
-  left: 15px;
-  bottom: 14px;
-}
-.edit-icon:hover .dash {
-  width: 8px;
-}
-.edit-icon:hover .pencil {
-  right: -8px;
-}

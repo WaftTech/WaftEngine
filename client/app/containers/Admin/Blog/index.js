@@ -24,8 +24,21 @@ import * as mapDispatchToProps from './actions';
 import QuickEdit from './AddEditPage/QuickEdit';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectAll, makeSelectCategory, makeSelectChip, makeSelectErrors, makeSelectHelper, makeSelectLoading, makeSelectMetaKeyword, makeSelectMetaTag, makeSelectOne, makeSelectQuery, makeSelectTag, makeSelectUsers } from './selectors';
-
+import {
+  makeSelectAll,
+  makeSelectCategory,
+  makeSelectChip,
+  makeSelectErrors,
+  makeSelectHelper,
+  makeSelectLoading,
+  makeSelectMetaKeyword,
+  makeSelectMetaTag,
+  makeSelectOne,
+  makeSelectQuery,
+  makeSelectTag,
+  makeSelectUpateCalled,
+  makeSelectUsers,
+} from './selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogManagePage extends React.Component {
@@ -73,6 +86,7 @@ export class BlogManagePage extends React.Component {
     ) {
       props.loadAllRequest(props.query);
     }
+
     return true;
   }
 
@@ -129,6 +143,7 @@ export class BlogManagePage extends React.Component {
     this.props.loadCategoryRequest();
     this.props.loadUsersRequest();
     this.props.setValue({ name: 'helper', key: 'showQuickEdit', value: true });
+    this.props.setUpdateCalled(false);
   };
 
   handleEditorChange = (e, name) => {
@@ -208,6 +223,7 @@ export class BlogManagePage extends React.Component {
 
   handleSave = () => {
     this.props.addEditRequest();
+    this.props.setUpdateCalled(true);
   };
 
   handleMetaKeywordDelete = index => () => {
@@ -424,6 +440,7 @@ export class BlogManagePage extends React.Component {
               value: false,
             })
           }
+          loading={loading}
           handleUpdate={this.handleSave}
         >
           <QuickEdit
@@ -452,6 +469,7 @@ export class BlogManagePage extends React.Component {
             tempMetaTag={tempMetaTag}
             tempMetaKeyword={tempMetaKeyword}
             errors={errors}
+            setUpdateCalled={this.props.setUpdateCalled}
           />
         </Modal>
         <div className="flex justify-between my-3">
@@ -577,11 +595,13 @@ export class BlogManagePage extends React.Component {
               />
             </div>
             <div className="px-1 w-1/6">
+              <label></label>
               <button
                 aria-label="Search"
-                className="bg-secondary mt-4 px-4 py-2 font-lg block text-white text-center w-full rounded leading-tighter mt-6"
+                className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                 onClick={this.handleSearch}
                 type="button"
+                style={{ marginTop: '1.5rem' }}
               >
                 Search
               </button>
@@ -651,6 +671,7 @@ const mapStateToProps = createStructuredSelector({
   tempMetaKeyword: makeSelectMetaKeyword(),
   users: makeSelectUsers(),
   errors: makeSelectErrors(),
+  updateCalled: makeSelectUpateCalled(),
 });
 
 const withConnect = connect(

@@ -4,12 +4,18 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 
 const Dialog = ({ open, onClose, className, title, body, actions }) => {
+  const {
+    ref,
+    isComponentVisible,
+    setIsComponentVisible,
+  } = useComponentVisible(open, onClose);
+
   return open ? (
     <>
       <div className="w-screen h-screen z-40 fixed top-0 left-0 bg-black bg-opacity-25" onClick={onClose} />
@@ -40,7 +46,7 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
 
 Dialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   className: PropTypes.string,
   title: PropTypes.any,
   body: PropTypes.any,

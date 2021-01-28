@@ -316,14 +316,14 @@ class AddEdit extends React.PureComponent {
 
           <div className="flex">
             <button
-              className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100 mr-2"
+              className="block btn text-white bg-green-500 border border-green-600 hover:bg-green-600 mr-2"
               onClick={this.handleAddPath}
             >
               Add Access Type
             </button>
 
             <button
-              className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
             >
               Save
