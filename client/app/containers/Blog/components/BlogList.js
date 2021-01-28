@@ -92,7 +92,7 @@ const RenderBlogs = props => {
           </Link>
         );
       })}
-      <div className="flex clearfix w-full pagination ">
+      <div className="flex flow-root w-full pagination ">
         {loading_more && '....'}
         {currentBlogs.length < pagination.totaldata && (
           <button
@@ -106,8 +106,8 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-    <div>No News Found</div>
-  );
+        <div>No News Found</div>
+      );
 };
 
 const withSaga = injectSaga({ key: 'blogPage', saga });

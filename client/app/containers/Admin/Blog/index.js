@@ -361,59 +361,59 @@ export class BlogManagePage extends React.Component {
           >
             {title}
           </Link>{' '}
-          <div className="flex py-2">
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
-              onClick={() => this.handleEdit(_id)}
-            >
-              Edit
+            <div className="flex py-2">
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+                onClick={() => this.handleEdit(_id)}
+              >
+                Edit
             </button>
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
-              onClick={() => this.handleLoadOne(_id)}
-            >
-              Quick Edit
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+                onClick={() => this.handleLoadOne(_id)}
+              >
+                Quick Edit
             </button>
 
-            <button
-              className="px-1 text-center leading-none text-red-500 whitespace-no-wrap text-sm"
-              type="button"
-              onClick={() => this.handleOpen(_id)}
-            >
-              Delete
+              <button
+                className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
+                type="button"
+                onClick={() => this.handleOpen(_id)}
+              >
+                Delete
             </button>
-          </div>
-        </>,
-        (category && category.map(each => each.title).join(', ')) || 'No',
-        <span className="whitespace-no-wrap">
-          {moment(added_at).format(DATE_FORMAT)}
-        </span>,
-        <span className="whitespace-no-wrap">
-          {moment(published_on).format('YYYY-MM-DD HH:mm')}
-        </span>,
-        // `${is_highlight}`,
-        // `${is_showcase}`,
-        // `${is_active}`,
-        <>
-          {is_published ? (
-            <FaRegCheckCircle className="text-green-500" />
-          ) : (
-            <FaBan className="text-red-400" />
-          )}{' '}
-        </>,
-        // tags.join(','),
-        (
-          <p className="">
-            {author &&
-              author.length > 0 &&
-              author.map(author => author.name).join(', ')}
-          </p>
-        ) || '',
-      ],
+            </div>
+          </>,
+          (category && category.map(each => each.title).join(', ')) || 'No',
+          <span className="whitespace-nowrap">
+            {moment(added_at).format(DATE_FORMAT)}
+          </span>,
+          <span className="whitespace-nowrap">
+            {moment(published_on).format('YYYY-MM-DD HH:mm')}
+          </span>,
+          // `${is_highlight}`,
+          // `${is_showcase}`,
+          // `${is_active}`,
+          <>
+            {is_published ? (
+              <FaRegCheckCircle className="text-green-500" />
+            ) : (
+                <FaBan className="text-red-400" />
+              )}{' '}
+          </>,
+          // tags.join(','),
+          (
+            <p className="">
+              {author &&
+                author.length > 0 &&
+                author.map(author => author.name).join(', ')}
+            </p>
+          ) || '',
+        ],
     );
 
     const activeData =

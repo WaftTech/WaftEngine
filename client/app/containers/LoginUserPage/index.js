@@ -226,7 +226,7 @@ const LoginUserPage = props => {
               icon="fa-facebook"
             />
             <GoogleLogin
-              className={`${classes.googbtn} flex jusitify-center flex-1`}
+              // className={`${classes.googbtn} flex jusitify-center flex-1`}
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Google"
               onSuccess={loginWithGoogleRequest}
@@ -276,13 +276,6 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'loginUserPage', reducer });
 const withSaga = injectSaga({ key: 'loginUserPage', saga });
 
-const styles = {
-  googbtn: {
-    boxShadow: 'none!important',
-    border: '1px solid gainsboro!important',
-    borderLeft: 'none!important',
-  },
-};
 
 export default compose(
   withReducer,

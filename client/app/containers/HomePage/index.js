@@ -44,7 +44,7 @@ export default class HomePage extends React.PureComponent {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          title={<h2> Demo Dialog </h2>}
+          title={`Demo Dialog`}
           body={
             <div>
               Lorem Ipsum is simply dummy text of the printing and typesetting

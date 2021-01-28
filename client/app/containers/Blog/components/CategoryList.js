@@ -22,7 +22,7 @@ const CategoryListingPage = props => {
       {props.category.map(each => (
         <div key={each._id} className="pr-8">
           <Link
-            className="block py-3 no-underline text-gray-700 hover:text-black whitespace-no-wrap text-lg"
+            className="block py-3 no-underline text-gray-700 hover:text-black whitespace-nowrap text-lg"
             to={`/news/category/${each.slug_url}`}
           >
             {each.title}

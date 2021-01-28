@@ -207,7 +207,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
         >
           <main className="flex-1 flex flex-col justify-between pt-16">
             <div
-              className="bg-white border-b flex top-0 justify-between fixed z-40"
+              className="bg-white dark:bg-gray-800 border-b flex top-0 justify-between fixed z-40"
               style={{ width: 'calc(100% - 220px)' }}
             >
               <div className="flex-1 flex items-center h-16">

@@ -1,6 +1,6 @@
-import TablePagination from '@material-ui/core/TablePagination';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 /* eslint-disable react/no-array-index-key */
 function CustomTable({ ...props }) {
@@ -44,35 +44,37 @@ function CustomTable({ ...props }) {
           ))}
         </tbody>
       </table>
-      <table className="w-full border-t border-gray-300">
-        <tbody>
-          <tr>
-            {pagination && handlePagination && (
-              <TablePagination
-                style={{ display: 'flex', justifyContent: 'flex-start' }}
-                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                colSpan={3}
-                count={pagination.totaldata}
-                rowsPerPage={pagination.size}
-                page={pagination.page - 1}
-                backIconButtonProps={{
-                  'aria-label': 'Previous Page',
-                }}
-                nextIconButtonProps={{
-                  'aria-label': 'Next Page',
-                }}
-                onChangePage={(e, page) =>
-                  handlePagination({ ...pagination, page: page + 1 })
+
+      {pagination && handlePagination && (
+        <>
+          <div className="flex justify-between items-center px-4 py-2 border-t border-gray-200">
+            <span className="text-sm">Total Data: {pagination.totaldata}</span>
+            <div className="inline-flex items-center justify-end ">
+              <span className="text-sm">Rows Per page</span> <select className="text-sm inputbox w-20 mr-20 ml-4" value={pagination.size || 10} onChange={(e) => {
+                handlePagination({ ...pagination, size: e.target.value })
+              }}>{[10, 25, 50, 100].map(each => <option value={each}>{each}</option>)}</select>
+              <span className="mr-20 text-sm">Page {pagination.page} of {Math.ceil(pagination.totaldata / pagination.size)}</span>
+              <span onClick={() => {
+                if (1 === pagination.page) {
+                  return;
                 }
-                onChangeRowsPerPage={e =>
-                  handlePagination({ ...pagination, size: e.target.value })
+                handlePagination({ ...pagination, page: pagination.page - 1 });
+              }} className={`${1 === pagination.page ? 'opacity-50 pointer-events-none' : ''} w-12 h-12 rounded hover:bg-gray-200 inline-block cursor-pointer inline-flex items-center justify-center`}>
+                <FaChevronLeft />
+              </span>
+              <span onClick={() => {
+                if (Math.ceil(pagination.totaldata / pagination.size) === pagination.page) {
+                  return;
                 }
-              />
-            )}
-          </tr>
-        </tbody>
-      </table>{' '}
-    </div>
+                handlePagination({ ...pagination, page: pagination.page + 1 });
+              }} className={`${Math.ceil(pagination.totaldata / pagination.size) === pagination.page ? 'opacity-50 pointer-events-none' : ''} w-12 h-12 rounded hover:bg-gray-200 inline-block cursor-pointer inline-flex items-center justify-center`}>
+                <FaChevronRight /></span>
+
+            </div>
+          </div>
+        </>
+      )}
+    </div >
   );
 }
 
