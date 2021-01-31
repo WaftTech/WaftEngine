@@ -26,6 +26,25 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      orange: colors.orange,
+
+      primary: colors.primary,
+      secondary: colors.secondary,
+      subprimary: colors.subprimary,
+      subsecondary: colors.subsecondary,
+
+      success: colors.success,
+      danger: colors.danger,
+      warning: colors.warning,
+      info: colors.info,
+      light: colors.light,
+      dark: colors.dark,
+
+      facebook: colors.facebook,
+      twitter: colors.twitter,
+      instagram: colors.instagram,
+      linkedin: colors.linkedin,
+      google: colors.google,
     },
     spacing: {
       px: '1px',
