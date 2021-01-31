@@ -80,7 +80,7 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-    <>
+      <>
         <div>
           <div className="flex justify-between my-3">
             <PageHeader>
@@ -110,55 +110,31 @@ const AddEdit = props => {
               <input
                 className="inputbox"
                 id="grid-value"
-                type="number"
+                type="text"
                 value={one.order}
                 onChange={handleChange('order')}
               />
               <div className="error">{errors.order}</div>
             </div>
-            <PageContent>
-              <div className="w-full md:w-1/2 pb-4">
-                <label>Module Group</label>
-                <input
-                  className="inputbox"
-                  id="grid-group"
-                  type="text"
-                  value={one.module_group}
-                  onChange={handleChange('module_group')}
-                />
-                <div className="error">{errors.module_group}</div>
-              </div>
 
-              <div className="w-full md:w-1/2 pb-4">
-                <label>Order</label>
-                <input
-                  className="inputbox"
-                  id="grid-value"
-                  type="text"
-                  value={one.order}
-                  onChange={handleChange('order')}
-                />
-                <div className="error">{errors.order}</div>
-              </div>
-
-              <div className="w-full md:w-1/2">
-                <label
-                  className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-                  htmlFor="grid-country-code-2"
-                >
-                  Description
+            <div className="w-full md:w-1/2">
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
+                htmlFor="grid-country-code-2"
+              >
+                Description
             </label>
-                <textarea
-                  className="inputbox"
-                  id="grid-description"
-                  type="text"
-                  value={one.description}
-                  onChange={handleChange('description')}
-                />
-                <div className="error">{errors.description}</div>
-              </div>
+            <textarea
+              className="inputbox"
+              id="grid-description"
+              type="text"
+              value={one.description}
+              onChange={handleChange('description')}
+            />
+            <div className="error">{errors.description}</div>
+          </div>
 
-              {/* <div className="w-full md:w-1/2 pb-4">
+          {/* <div className="w-full md:w-1/2 pb-4">
             <label>Module Group Main</label>
             <input
               className="inputbox"
@@ -170,26 +146,26 @@ const AddEdit = props => {
             <div className="error">{errors.module_group_main}</div>
           </div> */}
 
-              <button
-                type="button"
-                className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
-                onClick={handleSave}
-              >
-                Save
+          <button
+            type="button"
+            className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
+            onClick={handleSave}
+          >
+            Save
           </button>
-            </PageContent>
+          </PageContent>
         </div>
       </>
     );
 };
 
 AddEdit.propTypes = {
-          loadOneRequest: PropTypes.func.isRequired,
+  loadOneRequest: PropTypes.func.isRequired,
   addEditRequest: PropTypes.func.isRequired,
   setOneValue: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   match: PropTypes.shape({
-          params: PropTypes.object,
+    params: PropTypes.object,
   }),
   classes: PropTypes.object.isRequired,
   one: PropTypes.object.isRequired,
@@ -199,14 +175,14 @@ AddEdit.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-          one: makeSelectOne(),
+  one: makeSelectOne(),
   loading: makeSelectLoading(),
   errors: makeSelectErrors(),
 });
 
 const withConnect = connect(
   mapStateToProps,
-        { ...mapDispatchToProps, push},
+  { ...mapDispatchToProps, push },
 );
 
 export default compose(
