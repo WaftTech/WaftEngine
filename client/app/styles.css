@@ -194,7 +194,7 @@ select.inputbox {
 }
 
 .checkbox .box {
-  @apply w-5 border-gray-400 mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
+  @apply w-5 border border-gray-400 mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
 }
 
 .checkbox label {
