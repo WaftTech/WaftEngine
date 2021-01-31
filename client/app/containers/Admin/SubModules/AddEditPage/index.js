@@ -80,18 +80,18 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-      <>
-        <div>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={handleGoBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {match && match.params && match.params.id
-                ? 'Edit Sub Module'
-                : 'Add Sub Module'}
-            </PageHeader>
-          </div>
+    <>
+      <div>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Sub Module'
+              : 'Add Sub Module'}
+          </PageHeader>
+        </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
               <label>Module Group</label>
