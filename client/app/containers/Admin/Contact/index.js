@@ -28,7 +28,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
-
+import lid from '../../../assets/img/lid.svg';
 import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -106,21 +106,20 @@ export class Contact extends React.Component {
       moment(added_at).format(DATE_FORMAT),
 
       <div className="flex">
-        <button
-          aria-label="Edit"
-          className=" px-1 text-center leading-none"
-          onClick={() => this.handleView(_id)}
-        >
-          <FaRegEye className="text-base text-blue-500 hover:text-blue-600" />
-        </button>
-
-        <button
-          className="ml-2 px-1 text-center leading-none"
-          onClick={() => this.handleOpen(_id)}
-        >
-          <FaTrashAlt className="text-base text-red-500 hover:text-red-600" />
-        </button>
-      </div>,
+            <span
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
+              onClick={() => this.handleView(_id)}
+            >
+             <FaRegEye className="text-base text-blue-500" />
+            </span>
+            <span
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+              onClick={() => this.handleOpen(_id)}
+            >
+              <img className="trash-lid" src={lid} alt="trash-id" />
+              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+            </span>
+          </div>,
     ]);
 
     return (

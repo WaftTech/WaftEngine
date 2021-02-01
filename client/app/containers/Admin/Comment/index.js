@@ -200,15 +200,14 @@ export class BlogCommentManagePage extends React.PureComponent {
         moment(added_at).format(DATE_FORMAT),
         moment(updated_at ? updated_at : added_at).format(DATE_FORMAT),
         <>
-          <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+         <div className="flex">
+            <span
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
               onClick={() => this.handleView(_id)}
             >
-              <FaRegEye className="text-base text-blue-500 hover:text-blue-600" />
-            </button>
-          </div>
+             <FaRegEye className="text-base text-blue-500" />
+            </span>
+            </div>
         </>,
       ],
     );

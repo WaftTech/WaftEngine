@@ -33,6 +33,7 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
+import lid from '../../../assets/img/lid.svg';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Error extends React.Component {
@@ -134,20 +135,19 @@ export class Error extends React.Component {
           : moment(added_at).format(DATE_FORMAT),
         <React.Fragment>
           <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+            <span
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
               onClick={() => this.handleShow(_id, error_stack)}
             >
-              <FaRegEye className="text-base text-blue-500 hover:text-blue-600" />
-            </button>
-
-            <button
-              className="ml-2 px-1 text-center leading-none"
+             <FaRegEye className="text-base text-blue-500" />
+            </span>
+            <span
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
-              <FaTrashAlt className="text-base text-red-500 hover:text-red-600" />
-            </button>
+              <img className="trash-lid" src={lid} alt="trash-id" />
+              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+            </span>
           </div>
         </React.Fragment>,
       ],
