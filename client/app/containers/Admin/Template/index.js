@@ -159,7 +159,7 @@ export function Template({
             <WECkEditior
               description={one.body || ''}
               setOneValue={setOneValue}
-              is_body={true}
+              is_body
             />
           </div>
 
@@ -189,16 +189,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminTemplateListingPage', reducer });
 const withSaga = injectSaga({ key: 'adminTemplateListingPage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(Template);
+export default compose(withReducer, withSaga, withConnect)(Template);
