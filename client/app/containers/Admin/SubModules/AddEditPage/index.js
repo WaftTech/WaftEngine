@@ -12,6 +12,7 @@ import { IconButton } from '@material-ui/core';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import { FaArrowLeft } from 'react-icons/fa';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -23,7 +24,6 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import { FaArrowLeft } from 'react-icons/fa';
 
 const key = 'subModules';
 
@@ -80,18 +80,18 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-    <>
-      <div>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id
-              ? 'Edit Sub Module'
-              : 'Add Sub Module'}
-          </PageHeader>
-        </div>
+      <>
+        <div>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {match && match.params && match.params.id
+                ? 'Edit Sub Module'
+                : 'Add Sub Module'}
+            </PageHeader>
+          </div>
           <PageContent>
             <div className="w-full md:w-1/2 pb-4">
               <label>Module Group</label>
@@ -124,17 +124,17 @@ const AddEdit = props => {
               >
                 Description
             </label>
-            <textarea
-              className="inputbox"
-              id="grid-description"
-              type="text"
-              value={one.description}
-              onChange={handleChange('description')}
-            />
-            <div className="error">{errors.description}</div>
-          </div>
+              <textarea
+                className="inputbox"
+                id="grid-description"
+                type="text"
+                value={one.description}
+                onChange={handleChange('description')}
+              />
+              <div className="error">{errors.description}</div>
+            </div>
 
-          {/* <div className="w-full md:w-1/2 pb-4">
+            {/* <div className="w-full md:w-1/2 pb-4">
             <label>Module Group Main</label>
             <input
               className="inputbox"
@@ -146,12 +146,12 @@ const AddEdit = props => {
             <div className="error">{errors.module_group_main}</div>
           </div> */}
 
-          <button
-            type="button"
-            className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
-            onClick={handleSave}
-          >
-            Save
+            <button
+              type="button"
+              className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
+              onClick={handleSave}
+            >
+              Save
           </button>
           </PageContent>
         </div>

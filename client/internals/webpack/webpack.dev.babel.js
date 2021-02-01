@@ -6,6 +6,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = require('./webpack.base.babel')({
@@ -32,6 +33,7 @@ module.exports = require('./webpack.base.babel')({
 
   // Add development plugins
   plugins: [
+    new ErrorOverlayPlugin(),
     new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
     new MiniCssExtractPlugin({
       filename: 'app/styles.css',
