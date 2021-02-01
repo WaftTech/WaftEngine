@@ -163,7 +163,7 @@ export function Template({
             />
           </div>
 
-          <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme">
+          <button className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600">
             Save
           </button>
         </form>
