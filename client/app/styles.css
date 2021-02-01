@@ -243,10 +243,14 @@ select.inputbox {
 }
 .label-inactive,
 .label-active {
-  @apply inline-block py-px px-2 bg-gray-100 text-xs text-gray-400;
+  @apply w-20 text-center rounded-full inline-block py-1 px-2 bg-gray-100 text-xs text-gray-400;
 }
 .label-active {
   @apply bg-green-100 text-green-500 border-green-200;
+}
+
+.label-inactive {
+  @apply bg-red-100 text-red-500 border-red-200;
 }
 
 
