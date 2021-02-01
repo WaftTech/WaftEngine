@@ -26,7 +26,6 @@ import { makeSelectLoading } from './selectors';
 import '../../assets/styles/loading.css';
 
 const SignupUserPage = ({
-  classes,
   signupRequest,
   signupWithFbRequest,
   signupWithGoogleRequest,
@@ -58,8 +57,8 @@ const SignupUserPage = ({
                 <span className="ml-2">Sing Up</span>
               </div>
             ) : (
-                'Sign Up'
-              )}
+              'Sign Up'
+            )}
           </button>
           <Link
             className="inline-block align-baseline text-xs text-blue-700 hover:text-blue-700-darker"
@@ -98,7 +97,7 @@ const SignupUserPage = ({
               icon="fa-facebook"
             />
             <GoogleLogin
-              className={`${classes.googbtn} flex jusitify-center flex-1`}
+              className=" flex jusitify-center flex-1"
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Google"
               onSuccess={signupWithGoogleRequest}
@@ -115,32 +114,27 @@ const SignupUserPage = ({
 };
 
 SignupUserPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   signupRequest: PropTypes.func.isRequired,
+  signupWithFbRequest: PropTypes.func.isRequired,
+  signupWithGoogleRequest: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'signupUserPage', reducer });
 const withSaga = injectSaga({ key: 'signupUserPage', saga });
 
-const styles = {
-  googbtn: {
-    boxShadow: 'none!important',
-    border: '1px solid gainsboro!important',
-    borderLeft: 'none!important',
-  },
-};
+// const styles = {
+//   googbtn: {
+//     boxShadow: 'none!important',
+//     border: '1px solid gainsboro!important',
+//     borderLeft: 'none!important',
+//   },
+// };
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(SignupUserPage);
+export default compose(withReducer, withSaga, withConnect)(SignupUserPage);
