@@ -12,11 +12,7 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-
+import Dialog from 'components/Dialog/index';
 // core components
 import Table from 'components/Table';
 
@@ -163,12 +159,30 @@ export class Error extends React.Component {
               : this.handleDeleteAll()
           }
         />
-        <Dialog open={this.state.show} maxWidth="md" onClose={this.handleClose}>
+
+<Dialog
+          open={this.state.show}
+          className="w-5/6"
+          onClose={this.handleClose}
+          title={`Error Stack`}
+          body={
+            <p>{this.state.stack}</p>
+          }
+          actions={
+            <button
+              type="button"
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600"
+              onClick={this.handleClose}
+            >
+              Close 
+            </button>
+          }/>
+        {/* <Dialog open={this.state.show} maxWidth="md" onClose={this.handleClose}>
           <DialogTitle>Error Stack</DialogTitle>
           <DialogContent>
             <p>{this.state.stack}</p>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
         <Helmet>
           <title>Error Listing</title>
         </Helmet>
@@ -176,7 +190,7 @@ export class Error extends React.Component {
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Error Manage</PageHeader>
           <button
-            className="btn bg-danger hover:bg-secondary"
+            className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
             onClick={this.handleOpenAll}
           >
             Delete All

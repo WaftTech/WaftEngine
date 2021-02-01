@@ -2,6 +2,63 @@
 
 @tailwind components;
 
+/* /* General Css Starts */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h1,
+.h1 {
+  font-size: 2.5rem;
+}
+
+h2,
+.h2 {
+  font-size: 2rem;
+}
+
+h3,
+.h3 {
+  font-size: 1.75rem;
+}
+
+h4,
+.h4 {
+  font-size: 1.5rem;
+}
+
+h5,
+.h5 {
+  font-size: 1.25rem;
+}
+
+h6,
+.h6 {
+  font-size: 1rem;
+}
+
+.list-circle {
+  list-style-type: circle;
+  padding-left: 40px;
+}
+
 /* custom css starts */
 
 body {
@@ -112,6 +169,10 @@ select.inputbox {
 
 .btn {
   @apply py-2 px-4 rounded text-sm mt-4 transition-all duration-200;
+}
+
+.btn.margin-none{
+  @apply m-0;
 }
 .qr-code {
   transform: scale(4);
