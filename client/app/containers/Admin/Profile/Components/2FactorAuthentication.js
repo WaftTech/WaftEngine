@@ -97,20 +97,21 @@ export const TwoFactor = props => {
       >
         <div>
           <label>Google Two factor authorization code</label>
-          <input
+          <p className="text-xs bg-gray-100 rounded p-2">{twoFactor && twoFactor.google_authenticate.auth_secret_setup}</p>
+          {/* <input
             id="two_factor_authorization"
             name="two_factor_authorization"
             disabled
             readOnly
             value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
-          />
+          /> */}
           <div className="error">{errors.two_fa_ga_auth_secret}</div>
         </div>
         <div className="py-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="200"
-            height="200"
+            width="100"
+            height="100"
             fill="true"
           >
             <path
@@ -128,6 +129,7 @@ export const TwoFactor = props => {
           <label>Enter Your code</label>
           <input
             id="code"
+            className="inputbox"
             name="code"
             value={twoFactor && twoFactor.code}
             onChange={e => handleChange(e, 'google_authenticate')}

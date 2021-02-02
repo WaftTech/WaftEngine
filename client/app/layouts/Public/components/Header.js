@@ -5,7 +5,6 @@ import { NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Menu, MenuItem } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -15,6 +14,7 @@ import {
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
+import { FaUserCircle } from 'react-icons/fa';
 import './header.css';
 
 const Header = props => {
@@ -104,9 +104,9 @@ const Header = props => {
         ) : (
           <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
             <button onClick={handleMenu}>
-              <div className="text-base flex">
+              <div className="text-base flex items-center">
                 <span className="ml-2 mr-2">{user.name} | </span>
-                <AccountCircle />
+                <FaUserCircle className="text-base"/>
               </div>
             </button>
             <Menu

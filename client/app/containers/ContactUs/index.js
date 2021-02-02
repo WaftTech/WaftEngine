@@ -1,5 +1,3 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -148,7 +146,7 @@ class ContactUs extends React.Component {
               </div>
 
               {isRequesting && isRequesting == true ? (
-                <CircularProgress color="primary" disableShrink />
+               <>Loading</>
               ) : (
                   <form onSubmit={this.onSubmit}>
                     <ReCAPTCHA

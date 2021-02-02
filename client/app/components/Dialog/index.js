@@ -52,8 +52,8 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
 
   return open ? (
     <>
-      <div className="w-screen h-screen z-40 fixed top-0 left-0 bg-black bg-opacity-25" onClick={onClose} />
-      <div className={`fixed left-2/4 z-50 shadow-lg transform -translate-x-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
+      <div className="w-screen h-screen z-40 fixed top-0 left-0 bg-black bg-opacity-25 overflow-auto" onClick={onClose} />
+      <div className={`fixed overflow-auto left-2/4 z-50 shadow-lg transform -translate-x-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
         } `}>
         {title !== undefined && (
           <div className="flex flex-wrap items-center justify-between px-4 py-2 bg-primary rounded-tl-lg rounded-tr-lg">

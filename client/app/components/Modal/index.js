@@ -1,69 +1,43 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Dialog from '../../components/Dialog/index';
 
 export default function DeleteDialog(props) {
   const {
     open,
     handleClose,
     handleUpdate,
-    width = 'sm',
     buttonLabel1 = 'No',
     buttonLabel2 = 'Update',
     loading,
   } = props;
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        fullWidth
-        maxWidth={width}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle
-          id="alert-dialog-title"
-          className="border-b"
-          style={{ padding: '12px 20px', marginBottom: '1rem' }}
-        >
-          <div className="flex justify-between">
-            Two-Factor Authentication
-            <button className="hover:text-primary" onClick={handleClose}>
-              <ClearIcon />
-            </button>
-          </div>
-        </DialogTitle>
-        <DialogContent>{props.children}</DialogContent>
-        <DialogActions
-          className="mt-2 border-t py-2"
-          style={{ justifyContent: 'flex-end' }}
-        >
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      title={`Two-Factor Authentication`}
+      body={<div>{props.children}</div>}
+      actions={
+        <>
           <button
             type="button"
-            className="btn bg-info hover:bg-secondary"
+            className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
             onClick={handleClose}
           >
             {buttonLabel1}
           </button>
           <button
             type="button"
-            className="btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={handleUpdate}
             disabled={loading !== undefined && loading === true ? true : false}
           >
             {buttonLabel2}
           </button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        </>
+      }
+    />
   );
 }
 

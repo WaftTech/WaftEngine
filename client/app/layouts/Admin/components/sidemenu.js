@@ -1,4 +1,4 @@
-// https://material.io/tools/icons
+
 import React from 'react';
 
 import {
@@ -168,12 +168,12 @@ const menu = [
       //   icon: <FaCog />,
       //   link: '/admin/settings',
       // },
-      {
-        key: '4.2',
-        name: 'Global Settings',
-        icon: <FaCogs />,
-        link: '/admin/global-setting',
-      },
+      // {
+      //   key: '4.2',
+      //   name: 'Global Settings',
+      //   icon: <FaCogs />,
+      //   link: '/admin/global-setting',
+      // },
     ],
   },
   {

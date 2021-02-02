@@ -13,9 +13,7 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '../../../components/Dialog/index';
 
 import Table from 'components/Table';
 
@@ -223,27 +221,30 @@ export class BlogCommentManagePage extends React.PureComponent {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="approve-disapprove"
-        >
-          <DialogTitle>
-            Are you sure you want to {this.state.status} ?
-          </DialogTitle>
-          <DialogActions>
-            {/* <div> */}
+          title={`Blog Comment`}
+          className="w-5/6 sm:w-80"
+          body={
+            <p className="p-2">
+            Are you sure you want to {this.state.status} ?</p>
+          }
+          actions={
+               <>
             <button
               onClick={this.handleClose}
-              className="btn text-white bg-primary uppercase btn-theme"
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
             >
               No
             </button>
             <button
               onClick={this.handleSave}
-              className="btn text-white bg-blue-500 uppercase btn-theme"
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             >
               Yes
             </button>
-          </DialogActions>
-        </Dialog>
+            </>
+             }
+       
+        />
         <PageContent loading={loading}>
           <div className="flex items-center">
             <div className="inline-flex relative mr-4 w-64 mt-4">
