@@ -25,8 +25,8 @@ metaController.getAllMeta = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    let metas = await otherHelper.getQuerySendResponse(metaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, metas.data, metaConfig.get, page, size, metas.totaldata);
+    let pulledData = await otherHelper.getQuerySendResponse(metaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, metaConfig.get, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }

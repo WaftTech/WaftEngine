@@ -19,7 +19,7 @@ menuController.getMenu = async (req, res, next) => {
 
   selectQuery = 'title key order is_active';
   let data = await otherHelper.getQuerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totalData);
 };
 
 const menuControl = async (req, res, next) => {
@@ -28,16 +28,16 @@ const menuControl = async (req, res, next) => {
     .sort({ order: 1 })
     .lean();
   const baseParents = [];
-  const childrens = [];
+  const baseChildren = [];
   all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
-      childrens.push(each);
+      baseChildren.push(each);
     }
   });
 
-  const child = utils.recursiveChildFinder(baseParents, childrens);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
   return child;
 };
 menuItemController.getMenuItem = async (req, res, next) => {
@@ -137,15 +137,15 @@ menuController.getEditMenu = async (req, res, next) => {
     .lean();
 
   const baseParents = [];
-  const childrens = [];
+  const baseChildren = [];
   all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
-      childrens.push(each);
+      baseChildren.push(each);
     }
   });
-  const child = utils.recursiveChildFinder(baseParents, childrens);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
 
   return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!!', null);
 };
@@ -165,7 +165,7 @@ menuController.deleteMenu = async (req, res, next) => {
 menuController.getMenuForUser = async (req, res, next) => {
   const id = await menuSch.findOne({ key: req.params.key, is_active: true }).select('key');
   const baseParents = [];
-  const childrens = [];
+  const baseChildren = [];
   let key = req.params.key;
   if (id && id._id) {
     key = id.key;
@@ -174,11 +174,11 @@ menuController.getMenuForUser = async (req, res, next) => {
       if (each.parent_menu == null) {
         baseParents.push(each);
       } else {
-        childrens.push(each);
+        baseChildren.push(each);
       }
     });
   }
-  const child = utils.recursiveChildFinder(baseParents, childrens);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
   return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!!', null);
 };
 

@@ -22,7 +22,7 @@ subscribeController.GetSubscribe = async (req, res, next) => {
       };
     }
     let subscriber = await otherHelper.getQuerySendResponse(subscribeSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, subscriber.data, 'subscriber get successful!!', page, size, subscriber.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, subscriber.data, 'subscriber get successful!!', page, size, subscriber.totalData);
   } catch (err) {
     next(err);
   }

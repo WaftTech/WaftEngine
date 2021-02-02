@@ -6,9 +6,9 @@ const formController = {};
 
 formController.getForm = async (req, res, next) => {
   try {
-    const { page, size, sortq, searchq, selectq, populate } = otherHelper.parseFilters(req, 10, false);
-    const datas = await otherHelper.getquerySendResponse(formSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, formConfig.get, page, size, datas.totaldata);
+    const { page, size, sortQuery, searchQuery, selectQuery, populate } = otherHelper.parseFilters(req, 10, false);
+    const pulledData = await otherHelper.getQuerySendResponse(formSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, formConfig.get, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -29,15 +29,15 @@ formController.postForm = async (req, res, next) => {
       );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, formConfig.save, null);
     } else {
-      const invalidemail = await formSch.findOne({ email: req.body.email });
-      if (invalidemail) {
+      const invalidEmail = await formSch.findOne({ email: req.body.email });
+      if (invalidEmail) {
         const errors = { email: 'email already exists' };
         const data = { email: req.body.email };
         return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
       }
       form.added_by = req.user.id;
-      const newform = new formSch(form);
-      const formSave = await newform.save();
+      const newForm = new formSch(form);
+      const formSave = await newForm.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, formSave, null, formConfig.save, null);
     }
   } catch (err) {

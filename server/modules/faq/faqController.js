@@ -76,7 +76,7 @@ faqController.GetFaq = async (req, res, next) => {
     }
     populate = [{ path: 'category', select: '_id title' }];
     let faq = await otherHelper.getQuerySendResponse(faqSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faq.data, faqConfig.faqGet, page, size, faq.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faq.data, faqConfig.faqGet, page, size, faq.totalData);
   } catch (err) {
     next(err);
   }
@@ -103,8 +103,8 @@ faqController.GetFaqCat = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    let faqcat = await otherHelper.getQuerySendResponse(faqCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faqcat.data, faqConfig.catGet, page, size, faqcat.totaldata);
+    let faqCat = await otherHelper.getQuerySendResponse(faqCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faqCat.data, faqConfig.catGet, page, size, faqCat.totalData);
   } catch (err) {
     next(err);
   }
@@ -143,9 +143,9 @@ faqController.GetFaqByCat = async (req, res, next) => {
       is_deleted: false,
       category: id,
     };
-    const catgoryFaq = await faqSch.find(searchQuery);
-    const totaldata = await faqSch.countDocuments(searchQuery);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, catgoryFaq, faqConfig.faqGet, page, size, totaldata);
+    const categoryFaq = await faqSch.find(searchQuery);
+    const totalData = await faqSch.countDocuments(searchQuery);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, categoryFaq, faqConfig.faqGet, page, size, totalData);
   } catch (err) {
     next(err);
   }

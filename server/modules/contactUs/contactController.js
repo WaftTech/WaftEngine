@@ -52,7 +52,7 @@ contactController.GetContact = async (req, res, next) => {
   }
   selectQuery = 'name email message subject added_at is_deleted';
   let contacts = await otherHelper.getQuerySendResponse(contactSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totaldata);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totalData);
 };
 
 contactController.GetContactById = async (req, res, next) => {
