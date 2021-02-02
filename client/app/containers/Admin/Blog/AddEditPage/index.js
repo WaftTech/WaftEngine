@@ -6,7 +6,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Dropzone from 'react-dropzone';
 import { Helmet } from 'react-helmet';
-import { FaArrowLeft, FaCheck, FaTimes } from 'react-icons/fa';
+import {
+  FaArrowLeft,
+  FaCheck,
+  FaTimes,
+  FaCloudUploadAlt,
+} from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -52,7 +57,7 @@ class AddEdit extends React.PureComponent {
   };
 
   state = {
-    tempImage: defaultImage,
+    tempImage: '',
     startDate: new Date(),
     selected: [],
     slug_generated: false,
@@ -92,7 +97,7 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
-  slugify = text => {
+  slugify = text =>
     // return text
     //   .toString()
     //   .toLowerCase()
@@ -111,14 +116,13 @@ class AddEdit extends React.PureComponent {
     // return slug;
 
     // nepali slug
-    return text
+    text
       .replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ')
       .toLowerCase()
       .replace(/^\s+|\s+$/gm, '')
       .replace(/\s+/g, '-')
       .trim()
       .toLowerCase();
-  };
 
   handleChange = name => event => {
     event.persist();
@@ -317,7 +321,7 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
+      <>
         <Helmet>
           <title>
             {match && match.params && match.params.id
@@ -346,9 +350,9 @@ class AddEdit extends React.PureComponent {
               name="Blog Title"
               onChange={this.handleChange('title')}
             />
-               {errors && errors.title && errors.title.trim() !== '' && (
-            <div className="error">{errors && errors.title}</div>
-               )}
+            {errors && errors.title && errors.title.trim() !== '' && (
+              <div className="error">{errors && errors.title}</div>
+            )}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label>Slug</label>
@@ -361,9 +365,9 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('slug_url')}
               disabled
             />
-              {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
-            <div className="error">{errors && errors.slug_url}</div>
-              )}
+            {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+              <div className="error">{errors && errors.slug_url}</div>
+            )}
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label>Category</label>
@@ -394,9 +398,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="short_description">
-              Short Description
-            </label>
+            <label htmlFor="short_description">Short Description</label>
             <textarea
               className="inputbox"
               id="short_description"
@@ -412,33 +414,40 @@ class AddEdit extends React.PureComponent {
               description={one.description}
               setOneValue={this.props.setOneValue}
             />
-             {errors && errors.description && errors.description.trim() !== '' && (
-            <div className="error">{errors && errors.description}</div>
-             )}
+            {errors &&
+              errors.description &&
+              errors.description.trim() !== '' && (
+                <div className="error">{errors && errors.description}</div>
+              )}
           </div>
 
           <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label htmlFor="Image">
-              Image
-            </label>
+            <label htmlFor="Image">Image</label>
             <Dropzone onDrop={files => this.onDrop(files, 'image')}>
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <img
-                    className="inputbox cursor-pointer"
-                    src={tempImage}
-                    alt="Blogimage"
-                    style={{ height: '120px', width: '60%' }}
-                  />
+                  {tempImage === '' ? (
+                    <div
+                      className="inputbox cursor-pointer border-2 flex justify-center align-middle"
+                      style={{ height: '120px', width: '60%' }}
+                    >
+                      <FaCloudUploadAlt className="text-4xl " />
+                    </div>
+                  ) : (
+                    <img
+                      className="inputbox cursor-pointer"
+                      src={tempImage}
+                      alt="BlogCategoryImage"
+                      style={{ height: '120px', width: '60%' }}
+                    />
+                  )}
                 </div>
               )}
             </Dropzone>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="published_on">
-              Published On
-            </label>
+            <label htmlFor="published_on">Published On</label>
             <DatePicker
               showTimeSelect
               className="inputbox"
@@ -464,9 +473,7 @@ class AddEdit extends React.PureComponent {
             /> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-tags">
-              Tags
-            </label>
+            <label htmlFor="blog-tags">Tags</label>
             <form onSubmit={this.insertTags}>
               <input
                 className="inputbox"
@@ -477,26 +484,22 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempTag}
               />
             </form>
-            {one.tags.map((tag, index) => {
-              return (
-                <label
-                  onClick={this.handleDelete(index)}
-                  className="tag"
-                  key={`${tag}-${index}`}
-                >
-                  {tag}
-                  <span>
-                    <FaTimes />
-                  </span>
-                </label>
-              );
-            })}
+            {one.tags.map((tag, index) => (
+              <label
+                onClick={this.handleDelete(index)}
+                className="tag"
+                key={`${tag}-${index}`}
+              >
+                {tag}
+                <span>
+                  <FaTimes />
+                </span>
+              </label>
+            ))}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-meta-tags">
-              Meta Tags
-            </label>
+            <label htmlFor="blog-meta-tags">Meta Tags</label>
             <form onSubmit={this.insertMetaTags}>
               <input
                 className="inputbox"
@@ -525,9 +528,7 @@ class AddEdit extends React.PureComponent {
             })}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-meta-keyword">
-              Meta Keywords
-            </label>
+            <label htmlFor="blog-meta-keyword">Meta Keywords</label>
 
             <form onSubmit={this.insertMetaKeywords}>
               <input
@@ -558,9 +559,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-meta-description">
-              Meta Description
-            </label>
+            <label htmlFor="blog-meta-description">Meta Description</label>
 
             <textarea
               className="inputbox"
@@ -573,9 +572,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label  htmlFor="blog_author">
-              Author
-            </label>
+            <label htmlFor="blog_author">Author</label>
             <Select
               className="React_Select"
               id="category"
@@ -603,7 +600,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           {errors && errors.author && errors.author.trim() !== '' && (
-          <div className="error">{errors && errors.author}</div>
+            <div className="error">{errors && errors.author}</div>
           )}
           <div className="checkbox">
             <input
@@ -675,7 +672,7 @@ class AddEdit extends React.PureComponent {
             </button>
           </div>
         </PageContent>
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -720,13 +717,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

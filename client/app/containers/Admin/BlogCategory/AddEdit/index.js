@@ -23,7 +23,7 @@ import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
-import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck, FaCloudUploadAlt } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -39,7 +39,7 @@ class AddEdit extends React.PureComponent {
   };
 
   state = {
-    tempImage: defaultImage,
+    tempImage: '',
   };
 
   componentDidMount() {
@@ -152,7 +152,7 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           {errors && errors.title && errors.title.trim() !== '' && (
-          <div className="error">{errors && errors.title}</div>
+            <div className="error">{errors && errors.title}</div>
           )}
 
           <div className="w-full md:w-1/2 pb-4">
@@ -165,9 +165,9 @@ class AddEdit extends React.PureComponent {
               name="slug"
               onChange={this.handleChange('slug_url')}
             />
-              {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
-            <div className="error">{errors && errors.slug_url}</div>
-              )}
+            {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+              <div className="error">{errors && errors.slug_url}</div>
+            )}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
@@ -180,9 +180,9 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('order')}
               min="0"
             />
-              {errors && errors.order && errors.order.trim() !== '' && (
-            <div className="error">{errors && errors.order}</div>
-              )}
+            {errors && errors.order && errors.order.trim() !== '' && (
+              <div className="error">{errors && errors.order}</div>
+            )}
           </div>
           <div className="pb-4">
             <label>Blog Category Description</label>
@@ -204,12 +204,21 @@ class AddEdit extends React.PureComponent {
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <img
-                    className="inputbox cursor-pointer"
-                    src={tempImage}
-                    alt="BlogCategoryImage"
-                    style={{ height: '120px', width: '60%' }}
-                  />
+                  {tempImage === '' ? (
+                    <div
+                      className="inputbox cursor-pointer border-2 flex justify-center align-middle"
+                      style={{ height: '120px', width: '60%' }}
+                    >
+                      <FaCloudUploadAlt className="text-4xl " />
+                    </div>
+                  ) : (
+                    <img
+                      className="inputbox cursor-pointer"
+                      src={tempImage}
+                      alt="BlogCategoryImage"
+                      style={{ height: '120px', width: '60%' }}
+                    />
+                  )}
                 </div>
               )}
             </Dropzone>
@@ -255,12 +264,5 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withReducer, withSaga, withConnect)(AddEdit);
