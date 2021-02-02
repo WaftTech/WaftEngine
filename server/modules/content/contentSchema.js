@@ -10,7 +10,7 @@ const contentSchema = new schema({
   publish_to: { type: Date },
   meta_tag: { type: [String] },
   meta_description: { type: String },
-  meta_title: { type: String, required: true },
+  meta_title: { type: String },
   is_active: { type: Boolean, required: true, default: false },
   is_page: { type: Boolean, required: true, default: false },
   is_deleted: { type: Boolean, required: true, default: false },

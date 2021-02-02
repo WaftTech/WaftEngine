@@ -73,7 +73,7 @@ commentController.GetComment = async (req, res, next) => {
     }
 
     let blogComments = await otherHelper.getQuerySendResponse(commentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogComments.data, 'comments get success!!', page, size, blogComments.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogComments.data, 'comments get success!!', page, size, blogComments.totalData);
   } catch (err) {
     next(err);
   }
@@ -85,8 +85,8 @@ commentController.GetCommentByBlog = async (req, res, next) => {
       .find({ blog_id: id, is_deleted: false, status: 'approved' })
       .populate({ path: 'added_by', select: 'name' })
       .sort({ _id: -1 });
-    const totaldata = comment.length;
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { comment, totaldata }, null, 'comment get success!!', null);
+    const totalData = comment.length;
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { comment, totalData }, null, 'comment get success!!', null);
   } catch (err) {
     next(err);
   }

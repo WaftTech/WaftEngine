@@ -18,7 +18,7 @@ settingController.GetSetting = async (req, res, next) => {
     selectQuery = 'key value';
 
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
   } catch (err) {
     next(err);
   }
@@ -32,8 +32,8 @@ settingController.SaveSetting = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.OK, true, updated, null, settingConfig.save, null);
     } else {
       data.added_by = req.user.id;
-      let newsetting = new settingSch(data);
-      let saved = await newsetting.save();
+      let newSetting = new settingSch(data);
+      let saved = await newSetting.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, saved, null, settingConfig.save, null);
     }
   } catch (err) {
