@@ -122,7 +122,7 @@ export class AdminRole extends React.PureComponent {
               <FaKey className="text-base text-green-500 hover:text-green-600" />
             </span>
             <span
-              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
               <FaPencilAlt className="pencil" />
