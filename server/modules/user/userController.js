@@ -263,8 +263,8 @@ userController.GetAllUser = async (req, res, next) => {
     }
     selectQuery = 'name email password bio email_verified roles';
     populate = [{ path: 'roles', select: 'role_title' }];
-    const datas = await otherHelper.getQuerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
+    const pulledData = await otherHelper.getQuerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, config.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -321,7 +321,7 @@ userController.Register = async (req, res, next) => {
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
-      emailHelper.send(renderedMail);
+      emailHelper.send(renderedMail, next);
     }
     if (appSetting.force_allow_email_verify) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, { email_verified: false, email: email }, null, 'Verification email sent.', null);
@@ -421,7 +421,7 @@ userController.UpdateUserDetail = async (req, res, next) => {
     const { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no } = req.body;
     const id = req.params.id;
 
-    let newdatas = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
+    let newData = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
 
     if (req.file) {
       req.file.destination =
@@ -433,17 +433,17 @@ userController.UpdateUserDetail = async (req, res, next) => {
         .split('\\')
         .join('/')
         .split('server/')[1];
-      newdatas.image = req.file;
+      newData.image = req.file;
     }
 
-    const updateUser = await userSch.findByIdAndUpdate(id, { $set: newdatas });
+    const updateUser = await userSch.findByIdAndUpdate(id, { $set: newData });
     const msg = 'User Update Success';
-    const msgfail = 'User not found';
+    const msgFail = 'User not found';
 
     if (updateUser) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, req.body, null, msg, null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgfail, null);
+      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgFail, null);
     }
   } catch (err) {
     return next(err);
@@ -496,7 +496,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         if (renderMail.error) {
           console.log('render mail error: ', renderMail.error);
         } else {
-          emailHelper.send(renderedMail);
+          emailHelper.send(renderedMail, next);
           const dataReturn = { email: user.email, name: user.name };
           return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'Email verification code Sent!!', null);
         }
@@ -582,7 +582,7 @@ userController.ForgotPassword = async (req, res, next) => {
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
-      emailHelper.send(renderedMail);
+      emailHelper.send(renderedMail, next);
     }
 
     const msg = `Password Reset Code For ${email} is sent to email`;
@@ -604,8 +604,8 @@ userController.ResetPassword = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
     let salt = await bcrypt.genSalt(10);
-    let hashpw = await bcrypt.hash(password, salt);
-    const d = await userSch.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now(), email_verified: true }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+    let hashPw = await bcrypt.hash(password, salt);
+    const d = await userSch.findByIdAndUpdate(user._id, { $set: { password: hashPw, last_password_change_date: Date.now(), email_verified: true }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
 
     const { token, payload } = await userController.validLoginResponse(req, d, next);
@@ -656,7 +656,7 @@ userController.Login = async (req, res, next) => {
           if (renderMail.error) {
             console.log('render mail error: ', renderMail.error);
           } else {
-            const da = await emailHelper.send(renderedMail);
+            const da = await emailHelper.send(renderedMail, next);
           }
           if (!success) {
           }
@@ -868,7 +868,7 @@ userController.loginGOath = async (req, res, next) => {
   if (renderMail.error) {
     console.log('render mail error: ', renderMail.error);
   } else {
-    emailHelper.send(renderedMail);
+    emailHelper.send(renderedMail, next);
   }
   const { token, payload } = await userController.validLoginResponse(req, user, next);
   return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, 'Register Successfully', token);

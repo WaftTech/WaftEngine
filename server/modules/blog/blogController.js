@@ -62,7 +62,7 @@ blogController.GetBlogAuthorize = async (req, res, next) => {
     let active = await blogSch.countDocuments({ is_active: true, is_deleted: false });
     let highlight = await blogSch.countDocuments({ is_highlight: true, is_deleted: false });
     let showcase = await blogSch.countDocuments({ is_showcase: true, is_deleted: false });
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, { published, active, highlight, showcase }, page, size, blogs.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, { published, active, highlight, showcase }, page, size, blogs.totalData);
   } catch (err) {
     next(err);
   }
@@ -171,8 +171,8 @@ blogController.getLatestBlogByCat = async (req, res, next) => {
       .sort({ _id: -1 })
       .skip(0)
       .limit(size * 1);
-    const totaldata = blogs.length;
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { blogs, category, totaldata }, null, 'Latest blogs by category', null);
+    const totalData = blogs.length;
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { blogs, category, totalData }, null, 'Latest blogs by category', null);
   } catch (err) {
     next(err);
   }
@@ -284,7 +284,7 @@ blogController.GetBlogNonAuthorize = async (req, res, next) => {
       };
     }
     let blogs = await otherHelper.getQuerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totalData);
   } catch (err) {
     next(err);
   }
@@ -378,7 +378,7 @@ blogController.GetBlogUnauthorize = async (req, res, next) => {
       };
     }
     let blogs = await otherHelper.getQuerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, blogConfig.get, page, size, blogs.totalData);
   } catch (err) {
     next(err);
   }
@@ -401,7 +401,7 @@ blogController.GetBlogCategory = async (req, res, next) => {
       searchQuery = { is_active: true, ...searchQuery };
     }
     let blogCategories = await otherHelper.getQuerySendResponse(blogCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogCategories.data, blogConfig.cget, page, size, blogCategories.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogCategories.data, blogConfig.cget, page, size, blogCategories.totalData);
   } catch (err) {
     next(err);
   }
@@ -560,7 +560,7 @@ blogController.GetBlogByCat = async (req, res, next) => {
     const slug = req.params.slug_url;
     const current_date = new Date();
     const cat = await blogCatSch.findOne({ slug_url: slug, is_deleted: false }, { _id: 1, title: 1 });
-    let blogs = { data: [], totaldata: 0 };
+    let blogs = { data: [], totalData: 0 };
     if (cat && cat._id) {
       populate = [
         {
@@ -600,7 +600,7 @@ blogController.GetBlogByCat = async (req, res, next) => {
       }
       blogs = await otherHelper.getQuerySendResponse(blogSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     }
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, (cat && cat.title) || 'Category', page, size, blogs.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogs.data, (cat && cat.title) || 'Category', page, size, blogs.totalData);
   } catch (err) {
     next(err);
   }
@@ -638,7 +638,7 @@ blogController.GetBlogByTag = async (req, res, next) => {
       published_on: { $lte: current_date },
     };
     const tagBlog = await otherHelper.getQuerySendResponse(blogSch, page, size, { published_on: -1 }, searchQuery, '', next, populateq);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totalData);
   } catch (err) {
     next(err);
   }
@@ -670,7 +670,7 @@ blogController.GetBlogByAuthor = async (req, res, next) => {
     const current_date = new Date();
     searchQuery = { is_deleted: false, is_active: true, author: authorId, is_published: true, published_on: { $lte: current_date } };
     const blogByAuthor = await otherHelper.getQuerySendResponse(blogSch, page, size, { published_on: -1 }, searchQuery, '', next, populateq);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogByAuthor.data, 'blogs by author get success!!', page, size, blogByAuthor.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogByAuthor.data, 'blogs by author get success!!', page, size, blogByAuthor.totalData);
   } catch (err) {
     next(err);
   }
@@ -723,7 +723,7 @@ blogController.GetBlogByDate = async (req, res, next) => {
     ];
 
     const tagBlog = await otherHelper.getQuerySendResponse(blogSch, page, size, '', searchQuery, '', next, populateq);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, tagBlog.data, blogConfig.get, page, size, tagBlog.totalData);
   } catch (err) {
     next(err);
   }
@@ -783,7 +783,7 @@ blogController.GetBlogCategoryActive = async (req, res, next) => {
     searchQuery = { is_active: true, ...searchQuery };
 
     let blogCategories = await otherHelper.getQuerySendResponse(blogCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogCategories.data, blogConfig.cget, page, size, blogCategories.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogCategories.data, blogConfig.cget, page, size, blogCategories.totalData);
   } catch (err) {
     next(err);
   }
