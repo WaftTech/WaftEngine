@@ -143,10 +143,11 @@ export const TwoFactor = props => {
           <input
             checked={twoFactor.email.is_authenticate}
             onChange={handleChecked}
-            id="is_active"
+            id="is_active_email"
             type="checkbox"
+            name="email"
           />
-          <label htmlFor="is_active">
+          <label htmlFor="is_active_email">
             <span className="box">
               <FaCheck className="check-icon" />
             </span>
@@ -158,10 +159,11 @@ export const TwoFactor = props => {
           <input
             checked={twoFactor.google_authenticate.is_authenticate}
             onChange={handleChecked}
-            id="is_active"
+            id="is_active_google"
             type="checkbox"
+            name="google_authenticate"
           />
-          <label htmlFor="is_active">
+          <label htmlFor="is_active_google">
             <span className="box">
               <FaCheck className="check-icon" />
             </span>
@@ -192,9 +194,6 @@ const mapStateToProps = createStructuredSelector({
   helperObj: makeSelectHelperObj(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 export default compose(withConnect)(TwoFactor);
