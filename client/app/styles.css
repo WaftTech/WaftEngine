@@ -187,6 +187,11 @@ select.inputbox {
   transition: opacity .25s linear
 }
 
+.Waft_Tab .active{
+  @apply border-t-2 ;
+  border-top-color:#2A3C85;
+}
+
 @keyframes arrowtip {
   from {
     top: 32px;
