@@ -84,7 +84,7 @@ async function MongoDBConnection(app) {
 app.use(passport.initialize());
 
 // Passport Config
-require('./helper/passport')(passport);
+require('./helper/passport.helper')(passport);
 
 // CORS setup for dev
 app.use(function(req, res, next) {

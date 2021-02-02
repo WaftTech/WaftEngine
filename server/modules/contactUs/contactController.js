@@ -23,13 +23,13 @@ contactController.PostContact = async (req, res, next) => {
       if (renderMail.error) {
         console.log('render mail error: ', renderMail.error);
       } else {
-        emailHelper.send(renderedMail);
+        emailHelper.send(renderedMail, next);
       }
-      const renderedMailforAdmin = await renderMail.renderTemplate('contact_to_user', data, user.email);
+      const renderedMailForAdmin = await renderMail.renderTemplate('contact_to_user', data, user.email);
       if (renderMail.error) {
         console.log('render mail error: ', renderMail.error);
       } else {
-        emailHelper.send(renderedMailforAdmin);
+        emailHelper.send(renderedMailForAdmin, next);
       }
       return otherHelper.sendResponse(res, httpStatus.OK, true, user, null, contactConfig.save, null);
     } else {

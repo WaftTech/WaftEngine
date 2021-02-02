@@ -321,7 +321,7 @@ userController.Register = async (req, res, next) => {
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
-      emailHelper.send(renderedMail);
+      emailHelper.send(renderedMail, next);
     }
     if (appSetting.force_allow_email_verify) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, { email_verified: false, email: email }, null, 'Verification email sent.', null);
@@ -496,7 +496,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         if (renderMail.error) {
           console.log('render mail error: ', renderMail.error);
         } else {
-          emailHelper.send(renderedMail);
+          emailHelper.send(renderedMail, next);
           const dataReturn = { email: user.email, name: user.name };
           return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'Email verification code Sent!!', null);
         }
@@ -582,7 +582,7 @@ userController.ForgotPassword = async (req, res, next) => {
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
-      emailHelper.send(renderedMail);
+      emailHelper.send(renderedMail, next);
     }
 
     const msg = `Password Reset Code For ${email} is sent to email`;
@@ -656,7 +656,7 @@ userController.Login = async (req, res, next) => {
           if (renderMail.error) {
             console.log('render mail error: ', renderMail.error);
           } else {
-            const da = await emailHelper.send(renderedMail);
+            const da = await emailHelper.send(renderedMail, next);
           }
           if (!success) {
           }
@@ -868,7 +868,7 @@ userController.loginGOath = async (req, res, next) => {
   if (renderMail.error) {
     console.log('render mail error: ', renderMail.error);
   } else {
-    emailHelper.send(renderedMail);
+    emailHelper.send(renderedMail, next);
   }
   const { token, payload } = await userController.validLoginResponse(req, user, next);
   return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, 'Register Successfully', token);

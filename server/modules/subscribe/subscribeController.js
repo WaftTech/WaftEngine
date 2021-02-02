@@ -34,7 +34,7 @@ subscribeController.SaveSubscribe = async (req, res, next) => {
     if (subscribeMail.error) {
       console.log('render mail error: ', subscribeMail.error);
     } else {
-      mailHelper.send(subscribeMail);
+      mailHelper.send(subscribeMail, next);
     }
     subscriber.is_subscribed = true;
     const newSubscribe = new subscribeSch(subscriber);
