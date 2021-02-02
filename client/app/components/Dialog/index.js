@@ -56,8 +56,8 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
       <div className={`fixed left-2/4 z-50 shadow-lg transform -translate-x-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
         } `}>
         {title !== undefined && (
-          <div className="flex flex-wrap items-center justify-between px-4 py-4 bg-primary rounded-tl-lg rounded-tr-lg">
-            <h3 className="text-xl text-white">{title}</h3>
+          <div className="flex flex-wrap items-center justify-between px-4 py-2 bg-primary rounded-tl-lg rounded-tr-lg">
+            <h3 className="m-0 text-xl text-white">{title}</h3>
             <button
               type="button"
               className="text-white opacity-75 hover:opacity-100 text-xl"
