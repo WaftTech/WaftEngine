@@ -52,15 +52,15 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
 
   return open ? (
     <>
-      <div className="w-screen h-screen z-40 fixed top-0 left-0 bg-black bg-opacity-25" onClick={onClose} />
-      <div className={`fixed left-2/4 z-50 shadow-lg transform -translate-x-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
+      <div className="w-screen h-screen z-40 fixed top-0 left-0 bg-black bg-opacity-25 overflow-auto" onClick={onClose} />
+      <div className={`fixed overflow-auto left-2/4 z-50 shadow-lg transform -translate-x-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
         } `}>
         {title !== undefined && (
-          <div className="flex flex-wrap items-center justify-between px-2 py-4 border-b">
-            <h3 className="text-xl">{title}</h3>
+          <div className="flex flex-wrap items-center justify-between px-4 py-2 bg-primary rounded-tl-lg rounded-tr-lg">
+            <h3 className="m-0 text-xl text-white">{title}</h3>
             <button
               type="button"
-              className="text-gray-500"
+              className="text-white opacity-75 hover:opacity-100 text-xl"
               onClick={onClose}
             >
               <FaTimes />
@@ -69,7 +69,7 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
         )}
         {body !== undefined && <div className="p-4">{body}</div>}
         {actions !== undefined && (
-          <div className="border-t p-2 flex justify-center">
+          <div className="border-t p-2 flex justify-end">
             {actions}
           </div>
         )}

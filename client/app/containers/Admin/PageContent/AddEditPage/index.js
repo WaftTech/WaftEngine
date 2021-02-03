@@ -29,9 +29,7 @@ import { makeSelectToken } from '../../../App/selectors';
 import WECkEditior from '../../../../components/CkEditor';
 import { IMAGE_BASE } from '../../../App/constants';
 import EditorFileSelect from '../../../EditorFileSelect';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '../../../../components/Dialog/index';
 import { FaArrowLeft, FaCheck, FaTimes } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
@@ -140,21 +138,21 @@ class AddEdit extends React.PureComponent {
         </Helmet>
         <Dialog
           open={this.state.openMedia}
+          className="w-5/6 h-full overflow-auto"
           onClose={this.handleClose}
-          fullWidth={true}
-          maxWidth={'lg'}
-        >
-          <DialogTitle>Select Image</DialogTitle>
-          <DialogContent>
-            <EditorFileSelect
-              location={location}
-              selectFile={file => this.handleImageChange(file)}
-            />
-            <div className="mt-2 text-xs">
-              Note: Please Double Click to open folder and select images.
+          title={`Select Images`}
+          body={
+            <div className="h-screen overflow-auto">
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
             </div>
-          </DialogContent>
-        </Dialog>
+          }
+        />
         <div>
           <div className="flex justify-between my-3">
             <PageHeader>
@@ -176,8 +174,9 @@ class AddEdit extends React.PureComponent {
                 value={one.name}
                 onChange={this.handleChange('name')}
               />
-                {errors && errors.name && errors.name.trim() !== '' && (
-              <div className="error">{errors.name}</div>)}
+              {errors && errors.name && errors.name.trim() !== '' && (
+                <div className="error">{errors.name}</div>
+              )}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -189,17 +188,20 @@ class AddEdit extends React.PureComponent {
                 value={one.key}
                 onChange={this.handleChange('key')}
               />
-                {errors && errors.key && errors.key.trim() !== '' && (
-              <div className="error">{errors.key}</div>)}
+              {errors && errors.key && errors.key.trim() !== '' && (
+                <div className="error">{errors.key}</div>
+              )}
             </div>
             <div className="pb-4">
               <WECkEditior
                 description={one.description}
                 setOneValue={this.props.setOneValue}
               />
-              {errors && errors.description && errors.description.trim() !== '' && (
-              <div className="error">{errors.description}</div>
-              )}
+              {errors &&
+                errors.description &&
+                errors.description.trim() !== '' && (
+                  <div className="error">{errors.description}</div>
+                )}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -211,9 +213,11 @@ class AddEdit extends React.PureComponent {
                 value={one.meta_title}
                 onChange={this.handleChange('meta_title')}
               />
-               {errors && errors.meta_title && errors.meta_title.trim() !== '' && (
-              <div className="error">{errors.meta_title}</div>
-               )}
+              {errors &&
+                errors.meta_title &&
+                errors.meta_title.trim() !== '' && (
+                  <div className="error">{errors.meta_title}</div>
+                )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Description</label>
@@ -224,8 +228,10 @@ class AddEdit extends React.PureComponent {
                 value={one.meta_description}
                 onChange={this.handleChange('meta_description')}
               />
-                {errors && errors.meta_description && errors.meta_description.trim() !== '' && (
-              <div className="error">{errors.meta_description}</div>
+              {errors &&
+                errors.meta_description &&
+                errors.meta_description.trim() !== '' && (
+                  <div className="error">{errors.meta_description}</div>
                 )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
@@ -356,14 +362,6 @@ const mapStateToProps = createStructuredSelector({
   tempMetaTag: makeSelectMetaTag(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withRouter,
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withRouter, withReducer, withSaga, withConnect)(AddEdit);

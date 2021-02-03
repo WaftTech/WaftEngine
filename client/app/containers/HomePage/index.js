@@ -62,7 +62,7 @@ export default class HomePage extends React.PureComponent {
           actions={
             <button
               type="button"
-              className="bg-red-400 p-2 text-white"
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600"
               onClick={this.handleClose}
             >
               Close

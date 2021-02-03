@@ -19,6 +19,13 @@ export const makeSelectErrorMsg = () =>
     selectDomain,
     state => state.errorMessage,
   );
+
+  export const makeSelectError = () =>
+  createSelector(
+    selectDomain,
+    state => state.error,
+  );
+
 export const makeSelectContactDetail = () =>
   createSelector(
     selectDomain,

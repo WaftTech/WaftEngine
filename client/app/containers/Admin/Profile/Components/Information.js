@@ -60,7 +60,7 @@ class UserPersonalInformationPage extends React.PureComponent {
     return (
       <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block text-sm">Name</label>
+          <label>Name</label>
           <input
             className="inputbox"
             id="name"
@@ -72,7 +72,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block text-sm">Email</label>
+          <label>Email</label>
 
           <input
             className="inputbox"
@@ -84,8 +84,8 @@ class UserPersonalInformationPage extends React.PureComponent {
           <div className="error">{errors.email}</div>
         </div>
 
-        <div className="w-full md:w-1/2 pb-4">
-          <label className="block text-sm">Date Of Birth</label>
+        <div className="w-full md:w-1/2">
+          <label>Date Of Birth</label>
 
           <DatePicker
             name="date_of_birth"
@@ -99,7 +99,7 @@ class UserPersonalInformationPage extends React.PureComponent {
           />
         </div>
 
-        <div className="checkbox">
+        <div className="checkbox pb-4">
           <input
             checked={one.email_verified || false}
             id="is_active"
@@ -113,23 +113,23 @@ class UserPersonalInformationPage extends React.PureComponent {
           </label>
         </div>
 
-        <div className="w-full pb-2">
-          You are one of{' '}
-          <span className="font-bold">
+        <div className="w-full mb-2 ">
+         Role: 
+          <span className="ml-2 inline-flex btn margin-none text-blue-500 bg-blue-100 border border-blue-200 mr-2">
             {one.roles.map(each => `${each.role_title} `)}
           </span>
         </div>
 
-        <div className="w-full  pb-4">
-          Your account created at{' '}
-          <span className="font-bold">
+        <div className="w-full">
+          Account Created: 
+          <span className="ml-2 font-bold">
             {moment(one.added_at).format(DATE_FORMAT)}
           </span>
         </div>
 
         <button
           type="button"
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+          className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
           onClick={this.handleSave}
         >
           Save

@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
-import IndeterminateCheckBoxOutlinedIcon from '@material-ui/icons/IndeterminateCheckBoxOutlined';
 import Collapse from '@material-ui/core/Collapse';
-import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
-import FolderIcon from '@material-ui/icons/Folder';
-import DescriptionIcon from '@material-ui/icons/Description';
 import * as mapDispatchToProps from '../actions';
 import { makeSelectCategory, makeSelectLoading } from '../selectors';
+import { FaFolder , FaMinus, FaPlus, FaFile} from 'react-icons/fa';
 
 const SidebarCategoriesList = props => {
   const {
@@ -53,18 +49,18 @@ const SidebarCategoriesList = props => {
             onClick={() => handleSetClick(e._id)}
           >
             {openSet[e._id] ? (
-              <div className="text-grey-darker hover:text-primary cursor-pointer">
-                <IndeterminateCheckBoxOutlinedIcon />
-                <FolderIcon />
+              <div className="flex text-grey-darker hover:text-primary cursor-pointer">
+                <FaMinus className="mr-1"/>
+                <FaFolder />
               </div>
             ) : (
-              <div className="text-grey-darker hover:text-primary cursor-pointer">
+              <div className="flex text-grey-darker hover:text-primary cursor-pointer">
                 {e.child_menu[0]._id !== '' ? (
-                  <AddBoxOutlinedIcon />
+                  <FaPlus className="mr-1"/>
                 ) : (
-                  <CheckBoxOutlineBlankOutlinedIcon />
+                  <FaMinus className="mr-1"/>
                 )}
-                <FolderIcon />
+                <FaFolder />
               </div>
             )}
             <div className="flex items-center cursor-pointer">
@@ -92,7 +88,7 @@ const SidebarCategoriesList = props => {
               onClick={() => handleClick(e._id)}
               className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
             >
-              <DescriptionIcon />
+              <FaFile className="mr-2" />
               {`${e.title}`}
             </div>
           )}

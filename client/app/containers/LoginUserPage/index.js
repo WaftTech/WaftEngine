@@ -172,16 +172,16 @@ const LoginUserPage = props => {
             <UsernameInput />
             <PasswordInput />
             <button
-              className="btn mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              className="btn text-white mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
               type="submit"
             >
               {loading ? (
                 <div className="btn_loading">
-                  <div />
-                  <div />
-                  <div />
-                  <div />
                   <span className="ml-2">Login</span>
+                  <div />
+                  <div />
+                  <div />
+                  <div />
                 </div>
               ) : (
                   'Login'

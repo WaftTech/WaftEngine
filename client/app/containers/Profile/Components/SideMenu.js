@@ -10,6 +10,7 @@ import { makeSelectUser } from '../../App/selectors';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectToken } from '../selectors';
+import { FaCheck , FaTimes } from 'react-icons/fa';
 
 
 function App(props) {
