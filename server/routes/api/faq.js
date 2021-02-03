@@ -4,7 +4,7 @@ const router = express.Router();
 const faqValidations = require('../../modules/faq/faqValidation');
 const faqCatValidations = require('../../modules/faq/faqCatValidation');
 const faqModule = require('../../modules/faq/faqController');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/auth.middleware');
 
 router.get('/', authentication, authorization, faqModule.GetFaq);
 router.get('/all', faqModule.GetFaqAndCat);

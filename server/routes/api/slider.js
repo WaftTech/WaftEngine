@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/auth.middleware');
 const sliderModule = require('../../modules/slider/sliderController');
 const validations = require('../../modules/slider/sliderValidations');
 

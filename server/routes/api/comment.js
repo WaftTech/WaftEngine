@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const commentModule = require('../../modules/comment/commentController');
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
 const { sanitizeComment, validateComment } = require('../../modules/comment/commentValidation');
 
 router.get('/:blog', commentModule.GetCommentByBlog);

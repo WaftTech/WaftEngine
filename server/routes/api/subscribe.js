@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const validations = require('../../modules/subscribe/subscribeValidation');
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
 const subscribeModule = require('../../modules/subscribe/subscribeController');
 
 router.get('/', authentication, authorization, subscribeModule.GetSubscribe);

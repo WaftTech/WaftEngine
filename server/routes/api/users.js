@@ -8,7 +8,7 @@ const loginLogs = require('../../modules/user/loginlogs/loginlogController').log
 const fileUpload = require('../../helper/upload.helper')('public/user/');
 const uploader = fileUpload.uploader;
 const userModule = require('../../modules/user/userController');
-const { authentication, authenticationForLogout, authorization, getClientInfo, isPublicGoogleRegistrationAllow } = require('../../middleware/authentication.middleware');
+const { authentication, authenticationForLogout, authorization, getClientInfo, isPublicGoogleRegistrationAllow } = require('../../middleware/auth.middleware');
 
 router.get('/', authentication, authorization, userModule.GetAllUser);
 

@@ -6,6 +6,7 @@ const sanitizeHelper = require('../../helper/sanitize.helper');
 const validateHelper = require('../../helper/validate.helper');
 const roleConfig = require('./roleConfig');
 const moduleGroupSch = require('./moduleGroupSchema');
+const moduleAccessSch = require('./moduleSchema')
 const validations = {};
 
 validations.validateRole = (req, res, next) => {
@@ -47,7 +48,7 @@ validations.validateRole = (req, res, next) => {
     next();
   }
 };
-validations.validateModule = (req, res, next) => {
+validations.validateModule = async (req, res, next) => {
   const data = req.body;
   const validationArray = [
     {
@@ -88,7 +89,16 @@ validations.validateModule = (req, res, next) => {
       ],
     },
   ];
-  const errors = validateHelper.validation(data, validationArray);
+  let errors = validateHelper.validation(data, validateArray);
+  let key_filter = { is_deleted: false, module_name: data.module_name }
+  if (data._id) {
+    key_filter = { ...key_filter, _id: { $ne: data._id } }
+  }
+  const already_key = await moduleAccessSch.findOne(key_filter);
+  if (already_key && already_key._id) {
+    errors = { ...errors, module_name: 'module_name already exist' }
+  }
+
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, roleConfig.errorIn.inputErrors, null);
   } else {
