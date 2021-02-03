@@ -3,7 +3,7 @@ const router = express.Router();
 
 const validations = require('../../modules/template/templateValidation');
 const templateModule = require('../../modules/template/templateController').templateController;
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/auth.middleware');
 
 router.get('/', authentication, authorization, templateModule.getTemplateName);
 router.get('/:key', authentication, authorization, templateModule.getTemplateDetail);

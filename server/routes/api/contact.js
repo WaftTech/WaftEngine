@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const contModule = require('../../modules/contactUs/contactController');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/auth.middleware');
 const { sanitize, validate } = require('../../modules/contactUs/contactValidation');
 
 router.get('/', authentication, authorization, contModule.GetContact);
