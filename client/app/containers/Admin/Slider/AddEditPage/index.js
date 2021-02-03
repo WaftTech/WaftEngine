@@ -239,15 +239,20 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <Dialog
-            className="max-w-4xl"
+            className="w-5/6 h-full overflow-auto"
             open={this.state.open}
             onClose={this.handleClose}
             title={`Select Media`}
             body={
+              <div className="h-screen overflow-auto">
               <EditorFileSelect
                 location={location}
                 selectFile={file => this.handleImageImageChange(file)}
               />
+               <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
+              </div>
             }
           />
 
