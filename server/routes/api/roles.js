@@ -3,7 +3,7 @@ const router = express.Router();
 
 const dModule = require('../../modules/role/roleController');
 const validations = require('../../modules/role/roleValidation');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/auth.middleware');
 
 router.get('/role', authentication, authorization, dModule.GetRoles);
 router.get('/role/:id', authentication, authorization, dModule.GetRoleDetail);

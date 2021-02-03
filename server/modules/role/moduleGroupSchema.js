@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const moduleGroupSchema = new schema({
-  module_group: { type: String, required: true },
+  module_group: { type: String },
   description: { type: String },
   order: { type: Number },
   is_deleted: { type: Boolean, default: false }

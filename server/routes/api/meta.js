@@ -4,7 +4,7 @@ const fileUpload = require('../../helper/upload.helper')('public/meta/');
 const uploader = fileUpload.uploader;
 
 const metaModule = require('../../modules/meta/metaController');
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
 const validations = require('./../../modules/meta/metaValidation');
 
 router.get('/', authentication, metaModule.getAllMeta);

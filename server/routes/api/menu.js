@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { menuController, menuItemController } = require('../../modules/menu/menucontroller');
 const { sanitize, validate, itemSanitize, itemValidate } = require('../../modules/menu/menuValidation');
-const { authentication } = require('../../middleware/authentication.middleware');
+const { authentication } = require('../../middleware/auth.middleware');
 
 router.get('/', menuController.getMenu);
 router.post('/', sanitize, validate, authentication, menuController.saveMenu);

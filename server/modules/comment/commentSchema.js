@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const commentSchema = new schema({
-  title: { type: String, required: true },
+  title: { type: String},
   blog_id: { type: schema.Types.ObjectId, ref: 'blog' },
   is_approved: { type: Boolean, default: false },
   is_disapproved: { type: Boolean, default: false },
