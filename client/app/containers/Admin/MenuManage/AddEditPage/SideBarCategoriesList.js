@@ -49,12 +49,12 @@ const SidebarCategoriesList = props => {
             onClick={() => handleSetClick(e._id)}
           >
             {openSet[e._id] ? (
-              <div className="flex items-center text-gray-100 hover:text-white cursor-pointer">
+              <div className="flex items-center text-gray-300 hover:text-white cursor-pointer">
                 <FaMinus className="mr-1 text-white"/>
                 <FaFolder className="text-yellow-500 text-base"/>
               </div>
             ) : (
-              <div className="flex items-center text-grey-darker text-gray-100 hover:text-white cursor-pointer">
+              <div className="flex items-center text-grey-darker text-gray-300 hover:text-white cursor-pointer">
                 {e.child_menu[0]._id !== '' ? (
                   <FaPlus className="mr-1 text-white"/>
                 ) : (
@@ -66,7 +66,7 @@ const SidebarCategoriesList = props => {
             <div className="flex items-center cursor-pointer">
               <span
                 onClick={() => handleClick(e._id)}
-                className="dropdown-title capitalize ml-2 cursor-pointer text-gray-100 hover:text-white"
+                className="dropdown-title capitalize ml-2 cursor-pointer text-gray-300 hover:text-white"
               >
                 {e.title}
               </span>
@@ -74,7 +74,7 @@ const SidebarCategoriesList = props => {
           </li>
 
           <Collapse in={openSet[e._id]} timeout="auto" unmountOnExit>
-            <div className="list-reset pl-8 text-gray-100 hover:text-white">
+            <div className="list-reset pl-8 text-gray-300 hover:text-white">
               {e.child_menu.map(el => (
                 <div key={el._id}>{categoryFunction(el, e._id)}</div>
               ))}
@@ -86,7 +86,7 @@ const SidebarCategoriesList = props => {
           {e._id !== '' && (
             <div
               onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-100 text-sm hover:text-white"
+              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
             >
               <FaFile className="mr-2 text-base text-white" />
               {`${e.title}`}
