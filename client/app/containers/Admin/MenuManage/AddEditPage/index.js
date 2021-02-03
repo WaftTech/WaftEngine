@@ -230,15 +230,15 @@ const AddEdit = props => {
         <PageContent>
           <>
             {showSubMenuBool ? (
-              <div className="mt-3">
+              <div>
                 <div className="flex justify-between">
                   <div
-                    className="bg-white rounded"
-                    style={{ minWidth: '250px' }}
+                    className="-my-4 -ml-4 p-2 w-72 rounded-tl rounded-bl"
+                    style={{background: 'rgb(45, 52, 70)'}}
                   >
                     <SidebarCategoriesList />
                   </div>
-                  <div className="flex-1 bg-white rounded ml-4 pb-4">
+                  <div className="flex-1 bg-white rounded ml-8 pb-4">
                     <div className="container mt-4">
                       <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
