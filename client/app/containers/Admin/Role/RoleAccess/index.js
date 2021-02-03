@@ -165,7 +165,7 @@ const RoleAccess = props => {
             />
           ))}
           <button
-            className="btn bg-blue-500 hover:bg-blue-600 mt-4"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={handleSave}
           >
             Save Role Access

@@ -58,7 +58,7 @@ class UserPersonalInformationPage extends React.PureComponent {
   render() {
     const { classes, one, errors, loading } = this.props;
     return loading ? (
-      <div>Loading</div>
+      <>Loading...</>
     ) : (
         <React.Fragment>
           <div className="w-full md:w-1/2 pb-4">
@@ -117,7 +117,7 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div> */}
 
           <button
-            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
             Save Changes

@@ -1,4 +1,3 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -86,7 +85,7 @@ class AccessManagePage extends React.PureComponent {
       loading,
     } = this.props;
     return loading && loading == true ? (
-      <CircularProgress color="primary" disableShrink />
+      <>Loading...</>
     ) : (
         <React.Fragment>
           <Helmet>

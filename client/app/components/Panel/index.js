@@ -8,6 +8,7 @@
 
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { FaAngleDown } from 'react-icons/fa';
 
 const Panel = ({ title, body, open, key }) => {
   const [panelOpen, setPanelOpen] = useState(false);
@@ -28,19 +29,19 @@ const Panel = ({ title, body, open, key }) => {
         id="panel2a-header"
         onClick={() => handlePanel()}
       >
-        <h3 className="text-bold text-base px-4 py-3 border-b">
-          {title}
+        <div className="w-full flex justify-between items-center hover:shadow">
+        <h3 className="flex-1 m-0 text-bold text-base px-4 py-2 cursor-pointer">
+        {title}</h3>
           <span
-            className={`float-right text-lg ${
+            className={` flex p-2 ${
               openVal ? 'transform rotate-180' : ''
             }`}
           >
-            {' '}
-            ^
+           <FaAngleDown className="opacity-75 cursor-pointer text-lg m-auto hover:opacity-1"/>
           </span>
-        </h3>
+          </div>
       </div>
-      {openVal && <p className="text-base p-3 leading-loose">{body}</p>}
+      {openVal && <p className="text-sm border-t py-2 px-4 leading-loose">{body}</p>}
     </div>
   );
 };
