@@ -203,17 +203,56 @@ select.inputbox {
 
 @keyframes slideDialog {
   from {
+    left:50%;
     top: 0;
     opacity: 0;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform:translateX(-50%);
   }
   to {
     opacity: 1;
-    top: 100px;
+    left:50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    transform:translate(-50%,-50%);
   }
 }
 .slide-dialog {
-  animation: slideDialog 0.2s ease-in-out;
+  -webkit-animation:slideDialog 0.2s ease-in-out;
+ -moz-animation-name:slideDialog 0.2s ease-in-out;
+      animation-name:slideDialog 0.2s ease-in-out;
+  -ms-animation-name:slideDialog 0.2s ease-in-out;
+   -o-animation-name:slideDialog 0.2s ease-in-out;
 }
+
+.circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: whiteSmoke;
+  box-shadow: 4px -40px 60px 5px rgb(26, 117, 206) inset;
+}
+
+.loader {
+  background: linear-gradient(to right, rgb(22, 113, 202) 50%, transparent 50%);
+  animation: spin 1s infinite linear;
+}
+.loader:before {
+  display: block;
+  content: '';
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
 
 .arrow_box {
   border: solid transparent;
