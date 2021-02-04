@@ -435,6 +435,7 @@ export class BlogManagePage extends React.Component {
         <Dialog
           open={showQuickEdit}
           className="w-5/6 sm:w-96"
+          onClose={this.handleClose}
           handleClose={() =>
             this.props.setValue({
               name: 'helper',
