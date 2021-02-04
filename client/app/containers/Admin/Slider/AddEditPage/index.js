@@ -48,7 +48,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
     {items.map((value, index) => (
       <div
         key={`${value._id}-item-image-${index}`}
-        className="bg-gray-100 rounded p-0.5 mt-2"
+        className="bg-gray-100 rounded p-1 mt-2"
       >
         <SortableImageItem
           index={index}
@@ -105,7 +105,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
               </div>
               <div className="w-auto -mr-8 text-center">
                 <span
-                  className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+                  className="ml-4 mr-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
                   onClick={() => _this.handleRemoveSlide(index)}
                 >
                   <img className="trash-lid" src={lid} alt="trash-id" />
