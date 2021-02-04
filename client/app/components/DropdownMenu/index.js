@@ -70,7 +70,7 @@ const DropdownMenu = ({ main, items }) => {
             onClick={handleClose}
           />
          
-            <div className="z-50 shadow absolute right-0 w-64 bg-white border mt-4" onClick={() => handleMenu()}>
+            <div className="z-50 shadow absolute right-0 w-full bg-white border mt-4" onClick={() => handleMenu()}>
               {items && items}
             </div>
         </>
