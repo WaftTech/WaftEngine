@@ -48,7 +48,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
     {items.map((value, index) => (
       <div
         key={`${value._id}-item-image-${index}`}
-        className="bg-gray-100 rounded p-1 mt-2"
+        className="bg-gray-100 rounded p-0.5 mt-2"
       >
         <SortableImageItem
           index={index}
