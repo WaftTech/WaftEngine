@@ -15,10 +15,10 @@ import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectErrors, makeSelectLoading, makeSelectOne
+  makeSelectErrors,
+  makeSelectLoading,
+  makeSelectOne,
 } from '../selectors';
-
-
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -28,7 +28,7 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
@@ -63,77 +63,77 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <div>
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Faq Category'
-                : 'Add Faq Category'}
-            </title>
-          </Helmet>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={this.handleGoBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {match && match.params && match.params.id
-                ? 'Edit Faq Category'
-                : 'Add Faq Category'}
-            </PageHeader>
-          </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Title</label>
-              <input
-                className="inputbox"
-                id="title"
-                name="Title"
-                type="text"
-                value={one.title}
-                onChange={this.handleChange('title')}
-              />
-                {errors && errors.title && errors.title.trim() !== '' && (
+      <div>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Faq Category'
+              : 'Add Faq Category'}
+          </title>
+        </Helmet>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Faq Category'
+              : 'Add Faq Category'}
+          </PageHeader>
+        </div>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Title</label>
+            <input
+              className="inputbox"
+              id="title"
+              name="Title"
+              type="text"
+              value={one.title}
+              onChange={this.handleChange('title')}
+            />
+            {errors && errors.title && errors.title.trim() !== '' && (
               <div className="error">{errors && errors.title}</div>
-                )}
-            </div>
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Key</label>
-              <input
-                className="inputbox"
-                id="key"
-                name="key"
-                type="text"
-                value={one.key}
-                onChange={this.handleChange('key')}
-              />
-                {errors && errors.key && errors.key.trim() !== '' && (
+            )}
+          </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Key</label>
+            <input
+              className="inputbox"
+              id="key"
+              name="key"
+              type="text"
+              value={one.key}
+              onChange={this.handleChange('key')}
+            />
+            {errors && errors.key && errors.key.trim() !== '' && (
               <div className="error">{errors && errors.key}</div>
-                )}
-            </div>
-            <div className="checkbox">
-              <input
-                checked={one.is_active || false}
-                onClick={this.handleCheckedChange('is_active')}
-                id="is_active"
-                type="checkbox"
-              />
-              <label htmlFor="is_active">
-                <span className="box">
-                  <FaCheck className="check-icon" />
-                </span>
+            )}
+          </div>
+          <div className="checkbox">
+            <input
+              checked={one.is_active || false}
+              onClick={this.handleCheckedChange('is_active')}
+              id="is_active"
+              type="checkbox"
+            />
+            <label htmlFor="is_active">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
               Is Active
             </label>
-            </div>
+          </div>
 
-            <button
-              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-              onClick={this.handleSave}
-            >
-              Save
+          <button
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </div>
-      );
+        </PageContent>
+      </div>
+    );
   }
 }
 
@@ -149,12 +149,5 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

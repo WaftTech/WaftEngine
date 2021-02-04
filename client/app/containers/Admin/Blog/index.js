@@ -53,13 +53,13 @@ export class BlogManagePage extends React.Component {
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -300,7 +300,7 @@ export class BlogManagePage extends React.Component {
   render() {
     const { classes } = this.props;
     const {
-      all: { data, page, size, totaldata, msg },
+      all: { data, page, size, totalData, msg },
       query,
       loading,
       users,
@@ -347,7 +347,7 @@ export class BlogManagePage extends React.Component {
       helper: { showQuickEdit },
     } = this.props;
 
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({
         title,
