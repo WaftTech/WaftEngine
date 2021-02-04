@@ -2,16 +2,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './table.css';
+import Loader from '../../assets/img/loading_transparent.gif';
 
 /* eslint-disable react/no-array-index-key */
 function CustomTable({ ...props }) {
   const {
     classes,
+    loading,
     tableHead,
     tableData,
     tableHeaderColor,
     pagination,
     handlePagination,
+    emptyDataMsg,
   } = props;
   return (
     <div className="bg-white mt-4 border-t">
@@ -30,6 +33,7 @@ function CustomTable({ ...props }) {
             </tr>
           </thead>
         ) : null}
+         {tableData.length > 0 ? (
         <tbody>
           {tableData.map((prop, key) => (
             <tr key={key}>
@@ -44,7 +48,30 @@ function CustomTable({ ...props }) {
             </tr>
           ))}
         </tbody>
+         ) : (
+          loading && (
+            <tbody>
+              <tr>
+                <td colSpan={tableHead.length} className="py-2 text-center">
+                  <img
+                    src={Loader}
+                    alt="loading"
+                    className="inline-block w-8 h-8"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          )
+          )}
       </table>
+
+      {tableData.length < 1 && loading === false && (
+        <p
+          className="px-2 py-1 text-sm border-gray-200 text-gray-700"
+        >
+          {emptyDataMsg || 'No Data Found'}
+        </p>
+      )}
 
       {pagination && handlePagination && (
         <>
