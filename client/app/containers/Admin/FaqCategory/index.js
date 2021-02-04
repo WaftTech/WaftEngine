@@ -33,14 +33,14 @@ import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
 /* eslint-disable react/prefer-stateless-function */
 export class FaqCategory extends React.PureComponent {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     loadAllRequest: PropTypes.func.isRequired,
     deleteCatRequest: PropTypes.func.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -91,11 +91,11 @@ export class FaqCategory extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const {
-      all: { data, page, size, totaldata },
+      all: { data, page, size, totalData },
       query,
       loading,
     } = this.props;
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({ title, key, is_active, added_at, updated_at, _id }) => [
         title,
@@ -190,10 +190,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({
   key: 'adminFaqCategoryManagePage',
@@ -201,8 +198,4 @@ const withReducer = injectReducer({
 });
 const withSaga = injectSaga({ key: 'adminFaqCategoryManagePage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(FaqCategory);
+export default compose(withReducer, withSaga, withConnect)(FaqCategory);

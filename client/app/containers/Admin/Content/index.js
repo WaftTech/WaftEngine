@@ -50,7 +50,7 @@ export class ContentsListingPage extends React.Component {
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -125,12 +125,12 @@ export class ContentsListingPage extends React.Component {
   render() {
     const { classes } = this.props;
     const {
-      all: { data, page, size, totaldata },
+      all: { data, page, size, totalData },
       query,
       loading,
       showForm,
     } = this.props;
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({ name, key, is_active, publish_from, publish_to, _id }) => [
         name,
