@@ -37,7 +37,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
       <div key={`${value._id}-item-image-${index}`} className="bg-gray-100 rounded mt-2 px-4 border">
         <SortableImageItem index={index} value={value} _this={_this} />
         <div className="flex items-center justify-between py-2 items-center px-8">
-          <div className="w-36 text-center -ml-8 mr-2">
+          <div className="w-40 text-center -ml-8 mr-2">
             {value.image ? (
               <img
                 src={
@@ -51,7 +51,7 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
             ) : (
                 <button
                   type="button"
-                  className="btn text-white bg-orange-500 border border-orange-600 hover:bg-orange-600"
+                  className="items-center flex btn margin-none text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
                   onClick={_this.handleSetImage(index)}
                   style={{margin:0}}
                 >
@@ -244,7 +244,7 @@ class AddEdit extends React.PureComponent {
             onClose={this.handleClose}
             title={`Select Media`}
             body={
-              <div className="h-screen overflow-auto">
+              <div>
               <EditorFileSelect
                 location={location}
                 selectFile={file => this.handleImageImageChange(file)}
