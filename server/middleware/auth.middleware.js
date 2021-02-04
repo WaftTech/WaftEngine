@@ -4,7 +4,7 @@ const HttpStatus = require('http-status');
 
 const useragent = require('useragent');
 const requestIp = require('request-ip');
-const loginlogs = require('../modules/user/loginlogs/loginlogSchema');
+const loginLogSch = require('../modules/user/loginlogs/loginlogSchema');
 
 const otherHelper = require('../helper/others.helper');
 const { secretOrKey } = require('../config/keys');
@@ -23,7 +23,7 @@ authMiddleware.authentication = async (req, res, next) => {
       token = token.replace('Bearer ', '');
       const d = await jwt.verify(token, secretOrKey);
       req.user = d;
-      let passed = await loginlogs.findOne({ token, is_active: true });
+      let passed = await loginLogSch.findOne({ token, is_active: true });
       if (passed) {
         return next();
       } else {

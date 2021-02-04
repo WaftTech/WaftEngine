@@ -1,9 +1,9 @@
 const Jimp = require('jimp');
 const fs = require('fs');
 
-const photomanipulate = {};
+const photoManipulate = {};
 
-photomanipulate.changephoto = async (req, res, next) => {
+photoManipulate.changephoto = async (req, res, next) => {
   try {
     let w = req.params.w - 0;
     let h = req.params.h - 0;
@@ -21,7 +21,7 @@ photomanipulate.changephoto = async (req, res, next) => {
     Jimp.read(`./public/${picpath}`, async (err, image) => {
       if (err) next(err);
       const i = await image.scaleToFit(w, h).write(`./public/${req.params.w}-${req.params.h}/${picpath}`);
-      fs.readFile(`./public/${req.params.w}-${req.params.h}/${picpath}`, function(err, data) {
+      fs.readFile(`./public/${req.params.w}-${req.params.h}/${picpath}`, function (err, data) {
         if (err) {
           return next(err);
         } else {
@@ -36,4 +36,4 @@ photomanipulate.changephoto = async (req, res, next) => {
   }
 };
 
-module.exports = photomanipulate;
+module.exports = photoManipulate;
