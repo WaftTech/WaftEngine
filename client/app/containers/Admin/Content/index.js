@@ -44,13 +44,13 @@ export class ContentsListingPage extends React.Component {
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -125,12 +125,12 @@ export class ContentsListingPage extends React.Component {
   render() {
     const { classes } = this.props;
     const {
-      all: { data, page, size, totaldata },
+      all: { data, page, size, totalData },
       query,
       loading,
       showForm,
     } = this.props;
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({ name, key, is_active, publish_from, publish_to, _id }) => [
         name,
@@ -310,16 +310,9 @@ const mapStateToProps = createStructuredSelector({
   // showForm: makeSelectShowForm(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'contentsListingPage', reducer });
 const withSaga = injectSaga({ key: 'contentsListingPage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(ContentsListingPage);
+export default compose(withReducer, withSaga, withConnect)(ContentsListingPage);

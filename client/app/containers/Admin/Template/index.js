@@ -175,7 +175,7 @@ export function Template({
 Template.propTypes = {
   all: PropTypes.array.isRequired,
   one: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   addEditRequest: PropTypes.func.isRequired,
   loadAllRequest: PropTypes.func.isRequired,
   loadOneRequest: PropTypes.func.isRequired,
