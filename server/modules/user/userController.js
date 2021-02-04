@@ -7,7 +7,6 @@ const httpStatus = require('http-status');
 const emailHelper = require('./../../helper/email.helper');
 const twoFaHelper = require('./../../helper/2fa.helper');
 const renderMail = require('./../template/templateController').internal;
-const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');

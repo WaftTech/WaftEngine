@@ -32,7 +32,7 @@ sliderController.GetSlider = async (req, res, next) => {
       };
     }
     let sliders = await otherHelper.getQuerySendResponse(sliderSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totalData);
   } catch (err) {
     next(err);
   }

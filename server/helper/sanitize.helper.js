@@ -2,7 +2,6 @@
 const crypto = require('crypto');
 const Validator = require('validator');
 const isEmpty = require('../validation/isEmpty');
-const PhoneNumber = require('awesome-phonenumber');
 
 const sanitizeHelper = {};
 sanitizeHelper.sanitize = (req, sanitizeArray) => {

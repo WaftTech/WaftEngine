@@ -50,7 +50,7 @@ validations.validateRole = (req, res, next) => {
 };
 validations.validateModule = async (req, res, next) => {
   const data = req.body;
-  const validationArray = [
+  const validateArray = [
     {
       field: 'module_name',
       validate: [
