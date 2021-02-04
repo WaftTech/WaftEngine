@@ -120,6 +120,7 @@ const Header = props => {
                       to="/admin/dashboard"
                       style={{ textDecoration: 'none', color: 'black' }}
                       onClick={handleClose}
+                      className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
                     >
                       <p>Dashboard</p>
                     </Link>
@@ -128,10 +129,11 @@ const Header = props => {
                     to="/user/profile"
                     style={{ textDecoration: 'none', color: 'black' }}
                     onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
                   >
                     <p>Profile</p>
                   </Link>
-                  <p onClick={handleLogout}>Log Out</p>
+                  <p className="py-2 block px-4 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>Log Out</p>
                 </>
               }
             />
