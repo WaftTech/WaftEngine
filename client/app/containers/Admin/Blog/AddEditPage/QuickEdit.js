@@ -72,8 +72,7 @@ const QuickEdit = props => {
   return (
     <>
       <div>
-        <h2 className="text-2xl mb-4">Quick Edit</h2>
-        <div className="w-full  pb-4">
+        <div className="w-full pb-4">
           <label>Title</label>
           <input
             className="inputbox"

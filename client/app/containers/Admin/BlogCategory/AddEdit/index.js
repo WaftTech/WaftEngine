@@ -196,28 +196,31 @@ class AddEdit extends React.PureComponent {
               }}
             />
           </div>
-          <div className="w-full md:w-1/2 pb-4 mt-4">
+          <div className="w-full md:w-3/5 pb-4 mt-4">
             <label className="label" htmlFor="Image">
               Image
             </label>
             <Dropzone onDrop={files => this.onDrop(files, 'image')}>
               {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
+                <div {...getRootProps()} className="outline-none">
                   <input {...getInputProps()} />
                   {tempImage === '' ? (
                     <div
-                      className="inputbox cursor-pointer border-2 flex justify-center align-middle"
-                      style={{ height: '120px', width: '60%' }}
+                      className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none"
                     >
-                      <FaCloudUploadAlt className="text-4xl " />
+                      <div className="hover:text-primary m-auto text-center">
+                      <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
+                      <p className="text-gray-300 text-xs">Drag and Drop Your Files Here!!</p>
+                      </div>
                     </div>
                   ) : (
+                    <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
                     <img
-                      className="inputbox cursor-pointer"
+                      className="m-auto w-full h-28 object-contain inline-block text-center"
                       src={tempImage}
                       alt="BlogCategoryImage"
-                      style={{ height: '120px', width: '60%' }}
                     />
+                    </div>
                   )}
                 </div>
               )}
