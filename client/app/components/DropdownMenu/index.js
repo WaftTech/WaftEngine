@@ -60,24 +60,23 @@ const DropdownMenu = ({ main, items }) => {
 
   return (
     <>
-      <div className="mt-2 p-2" onClick={() => handleMenu()}>
+      <div className="flex items-center hover:bg-gray-100" onClick={() => handleMenu()}>
+        <div className="relative px-6">
         {main}
-      </div>
-      {open ? (
+        {open ? (
         <>
           <div
             className="w-screen h-screen z-40 fixed top-0 left-0 overflow-auto"
             onClick={handleClose}
           />
-          <div
-            className={`fixed overflow-auto left-2/4 top-2/4 z-50 shadow-lg transform -translate-x-2/4 -translate-y-2/4 rounded-lg bg-white slide-dialog  `}
-          >
-            <div onClick={() => handleMenu()} className="p-2 border-2">
+         
+            <div className="z-50 shadow absolute right-0 w-64 bg-white border mt-4" onClick={() => handleMenu()}>
               {items && items}
             </div>
-          </div>
         </>
       ) : null}
+        </div>
+      </div>
     </>
   );
 };

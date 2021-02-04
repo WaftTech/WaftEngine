@@ -246,7 +246,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
 
               <DropdownMenu
                 main={
-                  <button className="flex items-center justify-end px-6 hover:bg-gray-100">
+                  <button className="flex items-center justify-end">
                     <img
                       className="w-8 h-8 rounded-full overflow-hidden"
                       src={LogoIcon}
@@ -273,7 +273,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                       to="/admin/dashboard"
                       style={{ textDecoration: 'none', color: 'black' }}
                       onClick={handleClose}
-                      className=" mx-2"
+                      className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
                     >
                       <p>Dashboard</p>
                     </Link>
@@ -281,11 +281,11 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                       to="/admin/profile"
                       style={{ textDecoration: 'none', color: 'black' }}
                       onClick={handleClose}
-                      className=" mx-2"
+                      className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
                     >
                       <p>Profile</p>
                     </Link>
-                    <p className=" mx-2" onClick={handleLogout}>
+                    <p className="py-2 block px-4 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
                       Log Out
                     </p>
                   </>
