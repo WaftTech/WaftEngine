@@ -478,7 +478,7 @@ export class BlogManagePage extends React.Component {
           actions={
             <button
               type="button"
-              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600"
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
             >
               Update
