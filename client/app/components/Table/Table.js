@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import './table.css';
 
 /* eslint-disable react/no-array-index-key */
 function CustomTable({ ...props }) {
