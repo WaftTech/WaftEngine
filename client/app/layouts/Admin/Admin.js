@@ -19,6 +19,8 @@ import routes from '../../routes/admin';
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
 
+import DropdownMenu from '../../components/DropdownMenu/index';
+
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
   const arr = JSON.parse(route);
@@ -242,26 +244,54 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 </a>
               </div>
 
-              <button
-                className="flex items-center justify-end px-6 hover:bg-gray-100"
-                onClick={handleMenu}
-              >
-                <img
-                  className="w-8 h-8 rounded-full overflow-hidden"
-                  src={LogoIcon}
-                  alt="profile image"
-                />
-                <div className="px-3 text-left">
-                  <span className="block capitalize text-sm">{users.name}</span>
-                  <span className="block leading-none truncate capitalize text-xs text-gray-600">
-                    {users.roles && users.roles[0] && users.roles[0].role_title
-                      ? users.roles[0].role_title
-                      : ''}
-                  </span>
-                </div>
-                <FaAngleDown className="opacity-50" />
-              </button>
-              <Menu
+              <DropdownMenu
+                main={
+                  <button className="flex items-center justify-end px-6 hover:bg-gray-100">
+                    <img
+                      className="w-8 h-8 rounded-full overflow-hidden"
+                      src={LogoIcon}
+                      alt="profile image"
+                    />
+                    <div className="px-3 text-left">
+                      <span className="block capitalize text-sm">
+                        {users.name}
+                      </span>
+                      <span className="block leading-none truncate capitalize text-xs text-gray-600">
+                        {users.roles &&
+                        users.roles[0] &&
+                        users.roles[0].role_title
+                          ? users.roles[0].role_title
+                          : ''}
+                      </span>
+                    </div>
+                    <FaAngleDown className="opacity-50" />
+                  </button>
+                }
+                items={
+                  <>
+                    <Link
+                      to="/admin/dashboard"
+                      style={{ textDecoration: 'none', color: 'black' }}
+                      onClick={handleClose}
+                      className=" mx-2"
+                    >
+                      <p>Dashboard</p>
+                    </Link>
+                    <Link
+                      to="/admin/profile"
+                      style={{ textDecoration: 'none', color: 'black' }}
+                      onClick={handleClose}
+                      className=" mx-2"
+                    >
+                      <p>Profile</p>
+                    </Link>
+                    <p className=" mx-2" onClick={handleLogout}>
+                      Log Out
+                    </p>
+                  </>
+                }
+              />
+              {/* <Menu
                 id="menu-appbar"
                 anchorEl={anchorel}
                 anchorOrigin={{
@@ -290,7 +320,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                   <MenuItem>Profile</MenuItem>
                 </Link>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-              </Menu>
+              </Menu> */}
             </div>
             <div className="flex-1 m-6">{switchRoutes(roles)}</div>
             {/* <div className="border-t bg-white h-16 flex items-center justify-center">
@@ -317,14 +347,8 @@ const mapStateToProps = ({ global }) => ({
   users: global.user,
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { logoutRequest, push },
-);
+const withConnect = connect(mapStateToProps, { logoutRequest, push });
 
 const withStyle = withStyles(styles);
 
-export default compose(
-  withConnect,
-  withStyle,
-)(AdminLayout);
+export default compose(withConnect, withStyle)(AdminLayout);
