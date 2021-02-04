@@ -14,7 +14,7 @@ import {
 import { logoutRequest } from '../../../containers/App/actions';
 import logo from '../../../assets/img/logo.svg';
 import HeaderMenu from './HeaderMenu';
-import { FaUserCircle } from 'react-icons/fa';
+import {FaUserAlt } from 'react-icons/fa';
 import './header.css';
 
 const Header = props => {
@@ -106,7 +106,7 @@ const Header = props => {
             <button onClick={handleMenu}>
               <div className="text-base flex items-center">
                 <span className="ml-2 mr-2">{user.name} | </span>
-                <FaUserCircle className="text-base"/>
+                <FaUserAlt className="text-base"/>
               </div>
             </button>
             <Menu
