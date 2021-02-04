@@ -58,7 +58,7 @@ class UserPersonalInformationPage extends React.PureComponent {
   render() {
     const { classes, one, errors, loading } = this.props;
     return loading ? (
-      <div class="circlular_loader waftloader"></div>
+      <div class="circular_loader waftloader"></div>
     ) : (
         <React.Fragment>
           <div className="w-full md:w-1/2 pb-4">

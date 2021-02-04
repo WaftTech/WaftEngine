@@ -227,20 +227,20 @@ select.inputbox {
    -o-animation-name:slideDialog 0.2s ease-in-out;
 }
 
-.circle {
+.circular_loader {
   display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background: whiteSmoke;
-  box-shadow: 4px -40px 60px 5px rgb(26, 117, 206) inset;
+  box-shadow: 4px -40px 60px 5px #283772 inset;
 }
 
-.loader {
-  background: linear-gradient(to right, rgb(22, 113, 202) 50%, transparent 50%);
+.waftloader {
+  background: linear-gradient(to right, #2A3C85 50%, transparent 50%);
   animation: spin 1s infinite linear;
 }
-.loader:before {
+.waftloader:before {
   display: block;
   content: '';
   position: relative;
