@@ -40,7 +40,7 @@ const DragHandle = SortableHandle(() => (
 ));
 
 const SortableImageItem = SortableElement(({ value }) => (
-  <div className="mb-2 bg-white p-2 border rounded"> {value}</div>
+  <div className="bg-white rounded px-4 border"> {value}</div>
 ));
 
 const SortableImageList = SortableContainer(({ items, _this }) => (
@@ -48,17 +48,17 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
     {items.map((value, index) => (
       <div
         key={`${value._id}-item-image-${index}`}
-        className="bg-gray-100 rounded mt-2 px-4 border"
+        className="bg-gray-100 rounded p-0.5 mt-2"
       >
         <SortableImageItem
           index={index}
           _this={_this}
           value={
-            <div className="flex items-center justify-between py-2 items-center px-8">
-              <div className="w-10 text-center my-auto border-r text-gray-700 mr-2">
+            <div className="flex justify-between py-2 items-center px-4">
+              <div className="w-10 text-center my-auto border-r text-gray-700 -ml-4 mr-2">
                 <DragHandle />
               </div>
-              <div className="w-40 text-center -ml-8 mr-2">
+              <div className="w-40 text-center mr-2">
                 {value.image ? (
                   <img
                     src={
