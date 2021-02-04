@@ -74,7 +74,7 @@ const SidebarCategoriesList = props => {
           </li>
 
           <Collapse in={openSet[e._id]} timeout="auto" unmountOnExit>
-            <div className="list-reset pl-8 text-gray-300 hover:text-white">
+            <div className="list-reset pl-4 text-gray-300 hover:text-white">
               {e.child_menu.map(el => (
                 <div key={el._id}>{categoryFunction(el, e._id)}</div>
               ))}
@@ -86,7 +86,7 @@ const SidebarCategoriesList = props => {
           {e._id !== '' && (
             <div
               onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
+              className="pt-1 pb-1 pr-4 pl-8 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
             >
               <FaFile className="mr-2 text-base text-white" />
               {`${e.title}`}
