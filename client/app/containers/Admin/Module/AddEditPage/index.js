@@ -116,13 +116,7 @@ class AddEdit extends React.PureComponent {
 
   handleServerRoutesMethodChange = (pathIndex, index) => event => {
     event.persist();
-    // const { path } = this.props.one;
-    // const tempPath = [...path];
-    // tempPath[pathIndex].server_routes[index].method = event.target.value;
-    // this.props.setOneValue({
-    //   key: 'path',
-    //   value: tempPath,
-    // });
+
     this.props.setServerRouteMethod({
       pathIndex,
       index,
@@ -132,13 +126,6 @@ class AddEdit extends React.PureComponent {
 
   handleServerRoutesRouteChange = (pathIndex, index) => event => {
     event.persist();
-    // const { path } = this.props.one;
-    // const tempPath = [...path];
-    // tempPath[pathIndex].server_routes[index].route = event.target.value;
-    // this.props.setOneValue({
-    //   key: 'path',
-    //   value: tempPath,
-    // });
 
     this.props.setServerRouteChange({
       pathIndex,
@@ -156,15 +143,7 @@ class AddEdit extends React.PureComponent {
 
   handleAddServerRoute = index => event => {
     event.persist();
-    // const { path } = this.props.one;
-    // const tempPath = [...path];
-    // tempPath[index] = {
-    //   ...path[index],
-    //   server_routes: [
-    //     ...path[index].server_routes,
-    //     { route: '', method: 'GET' },
-    //   ],
-    // };
+
     this.props.addServerRoutes({
       index,
     });
@@ -172,12 +151,6 @@ class AddEdit extends React.PureComponent {
 
   handleRemoveServerRoute = (pathIndex, index) => event => {
     event.persist();
-    // const { path } = this.props.one;
-    // const tempPath = [...path];
-    // tempPath[pathIndex].server_routes = [
-    //   ...tempPath[pathIndex].server_routes.slice(0, index),
-    //   ...tempPath[pathIndex].server_routes.slice(index + 1),
-    // ];
 
     this.props.removeServerRoutes({
       pathIndex,
