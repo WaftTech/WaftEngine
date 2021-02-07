@@ -246,7 +246,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
 
               <DropdownMenu
                 main={
-                  <button className="flex items-center justify-end">
+                  <button className="flex items-center justify-end h-16 px-6 hover:bg-gray-100">
                     <img
                       className="w-8 h-8 rounded-full overflow-hidden"
                       src={LogoIcon}

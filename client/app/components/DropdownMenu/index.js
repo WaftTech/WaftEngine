@@ -60,7 +60,7 @@ const DropdownMenu = ({ main, items }) => {
 
   return (
     <>
-      <div className="flex items-center hover:bg-gray-100" onClick={() => handleMenu()}>
+      <div className="my-auto" onClick={() => handleMenu()}>
         <div className="relative px-6">
         {main}
         {open ? (
@@ -70,7 +70,7 @@ const DropdownMenu = ({ main, items }) => {
             onClick={handleClose}
           />
          
-            <div className="z-50 shadow absolute right-0 w-full bg-white border mt-4" onClick={() => handleMenu()}>
+            <div className="z-50 shadow absolute right-0 w-56 bg-white border mt-1" onClick={() => handleMenu()}>
               {items && items}
             </div>
         </>
