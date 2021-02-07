@@ -155,7 +155,7 @@ const RoleAccess = props => {
                   <div className="checkbox">
                     <input
                       type="checkbox"
-                      id={`module-${moduleIndex}`}
+                      id={`module-${module._id}-${moduleIndex}`}
                       checked={
                         module.path.length === getAccessArray(module._id).length
                       }
@@ -164,7 +164,7 @@ const RoleAccess = props => {
                         module.path,
                       )}
                     />{' '}
-                    <label htmlFor={`module-${moduleIndex}`}>
+                    <label htmlFor={`module-${module._id}-${moduleIndex}`}>
                       <span className="box">
                         <FaCheck className="check-icon" />
                       </span>
