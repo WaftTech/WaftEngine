@@ -67,6 +67,12 @@ export class AdminModuleManage extends React.PureComponent {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -85,8 +91,8 @@ export class AdminModuleManage extends React.PureComponent {
         module_name,
         description,
         <>
-        <div className="flex">
-         <span
+          <div className="flex">
+            <span
               className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-green-100 rounded-full relative edit-icon"
               onClick={() => this.handleAccessEdit(_id)}
             >
@@ -140,6 +146,7 @@ export class AdminModuleManage extends React.PureComponent {
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>
