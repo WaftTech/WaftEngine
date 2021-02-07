@@ -91,6 +91,12 @@ export class ContentsListingPage extends React.Component {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
+
   handleOpen = id => {
     this.setState({ open: true, deleteId: id });
   };
@@ -240,6 +246,7 @@ export class ContentsListingPage extends React.Component {
                 className="m-auto inputbox pr-6"
                 value={query.find_name}
                 onChange={this.handleQueryChange}
+                onKeyDown={this.handleKeyPress}
               />
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
@@ -258,6 +265,7 @@ export class ContentsListingPage extends React.Component {
                 className="m-auto inputbox pr-6"
                 value={query.find_key}
                 onChange={this.handleQueryChange}
+                onKeyDown={this.handleKeyPress}
               />
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"

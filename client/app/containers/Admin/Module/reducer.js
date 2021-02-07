@@ -91,6 +91,76 @@ const adminRoleReducer = (state = initialState, action) =>
       case types.LOAD_SUB_MODULE_SUCCESS:
         draft.sub_module = action.payload.data;
         break;
+
+      case types.SET_ACCESS_TYPE_CHANGE:
+        draft.one.path[action.payload.pathIndex].access_type =
+          action.payload.data;
+        break;
+
+      case types.SET_ADMIN_ROUTES:
+        draft.one.path[action.payload.pathIndex].admin_routes[
+          action.payload.index
+        ] = action.payload.data;
+        break;
+
+      case types.REMOVE_ADMIN_ROUTES:
+        let tempPath = [...draft.one.path];
+        tempPath[action.payload.pathIndex].admin_routes = [
+          ...tempPath[action.payload.pathIndex].admin_routes.slice(
+            0,
+            action.payload.index,
+          ),
+          ...tempPath[action.payload.pathIndex].admin_routes.slice(
+            action.payload.index + 1,
+          ),
+        ];
+        draft.one.path = tempPath;
+        break;
+
+      case types.ADD_ADMIN_ROUTES:
+        let tempPath2 = [...draft.one.path];
+        tempPath2[action.payload.pathIndex].admin_routes = [
+          ...tempPath2[action.payload.pathIndex].admin_routes,
+          '',
+        ];
+        draft.one.path = tempPath2;
+        break;
+
+      case types.SET_SERVER_ROUTE_METHOD:
+        draft.one.path[action.payload.pathIndex].server_routes[
+          action.payload.index
+        ].method = action.payload.data;
+        break;
+
+      case types.SET_SERVER_ROUTE_CHANGE:
+        draft.one.path[action.payload.pathIndex].server_routes[
+          action.payload.index
+        ].route = action.payload.data;
+        break;
+
+      case types.ADD_SERVER_ROUTES:
+        draft.one.path[action.payload.index] = {
+          ...draft.one.path[action.payload.index],
+          server_routes: [
+            ...draft.one.path[action.payload.index].server_routes,
+            { route: '', method: 'GET' },
+          ],
+        };
+        break;
+
+      case types.REMOVE_SERVER_ROUTES:
+        let tempPath3 = [...draft.one.path];
+        tempPath3[action.payload.pathIndex].server_routes = [
+          ...tempPath3[action.payload.pathIndex].server_routes.slice(
+            0,
+            action.payload.index,
+          ),
+          ...tempPath3[action.payload.pathIndex].server_routes.slice(
+            action.payload.index + 1,
+          ),
+        ];
+        draft.one.path = tempPath3;
+        break;
     }
   });
 
