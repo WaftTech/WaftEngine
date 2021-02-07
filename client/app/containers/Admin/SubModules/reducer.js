@@ -53,7 +53,11 @@ const subModulesReducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case types.LOAD_ALL_SUCCESS:
-        draft.all = action.payload;
+        draft.all = {
+          ...draft.all,
+          ...action.payload,
+          totaldata: action.payload.totalData,
+        };
         draft.loading = false;
         break;
 

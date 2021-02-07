@@ -52,7 +52,7 @@ export class ViewContacts extends React.Component {
         </Helmet>
         <div className="flex justify-between my-3">
           <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
+            <span className="backbtn" onClick={this.handleBack}>
               <FaArrowLeft className="text-xl" />
             </span>
             Contact Details

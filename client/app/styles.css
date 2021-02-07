@@ -121,7 +121,7 @@ select.inputbox {
 
 .error {
   position: relative;
-  top:4px;
+  top: 4px;
   color: #ff3b30;
   margin: 0;
   font-size: 0.75rem;
@@ -171,7 +171,7 @@ select.inputbox {
   @apply py-2 px-4 rounded text-sm mt-4 transition-all duration-200;
 }
 
-.btn.margin-none{
+.btn.margin-none {
   @apply mt-0;
 }
 .qr-code {
@@ -184,12 +184,12 @@ select.inputbox {
   @apply text-xs p-1;
 }
 .fade {
-  transition: opacity .25s linear
+  transition: opacity 0.25s linear;
 }
 
-.Waft_Tab .active{
-  @apply border-t-2 ;
-  border-top-color:#2A3C85;
+.Waft_Tab .active {
+  @apply border-t-2;
+  border-top-color: #2a3c85;
 }
 
 @keyframes arrowtip {
@@ -201,19 +201,58 @@ select.inputbox {
   }
 }
 
-
 @keyframes slideDialog {
   from {
+    left:50%;
     top: 0;
-    opacity:0
+    opacity: 0;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform:translateX(-50%);
   }
   to {
-    opacity:1;
-    top: 100px;
+    opacity: 1;
+    left:50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    transform:translate(-50%,-50%);
   }
 }
 .slide-dialog {
-  animation: slideDialog 0.2s ease-in-out; }
+  -webkit-animation:slideDialog 0.2s ease-in-out;
+ -moz-animation-name:slideDialog 0.2s ease-in-out;
+      animation-name:slideDialog 0.2s ease-in-out;
+  -ms-animation-name:slideDialog 0.2s ease-in-out;
+   -o-animation-name:slideDialog 0.2s ease-in-out;
+}
+
+.circular_loader {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: whiteSmoke;
+  box-shadow: 4px -40px 60px 5px #283772 inset;
+}
+
+.waftloader {
+  background: linear-gradient(to right, #2A3C85 50%, transparent 50%);
+  animation: spin 1s infinite linear;
+}
+.waftloader:before {
+  display: block;
+  content: '';
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
 
 .arrow_box {
   border: solid transparent;
@@ -319,7 +358,6 @@ select.inputbox {
   @apply bg-red-100 text-red-500 border-red-200;
 }
 
-
 .ckEditor p > img {
   margin-right: 40px;
   margin-bottom: 40px;
@@ -403,6 +441,25 @@ select.inputbox {
 }
 .edit-icon:hover .pencil {
   right: -3px;
+}
+
+/* animation */
+
+.animate-none {
+  animation: none;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @tailwind utilities;

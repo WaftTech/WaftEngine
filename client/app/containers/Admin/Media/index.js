@@ -5,12 +5,6 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Dropzone from 'react-dropzone';
 import { Helmet } from 'react-helmet';
-
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import reducer from './reducer';
@@ -110,32 +104,30 @@ export class Media extends React.Component {
                       alt="image"
                     />
                   </div>
-                  <CardContent>
-                    <Typography component="p" style={{ minHeight: '40px' }}>
+                  <div>
+                    <div component="p" style={{ minHeight: '40px' }}>
                       {each.encoding} | {each.mimetype} | {each.size}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
+                    </div>
+                  </div>
+                  <div>
                     <div>
-                      <Button
-                        size="small"
-                        color="primary"
+                      <button
+                        className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                         onClick={() =>
                           this.copyToClipboard(`${IMAGE_BASE}${each.path}`)
                         }
                       >
                         Copy Path
-                      </Button>
+                      </button>
                     </div>
 
-                    <Button
-                      size="small"
-                      color="primary"
+                    <button
+                      className="block btn text-white bg-red-500 border border-red-600 hover:bg-red-600"
                       onClick={() => this.handleDelete(each._id)}
                     >
                       Delete
-                    </Button>
-                  </CardActions>
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>
@@ -151,16 +143,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'adminMediaPage', reducer });
 const withSaga = injectSaga({ key: 'adminMediaPage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(Media);
+export default compose(withReducer, withSaga, withConnect)(Media);

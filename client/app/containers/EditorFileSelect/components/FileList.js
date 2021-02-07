@@ -358,37 +358,40 @@ const FileList = ({
 
   return (
     <PageContent loading={loading}>
-      <Dialog open={open} onClose={handleClose}   title={`New Folder`}
-       body={
-       <div className="w-5/6 sm:w-80">
-          <input
-            autoFocus
-            id="name"
-            type="text"
-            className="inputbox"
-            onChange={handleInput}
-            value={one.name}
-          />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        title={`New Folder`}
+        body={
+          <div className="w-5/6 sm:w-80">
+            <input
+              autoFocus
+              id="name"
+              type="text"
+              className="inputbox"
+              onChange={handleInput}
+              value={one.name}
+            />
           </div>
-       }
-       actions={
-         <>
-          <button
-            onClick={handleClose}
-            className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSave}
-            className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            disabled={folderAdded}
-          >
-            Save
-          </button>
+        }
+        actions={
+          <>
+            <button
+              onClick={handleClose}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              disabled={folderAdded}
+            >
+              Save
+            </button>
           </>
-       }
-       />
+        }
+      />
       <div className="flex items-center justify-between my-3">
         <div className="flex">
           <div className="flex relative">
@@ -477,14 +480,14 @@ const FileList = ({
         </div>
       </div>
       <div className="mb-2 w-full py-2 px-4 bg-gray-100 rounded border border-gray-200">
-      <p className="text-sm italic w-full block">
+        <p className="text-sm italic w-full block">
           Note : Please Click the given button first for selecting{' '}
           <span className="font-bold">
             Multiple Images, Renaming folders and Deleting files
           </span>
           !!!
         </p>
-        </div>
+      </div>
       <div className="my-auto">
         <BreadCrumb
           linkcomponent={LinkComponent}
@@ -498,34 +501,34 @@ const FileList = ({
         title={`Rename Folder`}
         body={
           <div className="w-5/6 sm:w-80">
-          <input
-            autoFocus
-            id="rename"
-            type="text"
-            className="inputbox"
-            onChange={handleEdit}
-            value={rename}
-            onKeyDown={handleEnter}
-          />
+            <input
+              autoFocus
+              id="rename"
+              type="text"
+              className="inputbox"
+              onChange={handleEdit}
+              value={rename}
+              onKeyDown={handleEnter}
+            />
           </div>
-          }
-          actions={
-            <>
-          <button
-            onClick={handleRenameClose}
-            className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSaveRename}
-            className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-          >
-            Save
-          </button>
-       </>
-          }
-       />
+        }
+        actions={
+          <>
+            <button
+              onClick={handleRenameClose}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveRename}
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            >
+              Save
+            </button>
+          </>
+        }
+      />
 
       <Dialog
         open={showRename}
@@ -533,32 +536,31 @@ const FileList = ({
         title={`Rename File`}
         body={
           <div className="w-5/6 sm:w-80">
-          <input
-            autoFocus
-            id="rename"
-            type="text"
-            className="inputbox"
-            onChange={handleEditFile}
-            value={rename_file.renamed_name}
-            onKeyDown={handleFileEnter}
-          />
+            <input
+              autoFocus
+              id="rename"
+              type="text"
+              className="inputbox"
+              onChange={handleEditFile}
+              value={rename_file.renamed_name}
+              onKeyDown={handleFileEnter}
+            />
           </div>
         }
-
         actions={
           <>
-          <button
-            onClick={closeFileRename}
-            className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSaveFileRename}
-            className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-          >
-            Save
-          </button>
+            <button
+              onClick={closeFileRename}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveFileRename}
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            >
+              Save
+            </button>
           </>
         }
       />
@@ -576,128 +578,135 @@ const FileList = ({
       />
       <div className="flex flex-wrap bg-white mt-1">
         {folders.data.map(each => (
+          <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5" key={each._id}>
+            <div
+              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100"
+              onMouseOver={() => handleMouseOver(each._id)}
+              onMouseLeave={() => handleMouseOver('')}
+            >
+              <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
+                {selectedButton === 'Rename' && (
+                  <button
+                    className="flex w-8 h-8 bg-white shadow rounded-full"
+                    onClick={() => handleRename(each._id, each.name)}
+                  >
+                    <FaEdit
+                      className="text-sm inline-block text-black m-auto hover:text-primary"
+                      title="Edit"
+                    />
+                  </button>
+                )}
+                {selectedButton === 'Delete' && (
+                  <>
+                    <div className="checkbox">
+                      <input
+                        id={`${each._id}-secondary`}
+                        type="checkbox"
+                        onClick={() => addChosenFolder(each)}
+                      />
+                      <label htmlFor={`${each._id}-secondary`}>
+                        <span className="box">
+                          <FaCheck className="check-icon" />
+                        </span>
+                      </label>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div
+                // data-tooltip={each.name}
+                className={`${
+                  selected === each._id ? 'folder_media' : ''
+                } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
+                onClick={() => handleSingleClick(each._id)}
+                onDoubleClick={() => handleFolderLink(each._id)}
+                onKeyDown={() => handleFolderLink(each._id)}
+                role="presentation"
+              >
+                <div className="flex justify-center">
+                  <FaFolder
+                    className="text-yellow-500"
+                    style={{ fontSize: '6rem' }}
+                  />
+                </div>
+                <div className="block text-sm truncate py-1">{each.name}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+        {files.data.map((each, index) => (
           <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
-          <div
-            className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100"
-            key={each._id}
-            onMouseOver={() => handleMouseOver(each._id)}
-            onMouseLeave={() => handleMouseOver('')}
-          >
-            <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
+            <div
+              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100"
+              key={each._id}
+              onMouseOver={() => handleMouseOverFile(each._id)}
+              onMouseLeave={() => handleMouseOverFile('')}
+            >
               {selectedButton === 'Rename' && (
-                <button
-                  className="flex w-8 h-8 bg-white shadow rounded-full"
-                  onClick={() => handleRename(each._id, each.name)}
-                >
-                 <FaEdit className="text-sm inline-block text-black m-auto hover:text-primary" title="Edit" />
-                </button>
+                <div className="absolute">
+                  <button
+                    className="flex w-8 h-8 bg-white shadow rounded-full"
+                    onClick={() =>
+                      handleRenameFile(each._id, each.renamed_name)
+                    }
+                  >
+                    <FaEdit
+                      className="text-sm inline-block text-black m-auto hover:text-primary"
+                      title="Edit"
+                    />
+                  </button>
+                </div>
               )}
-              {selectedButton === 'Delete' && (
-                <>
+              <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
+                {selectedButton === 'Multiple' && (
                   <div className="checkbox">
                     <input
-                      id={`${each._id}-secondary`}
+                      id={`${index}-multipleselect`}
                       type="checkbox"
-                      onClick={() => addChosenFolder(each)}
+                      onClick={() => onChooseFile(each)}
                     />
-                    <label htmlFor={`${each._id}-secondary`}>
+                    <label htmlFor={`${index}-multipleselect`}>
                       <span className="box">
                         <FaCheck className="check-icon" />
                       </span>
                     </label>
                   </div>
-                </>
-              )}
-            </div>
-            <div
-              // data-tooltip={each.name}
-              className={`${
-                selected === each._id ? 'folder_media' : ''
-              } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
-              onClick={() => handleSingleClick(each._id)}
-              onDoubleClick={() => handleFolderLink(each._id)}
-              onKeyDown={() => handleFolderLink(each._id)}
-              role="presentation"
-            >
-              <div className="flex justify-center">
-                <FaFolder
-                  className="text-yellow-500"
-                  style={{ fontSize: '6rem' }}
-                />
+                )}
+                {selectedButton === 'Delete' && (
+                  <div className="checkbox">
+                    <input
+                      id={`${index}-dltmultiple`}
+                      type="checkbox"
+                      onClick={() => addChosenFile(each)}
+                    />
+                    <label htmlFor={`${index}-dltmultiple`}>
+                      <span className="box">
+                        <FaCheck className="check-icon" />
+                      </span>
+                    </label>
+                  </div>
+                )}
               </div>
-              <div className="block text-sm truncate py-1">{each.name}</div>
-            </div>
-          </div>
-          </div>
-        ))}
-        {files.data.map((each, index) => (
-           <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
-          <div
-            className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100"
-            key={each._id}
-            onMouseOver={() => handleMouseOverFile(each._id)}
-            onMouseLeave={() => handleMouseOverFile('')}
-          >
-            {selectedButton === 'Rename' && (
-              <div className="absolute">
-              <button
-                className="flex w-8 h-8 bg-white shadow rounded-full"
-                onClick={() => handleRenameFile(each._id, each.renamed_name)}
+              <div
+                // data-tooltip={each.filename}
+                className={`${
+                  selected === each._id ? 'folder_media' : ''
+                } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
               >
-                <FaEdit className="text-sm inline-block text-black m-auto hover:text-primary" title="Edit" />
-              </button>
-              </div>
-            )}
-            <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
-              {selectedButton === 'Multiple' && (
-                <div className="checkbox">
-                  <input
-                    id={`${index}-multipleselect`}
-                    type="checkbox"
-                    onClick={() => onChooseFile(each)}
+                <div className="flex">
+                  <img
+                    className="w-full h-24 object-contain"
+                    src={`${IMAGE_BASE}${each.path}`}
+                    alt={each.filename}
+                    onClick={() => handleSingleClick(each._id)}
+                    onDoubleClick={() => onSelect(each)}
+                    onKeyDown={() => handleFolderLink(each._id)}
+                    role="presentation"
                   />
-                  <label htmlFor={`${index}-multipleselect`}>
-                    <span className="box">
-                      <FaCheck className="check-icon" />
-                    </span>
-                  </label>
                 </div>
-              )}
-              {selectedButton === 'Delete' && (
-                <div className="checkbox">
-                  <input
-                    id={`${index}-dltmultiple`}
-                    type="checkbox"
-                    onClick={() => addChosenFile(each)}
-                  />
-                  <label htmlFor={`${index}-dltmultiple`}>
-                    <span className="box">
-                      <FaCheck className="check-icon" />
-                    </span>
-                  </label>
-                </div>
-              )}
-            </div>
-            <div
-              // data-tooltip={each.filename}
-              className={`${
-                selected === each._id ? 'folder_media' : ''
-              } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
-            >
-              <div className="flex">
-                <img
-                  className="w-full h-24 object-contain"
-                  src={`${IMAGE_BASE}${each.path}`}
-                  alt={each.filename}
-                  onClick={() => handleSingleClick(each._id)}
-                  onDoubleClick={() => onSelect(each)}
-                  onKeyDown={() => handleFolderLink(each._id)}
-                  role="presentation"
-                />
+                <div className="truncate text-sm py-1">{each.renamed_name}</div>
               </div>
-              <div className="truncate text-sm py-1">{each.renamed_name}</div>
             </div>
-          </div>
           </div>
         ))}
         {folders.data.length < 1 && files.data.length < 1 && (
@@ -738,9 +747,6 @@ const mapStateToProps = createStructuredSelector({
   query: makeSelectQuery(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 export default compose(withConnect)(FileList);

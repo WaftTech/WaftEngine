@@ -2,7 +2,8 @@
   white-space: nowrap;
 }
 
-.table tr td {
-  border-bottom: 1px solid #e9e9e9;
+.table tr:hover td {
+  background: #F9F9F9;
+  cursor: pointer;
 }
 

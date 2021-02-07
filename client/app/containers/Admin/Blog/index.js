@@ -13,6 +13,7 @@ import Select from 'react-select';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import DeleteDialog from '../../../components/DeleteDialog';
+import Dialog from '../../../components/Dialog/index';
 import Loading from '../../../components/Loading';
 import Modal from '../../../components/Modal';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -52,13 +53,13 @@ export class BlogManagePage extends React.Component {
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -288,10 +289,18 @@ export class BlogManagePage extends React.Component {
 
   // for quick edit end
 
+  handleQuickEditClose = () => {
+    this.props.setValue({
+      name: 'helper',
+      key: 'showQuickEdit',
+      value: false,
+    });
+  };
+
   render() {
     const { classes } = this.props;
     const {
-      all: { data, page, size, totaldata, msg },
+      all: { data, page, size, totalData, msg },
       query,
       loading,
       users,
@@ -338,7 +347,7 @@ export class BlogManagePage extends React.Component {
       helper: { showQuickEdit },
     } = this.props;
 
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({
         title,
@@ -353,67 +362,67 @@ export class BlogManagePage extends React.Component {
         author,
         _id,
       }) => [
-          <>
-            <Link
-              to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
-              target="_blank"
-              className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
+        <>
+          <Link
+            to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+            target="_blank"
+            className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
+          >
+            {title}
+          </Link>{' '}
+          <div className="flex py-2">
+            <button
+              aria-label="Edit"
+              type="button"
+              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+              onClick={() => this.handleEdit(_id)}
             >
-              {title}
-            </Link>{' '}
-            <div className="flex py-2">
-              <button
-                aria-label="Edit"
-                type="button"
-                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
-                onClick={() => this.handleEdit(_id)}
-              >
-                Edit
+              Edit
             </button>
-              <button
-                aria-label="Edit"
-                type="button"
-                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
-                onClick={() => this.handleLoadOne(_id)}
-              >
-                Quick Edit
+            <button
+              aria-label="Edit"
+              type="button"
+              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+              onClick={() => this.handleLoadOne(_id)}
+            >
+              Quick Edit
             </button>
 
-              <button
-                className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
-                type="button"
-                onClick={() => this.handleOpen(_id)}
-              >
-                Delete
+            <button
+              className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
+              type="button"
+              onClick={() => this.handleOpen(_id)}
+            >
+              Delete
             </button>
-            </div>
-          </>,
-          (category && category.map(each => each.title).join(', ')) || 'No',
-          <span className="whitespace-nowrap">
-            {moment(added_at).format(DATE_FORMAT)}
-          </span>,
-          <span className="whitespace-nowrap">
-            {moment(published_on).format('YYYY-MM-DD HH:mm')}
-          </span>,
-          // `${is_highlight}`,
-          // `${is_showcase}`,
-          // `${is_active}`,
-          <>
-            {is_published ? (
-              <FaRegCheckCircle className="text-green-500" />
-            ) : (
-                <FaBan className="text-red-400" />
-              )}{' '}
-          </>,
-          // tags.join(','),
-          (
-            <p className="">
-              {author &&
-                author.length > 0 &&
-                author.map(author => author.name).join(', ')}
-            </p>
-          ) || '',
-        ],
+          </div>
+        </>,
+        (category && category.map(each => each.title).join(', ')) || 'No',
+        <span className="whitespace-nowrap">
+          {moment(added_at).format(DATE_FORMAT)}
+        </span>,
+        <span className="whitespace-nowrap">
+          {moment(published_on).format('YYYY-MM-DD HH:mm')}
+        </span>,
+        // `${is_highlight}`,
+        // `${is_showcase}`,
+        // `${is_active}`,
+        <div className="flex justify-center">
+          {is_published ? (
+            <FaRegCheckCircle className="text-green-500" />
+          ) : (
+            <FaBan className="text-red-400" />
+          )}{' '}
+        </div>,
+        // tags.join(','),
+        (
+          <p className="">
+            {author &&
+              author.length > 0 &&
+              author.map(author => author.name).join(', ')}
+          </p>
+        ) || '',
+      ],
     );
 
     const activeData =
@@ -431,47 +440,53 @@ export class BlogManagePage extends React.Component {
         <Helmet>
           <title>News Listing</title>
         </Helmet>
-        <Modal
+        <Dialog
           open={showQuickEdit}
-          handleClose={() =>
-            this.props.setValue({
-              name: 'helper',
-              key: 'showQuickEdit',
-              value: false,
-            })
+          className="w-5/6 sm:w-96"
+          onClose={this.handleQuickEditClose}
+          // loading={loading}
+          // handleUpdate={this.handleSave}
+          title={`Quick Edit`}
+          body={
+            <QuickEdit
+              handleEditorChange={this.handleEditorChange}
+              handleCheckedChange={this.handleCheckedChange}
+              handleChange={this.handleChange}
+              slugify={this.slugify}
+              handleDropDownChange={this.handleDropDownChange}
+              handleMultipleSelectCategoryChange={
+                this.handleMultipleSelectCategoryChange
+              }
+              handleTempMetaKeyword={this.handleTempMetaKeyword}
+              handleTempMetaTag={this.handleTempMetaTag}
+              handlePublishedOn={this.handlePublishedOn}
+              handleSave={this.handleSave}
+              handleMetaKeywordDelete={this.handleMetaKeywordDelete}
+              handleMetaTagDelete={this.handleMetaTagDelete}
+              handleDelete={this.handleDelete}
+              insertTags={this.insertTags}
+              insertMetaTags={this.insertMetaTags}
+              insertMetaKeywords={this.insertMetaKeywords}
+              one={one}
+              category={category}
+              users={users}
+              tempTag={tempTag}
+              tempMetaTag={tempMetaTag}
+              tempMetaKeyword={tempMetaKeyword}
+              errors={errors}
+              setUpdateCalled={this.props.setUpdateCalled}
+            />
           }
-          loading={loading}
-          handleUpdate={this.handleSave}
-        >
-          <QuickEdit
-            handleEditorChange={this.handleEditorChange}
-            handleCheckedChange={this.handleCheckedChange}
-            handleChange={this.handleChange}
-            slugify={this.slugify}
-            handleDropDownChange={this.handleDropDownChange}
-            handleMultipleSelectCategoryChange={
-              this.handleMultipleSelectCategoryChange
-            }
-            handleTempMetaKeyword={this.handleTempMetaKeyword}
-            handleTempMetaTag={this.handleTempMetaTag}
-            handlePublishedOn={this.handlePublishedOn}
-            handleSave={this.handleSave}
-            handleMetaKeywordDelete={this.handleMetaKeywordDelete}
-            handleMetaTagDelete={this.handleMetaTagDelete}
-            handleDelete={this.handleDelete}
-            insertTags={this.insertTags}
-            insertMetaTags={this.insertMetaTags}
-            insertMetaKeywords={this.insertMetaKeywords}
-            one={one}
-            category={category}
-            users={users}
-            tempTag={tempTag}
-            tempMetaTag={tempMetaTag}
-            tempMetaKeyword={tempMetaKeyword}
-            errors={errors}
-            setUpdateCalled={this.props.setUpdateCalled}
-          />
-        </Modal>
+          actions={
+            <button
+              type="button"
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Update
+            </button>
+          }
+        />
         <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>
@@ -674,10 +689,7 @@ const mapStateToProps = createStructuredSelector({
   updateCalled: makeSelectUpateCalled(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
