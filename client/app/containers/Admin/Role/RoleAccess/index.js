@@ -113,6 +113,27 @@ const RoleAccess = props => {
     setAccessArray({ index: temp_index, value: tempValue });
   };
 
+  const handleGroupMultiChoice = (modules, select) => {
+    for (let index = 0; index < modules.length; index++) {
+      const module = modules[index];
+      let access_array = [];
+      let temp_index = 0;
+      for (let index = 0; index < Access.length; index++) {
+        if (Access[index].module_id === module._id) {
+          temp_index = index;
+        }
+      }
+      let tempValue = [...access_array];
+      if (select === true) {
+        for (let index = 0; index < module.path.length; index++) {
+          const element = module.path[index];
+          tempValue.push(element._id);
+        }
+      }
+      setAccessArray({ index: temp_index, value: tempValue });
+    }
+  };
+
   const handleBack = () => {
     push('/admin/role-manage');
   };
@@ -142,66 +163,85 @@ const RoleAccess = props => {
         {module_data.map((each, index) => (
           <Panel
             title={`${each.module_group} Group`}
-            body={each.modules.map((module, moduleIndex) => (
-              <fieldset
-                key={`${module._id}-${each._id}-${index}`}
-                className="formfieldset mb-2"
-              >
-                <legend
-                  className="text-lg px-2"
-                  onClick={() => getAccessArray(module._id)}
-                >
-                  {module.module_name}{' '}
-                  <div className="checkbox">
-                    <input
-                      type="checkbox"
-                      id={`module-${module._id}-${moduleIndex}`}
-                      checked={
-                        module.path.length === getAccessArray(module._id).length
-                      }
-                      onChange={handleModuleMultiChoice(
-                        module._id,
-                        module.path,
-                      )}
-                    />{' '}
-                    <label htmlFor={`module-${module._id}-${moduleIndex}`}>
-                      <span className="box">
-                        <FaCheck className="check-icon" />
-                      </span>
-                    </label>
-                  </div>
-                </legend>
-                <ul className="flex flex-wrap">
-                  {module.path.length > 0 &&
-                    module.path.map(module_path => (
-                      <li
-                        key={`${module_path._id}-${module._id}-${each._id}-${index}`}
-                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2"
-                      >
-                        <div className="mr-2">
-                          <div className="checkbox">
-                            <input
-                              name={module_path._id}
-                              checked={getAccessArray(module._id).includes(
-                                module_path._id,
-                              )}
-                              onChange={handleAccessChange(module._id)}
-                              id={module_path._id}
-                              type="checkbox"
-                            />
-                            <label htmlFor={module_path._id}>
-                              <span className="box">
-                                <FaCheck className="check-icon" />
-                              </span>
-                              {module_path.access_type}
-                            </label>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-              </fieldset>
-            ))}
+            body={
+              <>
+                <span>
+                  <button
+                    className=" bg-blue-500 text-white px-2 p-1 ml-2 rounded"
+                    onClick={() => handleGroupMultiChoice(each.modules, true)}
+                  >
+                    Select all
+                  </button>{' '}
+                  <button
+                    className=" bg-blue-500 text-white px-2 p-1 ml-2 rounded "
+                    onClick={() => handleGroupMultiChoice(each.modules, false)}
+                  >
+                    Un-select All
+                  </button>{' '}
+                </span>
+                {each.modules.map((module, moduleIndex) => (
+                  <fieldset
+                    key={`${module._id}-${each._id}-${index}`}
+                    className="formfieldset mb-2"
+                  >
+                    <legend
+                      className="text-lg px-2"
+                      onClick={() => getAccessArray(module._id)}
+                    >
+                      {module.module_name}{' '}
+                      <div className="checkbox">
+                        <input
+                          type="checkbox"
+                          id={`module-${module._id}-${moduleIndex}`}
+                          checked={
+                            module.path.length ===
+                            getAccessArray(module._id).length
+                          }
+                          onChange={handleModuleMultiChoice(
+                            module._id,
+                            module.path,
+                          )}
+                        />{' '}
+                        <label htmlFor={`module-${module._id}-${moduleIndex}`}>
+                          <span className="box">
+                            <FaCheck className="check-icon" />
+                          </span>
+                        </label>
+                      </div>
+                    </legend>
+                    <ul className="flex flex-wrap">
+                      {module.path.length > 0 &&
+                        module.path.map(module_path => (
+                          <li
+                            key={`${module_path._id}-${module._id}-${each._id}-${index}`}
+                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2"
+                          >
+                            <div className="mr-2">
+                              <div className="checkbox">
+                                <input
+                                  name={module_path._id}
+                                  checked={getAccessArray(module._id).includes(
+                                    module_path._id,
+                                  )}
+                                  onChange={handleAccessChange(module._id)}
+                                  id={module_path._id}
+                                  type="checkbox"
+                                />
+                                <label htmlFor={module_path._id}>
+                                  <span className="box">
+                                    <FaCheck className="check-icon" />
+                                  </span>
+                                  {module_path.access_type}
+                                </label>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                  </fieldset>
+                ))}
+              </>
+            }
           />
         ))}
         <button
