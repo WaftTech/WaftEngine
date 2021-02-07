@@ -85,73 +85,65 @@ class AddEdit extends React.PureComponent {
 
   handleAccessTypeChange = pathIndex => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].access_type = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
-    });
+
+    this.props.setAccessTypeChange({ pathIndex, data: event.target.value });
   };
 
   handleAdminRoutesChange = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].admin_routes[index] = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
-    });
+
+    this.props.setAdminRoutes({ pathIndex, index, data: event.target.value });
   };
 
   handleRemoveAdminRoute = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].admin_routes = [
-      ...tempPath[pathIndex].admin_routes.slice(0, index),
-      ...tempPath[pathIndex].admin_routes.slice(index + 1),
-    ];
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.removeAdminRoutes({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
   handleAddAdminRoute = pathIndex => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].admin_routes = [
-      ...tempPath[pathIndex].admin_routes,
-      '',
-    ];
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.addAdminRoutes({
+      pathIndex,
+      data: event.target.value,
     });
   };
 
   handleServerRoutesMethodChange = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].server_routes[index].method = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+    // const { path } = this.props.one;
+    // const tempPath = [...path];
+    // tempPath[pathIndex].server_routes[index].method = event.target.value;
+    // this.props.setOneValue({
+    //   key: 'path',
+    //   value: tempPath,
+    // });
+    this.props.setServerRouteMethod({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
   handleServerRoutesRouteChange = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].server_routes[index].route = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+    // const { path } = this.props.one;
+    // const tempPath = [...path];
+    // tempPath[pathIndex].server_routes[index].route = event.target.value;
+    // this.props.setOneValue({
+    //   key: 'path',
+    //   value: tempPath,
+    // });
+
+    this.props.setServerRouteChange({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
@@ -164,32 +156,33 @@ class AddEdit extends React.PureComponent {
 
   handleAddServerRoute = index => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[index] = {
-      ...path[index],
-      server_routes: [
-        ...path[index].server_routes,
-        { route: '', method: 'GET' },
-      ],
-    };
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+    // const { path } = this.props.one;
+    // const tempPath = [...path];
+    // tempPath[index] = {
+    //   ...path[index],
+    //   server_routes: [
+    //     ...path[index].server_routes,
+    //     { route: '', method: 'GET' },
+    //   ],
+    // };
+    this.props.addServerRoutes({
+      index,
     });
   };
 
   handleRemoveServerRoute = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].server_routes = [
-      ...tempPath[pathIndex].server_routes.slice(0, index),
-      ...tempPath[pathIndex].server_routes.slice(index + 1),
-    ];
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+    // const { path } = this.props.one;
+    // const tempPath = [...path];
+    // tempPath[pathIndex].server_routes = [
+    //   ...tempPath[pathIndex].server_routes.slice(0, index),
+    //   ...tempPath[pathIndex].server_routes.slice(index + 1),
+    // ];
+
+    this.props.removeServerRoutes({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
@@ -345,10 +338,7 @@ const mapStateToProps = createStructuredSelector({
   sub_modules: makeSelectSubModules(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const customStyles = {
   control: (base, state) => ({
@@ -370,8 +360,4 @@ const customStyles = {
   }),
 };
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);
