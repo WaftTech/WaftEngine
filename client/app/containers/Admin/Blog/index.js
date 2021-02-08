@@ -362,67 +362,67 @@ export class BlogManagePage extends React.Component {
         author,
         _id,
       }) => [
-        <>
-          <Link
-            to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
-            target="_blank"
-            className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
-          >
-            {title}
-          </Link>{' '}
-          <div className="flex py-2">
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
-              onClick={() => this.handleEdit(_id)}
+          <>
+            <Link
+              to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+              target="_blank"
+              className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
             >
-              Edit
+              {title}
+            </Link>{' '}
+            <div className="flex py-2">
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+                onClick={() => this.handleEdit(_id)}
+              >
+                Edit
             </button>
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
-              onClick={() => this.handleLoadOne(_id)}
-            >
-              Quick Edit
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+                onClick={() => this.handleLoadOne(_id)}
+              >
+                Quick Edit
             </button>
 
-            <button
-              className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
-              type="button"
-              onClick={() => this.handleOpen(_id)}
-            >
-              Delete
+              <button
+                className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
+                type="button"
+                onClick={() => this.handleOpen(_id)}
+              >
+                Delete
             </button>
-          </div>
-        </>,
-        (category && category.map(each => each.title).join(', ')) || 'No',
-        <span className="whitespace-nowrap">
-          {moment(added_at).format(DATE_FORMAT)}
-        </span>,
-        <span className="whitespace-nowrap">
-          {moment(published_on).format('YYYY-MM-DD HH:mm')}
-        </span>,
-        // `${is_highlight}`,
-        // `${is_showcase}`,
-        // `${is_active}`,
-        <div className="flex justify-center">
-          {is_published ? (
-            <FaRegCheckCircle className="text-green-500" />
-          ) : (
-            <FaBan className="text-red-400" />
-          )}{' '}
-        </div>,
-        // tags.join(','),
-        (
-          <p className="">
-            {author &&
-              author.length > 0 &&
-              author.map(author => author.name).join(', ')}
-          </p>
-        ) || '',
-      ],
+            </div>
+          </>,
+          (category && category.map(each => each.title).join(', ')) || 'No',
+          <span className="whitespace-nowrap">
+            {moment(added_at).format(DATE_FORMAT)}
+          </span>,
+          <span className="whitespace-nowrap">
+            {moment(published_on).format('YYYY-MM-DD HH:mm')}
+          </span>,
+          // `${is_highlight}`,
+          // `${is_showcase}`,
+          // `${is_active}`,
+          <div className="flex justify-center">
+            {is_published ? (
+              <FaRegCheckCircle className="text-green-500" />
+            ) : (
+                <FaBan className="text-red-400" />
+              )}{' '}
+          </div>,
+          // tags.join(','),
+          (
+            <p className="">
+              {author &&
+                author.length > 0 &&
+                author.map(author => author.name).join(', ')}
+            </p>
+          ) || '',
+        ],
     );
 
     const activeData =
@@ -615,6 +615,7 @@ export class BlogManagePage extends React.Component {
                 aria-label="Search"
                 className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
                 type="button"
                 style={{ marginTop: '1.5rem' }}
               >

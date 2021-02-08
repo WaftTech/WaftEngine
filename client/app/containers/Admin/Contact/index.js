@@ -65,6 +65,12 @@ export class Contact extends React.Component {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -106,20 +112,20 @@ export class Contact extends React.Component {
       moment(added_at).format(DATE_FORMAT),
 
       <div className="flex">
-            <span
-              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
-              onClick={() => this.handleView(_id)}
-            >
-             <FaRegEye className="text-base text-blue-500" />
-            </span>
-            <span
-              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
-              onClick={() => this.handleOpen(_id)}
-            >
-              <img className="trash-lid" src={lid} alt="trash-id" />
-              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
-            </span>
-          </div>,
+        <span
+          className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
+          onClick={() => this.handleView(_id)}
+        >
+          <FaRegEye className="text-base text-blue-500" />
+        </span>
+        <span
+          className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+          onClick={() => this.handleOpen(_id)}
+        >
+          <img className="trash-lid" src={lid} alt="trash-id" />
+          <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+        </span>
+      </div>,
     ]);
 
     return (
@@ -151,6 +157,7 @@ export class Contact extends React.Component {
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>

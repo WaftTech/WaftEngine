@@ -61,6 +61,12 @@ export class BlogCategory extends React.PureComponent {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
+
   handleEdit = id => {
     this.props.push(`/admin/blog-cat-manage/edit/${id}`);
   };
@@ -158,10 +164,12 @@ export class BlogCategory extends React.PureComponent {
               className="m-auto inputbox pr-6"
               value={query.find_title}
               onChange={this.handleQueryChange}
+              onKeyDown={this.handleKeyPress}
             />
             <span
               className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
               onClick={this.handleSearch}
+              onKeyDown={this.handleKeyPress}
             >
               <FaSearch />
             </span>

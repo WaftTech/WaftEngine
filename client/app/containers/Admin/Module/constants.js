@@ -60,3 +60,5 @@ export const REMOVE_SERVER_ROUTES =
 
 export const SET_SERVER_ROUTE_CHANGE =
   'app/AdminModuleManage/SET_SERVER_ROUTE_CHANGE';
+
+export const SET_ACCESS_UPDATE = 'app/AdminModuleManage/SET_ACCESS_UPDATE';

@@ -96,6 +96,12 @@ export class Error extends React.Component {
     this.props.loadAllRequest(this.props.query);
   };
 
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
+
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
   };
@@ -122,31 +128,31 @@ export class Error extends React.Component {
         last_added_at,
         _id,
       }) => [
-        error_message,
-        error_type,
-        count,
-        moment(added_at).format(DATE_FORMAT),
-        last_added_at != null
-          ? moment(last_added_at).format(DATE_FORMAT)
-          : moment(added_at).format(DATE_FORMAT),
-        <React.Fragment>
-          <div className="flex">
-            <span
-              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
-              onClick={() => this.handleShow(_id, error_stack)}
-            >
-             <FaRegEye className="text-base text-blue-500" />
-            </span>
-            <span
-              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
-              onClick={() => this.handleOpen(_id)}
-            >
-              <img className="trash-lid" src={lid} alt="trash-id" />
-              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
-            </span>
-          </div>
-        </React.Fragment>,
-      ],
+          error_message,
+          error_type,
+          count,
+          moment(added_at).format(DATE_FORMAT),
+          last_added_at != null
+            ? moment(last_added_at).format(DATE_FORMAT)
+            : moment(added_at).format(DATE_FORMAT),
+          <React.Fragment>
+            <div className="flex">
+              <span
+                className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
+                onClick={() => this.handleShow(_id, error_stack)}
+              >
+                <FaRegEye className="text-base text-blue-500" />
+              </span>
+              <span
+                className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+                onClick={() => this.handleOpen(_id)}
+              >
+                <img className="trash-lid" src={lid} alt="trash-id" />
+                <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+              </span>
+            </div>
+          </React.Fragment>,
+        ],
     );
     return (
       <>
@@ -160,7 +166,7 @@ export class Error extends React.Component {
           }
         />
 
-<Dialog
+        <Dialog
           open={this.state.show}
           className="w-5/6"
           onClose={this.handleClose}
@@ -174,9 +180,9 @@ export class Error extends React.Component {
               className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600"
               onClick={this.handleClose}
             >
-              Close 
+              Close
             </button>
-          }/>
+          } />
         {/* <Dialog open={this.state.show} maxWidth="md" onClose={this.handleClose}>
           <DialogTitle>Error Stack</DialogTitle>
           <DialogContent>

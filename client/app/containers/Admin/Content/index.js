@@ -154,8 +154,8 @@ export class ContentsListingPage extends React.Component {
           {is_active ? (
             <span className="label-active">active</span>
           ) : (
-            <span className="label-inactive">inactive</span>
-          )}
+              <span className="label-inactive">inactive</span>
+            )}
         </>,
         <>
           <div className="flex">
@@ -251,6 +251,7 @@ export class ContentsListingPage extends React.Component {
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>
@@ -270,6 +271,7 @@ export class ContentsListingPage extends React.Component {
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>

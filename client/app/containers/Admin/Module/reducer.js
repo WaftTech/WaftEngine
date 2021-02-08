@@ -161,6 +161,38 @@ const adminRoleReducer = (state = initialState, action) =>
         ];
         draft.one.path = tempPath3;
         break;
+
+      case types.SET_ACCESS_UPDATE:
+        const pathIndex = action.payload.module_id.indexOf(
+          action.payload.singlePath,
+        );
+
+        if (pathIndex > -1) {
+          action.payload.module_id.splice(pathIndex, 1);
+        } else {
+          action.payload.module_id.push(action.payload.singlePath);
+        }
+
+        let tempAccess = [...draft.access.Access];
+        const index = tempAccess.findIndex(
+          each =>
+            each.module_id === action.payload.ModuleId &&
+            each.role_id === action.payload.roleId,
+        );
+        if (index > -1) {
+          tempAccess[index].access_type = [...action.payload.module_id];
+        } else {
+          tempAccess = [
+            ...tempAccess,
+
+            {
+              access_type: [...action.payload.module_id],
+              module_id: action.payload.ModuleId,
+              role_id: action.payload.roleId,
+            },
+          ];
+        }
+        break;
     }
   });
 
