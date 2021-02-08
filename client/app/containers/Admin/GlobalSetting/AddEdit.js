@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
@@ -27,6 +27,7 @@ import saga from './saga';
 import Loading from '../../../components/Loading';
 import Table from '../../../components/Table';
 import { FaPencilAlt, FaPlus, FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { enqueueSnackbar } from '../../App/actions';
 
 const key = 'globalSetting';
 
@@ -38,9 +39,12 @@ export const GlobalSetting = props => {
     push,
     setOneValue,
     saveRequest,
+    enqueueSnackbar,
   } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const [errors, setError] = useState('');
 
   useEffect(() => {
     if (props.match.params && props.match.params.id) {
@@ -63,7 +67,18 @@ export const GlobalSetting = props => {
   };
 
   const handleSave = () => {
-    saveRequest();
+    if (one.type.trim() === '') {
+      setError('Type is required');
+      const snackbarData = {
+        message: 'Type is required',
+        options: {
+          variant: 'warning',
+        },
+      };
+      enqueueSnackbar(snackbarData);
+    } else {
+      saveRequest();
+    }
   };
 
   return (
@@ -113,6 +128,9 @@ export const GlobalSetting = props => {
             value={one.type || ''}
             onChange={handleChange('type')}
           />
+          {errors && errors !== '' ? (
+            <div className="error"> This Field is required </div>
+          ) : null}
         </div>
         <div className="w-full md:w-1/2 pb-4">
           <label>Sub Type</label>
@@ -185,5 +203,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+const withConnect = connect(mapStateToProps, {
+  ...mapDispatchToProps,
+  push,
+  enqueueSnackbar,
+});
 export default compose(withConnect, memo, withRouter)(GlobalSetting);

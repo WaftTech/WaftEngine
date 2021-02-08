@@ -56,9 +56,16 @@ function* save() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
+  const type = data.type;
 
   yield fork(
-    Api.post(`setting`, actions.saveSuccess, actions.saveFailure, data, token),
+    Api.post(
+      `setting/${type}`,
+      actions.saveSuccess,
+      actions.saveFailure,
+      data,
+      token,
+    ),
   );
   yield take([LOCATION_CHANGE, types.SAVE_FAILURE]);
   yield cancel(successWatcher);
