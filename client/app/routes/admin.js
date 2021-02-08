@@ -26,8 +26,6 @@ import TemplateListingPage from '../containers/Admin/Template/Loadable';
 import ErrorManagePage from '../containers/Admin/Error/Loadable';
 import FaqCatAddEditPage from '../containers/Admin/FaqCategory/AddEdit/Loadable';
 import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
-import BlogCommentManagePage from '../containers/Admin/Comment/Loadable';
-import ViewCommentManagePage from '../containers/Admin/Comment/ViewComment/Loadable';
 import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadable';
 import Integration from '../containers/Admin/Integration/Loadable';
 import UserProfilePage from '../containers/Admin/Profile/index';
@@ -215,16 +213,6 @@ const routes = [
   {
     path: '/admin/blog-cat-manage',
     component: BlogCatManagePage,
-    exact: true,
-  },
-  {
-    path: '/admin/blog-comment-manage',
-    component: BlogCommentManagePage,
-    exact: true,
-  },
-  {
-    path: '/admin/comment/view/:id',
-    component: ViewCommentManagePage,
     exact: true,
   },
   {

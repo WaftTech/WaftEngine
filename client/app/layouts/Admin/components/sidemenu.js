@@ -198,12 +198,6 @@ const menu = [
         icon: <FaExclamationTriangle />,
         link: '/admin/errors',
       },
-      {
-        key: '5.5',
-        name: 'Comment',
-        icon: <FaCommentDots />,
-        link: '/admin/blog-comment-manage',
-      },
     ],
   },
 ];
