@@ -39,7 +39,7 @@ settingValidation.validate = async (req, res, next) => {
   ]
   let errors = validateHelper.validation(data, validateArray);
 
-  let key_filter = { is_deleted: false, key: data.key }
+  let key_filter = { is_deleted: false, type: type, key: data.key }
   if (data._id) {
     key_filter = { ...key_filter, _id: { $ne: data._id } }
   }
