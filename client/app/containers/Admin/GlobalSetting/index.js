@@ -71,9 +71,10 @@ export const GlobalSetting = props => {
 
   const tablePagination = { page, size, totaldata };
 
-  const tableData = data.map(({ key, value, _id }) => [
+  const tableData = data.map(({ key, value, type, _id }) => [
     key,
     value,
+    type,
 
     <>
       <div className="flex">
@@ -115,7 +116,7 @@ export const GlobalSetting = props => {
       <PageContent loading={loading}>
         <Table
           tableData={tableData}
-          tableHead={['Key', 'Value', 'Actions']}
+          tableHead={['Key', 'Value', 'Type', 'Actions']}
           pagination={tablePagination}
           handlePagination={handlePagination}
         />
