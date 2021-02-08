@@ -28,7 +28,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../../components/Loading';
 import Table from '../../../components/Table';
-import { FaPencilAlt, FaPlus, FaTrashAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
 const key = 'globalSetting';
 
@@ -67,6 +67,21 @@ export const GlobalSetting = props => {
   const handlePagination = ({ page, size }) => {
     setQueryValue({ key: 'page', value: page });
     setQueryValue({ key: 'size', value: size });
+  };
+
+  const handleQueryChange = e => {
+    e.persist();
+    setQueryValue({ key: e.target.name, value: e.target.value });
+  };
+
+  const handleSearch = () => {
+    loadWithdrawRequest(query);
+  };
+
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   const tablePagination = { page, size, totaldata };
@@ -114,6 +129,44 @@ export const GlobalSetting = props => {
         </div>
       </div>
       <PageContent loading={loading}>
+        <div className="flex">
+          <div className="flex relative mr-2">
+            <input
+              type="text"
+              name="find_key"
+              id="module-name"
+              placeholder="Search by key"
+              className="m-auto inputbox pr-6"
+              value={query.find_key}
+              onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
+            />
+            <span
+              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+          <div className="flex relative">
+            <input
+              type="text"
+              name="find_type"
+              id="module-name"
+              placeholder="Search by type"
+              className="m-auto inputbox pr-6"
+              value={query.find_type}
+              onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
+            />
+            <span
+              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+        </div>
         <Table
           tableData={tableData}
           tableHead={['Key', 'Value', 'Type', 'Actions']}
