@@ -89,6 +89,11 @@ export class BlogCommentManagePage extends React.PureComponent {
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
   };
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
+  };
 
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
@@ -198,14 +203,14 @@ export class BlogCommentManagePage extends React.PureComponent {
         moment(added_at).format(DATE_FORMAT),
         moment(updated_at ? updated_at : added_at).format(DATE_FORMAT),
         <>
-         <div className="flex">
+          <div className="flex">
             <span
               className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
               onClick={() => this.handleView(_id)}
             >
-             <FaRegEye className="text-base text-blue-500" />
+              <FaRegEye className="text-base text-blue-500" />
             </span>
-            </div>
+          </div>
         </>,
       ],
     );
@@ -225,25 +230,25 @@ export class BlogCommentManagePage extends React.PureComponent {
           className="w-5/6 sm:w-80"
           body={
             <p className="p-2">
-            Are you sure you want to {this.state.status} ?</p>
+              Are you sure you want to {this.state.status} ?</p>
           }
           actions={
-               <>
-            <button
-              onClick={this.handleClose}
-              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
-            >
-              No
+            <>
+              <button
+                onClick={this.handleClose}
+                className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+              >
+                No
             </button>
-            <button
-              onClick={this.handleSave}
-              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            >
-              Yes
+              <button
+                onClick={this.handleSave}
+                className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              >
+                Yes
             </button>
             </>
-             }
-       
+          }
+
         />
         <PageContent loading={loading}>
           <div className="flex items-center">
@@ -261,6 +266,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>
@@ -280,6 +286,7 @@ export class BlogCommentManagePage extends React.PureComponent {
               <span
                 className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
+                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>
