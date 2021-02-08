@@ -4,12 +4,9 @@ const sanitizeHelper = require('../../helper/sanitize.helper');
 const validateHelper = require('../../helper/validate.helper');
 const config = require('./contactConfig');
 const apiCallHelper = require('../../helper/apicall.helper');
-const {
-  recaptcha: { secretKey },
-} = require('../../config/keys');
 const isEmpty = require('../../validation/isEmpty');
+const settingsHelper = require('../../helper/settings.helper');
 const validateInput = {};
-
 validateInput.sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
@@ -43,6 +40,7 @@ validateInput.sanitize = (req, res, next) => {
 validateInput.validate = async (req, res, next) => {
   const data = req.body;
   let code = data.reCaptcha;
+  const secretKey = await settingsHelper('auth', 'recaptcha_secretKey')
   const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${code}&remoteip=${req.connection.remoteAddress}`;
   let verified = await apiCallHelper.requestThirdPartyApi(req, verifyUrl, null, null, 'POST', next);
   if (!(verified && verified.success)) {

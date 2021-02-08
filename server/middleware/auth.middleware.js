@@ -7,7 +7,6 @@ const requestIp = require('request-ip');
 const loginLogSch = require('../modules/user/loginlogs/loginlogSchema');
 
 const otherHelper = require('../helper/others.helper');
-const { secretOrKey } = require('../config/keys');
 const accessSch = require('../modules/role/accessSchema');
 const modulesSch = require('../modules/role/moduleSchema');
 const rolesSch = require('../modules/role/roleSchema');
@@ -15,9 +14,11 @@ const settingSch = require('../modules/setting/settingSchema');
 const authMiddleware = {};
 
 const isEmpty = require('../validation/isEmpty');
+const settingsHelper = require('../helper/settings.helper');
 
 authMiddleware.authentication = async (req, res, next) => {
   try {
+    const secretOrKey = await settingsHelper('auth', 'token_secretOrKey')
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
@@ -38,6 +39,7 @@ authMiddleware.authentication = async (req, res, next) => {
 
 authMiddleware.authenticationForLogout = async (req, res, next) => {
   try {
+    const secretOrKey = await settingsHelper('auth', 'token_secretOrKey')
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
