@@ -21,6 +21,8 @@ import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
 import { FaArrowLeft } from 'react-icons/fa';
+import CKEditor from 'react-ckeditor-component';
+
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -55,6 +57,11 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.props.setOneValue({ key: name, value: newContent });
+  };
+
   handleGoBack = () => {
     this.props.push('/admin/faq-manage');
   };
@@ -68,85 +75,93 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
-          </title>
-        </Helmet>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Question</label>
-            <input
-              className="inputbox"
-              id="faq"
-              type="text"
-              name="Question"
-              value={one.question || ''}
-              onChange={this.handleChange('question')}
-            />
+        <>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
+            </title>
+          </Helmet>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
+            </PageHeader>
           </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Answer
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Question</label>
+              <input
+                className="inputbox"
+                id="faq"
+                type="text"
+                name="Question"
+                value={one.question || ''}
+                onChange={this.handleChange('question')}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>
+                Answer
             </label>
-            <textarea
-              className="inputbox"
-              multiline="true"
-              rows="5"
-              name="Answer"
-              id="faq-answer"
-              value={one.title || ''}
-              onChange={this.handleChange('title')}
-            />
-          </div>
+              {/* <textarea
+                className="inputbox"
+                multiline="true"
+                rows="5"
+                name="Answer"
+                id="faq-answer"
+                value={one.title || ''}
+                onChange={this.handleChange('title')}
+              /> */}
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
-              htmlFor="category"
-            >
-              Category
+              <CKEditor
+                name="Answer"
+                content={one && one.title}
+                config={{ allowedContent: true }}
+                events={{
+                  change: e => this.handleEditorChange(e, 'title'),
+                  value: (one && one.title) || '',
+                }}
+              />
+
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label>
+                Category
             </label>
-            <select
-              className="inputbox"
-              value={one.category || ''}
-              onChange={this.handleChange('category')}
-              inputprops={{
-                name: 'category',
-                id: 'category-title',
-              }}
-            >
-              <option value="" disabled>
-                None
+              <select
+                className="inputbox"
+                value={one.category || ''}
+                onChange={this.handleChange('category')}
+                inputprops={{
+                  name: 'category',
+                  id: 'category-title',
+                }}
+              >
+                <option value="" disabled>
+                  None
               </option>
-              {category &&
-                category.length &&
-                category.map(each => (
-                  <option key={each._id} value={each._id}>
-                    {each.title}
-                  </option>
-                ))}
-            </select>
-          </div>
+                {category &&
+                  category.length &&
+                  category.map(each => (
+                    <option key={each._id} value={each._id}>
+                      {each.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
-          <button
-            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            onClick={this.handleSave}
-          >
-            Save
+            <button
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Save
           </button>
-        </PageContent>
-      </>
-    );
+          </PageContent>
+        </>
+      );
   }
 }
 

@@ -198,7 +198,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
 
           <MainListItems />
         </ColoredScrollbars>
-        <main className="flex-1 flex flex-col justify-between pt-16 bg-gray-50 h-screen">
+        <main className="flex-1 flex flex-col justify-between pt-16 bg-gray-50 h-screen overflow-auto">
           <div
             className="bg-white dark:bg-gray-800 border-b flex top-0 justify-between fixed z-40"
             style={{ width: 'calc(100% - 220px)' }}
