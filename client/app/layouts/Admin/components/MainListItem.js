@@ -40,7 +40,7 @@ const MainListItem = ({ location: { pathname }, access }) => {
           <>
             <div
               key={e.key}
-              className={`py-3 cursor-pointer flex items-center justify-between ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 text-base pl-${e.key.split(
+              className={`py-3 cursor-pointer flex items-center justify-between ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 text-sm pl-${e.key.split(
                 '.',
               ).length * 4}`}
               onClick={() => handleSetClick(e.key)}
@@ -50,9 +50,8 @@ const MainListItem = ({ location: { pathname }, access }) => {
                 <span className="dropdown-title text-white pl-4">{e.name}</span>
               </div>
               <FaAngleDown
-                className={`text-sm text-white mr-4 transition-all duration-100 ease-in-out ${
-                  !openSet[e.key] ? 'rotate-90' : ''
-                }`}
+                className={`text-sm text-white mr-4 transition-all duration-100 ease-in-out ${!openSet[e.key] ? 'rotate-90' : ''
+                  }`}
               />
             </div>
             <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
@@ -62,21 +61,21 @@ const MainListItem = ({ location: { pathname }, access }) => {
             </Collapse>
           </>
         ) : (
-          <div
-            selected={pathname === e.link}
-            className={e.key.split('.').length === 1 ? '' : ''}
-          >
-            <Link
-              to={`${e.link}`}
-              className={`text-gray-200 text-base no-underline flex items-center ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 py-3 pl-${e.key.split(
-                '.',
-              ).length * 4}`}
+            <div
+              selected={pathname === e.link}
+              className={e.key.split('.').length === 1 ? '' : ''}
             >
-              <span className="inline-block">{e.icon}</span>
-              <span className="pl-4">{e.name}</span>
-            </Link>
-          </div>
-        )}
+              <Link
+                to={`${e.link}`}
+                className={`text-gray-200 text-sm no-underline flex items-center ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 py-3 pl-${e.key.split(
+                  '.',
+                ).length * 4}`}
+              >
+                <span className="inline-block">{e.icon}</span>
+                <span className="pl-4">{e.name}</span>
+              </Link>
+            </div>
+          )}
       </div>
     );
   };

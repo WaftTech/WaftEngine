@@ -121,8 +121,6 @@ export class ContentsListingPage extends React.Component {
         >
           {`/page/${key}`}
         </Link>,
-        moment(publish_from).format(DATE_FORMAT),
-        moment(publish_to).format(DATE_FORMAT),
         <>
           {is_active ? (
             <span className="label-active">active</span>
@@ -250,8 +248,6 @@ export class ContentsListingPage extends React.Component {
               'Name',
               'Key',
               'Link',
-              'Pub From',
-              'Pub To',
               'Is Active',
               'Action',
             ]}
