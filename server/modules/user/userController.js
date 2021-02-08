@@ -10,9 +10,9 @@ const renderMail = require('./../template/templateController').internal;
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
-const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginLogs = require('./loginlogs/loginlogController').internal;
 const appSetting = require('../../config/settings');
+const settingsHelper = require('../../helper/settings.helper');
 
 const userController = {};
 
@@ -342,7 +342,8 @@ userController.validLoginResponse = async (req, user, next) => {
         }
       }
     }
-
+    const secretOrKey = await settingsHelper('auth', 'token_secretOrKey')
+    const tokenExpireTime = await settingsHelper('auth', 'token_tokenExpireTime')
     // Create JWT payload
     const payload = {
       id: user._id,
