@@ -13,6 +13,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
 import saga from '../saga';
+import clock from '../../../assets/img/clock.svg';
 
 const RenderBlogs = props => {
   const {
@@ -62,7 +63,7 @@ const RenderBlogs = props => {
         return (
           <Link
             className="block pb-6 mb-6 border-b border-gray-300"
-            to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+            to={`/blog/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
             key={`${slug_url}-${_id}`}
           >
             <div

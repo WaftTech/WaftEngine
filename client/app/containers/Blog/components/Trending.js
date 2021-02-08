@@ -22,7 +22,7 @@ const TrendingList = props => {
             </div>
             {trending.map((each, index) => (
               <Link
-                to={`/news/${moment(each.added_at).format('YYYY/MM/DD')}/${each._id
+                to={`/blog/${moment(each.added_at).format('YYYY/MM/DD')}/${each._id
                   }`}
                 key={each._id}
                 className={`block p-5 item-${index + 1}`}

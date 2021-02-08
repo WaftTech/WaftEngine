@@ -32,7 +32,7 @@ const FaqContent = props => {
         <div style={{ display: 'block', paddingLeft: 0 }}>
           {faq &&
             faq.length > 0 &&
-            faq.map(each => <Panel title={each.question} body={each.title} />)}
+            faq.map(each => <Panel title={each.question} body={<p dangerouslySetInnerHTML={{ __html: each.title }} />} />)}
         </div>
       </div>
     </div>

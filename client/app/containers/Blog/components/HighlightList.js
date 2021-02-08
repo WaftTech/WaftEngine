@@ -31,7 +31,7 @@ const HighLightList = props => {
             <div className="container mx-auto">
               <Link
                 className="block"
-                to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+                to={`/blog/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
                 key={slug_url}
               >
                 <div key={_id} className="">
@@ -53,8 +53,8 @@ const HighLightList = props => {
       })}
     </>
   ) : (
-    <p />
-  );
+      <p />
+    );
 };
 
 HighLightList.propTypes = {

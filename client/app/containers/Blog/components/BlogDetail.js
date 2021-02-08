@@ -109,7 +109,7 @@ const BlogDetail = props => {
                         <LinkBoth
                           className="bg-gray-200 hover:bg-gray-300 leading-tighter text-base no-underline rounded px-4 py-2 mb-1 mr-1 inline-block"
                           key={index}
-                          to={`/news/tag/${each}`}
+                          to={`/blog/tag/${each}`}
                         >
                           {`${index === 0 ? '' : ''}${each}`}
                         </LinkBoth>
@@ -148,7 +148,7 @@ const BlogDetail = props => {
                             {each && each && each._id && (
                               <LinkBoth
                                 className="text-blue-500"
-                                to={`/news/author/${each._id}`}
+                                to={`/blog/author/${each._id}`}
                               >
                                 Read more from author
                               </LinkBoth>
@@ -183,7 +183,7 @@ const BlogDetail = props => {
                               {each && each && each._id && (
                                 <LinkBoth
                                   className="text-secondary"
-                                  to={`/news/author/${each._id}`}
+                                  to={`/blog/author/${each._id}`}
                                 >
                                   Read more from author
                                 </LinkBoth>
