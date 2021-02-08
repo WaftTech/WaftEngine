@@ -1,25 +1,22 @@
-import React, { useState } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
-import MainListItems from './components/MainListItem';
-import { logoutRequest } from '../../containers/App/actions';
-import Logo from '../../assets/img/logo-white.svg';
-import LogoIcon from '../../assets/img/logo-icon-white.svg';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { FaAngleDown, FaExternalLinkAlt } from 'react-icons/fa';
-import routes from '../../routes/admin';
-
-import NotFoundPage from '../../containers/NotFoundPage/Loadable';
+import { connect } from 'react-redux';
+import { Link, Route, Switch } from 'react-router-dom';
+import { compose } from 'redux';
+import LogoIcon from '../../assets/img/logo-icon-white.svg';
+import Logo from '../../assets/img/logo-white.svg';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
-
 import DropdownMenu from '../../components/DropdownMenu/index';
+import { logoutRequest } from '../../containers/App/actions';
+import NotFoundPage from '../../containers/NotFoundPage/Loadable';
+import routes from '../../routes/admin';
+import MainListItems from './components/MainListItem';
+
+
+
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -282,43 +279,8 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 </>
               }
             />
-            {/* <Menu
-                id="menu-appbar"
-                anchorEl={anchorel}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={anchorOpen}
-                onClose={handleClose}
-              >
-                <Link
-                  to="/admin/dashboard"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                  onClick={handleClose}
-                >
-                  <MenuItem>Dashboard</MenuItem>
-                </Link>
-                <Link
-                  to="/admin/profile"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                  onClick={handleClose}
-                >
-                  <MenuItem>Profile</MenuItem>
-                </Link>
-                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-              </Menu> */}
           </div>
           <div className="flex-1 mx-6 my-2">{switchRoutes(roles)}</div>
-          {/* <div className="border-t bg-white h-16 flex items-center justify-center">
-              <p className="text-center text-gray-500 text-sm">
-                WaftEngine v1.0.1
-              </p>
-            </div> */}
         </main>
       </div>
     </React.Fragment>
@@ -339,6 +301,5 @@ const mapStateToProps = ({ global }) => ({
 
 const withConnect = connect(mapStateToProps, { logoutRequest, push });
 
-const withStyle = withStyles(styles);
 
-export default compose(withConnect, withStyle)(AdminLayout);
+export default compose(withConnect)(AdminLayout);

@@ -10,7 +10,8 @@
  */
 
 import React from 'react';
-import Slicklider from '../../components/SlickSlider';
+import SlickSlider from '../../components/SlickSlider';
+import StaticContentDiv from '../../components/StaticContentDiv';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
@@ -32,8 +33,7 @@ export default class HomePage extends React.PureComponent {
     return (
       <>
 
-        <Slicklider slideKey="homeSlider" />
-
+        <SlickSlider slideKey="homeSlider" />
       </>
     );
   }

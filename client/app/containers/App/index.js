@@ -21,13 +21,13 @@ import RoutesUser from '../../layouts/User';
 import AdminRoute from '../../components/Routes/AdminRoute';
 import UserRoute from '../../components/Routes/UserRoute';
 import ErrorBoundary from '../../components/ErrorBoundary';
-import Notifier from './components/Notifier';
+// import Notifier from './components/Notifier';
 import { enqueueSnackbar } from './actions';
 import { makeSelectLocation } from './selectors';
 
 const App = ({ location }) => (
   <ErrorBoundary>
-    <Notifier />
+    {/* <Notifier /> */}
     <Switch location={location}>
       <UserRoute path="/user" component={RoutesUser} />
       <AdminRoute path="/admin" component={RoutesAdmin} />

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
 
-// @material
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectBlogDate, makeSelectDateLoading } from '../selectors';

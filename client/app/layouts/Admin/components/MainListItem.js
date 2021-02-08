@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink as Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import Collapse from '@material-ui/core/Collapse';
-import menus from './sidemenu';
+import React, { useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
-
+import { connect } from 'react-redux';
+import { NavLink as Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import {
-  makeSelectLocation,
-  makeSelectAccess,
+  makeSelectAccess, makeSelectLocation
 } from '../../../containers/App/selectors';
+import menus from './sidemenu';
+
 
 const MainListItem = ({ location: { pathname }, access }) => {
   const [openSet, setOpenSet] = useState({});
@@ -54,11 +52,12 @@ const MainListItem = ({ location: { pathname }, access }) => {
                   }`}
               />
             </div>
-            <Collapse in={openSet[e.key]} timeout="auto" unmountOnExit>
+            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSet[e.key] ? 'max-h-0' : 'max-h-screen'
+              }`}>
               {e.menu.map(el => (
                 <div key={el.key}>{menuFunction(el)}</div>
               ))}
-            </Collapse>
+            </div>
           </>
         ) : (
             <div

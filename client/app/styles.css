@@ -159,10 +159,6 @@ select.inputbox {
     background-position: -200% 0;
   }
 }
-
-.ease-in-out {
-  transition: all 0.2s ease-in-out;
-}
 .rotate-90 {
   transform: rotate(-90deg);
 }
