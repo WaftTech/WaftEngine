@@ -48,7 +48,7 @@ export class AdminModuleManage extends React.PureComponent {
     }),
   };
 
-  state = { tempGroup: {} };
+  state = { tempGroup: null };
 
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
@@ -162,11 +162,18 @@ export class AdminModuleManage extends React.PureComponent {
                 name="find_module_group"
                 id="module-group"
                 placeholder="Search by group"
-                className="m-auto inputbox pr-6"
+                className="m-auto inputbox pr-8"
                 value={this.state.tempGroup}
                 onChange={this.handleDropdown}
                 options={groupOptions}
+                onKeyDown={this.handleKeyPress}
               />
+              <span
+                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                onClick={this.handleSearch}
+              >
+                <FaSearch />
+              </span>
             </div>
             <div className="flex relative">
               <input
@@ -177,11 +184,11 @@ export class AdminModuleManage extends React.PureComponent {
                 className="m-auto inputbox pr-6"
                 value={query.find_module_name}
                 onChange={this.handleQueryChange}
+                onKeyDown={this.handleKeyPress}
               />
               <span
                 className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
                 onClick={this.handleSearch}
-                onKeyDown={this.handleKeyPress}
               >
                 <FaSearch />
               </span>
