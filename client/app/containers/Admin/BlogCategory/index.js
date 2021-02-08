@@ -12,6 +12,7 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 import Table from 'components/Table';
 
@@ -103,7 +104,7 @@ export class BlogCategory extends React.PureComponent {
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ title, image, slug_url, is_active, added_at, updated_at, _id }) => [
-        title,
+        <Link className="text-blue-500" target="_blank" to={`/blog/category/${_id}`}>{title}</Link>,
         (image && image.fieldname) || '',
         '' + is_active,
         moment(added_at).format(DATE_FORMAT),
