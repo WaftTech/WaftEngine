@@ -27,7 +27,7 @@ function* loadWithdraw(action) {
   }
   yield call(
     Api.get(
-      `setting?${query}`,
+      `setting/all?${query}`,
       actions.loadWithdrawSuccess,
       actions.loadWithdrawFailure,
       token,
@@ -39,7 +39,7 @@ function* loadOne(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      `setting/key/${action.payload}`,
+      `setting/single/${action.payload}`,
       actions.loadOneSuccess,
       actions.loadOneFailure,
       token,
@@ -56,9 +56,16 @@ function* save() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
+  const type = data.type;
 
   yield fork(
-    Api.post(`setting`, actions.saveSuccess, actions.saveFailure, data, token),
+    Api.post(
+      `setting/${type}`,
+      actions.saveSuccess,
+      actions.saveFailure,
+      data,
+      token,
+    ),
   );
   yield take([LOCATION_CHANGE, types.SAVE_FAILURE]);
   yield cancel(successWatcher);

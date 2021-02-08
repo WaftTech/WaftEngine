@@ -46,7 +46,7 @@ const Panel = ({ title, body, open, key }) => {
 };
 
 Panel.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.any.isRequired,
   body: PropTypes.any.isRequired,
   open: PropTypes.bool,
   key: PropTypes.string,

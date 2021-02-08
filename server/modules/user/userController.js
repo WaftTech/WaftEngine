@@ -10,9 +10,9 @@ const renderMail = require('./../template/templateController').internal;
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
-const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginLogs = require('./loginlogs/loginlogController').internal;
 const appSetting = require('../../config/settings');
+const settingsHelper = require('../../helper/settings.helper');
 
 const userController = {};
 
@@ -342,7 +342,8 @@ userController.validLoginResponse = async (req, user, next) => {
         }
       }
     }
-
+    const secretOrKey = await settingsHelper('auth', 'token_secretOrKey')
+    const tokenExpireTime = await settingsHelper('auth', 'token_tokenExpireTime')
     // Create JWT payload
     const payload = {
       id: user._id,
@@ -808,6 +809,10 @@ userController.changePassword = async (req, res, next) => {
   try {
     let errors = {};
     const { oldPassword, newPassword } = req.body;
+    if (oldPassword == newPassword) {
+      errors.oldPassword = 'Old and New password cannot be same';
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, null, null);
+    }
     const user = await userSch.findById(req.user.id);
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (isMatch) {

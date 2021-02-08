@@ -16,7 +16,6 @@ import saga from '../saga';
 import { makeSelectAccess, makeSelectLoading } from '../selectors';
 import '../style.css';
 
-
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -51,30 +50,11 @@ class AccessManagePage extends React.PureComponent {
   };
 
   handleAccessUpdate = (module_id, roleId, ModuleId, singlePath) => {
-    const pathIndex = module_id.indexOf(singlePath);
-
-    if (pathIndex > -1) {
-      module_id.splice(pathIndex, 1);
-    } else {
-      module_id.push(singlePath);
-    }
-
-    let tempAccess = [...this.props.access.Access];
-    const index = tempAccess.findIndex(
-      each => each.module_id === ModuleId && each.role_id === roleId,
-    );
-    if (index > -1) {
-      tempAccess[index].access_type = [...module_id];
-    } else {
-      tempAccess = [
-        ...tempAccess,
-
-        { access_type: [...module_id], module_id: ModuleId, role_id: roleId },
-      ];
-    }
-    this.props.setAccessValue({
-      key: 'Access',
-      value: tempAccess,
+    this.props.setAccessUpdate({
+      module_id,
+      roleId,
+      ModuleId,
+      singlePath,
     });
   };
 
@@ -87,29 +67,29 @@ class AccessManagePage extends React.PureComponent {
     return loading && loading == true ? (
       <div class="circular_loader waftloader"></div>
     ) : (
-        <React.Fragment>
-          <Helmet>
-            <title>Access Listing</title>
-          </Helmet>
+      <React.Fragment>
+        <Helmet>
+          <title>Access Listing</title>
+        </Helmet>
 
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={this.handleBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {`Edit Access for ${Module.module_name}`}
-            </PageHeader>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {`Edit Access for ${Module.module_name}`}
+          </PageHeader>
 
-            <div className="flex items-center">
-              <button
-                className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
-                onClick={this.handleEditAccess}
-              >
-                <FaPlus />
-                <span className="pl-2">Add New</span>
-              </button>
-            </div>
-            </div>
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleEditAccess}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
+        </div>
         <PageContent>
           {Roles.map(role => {
             const accessFiltered = Access.filter(
@@ -150,19 +130,19 @@ class AccessManagePage extends React.PureComponent {
                     </div>
                   ))}
                 </div>
-                </div>
-              );
-            })}
+              </div>
+            );
+          })}
 
-            <button
-              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-              onClick={this.handleSave}
-            >
-              Save Changes
+          <button
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save Changes
           </button>
-          </PageContent>
-        </React.Fragment>
-      );
+        </PageContent>
+      </React.Fragment>
+    );
   }
 }
 
@@ -174,13 +154,6 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AccessManagePage);
+export default compose(withReducer, withSaga, withConnect)(AccessManagePage);

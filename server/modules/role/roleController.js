@@ -67,6 +67,12 @@ roleController.GetModule = async (req, res, next) => {
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
+    if (req.query.find_module_group) {
+      searchQuery2 = { module_group: { $regex: req.query.find_module_group, $options: 'i' }, is_deleted: false };
+      let pulledData = await otherHelper.getQuerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery2, selectQuery, next, populate);
+      const module_id = pulledData.data.map(id => id._id)
+      searchQuery = { ...searchQuery, module_group: { $in: module_id } }
+    }
     populate = [
       {
         path: 'module_group',
@@ -79,7 +85,7 @@ roleController.GetModule = async (req, res, next) => {
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
-  }
+  } req.query.find_module_group
 };
 
 
@@ -114,9 +120,8 @@ roleController.GetModuleDetail = async (req, res, next) => {
 roleController.GetModuleGroup = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
-    console.log(searchQuery)
-    if (req.query.find_module_name) {
-      searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
+    if (req.query.find_title) {
+      searchQuery = { module_group: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
     }
     let pulledData = await otherHelper.getQuerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.gets, page, size, pulledData.totalData);

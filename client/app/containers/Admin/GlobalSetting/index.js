@@ -28,7 +28,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../../components/Loading';
 import Table from '../../../components/Table';
-import { FaPencilAlt, FaPlus, FaTrashAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
 const key = 'globalSetting';
 
@@ -69,17 +69,33 @@ export const GlobalSetting = props => {
     setQueryValue({ key: 'size', value: size });
   };
 
+  const handleQueryChange = e => {
+    e.persist();
+    setQueryValue({ key: e.target.name, value: e.target.value });
+  };
+
+  const handleSearch = () => {
+    loadWithdrawRequest(query);
+  };
+
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const tablePagination = { page, size, totaldata };
 
-  const tableData = data.map(({ key, value, _id }) => [
+  const tableData = data.map(({ key, value, type, _id }) => [
     key,
     value,
+    type,
 
     <>
       <div className="flex">
         <span
           className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
-          onClick={() => handleEdit(key)}
+          onClick={() => handleEdit(_id)}
         >
           <FaPencilAlt className="pencil" />
           <span className="bg-blue-500 dash" />
@@ -103,19 +119,57 @@ export const GlobalSetting = props => {
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Global Settings </PageHeader>
         <div className="flex items-center">
-          {/* <button
+          <button
             className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
             onClick={handleAdd}
           >
             <FaPlus />
             <span className="pl-2">Add New</span>
-          </button> */}
+          </button>
         </div>
       </div>
       <PageContent loading={loading}>
+        <div className="flex">
+          <div className="flex relative mr-2">
+            <input
+              type="text"
+              name="find_key"
+              id="module-name"
+              placeholder="Search by key"
+              className="m-auto inputbox pr-6"
+              value={query.find_key}
+              onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
+            />
+            <span
+              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+          <div className="flex relative">
+            <input
+              type="text"
+              name="find_type"
+              id="module-name"
+              placeholder="Search by type"
+              className="m-auto inputbox pr-6"
+              value={query.find_type}
+              onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
+            />
+            <span
+              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+        </div>
         <Table
           tableData={tableData}
-          tableHead={['Key', 'Value', 'Actions']}
+          tableHead={['Key', 'Value', 'Type', 'Actions']}
           pagination={tablePagination}
           handlePagination={handlePagination}
         />
@@ -135,11 +189,5 @@ const mapStateToProps = createStructuredSelector({
   query: makeSelectQuery(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withConnect,
-  memo,
-)(GlobalSetting);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withConnect, memo)(GlobalSetting);

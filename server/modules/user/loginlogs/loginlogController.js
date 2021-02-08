@@ -2,12 +2,14 @@ const loginLogSch = require('./loginlogSchema');
 const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
 const otherHelper = require('../../../helper/others.helper');
-const { secretOrKey } = require('../../../config/keys');
+const settingsHelper = require('../../../helper/settings.helper');
 const internal = {};
 const loginLogController = {};
 
+
 internal.addloginlog = async (req, token, next) => {
   try {
+    const secretOrKey = settingsHelper('auth', 'token_secretOrKey');
     let jwtPayLoad = await jwt.verify(token, secretOrKey);
     let expires_in = new Date(jwtPayLoad.exp * 1000);
     let user_id = jwtPayLoad.id;
