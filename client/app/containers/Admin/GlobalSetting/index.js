@@ -79,7 +79,7 @@ export const GlobalSetting = props => {
       <div className="flex">
         <span
           className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
-          onClick={() => handleEdit(key)}
+          onClick={() => handleEdit(_id)}
         >
           <FaPencilAlt className="pencil" />
           <span className="bg-blue-500 dash" />
@@ -103,13 +103,13 @@ export const GlobalSetting = props => {
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Global Settings </PageHeader>
         <div className="flex items-center">
-          {/* <button
+          <button
             className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
             onClick={handleAdd}
           >
             <FaPlus />
             <span className="pl-2">Add New</span>
-          </button> */}
+          </button>
         </div>
       </div>
       <PageContent loading={loading}>
@@ -135,11 +135,5 @@ const mapStateToProps = createStructuredSelector({
   query: makeSelectQuery(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withConnect,
-  memo,
-)(GlobalSetting);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withConnect, memo)(GlobalSetting);

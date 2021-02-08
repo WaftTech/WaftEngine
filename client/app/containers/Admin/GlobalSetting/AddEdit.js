@@ -26,7 +26,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../../components/Loading';
 import Table from '../../../components/Table';
-import { FaPencilAlt, FaPlus, FaArrowLeft } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 const key = 'globalSetting';
 
@@ -51,6 +51,11 @@ export const GlobalSetting = props => {
   const handleChange = name => event => {
     event.persist();
     setOneValue({ key: name, value: event.target.value });
+  };
+
+  const handleCheckedChange = name => event => {
+    event.persist();
+    setOneValue({ key: name, value: event.target.checked });
   };
 
   const handleBack = () => {
@@ -99,6 +104,64 @@ export const GlobalSetting = props => {
           />
         </div>
         <div className="w-full md:w-1/2 pb-4">
+          <label>Type</label>
+          <input
+            className="inputbox"
+            id="type"
+            type="text"
+            name="type"
+            value={one.type || ''}
+            onChange={handleChange('type')}
+          />
+        </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Sub Type</label>
+          <input
+            className="inputbox"
+            id="sub_type"
+            type="text"
+            name="sub_type"
+            value={one.sub_type || ''}
+            onChange={handleChange('sub_type')}
+          />
+        </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Description</label>
+          <textarea
+            className="inputbox"
+            id="description"
+            type="text"
+            name="description"
+            value={one.description || ''}
+            onChange={handleChange('description')}
+          />
+        </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Email Setting</label>
+          <input
+            className="inputbox"
+            id="email_setting"
+            type="text"
+            name="email_setting"
+            value={one.email_setting || ''}
+            onChange={handleChange('email_setting')}
+          />
+        </div>
+        <div className="checkbox">
+          <input
+            onClick={handleCheckedChange('is_active')}
+            checked={one.is_active || false}
+            id="is_active"
+            type="checkbox"
+          />
+          <label htmlFor="is_active">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Is Active
+          </label>
+        </div>
+        <div className="w-full md:w-1/2 pb-4">
           <button
             className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             type="button"
@@ -122,12 +185,5 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withConnect,
-  memo,
-  withRouter,
-)(GlobalSetting);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withConnect, memo, withRouter)(GlobalSetting);
