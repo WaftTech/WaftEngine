@@ -11,7 +11,7 @@ module.exports = async passport => {
   const isFacebookAuth = await settingsHelper('auth', 'allow_facebook_login');
   const isGoogleAuth = await settingsHelper('auth', 'allow_google_login');
 
-  if (isGoogleAuth.value == true) {
+  if (isGoogleAuth == true) {
     const clientID = await settingsHelper('auth', 'googleAuth_client_id')
     const clientSecret = await settingsHelper('auth', 'googleAuth_client_secret')
 

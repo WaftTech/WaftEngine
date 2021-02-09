@@ -21,7 +21,7 @@ reCaptchaValidator.validate = async (req, res, next) => {
       next();
     } else {
       if (code) {
-        const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey.value}&response=${code}&remoteip=${req.connection.remoteAddress}`;
+        const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${code}&remoteip=${req.connection.remoteAddress}`;
         let verified = await apiCallHelper.requestThirdPartyApi(req, verifyUrl, null, null, 'POST', next);
         if (!(verified && verified.success)) {
           return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, { reCaptcha: 'invalid Captcha Validation ' }, 'Verify you are human1', null);

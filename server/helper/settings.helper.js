@@ -19,5 +19,3 @@ module.exports = async (type, key) => {
     return value
   }
 };
-
-
