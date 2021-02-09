@@ -100,7 +100,7 @@ export const MenuManage = props => {
     ({ title, key: itemKey, order, is_active, _id }) => [
       title || '',
       itemKey || '',
-      order || '',
+      // order || '',
       <>
         {is_active ? (
           <span className="label-active">active</span>
@@ -196,7 +196,7 @@ export const MenuManage = props => {
         </div>
 
         <Table
-          tableHead={['Title', 'Key', 'Order', 'Is Active', 'Action']}
+          tableHead={['Title', 'Key', 'Is Active', 'Action']}
           tableData={tableData}
           pagination={tablePagination}
           handlePagination={handlePagination}
