@@ -4,35 +4,32 @@
  *
  */
 
-import React, { memo, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { push } from 'connected-react-router';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-
 // core components
 import Table from 'components/Table';
-import * as mapDispatchToProps from './actions';
-
-import PageHeader from '../../../components/PageHeader/PageHeader';
-import PageContent from '../../../components/PageContent/PageContent';
+import { push } from 'connected-react-router';
+import React, { memo, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import {
+  FaPencilAlt, FaPlus,
+  FaSearch
+} from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import lid from '../../../assets/img/lid.svg';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
-import lid from '../../../assets/img/lid.svg';
-import {
-  FaRegQuestionCircle,
-  FaPlus,
-  FaSearch,
-  FaPencilAlt,
-} from 'react-icons/fa';
-import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
+import PageContent from '../../../components/PageContent/PageContent';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
+
+
+
 
 const key = 'menuManage';
 
@@ -88,6 +85,12 @@ export const MenuManage = props => {
     props.loadAllRequest(props.query);
   };
 
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const handlePagination = paging => {
     props.loadAllRequest(paging);
   };
@@ -102,8 +105,8 @@ export const MenuManage = props => {
         {is_active ? (
           <span className="label-active">active</span>
         ) : (
-          <span className="label-inactive">inactive</span>
-        )}
+            <span className="label-inactive">inactive</span>
+          )}
       </>,
       <>
         <div className="flex">
@@ -162,9 +165,10 @@ export const MenuManage = props => {
               className="m-auto inputbox pr-6"
               value={query.find_title}
               onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
             />
             <span
-              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
               onClick={handleSearch}
             >
               <FaSearch />
@@ -180,9 +184,10 @@ export const MenuManage = props => {
               className="m-auto inputbox pr-6"
               value={query.find_key}
               onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
             />
             <span
-              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
               onClick={handleSearch}
             >
               <FaSearch />
