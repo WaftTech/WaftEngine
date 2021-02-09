@@ -118,16 +118,6 @@ export class ContentsListingPage extends React.Component {
     this.setState({ help: !this.state.help });
   };
 
-  // handleShowForm = () => {
-  //   this.props.clearOne();
-
-  //   this.props.setShowForm(true);
-  // };
-
-  // handleCloseForm = () => {
-  //   this.props.setShowForm(false);
-  // };
-
   render() {
     const { classes } = this.props;
     const {
@@ -141,15 +131,6 @@ export class ContentsListingPage extends React.Component {
       ({ name, key, is_active, publish_from, publish_to, _id }) => [
         name,
         key,
-        // <Link
-        //   className="text-blue-500 hover:underline"
-        //   to={`/page/${key}`}
-        //   target="_blank"
-        // >
-        //   {`/page/${key}`}
-        // </Link>,
-        moment(publish_from).format(DATE_FORMAT),
-        moment(publish_to).format(DATE_FORMAT),
         <>
           {is_active ? (
             <span className="label-active">active</span>
@@ -282,8 +263,6 @@ export class ContentsListingPage extends React.Component {
             tableHead={[
               'Name',
               'Key',
-              'Pub From',
-              'Pub To',
               'Is Active',
               'Action',
             ]}

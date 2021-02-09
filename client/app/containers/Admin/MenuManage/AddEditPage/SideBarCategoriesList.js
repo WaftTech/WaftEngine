@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import Collapse from '@material-ui/core/Collapse';
 import * as mapDispatchToProps from '../actions';
 import { makeSelectCategory, makeSelectLoading } from '../selectors';
-import { FaFolder , FaMinus, FaPlus, FaFile} from 'react-icons/fa';
+import { FaFolder, FaMinus, FaPlus, FaFile } from 'react-icons/fa';
 
 const SidebarCategoriesList = props => {
   const {
@@ -50,19 +49,19 @@ const SidebarCategoriesList = props => {
           >
             {openSet[e._id] ? (
               <div className="flex items-center text-gray-300 hover:text-white cursor-pointer">
-                <FaMinus className="mr-1 text-white"/>
-                <FaFolder className="text-yellow-500 text-base"/>
+                <FaMinus className="mr-1 text-white" />
+                <FaFolder className="text-yellow-500 text-base" />
               </div>
             ) : (
-              <div className="flex items-center text-grey-darker text-gray-300 hover:text-white cursor-pointer">
-                {e.child_menu[0]._id !== '' ? (
-                  <FaPlus className="mr-1 text-white"/>
-                ) : (
-                  <FaMinus className="mr-1 text-white"/>
-                )}
-                <FaFolder className="text-yellow-500 text-base"/>
-              </div>
-            )}
+                <div className="flex items-center text-grey-darker text-gray-300 hover:text-white cursor-pointer">
+                  {e.child_menu[0]._id !== '' ? (
+                    <FaPlus className="mr-1 text-white" />
+                  ) : (
+                      <FaMinus className="mr-1 text-white" />
+                    )}
+                  <FaFolder className="text-yellow-500 text-base" />
+                </div>
+              )}
             <div className="flex items-center cursor-pointer">
               <span
                 onClick={() => handleClick(e._id)}
@@ -73,27 +72,27 @@ const SidebarCategoriesList = props => {
             </div>
           </li>
 
-          <Collapse in={openSet[e._id]} timeout="auto" unmountOnExit>
+          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${!openSet[e._id] ? 'max-h-0' : 'max-h-screen'}`}>
             <div className="list-reset pl-4 text-gray-300 hover:text-white">
               {e.child_menu.map(el => (
                 <div key={el._id}>{categoryFunction(el, e._id)}</div>
               ))}
             </div>
-          </Collapse>
+          </div>
         </>
       ) : (
-        <>
-          {e._id !== '' && (
-            <div
-              onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-8 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
-            >
-              <FaFile className="mr-2 text-base text-white" />
-              {`${e.title}`}
-            </div>
-          )}
-        </>
-      )}
+          <>
+            {e._id !== '' && (
+              <div
+                onClick={() => handleClick(e._id)}
+                className="pt-1 pb-1 pr-4 pl-8 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
+              >
+                <FaFile className="mr-2 text-base text-white" />
+                {`${e.title}`}
+              </div>
+            )}
+          </>
+        )}
     </ul>
   );
 
@@ -109,8 +108,8 @@ const SidebarCategoriesList = props => {
       {category.length <= 0 ? (
         <h1 />
       ) : (
-        category.map(e => <div className="rounded my-2 bg-gray-600" key={e._id}>{categoryFunction(e)}</div>)
-      )}
+          category.map(e => <div className="rounded my-2 bg-gray-600" key={e._id}>{categoryFunction(e)}</div>)
+        )}
     </div>
   );
 };

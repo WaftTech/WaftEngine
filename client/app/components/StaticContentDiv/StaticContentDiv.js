@@ -55,7 +55,7 @@ class StaticContent extends React.PureComponent {
                   }`}
                 target="_blank"
               >
-                 <div className="flex w-8 h-8 bg-white shadow rounded-full absolute">
+                <div className="flex w-8 h-8 bg-white shadow rounded-full absolute">
                   <FaEdit className="text-sm inline-block text-black m-auto hover:text-primary" title="Edit" />
                 </div>
               </Link>

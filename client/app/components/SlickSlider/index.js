@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import 'slick-carousel/slick/slick-theme.css';
-import 'slick-carousel/slick/slick.css';
 import { loadSlideRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import { makeSelectSlide } from '../../containers/App/selectors';
