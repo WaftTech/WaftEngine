@@ -134,9 +134,9 @@ export class AdminModuleManage extends React.PureComponent {
     const groupOptions =
       groups && groups.length > 0
         ? groups.map(each => {
-            const obj = { label: each.module_group, value: each._id };
-            return obj;
-          })
+          const obj = { label: each.module_group, value: each._id };
+          return obj;
+        })
         : [];
 
     return (
@@ -165,7 +165,7 @@ export class AdminModuleManage extends React.PureComponent {
                 name="find_module_group"
                 id="module-group"
                 placeholder="Search by group"
-                className="m-auto inputbox pr-8"
+                // className="m-auto inputbox pr-8"
                 value={this.state.tempGroup}
                 onChange={this.handleDropdown}
                 options={groupOptions}

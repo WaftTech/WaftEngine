@@ -429,14 +429,14 @@ select.inputbox {
   height: 2px;
   width: 0px;
   background: #4299e1;
-  left: 4px;
+  left: 8px;
   bottom:7px;
 }
 .edit-icon:hover .dash {
-  width: 6px;
+  width: 5px;
 }
 .edit-icon:hover .pencil {
-  right: -2px;
+  right: -4px;
 }
 
 /* animation */
