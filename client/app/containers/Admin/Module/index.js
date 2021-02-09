@@ -73,15 +73,18 @@ export class AdminModuleManage extends React.PureComponent {
     this.props.setQueryValue({ key: e.target.name, value: e.target.value });
   };
 
-  handleSearch = () => {
-    this.props.loadAllRequest(this.props.query);
-  };
-
   handleKeyPress = e => {
+    console.log("keydown");
     if (e.key === 'Enter') {
       this.handleSearch();
     }
   };
+
+  handleSearch = () => {
+    this.props.loadAllRequest(this.props.query);
+  };
+
+
 
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
@@ -131,9 +134,9 @@ export class AdminModuleManage extends React.PureComponent {
     const groupOptions =
       groups && groups.length > 0
         ? groups.map(each => {
-            const obj = { label: each.module_group, value: each._id };
-            return obj;
-          })
+          const obj = { label: each.module_group, value: each._id };
+          return obj;
+        })
         : [];
 
     return (

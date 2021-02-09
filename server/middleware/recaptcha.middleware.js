@@ -2,11 +2,8 @@ const httpStatus = require('http-status');
 const otherHelper = require('../helper/others.helper');
 const apiCallHelper = require('../helper/apicall.helper');
 const settingSch = require('../modules/setting/settingSchema');
-// const {
-//   recaptcha: { secretKey },
-// //   recaptcha_mobile: { secretKey_mobile },
-// //   recaptcha_ios: { secretKey_ios },
-// } = require('../config/keys');
+const settingsHelper = require('../helper/settings.helper');
+
 const reCaptchaValidator = {};
 
 reCaptchaValidator.validate = async (req, res, next) => {
@@ -14,11 +11,14 @@ reCaptchaValidator.validate = async (req, res, next) => {
     let code = req.body.reCaptcha;
     let code_android = req.body.reCaptcha_android;
     let code_ios = req.body.reCaptcha_iOS;
-    let secretKey = await settingSch.findOne({ key: 'captcha_secret_key' }, { value: 1, _id: 0 });
-    // let captcha_site_key = await settingSch.findOne({key:'captcha_site_key'},{value:1 , _id:0});
-    let checkrecaptcha = await settingSch.findOne({ key: 'recaptcha_check' }, { value: 1, _id: 0 });
+    let secretKey = await settingsHelper('auth', 'recaptcha_secretKey');
+    let checkrecaptcha = await settingsHelper('auth', 'recaptcha_check');
+    let secretKey_mobile = await settingsHelper('auth', 'recaptcha_secretKey_mobile');
+    let secretKey_ios = await settingsHelper('auth', 'recaptcha_secretKey_ios');
 
-    if (checkrecaptcha.value == false) {
+
+
+    if (checkrecaptcha == false) {
       next();
     } else {
       if (code) {

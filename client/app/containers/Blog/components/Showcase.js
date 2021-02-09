@@ -38,7 +38,7 @@ const ShowCase = props => {
                   <div className="article-container flow-root">
                     <div className="article-img-container">
                       <Link
-                        to={`/news/${moment(each.added_at).format(
+                        to={`/blog/${moment(each.added_at).format(
                           'YYYY/MM/DD',
                         )}/${each._id}`}
                       >
@@ -53,7 +53,7 @@ const ShowCase = props => {
                     </div>
                     <div className="textpart">
                       <Link
-                        to={`/news/${moment(each.added_at).format(
+                        to={`/blog/${moment(each.added_at).format(
                           'YYYY/MM/DD',
                         )}/${each._id}`}
                         className="text-xl leading-normal py-5 hover:text-blue-500 pointer no-underline article-title font-bold md:font-normal"

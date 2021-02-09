@@ -30,19 +30,17 @@ const Panel = ({ title, body, open, key }) => {
         onClick={() => handlePanel()}
       >
         <div className="w-full flex justify-between items-center hover:shadow">
-          <h3 className="flex-1 m-0 text-bold text-base px-4 py-2 cursor-pointer ">
-            {title}
-          </h3>
+          <h3 className="flex-1 m-0 text-bold text-base px-4 py-2 cursor-pointer select-none">
+            {title}</h3>
           <span
-            className={` flex p-2 ${openVal ? 'transform rotate-180' : ''}`}
+            className={` flex p-2 ${openVal ? 'transform rotate-180' : ''
+              }`}
           >
             <FaAngleDown className="opacity-75 cursor-pointer text-lg m-auto hover:opacity-1" />
           </span>
         </div>
       </div>
-      {openVal && (
-        <p className="text-sm border-t py-2 px-4 leading-loose">{body}</p>
-      )}
+      <div className={`overflow-hidden transition-all duration-300 ease-in-out text-sm  leading-loose select-none ${openVal ? 'max-h-screen' : 'max-h-0'}`}><div className="border-t py-2 px-4">{body}</div></div>
     </div>
   );
 };

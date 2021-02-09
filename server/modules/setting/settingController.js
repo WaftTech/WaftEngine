@@ -9,13 +9,12 @@ settingController.GetSettingAll = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
 
-    if (req.query.find_title) {
-      searchQuery = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
+    if (req.query.find_type) {
+      searchQuery = { type: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
     }
-    if (req.query.find_value) {
-      searchQuery = { value: { $regex: req.query.find_value, $options: 'i' }, ...searchQuery };
+    if (req.query.find_key) {
+      searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
     }
-
     selectQuery = 'key value type sub_type description';
 
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);

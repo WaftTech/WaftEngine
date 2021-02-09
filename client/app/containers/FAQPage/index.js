@@ -12,7 +12,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Loading from '../../components/Loading';
 import Panel from '../../components/Panel';
-import FaqContent from '../../components/FaqContent';
+import FaqCategory from '../../components/FaqCategory';
 
 class FAQPage extends React.Component {
   static propTypes = {
@@ -53,52 +53,34 @@ class FAQPage extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title> FAQs </title>
-        </Helmet>
-        <div className="my-10 container mx-auto">
-          {faq.cat &&
-            faq.cat.map(
-              x =>
-                faq.faq &&
-                faq.faq.filter(z => z.category == x._id).length !== 0 && (
-                  <div key={`cat-${x._id}`} className="mb-10">
-                    <h2 className="text-xl font-bold">{x.title}</h2>
-                    <div style={{ display: 'block', paddingLeft: 0 }}>
-                      {faq.faq &&
-                        faq.faq
-                          .filter(z => z.category == x._id)
-                          .map(y => (
-                            <Panel title={y.question} body={y.title} />
-                            // <div
-                            //   className="border rounded mb-4"
-                            //   key={`faq-${y._id}`}
-                            //   onChange={this.handleQChange(y._id)}
-                            // >
-                            //   <div
-                            //     aria-controls="panel2a-content"
-                            //     id="panel2a-header"
-                            //   >
-                            //     <h3 className="text-bold text-base px-4 py-3 border-b">
-                            //       {y.question}
-                            //     </h3>
-                            //   </div>
-                            //   <p className="text-base p-3 leading-loose">
-                            //     {y.title}
-                            //   </p>
-                            // </div>
-                          ))}
+        <div>
+          <Helmet>
+            <title> FAQs </title>
+          </Helmet>
+          <div className="my-10 container mx-auto">
+            {faq.cat &&
+              faq.cat.map(
+                x =>
+                  faq.faq &&
+                  faq.faq.filter(z => z.category == x._id).length !== 0 && (
+                    <div key={`cat-${x._id}`} className="mb-10">
+                      <h2 className="text-xl font-bold">{x.title}</h2>
+                      <div style={{ display: 'block', paddingLeft: 0 }}>
+                        {faq.faq &&
+                          faq.faq
+                            .filter(z => z.category == x._id)
+                            .map(y => (
+                              <Panel title={y.question} body={<p dangerouslySetInnerHTML={{ __html: y.title }} />} />
+                            ))}
+                      </div>
                     </div>
-                  </div>
-                ),
-            )}
+                  ),
+              )}
+          </div>
+
+          <FaqCategory faqKey="Motivations" />
         </div>
-        <div className="my-10 container mx-auto">
-          <FaqContent faqKey="prod_company" />
-        </div>
-      </div>
-    );
+      );
   }
 }
 
