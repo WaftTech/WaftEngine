@@ -9,5 +9,6 @@ router.get('/type/:type', authentication, authorization, settingModule.GetSettin
 router.get('/single/:setting_id', authentication, authorization, settingModule.GetSettingSingle);
 // router.post('/edit/all', authentication, authorization, settingModule.EditSetting);
 router.post('/:type', authentication, authorization, validation.validate, settingModule.SaveSetting);
+// router.get('/all/type', authentication, settingModule.GetAllType);
 
 module.exports = router;

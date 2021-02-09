@@ -2,16 +2,16 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const commentSch = require('./commentSchema');
 const blogSch = require('../blog/blogSchema');
-const settingSch = require('../setting/settingSchema');
+const settingsHelper = require('./../../helper/settings.helper')
 const commentController = {};
 
 commentController.PostComment = async (req, res, next) => {
   try {
     const data = req.body;
-    let cmntstatus = await settingSch.findOne({key:'default_status_of_comment'},{value:1 , _id:0});
+    let commentStatus = await settingsHelper('comment', 'default_status_of_comment');
     if (data._id) {
       data.updated_at = Date.now();
-      if(req.user) {
+      if (req.user) {
         data.updated_by = req.user.id;
       }
       const update = await commentSch.findOneAndUpdate({ _id: data._id, added_by: req.user.id }, { $set: data }, { new: true });
@@ -21,9 +21,9 @@ commentController.PostComment = async (req, res, next) => {
         return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, 'You are not allowed to edit!!', null);
       }
     } else {
-      data.status = cmntstatus.value;
+      data.status = commentStatus;
       // console.log(data.status , 'status')
-      if(req.user) {
+      if (req.user) {
         data.added_by = req.user.id;
       }
       const newComment = new commentSch(data);

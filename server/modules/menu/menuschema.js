@@ -22,7 +22,6 @@ const menuItemSchema = new Schema({
 const menuSchema = new Schema({
   title: { type: String },
   key: { type: String },
-  order: { type: Number, default: 1 },
   is_active: { type: Boolean, required: true, default: true },
   is_deleted: { type: Boolean, required: true, default: false },
   added_by: { type: Schema.Types.ObjectId, ref: 'users' },

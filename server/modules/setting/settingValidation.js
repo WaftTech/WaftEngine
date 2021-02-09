@@ -12,15 +12,6 @@ settingValidation.validate = async (req, res, next) => {
   const type = req.params.type
   const validateArray = [
     {
-      field: 'value',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: settingConfig.validate.empty,
-        },
-      ],
-    },
-    {
       field: 'key',
       validate: [
         {

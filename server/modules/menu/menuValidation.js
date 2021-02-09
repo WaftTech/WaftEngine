@@ -58,19 +58,7 @@ validation.validate = async (req, res, next) => {
           msg: menuConfig.validate.empty,
         },
       ],
-    },
-    {
-      field: 'order',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: menuConfig.validate.empty,
-        }, {
-          condition: 'IsInt',
-          msg: menuConfig.validate.isInt,
-        },
-      ],
-    },
+    }
   ];
   let errors = validateHelper.validation(data, validateArray);
 

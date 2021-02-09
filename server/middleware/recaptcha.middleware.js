@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
 const otherHelper = require('../helper/others.helper');
 const apiCallHelper = require('../helper/apicall.helper');
-const settingSch = require('../modules/setting/settingSchema');
 const settingsHelper = require('../helper/settings.helper');
 
 const reCaptchaValidator = {};

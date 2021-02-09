@@ -42,6 +42,7 @@
     "request-promise": "^4.2.2",
     "snyk": "^1.316.1",
     "speakeasy": "^2.0.0",
+    "uniq": "^1.0.1",
     "useragent": "^2.3.0",
     "validator": "^10.4.0"
   },

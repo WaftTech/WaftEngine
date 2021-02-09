@@ -18,9 +18,8 @@ const userController = {};
 
 userController.test = async (req, res, next) => {
   try {
-    const api_key = await settingSch.findOne({ key: 'sendgrid_api_key' }, { value: 1, _id: 0 });
-    sgMail.setApiKey(api_key.value);
-    console.log(api_key.value)
+    const api_key = await settingsHelper('email', 'sendgrid_api_key');
+    sgMail.setApiKey(api_key);
     const msg = {
       to: 'saileshkandel789@gmail.com',
       from: 'kulchan.sailesh@gmail.com',
@@ -36,12 +35,12 @@ userController.test = async (req, res, next) => {
 }
 userController.testmailgun = async (req, res, next) => {
   try {
-    const api_key = await settingSch.findOne({ key: 'api_key' }, { value: 1, _id: 0 });
-    const domain = await settingSch.findOne({ key: 'domain' }, { value: 1, _id: 0 });
+    const api_key = await settingsHelper('email', 'mailgun_api_key');
+    const domain = await settingsHelper('email', 'mailgun_domain')
 
     // const api_key = '7329ce5a129fcb9bf6a692df899d929d-aa4b0867-61ff9ed0';
     // const domain = 'sandbox6bd462cc8a284bfda9abe26f2842688d.mailgun.org';
-    const mailgun = require('mailgun-js')({ apiKey: api_key.value, domain: domain.value });
+    const mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
 
     const data = {
       from: 'sailesh <saileshkandel789@gmail.com>',
@@ -525,9 +524,9 @@ userController.VerifyServerMail = async (req, res, next) => {
       gender: user.gender,
     };
     // Sign Token
-    let secret_key = await settingSch.findOne({ key: 'secret_key' }, { value: 1, _id: 0 });
-    let token_expire_time = await settingSch.findOne({ key: 'token_expire_time' }, { value: 1, _id: 0 });
-    jwt.sign(payload, secret_key.value, { expiresIn: token_expire_time.value }, (err, token) => {
+    let secret_key = await settingsHelper('auth', 'token_secretOrKey');
+    let token_expire_time = await settingsHelper('auth', 'token_tokenExpireTimes');
+    jwt.sign(payload, secret_key, { expiresIn: token_expire_time }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;
 
