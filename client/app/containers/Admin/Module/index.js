@@ -165,7 +165,7 @@ export class AdminModuleManage extends React.PureComponent {
                 name="find_module_group"
                 id="module-group"
                 placeholder="Search by group"
-                // className="m-auto inputbox pr-8"
+                className="m-auto inputbox pr-8"
                 value={this.state.tempGroup}
                 onChange={this.handleDropdown}
                 options={groupOptions}
