@@ -88,8 +88,9 @@ export const GlobalSetting = props => {
 
   const tableData = data.map(({ key, value, type, _id }) => [
     key,
-    value,
     type,
+
+    `${value}`,
 
     <>
       <div className="flex">
@@ -169,7 +170,7 @@ export const GlobalSetting = props => {
         </div>
         <Table
           tableData={tableData}
-          tableHead={['Key', 'Value', 'Type', 'Actions']}
+          tableHead={['Key', 'Type', 'Value', 'Is active', 'Actions']}
           pagination={tablePagination}
           handlePagination={handlePagination}
         />
