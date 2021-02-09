@@ -32,6 +32,7 @@
     "mongoose": "^5.9.11",
     "morgan": "^1.10.0",
     "multer": "^1.4.0",
+    "node-cache": "^5.1.2",
     "nodemailer": "^4.6.7",
     "passport": "^0.4.0",
     "passport-facebook-token": "^3.3.0",
