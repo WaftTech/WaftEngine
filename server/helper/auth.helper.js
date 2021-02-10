@@ -8,12 +8,12 @@ module.exports = async passport => {
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
-  const isFacebookAuth = await settingsHelper('auth', 'allow_facebook_login');
-  const isGoogleAuth = await settingsHelper('auth', 'allow_google_login');
+  const isFacebookAuth = await settingsHelper('auth', 'facebook', 'allow_login');
+  const isGoogleAuth = await settingsHelper('auth', 'google', 'allow_login');
 
   if (isGoogleAuth == true) {
-    const clientID = await settingsHelper('auth', 'googleAuth_client_id')
-    const clientSecret = await settingsHelper('auth', 'googleAuth_client_secret')
+    const clientID = await settingsHelper('auth', 'google', 'client_id')
+    const clientSecret = await settingsHelper('auth', 'google', 'secret')
 
     const GoogleTokenStrategy = require('passport-google-token').Strategy;
     passport.use(
@@ -37,8 +37,8 @@ module.exports = async passport => {
   }
   if (isFacebookAuth == true) {
     const FacebookTokenStrategy = require('passport-facebook-token');
-    const FACEBOOK_APP_ID = await settingsHelper('auth', 'facebookAuth_FACEBOOK_APP_ID');
-    const FACEBOOK_APP_SECRET = await settingsHelper('auth', 'facebookAuth_FACEBOOK_APP_SECRET');
+    const FACEBOOK_APP_ID = await settingsHelper('auth', 'facebook', 'app_id');
+    const FACEBOOK_APP_SECRET = await settingsHelper('auth', 'sub_type', 'app_secret');
 
     passport.use(
       new FacebookTokenStrategy(
