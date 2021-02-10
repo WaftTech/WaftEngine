@@ -16,7 +16,7 @@ settingController.GetSettingAll = async (req, res, next) => {
     if (req.query.find_key) {
       searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
     }
-    selectQuery = 'key value type sub_type description';
+    selectQuery = 'key value type sub_type description is_active';
     sortQuery = { type: 1, key: 1 }
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
