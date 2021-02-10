@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const settingSch = require('./settingSchema');
+const uniq = require('uniq')
 const settingConfig = require('./settingConfig');
 const otherHelper = require('../../helper/others.helper');
 const { findOne } = require('./settingSchema');
@@ -16,7 +17,7 @@ settingController.GetSettingAll = async (req, res, next) => {
       searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
     }
     selectQuery = 'key value type sub_type description';
-
+    sortQuery = { type: 1, key: 1 }
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
   } catch (err) {
@@ -100,4 +101,16 @@ settingController.EditSetting = async (req, res, next) => {
     next(err);
   }
 };
+
+// settingController.GetAllType = async (req, res, next) => {
+//   try {
+
+//     let setting = await settingSch.find().select({ "type": 1, "_id": 0 })
+//     const typeArray = setting.map(type => type.type)
+//     return otherHelper.sendResponse(res, httpStatus.OK, true, uniq(typeArray), null, 'successful get all type', null);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 module.exports = settingController;
