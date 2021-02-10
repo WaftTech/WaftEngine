@@ -12,37 +12,28 @@ export const selectDomain = state => state.globalSetting || initialState;
  */
 
 export const makeSelectWithdraw = () =>
-  createSelector(
-    selectDomain,
-    state => state.withdraw,
-  );
+  createSelector(selectDomain, state => state.withdraw);
 
 export const makeSelectLoading = () =>
-  createSelector(
-    selectDomain,
-    state => state.loading,
-  );
+  createSelector(selectDomain, state => state.loading);
 
 export const makeSelectOne = () =>
-  createSelector(
-    selectDomain,
-    state => state.one,
-  );
+  createSelector(selectDomain, state => state.one);
 
 export const makeSelectQuery = () =>
-  createSelector(
-    selectDomain,
-    state => state.query,
-  );
+  createSelector(selectDomain, state => state.query);
+
+export const makeSelectTypes = () =>
+  createSelector(selectDomain, state => state.types);
+
+export const makeSelectSubTypes = () =>
+  createSelector(selectDomain, state => state.sub_types);
 
 /**
  * Default selector used by GlobalSetting
  */
 
 const makeSelectGlobalSetting = () =>
-  createSelector(
-    selectDomain,
-    substate => substate,
-  );
+  createSelector(selectDomain, substate => substate);
 
 export default makeSelectGlobalSetting;

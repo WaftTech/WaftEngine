@@ -18,7 +18,7 @@ const userController = {};
 
 userController.test = async (req, res, next) => {
   try {
-    const api_key = await settingsHelper('email', 'sendgrid_api_key');
+    const api_key = await settingsHelper('email', 'sendgrid', 'api_key');
     sgMail.setApiKey(api_key);
     const msg = {
       to: 'saileshkandel789@gmail.com',
@@ -35,8 +35,8 @@ userController.test = async (req, res, next) => {
 }
 userController.testmailgun = async (req, res, next) => {
   try {
-    const api_key = await settingsHelper('email', 'mailgun_api_key');
-    const domain = await settingsHelper('email', 'mailgun_domain')
+    const api_key = await settingsHelper('email', 'mailgun', 'api_key');
+    const domain = await settingsHelper('email', 'mailgun', 'domain')
 
     // const api_key = '7329ce5a129fcb9bf6a692df899d929d-aa4b0867-61ff9ed0';
     // const domain = 'sandbox6bd462cc8a284bfda9abe26f2842688d.mailgun.org';
@@ -341,8 +341,8 @@ userController.validLoginResponse = async (req, user, next) => {
         }
       }
     }
-    const secretOrKey = await settingsHelper('auth', 'token_secretOrKey')
-    const tokenExpireTime = await settingsHelper('auth', 'token_tokenExpireTime')
+    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
+    const tokenExpireTime = await settingsHelper('auth', 'token', 'expiry_time')
     // Create JWT payload
     const payload = {
       id: user._id,
@@ -524,8 +524,8 @@ userController.VerifyServerMail = async (req, res, next) => {
       gender: user.gender,
     };
     // Sign Token
-    let secret_key = await settingsHelper('auth', 'token_secretOrKey');
-    let token_expire_time = await settingsHelper('auth', 'token_tokenExpireTimes');
+    let secret_key = await settingsHelper('auth', 'token', 'secret_key');
+    let token_expire_time = await settingsHelper('auth', 'token', 'expiry_time');
     jwt.sign(payload, secret_key, { expiresIn: token_expire_time }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;

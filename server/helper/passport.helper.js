@@ -6,7 +6,7 @@ const settingsHelper = require('./settings.helper')
 
 
 module.exports = async passport => {
-  const secretOrKey = await settingsHelper('auth', 'token_secretOrKey')
+  const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
   const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey
