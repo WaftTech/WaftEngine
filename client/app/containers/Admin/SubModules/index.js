@@ -158,7 +158,7 @@ export const SubModules = props => {
             onKeyPress={handleKeyPress}
           />
           <span
-            className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+            className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
             onClick={handleSearch}
           >
             <FaSearch />

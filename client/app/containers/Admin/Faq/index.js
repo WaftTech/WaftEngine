@@ -159,11 +159,11 @@ export class FAQManagePage extends React.PureComponent {
               className="m-auto inputbox pr-6"
               value={query.find_question}
               onChange={this.handleQueryChange}
+              onKeyDown={this.handleKeyPress}
             />
             <span
-              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
               onClick={this.handleSearch}
-              onKeyDown={this.handleKeyPress}
             >
               <FaSearch />
             </span>

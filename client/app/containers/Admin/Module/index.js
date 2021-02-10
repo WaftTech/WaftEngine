@@ -134,9 +134,9 @@ export class AdminModuleManage extends React.PureComponent {
     const groupOptions =
       groups && groups.length > 0
         ? groups.map(each => {
-            const obj = { label: each.module_group, value: each._id };
-            return obj;
-          })
+          const obj = { label: each.module_group, value: each._id };
+          return obj;
+        })
         : [];
 
     return (
@@ -172,7 +172,7 @@ export class AdminModuleManage extends React.PureComponent {
                 onKeyDown={this.handleKeyPress}
               />
               <span
-                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
                 onClick={this.handleSearch}
               >
                 <FaSearch />
@@ -190,7 +190,7 @@ export class AdminModuleManage extends React.PureComponent {
                 onKeyDown={this.handleKeyPress}
               />
               <span
-                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
                 onClick={this.handleSearch}
               >
                 <FaSearch />

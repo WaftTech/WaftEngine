@@ -61,7 +61,7 @@ contentController.GetContentByKey = async (req, res, next) => {
   try {
     const key = req.params.key;
     const contents = await contentSch.findOne({ key, is_deleted: false, is_active: true }).populate([{ path: 'image' }]);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, contents ? contents : { key: req.params.key, description: `<div class="text-sm border border-red-200 bg-red-100 rounded px-2 py-1">Content not found key=${req.params.key}</div>` }, null, contentConfig.get, null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, contents ? contents : { key: req.params.key, description: `<div class="text-sm border border-red-100 bg-red-50 rounded px-2 py-1 text-red-600 inline-block m-4">Content not found [key=${req.params.key}]</div>` }, null, contentConfig.get, null);
   } catch (err) {
     next(err);
   }

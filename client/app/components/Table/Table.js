@@ -23,7 +23,7 @@ function CustomTable({ ...props }) {
             <tr>
               {tableHead.map((prop, key) => (
                 <th
-                  className="py-2 px-2 font-bold text-sm text-gray-800 border-t border-b border-gray-300"
+                  className="py-2 px-2 font-medium text-sm text-gray-500 border-t border-b border-gray-300"
                   key={key}
                 >
                   {prop}
@@ -48,16 +48,16 @@ function CustomTable({ ...props }) {
             ))}
           </tbody>
         ) : (
-          loading && (
-            <tbody>
-              <tr>
-                <td colSpan={tableHead.length} className="py-2 text-center">
-                <div class="circular_loader waftloader"></div>
-                </td>
-              </tr>
-            </tbody>
-          )
-        )}
+            loading && (
+              <tbody>
+                <tr>
+                  <td colSpan={tableHead.length} className="py-2 text-center">
+                    <div class="circular_loader waftloader"></div>
+                  </td>
+                </tr>
+              </tbody>
+            )
+          )}
       </table>
 
       {(tableData.length < 1 || pagination.totaldata === 0) &&
@@ -69,12 +69,11 @@ function CustomTable({ ...props }) {
 
       {pagination && handlePagination && (
         <>
-          <div className="flex justify-between items-center px-4 py-2 border-t border-gray-200">
-            <span className="text-sm">Total Data: {pagination.totaldata}</span>
+          <div className="flex justify-end items-center pt-2 border-t border-gray-200">
             <div className="inline-flex items-center justify-end ">
-              <span className="text-sm">Rows Per page</span>{' '}
+              <span className="text-xs text-gray-500">rows per page</span>{' '}
               <select
-                className="text-sm inputbox w-20 mr-20 ml-4"
+                className="inputbox text-xs w-12 h-6 p-0 mx-2"
                 value={pagination.size || 10}
                 onChange={e => {
                   handlePagination({ ...pagination, size: e.target.value });
@@ -84,9 +83,11 @@ function CustomTable({ ...props }) {
                   <option value={each}>{each}</option>
                 ))}
               </select>
-              <span className="mr-20 text-sm">
-                Page {pagination.page} of{' '}
-                {Math.ceil(pagination.totaldata / pagination.size)}
+              <span className="mr-5 text-xs text-gray-500">
+                page {pagination.page} of {Math.ceil(pagination.totaldata / pagination.size)}
+
+                <span className="pl-4">total data : {pagination.totaldata}</span>
+
               </span>
               <span
                 onClick={() => {
@@ -98,9 +99,9 @@ function CustomTable({ ...props }) {
                     page: pagination.page - 1,
                   });
                 }}
-                className={`${
-                  1 === pagination.page ? 'opacity-50 pointer-events-none' : ''
-                } w-12 h-12 rounded hover:bg-gray-200 inline-block cursor-pointer inline-flex items-center justify-center`}
+                className={`${1 === pagination.page ? 'opacity-25 pointer-events-none'
+                  : 'hover:bg-blue-500 hover:text-white'
+                  } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
               >
                 <FaChevronLeft />
               </span>
@@ -117,12 +118,11 @@ function CustomTable({ ...props }) {
                     page: pagination.page + 1,
                   });
                 }}
-                className={`${
-                  Math.ceil(pagination.totaldata / pagination.size) ===
+                className={`${Math.ceil(pagination.totaldata / pagination.size) ===
                   pagination.page
-                    ? 'opacity-50 pointer-events-none'
-                    : ''
-                } w-12 h-12 rounded hover:bg-gray-200 inline-block cursor-pointer inline-flex items-center justify-center`}
+                  ? 'opacity-25 pointer-events-none'
+                  : 'hover:bg-blue-500 hover:text-white'
+                  } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
               >
                 <FaChevronRight />
               </span>
