@@ -15,7 +15,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
 
-import { SnackbarProvider } from 'notistack';
+// import { SnackbarProvider } from 'notistack';
 
 import history from 'utils/history';
 
@@ -81,9 +81,9 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <SnackbarProvider maxSnack={3}>
-            <App />
-          </SnackbarProvider>
+          {/* <SnackbarProvider maxSnack={3}> */}
+          <App />
+          {/* </SnackbarProvider> */}
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

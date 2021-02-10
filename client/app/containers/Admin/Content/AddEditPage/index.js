@@ -146,9 +146,9 @@ class AddEdit extends React.PureComponent {
                 value={one.name}
                 onChange={this.handleChange('name')}
               />
-             {errors && errors.name && errors.name.trim() !== '' && (
-              <div className="error">{errors.name}</div>
-             )}
+              {errors && errors.name && errors.name.trim() !== '' && (
+                <div className="error">{errors.name}</div>
+              )}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -161,8 +161,8 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('key')}
               />
               {errors && errors.key && errors.key.trim() !== '' && (
-              <div className="error">{errors && errors.key}</div>
-              )}   
+                <div className="error">{errors && errors.key}</div>
+              )}
             </div>
 
             <div className="pb-4">
@@ -171,7 +171,7 @@ class AddEdit extends React.PureComponent {
                 setOneValue={this.props.setOneValue}
               />
               {errors && errors.description && errors.description.trim() !== '' && (
-              <div className="error">{errors.description}</div>
+                <div className="error">{errors.description}</div>
               )}
             </div>
 
@@ -185,8 +185,8 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('meta_title')}
               />
               {errors && errors.meta_title && errors.meta_title.trim() !== '' && (
-              <div className="error">{errors.meta_title}</div>)
-               }
+                <div className="error">{errors.meta_title}</div>)
+              }
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Description</label>
@@ -198,7 +198,7 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('meta_description')}
               />
               {errors && errors.meta_description && (
-              <div className="error">{errors.meta_description}</div>
+                <div className="error">{errors.meta_description}</div>
               )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
@@ -232,42 +232,6 @@ class AddEdit extends React.PureComponent {
                     </label>
                   );
                 })}
-            </div>
-
-            <div className="flex w-full justify-between md:w-1/2 px-2">
-              <div className="w-full md:w-1/2 -ml-2">
-                <label className="text-sm" htmlFor="grid-last-name">
-                  Published From
-              </label>
-                <DatePicker
-                  margin="normal"
-                  name="publish_from"
-                  className="inputbox"
-                  value={
-                    (one.publish_from &&
-                      moment(one.publish_from).format(DATE_FORMAT)) ||
-                    ''
-                  }
-                  onChange={this.handleDateChange('publish_from')}
-                />
-              </div>
-
-              <div className="w-full md:w-1/2 -mr-2">
-                <label className="text-sm" htmlFor="grid-last-name">
-                  Published To
-              </label>
-                <DatePicker
-                  margin="normal"
-                  name="publish_to"
-                  className="inputbox"
-                  value={
-                    (one.publish_to &&
-                      moment(one.publish_to).format(DATE_FORMAT)) ||
-                    ''
-                  }
-                  onChange={this.handleDateChange('publish_to')}
-                />
-              </div>
             </div>
 
             <div className="checkbox">

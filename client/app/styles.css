@@ -159,10 +159,6 @@ select.inputbox {
     background-position: -200% 0;
   }
 }
-
-.ease-in-out {
-  transition: all 0.2s ease-in-out;
-}
 .rotate-90 {
   transform: rotate(-90deg);
 }
@@ -299,7 +295,7 @@ select.inputbox {
 }
 
 .checkbox .box {
-  @apply w-5 h-5 border border-gray-500 rounded mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
+  @apply w-5 h-5 border border-gray-400 rounded mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
 }
 
 .checkbox label {
@@ -411,7 +407,7 @@ select.inputbox {
 .trash-lid {
   position: absolute;
   left: 8px;
-  top: 9px;
+  top: 8px;
 }
 .pencil,
 .trash-lid,
@@ -421,8 +417,8 @@ select.inputbox {
 .pencil {
   position: relative;
   right: 0;
-  color: #4299e1;
-  font-size: 16px;
+  color: #3b82f6;
+  font-size: 18px;
 }
 
 .trash-icon:hover .trash-lid {
@@ -433,14 +429,14 @@ select.inputbox {
   height: 2px;
   width: 0px;
   background: #4299e1;
-  left: 6px;
-  bottom: 8px;
+  left: 4px;
+  bottom:7px;
 }
 .edit-icon:hover .dash {
-  width: 8px;
+  width: 6px;
 }
 .edit-icon:hover .pencil {
-  right: -3px;
+  right: -2px;
 }
 
 /* animation */
