@@ -288,7 +288,6 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
 };
 
 AdminLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
   logoutRequest: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,

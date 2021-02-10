@@ -34,6 +34,7 @@ export default class HomePage extends React.PureComponent {
       <>
 
         <SlickSlider slideKey="homeSlider" />
+        <StaticContentDiv contentKey="sdafsdf" />
       </>
     );
   }
