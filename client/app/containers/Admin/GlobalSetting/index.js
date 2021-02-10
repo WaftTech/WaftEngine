@@ -86,11 +86,13 @@ export const GlobalSetting = props => {
 
   const tablePagination = { page, size, totaldata };
 
-  const tableData = data.map(({ key, value, type, _id }) => [
-    key,
+  const tableData = data.map(({ key, sub_type, value, type, is_active, _id }) => [
     type,
+    sub_type,
+    key,
 
     `${value}`,
+    `${is_active}`,
 
     <>
       <div className="flex">
@@ -134,24 +136,6 @@ export const GlobalSetting = props => {
           <div className="flex relative mr-2">
             <input
               type="text"
-              name="find_key"
-              id="module-name"
-              placeholder="Search by key"
-              className="m-auto inputbox pr-6"
-              value={query.find_key}
-              onChange={handleQueryChange}
-              onKeyDown={handleKeyPress}
-            />
-            <span
-              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
-              onClick={handleSearch}
-            >
-              <FaSearch />
-            </span>
-          </div>
-          <div className="flex relative">
-            <input
-              type="text"
               name="find_type"
               id="module-name"
               placeholder="Search by type"
@@ -167,10 +151,29 @@ export const GlobalSetting = props => {
               <FaSearch />
             </span>
           </div>
+          <div className="flex relative">
+            <input
+              type="text"
+              name="find_key"
+              id="module-name"
+              placeholder="Search by key"
+              className="m-auto inputbox pr-6"
+              value={query.find_key}
+              onChange={handleQueryChange}
+              onKeyDown={handleKeyPress}
+            />
+            <span
+              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+
         </div>
         <Table
           tableData={tableData}
-          tableHead={['Key', 'Type', 'Value', 'Is active', 'Actions']}
+          tableHead={['Type', 'Sub Type', 'Key', 'Value', 'Is active', 'Actions']}
           pagination={tablePagination}
           handlePagination={handlePagination}
         />
