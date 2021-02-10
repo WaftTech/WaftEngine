@@ -9,9 +9,9 @@ const settingController = {};
 settingController.GetSettingAll = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
-
+    console.log(req.query)
     if (req.query.find_type) {
-      searchQuery = { type: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
+      searchQuery = { type: { $regex: req.query.find_type, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_key) {
       searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
@@ -19,7 +19,9 @@ settingController.GetSettingAll = async (req, res, next) => {
     selectQuery = 'key value type sub_type description is_active';
     sortQuery = { type: 1, key: 1 }
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
+    if (setting) {
+      return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
+    }
   } catch (err) {
     next(err);
   }
@@ -29,13 +31,15 @@ settingController.GetSettingType = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
 
-    if (req.query.find_title) {
-      searchQuery = { key: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
+    if (req.query.find_type) {
+      searchQuery = { type: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
     }
-    if (req.query.find_value) {
-      searchQuery = { value: { $regex: req.query.find_value, $options: 'i' }, ...searchQuery };
+    if (req.query.find_sub_type) {
+      searchQuery = { sub_type: { $regex: req.query.sub_type, $options: 'i' }, ...searchQuery };
     }
-    searchQuery = { type: req.params.type, ...searchQuery };
+    if (req.query.find_key) {
+      searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
+    }
 
     selectQuery = 'key value type sub_type description';
 
@@ -102,15 +106,25 @@ settingController.EditSetting = async (req, res, next) => {
   }
 };
 
-// settingController.GetAllType = async (req, res, next) => {
-//   try {
+settingController.GetAllType = async (req, res, next) => {
+  try {
 
-//     let setting = await settingSch.find().select({ "type": 1, "_id": 0 })
-//     const typeArray = setting.map(type => type.type)
-//     return otherHelper.sendResponse(res, httpStatus.OK, true, uniq(typeArray), null, 'successful get all type', null);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    let setting = await settingSch.distinct('type')
+    return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, 'successful get all type', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+settingController.GetSubTypeByType = async (req, res, next) => {
+  try {
+    const type = req.params.type
+    let setting = await settingSch.find({ type: type }).distinct('sub_type')
+    setting.type = req.params.type
+    return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, 'successful get all sub-type', null);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = settingController;
