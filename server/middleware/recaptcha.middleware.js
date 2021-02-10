@@ -12,8 +12,8 @@ reCaptchaValidator.validate = async (req, res, next) => {
     let code_ios = req.body.reCaptcha_iOS;
     let secretKey = await settingsHelper('auth', 'recaptcha', 'secret_key');
     let checkrecaptcha = await settingsHelper('auth', 'recaptcha', 'check');
-    let secretKey_mobile = await settingsHelper('auth', 'recaptcha', 'recaptcha_secretKey_mobile');
-    let secretKey_ios = await settingsHelper('auth', 'recaptcha', 'recaptcha_secretKey_ios');
+    let secretKey_mobile = await settingsHelper('auth', 'recaptcha', 'secret_key_mobile');
+    let secretKey_ios = await settingsHelper('auth', 'recaptcha', 'secret_key_ios');
 
 
 

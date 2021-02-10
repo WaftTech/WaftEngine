@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const settingSch = require('./settingSchema');
 const settingConfig = require('./settingConfig');
 const otherHelper = require('../../helper/others.helper');
+const settingsHelper = require('../../helper/settings.helper');
 const settingController = {};
 
 settingController.GetSettingAll = async (req, res, next) => {
@@ -69,6 +70,7 @@ settingController.SaveSetting = async (req, res, next) => {
     let data = req.body;
     if (data._id) {
       data.updated_by = req.user.id;
+      settingsHelper(data.type, data.sub_type, data.sub_type)
       let updated = await settingSch.findByIdAndUpdate(data._id, { $set: data });
       return otherHelper.sendResponse(res, httpStatus.OK, true, updated, null, settingConfig.save, null);
     } else {
