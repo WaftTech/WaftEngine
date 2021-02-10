@@ -3,20 +3,21 @@ const settingSch = require('./settingSchema');
 const settingConfig = require('./settingConfig');
 const otherHelper = require('../../helper/others.helper');
 const settingsHelper = require('../../helper/settings.helper');
+const NodeCache = require("node-cache");
+const myCache = new NodeCache();
 const settingController = {};
 
 settingController.GetSettingAll = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
-    console.log(req.query)
-    if (req.query.find_type) {
+    if (req.query.find_type && req.query.find_type != 'all') {
       searchQuery = { type: { $regex: req.query.find_type, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_key) {
       searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
     }
-    if (req.query.find_sub_type) {
-      searchQuery = { find_sub_type: { $regex: req.query.find_sub_type, $options: 'i' }, ...searchQuery };
+    if (req.query.find_sub_type && req.query.find_type != 'all' && req.query.find_sub_type != 'all') {
+      searchQuery = { sub_type: { $regex: req.query.find_sub_type, $options: 'i' }, ...searchQuery };
     }
     selectQuery = 'key value type sub_type description is_active';
     sortQuery = { type: 1, sub_type: 1, key: 1 }
@@ -70,7 +71,7 @@ settingController.SaveSetting = async (req, res, next) => {
     let data = req.body;
     if (data._id) {
       data.updated_by = req.user.id;
-      settingsHelper(data.type, data.sub_type, data.sub_type)
+      settingsHelper('##$##', '##$##', data)
       let updated = await settingSch.findByIdAndUpdate(data._id, { $set: data });
       return otherHelper.sendResponse(res, httpStatus.OK, true, updated, null, settingConfig.save, null);
     } else {
@@ -111,9 +112,10 @@ settingController.EditSetting = async (req, res, next) => {
 
 settingController.GetAllType = async (req, res, next) => {
   try {
-
-    let setting = await settingSch.distinct('type')
-    return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, 'successful get all type', null);
+    let setting = ['all']
+    let pulledData = await settingSch.distinct('type')
+    let temp = setting.concat(pulledData)
+    return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'successful get all type', null);
   } catch (err) {
     next(err);
   }
@@ -122,9 +124,11 @@ settingController.GetAllType = async (req, res, next) => {
 settingController.GetSubTypeByType = async (req, res, next) => {
   try {
     const type = req.params.type
-    let setting = await settingSch.find({ type: type }).distinct('sub_type')
-    setting.type = req.params.type
-    return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, 'successful get all sub-type', null);
+    var temp
+    let setting = ['all']
+    let pulledData = await settingSch.find({ type: type }).distinct('sub_type')
+    temp = setting.concat(pulledData)
+    return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'successful get all sub-type', null);
   } catch (err) {
     next(err);
   }
