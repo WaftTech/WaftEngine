@@ -28,6 +28,7 @@ export const initialState = {
     module_loading: false,
     role_loading: false,
   },
+  selectStates: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -90,6 +91,13 @@ const adminRoleReducer = (state = initialState, action) =>
       case types.LOAD_MODULE_GROUP_SUCCESS:
         draft.loaders.module_loading = false;
         draft.module_data = action.payload.data;
+        for (let index = 0; index < action.payload.data.length; index++) {
+          const element = action.payload.data[index];
+          draft.selectStates = {
+            ...draft.selectStates,
+            [element._id]: false,
+          };
+        }
         break;
       case types.LOAD_MODULE_GROUP_FAILURE:
         draft.loaders.module_loading = false;
@@ -101,6 +109,7 @@ const adminRoleReducer = (state = initialState, action) =>
       case types.LOAD_ROLE_ACCESS_SUCCESS:
         draft.loaders.role_loading = false;
         draft.role_data = action.payload.data;
+
         break;
       case types.LOAD_ROLE_ACCESS_FAILURE:
         draft.loaders.role_loading = false;
@@ -109,6 +118,10 @@ const adminRoleReducer = (state = initialState, action) =>
       case types.SET_ACCESS_ARRAY:
         draft.role_data.Access[action.payload.index].access_type =
           action.payload.value;
+        break;
+
+      case types.SET_SELECT_STATE:
+        draft.selectStates[action.payload.key] = action.payload.value;
         break;
     }
   });
