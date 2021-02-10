@@ -81,7 +81,7 @@ export const GlobalSetting = props => {
     setQueryValue({ key: e.target.name, value: e.target.value });
     if (e.target.name === 'find_type') {
       loadSubTypeRequest(e.target.value);
-      setQueryValue({ key: 'find_sub_types', value: '' });
+      setQueryValue({ key: 'find_sub_type', value: '' });
     }
   };
 
