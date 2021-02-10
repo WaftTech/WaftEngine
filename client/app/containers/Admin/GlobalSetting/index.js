@@ -22,7 +22,9 @@ import * as mapDispatchToProps from './actions';
 import {
   makeSelectLoading,
   makeSelectQuery,
+  makeSelectSubTypes,
   makeSelectWithdraw,
+  makeSelectTypes,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -41,12 +43,17 @@ export const GlobalSetting = props => {
     setQueryValue,
     clearOne,
     query,
+    loadTypeRequest,
+    loadSubTypeRequest,
+    types,
+    sub_types,
   } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
     loadWithdrawRequest(query);
+    loadTypeRequest();
   }, [query]);
 
   const handleChange = name => event => {
@@ -72,6 +79,10 @@ export const GlobalSetting = props => {
   const handleQueryChange = e => {
     e.persist();
     setQueryValue({ key: e.target.name, value: e.target.value });
+    if (e.target.name === 'find_type') {
+      loadSubTypeRequest(e.target.value);
+      setQueryValue({ key: 'find_sub_types', value: '' });
+    }
   };
 
   const handleSearch = () => {
@@ -86,32 +97,34 @@ export const GlobalSetting = props => {
 
   const tablePagination = { page, size, totaldata };
 
-  const tableData = data.map(({ key, sub_type, value, type, is_active, _id }) => [
-    type,
-    sub_type,
-    key,
+  const tableData = data.map(
+    ({ key, sub_type, value, type, is_active, _id }) => [
+      type,
+      sub_type,
+      key,
 
-    `${value}`,
-    `${is_active}`,
+      `${value}`,
+      `${is_active}`,
 
-    <>
-      <div className="flex">
-        <span
-          className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
-          onClick={() => handleEdit(_id)}
-        >
-          <FaPencilAlt className="pencil" />
-          <span className="bg-blue-500 dash" />
-        </span>
-        {/* <span
+      <>
+        <div className="flex">
+          <span
+            className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+            onClick={() => handleEdit(_id)}
+          >
+            <FaPencilAlt className="pencil" />
+            <span className="bg-blue-500 dash" />
+          </span>
+          {/* <span
               className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => handleOpen(_id)}
             >
               <FaTrashAlt className="text-red-400 text-lg" />
             </span> */}
-      </div>
-    </>,
-  ]);
+        </div>
+      </>,
+    ],
+  );
 
   return (
     <>
@@ -134,7 +147,7 @@ export const GlobalSetting = props => {
       <PageContent loading={loading}>
         <div className="flex">
           <div className="flex relative mr-2">
-            <input
+            <select
               type="text"
               name="find_type"
               id="module-name"
@@ -142,8 +155,16 @@ export const GlobalSetting = props => {
               className="m-auto inputbox pr-6"
               value={query.find_type}
               onChange={handleQueryChange}
-              onKeyDown={handleKeyPress}
-            />
+            >
+              <option value="">Choose type</option>
+              {types &&
+                types.length > 0 &&
+                types.map(each => (
+                  <option value={each.name} key={each._id}>
+                    {each.name}
+                  </option>
+                ))}
+            </select>
             <span
               className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
               onClick={handleSearch}
@@ -151,6 +172,39 @@ export const GlobalSetting = props => {
               <FaSearch />
             </span>
           </div>
+          <div className="flex relative mr-2">
+            <select
+              type="text"
+              name="find_sub_type"
+              placeholder="Search by SubType"
+              className="m-auto inputbox pr-6"
+              value={query.find_sub_type || ''}
+              onChange={handleQueryChange}
+            >
+              {query.find_type && query.find_type !== '' ? (
+                <>
+                  <option value="">Choose sub type</option>
+
+                  {sub_types &&
+                    sub_types.length > 0 &&
+                    sub_types.map(each => (
+                      <option value={each.name} key={each._id}>
+                        {each.name}
+                      </option>
+                    ))}
+                </>
+              ) : (
+                <option value="">Choose type first</option>
+              )}
+            </select>
+            <span
+              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+
           <div className="flex relative">
             <input
               type="text"
@@ -169,11 +223,17 @@ export const GlobalSetting = props => {
               <FaSearch />
             </span>
           </div>
-
         </div>
         <Table
           tableData={tableData}
-          tableHead={['Type', 'Sub Type', 'Key', 'Value', 'Is active', 'Actions']}
+          tableHead={[
+            'Type',
+            'Sub Type',
+            'Key',
+            'Value',
+            'Is active',
+            'Actions',
+          ]}
           pagination={tablePagination}
           handlePagination={handlePagination}
         />
@@ -191,6 +251,8 @@ const mapStateToProps = createStructuredSelector({
   withdraw: makeSelectWithdraw(),
   loading: makeSelectLoading(),
   query: makeSelectQuery(),
+  types: makeSelectTypes(),
+  sub_types: makeSelectSubTypes(),
 });
 
 const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
