@@ -81,7 +81,7 @@ export const GlobalSetting = props => {
     setQueryValue({ key: e.target.name, value: e.target.value });
     if (e.target.name === 'find_type') {
       loadSubTypeRequest(e.target.value);
-      setQueryValue({ key: 'find_sub_types', value: '' });
+      setQueryValue({ key: 'find_sub_type', value: '' });
     }
   };
 
@@ -159,9 +159,9 @@ export const GlobalSetting = props => {
               <option value="">Choose type</option>
               {types &&
                 types.length > 0 &&
-                types.map(each => (
-                  <option value={each.name} key={each._id}>
-                    {each.name}
+                types.map((each, index) => (
+                  <option value={each} key={`ty-${index}`}>
+                    {each}
                   </option>
                 ))}
             </select>
@@ -181,9 +181,9 @@ export const GlobalSetting = props => {
 
                   {sub_types &&
                     sub_types.length > 0 &&
-                    sub_types.map(each => (
-                      <option value={each.name} key={each._id}>
-                        {each.name}
+                    sub_types.map((each, index) => (
+                      <option value={each} key={index}>
+                        {each}
                       </option>
                     ))}
                 </>
