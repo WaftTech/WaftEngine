@@ -9,7 +9,7 @@ const loginLogController = {};
 
 internal.addloginlog = async (req, token, next) => {
   try {
-    const secretOrKey = await settingsHelper('auth', 'token_secretOrKey');
+    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key');
     let jwtPayLoad = await jwt.verify(token, secretOrKey);
     let expires_in = new Date(jwtPayLoad.exp * 1000);
     let user_id = jwtPayLoad.id;

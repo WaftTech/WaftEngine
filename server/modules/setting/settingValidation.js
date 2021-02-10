@@ -23,21 +23,14 @@ settingValidation.validate = async (req, res, next) => {
   ]
   let errors = validateHelper.validation(data, validateArray);
 
-  let key_filter = { is_deleted: false, type: type, key: data.key }
-  if (data.sub_type) {
-    key_filter = { ...key_filter, sub_type: data.sub_type, }
-  }
+  let key_filter = { is_deleted: false, sub_type: data.sub_type, type: type, key: data.key }
   if (data._id) {
-    key_filter = { ...key_filter, type: type, _id: { $ne: data._id } }
-    if (data.sub_type) {
-      key_filter = { ...key_filter, sub_type: data.sub_type, }
-    }
+    key_filter = { ...key_filter, type: type, sub_type: data.sub_type, _id: { $ne: data._id } }
   }
   const already_key = await settingSch.findOne(key_filter);
   if (already_key && already_key._id) {
     errors = { ...errors, key: 'key already exist' }
   }
-
 
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, settingConfig.errorIn.inputErrors, null);

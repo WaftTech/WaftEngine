@@ -10,10 +10,10 @@ reCaptchaValidator.validate = async (req, res, next) => {
     let code = req.body.reCaptcha;
     let code_android = req.body.reCaptcha_android;
     let code_ios = req.body.reCaptcha_iOS;
-    let secretKey = await settingsHelper('auth', 'recaptcha_secretKey');
-    let checkrecaptcha = await settingsHelper('auth', 'recaptcha_check');
-    let secretKey_mobile = await settingsHelper('auth', 'recaptcha_secretKey_mobile');
-    let secretKey_ios = await settingsHelper('auth', 'recaptcha_secretKey_ios');
+    let secretKey = await settingsHelper('auth', 'recaptcha', 'secret_key');
+    let checkrecaptcha = await settingsHelper('auth', 'recaptcha', 'check');
+    let secretKey_mobile = await settingsHelper('auth', 'recaptcha', 'recaptcha_secretKey_mobile');
+    let secretKey_ios = await settingsHelper('auth', 'recaptcha', 'recaptcha_secretKey_ios');
 
 
 

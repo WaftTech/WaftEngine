@@ -59,3 +59,29 @@ export const saveFailure = payload => ({
   type: types.SAVE_FAILURE,
   payload,
 });
+
+export const loadTypeRequest = payload => ({
+  type: types.LOAD_TYPE_REQUEST,
+  payload,
+});
+export const loadTypeSuccess = payload => ({
+  type: types.LOAD_TYPE_SUCCESS,
+  payload,
+});
+export const loadTypeFailure = payload => ({
+  type: types.LOAD_TYPE_FAILURE,
+  payload,
+});
+
+export const loadSubTypeRequest = payload => ({
+  type: types.LOAD_SUB_TYPE_REQUEST,
+  payload,
+});
+export const loadSubTypeSuccess = payload => ({
+  type: types.LOAD_SUB_TYPE_SUCCESS,
+  payload,
+});
+export const loadSubTypeFailure = payload => ({
+  type: types.LOAD_SUB_TYPE_FAILURE,
+  payload,
+});
