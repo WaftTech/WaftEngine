@@ -11,7 +11,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   FaPencilAlt, FaPlus,
-  FaSearch
+  FaSearch, FaBars
 } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -117,8 +117,10 @@ export const MenuManage = props => {
             <FaPencilAlt className="pencil" />
             <span className="bg-blue-500 dash" />
           </span>
+
+          <span onClick={() => handleEdit(_id)} className="w-8 h-8 inline-flex justify-center items-center ml-2 text-blue-500"><FaBars /> </span>
           <span
-            className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+            className="ml-2 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
             onClick={() => handleOpen(_id)}
           >
             <img className="trash-lid" src={lid} alt="trash-id" />

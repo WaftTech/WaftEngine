@@ -103,6 +103,7 @@ export class AdminModuleManage extends React.PureComponent {
       loading,
       groups,
     } = this.props;
+
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ _id, module_name, description, module_group }) => [
@@ -130,6 +131,15 @@ export class AdminModuleManage extends React.PureComponent {
         </>,
       ],
     );
+
+    const customStyles = {
+      container: state => ({
+        width: '100%',
+      }),
+      indicatorSeparator: state => ({
+        display: 'none',
+      }),
+    }
 
     const groupOptions =
       groups && groups.length > 0
@@ -159,43 +169,43 @@ export class AdminModuleManage extends React.PureComponent {
         </div>
 
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative">
+          <div className="flex items-center">
+            <div className="flex relative w-64 pr-5">
               <Select
+                styles={customStyles}
                 name="find_module_group"
                 id="module-group"
                 placeholder="Search by group"
-                className="m-auto inputbox pr-8"
                 value={this.state.tempGroup}
                 onChange={this.handleDropdown}
                 options={groupOptions}
                 onKeyDown={this.handleKeyPress}
               />
-              <span
+              {/* <span
                 className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
                 onClick={this.handleSearch}
               >
                 <FaSearch />
-              </span>
+              </span> */}
             </div>
-            <div className="flex relative">
+            <div>
               <input
                 type="text"
                 name="find_module_name"
                 id="module-name"
                 placeholder="Search by name"
-                className="m-auto inputbox pr-6"
+                className="m-auto inputbox pr-6 w-64"
                 value={query.find_module_name}
                 onChange={this.handleQueryChange}
                 onKeyDown={this.handleKeyPress}
               />
-              <span
-                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
-                onClick={this.handleSearch}
-              >
-                <FaSearch />
-              </span>
             </div>
+            <span
+              className="ml-3 inline-flex h-8 px-2 items-center cursor-pointer text-blue-500 text-sm"
+              onClick={this.handleSearch}
+            >
+              <FaSearch className="mr-1" /> Search
+            </span>
           </div>
           <Table
             tableHead={['Module Group', 'Module Name', 'Description', 'Action']}

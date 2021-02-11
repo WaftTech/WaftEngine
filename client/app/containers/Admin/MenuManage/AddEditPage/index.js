@@ -1,39 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Helmet } from 'react-helmet';
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useInjectSaga } from 'utils/injectSaga';
+import { Helmet } from 'react-helmet';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
-
+import { useInjectSaga } from 'utils/injectSaga';
+import DeleteDialog from '../../../../components/DeleteDialog';
+import Loading from '../../../../components/Loading';
+import PageContent from '../../../../components/PageContent/PageContent';
+import PageHeader from '../../../../components/PageHeader/PageHeader';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
-import * as mapDispatchToProps from '../actions';
-import { DATE_FORMAT } from '../../../App/constants';
-import PageHeader from '../../../../components/PageHeader/PageHeader';
-import PageContent from '../../../../components/PageContent/PageContent';
-import Loading from '../../../../components/Loading';
-import { FaCheck } from 'react-icons/fa';
-
 import {
-  makeSelectOne,
-  makeSelectLoading,
-  makeSelectErrors,
-  makeSelectSubMenu,
-  makeSelectShowSubMenu,
-  makeSelectCategory,
-} from '../selectors';
+  makeSelectCategory, makeSelectErrors, makeSelectLoading, makeSelectOne,
 
+
+
+  makeSelectShowSubMenu, makeSelectSubMenu
+} from '../selectors';
 import SidebarCategoriesList from './SideBarCategoriesList';
-import WECkEditior from '../../../../components/CkEditor';
-import DeleteDialog from '../../../../components/DeleteDialog';
-import { FaArrowLeft } from 'react-icons/fa';
+
+
+
 
 const key = 'menuManage';
 
@@ -467,21 +461,22 @@ const AddEdit = props => {
                       </div>{' '}
                     </div>
 
-                    <button
-                      type="button"
-                      className="btn text-white  bg-green-500 border border-green-600 hover:bg-green-600 mr-2"
-                      onClick={handleAddChildMenuSave}
-                    >
-                      Add Child Menu
-                </button>
-
-                    <button
-                      type="button"
-                      className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-                      onClick={handleSave}
-                    >
-                      Save
-                </button>
+                    {match && match.params && match.params.id ?
+                      <button
+                        type="button"
+                        className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                        onClick={handleSave}
+                      >
+                        Save Menu
+                        </button>
+                      : <button
+                        type="button"
+                        className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                        onClick={handleAddChildMenuSave}
+                      >
+                        Save Menu &amp; Continue
+               </button>
+                    }
                     {subMenu._id && (
                       <button
                         type="button"
