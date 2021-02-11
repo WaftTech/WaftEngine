@@ -28,11 +28,9 @@ export const networkError = token => ({
 
 export const enqueueSnackbar = notification => ({
   type: types.ENQUEUE_SNACKBAR,
-  payload: {
-    key: new Date().getTime() + Math.random(),
-    ...notification,
-  },
+  payload: notification,
 });
+
 export const removeSnackbar = payload => ({
   type: types.REMOVE_SNACKBAR,
   payload,
