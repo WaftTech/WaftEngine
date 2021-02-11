@@ -85,9 +85,9 @@ const SidebarCategoriesList = props => {
             {e._id !== '' && (
               <div
                 onClick={() => handleClick(e._id)}
-                className="pt-1 pb-1 pr-4 pl-8 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
+                className="py-2 pr-4 pl-8 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
               >
-                <FaFile className="mr-2 text-base text-white" />
+                <FaFile className="mr-2 text-sm text-white opacity-75" />
                 {`${e.title}`}
               </div>
             )}
@@ -108,7 +108,7 @@ const SidebarCategoriesList = props => {
       {category.length <= 0 ? (
         <h1 />
       ) : (
-          category.map(e => <div className="rounded my-2 bg-gray-600" key={e._id}>{categoryFunction(e)}</div>)
+          category.map(e => <div className="rounded my-1 bg-gray-600" key={e._id}>{categoryFunction(e)}</div>)
         )}
     </div>
   );
