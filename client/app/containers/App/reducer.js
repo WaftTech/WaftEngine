@@ -124,7 +124,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         draft.blogLoading = false;
         break;
       case types.ENQUEUE_SNACKBAR:
-        // draft.notifications = [...draft.notifications, { ...action.payload }];
+        draft.notifications = [...draft.notifications, { ...action.payload }];
         if (action.payload.options && action.payload.options.variant) {
           toast[action.payload.options.variant](action.payload.message, {
             ...action.payload.options,
