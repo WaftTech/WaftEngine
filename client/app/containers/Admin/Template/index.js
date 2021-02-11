@@ -86,10 +86,10 @@ export function Template({
             <input
               type="text"
               className="inputbox"
-              readOnly
               id="template-name"
-              name="template-name"
+              name="template_name"
               value={one.template_name || ''}
+              onChange={handleChange}
             />
           </div>
 
@@ -98,10 +98,10 @@ export function Template({
             <input
               className="inputbox"
               type="text"
-              readOnly
               id="informations"
-              name="informations"
+              name="information"
               value={one.information || ''}
+              onChange={handleChange}
             />
           </div>
 
@@ -112,7 +112,6 @@ export function Template({
               type="text"
               id="variables"
               name="variables"
-              readOnly
               value={one.variables || ''}
               onChange={handleChange}
             />
