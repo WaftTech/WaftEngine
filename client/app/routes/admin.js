@@ -22,7 +22,9 @@ import SubscribePage from '../containers/Admin/Subscribe/Loadable';
 import SubscribeViewPage from '../containers/Admin/Subscribe/SubscribeView';
 import ContactListPage from '../containers/Admin/Contact/Loadable';
 import ContactViewPage from '../containers/Admin/Contact/ViewContactList';
-import TemplateListingPage from '../containers/Admin/Template/Loadable';
+import TemplateListingPage from '../containers/Admin/Template/List';
+import TemplateAddEdit from '../containers/Admin/Template/Loadable';
+
 import ErrorManagePage from '../containers/Admin/Error/Loadable';
 import FaqCatAddEditPage from '../containers/Admin/FaqCategory/AddEdit/Loadable';
 import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
@@ -238,6 +240,16 @@ const routes = [
   {
     path: '/admin/template-manage',
     component: TemplateListingPage,
+    exact: true,
+  },
+  {
+    path: '/admin/template-manage/add',
+    component: TemplateAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/template-manage/edit/:key',
+    component: TemplateAddEdit,
     exact: true,
   },
   {
