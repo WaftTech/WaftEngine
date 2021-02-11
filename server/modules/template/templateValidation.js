@@ -63,14 +63,11 @@ templateValidation.sanitized = (req, res, next) => {
 };
 
 templateValidation.validate = async (req, res, next) => {
+  const data = req.body
   const validateArray = [
     {
       field: '_id',
       validate: [
-        {
-          condition: 'IsEmpty',
-          msg: templateConfig.validate.isEmpty,
-        },
         {
           condition: 'IsMongoId',
           msg: templateConfig.validate.isMongoID,
