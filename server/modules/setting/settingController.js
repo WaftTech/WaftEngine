@@ -56,7 +56,7 @@ settingController.GetSettingType = async (req, res, next) => {
 settingController.GetSettingSingle = async (req, res, next) => {
   try {
     settingId = req.params.setting_id
-    selectQuery = 'key value type sub_type description';
+    selectQuery = 'key value type sub_type description value_type';
 
     let setting = await settingSch.findOne({ _id: settingId });
     return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, settingConfig.get, null);
