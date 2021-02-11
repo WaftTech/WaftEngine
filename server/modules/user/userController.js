@@ -286,7 +286,8 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  if (!appSetting.public_register_allow) {
+  const public_register_allow = await settingsHelper('auth', 'auth', 'is_public_registration')
+  if (!public_register_allow) {
     return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, null, 'Public Registration not allowed.', null);
   }
   let email = req.body.email && req.body.email.toLowerCase();
