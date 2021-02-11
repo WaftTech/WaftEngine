@@ -8,7 +8,7 @@ const internal = {};
 
 templateController.getTemplateName = async (req, res, next) => {
   try {
-    const names = await templateSch.find().select('template_name template_key');
+    const names = await templateSch.find()
     return otherHelper.sendResponse(res, httpStatus.OK, true, names, null, templateConfig.namesGet, null);
   } catch (err) {
     next(err);
