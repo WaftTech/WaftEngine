@@ -14,6 +14,7 @@ import produce from 'immer';
 import * as types from './constants';
 import { LOAD_ALL_SUCCESS as MEDIA_LOAD_ALL_SUCCESS } from '../Admin/Media/constants';
 import * as utils from './utils';
+import { toast } from 'react-toastify';
 
 // The initial state of the App
 export const initialState = {
@@ -124,6 +125,17 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];
+        if (action.payload.options && action.payload.options.variant) {
+          toast[action.payload.options.variant](action.payload.message, {
+            ...action.payload.options,
+          });
+        } else {
+          if (action.payload.options) {
+            toast(action.payload.message, { ...action.payload.options });
+          } else {
+            toast(action.payload.message);
+          }
+        }
         break;
       case types.REMOVE_SNACKBAR:
         draft.notifications = [

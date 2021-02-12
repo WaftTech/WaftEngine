@@ -125,3 +125,8 @@ export const saveRoleAccessFailure = payload => ({
   type: types.SAVE_ROLE_ACCESS_FAILURE,
   payload,
 });
+
+export const setSelectState = payload => ({
+  type: types.SET_SELECT_STATE,
+  payload,
+});

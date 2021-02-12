@@ -104,6 +104,7 @@
     "react-share": "^4.3.1",
     "react-slick": "^0.28.0",
     "react-sortable-hoc": "^1.11.0",
+    "react-toastify": "^7.0.3",
     "redux": "4.0.4",
     "redux-injectors": "1.2.0",
     "redux-saga": "1.1.3",

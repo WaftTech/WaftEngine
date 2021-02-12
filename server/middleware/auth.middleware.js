@@ -118,7 +118,7 @@ authMiddleware.getClientInfo = async (req, res, next) => {
 
 authMiddleware.isPublicFacebookRegistrationAllow = async (req, res, next) => {
   try {
-    let checkis_public_registration = await settingsHelper('auth', '', 'is_public_registration');
+    let checkis_public_registration = await settingsHelper('auth', 'auth', 'is_public_registration');
     let checkis_fblogin = await settingsHelper('auth', 'facebook', 'allow_login');
     if (checkis_public_registration == false || checkis_fblogin == false) {
       return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, null, 'facebook login function disabled', 'null');
@@ -133,7 +133,7 @@ authMiddleware.isPublicFacebookRegistrationAllow = async (req, res, next) => {
 
 authMiddleware.isPublicGoogleRegistrationAllow = async (req, res, next) => {
   try {
-    let checkis_public_registration = await settingsHelper('auth', '', 'is_public_registration');
+    let checkis_public_registration = await settingsHelper('auth', 'auth', 'is_public_registration');
     let checkis_googleLogin = await settingsHelper('auth', 'google', 'allow_login');
     if (checkis_public_registration == false || checkis_googleLogin == false) {
       return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, null, 'google login function disabled', 'null');
