@@ -220,6 +220,20 @@ export const GlobalSetting = props => {
             Is Active
           </label>
         </div>
+        <div className="checkbox">
+          <input
+            onClick={handleCheckedChange('is_removable')}
+            checked={one.is_removable || false}
+            id="is_removable"
+            type="checkbox"
+          />
+          <label htmlFor="is_removable">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Is Removable
+          </label>
+        </div>
         <div className="w-full md:w-1/2 pb-4">
           <button
             className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"

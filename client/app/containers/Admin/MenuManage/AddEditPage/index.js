@@ -18,16 +18,15 @@ import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectCategory, makeSelectErrors, makeSelectLoading, makeSelectOne,
-
-
-
-  makeSelectShowSubMenu, makeSelectSubMenu
+  makeSelectCategory,
+  makeSelectErrors,
+  makeSelectLoadChild,
+  makeSelectLoading,
+  makeSelectOne,
+  makeSelectShowSubMenu,
+  makeSelectSubMenu,
 } from '../selectors';
 import SidebarCategoriesList from './SideBarCategoriesList';
-
-
-
 
 const key = 'menuManage';
 
@@ -44,6 +43,12 @@ const AddEdit = props => {
       props.loadOneRequest(props.match.params.id);
     }
   }, []);
+
+  useEffect(() => {
+    if (props.loadChild === true && props.one._id) {
+      props.addEditRequest2();
+    }
+  }, [props.one]);
 
   const [open, setOpen] = useState(false);
   const [deleteID, setDeleteId] = useState('');
@@ -200,304 +205,305 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-      <>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id ? 'Edit Menu' : 'Add Menu'}
-          </title>
-        </Helmet>
-        <div>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={handleGoBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {match && match.params && match.params.id
-                ? showSubMenuBool
-                  ? 'Edit Sub Menu'
-                  : 'Edit Menu'
-                : showSubMenuBool
-                  ? 'Add Sub Menu'
-                  : 'Add Menu'}
-            </PageHeader>
-          </div>
-          <PageContent>
-            <>
-              {showSubMenuBool ? (
-                <div>
-                  <div className="flex justify-between">
-                    <div
-                      className="-my-4 -ml-4 p-2 w-72 rounded-tl rounded-bl"
-                      style={{ background: 'rgb(45, 52, 70)' }}
-                    >
-                      <SidebarCategoriesList />
-                    </div>
-                    <div className="flex-1 bg-white rounded ml-8 pb-4">
-                      <div className="container mt-4">
-                        <div className="w-full md:w-1/2 pb-4">
-                          <label className="label" htmlFor="grid-last-name">
-                            Title
+    <>
+      <Helmet>
+        <title>
+          {match && match.params && match.params.id ? 'Edit Menu' : 'Add Menu'}
+        </title>
+      </Helmet>
+      <div>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? showSubMenuBool
+                ? 'Edit Sub Menu'
+                : 'Edit Menu'
+              : showSubMenuBool
+              ? 'Add Sub Menu'
+              : 'Add Menu'}
+          </PageHeader>
+        </div>
+        <PageContent>
+          <>
+            {showSubMenuBool ? (
+              <div>
+                <div className="flex justify-between">
+                  <div
+                    className="-my-4 -ml-4 p-2 w-72 rounded-tl rounded-bl"
+                    style={{ background: 'rgb(45, 52, 70)' }}
+                  >
+                    <SidebarCategoriesList />
+                  </div>
+                  <div className="flex-1 bg-white rounded ml-8 pb-4">
+                    <div className="container mt-4">
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Title
                         </label>
-                          <input
-                            className="inputbox"
-                            id="grid-last-name"
-                            type="text"
-                            value={subMenu.title || ''}
-                            onChange={handleChildChange('title')}
-                          />
-                          {errors &&
-                            errors.sub_menu_form &&
-                            errors.sub_menu_form.title && (
-                              <div className="error">
-                                {errors.sub_menu_form.title}
-                              </div>
-                            )}
-                        </div>
-                        <div className="w-full md:w-1/2 pb-4">
-                          <label className="label" htmlFor="grid-last-name">
-                            URL
-                        </label>
-                          {subMenu.url && (
-                            <Link
-                              to={`${subMenu.url}`}
-                              className="ml-1 hover:text-primary cursor-pointer text-subprimary text-xs"
-                              target="_blank"
-                            >
-                              ( open URL )
-                            </Link>
+                        <input
+                          className="inputbox"
+                          id="grid-last-name"
+                          type="text"
+                          value={subMenu.title || ''}
+                          onChange={handleChildChange('title')}
+                        />
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.title && (
+                            <div className="error">
+                              {errors.sub_menu_form.title}
+                            </div>
                           )}
-                          <input
-                            className="inputbox"
-                            id="grid-last-name"
-                            type="text"
-                            value={subMenu.url || ''}
-                            onChange={handleChildChange('url')}
-                          />
-
-                          {errors &&
-                            errors.sub_menu_form &&
-                            errors.sub_menu_form.url && (
-                              <div className="error">
-                                {errors.sub_menu_form.url}
-                              </div>
-                            )}
-                        </div>
-                        <div className="w-full md:w-1/2 pb-4">
-                          <label className="label" htmlFor="grid-last-name">
-                            Order
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          URL
                         </label>
-                          <input
-                            className="inputbox"
-                            id="grid-last-name"
-                            type="number"
-                            value={subMenu.order || ''}
-                            onChange={handleChildChange('order')}
-                          />
-                          {errors &&
-                            errors.sub_menu_form &&
-                            errors.sub_menu_form.order && (
-                              <div className="error">
-                                {errors.sub_menu_form.order}
-                              </div>
-                            )}
-                        </div>
-                        <div className="w-full md:w-1/2 pb-4">
-                          <label className="label" htmlFor="grid-last-name">
-                            Category
-                          </label>
-                          {getCategoryDropDown()}
-
-                          {errors &&
-                            errors.sub_menu_form &&
-                            errors.sub_menu_form.parent_menu && (
-                              <div className="error">
-                                {errors.sub_menu_form.parent_menu}
-                              </div>
-                            )}
-                        </div>
-
-                        <div className="w-full md:w-1/2 pb-4">
-                          <label className="label" htmlFor="grid-last-name">
-                            Link Type
-                        </label>
-                          <select
-                            className="inputbox"
-                            id="product_type"
-                            // value={
-                            //   listProductTypeNormalized[generalInfo.product_type] ||
-                            //   null
-                            // }
-                            value={subMenu.is_internal}
-                            name="is_internal"
-                            onChange={handleChildChange('is_internal')}
+                        {subMenu.url && (
+                          <Link
+                            to={`${subMenu.url}`}
+                            className="ml-1 hover:text-primary cursor-pointer text-subprimary text-xs"
+                            target="_blank"
                           >
-                            <option value>Same Site</option>
-                            <option value={false}>Other Site</option>
-                          </select>
+                            ( open URL )
+                          </Link>
+                        )}
+                        <input
+                          className="inputbox"
+                          id="grid-last-name"
+                          type="text"
+                          value={subMenu.url || ''}
+                          onChange={handleChildChange('url')}
+                        />
 
-                          {errors && errors.title && (
-                            <div className="error">{errors.is_internal}</div>
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.url && (
+                            <div className="error">
+                              {errors.sub_menu_form.url}
+                            </div>
                           )}
-                        </div>
-                        <div className="w-full md:w-1/2 pb-4">
-                          <label className="label" htmlFor="product_type">
-                            Target
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Order
                         </label>
-                          <select
-                            className="inputbox"
-                            id="product_type"
-                            value={subMenu.target}
-                            name="target"
-                            onChange={handleChildChange('target')}
-                          >
-                            <option value="_self">_self</option>
-                            <option value="_blank">_blank</option>
-                            <option value="_top">_top</option>
-                            <option value="_parent">_parent</option>
-                          </select>
-                          {errors && errors.title && (
-                            <div className="error">{errors.target}</div>
+                        <input
+                          className="inputbox"
+                          id="grid-last-name"
+                          type="number"
+                          value={subMenu.order || ''}
+                          onChange={handleChildChange('order')}
+                        />
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.order && (
+                            <div className="error">
+                              {errors.sub_menu_form.order}
+                            </div>
                           )}
-                        </div>
-                        <div className="w-full md:w-1/2">
-                          <div className="checkbox">
-                            <input
-                              checked={subMenu.is_active || false}
-                              onChange={handleCheckedChildChange('is_active')}
-                              id="is_active"
-                              type="checkbox"
-                            />
-                            <label htmlFor="is_active">
-                              <span className="box">
-                                <FaCheck className="check-icon" />
-                              </span>
-                            Is Active
-                          </label>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-                          onClick={handleChildSave}
+                      </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Category
+                        </label>
+                        {getCategoryDropDown()}
+
+                        {errors &&
+                          errors.sub_menu_form &&
+                          errors.sub_menu_form.parent_menu && (
+                            <div className="error">
+                              {errors.sub_menu_form.parent_menu}
+                            </div>
+                          )}
+                      </div>
+
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="grid-last-name">
+                          Link Type
+                        </label>
+                        <select
+                          className="inputbox"
+                          id="product_type"
+                          // value={
+                          //   listProductTypeNormalized[generalInfo.product_type] ||
+                          //   null
+                          // }
+                          value={subMenu.is_internal}
+                          name="is_internal"
+                          onChange={handleChildChange('is_internal')}
                         >
-                          Save
-                      </button>
-                        {subMenu._id && (
-                          <button
-                            type="button"
-                            className="text-white btn-waft btn-red"
-                            onClick={() => handleOpen(subMenu._id)}
-                          >
-                            Delete
-                          </button>
+                          <option value>Same Site</option>
+                          <option value={false}>Other Site</option>
+                        </select>
+
+                        {errors && errors.title && (
+                          <div className="error">{errors.is_internal}</div>
                         )}
                       </div>
+                      <div className="w-full md:w-1/2 pb-4">
+                        <label className="label" htmlFor="product_type">
+                          Target
+                        </label>
+                        <select
+                          className="inputbox"
+                          id="product_type"
+                          value={subMenu.target}
+                          name="target"
+                          onChange={handleChildChange('target')}
+                        >
+                          <option value="_self">_self</option>
+                          <option value="_blank">_blank</option>
+                          <option value="_top">_top</option>
+                          <option value="_parent">_parent</option>
+                        </select>
+                        {errors && errors.title && (
+                          <div className="error">{errors.target}</div>
+                        )}
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <div className="checkbox">
+                          <input
+                            checked={subMenu.is_active || false}
+                            onChange={handleCheckedChildChange('is_active')}
+                            id="is_active"
+                            type="checkbox"
+                          />
+                          <label htmlFor="is_active">
+                            <span className="box">
+                              <FaCheck className="check-icon" />
+                            </span>
+                            Is Active
+                          </label>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                        onClick={handleChildSave}
+                      >
+                        Save
+                      </button>
+                      {subMenu._id && (
+                        <button
+                          type="button"
+                          className="text-white btn-waft btn-red"
+                          onClick={() => handleOpen(subMenu._id)}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
-              ) : (
-                  <>
-                    <div className="w-full md:w-1/2 pb-4">
-                      <label className="label" htmlFor="menu_title">
-                        Title
+              </div>
+            ) : (
+              <>
+                <div className="w-full md:w-1/2 pb-4">
+                  <label className="label" htmlFor="menu_title">
+                    Title
                   </label>
-                      <input
-                        className="inputbox"
-                        id="menu_title"
-                        type="text"
-                        value={one.title || ''}
-                        onChange={handleTitleChange}
-                      />
-                      {errors && errors.title && (
-                        <div className="error">{errors.title}</div>
-                      )}
-                    </div>
+                  <input
+                    className="inputbox"
+                    id="menu_title"
+                    type="text"
+                    value={one.title || ''}
+                    onChange={handleTitleChange}
+                  />
+                  {errors && errors.title && (
+                    <div className="error">{errors.title}</div>
+                  )}
+                </div>
 
-                    <div className="w-full md:w-1/2 pb-4">
-                      <label className="label" htmlFor="menu_key">
-                        Key
+                <div className="w-full md:w-1/2 pb-4">
+                  <label className="label" htmlFor="menu_key">
+                    Key
                   </label>
-                      <input
-                        className="inputbox"
-                        id="menu_key"
-                        type="text"
-                        value={one.key || ''}
-                        onChange={handleChange('key')}
-                      />
-                      {errors && errors.key && (
-                        <div className="error">{errors.key}</div>
-                      )}
-                    </div>
+                  <input
+                    className="inputbox"
+                    id="menu_key"
+                    type="text"
+                    value={one.key || ''}
+                    onChange={handleChange('key')}
+                  />
+                  {errors && errors.key && (
+                    <div className="error">{errors.key}</div>
+                  )}
+                </div>
 
-                    <div className="w-full md:w-1/2 pb-4">
-                      <label className="label" htmlFor="menu_order">
-                        Order
+                <div className="w-full md:w-1/2 pb-4">
+                  <label className="label" htmlFor="menu_order">
+                    Order
                   </label>
-                      <input
-                        className="inputbox"
-                        id="menu_order"
-                        type="number"
-                        value={one.order || ''}
-                        onChange={handleChange('order')}
-                      />
-                      {errors && errors.title && (
-                        <div className="error">{errors.order}</div>
-                      )}
-                    </div>
-                    <div className="w-full md:w-1/2 pb-4">
-                      <div className="checkbox">
-                        <input
-                          checked={one.is_active || false}
-                          onClick={handleCheckedChange('is_active', null)}
-                          id="is_active"
-                          type="checkbox"
-                        />
-                        <label htmlFor="is_active">
-                          <span className="box">
-                            <FaCheck className="check-icon" />
-                          </span>
+                  <input
+                    className="inputbox"
+                    id="menu_order"
+                    type="number"
+                    value={one.order || ''}
+                    onChange={handleChange('order')}
+                  />
+                  {errors && errors.title && (
+                    <div className="error">{errors.order}</div>
+                  )}
+                </div>
+                <div className="w-full md:w-1/2 pb-4">
+                  <div className="checkbox">
+                    <input
+                      checked={one.is_active || false}
+                      onClick={handleCheckedChange('is_active', null)}
+                      id="is_active"
+                      type="checkbox"
+                    />
+                    <label htmlFor="is_active">
+                      <span className="box">
+                        <FaCheck className="check-icon" />
+                      </span>
                       Is Active
                     </label>
-                      </div>{' '}
-                    </div>
+                  </div>{' '}
+                </div>
 
-                    {match && match.params && match.params.id ?
-                      <button
-                        type="button"
-                        className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-                        onClick={handleSave}
-                      >
-                        Save Menu
-                        </button>
-                      : <button
-                        type="button"
-                        className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-                        onClick={handleAddChildMenuSave}
-                      >
-                        Save Menu &amp; Continue
-               </button>
-                    }
-                    {subMenu._id && (
-                      <button
-                        type="button"
-                        className="text-white btn-waft btn-red"
-                        onClick={() => handleOpen(subMenu._id)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </>
+                {match && match.params && match.params.id ? (
+                  <button
+                    type="button"
+                    className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                    onClick={handleSave}
+                  >
+                    Save Menu
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                    onClick={handleAddChildMenuSave}
+                  >
+                    Save Menu &amp; Continue
+                  </button>
                 )}
-            </>
-            <DeleteDialog
-              open={open}
-              doClose={handleClose}
-              doDelete={() => handleDelete(deleteID)}
-            />
-          </PageContent>
-        </div>
-      </>
-    );
+                {subMenu._id && (
+                  <button
+                    type="button"
+                    className="text-white btn-waft btn-red"
+                    onClick={() => handleOpen(subMenu._id)}
+                  >
+                    Delete
+                  </button>
+                )}
+              </>
+            )}
+          </>
+          <DeleteDialog
+            open={open}
+            doClose={handleClose}
+            doDelete={() => handleDelete(deleteID)}
+          />
+        </PageContent>
+      </div>
+    </>
+  );
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -507,12 +513,10 @@ const mapStateToProps = createStructuredSelector({
   subMenu: makeSelectSubMenu(),
   showSubMenuBool: makeSelectShowSubMenu(),
   category: makeSelectCategory(),
+  loadChild: makeSelectLoadChild(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 AddEdit.propTypes = {
   // loadOneRequest: PropTypes.func.isRequired,
@@ -526,7 +530,4 @@ AddEdit.propTypes = {
   errors: PropTypes.object.isRequired,
   push: PropTypes.func.isRequired,
 };
-export default compose(
-  withRouter,
-  withConnect,
-)(AddEdit);
+export default compose(withRouter, withConnect)(AddEdit);

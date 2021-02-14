@@ -41,6 +41,7 @@ export const initialState = {
   query: { find_title: '', find_key: '', size: 10 },
   loading: false,
   errors: { title: '', is_active: '', key: '', order: '', sub_menu_form: {} },
+  loadChild: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -136,9 +137,9 @@ const menuManageReducer = (state = initialState, action) =>
           ),
         };
         break;
-      // case types.LOAD_MENU_SUCCESS:
-      //   draft.sub_menu_form = action.payload.data;
-      //   break;
+      case types.SET_LOAD_CHILD:
+        draft.loadChild = action.payload;
+        break;
     }
   });
 

@@ -23,6 +23,7 @@ export const initialState = {
     sub_type: '',
     description: '',
     is_active: true,
+    is_removable: false,
   },
   types: [],
   sub_types: [],
@@ -37,7 +38,7 @@ const globalSettingReducer = (state = initialState, action) =>
         break;
       case types.LOAD_WITHDRAW_SUCCESS:
         draft.loading = false;
-        draft.withdraw = action.payload;
+        draft.withdraw = { ...action.payload };
         draft.withdraw.totaldata = action.payload.totalData;
         break;
       case types.LOAD_WITHDRAW_FAILURE:
@@ -84,6 +85,14 @@ const globalSettingReducer = (state = initialState, action) =>
       case types.LOAD_SUB_TYPE_SUCCESS:
         draft.sub_types = action.payload.data;
         break;
+
+      case types.DELETE_ONE_SUCCESS:
+        draft.withdraw = {
+          ...draft.withdraw,
+          data: draft.withdraw.data.filter(
+            each => each._id != action.payload.data._id,
+          ),
+        };
     }
   });
 

@@ -105,7 +105,7 @@ function* deleteOne(action) {
 
   yield call(
     Api.delete(
-      `setting/${action.payload}`,
+      `setting/delete/${action.payload}`,
       actions.deleteOneSuccess,
       actions.deleteOneFailure,
       token,
@@ -169,4 +169,5 @@ export default function* globalSettingSaga() {
   yield takeLatest(types.SAVE_FAILURE, saveFailureFunc);
   yield takeLatest(types.LOAD_TYPE_REQUEST, loadType);
   yield takeLatest(types.LOAD_SUB_TYPE_REQUEST, loadSubType);
+  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
 }

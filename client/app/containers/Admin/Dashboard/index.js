@@ -58,7 +58,6 @@ export class Dashboard extends React.PureComponent {
       <>
         <div className="flex justify-between my-3">
           <PageHeader>Dashboard </PageHeader>
-
         </div>
         <div className="bg-white rounded p-4">
           {info.map(each => (
@@ -104,7 +103,7 @@ export class Dashboard extends React.PureComponent {
           </div>
           <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <FaExclamationCircle className="text-5xl mx-auto"/>
+              <FaExclamationCircle className="text-5xl mx-auto" />
               <div className="mt-1">Total Errors</div>
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-8 h-8 text-center rounded-full bg-waftprimary-light leading-loose">
@@ -163,12 +162,12 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                    <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                        No Errors
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Errors
                     </h2>
-                    </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -222,16 +221,9 @@ const mapStateToProps = createStructuredSelector({
   blogs: makeSelectBlog(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminDashboard', reducer });
 const withSaga = injectSaga({ key: 'adminDashboard', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(Dashboard);
+export default compose(withReducer, withSaga, withConnect)(Dashboard);
