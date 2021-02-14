@@ -5,13 +5,12 @@ const validateRegisterInput = require('../../modules/user/userValidations');
 const reCaptchaValidator = require('../../middleware/recaptcha.middleware')
 
 const loginLogs = require('../../modules/user/loginlogs/loginlogController').loginLogController;
-const fileUpload = require('../../helper/upload.helper')('public/user/');
-const uploader = fileUpload.uploader;
+const uploadHelper = require('../../helper/upload.helper')
 const userModule = require('../../modules/user/userController');
 const { authentication, authenticationForLogout, authorization, getClientInfo, isPublicGoogleRegistrationAllow } = require('../../middleware/auth.middleware');
 
-router.get('/', authentication, authorization, userModule.GetAllUser);
 
+router.get('/', authentication, authorization, userModule.GetAllUser);
 router.post('/', userModule.CheckMail);
 router.get('/mfa', authentication, userModule.getMultiFAStatus);
 router.post('/mfa/email', authentication, userModule.postEmailFAStatus);
@@ -26,7 +25,7 @@ router.get('/grby', authentication, authorization, userModule.GetAllUserGroupBy)
 
 router.get('/detail/:id', authentication, authorization, userModule.GetUserDetail);
 
-router.post('/detail/:id', authentication, authorization, uploader.single('file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
+router.post('/detail/:id', authentication, authorization, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
 
 /**
  * @route POST api/user/change
@@ -73,7 +72,7 @@ router.post('/login/github/', getClientInfo, passport.authenticate('github-token
  * @description Register user route || for admin
  * @access Public
  */
-router.post('/register/admin', authentication, authorization, uploader.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
+router.post('/register/admin', authentication, authorization, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
 
 /**
  * @route POST api/user/verifymail
@@ -160,6 +159,6 @@ router.get('/profile', authentication, userModule.GetProfile);
  * @description POST user profile info
  * @access Public
  */
-router.post('/profile', authentication, uploader.single('file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
+router.post('/profile', authentication, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
 
 module.exports = router;
