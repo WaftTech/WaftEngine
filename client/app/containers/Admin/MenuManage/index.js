@@ -44,6 +44,7 @@ export const MenuManage = props => {
 
   useEffect(() => {
     loadAllRequest(query);
+    props.setLoadChild(false);
   }, []);
 
   const handleAdd = () => {
