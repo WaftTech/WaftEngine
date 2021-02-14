@@ -139,7 +139,7 @@ settingController.DeleteSettings = async (req, res, next) => {
     const settingId = req.params.id;
     const temp = await settingSch.findOne({ _id: settingId, is_removable: true })
     if (temp && temp._id) {
-      const del = await settingSch.findByIdAndUpdate(id, { $set: { is_deleted: true } });
+      const del = await settingSch.findByIdAndUpdate(settingId, { $set: { is_deleted: true } });
       return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'setting delete success!', null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, true, null, null, 'This setting is not Removable', null);
