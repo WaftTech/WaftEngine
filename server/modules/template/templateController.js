@@ -32,30 +32,18 @@ templateController.getTemplateDetail = async (req, res, next) => {
 
 templateController.postTemplate = async (req, res, next) => {
   try {
-    const { _id, template_name, template_key, information, variables, from, subject, alternate_text, body } = req.body;
-
-    const update = await templateSch.findOneAndUpdate(
-      { _id, template_name, template_key },
-      {
-        $set: {
-          template_name,
-          template_key,
-          information,
-          variables,
-          from,
-          subject,
-          alternate_text,
-          body,
-          updated_by: req.user.id,
-          updated_at: Date.now(),
-        },
-      },
-    );
-
-    if (update) {
-      return otherHelper.sendResponse(res, httpStatus.OK, true, req.body, null, templateConfig.templateSave, null);
+    const template = req.body
+    console.log(template)
+    template.updated_by = req.user.id
+    template.updated_at = Date.now()
+    if (template && template._id) {
+      const update = await templateSch.findByIdAndUpdate({ _id: template._id }, { $set: template }, { new: true },);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, templateConfig.templateSave, null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, templateConfig.templateNotFound, null);
+      let newTemplate = new templateSch(template);
+      let saved = await newTemplate.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, saved, null, templateConfig.templateSave, null);
+
     }
   } catch (err) {
     next(err);

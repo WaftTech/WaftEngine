@@ -57,13 +57,22 @@ function* save() {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
   const type = data.type;
+  let main_data = { ...data };
+
+  if (data.value_type === 'Boolean') {
+    if (data.value === 'true') {
+      main_data = { ...main_data, value: true };
+    } else {
+      main_data = { ...main_data, value: false };
+    }
+  }
 
   yield fork(
     Api.post(
       `setting/${type}`,
       actions.saveSuccess,
       actions.saveFailure,
-      data,
+      main_data,
       token,
     ),
   );

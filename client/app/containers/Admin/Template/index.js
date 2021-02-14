@@ -7,6 +7,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
@@ -20,6 +22,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import Loading from '../../../components/Loading';
 import WECkEditior from '../../../components/CkEditor';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export function Template({
   classes,
@@ -31,12 +34,17 @@ export function Template({
   all,
   one,
   loading,
+  match,
+  push,
 }) {
   const [data, setData] = useState('');
   useEffect(() => {
-    clearOne();
-    loadAllRequest();
+    if (match.params && match.params.key) {
+      loadOneRequest(match.params.key);
+      setData(match.params.key);
+    }
   }, []);
+
   const handleSubmit = e => {
     e.preventDefault();
     if (data) {
@@ -50,6 +58,11 @@ export function Template({
     setData(value);
     value && loadOneRequest(value);
   };
+
+  const handleGoBack = () => {
+    push('/admin/template-manage');
+  };
+
   const handleChange = e => {
     setOneValue({ key: e.target.name, value: e.target.value });
   };
@@ -57,11 +70,17 @@ export function Template({
     <>
       <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
-        <PageHeader>Email Template Manage</PageHeader>
+
+        <PageHeader>
+          <span className="backbtn" onClick={handleGoBack}>
+            <FaArrowLeft className="text-xl" />
+          </span>
+          Email Template Manage
+        </PageHeader>
       </div>
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
-          <div className="w-full md:w-1/2 pb-4">
+          {/* <div className="w-full md:w-1/2 pb-4">
             <label className="label">Template Key</label>
             <select
               className="inputbox"
@@ -79,17 +98,17 @@ export function Template({
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="w-full md:w-1/2 pb-4">
             <label className="label">Template Name</label>
             <input
               type="text"
               className="inputbox"
-              readOnly
               id="template-name"
-              name="template-name"
+              name="template_name"
               value={one.template_name || ''}
+              onChange={handleChange}
             />
           </div>
 
@@ -98,10 +117,10 @@ export function Template({
             <input
               className="inputbox"
               type="text"
-              readOnly
               id="informations"
-              name="informations"
+              name="information"
               value={one.information || ''}
+              onChange={handleChange}
             />
           </div>
 
@@ -112,7 +131,6 @@ export function Template({
               type="text"
               id="variables"
               name="variables"
-              readOnly
               value={one.variables || ''}
               onChange={handleChange}
             />
@@ -194,4 +212,9 @@ const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 const withReducer = injectReducer({ key: 'adminTemplateListingPage', reducer });
 const withSaga = injectSaga({ key: 'adminTemplateListingPage', saga });
 
-export default compose(withReducer, withSaga, withConnect)(Template);
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+  withRouter,
+)(Template);
