@@ -9,10 +9,7 @@ import Table from 'components/Table';
 import { push } from 'connected-react-router';
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import {
-  FaPencilAlt, FaPlus,
-  FaSearch, FaBars
-} from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaSearch, FaBars } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -27,9 +24,6 @@ import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
-
-
-
 
 const key = 'menuManage';
 
@@ -50,6 +44,7 @@ export const MenuManage = props => {
 
   useEffect(() => {
     loadAllRequest(query);
+    props.setLoadChild(false);
   }, []);
 
   const handleAdd = () => {
@@ -58,6 +53,11 @@ export const MenuManage = props => {
   };
   const handleEdit = id => {
     props.push(`/admin/menu-manage/edit/${id}`);
+  };
+
+  const handleChildEdit = id => {
+    props.push(`/admin/menu-manage/edit/${id}`);
+    props.setLoadChild(true);
   };
   const handleView = slug_url => {
     props.push(`/blog/${slug_url}`);
@@ -105,8 +105,8 @@ export const MenuManage = props => {
         {is_active ? (
           <span className="label-active">active</span>
         ) : (
-            <span className="label-inactive">inactive</span>
-          )}
+          <span className="label-inactive">inactive</span>
+        )}
       </>,
       <>
         <div className="flex">
@@ -118,7 +118,12 @@ export const MenuManage = props => {
             <span className="bg-blue-500 dash" />
           </span>
 
-          <span onClick={() => handleEdit(_id)} className="w-8 h-8 inline-flex justify-center items-center ml-2 text-blue-500"><FaBars /> </span>
+          <span
+            onClick={() => handleChildEdit(_id)}
+            className="w-8 h-8 inline-flex justify-center items-center ml-2 text-blue-500"
+          >
+            <FaBars />{' '}
+          </span>
           <span
             className="ml-2 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
             onClick={() => handleOpen(_id)}
@@ -219,11 +224,5 @@ const mapStateToProps = createStructuredSelector({
   query: makeSelectQuery(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withConnect,
-  memo,
-)(MenuManage);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withConnect, memo)(MenuManage);
