@@ -136,20 +136,20 @@ settingController.GetSubTypeByType = async (req, res, next) => {
 
 settingController.DeleteSettings = async (req, res, next) => {
   try {
-    // const settingId = req.params.id;
-    // const temp = await settingSch.findOne({ _id: settingId, is_removable: true })
-    // if (temp && temp._id) {
-    //   const del = await settingSch.findByIdAndUpdate(id, { $set: { is_deleted: true } });
-    //   return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'setting delete success!', null);
-    // } else {
-    //   return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, true, null, null, 'This setting is not Removable', null);
-    // }
+    const settingId = req.params.id;
+    const temp = await settingSch.findOne({ _id: settingId, is_removable: true })
+    if (temp && temp._id) {
+      const del = await settingSch.findByIdAndUpdate(settingId, { $set: { is_deleted: true } });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'setting delete success!', null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, true, null, null, 'This setting is not Removable', null);
+    }
 
-    const temp = await settingSch.update({},
-      { $unset: { 'email_setting': 1 } },
-      { multi: true }
-    )
-    return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'setting delete success!', null);
+    // const temp = await settingSch.update({},
+    //   { $set: { 'email_setting': "" } },
+    //   { upsert: false, multi: true }
+    // )
+    // return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'setting delete success!', null);
 
   } catch (err) {
     next(err);
