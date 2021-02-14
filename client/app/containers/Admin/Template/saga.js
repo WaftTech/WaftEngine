@@ -67,7 +67,7 @@ function* addEditSuccess(action) {
       variant: 'success',
     },
   };
-
+  yield put(push('/admin/template-manage'));
   yield put(enqueueSnackbar(defaultError));
 }
 export default function* defaultSaga() {
