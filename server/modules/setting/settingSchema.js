@@ -10,6 +10,7 @@ const settingSchema = new schema({
   value_type: { type: String, enum: ['Boolean', 'Free text', 'Number'] },
   is_active: { type: Boolean, default: true },
   is_deleted: { type: Boolean, default: false },
+  is_removable: { type: Boolean, default: false },
   added_by: { type: schema.Types.ObjectId, required: true, ref: 'users' },
   added_date: { type: Date, default: Date.now },
   updated_by: { type: schema.Types.ObjectId, ref: 'users' },
