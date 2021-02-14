@@ -345,8 +345,10 @@ userController.validLoginResponse = async (req, user, next) => {
       }
     }
     const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
-    const tokenExpireTime = await settingsHelper('auth', 'token', 'expiry_time')
+    var tokenExpireTime = await settingsHelper('auth', 'token', 'expiry_time')
+    tokenExpireTime = Number.parseInt(tokenExpireTime)
     // Create JWT payload
+
     const payload = {
       id: user._id,
       name: user.name,
@@ -530,6 +532,7 @@ userController.VerifyServerMail = async (req, res, next) => {
     // Sign Token
     let secret_key = await settingsHelper('auth', 'token', 'secret_key');
     let token_expire_time = await settingsHelper('auth', 'token', 'expiry_time');
+    token_expire_time = Number.parseInt(token_expire_time)
     jwt.sign(payload, secret_key, { expiresIn: token_expire_time }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;
