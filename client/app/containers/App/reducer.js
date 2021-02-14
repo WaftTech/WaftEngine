@@ -124,19 +124,9 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         draft.blogLoading = false;
         break;
       case types.ENQUEUE_SNACKBAR:
-        // draft.notifications = [...draft.notifications, { ...action.payload }];
-        console.log('action.paylod', action.payload);
-        if (action.payload.options && action.payload.options.variant) {
-          toast[action.payload.options.variant](action.payload.message, {
-            ...action.payload.options,
-          });
-        } else {
-          if (action.payload.options) {
-            toast(action.payload.message, { ...action.payload.options });
-          } else {
-            toast(action.payload.message);
-          }
-        }
+        draft.notifications = [...draft.notifications, { ...action.payload }];
+        // console.log('action.paylod', action.payload);
+
         break;
       case types.REMOVE_SNACKBAR:
         draft.notifications = [
