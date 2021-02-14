@@ -19,7 +19,9 @@ settingController.GetSettingAll = async (req, res, next) => {
     if (req.query.find_sub_type && req.query.find_type != 'all' && req.query.find_sub_type != 'all') {
       searchQuery = { sub_type: { $regex: req.query.find_sub_type, $options: 'i' }, ...searchQuery };
     }
-    selectQuery = 'key value type sub_type description is_active';
+    if (req.query.find_removable) {
+      searchQuery = { is_removable: { $regex: req.query.find_removable, $options: 'i' }, ...searchQuery };
+    }
     sortQuery = { type: 1, sub_type: 1, key: 1 }
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     if (setting) {
@@ -43,7 +45,6 @@ settingController.GetSettingType = async (req, res, next) => {
     }
     searchQuery = { type: req.params.type, ...searchQuery };
 
-    selectQuery = 'key value type sub_type description';
 
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
@@ -56,7 +57,6 @@ settingController.GetSettingType = async (req, res, next) => {
 settingController.GetSettingSingle = async (req, res, next) => {
   try {
     settingId = req.params.setting_id
-    selectQuery = 'key value type sub_type description value_type';
 
     let setting = await settingSch.findOne({ _id: settingId });
     return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, settingConfig.get, null);
@@ -129,6 +129,28 @@ settingController.GetSubTypeByType = async (req, res, next) => {
     let pulledData = await settingSch.find({ type: type }).distinct('sub_type')
     temp = setting.concat(pulledData)
     return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'successful get all sub-type', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+settingController.DeleteSettings = async (req, res, next) => {
+  try {
+    // const settingId = req.params.id;
+    // const temp = await settingSch.findOne({ _id: settingId, is_removable: true })
+    // if (temp && temp._id) {
+    //   const del = await settingSch.findByIdAndUpdate(id, { $set: { is_deleted: true } });
+    //   return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'setting delete success!', null);
+    // } else {
+    //   return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, true, null, null, 'This setting is not Removable', null);
+    // }
+
+    const temp = await settingSch.update({},
+      { $unset: { 'email_setting': 1 } },
+      { multi: true }
+    )
+    return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'setting delete success!', null);
+
   } catch (err) {
     next(err);
   }

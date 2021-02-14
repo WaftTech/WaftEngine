@@ -11,6 +11,7 @@ router.get('/single/:setting_id', authentication, authorization, settingModule.G
 router.post('/:type', authentication, authorization, validation.validate, settingModule.SaveSetting);
 router.get('/all/type', authentication, settingModule.GetAllType);
 router.get('/all/subtype/:type', authentication, settingModule.GetSubTypeByType);
+router.delete('/delete', settingModule.DeleteSettings)
 
 
 module.exports = router;
