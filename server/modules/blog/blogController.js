@@ -420,7 +420,6 @@ blogController.GetBlogCatById = async (req, res, next) => {
 blogController.SaveBlog = async (req, res, next) => {
   try {
     let blogs = req.body;
-    console.log(blogs)
     if (blogs.is_highlight !== ('true' || 'false')) {
       blogs.is_highlight = false;
     }
