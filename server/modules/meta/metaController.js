@@ -57,18 +57,18 @@ metaController.saveMeta = async (req, res, next) => {
     let { _id, client_route, title, meta_keywords, meta_description } = req.body;
     let metaS = { client_route, title, meta_keywords, meta_description };
 
-    // if (req.file) {
-    //   req.file.destination =
-    //     req.file.destination
-    //       .split('\\')
-    //       .join('/')
-    //       .split('server/')[1] + '/';
-    //   req.file.path = req.file.path
-    //     .split('\\')
-    //     .join('/')
-    //     .split('server/')[1];
-    //   metaS.meta_image = req.file;
-    // }
+    if (req.file) {
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
+      metaS.meta_image = req.file;
+    }
     if (_id) {
       metaS.updated_by = req.user.id;
       metaS.updated_at = Date.now();
