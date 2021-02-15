@@ -105,8 +105,8 @@ export class AdminModuleManage extends React.PureComponent {
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ _id, module_name, description, module_group }) => [
-        (module_group && module_group.module_group) || '-',
         module_name,
+        (module_group && module_group.module_group) || '-',
         description,
         <>
           <div className="flex">
@@ -218,7 +218,7 @@ export class AdminModuleManage extends React.PureComponent {
             </span>
           </div>
           <Table
-            tableHead={['Module Group', 'Module Name', 'Description', 'Action']}
+            tableHead={['Module Name', 'Module Group', 'Description', 'Action']}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

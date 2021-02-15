@@ -12,7 +12,6 @@ import injectReducer from 'utils/injectReducer';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
-import EmailAuth from '../../../../assets/img/EmailAuth.png';
 import {
   makeSelectTwoFactor,
   makeSelectHelperObj,
@@ -22,8 +21,8 @@ import {
 import * as mapDispatchToProps from '../actions';
 import Modal from '../../../../components/Modal';
 import { FaCheck } from 'react-icons/fa';
-// import EmailAuth from '../../../../assets/img/EmailAuth.png';
-// import GoogleAuth from '../../../../assets/img/GoogleAuth.png';
+import EmailAuth from '../../../../assets/img/EmailAuth.png';
+import GoogleAuth from '../../../../assets/img/GoogleAuth.png';
 import { DATE_FORMAT } from '../../../App/constants';
 
 const key = 'userPersonalInformationPage';
@@ -198,7 +197,7 @@ export const TwoFactor = props => {
               </div>
             </div>
             <div className="-mr-2 w-1/2 p-4 border rounded">
-              {/* <img src={GoogleAuth} className="h-16" alt="Google Authentication"/> */}
+              <img src={GoogleAuth} className="h-16" alt="Google Authentication" />
               <h2 className="text-lg">Google Authentication</h2>
               <p>
                 Google authentication is a physical security key that is used for
