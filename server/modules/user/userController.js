@@ -378,18 +378,18 @@ userController.RegisterFromAdmin = async (req, res, next) => {
       const data = { email: req.body.email };
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
-      if (req.file) {
-        req.file.destination =
-          req.file.destination
-            .split('\\')
-            .join('/')
-            .split('server/')[1] + '/';
-        req.file.path = req.file.path
-          .split('\\')
-          .join('/')
-          .split('server/')[1];
-        req.body.image = req.file;
-      }
+      // if (req.file) {
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
+      //   req.body.image = req.file;
+      // }
       const { name, email, password, date_of_birth, bio, location, phone, description, is_active, email_verified, roles, image, company_name, company_location, company_established, company_phone_no } = req.body;
       const newUser = new User({ name, email, password, date_of_birth, bio, description, email_verified, is_active, roles, image, location, phone, company_name, company_location, company_established, company_phone_no });
       bcrypt.genSalt(10, async (err, salt) => {
@@ -427,18 +427,18 @@ userController.UpdateUserDetail = async (req, res, next) => {
 
     let newData = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
 
-    if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
-      newData.image = req.file;
-    }
+    // if (req.file) {
+    //   req.file.destination =
+    //     req.file.destination
+    //       .split('\\')
+    //       .join('/')
+    //       .split('server/')[1] + '/';
+    //   req.file.path = req.file.path
+    //     .split('\\')
+    //     .join('/')
+    //     .split('server/')[1];
+    //   newData.image = req.file;
+    // }
 
     const updateUser = await userSch.findByIdAndUpdate(id, { $set: newData });
     const msg = 'User Update Success';
@@ -787,18 +787,18 @@ userController.GetProfile = async (req, res, next) => {
 
 userController.postProfile = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
-      req.body.image = req.file;
-    }
+    // if (req.file) {
+    //   req.file.destination =
+    //     req.file.destination
+    //       .split('\\')
+    //       .join('/')
+    //       .split('server/')[1] + '/';
+    //   req.file.path = req.file.path
+    //     .split('\\')
+    //     .join('/')
+    //     .split('server/')[1];
+    //   req.body.image = req.file;
+    // }
     const { name, date_of_birth, bio, description, image, phone, location, is_two_fa, company_name, company_location, company_established, company_phone_no } = req.body;
     const updateUser = await userSch.findByIdAndUpdate(req.user.id, { $set: { name, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() } }, { new: true });
     const msg = 'User Update Success';

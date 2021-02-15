@@ -6,7 +6,6 @@ const maxFileSize = 1024 * 1024 * 2
 const uploaderHelper = {}
 
 uploaderHelper.uploadFiles = (destinationPath, uploadTYpe, fieldData) => {
-
   const temp = maxFileSize / (1024 * 1024)
   var storage = multer.diskStorage(
     {
