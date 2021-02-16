@@ -186,18 +186,7 @@ export class AdminModuleManage extends React.PureComponent {
                 <FaSearch />
               </span> */}
             </div>
-            <div>
-              <select
-                name="find_removable"
-                className="m-auto inputbox pr-6 w-64 mr-4"
-                value={query.find_removable || ''}
-                onChange={this.handleQueryChange}
-              >
-                <option value="">Find Removable</option>
-                <option value="true">Removable</option>
-                <option value="false">Not Removable</option>
-              </select>
-            </div>
+
             <div>
               <input
                 type="text"

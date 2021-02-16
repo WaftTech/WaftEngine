@@ -66,15 +66,15 @@ fileController.UploadFiles = async (req, res, next) => {
       let file = req.files[i];
       file.added_by = req.user.id;
       file.renamed_name = file.originalname;
-      file.destination =
-        file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      file.path = file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      // file.destination =
+      //   file.destination
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1] + '/';
+      // file.path = file.path
+      //   .split('\\')
+      //   .join('/')
+      //   .split('server/')[1];
       file.folder_id = req.params.folder_id;
       const newFile = new fileSch(file);
       const fileSave = await newFile.save();
@@ -100,15 +100,15 @@ fileController.UploadFilesToRoot = async (req, res, next) => {
       let file = req.files[i];
       file.added_by = req.user.id;
       file.renamed_name = file.originalname;
-      file.destination =
-        file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      file.path = file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      // file.destination =
+      //   file.destination
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1] + '/';
+      // file.path = file.path
+      //   .split('\\')
+      //   .join('/')
+      //   .split('server/')[1];
       if (id) file.folder_id = id;
       const newFile = new fileSch(file);
       const fileSave = await newFile.save();

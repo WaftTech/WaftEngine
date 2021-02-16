@@ -171,6 +171,18 @@ export const GlobalSetting = props => {
       </div>
       <PageContent loading={loading}>
         <div className="flex">
+          <div>
+            <select
+              name="find_removable"
+              className="m-auto inputbox pr-6 w-64 mr-4"
+              value={query.find_removable || ''}
+              onChange={handleQueryChange}
+            >
+              <option value="">Find Removable</option>
+              <option value="true">Removable</option>
+              <option value="false">Not Removable</option>
+            </select>
+          </div>
           <div className="flex relative mr-2">
             <select
               type="text"
@@ -213,8 +225,8 @@ export const GlobalSetting = props => {
                     ))}
                 </>
               ) : (
-                  <option value="">Choose type first</option>
-                )}
+                <option value="">Choose type first</option>
+              )}
             </select>
           </div>
 
