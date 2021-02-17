@@ -19,7 +19,7 @@ import saga from './saga';
 import RoutesPublic from '../../layouts/Public';
 import RoutesAdmin from '../../layouts/Admin';
 import RoutesUser from '../../layouts/User';
-
+import Notifier from './components/Notifier';
 import AdminRoute from '../../components/Routes/AdminRoute';
 import UserRoute from '../../components/Routes/UserRoute';
 import ErrorBoundary from '../../components/ErrorBoundary';
@@ -28,6 +28,7 @@ import { makeSelectLocation } from './selectors';
 
 const App = ({ location }) => (
   <ErrorBoundary>
+    <Notifier />
     <ToastContainer hideProgressBar position="bottom-left" />
     <Switch location={location}>
       <UserRoute path="/user" component={RoutesUser} />

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 // import { withSnackbar } from 'notistack';
 import { removeSnackbar, enqueueSnackbar } from '../actions';
 import { makeSelectNotifications } from '../selectors';
+import { toast } from 'react-toastify';
 
 class Notifier extends React.Component {
   static propTypes = {
@@ -38,8 +39,19 @@ class Notifier extends React.Component {
     notifications.forEach(notification => {
       // Do nothing if snackbar is already displayed
       if (this.displayed.includes(notification.key)) return;
-      // Display snackbar using notistack
-      this.props.enqueueSnackbar(notification.message, notification.options);
+      // Display snackbar using toast
+      if (notification.options && notification.options.variant) {
+        toast[notification.options.variant](notification.message, {
+          ...notification.options,
+        });
+      } else {
+        if (notification.options) {
+          toast(notification.message, { ...notification.options });
+        } else {
+          toast(notification.message);
+        }
+      }
+      // this.props.enqueueSnackbar(notification.message, notification.options);
       // Keep track of snackbars that we've displayed
       this.storeDisplayed(notification.key);
       // Dispatch action to remove snackbar from redux store
@@ -56,7 +68,6 @@ const mapStateToProps = createStructuredSelector({
   notifications: makeSelectNotifications(),
 });
 
-export default connect(
-  mapStateToProps,
-  { enqueueSnackbar, removeSnackbar },
-)(withSnackbar(Notifier));
+export default connect(mapStateToProps, { enqueueSnackbar, removeSnackbar })(
+  Notifier,
+);

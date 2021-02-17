@@ -14,7 +14,10 @@ import { loadSlideRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import { makeSelectSlide } from '../../containers/App/selectors';
 import LinkBoth from '../LinkBoth';
-import './index.css';
+import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa';
+import './slick.css';
+
+
 
 /* eslint-disable react/prefer-stateless-function */
 class SlickSlider extends React.PureComponent {
@@ -35,17 +38,53 @@ class SlickSlider extends React.PureComponent {
     const { slideObj, show_link, show_caption } = this.props;
     const slide = slideObj[this.props.slideKey];
     let settings = {
-      slidesToShow: 2,
-      slidesToScroll: 1,
       dots: true,
-      centerMode: true,
-      centerPadding: '40px',
-      autoplay: true,
-      autoplaySpeed: 2000,
-      focusOnSelect: true,
+      infinite: true,
+      adaptiveHeight: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      nextArrow: <FaChevronCircleRight />,
+      prevArrow: <FaChevronCircleLeft />,
+      responsive: [
+        {
+          breakpoint: 1100,
+          settings: {
+            arrows: false,
+            dots: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            dots: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            dots: false,
+            adaptiveHeight: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
     };
     try {
-      if (slide.settings && typeof slide.settings === 'string') {
+      if (
+        slide.settings &&
+        typeof slide.settings === 'string' &&
+        slide.settings !== ''
+      ) {
         settings = JSON.parse(slide.settings);
       }
     } catch (err) {
@@ -53,15 +92,15 @@ class SlickSlider extends React.PureComponent {
     }
     if (!slide) return null; // maybe add a loader here
     return (
-      <div className="slider">
+      <div>
         <Slider {...settings}>
+          {console.log(settings, 'settings')}
           {slide.images.map(image => (
             <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
               <>
                 <img
                   src={`${IMAGE_BASE}${image.image.path}`}
-                  style={{ maxWidth: 200, maxHeight: 200 }}
-                  alt="slider media"
+                  alt={image.caption}
                 />
                 {show_caption && <h6>{image.caption}</h6>}
               </>
@@ -81,9 +120,6 @@ const mapDispatchToProps = dispatch => ({
   loadSlide: payload => dispatch(loadSlideRequest(payload)),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(SlickSlider);
