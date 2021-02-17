@@ -71,19 +71,6 @@ adminDashboardController.getLastXDayUserRegistration = async (req, res, next) =>
                   },
                   { $project: { _id: '$_id.year', month: '$_id.month', day: '$_id.day', rm: '$_id.rm', amt: '$amt' } },
             ]);
-            // console.log('aaaaaa', property)
-            // var data = [];
-            // for (let i = 0; i < days; i++) {
-            //       d.setDate(d.getDate() + 1);
-            //       let x = { _id: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate(), amt: [] };
-            //       let y = property.filter((y) => y.day === x.day && y.month === x.month && y._id === x._id);
-            //       if (y && y.length) {
-            //             for (let j = 0; j < y.length; y++) {
-            //                   x.amt.push({ amt: y[j].amt, rm: y[j].rm });
-            //             }
-            //       }
-            //       data.push(x);
-            // }
             return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get User by Day', null);
       } catch (err) {
             next(err);
