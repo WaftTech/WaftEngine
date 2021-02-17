@@ -18,6 +18,9 @@ import {
   makeSelectUsers,
   makeSelectInfo,
   makeSelectBlog,
+  makeSelectUserByRegister,
+  makeSelectBlogsByUser,
+  makeSelectRecentUser,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
@@ -40,6 +43,9 @@ export class Dashboard extends React.PureComponent {
     this.props.loadErrorRequest();
     this.props.loadInfoRequest();
     this.props.loadBlogRequest();
+    this.props.loadUserByRegisterRequest();
+    this.props.loadBlogsByUserRequest();
+    this.props.loadRecentUserRequest();
   }
 
   state = { open: false };
@@ -53,7 +59,16 @@ export class Dashboard extends React.PureComponent {
   };
 
   render() {
-    const { classes, users, info, errors, blogs } = this.props;
+    const {
+      classes,
+      users,
+      info,
+      errors,
+      blogs,
+      userByRegister,
+      blogsByUser,
+      recentUser,
+    } = this.props;
     return (
       <>
         <div className="flex justify-between my-3">
@@ -130,11 +145,7 @@ export class Dashboard extends React.PureComponent {
                       <div className="flex justify-between px-2 h-10 items-center">
                         <span>{each.role_title}: </span>
                         <span className="inline-block text-waftprimary text-2xl text-right font-bold">
-                          {users.data &&
-                            users.data.user &&
-                            users.data.user.filter(e =>
-                              e.roles.includes(each._id),
-                            ).length}
+                          {each.count}
                         </span>
                       </div>
                     </div>
@@ -172,6 +183,92 @@ export class Dashboard extends React.PureComponent {
             </div>
           </div>
         </div>
+
+        <div>
+          <div className="flex justify-between mx-4 my-4">
+            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                By Registration method
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                {userByRegister &&
+                  userByRegister.map(each => (
+                    <div
+                      key={each._id}
+                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
+                    >
+                      <div className="flex justify-between px-2 h-10 items-center">
+                        <span>{`${each._id}`}: </span>
+                        <span className="inline-block text-waftprimary text-2xl text-right font-bold">
+                          {each.amt}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                Blogs by Users{' '}
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                {blogsByUser.blog && blogsByUser.blog.length ? (
+                  blogsByUser.blog.map(each => (
+                    <div
+                      key={each._id}
+                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
+                    >
+                      <div className="flex justify-between h-10 items-center px-2">
+                        <span className="w-24 text-sm">{each.author}</span>
+                        <span className="inline-block text-waftprimary font-bold text-2xl text-right ">
+                          {each.amt}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Blogs
+                    </h2>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex justify-between mx-4 my-4">
+            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                Recent users
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                {recentUser &&
+                  recentUser.map(each => (
+                    <div
+                      key={each.email}
+                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
+                    >
+                      <div className="flex justify-between px-2 h-10 items-center">
+                        {`${each.name}`}:{each.email}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                Users by days{' '}
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">chart</div>
+            </div>
+          </div>
+        </div>
+
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -219,6 +316,9 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
   info: makeSelectInfo(),
   blogs: makeSelectBlog(),
+  userByRegister: makeSelectUserByRegister(),
+  blogsByUser: makeSelectBlogsByUser(),
+  recentUser: makeSelectRecentUser(),
 });
 
 const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });

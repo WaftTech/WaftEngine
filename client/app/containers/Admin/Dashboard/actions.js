@@ -56,3 +56,42 @@ export const loadBlogFailure = payload => ({
   type: types.LOAD_BLOG_FAILURE,
   payload,
 });
+
+export const loadUserByRegisterRequest = payload => ({
+  type: types.LOAD_USER_BY_REGISTER_REQUEST,
+  payload,
+});
+export const loadUserByRegisterSuccess = payload => ({
+  type: types.LOAD_USER_BY_REGISTER_SUCCESS,
+  payload,
+});
+export const loadUserByRegisterFailure = payload => ({
+  type: types.LOAD_USER_BY_REGISTER_FAILURE,
+  payload,
+});
+
+export const loadBlogsByUserRequest = payload => ({
+  type: types.LOAD_BLOGS_BY_USER_REQUEST,
+  payload,
+});
+export const loadBlogsByUserSuccess = payload => ({
+  type: types.LOAD_BLOGS_BY_USER_SUCCESS,
+  payload,
+});
+export const loadBlogsByUserFailure = payload => ({
+  type: types.LOAD_BLOGS_BY_USER_FAILURE,
+  payload,
+});
+
+export const loadRecentUserRequest = payload => ({
+  type: types.LOAD_RECENT_USER_REQUEST,
+  payload,
+});
+export const loadRecentUserSuccess = payload => ({
+  type: types.LOAD_RECENT_USER_SUCCESS,
+  payload,
+});
+export const loadRecentUserFailure = payload => ({
+  type: types.LOAD_RECENT_USER_FAILURE,
+  payload,
+});
