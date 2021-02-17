@@ -45,7 +45,11 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.id !== '') {
+    if (
+      this.props.match.params &&
+      this.props.match.params.id !== undefined &&
+      this.props.match.params.id !== ''
+    ) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
   }
@@ -237,6 +241,7 @@ class AddEdit extends React.PureComponent {
             <input
               checked={one.is_active || false}
               onClick={this.handleCheckedChange('is_active')}
+              onChange={null}
               id="is_active"
               type="checkbox"
             />

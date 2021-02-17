@@ -118,8 +118,8 @@ const LoginUserPage = props => {
               </div>
             </>
           ) : (
-              'Continue'
-            )
+            'Continue'
+          )
         }
         width="sm"
       >
@@ -184,8 +184,8 @@ const LoginUserPage = props => {
                   <div />
                 </div>
               ) : (
-                  'Login'
-                )}
+                'Login'
+              )}
             </button>
           </form>
           <Link
@@ -252,7 +252,6 @@ const LoginUserPage = props => {
 };
 
 LoginUserPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   loginWithFbRequest: PropTypes.func.isRequired,
   loginWithGoogleRequest: PropTypes.func.isRequired,
@@ -268,17 +267,9 @@ const mapStateToProps = createStructuredSelector({
   loadingObj: makeSelectLoadingObj(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'loginUserPage', reducer });
 const withSaga = injectSaga({ key: 'loginUserPage', saga });
 
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(LoginUserPage);
+export default compose(withReducer, withSaga, withConnect)(LoginUserPage);

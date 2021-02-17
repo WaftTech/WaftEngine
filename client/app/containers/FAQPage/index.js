@@ -18,7 +18,6 @@ class FAQPage extends React.Component {
   static propTypes = {
     loadFAQRequest: PropTypes.func.isRequired,
     faq: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
   };
   constructor(props) {
@@ -53,34 +52,41 @@ class FAQPage extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <div>
-          <Helmet>
-            <title> FAQs </title>
-          </Helmet>
-          <div className="my-10 container mx-auto">
-            {faq.cat &&
-              faq.cat.map(
-                x =>
-                  faq.faq &&
-                  faq.faq.filter(z => z.category == x._id).length !== 0 && (
-                    <div key={`cat-${x._id}`} className="mb-10">
-                      <h2 className="text-xl font-bold">{x.title}</h2>
-                      <div style={{ display: 'block', paddingLeft: 0 }}>
-                        {faq.faq &&
-                          faq.faq
-                            .filter(z => z.category == x._id)
-                            .map(y => (
-                              <Panel title={y.question} body={<p dangerouslySetInnerHTML={{ __html: y.title }} />} />
-                            ))}
-                      </div>
+      <div>
+        <Helmet>
+          <title> FAQs </title>
+        </Helmet>
+        <div className="my-10 container mx-auto">
+          {faq.cat &&
+            faq.cat.map(
+              x =>
+                faq.faq &&
+                faq.faq.filter(z => z.category == x._id).length !== 0 && (
+                  <div key={`cat-${x._id}`} className="mb-10">
+                    <h2 className="text-xl font-bold">{x.title}</h2>
+                    <div style={{ display: 'block', paddingLeft: 0 }}>
+                      {faq.faq &&
+                        faq.faq
+                          .filter(z => z.category == x._id)
+                          .map(y => (
+                            <Panel
+                              title={y.question}
+                              body={
+                                <p
+                                  dangerouslySetInnerHTML={{ __html: y.title }}
+                                />
+                              }
+                            />
+                          ))}
                     </div>
-                  ),
-              )}
-          </div>
-
-          <FaqCategory faqKey="Motivations" />
+                  </div>
+                ),
+            )}
         </div>
-      );
+
+        <FaqCategory faqKey="Motivations" />
+      </div>
+    );
   }
 }
 
@@ -92,12 +98,5 @@ const mapStateToProps = createStructuredSelector({
   faq: makeSelectFAQ(),
   loading: makeSelectLoading(),
 });
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(FAQPage);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+export default compose(withReducer, withSaga, withConnect)(FAQPage);

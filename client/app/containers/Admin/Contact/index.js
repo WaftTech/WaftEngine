@@ -37,7 +37,6 @@ export class Contact extends React.Component {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -182,17 +181,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
 const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
-export default compose(
-  withRouter,
-  withReducer,
-  withSaga,
-  withConnect,
-)(Contact);
+export default compose(withRouter, withReducer, withSaga, withConnect)(Contact);

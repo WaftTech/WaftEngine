@@ -11,7 +11,6 @@ import { makeSelectErrors } from '../selectors';
 export class ChangePassword extends React.Component {
   static propTypes = {
     changePasswordRequest: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
   };
 
   state = {
@@ -153,9 +152,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 export default compose(withConnect)(ChangePassword);

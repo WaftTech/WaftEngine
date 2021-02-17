@@ -19,7 +19,6 @@ import reducer from './reducer';
 import saga from './saga';
 import { makeSelectLoading, makeSelectOne } from './selectors';
 
-
 export class ViewSubscriber extends React.Component {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -27,7 +26,6 @@ export class ViewSubscriber extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
   };
 
@@ -46,38 +44,38 @@ export class ViewSubscriber extends React.Component {
     return loading && loading == true ? (
       <Loading />
     ) : (
-        <React.Fragment>
-          <Helmet>
-            <title> Subscriber Details </title>
-          </Helmet>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={this.handleBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
+      <React.Fragment>
+        <Helmet>
+          <title> Subscriber Details </title>
+        </Helmet>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             Subscribe Details
           </PageHeader>
-          </div>
-          <PageContent>
-            <div className="bg-white mt-2 p-2">
-              <div className="mb-2 Capitalize">
-                <b>Email: </b>
-                {one && one.email ? one.email : ''}
-              </div>
-
-              <div className="mb-2 Capitalize">
-                <b>Is Subscribed: </b>
-                {one && one.is_subscribed ? '' + one.is_subscribed : ''}
-              </div>
-
-              <div className="mb-2 Capitalize">
-                <b>Added At: </b>
-                {moment(one && one.added_at).format(DATE_FORMAT)}
-              </div>
+        </div>
+        <PageContent>
+          <div className="bg-white mt-2 p-2">
+            <div className="mb-2 Capitalize">
+              <b>Email: </b>
+              {one && one.email ? one.email : ''}
             </div>
-          </PageContent>
-        </React.Fragment>
-      );
+
+            <div className="mb-2 Capitalize">
+              <b>Is Subscribed: </b>
+              {one && one.is_subscribed ? '' + one.is_subscribed : ''}
+            </div>
+
+            <div className="mb-2 Capitalize">
+              <b>Added At: </b>
+              {moment(one && one.added_at).format(DATE_FORMAT)}
+            </div>
+          </div>
+        </PageContent>
+      </React.Fragment>
+    );
   }
 }
 
@@ -86,16 +84,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminSubscribePage', reducer });
 const withSaga = injectSaga({ key: 'adminSubscribePage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(ViewSubscriber);
+export default compose(withReducer, withSaga, withConnect)(ViewSubscriber);

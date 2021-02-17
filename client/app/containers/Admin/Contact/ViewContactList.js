@@ -27,7 +27,6 @@ export class ViewContacts extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
   };
 
@@ -96,16 +95,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
 const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(ViewContacts);
+export default compose(withReducer, withSaga, withConnect)(ViewContacts);
