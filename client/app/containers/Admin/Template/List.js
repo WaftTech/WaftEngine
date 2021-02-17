@@ -98,7 +98,7 @@ export function Template({
         <Table
           tableData={tableData}
           tableHead={['Name', 'Key', 'Edit']}
-          pagination={{ totaldata: all.length }}
+          pagination={{ totaldata: all.length, page: 1, size: all.length }}
         />
       </PageContent>
     </>

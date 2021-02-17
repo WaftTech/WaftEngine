@@ -17,9 +17,9 @@ import reducer from '../reducer';
 import saga from '../saga';
 import {
   makeSelectErrors,
-  makeSelectLoading, makeSelectOne
+  makeSelectLoading,
+  makeSelectOne,
 } from '../selectors';
-
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -29,7 +29,6 @@ class UserPersonalInformationPage extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object,
   };
@@ -58,72 +57,72 @@ class UserPersonalInformationPage extends React.PureComponent {
   render() {
     const { classes, one, errors, loading } = this.props;
     return loading ? (
-      <div class="circular_loader waftloader"></div>
+      <div className="circular_loader waftloader"></div>
     ) : (
-        <React.Fragment>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Name</label>
-            <input
-              className="inputbox"
-              id="name"
-              type="text"
-              name="Name"
-              value={one.name || ''}
-              onChange={this.handleChange('name')}
-            />
-            <div className="error">{errors.name}</div>
-          </div>
+      <React.Fragment>
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Name</label>
+          <input
+            className="inputbox"
+            id="name"
+            type="text"
+            name="Name"
+            value={one.name || ''}
+            onChange={this.handleChange('name')}
+          />
+          <div className="error">{errors.name}</div>
+        </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Email</label>
-            <input
-              className="inputbox"
-              id="email"
-              type="text"
-              name="Email"
-              value={one.email || ''}
-              onChange={this.handleChange('name')}
-            />
-            <div className="error">{errors.email}</div>
-          </div>
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Email</label>
+          <input
+            className="inputbox"
+            id="email"
+            type="text"
+            name="Email"
+            value={one.email || ''}
+            onChange={this.handleChange('name')}
+          />
+          <div className="error">{errors.email}</div>
+        </div>
 
-          <div className="md:w-1/2 pb-4">
-            <label className="text-sm">Date Of Birth</label>
-            <DatePicker
-              name="date_of_birth"
-              className="inputbox"
-              value={
-                (one.date_of_birth &&
-                  moment(one.date_of_birth).format(DATE_FORMAT)) ||
-                ''
-              }
-              onChange={this.handleDateChange('date_of_birth')}
-            />
-          </div>
+        <div className="md:w-1/2 pb-4">
+          <label className="text-sm">Date Of Birth</label>
+          <DatePicker
+            name="date_of_birth"
+            className="inputbox"
+            value={
+              (one.date_of_birth &&
+                moment(one.date_of_birth).format(DATE_FORMAT)) ||
+              ''
+            }
+            onChange={this.handleDateChange('date_of_birth')}
+          />
+        </div>
 
-          <div className="w-full pb-4">
-            <div>
-              <label className="text-sm">Role :</label>{' '}
-              {one.roles.map(each => (
-                <span key={each._id} className="rounded border px-4 py-2 mr-2">
-                  {each.role_title}{' '}
-                </span>
-              ))}
-            </div>
+        <div className="w-full pb-4">
+          <div>
+            <label className="text-sm">Role :</label>{' '}
+            {one.roles.map(each => (
+              <span key={each._id} className="rounded border px-4 py-2 mr-2">
+                {each.role_title}{' '}
+              </span>
+            ))}
           </div>
+        </div>
 
-          {/* <div className="w-full  pb-4">
+        {/* <div className="w-full  pb-4">
           Your account created at {moment(one.added_at).format(DATE_FORMAT)}
         </div> */}
 
-          <button
-            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            onClick={this.handleSave}
-          >
-            Save Changes
+        <button
+          className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+          onClick={this.handleSave}
+        >
+          Save Changes
         </button>
-        </React.Fragment>
-      );
+      </React.Fragment>
+    );
   }
 }
 
@@ -133,10 +132,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
