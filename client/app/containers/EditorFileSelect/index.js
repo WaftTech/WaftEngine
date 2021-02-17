@@ -33,7 +33,7 @@ export const EditorFileSelect = ({
   const queryObj = qs.parse(search);
 
   useEffect(() => {
-    loadFilesRequest(queryObj.path);
+    loadFilesRequest({ path: queryObj.path });
   }, [queryObj.path]);
 
   return (
@@ -60,12 +60,6 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(
-  withConnect,
-  memo,
-)(EditorFileSelect);
+export default compose(withConnect, memo)(EditorFileSelect);

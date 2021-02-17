@@ -13,12 +13,18 @@ fileController.GetFileAndFolder = async (req, res, next) => {
     } else {
       id = req.params.id;
     }
+    let searchQueryFiles = { is_deleted: false, folder_id: id }
+    let searchQueryFolder = { is_deleted: false, parent_folder: id }
+    if (req.query.search) {
+      searchQueryFiles = { originalname: { $regex: req.query.search, $options: 'i' }, ...searchQueryFiles };
+      searchQueryFolder = { name: { $regex: req.query.search, $options: 'i' }, ...searchQueryFolder };
+    }
     const self = await folderSch
       .findOne({ is_deleted: false, _id: id })
       .populate([{ path: 'path', select: { name: 1 } }])
       .select({ name: 1, path: 1 });
-    const files = await fileSch.find({ is_deleted: false, folder_id: id });
-    const folders = await folderSch.find({ is_deleted: false, parent_folder: id }).select({ name: 1 });
+    const files = await fileSch.find(searchQueryFiles);
+    const folders = await folderSch.find(searchQueryFolder).select({ name: 1 });
     const totalFile = files.length;
     const totalFolder = folders.length;
     otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totalData: totalFolder }, files: { data: files, totalData: totalFile }, self: self }, null, 'files and folders get success!!', null);

@@ -20,8 +20,9 @@ settingController.GetSettingAll = async (req, res, next) => {
       searchQuery = { sub_type: { $regex: req.query.find_sub_type, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_removable) {
-      searchQuery = { is_removable: { $regex: req.query.find_removable, $options: 'i' }, ...searchQuery };
-    }
+      searchQuery = { is_removable: req.query.find_removable, ...searchQuery }
+    };
+
     sortQuery = { type: 1, sub_type: 1, key: 1 }
     let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     if (setting) {
