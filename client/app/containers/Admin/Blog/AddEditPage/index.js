@@ -428,22 +428,22 @@ class AddEdit extends React.PureComponent {
                 <div {...getRootProps()} className="outline-none">
                   <input {...getInputProps()} />
                   {tempImage === '' ? (
-                    <div
-                      className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none"
-                    >
-                     <div className="m-auto text-center hover:text-primary">
-                      <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
-                      <p className="text-gray-300 text-xs">Drag and Drop Your Files Here!!</p>
+                    <div className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none">
+                      <div className="m-auto text-center hover:text-primary">
+                        <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
+                        <p className="text-gray-300 text-xs">
+                          Drag and Drop Your Files Here!!
+                        </p>
                       </div>
                     </div>
                   ) : (
                     <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
-                    <img
-                      className="m-auto w-full h-28 object-contain inline-block text-center"
-                      src={tempImage}
-                      alt="BlogCategoryImage"
-                      style={{ height: '120px', width: '60%' }}
-                    />
+                      <img
+                        className="m-auto w-full h-28 object-contain inline-block text-center"
+                        src={tempImage}
+                        alt="BlogCategoryImage"
+                        style={{ height: '120px', width: '60%' }}
+                      />
                     </div>
                   )}
                 </div>
@@ -489,14 +489,10 @@ class AddEdit extends React.PureComponent {
               />
             </form>
             {one.tags.map((tag, index) => (
-              <label
-                onClick={this.handleDelete(index)}
-                className="tag"
-                key={`${tag}-${index}`}
-              >
+              <label className="tag" key={`${tag}-${index}`}>
                 {tag}
                 <span>
-                  <FaTimes />
+                  <FaTimes onClick={this.handleDelete(index)} />
                 </span>
               </label>
             ))}
@@ -518,14 +514,10 @@ class AddEdit extends React.PureComponent {
               const icon = null;
 
               return (
-                <label
-                  onDelete={this.handleMetaTagDelete(index)}
-                  className="tag"
-                  key={`meta-${tag}-${index}`}
-                >
+                <label className="tag" key={`meta-${tag}-${index}`}>
                   {tag}
                   <span>
-                    <FaTimes />
+                    <FaTimes onClick={this.handleMetaTagDelete(index)} />
                   </span>
                 </label>
               );
