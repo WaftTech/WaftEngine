@@ -62,6 +62,21 @@ export class Dashboard extends React.PureComponent {
     this.setState({ open: false });
   };
 
+  convertDateData = dates => {
+    let newData = [];
+    if (dates.length > 0) {
+      for (let index = 0; index < dates.length; index++) {
+        const element = dates[index];
+        let obj = {
+          date: `${element._id}/${element.month}/${element.day}`,
+          users: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
   render() {
     const {
       classes,
@@ -74,6 +89,7 @@ export class Dashboard extends React.PureComponent {
       recentUser,
       userByDays,
     } = this.props;
+
     return (
       <>
         <div className="flex justify-between my-3">
@@ -269,7 +285,13 @@ export class Dashboard extends React.PureComponent {
               <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
                 Users by days{' '}
               </h3>
-              <div className="flex flex-wrap justify-between mx-4">chart</div>
+              <div className="flex flex-wrap justify-between mx-4">
+                <LineChart
+                  data={this.convertDateData(userByDays)}
+                  XAxisKey="date"
+                  Line1Key="users"
+                />
+              </div>
             </div>
           </div>
         </div>
