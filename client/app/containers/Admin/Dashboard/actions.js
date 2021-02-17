@@ -95,3 +95,16 @@ export const loadRecentUserFailure = payload => ({
   type: types.LOAD_RECENT_USER_FAILURE,
   payload,
 });
+
+export const loadUserByDaysRequest = payload => ({
+  type: types.LOAD_USER_BY_DAYS_REQUEST,
+  payload,
+});
+export const loadUserByDaysSuccess = payload => ({
+  type: types.LOAD_USER_BY_DAYS_SUCCESS,
+  payload,
+});
+export const loadUserByDaysFailure = payload => ({
+  type: types.LOAD_USER_BY_DAYS_FAILURE,
+  payload,
+});

@@ -20,6 +20,7 @@ export const initialState = {
   userByRegister: [],
   blogsByUser: [],
   recentUser: [],
+  userByDays: [],
 };
 
 const reducer = (state = initialState, action) =>
@@ -47,6 +48,10 @@ const reducer = (state = initialState, action) =>
 
       case types.LOAD_RECENT_USER_SUCCESS:
         draft.recentUser = action.payload.data;
+        break;
+
+      case types.LOAD_USER_BY_DAYS_SUCCESS:
+        draft.userByDays = action.payload.data;
         break;
     }
   });
