@@ -575,7 +575,7 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
-    const forgot_password_mail_template = settingsHelper('email', 'email_template', 'forgot_password_mail_template')
+    const forgot_password_mail_template = await settingsHelper('email', 'email_template', 'forgot_password_mail_template')
     const renderedMail = await renderMail.renderTemplate(
       forgot_password_mail_template,
       {
@@ -585,6 +585,8 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       user.email,
     );
+    console.log('inside forgot password controller:', renderedMail)
+
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
