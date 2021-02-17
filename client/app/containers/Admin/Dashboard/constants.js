@@ -40,3 +40,10 @@ export const LOAD_RECENT_USER_SUCCESS =
   'app/Dashboard/LOAD_RECENT_USER_SUCCESS';
 export const LOAD_RECENT_USER_FAILURE =
   'app/Dashboard/LOAD_RECENT_USER_FAILURE';
+
+export const LOAD_USER_BY_DAYS_REQUEST =
+  'app/Dashboard/LOAD_USER_BY_DAYS_REQUEST';
+export const LOAD_USER_BY_DAYS_SUCCESS =
+  'app/Dashboard/LOAD_USER_BY_DAYS_SUCCESS';
+export const LOAD_USER_BY_DAYS_FAILURE =
+  'app/Dashboard/LOAD_USER_BY_DAYS_FAILURE';

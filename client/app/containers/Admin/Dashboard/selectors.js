@@ -34,3 +34,6 @@ export const makeSelectBlogsByUser = () =>
 
 export const makeSelectRecentUser = () =>
   createSelector(selectDashboardDomain, state => state.recentUser);
+
+export const makeSelectUserByDays = () =>
+  createSelector(selectDashboardDomain, state => state.userByDays);
