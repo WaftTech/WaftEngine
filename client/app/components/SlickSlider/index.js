@@ -8,14 +8,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
-
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { loadSlideRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import { makeSelectSlide } from '../../containers/App/selectors';
 import LinkBoth from '../LinkBoth';
-import './index.css';
+import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa';
+import './slick.css';
+
+
 
 /* eslint-disable react/prefer-stateless-function */
 class SlickSlider extends React.PureComponent {
@@ -43,12 +45,14 @@ class SlickSlider extends React.PureComponent {
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: 0,
+      nextArrow: <FaChevronCircleRight />,
+      prevArrow: <FaChevronCircleLeft />,
       responsive: [
         {
           breakpoint: 1100,
           settings: {
             arrows: false,
-            dots: false,
+            dots: true,
             slidesToShow: 1,
             slidesToScroll: 1,
             infinite: true,
@@ -90,13 +94,13 @@ class SlickSlider extends React.PureComponent {
     return (
       <div>
         <Slider {...settings}>
+          {console.log(settings, 'settings')}
           {slide.images.map(image => (
             <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
               <>
                 <img
                   src={`${IMAGE_BASE}${image.image.path}`}
-                  style={{ maxWidth: 200, maxHeight: 200 }}
-                  alt="slider media"
+                  alt={image.caption}
                 />
                 {show_caption && <h6>{image.caption}</h6>}
               </>
