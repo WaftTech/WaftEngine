@@ -35,7 +35,6 @@ import { FaPlus, FaSearch, FaPencilAlt, FaKey } from 'react-icons/fa';
 /* eslint-disable react/prefer-stateless-function */
 export class AdminModuleManage extends React.PureComponent {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
