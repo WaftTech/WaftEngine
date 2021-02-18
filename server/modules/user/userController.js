@@ -303,8 +303,8 @@ userController.Register = async (req, res, next) => {
     newUser.password = hash;
     newUser.email_verification_code = otherHelper.generateRandomHexString(12);
     newUser.email_verified = false;
-    newUser.roles = await settingsHelper('auth', 'roles', 'public_register_role')
-
+    const temp = await settingsHelper('auth', 'roles', 'public_register_role')
+    newUser.roles.push(temp)
     newUser.last_password_change_date = new Date();
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
