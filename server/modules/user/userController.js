@@ -285,7 +285,7 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  const public_register_allow = await settingsHelper('auth', 'auth', 'is_public_registration')
+  const public_register_allow = await settingsHelper('auth', 'user', 'is_public_registration')
   if (!public_register_allow) {
     return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, null, 'Public Registration not allowed.', null);
   }
