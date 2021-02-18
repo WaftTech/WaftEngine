@@ -231,36 +231,42 @@ class AddEdit extends React.PureComponent {
 
   insertTags = event => {
     event.preventDefault();
-    if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
-      this.props.setOneValue({
-        key: 'tags',
-        value: [...this.props.one.tags, this.props.tempTag],
-      });
-      this.props.setTagValue('');
+    if (this.props.tempTag.trim() !== '') {
+      if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
+        this.props.setOneValue({
+          key: 'tags',
+          value: [...this.props.one.tags, this.props.tempTag],
+        });
+        this.props.setTagValue('');
+      }
     }
     return { tempTag: this.props.setTagValue('') };
   };
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };
 
   insertMetaKeywords = event => {
     event.preventDefault();
-    if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
-      this.props.setOneValue({
-        key: 'keywords',
-        value: [...this.props.one.keywords, this.props.tempMetaKeyword],
-      });
-      this.props.setMetaKeywordValue('');
+    if (this.props.tempMetaKeyword.trim() !== '') {
+      if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
+        this.props.setOneValue({
+          key: 'keywords',
+          value: [...this.props.one.keywords, this.props.tempMetaKeyword],
+        });
+        this.props.setMetaKeywordValue('');
+      }
     }
     return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
   };
