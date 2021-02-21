@@ -101,7 +101,7 @@ export class BlogManagePage extends React.Component {
   };
 
   handleView = slug_url => {
-    this.props.push(`/news/${slug_url}`);
+    this.props.push(`/blog/${slug_url}`);
   };
 
   handleOpen = id => {
@@ -358,7 +358,7 @@ export class BlogManagePage extends React.Component {
       }) => [
           <>
             <Link
-              to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+              to={`/blog/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
               target="_blank"
               className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
             >
