@@ -92,12 +92,14 @@ class AddEdit extends React.PureComponent {
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };

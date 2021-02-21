@@ -32,7 +32,9 @@ import {
   makeSelectTwoFactor,
 } from './selectors';
 import Modal from '../../components/Modal';
+import Dialog from '../../components/Dialog/index';
 import '../../assets/styles/loading.css';
+import { makeSelectErrorMsg } from '../ContactUs/selectors';
 
 const LoginUserPage = props => {
   const {
@@ -47,6 +49,7 @@ const LoginUserPage = props => {
     twoFactor,
     loadingObj: { loggingUser, sendingCode },
     helperObj: { showEmailTwoFactor, showGoogleTwoFactor },
+    setOpen,
   } = props;
 
   const handleClose = () => {
@@ -97,6 +100,10 @@ const LoginUserPage = props => {
   const handleSubmitCode = e => {
     e.preventDefault();
     props.addTwoFactorRequest();
+  };
+
+  const handleCloseDialog = () => {
+    setOpen(false);
   };
 
   return (
