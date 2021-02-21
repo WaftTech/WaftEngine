@@ -11,7 +11,7 @@ import {
 
 const BarChartComponent = ({
   data,
-  width = 720,
+  width = 500,
   height = 250,
   key1,
   key2,

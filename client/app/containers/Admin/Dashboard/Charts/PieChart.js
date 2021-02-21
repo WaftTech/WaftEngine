@@ -21,7 +21,7 @@ const PieChartComponent = ({ data, dataKey = 'value', nameKey = 'name' }) => (
       ))}
     </Pie>
     <Tooltip />
-    <Legend verticalAlign="bottom" align="left" height={100}/>
+    <Legend verticalAlign="bottom" align="right" height={100} />
   </PieChart>
 );
 
