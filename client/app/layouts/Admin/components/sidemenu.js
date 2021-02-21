@@ -27,7 +27,7 @@ import {
   FaAddressCard,
   FaMailBulk,
   FaExclamationTriangle,
-  FaCommentDots,
+  FaCommentDots, FaTenge
 } from 'react-icons/fa';
 
 const menu = [
@@ -44,15 +44,22 @@ const menu = [
     menu: [
       {
         key: '2.1',
-        name: 'Section',
-        link: '/admin/content-manage',
-        icon: <FaAlignLeft />,
-      },
-      {
-        key: '2.9',
-        name: 'Page',
-        icon: <FaRegFile />,
-        link: '/admin/page-manage',
+        name: 'Static Content',
+        icon: <FaTenge />,
+        menu: [
+          {
+            key: '2.1.1',
+            name: 'Section Content',
+            icon: <FaAlignLeft />,
+            link: '/admin/section-content',
+          },
+          {
+            key: '2.1.2',
+            name: 'Page Content',
+            icon: <FaRegFile />,
+            link: '/admin/page-content',
+          },
+        ],
       },
       {
         key: '2.7',

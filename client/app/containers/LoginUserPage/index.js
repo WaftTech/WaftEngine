@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { Helmet } from 'react-helmet';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { createStructuredSelector } from 'reselect';
@@ -101,6 +101,11 @@ const LoginUserPage = props => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          Login
+          </title>
+      </Helmet>
       <Modal
         open={showEmailTwoFactor || showGoogleTwoFactor}
         handleClose={handleClose}
@@ -118,8 +123,8 @@ const LoginUserPage = props => {
               </div>
             </>
           ) : (
-            'Continue'
-          )
+              'Continue'
+            )
         }
         width="sm"
       >
@@ -184,8 +189,8 @@ const LoginUserPage = props => {
                   <div />
                 </div>
               ) : (
-                'Login'
-              )}
+                  'Login'
+                )}
             </button>
           </form>
           <Link

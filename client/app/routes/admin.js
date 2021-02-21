@@ -49,17 +49,17 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/page-manage/add',
+    path: '/admin/page-content/add',
     component: AddEditPageManage,
     exact: true,
   },
   {
-    path: '/admin/page-manage/edit/:id',
+    path: '/admin/page-content/edit/:id',
     component: AddEditPageManage,
     exact: true,
   },
   {
-    path: '/admin/page-manage',
+    path: '/admin/page-content',
     component: PageManage,
     exact: true,
   },
@@ -84,17 +84,17 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/content-manage/edit/:id',
+    path: '/admin/section-content/edit/:id',
     component: ContentManageAddEdit,
     exact: true,
   },
   {
-    path: '/admin/content-manage/add',
+    path: '/admin/section-content/add',
     component: ContentManageAddEdit,
     exact: true,
   },
   {
-    path: '/admin/content-manage',
+    path: '/admin/section-content',
     component: ContentManagePage,
     exact: true,
   },

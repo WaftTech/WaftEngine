@@ -68,11 +68,11 @@ export class ContentsListingPage extends React.Component {
 
   handleAdd = () => {
     this.props.clearOne();
-    this.props.push('/admin/content-manage/add');
+    this.props.push('/admin/section-content/add');
   };
 
   handleEdit = id => {
-    this.props.push(`/admin/content-manage/edit/${id}`);
+    this.props.push(`/admin/section-content/edit/${id}`);
     this.props.clearOne();
 
     // this.setState({ edit_id: id });
