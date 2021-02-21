@@ -38,6 +38,8 @@ import {
 } from 'react-icons/fa';
 
 import LineChart from './Charts/LineChart';
+import BarChart from './Charts/BarChart';
+import PieChart from './Charts/PieChart';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Dashboard extends React.PureComponent {
@@ -70,6 +72,51 @@ export class Dashboard extends React.PureComponent {
         let obj = {
           date: `${element._id}/${element.month}/${element.day}`,
           users: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertAuthorData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          Author: element.author,
+          amt: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertRolesData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          name: element.role_title,
+          count: element.count,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertRegisterData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          name: element._id,
+          count: element.amt,
         };
         newData.push(obj);
       }
@@ -155,22 +202,13 @@ export class Dashboard extends React.PureComponent {
                 By Roles{' '}
               </h3>
               <div className="flex flex-wrap justify-between mx-4">
-                {users &&
-                  users.data &&
-                  users.data.role &&
-                  users.data.role.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between px-2 h-10 items-center">
-                        <span>{each.role_title}: </span>
-                        <span className="inline-block text-waftprimary text-2xl text-right font-bold">
-                          {each.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                {users && users.data && users.data.role && (
+                  <PieChart
+                    dataKey="count"
+                    nameKey="name"
+                    data={this.convertRolesData(users.data.role)}
+                  />
+                )}
               </div>
             </div>
 
@@ -212,20 +250,13 @@ export class Dashboard extends React.PureComponent {
                 By Registration method
               </h3>
               <div className="flex flex-wrap justify-between mx-4">
-                {userByRegister &&
-                  userByRegister.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between px-2 h-10 items-center">
-                        <span>{`${each._id}`}: </span>
-                        <span className="inline-block text-waftprimary text-2xl text-right font-bold">
-                          {each.amt}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                {userByRegister && (
+                  <PieChart
+                    dataKey="count"
+                    nameKey="name"
+                    data={this.convertRegisterData(userByRegister)}
+                  />
+                )}
               </div>
             </div>
 
@@ -235,19 +266,11 @@ export class Dashboard extends React.PureComponent {
               </h3>
               <div className="flex flex-wrap justify-between mx-4">
                 {blogsByUser.blog && blogsByUser.blog.length ? (
-                  blogsByUser.blog.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between h-10 items-center px-2">
-                        <span className="w-24 text-sm">{each.author}</span>
-                        <span className="inline-block text-waftprimary font-bold text-2xl text-right ">
-                          {each.amt}
-                        </span>
-                      </div>
-                    </div>
-                  ))
+                  <BarChart
+                    data={this.convertAuthorData(blogsByUser.blog)}
+                    key1="amt"
+                    XAxisKey="Author"
+                  />
                 ) : (
                   <div className="flex justify-between">
                     <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
