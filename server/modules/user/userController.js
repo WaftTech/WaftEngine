@@ -285,7 +285,7 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  const public_register_allow = await settingsHelper('auth', 'auth', 'is_public_registration')
+  const public_register_allow = await settingsHelper('auth', 'user', 'is_public_registration')
   if (!public_register_allow) {
     return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, null, 'Public Registration not allowed.', null);
   }
@@ -303,8 +303,8 @@ userController.Register = async (req, res, next) => {
     newUser.password = hash;
     newUser.email_verification_code = otherHelper.generateRandomHexString(12);
     newUser.email_verified = false;
-    newUser.roles = await settingsHelper('auth', 'roles', 'public_register_role')
-
+    const temp = await settingsHelper('auth', 'roles', 'public_register_role')
+    newUser.roles.push(temp)
     newUser.last_password_change_date = new Date();
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();

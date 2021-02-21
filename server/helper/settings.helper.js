@@ -14,7 +14,7 @@ module.exports = async (type, sub_type, key) => {
   }
   const value = myCache.get(temp);
   if (value == undefined) {
-    const setting = await settingSch.findOne({ key: key, type: type, sub_type: sub_type }, { value: 1, key: 1, _id: 0 });
+    const setting = await settingSch.findOne({ key: key, type: type, sub_type: sub_type }, { value: 1, key: 1, _id: 0 }).lean();
     if (setting) {
       myCache.set(temp, setting.value)
       return setting.value;
