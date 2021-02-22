@@ -107,7 +107,7 @@ const RenderBlogs = props => {
       </div>
     </>
   ) : (
-        <div>No News Found</div>
+        <div>No Blog Found</div>
       );
 };
 
