@@ -68,11 +68,11 @@ export class ContentsListingPage extends React.Component {
 
   handleAdd = () => {
     this.props.clearOne();
-    this.props.push('/admin/content-manage/add');
+    this.props.push('/admin/section-content/add');
   };
 
   handleEdit = id => {
-    this.props.push(`/admin/content-manage/edit/${id}`);
+    this.props.push(`/admin/section-content/edit/${id}`);
     this.props.clearOne();
 
     // this.setState({ edit_id: id });
@@ -169,7 +169,7 @@ export class ContentsListingPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>HTML Content</title>
+          <title>Section Content</title>
         </Helmet>
         {loading && loading === true ? <Loading /> : <></>}
         <div className="flex justify-between my-3">

@@ -124,7 +124,7 @@ export const SubModules = props => {
   return (
     <>
       <Helmet>
-        <title>Sub Modules Manage</title>
+        <title>Module Group Manage</title>
       </Helmet>
       <DeleteDialog
         open={open}
@@ -133,14 +133,14 @@ export const SubModules = props => {
       />
       <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
-        <PageHeader>Sub Modules Manage</PageHeader>
+        <PageHeader>Module Group Manage</PageHeader>
         <div className="flex items-center">
           <button
             className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
             onClick={handleAdd}
           >
             <FaPlus />
-            <span className="pl-2">Add Sub-Module</span>
+            <span className="pl-2">Add New</span>
           </button>
         </div>
       </div>

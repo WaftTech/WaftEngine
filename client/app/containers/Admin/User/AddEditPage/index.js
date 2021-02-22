@@ -123,30 +123,30 @@ class AddEdit extends React.PureComponent {
             {id ? 'Edit' : 'Add'} User
           </PageHeader>
         </div>
-       
+
         <PageContent>
-        {window.location.pathname.includes('edit') && (
-          <div className="flex border border-b-0 Waft_Tab">
-            <button
-              type="button "
-              className={`block py-2 px-4 hover:text-primary  border-r ${
-                this.state.tab === 'basic' ? 'active' : ''
-              }`}
-              onClick={() => this.handleTab('basic')}
-            >
-              Basic Info
-            </button>
-            <button
-              type="button "
-              className={`block py-2 px-4 hover:text-primary  border-r ${
-                this.state.tab === 'reset' ? 'active' : ''
-              }`}
-              onClick={() => this.handleTab('reset')}
-            >
-              Reset Password
-            </button>
-          </div>
-        )}
+          {window.location.pathname.includes('edit') && (
+            <div className="flex border border-b-0 Waft_Tab">
+              <button
+                type="button "
+                className={`block py-2 px-4 hover:text-primary  border-r ${
+                  this.state.tab === 'basic' ? 'active' : ''
+                }`}
+                onClick={() => this.handleTab('basic')}
+              >
+                Basic Info
+              </button>
+              <button
+                type="button "
+                className={`block py-2 px-4 hover:text-primary  border-r ${
+                  this.state.tab === 'reset' ? 'active' : ''
+                }`}
+                onClick={() => this.handleTab('reset')}
+              >
+                Reset Password
+              </button>
+            </div>
+          )}
           {this.state.tab === 'basic' && (
             <div className="p-4 border">
               <div className="w-full md:w-1/2 pb-4">
@@ -187,9 +187,8 @@ class AddEdit extends React.PureComponent {
                 />
               </div>
               {roless.map(each => (
-                <div className="checkbox">
+                <div className="checkbox" key={each._id}>
                   <input
-                    key={each._id}
                     checked={users.roles.includes(each._id)}
                     onChange={() => this.handleRolesChecked(each._id)}
                     type="checkbox"

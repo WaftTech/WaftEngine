@@ -18,7 +18,6 @@ import '../style.css';
 
 class AccessManagePage extends React.PureComponent {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     loadAccessRequest: PropTypes.func.isRequired,
     updateAccessRequest: PropTypes.func.isRequired,
     setAccessValue: PropTypes.func.isRequired,
@@ -65,7 +64,7 @@ class AccessManagePage extends React.PureComponent {
       loading,
     } = this.props;
     return loading && loading == true ? (
-      <div class="circular_loader waftloader"></div>
+      <div className="circular_loader waftloader"></div>
     ) : (
       <React.Fragment>
         <Helmet>

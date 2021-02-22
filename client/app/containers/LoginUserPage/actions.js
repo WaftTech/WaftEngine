@@ -15,6 +15,11 @@ export const setValue = payload => ({
   payload,
 });
 
+export const setOpen = payload => ({
+  type: types.SET_OPEN,
+  payload,
+});
+
 export const clearStore = payload => ({ type: types.CLEAR_STORE, payload });
 
 export const loginRequest = payload => ({ type: types.LOGIN_REQUEST, payload });
