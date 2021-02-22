@@ -44,18 +44,18 @@ const menu = [
     menu: [
       {
         key: '2.1',
-        name: 'Static Content',
+        name: 'HTML',
         icon: <FaTenge />,
         menu: [
           {
             key: '2.1.1',
-            name: 'Section Content',
+            name: 'Section',
             icon: <FaAlignLeft />,
             link: '/admin/section-content',
           },
           {
             key: '2.1.2',
-            name: 'Page Content',
+            name: 'Page',
             icon: <FaRegFile />,
             link: '/admin/page-content',
           },

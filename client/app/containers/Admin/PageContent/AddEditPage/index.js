@@ -134,8 +134,8 @@ class AddEdit extends React.PureComponent {
             <title>
               {' '}
               {match && match.params && match.params.id
-                ? 'Edit Section Page'
-                : 'Add Section Page'}
+                ? 'Edit Page Content'
+                : 'Add Page Content'}
             </title>
           </Helmet>
           <Dialog
@@ -162,8 +162,8 @@ class AddEdit extends React.PureComponent {
                   <FaArrowLeft className="text-xl" />
                 </span>
                 {match && match.params && match.params.id
-                  ? 'Edit Section Page'
-                  : 'Add Section Page'}
+                  ? 'Edit Page Content'
+                  : 'Add Page Content'}
               </PageHeader>
             </div>
             <PageContent>

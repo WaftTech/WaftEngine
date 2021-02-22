@@ -169,7 +169,7 @@ export class ContentsListingPage extends React.Component {
           doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
-          <title>HTML Content</title>
+          <title>Section Content</title>
         </Helmet>
         {loading && loading === true ? <Loading /> : <></>}
         <div className="flex justify-between my-3">
