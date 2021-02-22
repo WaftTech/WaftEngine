@@ -18,7 +18,7 @@ function RecentBlogs(props) {
   return (
     <div className="">
       <div className="bg-primary h-14 flex items-center pl-8">
-        <h2 className="font-bold text-3xl my-0">Recent News</h2>
+        <h2 className="font-bold text-3xl my-0">Recent Blog</h2>
       </div>
       {props.blogs.map(blog => (
         <div

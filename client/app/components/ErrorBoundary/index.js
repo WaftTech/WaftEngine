@@ -6,7 +6,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import Logo from '../../assets/img/logo-icon.svg';
+import { FaExclamationCircle, FaRegArrowAltCircleLeft, FaUndo } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 class ErrorBoundary extends React.Component {
@@ -38,25 +38,27 @@ class ErrorBoundary extends React.Component {
       // if (customErrorView) return customErrorView(error, info);
       return (
         <>
-          <div className="flex justify-center mt-24">
-            <img src={Logo} className="w-48" />
-          </div>
-          <div className="flex justify-center">
-            <h1>Something went wrong.</h1>
-          </div>
-          <div className="flex justify-center">
-            <button
-              className="underline text-secondary hover:cursor p-2 m-2"
-              onClick={this.handleGoBack}
-            >
-              Go Back.
-            </button>
-            <button
-              className="underline text-secondary hover:cursor p-2 m-2"
-              onClick={this.handleReload}
-            >
-              Relaod.
-            </button>
+          <div className="h-screen w-screen bg-red-50 flex flex-col items-center justify-center py-10 pb-48">
+            <div className="flex justify-center">
+              <FaExclamationCircle className="text-6xl text-red-500" />
+            </div>
+            <div className="flex justify-center py-5">
+              <h1 className="text-2xl">something went wrong.</h1>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="underline text-black hover:text-blue-600 cursor p-2 m-2"
+                onClick={this.handleGoBack}
+              >
+                <FaRegArrowAltCircleLeft className="text-2xl" />
+              </button>
+              <button
+                className="underline text-black hover:text-blue-600 cursor p-2 m-2"
+                onClick={this.handleReload}
+              >
+                <FaUndo className="text-xl" />
+              </button>
+            </div>
           </div>
         </>
       );

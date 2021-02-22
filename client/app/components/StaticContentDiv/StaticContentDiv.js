@@ -41,7 +41,7 @@ class StaticContent extends React.PureComponent {
             contentObj.is_page &&
             contentObj.is_page[this.props.contentKey] === false ? (
               <Link
-                to={`/admin/content-manage/edit/${contentObj.ids[this.props.contentKey]
+                to={`/admin/section-content/edit/${contentObj.ids[this.props.contentKey]
                   }`}
                 target="_blank"
               >
@@ -51,7 +51,7 @@ class StaticContent extends React.PureComponent {
               </Link>
             ) : (
               <Link
-                to={`/admin/page-manage/edit/${contentObj.ids[this.props.contentKey]
+                to={`/admin/page-content/edit/${contentObj.ids[this.props.contentKey]
                   }`}
                 target="_blank"
               >

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
+import { Helmet } from 'react-helmet';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -86,6 +86,11 @@ const LoginAdminPage = props => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          Login
+          </title>
+      </Helmet>
       <Modal
         open={showEmailTwoFactor || showGoogleTwoFactor}
         handleClose={handleClose}
@@ -170,8 +175,8 @@ const LoginAdminPage = props => {
                     <div />
                   </div>
                 ) : (
-                  'Login'
-                )}
+                    'Login'
+                  )}
               </button>
             </form>
           </div>

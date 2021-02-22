@@ -77,7 +77,7 @@ class AddEdit extends React.PureComponent {
   };
 
   handleGoBack = () => {
-    this.props.push('/admin/content-manage');
+    this.props.push('/admin/section-content');
   };
 
   handleSave = () => {
@@ -138,8 +138,8 @@ class AddEdit extends React.PureComponent {
               <FaArrowLeft className="text-xl" />
             </span>
             {match && match.params && match.params.id
-              ? 'Edit Static Content'
-              : 'Add Static Content'}
+              ? 'Edit Section Content'
+              : 'Add Section Content'}
           </PageHeader>
         </div>
 
