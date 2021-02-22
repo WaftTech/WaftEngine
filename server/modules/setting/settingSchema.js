@@ -7,7 +7,7 @@ const settingSchema = new schema({
   type: { type: String, required: true },
   sub_type: { type: String },
   description: { type: String },
-  value_type: { type: String, enum: ['Boolean', 'Free text', 'Number'] },
+  value_type: { type: String, enum: ['Boolean', 'Free text', 'Number', 'ck_editor'] },
   is_active: { type: Boolean, default: true },
   is_deleted: { type: Boolean, default: false },
   is_removable: { type: Boolean, default: false },
