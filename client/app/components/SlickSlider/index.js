@@ -17,8 +17,6 @@ import LinkBoth from '../LinkBoth';
 import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa';
 import './slick.css';
 
-
-
 /* eslint-disable react/prefer-stateless-function */
 class SlickSlider extends React.PureComponent {
   static propTypes = {
@@ -80,21 +78,17 @@ class SlickSlider extends React.PureComponent {
       ],
     };
     try {
-      if (
-        slide.settings &&
-        typeof slide.settings === 'string' &&
-        slide.settings !== ''
-      ) {
-        settings = JSON.parse(slide.settings);
+      if (slide.settings && typeof slide.settings === 'string') {
+        settings = JSON.parse(`${slide.settings}`);
       }
     } catch (err) {
       console.log('something went wrong!', err);
     }
+
     if (!slide) return null; // maybe add a loader here
     return (
       <div>
         <Slider {...settings}>
-          {console.log(settings, 'settings')}
           {slide.images.map(image => (
             <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
               <>
