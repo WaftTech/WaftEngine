@@ -35,7 +35,6 @@ import { FaPlus, FaSearch, FaPencilAlt, FaKey } from 'react-icons/fa';
 /* eslint-disable react/prefer-stateless-function */
 export class AdminModuleManage extends React.PureComponent {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -74,7 +73,7 @@ export class AdminModuleManage extends React.PureComponent {
   };
 
   handleKeyPress = e => {
-    console.log("keydown");
+    console.log('keydown');
     if (e.key === 'Enter') {
       this.handleSearch();
     }
@@ -83,8 +82,6 @@ export class AdminModuleManage extends React.PureComponent {
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
   };
-
-
 
   handlePagination = paging => {
     this.props.loadAllRequest(paging);
@@ -107,8 +104,8 @@ export class AdminModuleManage extends React.PureComponent {
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ _id, module_name, description, module_group }) => [
-        (module_group && module_group.module_group) || '-',
         module_name,
+        (module_group && module_group.module_group) || '-',
         description,
         <>
           <div className="flex">
@@ -139,14 +136,14 @@ export class AdminModuleManage extends React.PureComponent {
       indicatorSeparator: state => ({
         display: 'none',
       }),
-    }
+    };
 
     const groupOptions =
       groups && groups.length > 0
         ? groups.map(each => {
-          const obj = { label: each.module_group, value: each._id };
-          return obj;
-        })
+            const obj = { label: each.module_group, value: each._id };
+            return obj;
+          })
         : [];
 
     return (
@@ -188,6 +185,7 @@ export class AdminModuleManage extends React.PureComponent {
                 <FaSearch />
               </span> */}
             </div>
+
             <div>
               <input
                 type="text"
@@ -208,7 +206,7 @@ export class AdminModuleManage extends React.PureComponent {
             </span>
           </div>
           <Table
-            tableHead={['Module Group', 'Module Name', 'Description', 'Action']}
+            tableHead={['Module Name', 'Module Group', 'Description', 'Action']}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

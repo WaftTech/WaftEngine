@@ -13,12 +13,18 @@ fileController.GetFileAndFolder = async (req, res, next) => {
     } else {
       id = req.params.id;
     }
+    let searchQueryFiles = { is_deleted: false, folder_id: id }
+    let searchQueryFolder = { is_deleted: false, parent_folder: id }
+    if (req.query.search) {
+      searchQueryFiles = { originalname: { $regex: req.query.search, $options: 'i' }, ...searchQueryFiles };
+      searchQueryFolder = { name: { $regex: req.query.search, $options: 'i' }, ...searchQueryFolder };
+    }
     const self = await folderSch
       .findOne({ is_deleted: false, _id: id })
       .populate([{ path: 'path', select: { name: 1 } }])
       .select({ name: 1, path: 1 });
-    const files = await fileSch.find({ is_deleted: false, folder_id: id });
-    const folders = await folderSch.find({ is_deleted: false, parent_folder: id }).select({ name: 1 });
+    const files = await fileSch.find(searchQueryFiles);
+    const folders = await folderSch.find(searchQueryFolder).select({ name: 1 });
     const totalFile = files.length;
     const totalFolder = folders.length;
     otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totalData: totalFolder }, files: { data: files, totalData: totalFile }, self: self }, null, 'files and folders get success!!', null);
@@ -66,15 +72,15 @@ fileController.UploadFiles = async (req, res, next) => {
       let file = req.files[i];
       file.added_by = req.user.id;
       file.renamed_name = file.originalname;
-      file.destination =
-        file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      file.path = file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      // file.destination =
+      //   file.destination
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1] + '/';
+      // file.path = file.path
+      //   .split('\\')
+      //   .join('/')
+      //   .split('server/')[1];
       file.folder_id = req.params.folder_id;
       const newFile = new fileSch(file);
       const fileSave = await newFile.save();
@@ -100,15 +106,15 @@ fileController.UploadFilesToRoot = async (req, res, next) => {
       let file = req.files[i];
       file.added_by = req.user.id;
       file.renamed_name = file.originalname;
-      file.destination =
-        file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      file.path = file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      // file.destination =
+      //   file.destination
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1] + '/';
+      // file.path = file.path
+      //   .split('\\')
+      //   .join('/')
+      //   .split('server/')[1];
       if (id) file.folder_id = id;
       const newFile = new fileSch(file);
       const fileSave = await newFile.save();

@@ -70,15 +70,15 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
                     onClick={_this.handleSetImage(index)}
                   />
                 ) : (
-                    <button
-                      type="button"
-                      className="items-center flex btn margin-none text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
-                      onClick={_this.handleSetImage(index)}
-                      style={{ margin: 0 }}
-                    >
-                      Click To Set Image
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    className="items-center flex btn margin-none text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+                    onClick={_this.handleSetImage(index)}
+                    style={{ margin: 0 }}
+                  >
+                    Click To Set Image
+                  </button>
+                )}
               </div>
 
               <div className="w-1/4 text-center mr-2">
@@ -128,7 +128,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     media: PropTypes.shape({
@@ -252,37 +251,37 @@ class AddEdit extends React.PureComponent {
     return loading ? (
       <Loading />
     ) : (
-        <>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={this.handleGoBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </PageHeader>
-          </div>
+      <>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </PageHeader>
+        </div>
 
-          <Dialog
-            className="w-5/6 h-full overflow-auto"
-            open={this.state.open}
-            onClose={this.handleClose}
-            title={`Select Media`}
-            body={
-              <div>
-                <EditorFileSelect
-                  location={location}
-                  selectFile={file => this.handleImageImageChange(file)}
-                />
-                <div className="mt-2 text-xs">
-                  Note: Please Double Click to open folder and select images.
+        <Dialog
+          className="w-5/6 h-full overflow-auto"
+          open={this.state.open}
+          onClose={this.handleClose}
+          title={`Select Media`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
               </div>
-              </div>
-            }
-          />
+            </div>
+          }
+        />
 
-          {/* <Dialog
+        {/* <Dialog
             aria-labelledby="max-width-dialog-title"
             open={this.state.open}
             onClose={this.handleClose}
@@ -298,85 +297,83 @@ class AddEdit extends React.PureComponent {
             </DialogContent>
           </Dialog> */}
 
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </title>
-          </Helmet>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Slider Name</label>
-              <input
-                className="inputbox"
-                id="slider-name"
-                type="text"
-                value={one.slider_name}
-                name="slider_name"
-                onChange={this.handleChange('slider_name')}
-              />
-              {errors && errors.slider_name && (
-                <div className="error">{errors.slider_name}</div>
-              )}
-            </div>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </title>
+        </Helmet>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Name</label>
+            <input
+              className="inputbox"
+              id="slider-name"
+              type="text"
+              value={one.slider_name}
+              name="slider_name"
+              onChange={this.handleChange('slider_name')}
+            />
+            {errors && errors.slider_name && (
+              <div className="error">{errors.slider_name}</div>
+            )}
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Slider Key</label>
-              <input
-                className="inputbox"
-                id="slider-key"
-                type="text"
-                value={one.slider_key}
-                name="slider_key"
-                onChange={this.handleChange('slider_key')}
-              />
-              {errors && errors.slider_key && (
-                <div className="error">{errors.slider_key}</div>
-              )}
-            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Key</label>
+            <input
+              className="inputbox"
+              id="slider-key"
+              type="text"
+              value={one.slider_key}
+              name="slider_key"
+              onChange={this.handleChange('slider_key')}
+            />
+            {errors && errors.slider_key && (
+              <div className="error">{errors.slider_key}</div>
+            )}
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label>
-                Slider Settings
-            </label>
-              <textarea
-                name="slider settings"
-                id="slider_setting"
-                className="inputbox"
-                cols="50"
-                rows="5"
-                onChange={this.handleChange('settings')}
-                value={one.settings || ''}
-              />
-            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Settings</label>
+            <textarea
+              name="slider settings"
+              id="slider_setting"
+              className="inputbox"
+              cols="50"
+              rows="5"
+              onChange={this.handleChange('settings')}
+              value={one.settings || ''}
+            />
+          </div>
 
-            <button
-              type="button"
-              className="block btn text-white bg-green-500 border border-green-600 hover:bg-green-600"
-              onClick={this.handleAddSlide}
-              style={{ margin: 0 }}
-            >
-              Add Slide
+          <button
+            type="button"
+            className="block btn text-white bg-green-500 border border-green-600 hover:bg-green-600"
+            onClick={this.handleAddSlide}
+            style={{ margin: 0 }}
+          >
+            Add Slide
           </button>
-            <div>
-              <SortableImageList
-                items={one.images}
-                _this={this}
-                onSortEnd={this.onImageSortEnd}
-                useDragHandle
-              />
-            </div>
-            <button
-              type="button"
-              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-              onClick={this.handleSave}
-            >
-              Save
+          <div>
+            <SortableImageList
+              items={one.images}
+              _this={this}
+              onSortEnd={this.onImageSortEnd}
+              useDragHandle
+            />
+          </div>
+          <button
+            type="button"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </>
-      );
+        </PageContent>
+      </>
+    );
   }
 }
 

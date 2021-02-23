@@ -2,26 +2,26 @@ module.exports = {
   black: '#000',
   white: '#fff',
 
-   // theme color
-   primary: '#2A3C85',
-   secondary: '#3b82f6',
-   subprimary: '#2e46ab',
-   subsecondary: '#2563eb',
+  // theme color
+  primary: '#2563eb',
+  secondary: '#3b82f6',
+  subprimary: '#2e46ab',
+  subsecondary: '#2563eb',
 
-   // Action color
-   success: '#28a745',
-   danger: '#dc3545',
-   warning: '#ffc107',
-   info: '#17a2b8',
-   light: '#f8f9fa',
-   dark: '#343a40',
+  // Action color
+  success: '#28a745',
+  danger: '#dc3545',
+  warning: '#ffc107',
+  info: '#17a2b8',
+  light: '#f8f9fa',
+  dark: '#343a40',
 
-   // Social site color
-   facebook:'#4B69B0',
-   twitter:'#37B1E1',
-   instagram:'#D82E51',
-   linkedin:'#0678B6',
-   google:'#e34133',
+  // Social site color
+  facebook: '#4B69B0',
+  twitter: '#37B1E1',
+  instagram: '#D82E51',
+  linkedin: '#0678B6',
+  google: '#e34133',
 
 
   rose: {

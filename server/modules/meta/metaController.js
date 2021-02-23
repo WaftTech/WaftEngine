@@ -58,15 +58,15 @@ metaController.saveMeta = async (req, res, next) => {
     let metaS = { client_route, title, meta_keywords, meta_description };
 
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
       metaS.meta_image = req.file;
     }
     if (_id) {

@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { Helmet } from 'react-helmet';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { createStructuredSelector } from 'reselect';
@@ -32,7 +32,9 @@ import {
   makeSelectTwoFactor,
 } from './selectors';
 import Modal from '../../components/Modal';
+import Dialog from '../../components/Dialog/index';
 import '../../assets/styles/loading.css';
+import { makeSelectErrorMsg } from '../ContactUs/selectors';
 
 const LoginUserPage = props => {
   const {
@@ -47,6 +49,7 @@ const LoginUserPage = props => {
     twoFactor,
     loadingObj: { loggingUser, sendingCode },
     helperObj: { showEmailTwoFactor, showGoogleTwoFactor },
+    setOpen,
   } = props;
 
   const handleClose = () => {
@@ -99,8 +102,17 @@ const LoginUserPage = props => {
     props.addTwoFactorRequest();
   };
 
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <Helmet>
+        <title>
+          Login
+          </title>
+      </Helmet>
       <Modal
         open={showEmailTwoFactor || showGoogleTwoFactor}
         handleClose={handleClose}
@@ -252,7 +264,6 @@ const LoginUserPage = props => {
 };
 
 LoginUserPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   loginWithFbRequest: PropTypes.func.isRequired,
   loginWithGoogleRequest: PropTypes.func.isRequired,
@@ -268,17 +279,9 @@ const mapStateToProps = createStructuredSelector({
   loadingObj: makeSelectLoadingObj(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'loginUserPage', reducer });
 const withSaga = injectSaga({ key: 'loginUserPage', saga });
 
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(LoginUserPage);
+export default compose(withReducer, withSaga, withConnect)(LoginUserPage);

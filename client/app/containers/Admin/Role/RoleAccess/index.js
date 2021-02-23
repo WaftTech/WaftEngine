@@ -166,13 +166,14 @@ const RoleAccess = props => {
       <PageContent>
         {module_data.map((each, index) => (
           <Panel
+            key={`panel-${index}`}
             title={`${each.module_group} Group`}
             body={
               <>
-                <span>
+                <div className="flex justify-end">
                   {selectStates[each._id] === false ? (
                     <button
-                      className=" bg-blue-500 text-white px-2 p-1 ml-2 rounded"
+                      className="bg-white text-blue-500 shadow px-2 p-1 ml-2 rounded"
                       onClick={() =>
                         handleGroupMultiChoice(each.modules, true, each._id)
                       }
@@ -181,7 +182,7 @@ const RoleAccess = props => {
                     </button>
                   ) : (
                     <button
-                      className=" bg-blue-500 text-white px-2 p-1 ml-2 rounded "
+                      className="bg-white text-blue-500 shadow px-2 p-1 ml-2 rounded"
                       onClick={() =>
                         handleGroupMultiChoice(each.modules, false, each._id)
                       }
@@ -189,7 +190,7 @@ const RoleAccess = props => {
                       Un-select All
                     </button>
                   )}
-                </span>
+                </div>
                 {each.modules.map((module, moduleIndex) => (
                   <fieldset
                     key={`${module._id}-${each._id}-${index}`}
@@ -199,7 +200,7 @@ const RoleAccess = props => {
                       className="w-64 truncate"
                       onClick={() => getAccessArray(module._id)}
                     >
-                      <div className="checkbox mr-1">
+                      <div className="checkbox mr-1 mt-1">
                         <input
                           type="checkbox"
                           id={`module-${module._id}-${moduleIndex}`}
@@ -247,7 +248,7 @@ const RoleAccess = props => {
                                   <span className="box">
                                     <FaCheck className="check-icon" />
                                   </span>
-                                  <span className="text-xs uppercase">
+                                  <span className="text-xs uppercase flex-1">
                                     {module_path.access_type}
                                   </span>
                                 </label>

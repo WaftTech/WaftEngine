@@ -37,13 +37,12 @@ export class SliderPage extends React.Component {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 

@@ -231,36 +231,42 @@ class AddEdit extends React.PureComponent {
 
   insertTags = event => {
     event.preventDefault();
-    if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
-      this.props.setOneValue({
-        key: 'tags',
-        value: [...this.props.one.tags, this.props.tempTag],
-      });
-      this.props.setTagValue('');
+    if (this.props.tempTag.trim() !== '') {
+      if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
+        this.props.setOneValue({
+          key: 'tags',
+          value: [...this.props.one.tags, this.props.tempTag],
+        });
+        this.props.setTagValue('');
+      }
     }
     return { tempTag: this.props.setTagValue('') };
   };
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };
 
   insertMetaKeywords = event => {
     event.preventDefault();
-    if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
-      this.props.setOneValue({
-        key: 'keywords',
-        value: [...this.props.one.keywords, this.props.tempMetaKeyword],
-      });
-      this.props.setMetaKeywordValue('');
+    if (this.props.tempMetaKeyword.trim() !== '') {
+      if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
+        this.props.setOneValue({
+          key: 'keywords',
+          value: [...this.props.one.keywords, this.props.tempMetaKeyword],
+        });
+        this.props.setMetaKeywordValue('');
+      }
     }
     return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
   };
@@ -428,22 +434,22 @@ class AddEdit extends React.PureComponent {
                 <div {...getRootProps()} className="outline-none">
                   <input {...getInputProps()} />
                   {tempImage === '' ? (
-                    <div
-                      className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none"
-                    >
-                     <div className="m-auto text-center hover:text-primary">
-                      <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
-                      <p className="text-gray-300 text-xs">Drag and Drop Your Files Here!!</p>
+                    <div className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none">
+                      <div className="m-auto text-center hover:text-primary">
+                        <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
+                        <p className="text-gray-300 text-xs">
+                          Drag and Drop Your Files Here!!
+                        </p>
                       </div>
                     </div>
                   ) : (
                     <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
-                    <img
-                      className="m-auto w-full h-28 object-contain inline-block text-center"
-                      src={tempImage}
-                      alt="BlogCategoryImage"
-                      style={{ height: '120px', width: '60%' }}
-                    />
+                      <img
+                        className="m-auto w-full h-28 object-contain inline-block text-center"
+                        src={tempImage}
+                        alt="BlogCategoryImage"
+                        style={{ height: '120px', width: '60%' }}
+                      />
                     </div>
                   )}
                 </div>
@@ -489,14 +495,10 @@ class AddEdit extends React.PureComponent {
               />
             </form>
             {one.tags.map((tag, index) => (
-              <label
-                onClick={this.handleDelete(index)}
-                className="tag"
-                key={`${tag}-${index}`}
-              >
+              <label className="tag" key={`${tag}-${index}`}>
                 {tag}
                 <span>
-                  <FaTimes />
+                  <FaTimes onClick={this.handleDelete(index)} />
                 </span>
               </label>
             ))}
@@ -518,14 +520,10 @@ class AddEdit extends React.PureComponent {
               const icon = null;
 
               return (
-                <label
-                  onDelete={this.handleMetaTagDelete(index)}
-                  className="tag"
-                  key={`meta-${tag}-${index}`}
-                >
+                <label className="tag" key={`meta-${tag}-${index}`}>
                   {tag}
                   <span>
-                    <FaTimes />
+                    <FaTimes onClick={this.handleMetaTagDelete(index)} />
                   </span>
                 </label>
               );

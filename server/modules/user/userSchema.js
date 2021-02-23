@@ -35,7 +35,7 @@ const userSchema = new schema({
   is_added_by_admin: { type: Boolean, require: true, default: false },
   roles: [{ type: [schema.Types.ObjectId], required: true, ref: 'roles' }],
   bio: { type: String },
-  register_method: { type: String },
+  register_method: { type: String, default: 'email', enum: ['email', 'google', 'facebook'] },
   skills: { type: [String] },
   description: { type: String },
   is_deleted: {

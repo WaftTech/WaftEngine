@@ -427,17 +427,17 @@ blogController.SaveBlog = async (req, res, next) => {
       await blogSch.updateMany({}, { $set: { is_highlight: false } }, { new: true });
       blogs.is_highlight === true;
     }
-    if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
-    }
+    // if (req.file) {
+    //   req.file.destination =
+    //     req.file.destination
+    //       .split('\\')
+    //       .join('/')
+    //       .split('server/')[1] + '/';
+    //   req.file.path = req.file.path
+    //     .split('\\')
+    //     .join('/')
+    //     .split('server/')[1];
+    // }
     if (blogs && blogs._id) {
       if (req.file) {
         blogs.image = req.file;
@@ -471,17 +471,17 @@ blogController.SaveBlog = async (req, res, next) => {
 blogController.SaveBlogCategory = async (req, res, next) => {
   try {
     let blogcats = req.body;
-    if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
-    }
+    // if (req.file) {
+    //   req.file.destination =
+    //     req.file.destination
+    //       .split('\\')
+    //       .join('/')
+    //       .split('server/')[1] + '/';
+    //   req.file.path = req.file.path
+    //     .split('\\')
+    //     .join('/')
+    //     .split('server/')[1];
+    // }
     if (blogcats && blogcats._id) {
       blogcats.updated_at = new Date();
       blogcats.updated_by = req.user.id;

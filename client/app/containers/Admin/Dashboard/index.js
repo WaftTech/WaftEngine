@@ -18,6 +18,10 @@ import {
   makeSelectUsers,
   makeSelectInfo,
   makeSelectBlog,
+  makeSelectUserByRegister,
+  makeSelectBlogsByUser,
+  makeSelectRecentUser,
+  makeSelectUserByDays,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
@@ -33,6 +37,10 @@ import {
   FaNewspaper,
 } from 'react-icons/fa';
 
+import LineChart from './Charts/LineChart';
+import BarChart from './Charts/BarChart';
+import PieChart from './Charts/PieChart';
+
 /* eslint-disable react/prefer-stateless-function */
 export class Dashboard extends React.PureComponent {
   componentDidMount() {
@@ -40,6 +48,10 @@ export class Dashboard extends React.PureComponent {
     this.props.loadErrorRequest();
     this.props.loadInfoRequest();
     this.props.loadBlogRequest();
+    this.props.loadUserByRegisterRequest();
+    this.props.loadBlogsByUserRequest();
+    this.props.loadRecentUserRequest();
+    this.props.loadUserByDaysRequest();
   }
 
   state = { open: false };
@@ -52,13 +64,83 @@ export class Dashboard extends React.PureComponent {
     this.setState({ open: false });
   };
 
+  convertDateData = dates => {
+    let newData = [];
+    if (dates.length > 0) {
+      for (let index = 0; index < dates.length; index++) {
+        const element = dates[index];
+        let obj = {
+          date: `${element._id}/${element.month}/${element.day}`,
+          users: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertAuthorData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          Author: element.author,
+          amt: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertRolesData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          name: element.role_title,
+          count: element.count,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertRegisterData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          name: element._id,
+          count: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
   render() {
-    const { classes, users, info, errors, blogs } = this.props;
+    const {
+      classes,
+      users,
+      info,
+      errors,
+      blogs,
+      userByRegister,
+      blogsByUser,
+      recentUser,
+      userByDays,
+    } = this.props;
+
     return (
       <>
         <div className="flex justify-between my-3">
           <PageHeader>Dashboard </PageHeader>
-
         </div>
         <div className="bg-white rounded p-4">
           {info.map(each => (
@@ -104,7 +186,7 @@ export class Dashboard extends React.PureComponent {
           </div>
           <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
             <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <FaExclamationCircle className="text-5xl mx-auto"/>
+              <FaExclamationCircle className="text-5xl mx-auto" />
               <div className="mt-1">Total Errors</div>
             </span>
             <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-8 h-8 text-center rounded-full bg-waftprimary-light leading-loose">
@@ -120,26 +202,13 @@ export class Dashboard extends React.PureComponent {
                 By Roles{' '}
               </h3>
               <div className="flex flex-wrap justify-between mx-4">
-                {users &&
-                  users.data &&
-                  users.data.role &&
-                  users.data.role.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between px-2 h-10 items-center">
-                        <span>{each.role_title}: </span>
-                        <span className="inline-block text-waftprimary text-2xl text-right font-bold">
-                          {users.data &&
-                            users.data.user &&
-                            users.data.user.filter(e =>
-                              e.roles.includes(each._id),
-                            ).length}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                {users && users.data && users.data.role && (
+                  <PieChart
+                    dataKey="count"
+                    nameKey="name"
+                    data={this.convertRolesData(users.data.role)}
+                  />
+                )}
               </div>
             </div>
 
@@ -163,16 +232,93 @@ export class Dashboard extends React.PureComponent {
                     </div>
                   ))
                 ) : (
-                    <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                        No Errors
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Errors
                     </h2>
-                    </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
+
+        <div>
+          <div className="flex justify-between mx-4 my-4">
+            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                By Registration method
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                {userByRegister && (
+                  <PieChart
+                    dataKey="count"
+                    nameKey="name"
+                    data={this.convertRegisterData(userByRegister)}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                Blogs by Users{' '}
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                {blogsByUser.blog && blogsByUser.blog.length ? (
+                  <BarChart
+                    data={this.convertAuthorData(blogsByUser.blog)}
+                    key1="amt"
+                    XAxisKey="Author"
+                  />
+                ) : (
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                      No Blogs
+                    </h2>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex justify-between mx-4 my-4">
+            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                Recent users
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                {recentUser &&
+                  recentUser.map(each => (
+                    <div
+                      key={each.email}
+                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
+                    >
+                      <div className="flex justify-between px-2 h-10 items-center">
+                        {`${each.name}`}:{each.email}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
+              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
+                Users by days{' '}
+              </h3>
+              <div className="flex flex-wrap justify-between mx-4">
+                <LineChart
+                  data={this.convertDateData(userByDays)}
+                  XAxisKey="date"
+                  Line1Key="users"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -220,18 +366,15 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
   info: makeSelectInfo(),
   blogs: makeSelectBlog(),
+  userByRegister: makeSelectUserByRegister(),
+  blogsByUser: makeSelectBlogsByUser(),
+  recentUser: makeSelectRecentUser(),
+  userByDays: makeSelectUserByDays(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminDashboard', reducer });
 const withSaga = injectSaga({ key: 'adminDashboard', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(Dashboard);
+export default compose(withReducer, withSaga, withConnect)(Dashboard);

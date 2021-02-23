@@ -78,7 +78,7 @@ class AddEdit extends React.PureComponent {
   };
 
   handleGoBack = () => {
-    this.props.push('/admin/page-manage');
+    this.props.push('/admin/page-content');
   };
 
   handleSave = () => {
@@ -92,12 +92,14 @@ class AddEdit extends React.PureComponent {
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };
@@ -132,8 +134,8 @@ class AddEdit extends React.PureComponent {
             <title>
               {' '}
               {match && match.params && match.params.id
-                ? 'Edit Static Page'
-                : 'Add Static Page'}
+                ? 'Edit Page Content'
+                : 'Add Page Content'}
             </title>
           </Helmet>
           <Dialog
@@ -160,8 +162,8 @@ class AddEdit extends React.PureComponent {
                   <FaArrowLeft className="text-xl" />
                 </span>
                 {match && match.params && match.params.id
-                  ? 'Edit Static Page'
-                  : 'Add Static Page'}
+                  ? 'Edit Page Content'
+                  : 'Add Page Content'}
               </PageHeader>
             </div>
             <PageContent>
@@ -253,14 +255,10 @@ class AddEdit extends React.PureComponent {
                     const icon = null;
 
                     return (
-                      <label
-                        onClick={this.handleMetaTagDelete(index)}
-                        className="tag"
-                        key={`meta-${tag}-${index}`}
-                      >
+                      <label className="tag" key={`meta-${tag}-${index}`}>
                         {tag}
                         <span>
-                          <FaTimes />
+                          <FaTimes onClick={this.handleMetaTagDelete(index)} />
                         </span>
                       </label>
                     );

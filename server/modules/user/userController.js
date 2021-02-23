@@ -285,7 +285,7 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  const public_register_allow = await settingsHelper('auth', 'auth', 'is_public_registration')
+  const public_register_allow = await settingsHelper('auth', 'user', 'is_public_registration')
   if (!public_register_allow) {
     return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, null, 'Public Registration not allowed.', null);
   }
@@ -303,8 +303,8 @@ userController.Register = async (req, res, next) => {
     newUser.password = hash;
     newUser.email_verification_code = otherHelper.generateRandomHexString(12);
     newUser.email_verified = false;
-    newUser.roles = await settingsHelper('auth', 'roles', 'public_register_role')
-
+    const temp = await settingsHelper('auth', 'roles', 'public_register_role')
+    newUser.roles.push(temp)
     newUser.last_password_change_date = new Date();
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
@@ -345,8 +345,10 @@ userController.validLoginResponse = async (req, user, next) => {
       }
     }
     const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
-    const tokenExpireTime = await settingsHelper('auth', 'token', 'expiry_time')
+    var tokenExpireTime = await settingsHelper('auth', 'token', 'expiry_time')
+    tokenExpireTime = Number.parseInt(tokenExpireTime)
     // Create JWT payload
+
     const payload = {
       id: user._id,
       name: user.name,
@@ -377,15 +379,15 @@ userController.RegisterFromAdmin = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
       if (req.file) {
-        req.file.destination =
-          req.file.destination
-            .split('\\')
-            .join('/')
-            .split('server/')[1] + '/';
-        req.file.path = req.file.path
-          .split('\\')
-          .join('/')
-          .split('server/')[1];
+        //   req.file.destination =
+        //     req.file.destination
+        //       .split('\\')
+        //       .join('/')
+        //       .split('server/')[1] + '/';
+        //   req.file.path = req.file.path
+        //     .split('\\')
+        //     .join('/')
+        //     .split('server/')[1];
         req.body.image = req.file;
       }
       const { name, email, password, date_of_birth, bio, location, phone, description, is_active, email_verified, roles, image, company_name, company_location, company_established, company_phone_no } = req.body;
@@ -426,15 +428,15 @@ userController.UpdateUserDetail = async (req, res, next) => {
     let newData = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
 
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
       newData.image = req.file;
     }
 
@@ -530,6 +532,7 @@ userController.VerifyServerMail = async (req, res, next) => {
     // Sign Token
     let secret_key = await settingsHelper('auth', 'token', 'secret_key');
     let token_expire_time = await settingsHelper('auth', 'token', 'expiry_time');
+    token_expire_time = Number.parseInt(token_expire_time)
     jwt.sign(payload, secret_key, { expiresIn: token_expire_time }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;
@@ -572,7 +575,7 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
-    const forgot_password_mail_template = settingsHelper('email', 'email_template', 'forgot_password_mail_template')
+    const forgot_password_mail_template = await settingsHelper('email', 'email_template', 'forgot_password_mail_template')
     const renderedMail = await renderMail.renderTemplate(
       forgot_password_mail_template,
       {
@@ -582,6 +585,8 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       user.email,
     );
+    console.log('inside forgot password controller:', renderedMail)
+
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
@@ -785,15 +790,15 @@ userController.GetProfile = async (req, res, next) => {
 userController.postProfile = async (req, res, next) => {
   try {
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
       req.body.image = req.file;
     }
     const { name, date_of_birth, bio, description, image, phone, location, is_two_fa, company_name, company_location, company_established, company_phone_no } = req.body;

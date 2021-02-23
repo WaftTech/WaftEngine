@@ -28,3 +28,7 @@ export const LOAD_TYPE_FAILURE = 'app/GlobalSetting/LOAD_TYPE_FAILURE';
 export const LOAD_SUB_TYPE_REQUEST = 'app/GlobalSetting/LOAD_SUB_TYPE_REQUEST';
 export const LOAD_SUB_TYPE_SUCCESS = 'app/GlobalSetting/LOAD_SUB_TYPE_SUCCESS';
 export const LOAD_SUB_TYPE_FAILURE = 'app/GlobalSetting/LOAD_SUB_TYPE_FAILURE';
+
+export const DELETE_ONE_REQUEST = 'app/GlobalSetting/DELETE_ONE_REQUEST';
+export const DELETE_ONE_SUCCESS = 'app/GlobalSetting/DELETE_ONE_SUCCESS';
+export const DELETE_ONE_FAILURE = 'app/GlobalSetting/DELETE_ONE_FAILURE';

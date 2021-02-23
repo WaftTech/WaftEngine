@@ -85,3 +85,16 @@ export const loadSubTypeFailure = payload => ({
   type: types.LOAD_SUB_TYPE_FAILURE,
   payload,
 });
+
+export const deleteOneRequest = payload => ({
+  type: types.DELETE_ONE_REQUEST,
+  payload,
+});
+export const deleteOneSuccess = payload => ({
+  type: types.DELETE_ONE_SUCCESS,
+  payload,
+});
+export const deleteOneFailure = payload => ({
+  type: types.DELETE_ONE_FAILURE,
+  payload,
+});

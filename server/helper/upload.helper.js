@@ -1,12 +1,11 @@
 // const { fileSizes } = require('../config/keys');
+require('dotenv').config();
 const httpStatus = require('http-status');
 const otherHelper = require('./others.helper');
 const multer = require('multer');
-const maxFileSize = 1024 * 1024 * 2
+const maxFileSize = process.env.maxFileSize
 const uploaderHelper = {}
-
 uploaderHelper.uploadFiles = (destinationPath, uploadTYpe, fieldData) => {
-
   const temp = maxFileSize / (1024 * 1024)
   var storage = multer.diskStorage(
     {

@@ -19,9 +19,10 @@ import { makeSelectToken } from '../../../App/selectors';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectErrors, makeSelectLoading,
-
-  makeSelectMetaTag, makeSelectOne
+  makeSelectErrors,
+  makeSelectLoading,
+  makeSelectMetaTag,
+  makeSelectOne,
 } from '../selectors';
 
 import * as mapDispatchToProps from '../actions';
@@ -44,7 +45,11 @@ class AddEdit extends React.PureComponent {
 
   componentDidMount() {
     this.props.clearErrors();
-    if (this.props.match.params && this.props.match.params.id !== '') {
+    if (
+      this.props.match.params &&
+      this.props.match.params.id !== undefined &&
+      this.props.match.params.id !== ''
+    ) {
       this.props.loadOneRequest(this.props.match.params.id);
     }
   }
@@ -72,7 +77,7 @@ class AddEdit extends React.PureComponent {
   };
 
   handleGoBack = () => {
-    this.props.push('/admin/content-manage');
+    this.props.push('/admin/section-content');
   };
 
   handleSave = () => {
@@ -86,12 +91,14 @@ class AddEdit extends React.PureComponent {
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };
@@ -131,8 +138,8 @@ class AddEdit extends React.PureComponent {
                 <FaArrowLeft className="text-xl" />
               </span>
               {match && match.params && match.params.id
-                ? 'Edit Static Content'
-                : 'Add Static Content'}
+                ? 'Edit Section Content'
+                : 'Add Section Content'}
             </PageHeader>
           </div>
 
@@ -170,9 +177,11 @@ class AddEdit extends React.PureComponent {
                 description={one.description}
                 setOneValue={this.props.setOneValue}
               />
-              {errors && errors.description && errors.description.trim() !== '' && (
-                <div className="error">{errors.description}</div>
-              )}
+              {errors &&
+                errors.description &&
+                errors.description.trim() !== '' && (
+                  <div className="error">{errors.description}</div>
+                )}
             </div>
 
             <div className="w-full md:w-1/2 pb-4">
@@ -185,8 +194,8 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleChange('meta_title')}
               />
               {errors && errors.meta_title && errors.meta_title.trim() !== '' && (
-                <div className="error">{errors.meta_title}</div>)
-              }
+                <div className="error">{errors.meta_title}</div>
+              )}
             </div>
             <div className="w-full md:w-1/2 pb-4">
               <label>Meta Description</label>
@@ -220,14 +229,10 @@ class AddEdit extends React.PureComponent {
                   const icon = null;
 
                   return (
-                    <label
-                      onDelete={this.handleMetaTagDelete(index)}
-                      className="tag"
-                      key={`meta-${tag}-${index}`}
-                    >
+                    <label className="tag" key={`meta-${tag}-${index}`}>
                       {tag}
                       <span>
-                        <FaTimes />
+                        <FaTimes onClick={this.handleMetaTagDelete(index)} />
                       </span>
                     </label>
                   );
@@ -238,6 +243,7 @@ class AddEdit extends React.PureComponent {
               <input
                 checked={one.is_active || false}
                 onClick={this.handleCheckedChange('is_active')}
+                onChange={null}
                 id="is_active"
                 type="checkbox"
               />
@@ -272,14 +278,6 @@ const mapStateToProps = createStructuredSelector({
   tempMetaTag: makeSelectMetaTag(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withRouter,
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withRouter, withReducer, withSaga, withConnect)(AddEdit);

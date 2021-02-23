@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -31,6 +31,7 @@ import saga from './saga';
 import Loading from '../../../components/Loading';
 import Table from '../../../components/Table';
 import { FaPencilAlt, FaPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
+import DeleteDialog from '../../../components/DeleteDialog';
 
 const key = 'globalSetting';
 
@@ -50,6 +51,9 @@ export const GlobalSetting = props => {
   } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
 
   useEffect(() => {
     loadWithdrawRequest(query);
@@ -95,10 +99,24 @@ export const GlobalSetting = props => {
     }
   };
 
+  const handleOpen = id => {
+    setDeleteId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = id => {
+    props.deleteOneRequest(id);
+    setOpen(false);
+  };
+
   const tablePagination = { page, size, totaldata };
 
   const tableData = data.map(
-    ({ key, sub_type, value, type, is_active, _id }) => [
+    ({ key, sub_type, value, type, is_active, is_removable, _id }) => [
       type,
       sub_type,
       key,
@@ -115,12 +133,14 @@ export const GlobalSetting = props => {
             <FaPencilAlt className="pencil" />
             <span className="bg-blue-500 dash" />
           </span>
-          {/* <span
+          {is_removable && is_removable === true && (
+            <span
               className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => handleOpen(_id)}
             >
               <FaTrashAlt className="text-red-400 text-lg" />
-            </span> */}
+            </span>
+          )}
         </div>
       </>,
     ],
@@ -131,6 +151,11 @@ export const GlobalSetting = props => {
       <Helmet>
         <title>Global Settings </title>
       </Helmet>
+      <DeleteDialog
+        open={open}
+        doClose={handleClose}
+        doDelete={() => handleDelete(deleteId)}
+      />
       <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
         <PageHeader>Global Settings </PageHeader>
@@ -146,6 +171,18 @@ export const GlobalSetting = props => {
       </div>
       <PageContent loading={loading}>
         <div className="flex">
+          <div>
+            <select
+              name="find_removable"
+              className="m-auto inputbox pr-6 w-64 mr-4"
+              value={query.find_removable || ''}
+              onChange={handleQueryChange}
+            >
+              <option value="">Find Removable</option>
+              <option value="true">Removable</option>
+              <option value="false">Not Removable</option>
+            </select>
+          </div>
           <div className="flex relative mr-2">
             <select
               type="text"
@@ -165,12 +202,6 @@ export const GlobalSetting = props => {
                   </option>
                 ))}
             </select>
-            <span
-              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
-              onClick={handleSearch}
-            >
-              <FaSearch />
-            </span>
           </div>
           <div className="flex relative mr-2">
             <select
@@ -197,12 +228,6 @@ export const GlobalSetting = props => {
                 <option value="">Choose type first</option>
               )}
             </select>
-            <span
-              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
-              onClick={handleSearch}
-            >
-              <FaSearch />
-            </span>
           </div>
 
           <div className="flex relative">
