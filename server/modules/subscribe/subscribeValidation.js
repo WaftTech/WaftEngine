@@ -52,7 +52,6 @@ validations.validate = async (req, res, next) => {
   const already_subscribe = await subscribeSch.findOne(subscribe_filter);
 
   if (already_subscribe && already_subscribe._id) {
-    console.log('aaaaa', already_subscribe)
     errors = { ...errors, subscribe: 'This email has already been subscribed! Thank You!!' }
   }
   if (!isEmpty(errors)) {
