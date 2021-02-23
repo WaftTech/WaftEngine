@@ -479,15 +479,6 @@ const FileList = ({
             )}
         </div>
       </div>
-      <div className="mb-2 w-full py-2 px-4 bg-gray-100 rounded border border-gray-200">
-        <p className="text-sm italic w-full block">
-          Note : Please Click the given button first for selecting{' '}
-          <span className="font-bold">
-            Multiple Images, Renaming folders and Deleting files
-          </span>
-          !!!
-        </p>
-      </div>
       <div className="my-auto">
         <BreadCrumb
           linkcomponent={LinkComponent}

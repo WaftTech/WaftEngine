@@ -121,137 +121,137 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <div>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.slug
-              ? 'Edit Blog'
-              : 'Add Blog'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.slug
-              ? 'Edit Blog Category'
-              : 'Add Blog Category'}
-          </PageHeader>
-        </div>
-
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Blog Title</label>
-            <input
-              className="inputbox"
-              id="title"
-              type="text"
-              value={(one && one.title) || ''}
-              onChange={this.handleChange('title')}
-            />
-          </div>
-          {errors && errors.title && errors.title.trim() !== '' && (
-            <div className="error">{errors && errors.title}</div>
-          )}
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Slug</label>
-            <input
-              className="inputbox"
-              id="slug"
-              type="text"
-              value={(one && one.slug_url) || ''}
-              name="slug"
-              onChange={this.handleChange('slug_url')}
-            />
-            {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
-              <div className="error">{errors && errors.slug_url}</div>
-            )}
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Order</label>
-            <input
-              className="inputbox"
-              id="order"
-              type="number"
-              value={(one && one.order) || ''}
-              onChange={this.handleChange('order')}
-              min="0"
-            />
-            {errors && errors.order && errors.order.trim() !== '' && (
-              <div className="error">{errors && errors.order}</div>
-            )}
-          </div>
-          <div className="pb-4">
-            <label>Blog Category Description</label>
-            <CKEditor
-              name="cat-description"
-              content={one && one.description}
-              config={{ allowedContent: true }}
-              events={{
-                change: e => this.handleEditorChange(e, 'description'),
-                value: (one && one.description) || '',
-              }}
-            />
-          </div>
-          <div className="w-full md:w-3/5 pb-4 mt-4">
-            <label className="label" htmlFor="Image">
-              Image
-            </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="outline-none">
-                  <input {...getInputProps()} />
-                  {tempImage === '' ? (
-                    <div
-                      className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none"
-                    >
-                      <div className="hover:text-primary m-auto text-center">
-                      <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
-                      <p className="text-gray-300 text-xs">Drag and Drop Your Files Here!!</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
-                    <img
-                      className="m-auto w-full h-28 object-contain inline-block text-center"
-                      src={tempImage}
-                      alt="BlogCategoryImage"
-                    />
-                    </div>
-                  )}
-                </div>
-              )}
-            </Dropzone>
-          </div>
-
-          <div className="checkbox">
-            <input
-              checked={(one && one.is_active) || false}
-              onClick={this.handleCheckedChange('is_active')}
-              id="is_active"
-              type="checkbox"
-            />
-            <label htmlFor="is_active">
-              <span className="box">
-                <FaCheck className="check-icon" />
+        <div>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.slug
+                ? 'Edit Blog'
+                : 'Add Blog'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
               </span>
+              {match && match.params && match.params.slug
+                ? 'Edit Blog Category'
+                : 'Add Blog Category'}
+            </PageHeader>
+          </div>
+
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Title</label>
+              <input
+                className="inputbox"
+                id="title"
+                type="text"
+                value={(one && one.title) || ''}
+                onChange={this.handleChange('title')}
+              />
+            </div>
+            {errors && errors.title && errors.title.trim() !== '' && (
+              <div className="error">{errors && errors.title}</div>
+            )}
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Slug</label>
+              <input
+                className="inputbox"
+                id="slug"
+                type="text"
+                value={(one && one.slug_url) || ''}
+                name="slug"
+                onChange={this.handleChange('slug_url')}
+              />
+              {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+                <div className="error">{errors && errors.slug_url}</div>
+              )}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Order</label>
+              <input
+                className="inputbox"
+                id="order"
+                type="number"
+                value={(one && one.order) || ''}
+                onChange={this.handleChange('order')}
+                min="0"
+              />
+              {errors && errors.order && errors.order.trim() !== '' && (
+                <div className="error">{errors && errors.order}</div>
+              )}
+            </div>
+            <div className="pb-4">
+              <label>Blog Category Description</label>
+              <CKEditor
+                name="cat-description"
+                content={one && one.description}
+                config={{ allowedContent: true }}
+                events={{
+                  change: e => this.handleEditorChange(e, 'description'),
+                  value: (one && one.description) || '',
+                }}
+              />
+            </div>
+            <div className="w-full md:w-3/5 pb-4 mt-4">
+              <label className="label" htmlFor="Image">
+                Image
+            </label>
+              <Dropzone onDrop={files => this.onDrop(files, 'image')}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()} className="outline-none">
+                    <input {...getInputProps()} />
+                    {tempImage === '' ? (
+                      <div
+                        className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none"
+                      >
+                        <div className="hover:text-primary m-auto text-center">
+                          <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
+                          <p className="text-gray-300 text-xs">Drag and Drop Your Files Here!!</p>
+                        </div>
+                      </div>
+                    ) : (
+                        <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
+                          <img
+                            className="m-auto w-full h-28 object-contain inline-block text-center"
+                            src={tempImage}
+                            alt="BlogCategoryImage"
+                          />
+                        </div>
+                      )}
+                  </div>
+                )}
+              </Dropzone>
+            </div>
+
+            <div className="checkbox">
+              <input
+                checked={(one && one.is_active) || false}
+                onClick={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Active
             </label>
-          </div>
+            </div>
 
-          <button
-            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            onClick={this.handleSave}
-            disabled={loading}
-          >
-            Save
+            <button
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+              disabled={loading}
+            >
+              Save
           </button>
-        </PageContent>
-      </div>
-    );
+          </PageContent>
+        </div>
+      );
   }
 }
 
