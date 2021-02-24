@@ -10,9 +10,9 @@ yarn.lock
 .DS_Store
 npm-debug.log
 .idea
-# public
+public
 config/
-# env file 
+# env file
 .env
 
 # files

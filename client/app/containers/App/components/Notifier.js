@@ -38,7 +38,7 @@ class Notifier extends React.Component {
 
     notifications.forEach(notification => {
       // Do nothing if snackbar is already displayed
-      if (this.displayed.includes(notification.key)) return;
+      // if (this.displayed.includes(notification.key)) return;
       // Display snackbar using toast
       if (notification.options && notification.options.variant) {
         toast[notification.options.variant](notification.message, {

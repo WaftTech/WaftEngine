@@ -28,6 +28,7 @@ import Loading from '../../../components/Loading';
 import Table from '../../../components/Table';
 import { FaPencilAlt, FaPlus, FaArrowLeft, FaCheck } from 'react-icons/fa';
 import { enqueueSnackbar } from '../../App/actions';
+import CKEditor from 'react-ckeditor-component';
 
 const key = 'globalSetting';
 
@@ -61,6 +62,11 @@ export const GlobalSetting = props => {
     if (name === 'value_type' && event.target.value !== 'Boolean') {
       setOneValue({ key: 'value', value: '' });
     }
+  };
+
+  const handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    setOneValue({ key: name, value: newContent });
   };
 
   const handleCheckedChange = name => event => {
@@ -125,6 +131,7 @@ export const GlobalSetting = props => {
             <option value="Boolean">Boolean</option>
             <option value="Free text">Free text</option>
             <option value="Number">Number</option>
+            <option value="ck_editor">Ck editor</option>
           </select>
         </div>
         {one.value_type === 'Boolean' && (
@@ -166,6 +173,20 @@ export const GlobalSetting = props => {
               name="value"
               value={one.value || ''}
               onChange={handleChange('value')}
+            />
+          </div>
+        )}
+        {one.value_type === 'ck_editor' && (
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Value</label>
+            <CKEditor
+              name="Answer"
+              content={one && one.value}
+              config={{ allowedContent: true }}
+              events={{
+                change: e => handleEditorChange(e, 'value'),
+                value: (one && one.value) || '',
+              }}
             />
           </div>
         )}
