@@ -48,15 +48,6 @@ validations.validation = async (req, res, next) => {
       ],
     },
     {
-      field: 'meta_title',
-      validate: [
-        {
-          condition: 'IsEmpty',
-          msg: contentConfig.validation.empty,
-        }
-      ],
-    },
-    {
       field: 'key',
       validate: [
         {

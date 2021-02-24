@@ -81,7 +81,7 @@ adminDashboardController.getLatestFiveUsers = async (req, res, next) => {
       try {
             let top = 5;
             top = Number.parseInt(top);
-            const fiveUsers = await userSch.find({ is_deleted: false }).select('name email').sort({ sales_amount: -1 }).limit(top)
+            const fiveUsers = await userSch.find({ is_deleted: false }).select('name email').sort({ "_id": -1 }).limit(top)
             return otherHelper.sendResponse(res, httpStatus.OK, true, fiveUsers, null, 'Get User by Day', null);
       } catch (err) {
             next(err);

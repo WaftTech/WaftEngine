@@ -58,35 +58,26 @@ export class BlogListPage extends React.Component {
           <title>Blogs</title>
         </Helmet>
 
-        <HighLightList
+        {/* <HighLightList
           loading={highlightLoading}
           currentBlogs={highlight}
           pagination={pagination}
           handlePagination={this.handlePagination}
         />
-        <Showcase loading={showcaseLoading} showcase={showcase} />
+        <Showcase loading={showcaseLoading} showcase={showcase} /> */}
 
         <div className="container mx-auto lg:flex">
           <div className="lg:w-3/4 lg:pr-10">
             <div className="layout-2 no-container no-bg">
-              {/* <CategoryElement cat_id="5d8354aed17b367dfc7182b4" size={3} /> */}
             </div>
           </div>
           <div className="lg:w-1/4 mt-16 lg:mt-32 headline-only">
             <RecentBlogs />
+            {/* <Trending loading={trending.length === 0} trending={trending} /> */}
+
           </div>
         </div>
 
-        <div className="container mx-auto lg:flex pb-12">
-          <div className="lg:w-3/4 lg:pr-4">
-            <div className="layout-7 no-container item4">
-              {/* <CategoryElement cat_id="5d835644d17b367dfc7182b7" size={4} /> */}
-            </div>
-          </div>
-          <div className="lg:w-1/4">
-            <Trending loading={trending.length === 0} trending={trending} />
-          </div>
-        </div>
       </React.Fragment>
     );
   }
