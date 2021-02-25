@@ -44,15 +44,12 @@ validations.validate = async (req, res, next) => {
   ]
 
   let errors = validateHelper.validation(data, validateArray);
-  console.log('aaaaa', data)
-  let subscribe_filter = { is_deleted: false, email: data.email }
-  if (data._id) {
-    subscribe_filter = { ...subscribe_filter, _id: { $ne: data._id } }
-  }
+  let subscribe_filter = { is_deleted: true, email: data.email }
+
   const already_subscribe = await subscribeSch.findOne(subscribe_filter);
 
   if (already_subscribe && already_subscribe._id) {
-    errors = { ...errors, subscribe: 'This email has already been subscribed! Thank You!!' }
+    errors = { ...errors, subscribe: 'You cannot subscribe anymore' }
   }
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
