@@ -6,10 +6,10 @@ import { NavLink as Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeSelectAccess, makeSelectLocation
+  makeSelectAccess,
+  makeSelectLocation,
 } from '../../../containers/App/selectors';
 import menus from './sidemenu';
-
 
 const MainListItem = ({ location: { pathname }, access }) => {
   const [openSet, setOpenSet] = useState({});
@@ -19,6 +19,8 @@ const MainListItem = ({ location: { pathname }, access }) => {
   };
 
   const hasAccess = link => Object.keys(access).includes(link);
+
+  console.log('openset', openSet);
 
   const menuFunction = e => {
     let showChildren = false;
@@ -48,33 +50,41 @@ const MainListItem = ({ location: { pathname }, access }) => {
                 <span className="dropdown-title text-white pl-4">{e.name}</span>
               </div>
               <FaAngleDown
-                className={`text-sm text-white mr-4 transition-all duration-100 ease-in-out ${!openSet[e.key] ? 'rotate-90' : ''
-                  }`}
+                className={`text-sm text-white mr-4 transition-all duration-100 ease-in-out ${
+                  openSet[e.key] === false || openSet[e.key] == undefined
+                    ? 'rotate-90'
+                    : ''
+                }`}
               />
             </div>
-            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSet[e.key] ? 'max-h-0' : 'max-h-screen'
-              }`}>
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                openSet[e.key] === false || openSet[e.key] == undefined
+                  ? 'max-h-0'
+                  : 'max-h-screen'
+              }`}
+            >
               {e.menu.map(el => (
                 <div key={el.key}>{menuFunction(el)}</div>
               ))}
             </div>
           </>
         ) : (
-            <div
-              selected={pathname === e.link}
-              className={e.key.split('.').length === 1 ? '' : ''}
+          <div
+            selected={pathname === e.link}
+            className={e.key.split('.').length === 1 ? '' : ''}
+          >
+            <Link
+              to={`${e.link}`}
+              className={`text-gray-200 text-sm no-underline flex items-center ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 py-3 pl-${e.key.split(
+                '.',
+              ).length * 4}`}
             >
-              <Link
-                to={`${e.link}`}
-                className={`text-gray-200 text-sm no-underline flex items-center ease-in transition-opacity duration-100 opacity-75 hover:opacity-100 py-3 pl-${e.key.split(
-                  '.',
-                ).length * 4}`}
-              >
-                <span className="inline-block">{e.icon}</span>
-                <span className="pl-4">{e.name}</span>
-              </Link>
-            </div>
-          )}
+              <span className="inline-block">{e.icon}</span>
+              <span className="pl-4">{e.name}</span>
+            </Link>
+          </div>
+        )}
       </div>
     );
   };
