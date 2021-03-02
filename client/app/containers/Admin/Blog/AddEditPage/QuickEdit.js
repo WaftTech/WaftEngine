@@ -38,6 +38,7 @@ const QuickEdit = props => {
     handleDropDownChange,
     handleMultipleSelectCategoryChange,
     handlePublishedOn,
+    handleMultipleSelectAuthorChange,
   } = props;
   const {
     one,
@@ -67,6 +68,19 @@ const QuickEdit = props => {
   category.map(e => {
     cats[e._id] = e;
     return null;
+  });
+
+  let listAuthorNormalized = {};
+  const listAuthor = users.map(each => {
+    const obj = {
+      label: each.name,
+      value: each._id,
+    };
+    listAuthorNormalized = {
+      ...listAuthorNormalized,
+      [each._id]: obj,
+    };
+    return obj;
   });
 
   return (
@@ -133,28 +147,37 @@ const QuickEdit = props => {
           />
         </div>
 
-        <div className="w-full  pb-4">
-          <label className="label" htmlFor="grid-last-name">
-            Author
-          </label>
-          <select
-            className="inputbox"
-            native="true"
-            value={(one && one.author) || ''}
-            onChange={handleDropDownChange('author')}
-          >
-            <option value="" disabled>
-              None
-            </option>
-            {users &&
-              users.map(each => (
-                <option key={each._id} name={each.name} value={each._id}>
-                  {each.name}
-                </option>
-              ))}
-          </select>
+        <div className="w-full md:w-1/2 pb-4">
+          <label htmlFor="blog_author">Author</label>
+          <Select
+            className="React_Select"
+            id="category"
+            value={
+              (one.author &&
+                one.author.map((each, index) => {
+                  const authorObj = listAuthorNormalized[each];
+                  if (!authorObj) {
+                    return {
+                      label: null,
+                      value: index,
+                    };
+                  }
+                  return authorObj;
+                })) ||
+              []
+            }
+            name="author"
+            placeholder="Select Blog Author"
+            onChange={handleMultipleSelectAuthorChange}
+            isSearchable
+            isMulti
+            options={listAuthor}
+            styles={customStyles}
+          />
         </div>
-        <div className="error">{errors && errors.author}</div>
+        {errors && errors.author && errors.author.trim() !== '' && (
+          <div className="error">{errors && errors.author}</div>
+        )}
         <div className="checkbox">
           <input
             checked={one.is_active || false}

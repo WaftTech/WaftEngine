@@ -202,8 +202,6 @@ const AddEdit = props => {
     );
   };
 
-  console.log(subMenu);
-
   return loading && loading == true ? (
     <Loading />
   ) : (
