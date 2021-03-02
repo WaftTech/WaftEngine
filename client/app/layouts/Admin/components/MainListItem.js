@@ -20,8 +20,6 @@ const MainListItem = ({ location: { pathname }, access }) => {
 
   const hasAccess = link => Object.keys(access).includes(link);
 
-  console.log('openset', openSet);
-
   const menuFunction = e => {
     let showChildren = false;
     if (e.menu) {

@@ -52,7 +52,7 @@ function CustomTable({ ...props }) {
             <tbody>
               <tr>
                 <td colSpan={tableHead.length} className="py-2 text-center">
-                  <div class="circular_loader waftloader"></div>
+                  <div className="circular_loader waftloader"></div>
                 </td>
               </tr>
             </tbody>

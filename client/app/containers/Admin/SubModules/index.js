@@ -109,13 +109,6 @@ export const SubModules = props => {
             <FaPencilAlt className="pencil" />
             <span className="bg-blue-500 dash" />
           </span>
-          <span
-            className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
-            onClick={() => handleOpen(_id)}
-          >
-            <img className="trash-lid" src={lid} alt="trash-id" />
-            <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
-          </span>
         </div>
       </>,
     ],
@@ -193,12 +186,6 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withConnect,
-  memo,
-)(SubModules);
+export default compose(withConnect, memo)(SubModules);

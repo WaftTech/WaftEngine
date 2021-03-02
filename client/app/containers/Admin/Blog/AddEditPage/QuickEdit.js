@@ -6,7 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 import Select from '../../../../components/Select';
 
 const customStyles = {
-  chip: () => { },
+  chip: () => {},
   option: (provided, state) => ({
     ...provided,
     background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
@@ -161,6 +161,7 @@ const QuickEdit = props => {
             onClick={handleCheckedChange('is_active')}
             id="is_active"
             type="checkbox"
+            onChange={null}
           />
           <label htmlFor="is_active">
             <span className="box">

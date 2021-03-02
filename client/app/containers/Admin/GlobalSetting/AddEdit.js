@@ -299,6 +299,7 @@ export const GlobalSetting = props => {
             checked={one.is_active || false}
             id="is_active"
             type="checkbox"
+            onChange={null}
           />
           <label htmlFor="is_active">
             <span className="box">
@@ -313,6 +314,7 @@ export const GlobalSetting = props => {
             checked={one.is_removable || false}
             id="is_removable"
             type="checkbox"
+            onChange={null}
           />
           <label htmlFor="is_removable">
             <span className="box">
