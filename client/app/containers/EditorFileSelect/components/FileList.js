@@ -311,11 +311,14 @@ const FileList = ({
 
   const handleRenameButton = () => {
     if (selectedButton === 'Rename') {
+      setfileCheckbox(!fileCheckbox);
+
       setfolderCheckbox(!folderCheckbox);
     } else {
       setfolderCheckbox(true);
+      setfileCheckbox(true);
     }
-    setfileCheckbox(false);
+    // setfileCheckbox(false);
     setSelectedButton('Rename');
     clearChosen();
   };
@@ -460,23 +463,23 @@ const FileList = ({
             <span>Rename</span>
           </button>
           {selectedButton === 'Delete' &&
-            (chosen_files.length > 0 || chosen_folders.length > 0) ? (
-              <button
-                onClick={confirmDelete}
-                className="blink items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
-              >
-                <FaTrash className="text-base mr-2" />
-                <span>Confirm Delete</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleDeleteButton}
-                className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
-              >
-                <FaTrash className="text-base mr-2" />
-                <span>Delete</span>
-              </button>
-            )}
+          (chosen_files.length > 0 || chosen_folders.length > 0) ? (
+            <button
+              onClick={confirmDelete}
+              className="blink items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
+            >
+              <FaTrash className="text-base mr-2" />
+              <span>Confirm Delete</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDeleteButton}
+              className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
+            >
+              <FaTrash className="text-base mr-2" />
+              <span>Delete</span>
+            </button>
+          )}
         </div>
       </div>
       <div className="my-auto">
@@ -606,8 +609,9 @@ const FileList = ({
               </div>
               <div
                 // data-tooltip={each.name}
-                className={`${selected === each._id ? 'folder_media' : ''
-                  } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
+                className={`${
+                  selected === each._id ? 'folder_media' : ''
+                } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
                 onClick={() => handleSingleClick(each._id)}
                 onDoubleClick={() => handleFolderLink(each._id)}
                 onKeyDown={() => handleFolderLink(each._id)}
@@ -633,7 +637,7 @@ const FileList = ({
               onMouseLeave={() => handleMouseOverFile('')}
             >
               {selectedButton === 'Rename' && (
-                <div className="absolute">
+                <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
                   <button
                     className="flex w-8 h-8 bg-white shadow rounded-full"
                     onClick={() =>
@@ -679,8 +683,9 @@ const FileList = ({
               </div>
               <div
                 // data-tooltip={each.filename}
-                className={`${selected === each._id ? 'folder_media' : ''
-                  } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
+                className={`${
+                  selected === each._id ? 'folder_media' : ''
+                } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
               >
                 <div className="flex">
                   <img
