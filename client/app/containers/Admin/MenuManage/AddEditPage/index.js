@@ -202,6 +202,8 @@ const AddEdit = props => {
     );
   };
 
+  console.log(subMenu);
+
   return loading && loading == true ? (
     <Loading />
   ) : (
@@ -387,10 +389,10 @@ const AddEdit = props => {
                       >
                         Save
                       </button>
-                      {subMenu._id && (
+                      {subMenu._id !== '' && (
                         <button
                           type="button"
-                          className="text-white btn-waft btn-red"
+                          className="btn text-white bg-red-500 border border-red-600 hover:bg-blue-600 ml-2"
                           onClick={() => handleOpen(subMenu._id)}
                         >
                           Delete
