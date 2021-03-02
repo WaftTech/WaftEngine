@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const subscribeSch = require('./subscribeSchema');
 const mailHelper = require('../../helper/email.helper');
+const settingsHelper = require('./../../helper/settings.helper')
 const renderMail = require('../template/templateController').internal;
 const subscribeController = {};
 
@@ -30,7 +31,8 @@ subscribeController.GetSubscribe = async (req, res, next) => {
 subscribeController.SaveSubscribe = async (req, res, next) => {
   try {
     let subscriber = req.body;
-    const subscribeMail = await renderMail.renderTemplate('user_subscribe', { email: subscriber.email }, subscriber.email);
+    let user_subscribe = await settingsHelper('email', 'email_template', 'user_subscribe')
+    const subscribeMail = await renderMail.renderTemplate(user_subscribe, { email: subscriber.email }, subscriber.email);
     if (subscribeMail.error) {
       console.log('render mail error: ', subscribeMail.error);
     } else {
@@ -39,7 +41,7 @@ subscribeController.SaveSubscribe = async (req, res, next) => {
     subscriber.is_subscribed = true;
     const newSubscribe = new subscribeSch(subscriber);
     const subscriberSave = await newSubscribe.save();
-    return otherHelper.sendResponse(res, httpStatus.OK, true, subscriberSave, null, 'subscriber save successful!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, subscriberSave, null, 'subscriber saved successful!!', null);
   } catch (err) {
     next(err);
   }
