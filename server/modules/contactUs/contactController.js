@@ -4,7 +4,7 @@ const contactConfig = require('./contactConfig');
 const contactSch = require('./contactSchema');
 const renderMail = require('./../template/templateController').internal;
 const emailHelper = require('./../../helper/email.helper');
-
+const settingsHelper = require('./../../helper/settings.helper')
 const contactController = {};
 
 contactController.PostContact = async (req, res, next) => {
@@ -12,6 +12,9 @@ contactController.PostContact = async (req, res, next) => {
     let { name, email, message, subject } = req.body;
     const newUser = new contactSch({ name, email, message, subject });
     const user = await newUser.save();
+    let contact_to_admin = await settingsHelper('email', 'email_template', 'contact_to_admin')
+    let contact_to_user = await settingsHelper('email', 'email_template', 'contact_to_user')
+    let admin_emails = await settingsHelper('email', 'admin_email', 'email_array')
     if (user) {
       const data = {
         name: user.name,
@@ -19,13 +22,17 @@ contactController.PostContact = async (req, res, next) => {
         msg: user.message,
         sub: user.subject,
       };
-      const renderedMail = await renderMail.renderTemplate('contact_to_admin', data, contactConfig.admin);
-      if (renderMail.error) {
-        console.log('render mail error: ', renderMail.error);
-      } else {
-        emailHelper.send(renderedMail, next);
+      if (admin_emails.length != -1) {
+        for (i = 0; i < admin_emails.length; i++) {
+          const renderedMail = await renderMail.renderTemplate(contact_to_admin, data, admin_emails[i]);
+          if (renderMail.error) {
+            console.log('render mail error: ', renderMail.error);
+          } else {
+            emailHelper.send(renderedMail, next);
+          }
+        };
       }
-      const renderedMailForAdmin = await renderMail.renderTemplate('contact_to_user', data, user.email);
+      const renderedMailForAdmin = await renderMail.renderTemplate(contact_to_user, data, user.email);
       if (renderMail.error) {
         console.log('render mail error: ', renderMail.error);
       } else {
