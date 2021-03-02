@@ -26,7 +26,7 @@ settingValidation.validate = async (req, res, next) => {
         {
           condition: 'IsEmpty',
           msg: settingConfig.validate.empty,
-          option: ['Boolean', 'Free text', 'Number', 'ck_editor'],
+          option: ['Boolean', 'Free text', 'Number', 'ck_editor', 'Array'],
         }
       ],
     },

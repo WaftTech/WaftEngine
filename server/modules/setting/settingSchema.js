@@ -3,11 +3,11 @@ const schema = mongoose.Schema;
 
 const settingSchema = new schema({
   key: { type: String },
-  value: { type: schema.Types.Mixed },
   type: { type: String, required: true },
   sub_type: { type: String },
   description: { type: String },
-  value_type: { type: String, enum: ['Boolean', 'Free text', 'Number', 'ck_editor'] },
+  value_type: { type: String, enum: ['Boolean', 'Free text', 'Number', 'ck_editor', 'Array'] },
+  value: { type: schema.Types.Mixed },
   is_active: { type: Boolean, default: true },
   is_deleted: { type: Boolean, default: false },
   is_removable: { type: Boolean, default: false },
