@@ -16,7 +16,7 @@ SelectWrapper.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
-      label: PropTypes.object,
+      label: PropTypes.string,
     }),
   ).isRequired,
 };
