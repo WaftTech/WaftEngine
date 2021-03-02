@@ -165,9 +165,7 @@ export class FAQManagePage extends React.PureComponent {
                 name="find_category"
                 onChange={this.handleQueryChange}
               >
-                <option value="" disabled>
-                  Choose category
-                </option>
+                <option value="">Choose category</option>
                 {category &&
                   category.length &&
                   category.map(each => (
