@@ -164,6 +164,7 @@ export class FAQManagePage extends React.PureComponent {
                 value={query.find_category || ''}
                 name="find_category"
                 onChange={this.handleQueryChange}
+                onMouseLeave={this.handleSearch}
               >
                 <option value="">Choose category</option>
                 {category &&
