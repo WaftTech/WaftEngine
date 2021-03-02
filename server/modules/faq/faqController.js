@@ -49,7 +49,7 @@ faqController.GetFaq = async (req, res, next) => {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
 
     searchQuery = { is_active: true, ...searchQuery };
-
+    console.log('aaaa', req.query)
     if (req.query.find_title) {
       searchQuery = {
         title: {
@@ -60,13 +60,7 @@ faqController.GetFaq = async (req, res, next) => {
       };
     }
     if (req.query.find_category) {
-      searchQuery = {
-        category: {
-          $regex: req.query.find_category,
-          $options: 'i',
-        },
-        ...searchQuery,
-      };
+      searchQuery = { category: req.query.find_category, ...searchQuery };
     }
     if (req.query.find_question) {
       searchQuery = {
