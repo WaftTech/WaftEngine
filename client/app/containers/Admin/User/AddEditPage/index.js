@@ -221,6 +221,23 @@ class AddEdit extends React.PureComponent {
                 </label>
               </div>
 
+              <div className="checkbox">
+                <input
+                  name="is_active"
+                  checked={users.is_active || false}
+                  onClick={this.handleChecked('is_active')}
+                  onChange={null}
+                  type="checkbox"
+                  id="is_active"
+                />
+                <label htmlFor="is_active">
+                  <span className="box">
+                    <FaCheck className="check-icon" />
+                  </span>
+                  Active?
+                </label>
+              </div>
+
               {id ? (
                 <div className="mt-4">
                   <button
