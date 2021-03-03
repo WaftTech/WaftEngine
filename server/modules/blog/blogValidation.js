@@ -47,6 +47,15 @@ validation.validate = (req, res, next) => {
       ],
     },
     {
+      field: 'category',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+      ],
+    },
+    {
       field: 'description',
       validate: [
         {

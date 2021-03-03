@@ -18,7 +18,7 @@ const blogSchema = new schema({
   is_highlight: { type: Boolean, default: false },
   is_showcase: { type: Boolean, default: false },
   is_active: { type: Boolean, required: true, default: false },
-  image: { type: schema.Types.Mixed },
+  image: { type: schema.Types.ObjectId, ref: 'files' },
   is_deleted: { type: Boolean, required: true, default: false },
   deleted_at: { type: Date, default: Date.now },
   deleted_by: { type: schema.Types.ObjectId, ref: 'users' },
