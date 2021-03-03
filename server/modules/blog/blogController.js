@@ -409,7 +409,7 @@ blogController.GetBlogCategory = async (req, res, next) => {
 blogController.GetBlogCatById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const blogcats = await blogCatSch.findOne({ _id: id, }).populate([{ path: 'image', select: 'path', },])
+    const blogcats = await blogCatSch.findOne({ _id: id, }).populate([{ path: 'image', select: 'path' }])
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
   } catch (err) {
     next(err);
@@ -538,7 +538,7 @@ blogController.GetBlogById = async (req, res, next) => {
     const blogs = await blogSch.findOne({
       _id: id,
       is_deleted: false,
-    });
+    }).populate([{ path: 'image', select: 'path' }])
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
   } catch (err) {
     next(err);
