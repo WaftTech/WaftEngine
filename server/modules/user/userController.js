@@ -258,7 +258,7 @@ userController.GetAllUser = async (req, res, next) => {
     if (req.query.filter_author) {
       searchQuery = { roles: { $in: roles }, ...searchQuery };
     }
-    selectQuery = 'name email password bio email_verified roles';
+    selectQuery = 'name email password bio email_verified roles is_active';
     populate = [{ path: 'roles', select: 'role_title' }];
     const pulledData = await otherHelper.getQuerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, config.gets, page, size, pulledData.totalData);

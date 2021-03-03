@@ -4,7 +4,7 @@ const schema = mongoose.Schema;
 const categorySchema = new schema({
   title: { type: String },
   description: { type: String },
-  image: { type: schema.Types.Mixed },
+  image: { type: schema.Types.ObjectId, ref: 'files' },
   slug_url: { type: String },
   is_active: { type: Boolean, required: true, default: true },
   order: { type: Number },
