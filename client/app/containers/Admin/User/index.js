@@ -29,7 +29,7 @@ import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
 import { FaPencilAlt, FaPlus, FaSearch } from 'react-icons/fa';
 /* eslint-disable react/prefer-stateless-function */
-export class User extends React.PureComponent {
+export class User extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
@@ -42,6 +42,8 @@ export class User extends React.PureComponent {
       totaldata: PropTypes.number.isRequired,
     }),
   };
+
+  state = { cleared: false };
 
   componentDidMount() {
     const {
@@ -59,6 +61,25 @@ export class User extends React.PureComponent {
     loadAllRequest(queryObj);
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
+
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/user-manage/add');
@@ -70,7 +91,10 @@ export class User extends React.PureComponent {
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
     const queryString = qs.stringify({
       ...this.props.query,
       [e.target.name]: e.target.value,
@@ -91,14 +115,6 @@ export class User extends React.PureComponent {
     }
   };
 
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
-    const queryString = qs.stringify(paging);
-    this.props.push({
-      search: queryString,
-    });
-  };
-
   render() {
     const {
       classes,
@@ -108,11 +124,12 @@ export class User extends React.PureComponent {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ _id, email, name, roles, email_verified }) => [
+      ({ _id, email, name, roles, email_verified, is_active }) => [
         email,
         name,
         roles.map(each => each.role_title).join(', '),
         `${email_verified}`,
+        is_active ? 'Active' : 'In-active',
         <>
           <div className="flex">
             <span
@@ -168,7 +185,14 @@ export class User extends React.PureComponent {
           </div>
 
           <Table
-            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
+            tableHead={[
+              'Email',
+              'Name',
+              'Roles',
+              'Email verified',
+              'Active',
+              'Action',
+            ]}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

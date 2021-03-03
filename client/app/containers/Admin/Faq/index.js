@@ -17,20 +17,24 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
-import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import {
+  makeSelectAll,
+  makeSelectQuery,
+  makeSelectLoading,
+  makeSelectCategory,
+} from './selectors';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
 import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
-export class FAQManagePage extends React.PureComponent {
+export class FAQManagePage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -48,7 +52,27 @@ export class FAQManagePage extends React.PureComponent {
   componentDidMount() {
     this.props.clearQuery();
     this.props.loadAllRequest(this.props.query);
+    this.props.loadCategoryRequest();
   }
+
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
 
   handleAdd = () => {
     this.props.clearOne();
@@ -60,8 +84,11 @@ export class FAQManagePage extends React.PureComponent {
   };
 
   handleQueryChange = e => {
-    e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    // e.persist();
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
@@ -87,16 +114,13 @@ export class FAQManagePage extends React.PureComponent {
     this.setState({ open: false });
   };
 
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
-  };
-
   render() {
     const { classes } = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
       loading,
+      category,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -151,6 +175,25 @@ export class FAQManagePage extends React.PureComponent {
         </div>
         <PageContent loading={loading}>
           <div className="flex relative mr-4 max-w-lg">
+            <div className="w-full md:w-1/2 pb-4 mt-1 mr-2">
+              <select
+                className="inputbox"
+                value={query.find_category || ''}
+                name="find_category"
+                onChange={this.handleQueryChange}
+                onMouseLeave={this.handleSearch}
+              >
+                <option value="">Choose category</option>
+                {category &&
+                  category.length &&
+                  category.map(each => (
+                    <option key={each._id} value={each._id}>
+                      {each.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
             <input
               type="text"
               name="find_question"
@@ -194,12 +237,10 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
   loading: makeSelectLoading(),
+  category: makeSelectCategory(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'faqManagePage', reducer });
 const withSaga = injectSaga({ key: 'faqManagePage', saga });

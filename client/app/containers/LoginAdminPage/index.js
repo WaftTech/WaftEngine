@@ -87,9 +87,7 @@ const LoginAdminPage = props => {
   return (
     <>
       <Helmet>
-        <title>
-          Login
-          </title>
+        <title>Login</title>
       </Helmet>
       <Modal
         open={showEmailTwoFactor || showGoogleTwoFactor}
@@ -175,8 +173,8 @@ const LoginAdminPage = props => {
                     <div />
                   </div>
                 ) : (
-                    'Login'
-                  )}
+                  'Login'
+                )}
               </button>
             </form>
           </div>
@@ -187,7 +185,6 @@ const LoginAdminPage = props => {
 };
 
 LoginAdminPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -201,16 +198,9 @@ const mapStateToProps = createStructuredSelector({
   helperObj: makeSelectHelperObj(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
 const withSaga = injectSaga({ key: 'loginAdminPage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(LoginAdminPage);
+export default compose(withReducer, withSaga, withConnect)(LoginAdminPage);

@@ -12,14 +12,12 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectCode } from '../selectors';
 
-
 class VerifyEmail extends React.PureComponent {
   static propTypes = {
     setCodeValue: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
   };
 
   handleChange = name => event => {
@@ -73,10 +71,7 @@ const mapStateToProps = createStructuredSelector({
   code: makeSelectCode(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
@@ -84,8 +79,4 @@ const withReducer = injectReducer({
 });
 const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
 
-export default compose(
-  withConnect,
-  withReducer,
-  withSaga,
-)(VerifyEmail);
+export default compose(withConnect, withReducer, withSaga)(VerifyEmail);

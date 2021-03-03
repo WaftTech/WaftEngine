@@ -249,7 +249,7 @@ class AddEdit extends React.PureComponent {
     const newContent = e.editor.getData();
     const tempImages = [...this.props.one.images];
     tempImages[index] = { ...tempImages[index], caption: newContent };
-    this.props.setOneValue({ key: name, value: tempImages });
+    this.props.setOneValue({ key: 'images', value: tempImages });
     // this.props.setOneValue({ key: name, value: newContent });
   };
 

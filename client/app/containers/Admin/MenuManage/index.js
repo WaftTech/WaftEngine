@@ -46,7 +46,7 @@ export const MenuManage = props => {
     loadAllRequest(query);
     props.setLoadChild(false);
     props.clearOne();
-  }, []);
+  }, [query]);
 
   const handleAdd = () => {
     props.clearOne();
@@ -93,7 +93,8 @@ export const MenuManage = props => {
   };
 
   const handlePagination = paging => {
-    props.loadAllRequest(paging);
+    props.setQueryValue({ key: 'page', value: paging.page });
+    props.setQueryValue({ key: 'size', value: paging.size });
   };
 
   const tablePagination = { page, size, totaldata };

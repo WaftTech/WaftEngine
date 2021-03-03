@@ -22,7 +22,7 @@ export const initialState = {
     is_active: false,
     is_page: false,
     publish_to: '',
-    meta_tag: [],
+    // meta_tag: [],
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,

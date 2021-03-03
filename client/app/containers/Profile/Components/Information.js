@@ -20,8 +20,9 @@ import {
   makeSelectLoading,
   makeSelectOne,
 } from '../selectors';
+import DateInput from '../../../components/DateInput';
 
-class UserPersonalInformationPage extends React.PureComponent {
+class UserPersonalInformationPage extends React.Component {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
     addEditRequest: PropTypes.func.isRequired,
@@ -88,16 +89,17 @@ class UserPersonalInformationPage extends React.PureComponent {
 
         <div className="md:w-1/2 pb-4">
           <label className="text-sm">Date Of Birth</label>
-          <DatePicker
-            name="date_of_birth"
-            className="inputbox"
-            value={
-              (one.date_of_birth &&
-                moment(one.date_of_birth).format(DATE_FORMAT)) ||
-              ''
-            }
-            onChange={this.handleDateChange('date_of_birth')}
-          />
+          <div className="border-2 p-2 mb-2 rounded">
+            <DateInput
+              onDateChange={date => {
+                this.props.setOneValue({
+                  key: 'date_of_birth',
+                  value: moment(date).format('YYYY-MM-DD'),
+                });
+              }}
+              birth_date={moment(one.date_of_birth).format('YYYY-M-D')}
+            />
+          </div>
         </div>
 
         <div className="w-full pb-4">

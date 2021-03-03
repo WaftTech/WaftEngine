@@ -270,6 +270,9 @@ roleController.GetAccessListForRole = async (req, res, next) => {
     const roleId = req.params.roleid;
     const AccessForRole = await accessSch.find({ role_id: roleId }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
     const Module = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
+    console.log('access', AccessForRole)
+    console.log('modules', Module)
+
     let Access = [];
     for (let i = 0; i < Module.length; i++) {
       const one_access = AccessForRole.find(x => x.module_id.toString() == Module[i]._id.toString());

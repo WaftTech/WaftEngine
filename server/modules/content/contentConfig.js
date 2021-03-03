@@ -11,6 +11,6 @@ module.exports = {
     inputErrors: 'input errors'
   },
   get: 'Content get successful!!',
-  save: 'Content save successful',
+  save: 'Content saved successful',
   gets: 'Contents get successful',
 };

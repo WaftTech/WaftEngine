@@ -37,7 +37,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    // classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
@@ -210,7 +209,7 @@ class AddEdit extends React.PureComponent {
               <div className="error">{errors.meta_description}</div>
             )}
           </div>
-          <div className="w-full md:w-1/2 pb-4">
+          {/* <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm" htmlFor="grid-last-name">
               Meta Tags
             </label>
@@ -237,7 +236,7 @@ class AddEdit extends React.PureComponent {
                   </label>
                 );
               })}
-          </div>
+          </div> */}
 
           <div className="checkbox">
             <input
