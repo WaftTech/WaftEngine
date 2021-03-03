@@ -33,7 +33,7 @@ import lid from '../../../assets/img/lid.svg';
 import { FaPlus, FaSearch, FaPencilAlt, FaKey } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
-export class AdminModuleManage extends React.PureComponent {
+export class AdminModuleManage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,

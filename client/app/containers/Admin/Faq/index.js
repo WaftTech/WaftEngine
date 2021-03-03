@@ -29,7 +29,7 @@ import lid from '../../../assets/img/lid.svg';
 import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
-export class FAQManagePage extends React.PureComponent {
+export class FAQManagePage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
@@ -56,6 +56,25 @@ export class FAQManagePage extends React.PureComponent {
     this.props.loadCategoryRequest();
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
+
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/faq-manage/add');
@@ -67,7 +86,10 @@ export class FAQManagePage extends React.PureComponent {
 
   handleQueryChange = e => {
     // e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
@@ -91,10 +113,6 @@ export class FAQManagePage extends React.PureComponent {
   handleDelete = id => {
     this.props.deleteOneRequest(id);
     this.setState({ open: false });
-  };
-
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
   };
 
   render() {
