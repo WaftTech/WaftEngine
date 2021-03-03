@@ -276,6 +276,7 @@ userController.GetUserDetail = async (req, res, next) => {
       email: 1,
       bio: 1,
       updated_at: 1,
+      is_active: 1,
     });
     const role = await roleSch.find({ is_deleted: false }, { role_title: 1, _id: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { users: user, roles: role }, null, config.get, null);
