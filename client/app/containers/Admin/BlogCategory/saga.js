@@ -61,13 +61,17 @@ function* addEdit() {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
   const errors = validate(data);
+  let main_data = { ...data };
+  if (data.image && data.image._id) {
+    main_data = { ...main_data, image: data.image._id };
+  }
   if (errors.isValid) {
     yield fork(
       Api.post(
         'blog/category',
         actions.addEditSuccess,
         actions.addEditFailure,
-        data,
+        main_data,
         token,
       ),
     );
