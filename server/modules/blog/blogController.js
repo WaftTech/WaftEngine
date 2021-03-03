@@ -751,7 +751,7 @@ blogController.CountBlogByCat = async (req, res, next) => {
 blogController.getstaticBlog = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const data = await blogSch.findOne({ _id: id }).select('title description image.path');
+    const data = await (await blogSch.findOne({ _id: id }).select('title description image')).populated([{ path: 'image', select: 'path' }]);
     let newdata = `<h1>${data.title}</h1><img src=${blogConfig.image_base + data.image.path} /><p>${data.description}</p>`;
     return otherHelper.sendResponse(res, httpStatus.OK, true, newdata, null, 'blog get successfull', null);
   } catch (err) {
