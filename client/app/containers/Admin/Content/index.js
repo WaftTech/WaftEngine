@@ -108,6 +108,7 @@ export class ContentsListingPage extends React.Component {
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
   handleKeyPress = e => {

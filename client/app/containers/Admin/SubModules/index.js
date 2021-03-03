@@ -81,6 +81,7 @@ export const SubModules = props => {
 
   const handleSearch = () => {
     loadAllRequest(query);
+    setQueryValue({ key: 'page', value: 1 });
   };
 
   const handleDelete = id => {

@@ -87,6 +87,7 @@ export class Subscribe extends React.Component {
 
   handleSearch = () => {
     this.props.loadSubscriberRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
   handleKeyPress = e => {

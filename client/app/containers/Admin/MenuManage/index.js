@@ -84,6 +84,7 @@ export const MenuManage = props => {
 
   const handleSearch = () => {
     props.loadAllRequest(props.query);
+    props.setQueryValue({ key: 'page', value: 1 });
   };
 
   const handleKeyPress = e => {

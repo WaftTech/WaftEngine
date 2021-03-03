@@ -95,6 +95,7 @@ export class AdminModuleManage extends React.Component {
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
   handlePagination = paging => {
