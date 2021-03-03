@@ -525,6 +525,8 @@ blogController.GetBlogBySlug = async (req, res, next) => {
     .populate([
       { path: 'author', select: '_id name avatar image bio author.bio social_link' },
       { path: 'category', select: '_id title slug_url' },
+      { path: 'image', select: 'path' },
+
     ]);
   if (!blogs) {
     return otherHelper.sendResponse(res, httpStatus.OK, false, blogs, 'no blog found', 'no blog found', null);
