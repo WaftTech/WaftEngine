@@ -41,7 +41,6 @@ validations.validate = async (req, res, next) => {
       if (already_name && already_name._id) {
             errors = { ...errors, name: 'folder_name already exist' }
       }
-      console.log('aaaaaaaaaaaaaaaaaaaaa', name_filter)
       if (!isEmpty(errors)) {
             return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'Input Errors', null);
       } else {

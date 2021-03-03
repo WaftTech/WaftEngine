@@ -276,6 +276,7 @@ userController.GetUserDetail = async (req, res, next) => {
       email: 1,
       bio: 1,
       updated_at: 1,
+      is_active: 1,
     });
     const role = await roleSch.find({ is_deleted: false }, { role_title: 1, _id: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { users: user, roles: role }, null, config.get, null);
@@ -642,10 +643,15 @@ userController.Login = async (req, res, next) => {
     const password = req.body.password;
     let email = req.body.email.toLowerCase();
     const user = await userSch.findOne({ email }).populate([{ path: 'roles', select: 'role_title' }]);
+
     if (!user) {
       errors.email = 'User not found';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
     } else {
+      if (!user.is_active) {
+        errors.inactive = 'Please Contact Admin to reactivate your account';
+        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, errors.inactive, null);
+      }
       const force_allow_email_verify = await settingsHelper('email', 'email', 'force_allow_email_verify')
       if (force_allow_email_verify && !user.email_verified) {
         return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, { email: email, email_verified: false }, null, 'Please Verify your Email', null);
