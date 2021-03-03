@@ -401,7 +401,6 @@ class AddEdit extends React.PureComponent {
               value={(one && one.slug_url) || ''}
               name="Blog Slug"
               onChange={this.handleChange('slug_url')}
-              disabled
             />
             {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
               <div className="error">{errors && errors.slug_url}</div>
