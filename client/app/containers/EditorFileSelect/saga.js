@@ -97,6 +97,22 @@ function* createNewFolder(action) {
   );
 }
 
+function* createFolderFailFunc(action) {
+  const message =
+    action.payload.errors && action.payload.errors.name
+      ? action.payload.errors.name
+      : 'something went wrong';
+  const defaultError = {
+    message: message,
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultError));
+  yield;
+}
+
 function* multipleDelete(action) {
   const token = yield select(makeSelectToken());
   const files = yield select(makeSelectChosen());
@@ -165,6 +181,8 @@ export default function* editorFileSelectSaga() {
   yield takeLatest(types.DELETE_FILE_REQUEST, deleteFile);
   yield takeLatest(types.ADD_MEDIA_REQUEST, addMedia);
   yield takeLatest(types.LOAD_NEW_FOLDER_REQUEST, createNewFolder);
+  yield takeLatest(types.LOAD_NEW_FOLDER_FAILURE, createFolderFailFunc);
+
   yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multipleDelete);
   yield takeLatest(types.DELETE_MULTIPLE_SUCCESS, multiDeleteSuccessFunc);
   yield takeLatest(types.DELETE_MULTIPLE_FAILURE, multiDeleteFailureFunc);

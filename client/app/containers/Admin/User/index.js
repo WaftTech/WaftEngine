@@ -124,11 +124,12 @@ export class User extends React.Component {
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
-      ({ _id, email, name, roles, email_verified }) => [
+      ({ _id, email, name, roles, email_verified, is_active }) => [
         email,
         name,
         roles.map(each => each.role_title).join(', '),
         `${email_verified}`,
+        is_active ? 'Active' : 'In-active',
         <>
           <div className="flex">
             <span
@@ -184,7 +185,14 @@ export class User extends React.Component {
           </div>
 
           <Table
-            tableHead={['Email', 'Name', 'Roles', 'Email verified', 'Action']}
+            tableHead={[
+              'Email',
+              'Name',
+              'Roles',
+              'Email verified',
+              'Active',
+              'Action',
+            ]}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

@@ -15,7 +15,6 @@ const menuItemSchema = new Schema({
   updated_at: { type: Date },
   updated_by: { type: Schema.Types.ObjectId, ref: 'users' },
   added_at: { type: Date },
-  order: { type: Number, default: 1 },
   menu_sch_id: { type: Schema.Types.ObjectId, ref: 'menusch' },
 });
 
