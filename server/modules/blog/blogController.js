@@ -439,14 +439,13 @@ blogController.SaveBlog = async (req, res, next) => {
     //     .split('server/')[1];
     // }
     if (blogs && blogs._id) {
-      if (req.file) {
-        blogs.image = req.file;
-      }
+
       if (!blogs.meta_tag) blogs.meta_tag = [];
       if (!blogs.category) blogs.category = [];
       if (!blogs.tags) blogs.tags = [];
       if (!blogs.keywords) blogs.keywords = [];
       if (!blogs.author) blogs.author = req.user.id;
+
 
       const update = await blogSch.findByIdAndUpdate(
         blogs._id,
@@ -459,7 +458,6 @@ blogController.SaveBlog = async (req, res, next) => {
     } else {
       blogs.added_by = req.user.id;
       blogs.published_on = new Date();
-      blogs.image = req.file;
       const newBlog = new blogSch(blogs);
       const BlogSave = await newBlog.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, BlogSave, null, blogConfig.save, null);
@@ -485,9 +483,6 @@ blogController.SaveBlogCategory = async (req, res, next) => {
     if (blogcats && blogcats._id) {
       blogcats.updated_at = new Date();
       blogcats.updated_by = req.user.id;
-      if (req.file) {
-        blogcats.image = req.file;
-      }
       const update = await blogCatSch.findByIdAndUpdate(
         blogcats._id,
         {
@@ -497,7 +492,6 @@ blogController.SaveBlogCategory = async (req, res, next) => {
       );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, blogConfig.categoryUpdate, null);
     } else {
-      blogcats.image = req.file;
       const newBlog = new blogCatSch(blogcats);
       const catSave = await newBlog.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, catSave, null, blogConfig.categorySave, null);
@@ -745,8 +739,16 @@ blogController.DeleteBlogCat = async (req, res, next) => {
       deleted_at: new Date(),
     },
   });
+  await blogSch.updateMany({ category: id }, { is_deleted: true })
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogCat, null, blogConfig.deleteCat, null);
 };
+
+blogController.CountBlogByCat = async (req, res, next) => {
+  const id = req.params.id;
+  const blogCount = await blogSch.countDocuments({ category: id, is_deleted: false })
+  return otherHelper.sendResponse(res, httpStatus.OK, true, blogCount, null, 'blog count by category', null);
+};
+
 
 blogController.getstaticBlog = async (req, res, next) => {
   try {
