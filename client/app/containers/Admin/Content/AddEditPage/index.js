@@ -183,32 +183,6 @@ class AddEdit extends React.PureComponent {
               )}
           </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Meta Title</label>
-            <input
-              className="inputbox"
-              id="meta_title"
-              type="text"
-              value={one.meta_title}
-              onChange={this.handleChange('meta_title')}
-            />
-            {errors && errors.meta_title && errors.meta_title.trim() !== '' && (
-              <div className="error">{errors.meta_title}</div>
-            )}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Meta Description</label>
-            <input
-              className="inputbox"
-              id="meta_description"
-              type="text"
-              value={one.meta_description}
-              onChange={this.handleChange('meta_description')}
-            />
-            {errors && errors.meta_description && (
-              <div className="error">{errors.meta_description}</div>
-            )}
-          </div>
           {/* <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm" htmlFor="grid-last-name">
               Meta Tags

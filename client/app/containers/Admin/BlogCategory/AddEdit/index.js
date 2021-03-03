@@ -24,7 +24,8 @@ import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
 import { FaArrowLeft, FaCheck, FaCloudUploadAlt } from 'react-icons/fa';
-
+import EditorFileSelect from '../../../EditorFileSelect';
+import Dialog from '../../../../components/Dialog/index';
 class AddEdit extends React.PureComponent {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -39,6 +40,7 @@ class AddEdit extends React.PureComponent {
 
   state = {
     tempImage: '',
+    openMedia: false,
   };
 
   componentDidMount() {
@@ -61,6 +63,19 @@ class AddEdit extends React.PureComponent {
       }
     }
   }
+
+  handleClose = () => {
+    this.setState({ openMedia: false });
+  };
+
+  handleSetImage = () => {
+    this.setState({ openMedia: true });
+  };
+
+  handleImageChange = file => {
+    this.props.setOneValue({ key: 'image', value: file });
+    this.setState({ openMedia: false });
+  };
 
   slugify = text => {
     return text
@@ -199,31 +214,23 @@ class AddEdit extends React.PureComponent {
             <label className="label" htmlFor="Image">
               Image
             </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="outline-none">
-                  <input {...getInputProps()} />
-                  {tempImage === '' ? (
-                    <div className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none">
-                      <div className="hover:text-primary m-auto text-center">
-                        <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
-                        <p className="text-gray-300 text-xs">
-                          Drag and Drop Your Files Here!!
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
-                      <img
-                        className="m-auto w-full h-28 object-contain inline-block text-center"
-                        src={tempImage}
-                        alt="BlogCategoryImage"
-                      />
-                    </div>
-                  )}
+            <section
+              onClick={this.handleSetImage}
+              className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+            >
+              {one && one.image && one.image.path ? (
+                <div>
+                  <img src={`${IMAGE_BASE}${one.image.path}`} />
                 </div>
+              ) : (
+                <button
+                  type="button"
+                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                >
+                  Featured Image
+                </button>
               )}
-            </Dropzone>
+            </section>
           </div>
 
           <div className="checkbox">
@@ -249,6 +256,23 @@ class AddEdit extends React.PureComponent {
             Save
           </button>
         </PageContent>
+        <Dialog
+          open={this.state.openMedia}
+          className="w-5/6 h-full overflow-auto"
+          onClose={this.handleClose}
+          title={`Select Images`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
+            </div>
+          }
+        />
       </div>
     );
   }
