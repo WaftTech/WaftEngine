@@ -30,7 +30,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
@@ -93,9 +92,9 @@ class AddEdit extends React.PureComponent {
               value={one.role_title}
               onChange={this.handleChange('role_title')}
             />
-              {errors && errors.role_title && errors.role_title.trim() !== '' && (
-            <div className="error">{errors.role_title}</div>
-              )}
+            {errors && errors.role_title && errors.role_title.trim() !== '' && (
+              <div className="error">{errors.role_title}</div>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -108,9 +107,11 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('description')}
               required
             />
-            {errors && errors.description && errors.description.trim() !== '' && (
-            <div className="error">{errors.description}</div>
-            )}
+            {errors &&
+              errors.description &&
+              errors.description.trim() !== '' && (
+                <div className="error">{errors.description}</div>
+              )}
           </div>
 
           <div className="checkbox">
@@ -149,13 +150,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

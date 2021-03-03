@@ -14,7 +14,7 @@ router.get('/module/:id', authentication, authorization, dModule.GetModuleDetail
 router.post('/module', authentication, authorization, validations.sanitizeModule, validations.validateModule, dModule.AddModuleList);
 router.get('/module-group', authentication, authorization, dModule.GetModuleGroup);
 router.get('/module-group/:id', authentication, authorization, dModule.GetModuleGroupDetail);
-router.post('/module-group', authentication, authorization,validations.validateModuleGroup, dModule.AddModuleGroupList);
+router.post('/module-group', authentication, authorization, validations.validateModuleGroup, dModule.AddModuleGroupList);
 router.get('/access', authentication, authorization, dModule.GetAccessList);
 router.post('/access', authentication, authorization, validations.sanitizeAccess, validations.validateAccess, dModule.SaveAccessList);
 /**
@@ -31,5 +31,5 @@ router.get('/access/module/:moduleid', authentication, authorization, dModule.Ge
 router.post('/access/module/:moduleid', authentication, authorization, dModule.SaveAccessListForModule);
 
 // router.get('/active', authentication, authorization, dModule.GetModuleActive)
-router.delete('/module-group/:id', authentication, authorization, dModule.deleteModuleGroupList)
+// router.delete('/module-group/:id', authentication, authorization, dModule.deleteModuleGroupList)
 module.exports = router;

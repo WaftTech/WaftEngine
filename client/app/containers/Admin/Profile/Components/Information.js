@@ -29,7 +29,7 @@ class UserPersonalInformationPage extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
+
     one: PropTypes.object.isRequired,
     errors: PropTypes.object,
   };
@@ -114,14 +114,14 @@ class UserPersonalInformationPage extends React.PureComponent {
         </div>
 
         <div className="w-full mb-2 ">
-         Role: 
+          Role:
           <span className="ml-2 inline-flex btn margin-none text-blue-500 bg-blue-100 border border-blue-200 mr-2">
             {one.roles.map(each => `${each.role_title} `)}
           </span>
         </div>
 
         <div className="w-full">
-          Account Created: 
+          Account Created:
           <span className="ml-2 font-bold">
             {moment(one.added_at).format(DATE_FORMAT)}
           </span>
@@ -144,9 +144,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 export default compose(withConnect)(UserPersonalInformationPage);

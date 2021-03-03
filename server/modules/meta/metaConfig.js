@@ -8,7 +8,7 @@ module.exports = {
   },
   save: 'Meta Data saved successfully.',
   update: 'Meta Data updated successfully',
-  get: 'Meta Datas get successfully.',
+  get: 'Meta Data get successfully.',
   delete: 'Meta Data deleted successfully!!',
   notFound: 'Meta not Found',
 };

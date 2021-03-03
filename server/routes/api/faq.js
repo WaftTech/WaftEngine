@@ -9,6 +9,7 @@ const { authorization, authentication } = require('../../middleware/auth.middlew
 router.get('/', authentication, authorization, faqModule.GetFaq);
 router.get('/all', faqModule.GetFaqAndCat);
 router.get('/cat', faqModule.GetFaqCat);
+router.get('/category/all', faqModule.GetFaqCatDropDown);
 router.get('/:id', faqModule.GetFaqById);
 router.get('/cat/:id', authentication, faqModule.GetFaqCatById);
 router.get('/bycat/:id', faqModule.GetFaqByCat);

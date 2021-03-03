@@ -25,12 +25,12 @@ export const initialState = {
   one: {
     title: '',
     key: '',
-    order: '',
+    // order: '',
     is_active: false,
   },
   sub_menu_form: {
     title: '',
-    order: '',
+    // order: '',
     is_internal: true,
     url: '',
     parent_menu: '',

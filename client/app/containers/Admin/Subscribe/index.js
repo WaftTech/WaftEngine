@@ -31,7 +31,7 @@ import { FaTrashAlt, FaRegEye, FaSearch } from 'react-icons/fa';
 import lid from '../../../assets/img/lid.svg';
 
 /* eslint-disable react/prefer-stateless-function */
-export class Subscribe extends React.PureComponent {
+export class Subscribe extends React.Component {
   static propTypes = {
     loadSubscriberRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
@@ -54,13 +54,35 @@ export class Subscribe extends React.PureComponent {
     this.props.loadSubscriberRequest(this.props.query);
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadSubscriberRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadSubscriberRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
+
   handleView = id => {
     this.props.push(`/admin/subscribe-manage/view/${id}`);
   };
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
@@ -84,10 +106,6 @@ export class Subscribe extends React.PureComponent {
   handleDelete = id => {
     this.props.deleteOneRequest(id);
     this.setState({ open: false });
-  };
-
-  handlePagination = paging => {
-    this.props.loadSubscriberRequest(paging);
   };
 
   render() {

@@ -287,7 +287,7 @@ const AddEdit = props => {
                             </div>
                           )}
                       </div>
-                      <div className="w-full md:w-1/2 pb-4">
+                      {/* <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
                           Order
                         </label>
@@ -305,7 +305,7 @@ const AddEdit = props => {
                               {errors.sub_menu_form.order}
                             </div>
                           )}
-                      </div>
+                      </div> */}
                       <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
                           Category
@@ -387,10 +387,10 @@ const AddEdit = props => {
                       >
                         Save
                       </button>
-                      {subMenu._id && (
+                      {subMenu._id !== '' && (
                         <button
                           type="button"
-                          className="text-white btn-waft btn-red"
+                          className="btn text-white bg-red-500 border border-red-600 hover:bg-blue-600 ml-2"
                           onClick={() => handleOpen(subMenu._id)}
                         >
                           Delete
@@ -434,7 +434,7 @@ const AddEdit = props => {
                   )}
                 </div>
 
-                <div className="w-full md:w-1/2 pb-4">
+                {/* <div className="w-full md:w-1/2 pb-4">
                   <label className="label" htmlFor="menu_order">
                     Order
                   </label>
@@ -448,7 +448,7 @@ const AddEdit = props => {
                   {errors && errors.title && (
                     <div className="error">{errors.order}</div>
                   )}
-                </div>
+                </div> */}
                 <div className="w-full md:w-1/2 pb-4">
                   <div className="checkbox">
                     <input
@@ -525,7 +525,7 @@ AddEdit.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
-  // classes: PropTypes.object.isRequired,
+  //
   one: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   push: PropTypes.func.isRequired,

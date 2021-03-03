@@ -18,7 +18,7 @@ export const initialState = {
     title: '',
   },
   category: [],
-  query: { find_question: '', size: 10 },
+  query: { find_question: '', find_category: '', size: 10 },
   loading: false,
   errors: { title: '', question: '' },
 };

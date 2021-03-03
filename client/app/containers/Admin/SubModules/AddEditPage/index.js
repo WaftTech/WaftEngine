@@ -77,65 +77,63 @@ const AddEdit = props => {
   return loading && loading == true ? (
     <Loading />
   ) : (
-      <>
-        <Helmet>
-          <title>{match && match.params && match.params.id
+    <>
+      <Helmet>
+        <title>
+          {match && match.params && match.params.id
             ? 'Edit Group Module'
-            : 'Add Group Module'}</title>
-        </Helmet>
-        <div>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={handleGoBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {match && match.params && match.params.id
-                ? 'Edit Group Module'
-                : 'Add Group Module'}
-            </PageHeader>
+            : 'Add Group Module'}
+        </title>
+      </Helmet>
+      <div>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Group Module'
+              : 'Add Group Module'}
+          </PageHeader>
+        </div>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Module Group</label>
+            <input
+              className="inputbox"
+              id="grid-group"
+              type="text"
+              value={one.module_group}
+              onChange={handleChange('module_group')}
+            />
+            <div className="error">{errors.module_group}</div>
           </div>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Module Group</label>
-              <input
-                className="inputbox"
-                id="grid-group"
-                type="text"
-                value={one.module_group}
-                onChange={handleChange('module_group')}
-              />
-              <div className="error">{errors.module_group}</div>
-            </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Order</label>
-              <input
-                className="inputbox"
-                id="grid-value"
-                type="text"
-                value={one.order}
-                onChange={handleChange('order')}
-              />
-              <div className="error">{errors.order}</div>
-            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Order</label>
+            <input
+              className="inputbox"
+              id="grid-value"
+              type="text"
+              value={one.order}
+              onChange={handleChange('order')}
+            />
+            <div className="error">{errors.order}</div>
+          </div>
 
-            <div className="w-full md:w-1/2">
-              <label
-                htmlFor="grid-country-code-2"
-              >
-                Description
-            </label>
-              <textarea
-                className="inputbox"
-                id="grid-description"
-                type="text"
-                value={one.description}
-                onChange={handleChange('description')}
-              />
-              <div className="error">{errors.description}</div>
-            </div>
+          <div className="w-full md:w-1/2">
+            <label htmlFor="grid-country-code-2">Description</label>
+            <textarea
+              className="inputbox"
+              id="grid-description"
+              type="text"
+              value={one.description}
+              onChange={handleChange('description')}
+            />
+            <div className="error">{errors.description}</div>
+          </div>
 
-            {/* <div className="w-full md:w-1/2 pb-4">
+          {/* <div className="w-full md:w-1/2 pb-4">
             <label>Module Group Main</label>
             <input
               className="inputbox"
@@ -147,17 +145,17 @@ const AddEdit = props => {
             <div className="error">{errors.module_group_main}</div>
           </div> */}
 
-            <button
-              type="button"
-              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded mt-5"
-              onClick={handleSave}
-            >
-              Save
+          <button
+            type="button"
+            className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded mt-5"
+            onClick={handleSave}
+          >
+            Save
           </button>
-          </PageContent>
-        </div>
-      </>
-    );
+        </PageContent>
+      </div>
+    </>
+  );
 };
 
 AddEdit.propTypes = {
@@ -168,7 +166,6 @@ AddEdit.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
-  classes: PropTypes.object.isRequired,
   one: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   clearErrors: PropTypes.func.isRequired,
@@ -181,12 +178,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withRouter,
-  withConnect,
-)(AddEdit);
+export default compose(withRouter, withConnect)(AddEdit);
