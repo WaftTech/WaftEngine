@@ -54,6 +54,20 @@ export class AdminModuleManage extends React.PureComponent {
     this.props.loadSubModuleRequest();
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/module-manage/add');
@@ -84,7 +98,8 @@ export class AdminModuleManage extends React.PureComponent {
   };
 
   handlePagination = paging => {
-    this.props.loadAllRequest(paging);
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
   };
 
   handleDropdown = event => {
