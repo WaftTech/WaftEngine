@@ -95,12 +95,11 @@ function* addEdit() {
   if (errors.isValid) {
     // const { image, ...dataObj } = data;
     yield fork(
-      Api.multipartPost(
+      Api.post(
         'blog',
         actions.addEditSuccess,
         actions.addEditFailure,
         data,
-        { file: data.image },
         token,
       ),
     );

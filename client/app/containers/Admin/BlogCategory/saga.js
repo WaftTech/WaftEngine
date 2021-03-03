@@ -63,12 +63,11 @@ function* addEdit() {
   const errors = validate(data);
   if (errors.isValid) {
     yield fork(
-      Api.multipartPost(
+      Api.post(
         'blog/category',
         actions.addEditSuccess,
         actions.addEditFailure,
         data,
-        { file: data.image },
         token,
       ),
     );
