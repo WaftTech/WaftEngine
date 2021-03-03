@@ -48,7 +48,6 @@ faqController.GetFaq = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
 
-    searchQuery = { is_active: true, ...searchQuery };
     console.log('aaaa', req.query)
     if (req.query.find_title) {
       searchQuery = {
@@ -176,11 +175,7 @@ faqController.DeleteFaqCat = async (req, res, next) => {
         deleted_at: new Date(),
       },
     });
-    await faqSch.updateMany({ category: id }, {
-      $set: {
-        is_active: false
-      }
-    })
+    await faqSch.updateMany({ category: id, is_deleted: false }, { $set: { is_deleted: true } })
     return otherHelper.sendResponse(res, httpStatus.OK, true, delCat, null, 'faq category deleted!!', null);
   } catch (err) {
     next(err);
@@ -208,6 +203,12 @@ faqController.GetCatByKey = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+faqController.CountFaqByCat = async (req, res, next) => {
+  const id = req.params.id;
+  const faqCount = await faqSch.countDocuments({ category: id, is_deleted: false })
+  return otherHelper.sendResponse(res, httpStatus.OK, true, faqCount, null, 'faq count by category', null);
 };
 
 module.exports = faqController;
