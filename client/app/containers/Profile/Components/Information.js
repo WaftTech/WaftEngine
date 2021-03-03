@@ -97,7 +97,7 @@ class UserPersonalInformationPage extends React.Component {
                   value: moment(date).format('YYYY-MM-DD'),
                 });
               }}
-              birth_date={moment(one.date_of_birth).format('YYYY-M-D')}
+              birth_date={moment(one.date_of_birth).format('YYYY-MM-D')}
             />
           </div>
         </div>
