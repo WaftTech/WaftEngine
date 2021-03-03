@@ -30,4 +30,5 @@ router.delete('/category/:id', authentication, authorization, blogModule.DeleteB
 router.get('/htmlblog/:id', blogModule.getstaticBlog);
 
 router.get('/count/increase/:id', countSanitize, countValidate, blogModule.updateViewCount);
+router.get('/count/category/:id', authentication, authorization, blogModule.CountBlogByCat)
 module.exports = router;

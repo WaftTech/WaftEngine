@@ -739,8 +739,16 @@ blogController.DeleteBlogCat = async (req, res, next) => {
       deleted_at: new Date(),
     },
   });
+  await blogSch.updateMany({ category: id }, { is_deleted: true })
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogCat, null, blogConfig.deleteCat, null);
 };
+
+blogController.CountBlogByCat = async (req, res, next) => {
+  const id = req.params.id;
+  const blogCount = await blogSch.countDocuments({ category: id, is_deleted: false })
+  return otherHelper.sendResponse(res, httpStatus.OK, true, blogCount, null, 'blog count by category', null);
+};
+
 
 blogController.getstaticBlog = async (req, res, next) => {
   try {
