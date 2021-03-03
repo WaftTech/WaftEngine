@@ -35,7 +35,6 @@ export class FAQManagePage extends React.Component {
     setQueryValue: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,

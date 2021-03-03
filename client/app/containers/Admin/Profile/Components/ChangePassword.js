@@ -12,7 +12,6 @@ import { makeSelectErrors } from '../selectors';
 export class ChangePassword extends React.Component {
   static propTypes = {
     changePasswordRequest: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
   };
 
   state = {
@@ -72,9 +71,7 @@ export class ChangePassword extends React.Component {
     return (
       <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label htmlFor="oldPassword">
-            Old Password
-          </label>
+          <label htmlFor="oldPassword">Old Password</label>
           <input
             className="inputbox"
             id="oldPassword"
@@ -88,9 +85,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label htmlFor="newPassword">
-            New Password
-          </label>
+          <label htmlFor="newPassword">New Password</label>
           <input
             className="inputbox"
             id="newPassword"
@@ -104,9 +99,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label htmlFor="newPassword">
-            Confirm New Password
-          </label>
+          <label htmlFor="newPassword">Confirm New Password</label>
           <input
             className="inputbox"
             id="newPassword2"
@@ -135,9 +128,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 export default compose(withConnect)(ChangePassword);

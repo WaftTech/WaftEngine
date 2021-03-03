@@ -24,7 +24,7 @@ export class Media extends React.Component {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     addMediaRequest: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,

@@ -118,111 +118,115 @@ export const TwoFactor = props => {
       </div>
     </>
   ) : (
-      <>
-        <Modal
-          open={showGoogleTwoFactor}
-          handleClose={handleClose}
-          handleUpdate={handleSubmitCode}
-        >
-          <div>
-            <label>Google Two factor authorization code</label>
-            <p className="text-xs bg-gray-100 rounded p-2">
-              {twoFactor && twoFactor.google_authenticate.auth_secret_setup}
-            </p>
-            {/* <input
+    <>
+      <Modal
+        open={showGoogleTwoFactor}
+        handleClose={handleClose}
+        handleUpdate={handleSubmitCode}
+      >
+        <div>
+          <label>Google Two factor authorization code</label>
+          <p className="text-xs bg-gray-100 rounded p-2">
+            {twoFactor && twoFactor.google_authenticate.auth_secret_setup}
+          </p>
+          {/* <input
             id="two_factor_authorization"
             name="two_factor_authorization"
             disabled
             readOnly
             value={twoFactor && twoFactor.google_authenticate.auth_secret_setup}
           /> */}
-            <div className="error">{errors.two_fa_ga_auth_secret}</div>
-          </div>
-          <div className="py-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100"
-              height="100"
-              fill="true"
-            >
-              <path
-                d={
-                  twoFactor &&
-                  twoFactor.google_authenticate &&
-                  twoFactor.google_authenticate.qrcode &&
-                  twoFactor.google_authenticate.qrcode.path
-                }
-                className="qr-code"
-              />
-            </svg>
-          </div>
-          <div>
-            <label>Enter Your code</label>
-            <input
-              id="code"
-              className="inputbox"
-              name="code"
-              value={twoFactor && twoFactor.code}
-              onChange={e => handleChange(e, 'google_authenticate')}
+          <div className="error">{errors.two_fa_ga_auth_secret}</div>
+        </div>
+        <div className="py-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100"
+            height="100"
+            fill="true"
+          >
+            <path
+              d={
+                twoFactor &&
+                twoFactor.google_authenticate &&
+                twoFactor.google_authenticate.qrcode &&
+                twoFactor.google_authenticate.qrcode.path
+              }
+              className="qr-code"
             />
-            <div className="error">{errors.code}</div>
-            <p className="italic mt-2 text-sm">
-              Note : Enter the code from Authentication App
+          </svg>
+        </div>
+        <div>
+          <label>Enter Your code</label>
+          <input
+            id="code"
+            className="inputbox"
+            name="code"
+            value={twoFactor && twoFactor.code}
+            onChange={e => handleChange(e, 'google_authenticate')}
+          />
+          <div className="error">{errors.code}</div>
+          <p className="italic mt-2 text-sm">
+            Note : Enter the code from Authentication App
           </p>
-          </div>
-        </Modal>
-        <div className="ml-4 p-4 border">
-          <div className="flex justify-between px-2">
-            <div className="-ml-2 w-1/2 p-4 border rounded">
-              <img src={EmailAuth} className="h-16" alt="Email Authentication" />
-              <h2 className="text-lg">E-mail Authentication</h2>
-              <p>
-                Checking your E-mail for authentication will help secure your
-                account from unauthorized access.
+        </div>
+      </Modal>
+      <div className="ml-4 p-4 border">
+        <div className="flex justify-between px-2">
+          <div className="-ml-2 w-1/2 p-4 border rounded">
+            <img src={EmailAuth} className="h-16" alt="Email Authentication" />
+            <h2 className="text-lg">E-mail Authentication</h2>
+            <p>
+              Checking your E-mail for authentication will help secure your
+              account from unauthorized access.
             </p>
-              <div className="checkbox">
-                <input
-                  checked={twoFactor.email.is_authenticate}
-                  onChange={handleChecked}
-                  id="is_active_email"
-                  type="checkbox"
-                  name="email"
-                />
-                <label htmlFor="is_active_email">
-                  <span className="box">
-                    <FaCheck className="check-icon" />
-                  </span>
+            <div className="checkbox">
+              <input
+                checked={twoFactor.email.is_authenticate}
+                onChange={handleChecked}
+                id="is_active_email"
+                type="checkbox"
+                name="email"
+              />
+              <label htmlFor="is_active_email">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
                 Enable email authorization
               </label>
-              </div>
             </div>
-            <div className="-mr-2 w-1/2 p-4 border rounded">
-              <img src={GoogleAuth} className="h-16" alt="Google Authentication" />
-              <h2 className="text-lg">Google Authentication</h2>
-              <p>
-                Google authentication is a physical security key that is used for
-                authentication during account sign in.
+          </div>
+          <div className="-mr-2 w-1/2 p-4 border rounded">
+            <img
+              src={GoogleAuth}
+              className="h-16"
+              alt="Google Authentication"
+            />
+            <h2 className="text-lg">Google Authentication</h2>
+            <p>
+              Google authentication is a physical security key that is used for
+              authentication during account sign in.
             </p>
-              <div className="checkbox">
-                <input
-                  checked={twoFactor.google_authenticate.is_authenticate}
-                  onChange={handleChecked}
-                  id="is_active_google"
-                  type="checkbox"
-                  name="google_authenticate"
-                />
-                <label htmlFor="is_active_google">
-                  <span className="box">
-                    <FaCheck className="check-icon" />
-                  </span>
+            <div className="checkbox">
+              <input
+                checked={twoFactor.google_authenticate.is_authenticate}
+                onChange={handleChecked}
+                id="is_active_google"
+                type="checkbox"
+                name="google_authenticate"
+              />
+              <label htmlFor="is_active_google">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
                 Enable Google two factor authorization
               </label>
-              </div>
             </div>
           </div>
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 };
 
 TwoFactor.propTypes = {
@@ -232,7 +236,7 @@ TwoFactor.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
-  classes: PropTypes.object.isRequired,
+
   twoFactor: PropTypes.object.isRequired,
   errors: PropTypes.object,
 };
