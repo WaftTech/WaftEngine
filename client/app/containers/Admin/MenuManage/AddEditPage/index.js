@@ -287,7 +287,7 @@ const AddEdit = props => {
                             </div>
                           )}
                       </div>
-                      {/* <div className="w-full md:w-1/2 pb-4">
+                      <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
                           Order
                         </label>
@@ -305,7 +305,7 @@ const AddEdit = props => {
                               {errors.sub_menu_form.order}
                             </div>
                           )}
-                      </div> */}
+                      </div>
                       <div className="w-full md:w-1/2 pb-4">
                         <label className="label" htmlFor="grid-last-name">
                           Category
