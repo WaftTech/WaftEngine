@@ -116,6 +116,7 @@ export class SliderPage extends React.Component {
   handleSearch = e => {
     e.preventDefault();
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
   handleKeyPress = e => {

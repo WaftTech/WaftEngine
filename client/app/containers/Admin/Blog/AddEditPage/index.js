@@ -38,6 +38,8 @@ import {
   makeSelectTag,
   makeSelectUsers,
 } from '../selectors';
+import EditorFileSelect from '../../../EditorFileSelect';
+import Dialog from '../../../../components/Dialog/index';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -60,6 +62,7 @@ class AddEdit extends React.PureComponent {
     startDate: new Date(),
     selected: [],
     slug_generated: false,
+    openMedia: false,
   };
 
   componentDidMount() {
@@ -163,6 +166,19 @@ class AddEdit extends React.PureComponent {
   handleTempTag = e => {
     e.persist();
     this.props.setTagValue(e.target.value);
+  };
+
+  handleClose = () => {
+    this.setState({ openMedia: false });
+  };
+
+  handleSetImage = () => {
+    this.setState({ openMedia: true });
+  };
+
+  handleImageChange = file => {
+    this.props.setOneValue({ key: 'image', value: file });
+    this.setState({ openMedia: false });
   };
 
   onDrop = (files, name) => {
@@ -334,6 +350,23 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
+        <Dialog
+          open={this.state.openMedia}
+          className="w-5/6 h-full overflow-auto"
+          onClose={this.handleClose}
+          title={`Select Images`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
+            </div>
+          }
+        />
         <div className="flex justify-between my-3">
           <PageHeader>
             <span className="backbtn" onClick={this.handleGoBack}>
@@ -368,7 +401,6 @@ class AddEdit extends React.PureComponent {
               value={(one && one.slug_url) || ''}
               name="Blog Slug"
               onChange={this.handleChange('slug_url')}
-              disabled
             />
             {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
               <div className="error">{errors && errors.slug_url}</div>
@@ -428,32 +460,24 @@ class AddEdit extends React.PureComponent {
 
           <div className="w-full md:w-3/5 pb-4 mt-4">
             <label htmlFor="Image">Image</label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="outline-none">
-                  <input {...getInputProps()} />
-                  {tempImage === '' ? (
-                    <div className="rounded cursor-pointer border-2 border-gray-300 border-dashed flex w-3/5 h-32 hover:border-primary hover:text-primary outline-none">
-                      <div className="m-auto text-center hover:text-primary">
-                        <FaCloudUploadAlt className="text-gray-300 text-4xl inline-block" />
-                        <p className="text-gray-300 text-xs">
-                          Drag and Drop Your Files Here!!
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="border-2 border-gray-300 border-dashed flex w-3/5 h-32">
-                      <img
-                        className="m-auto w-full h-28 object-contain inline-block text-center"
-                        src={tempImage}
-                        alt="BlogCategoryImage"
-                        style={{ height: '120px', width: '60%' }}
-                      />
-                    </div>
-                  )}
+
+            <section
+              onClick={this.handleSetImage}
+              className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+            >
+              {one && one.image && one.image.path ? (
+                <div>
+                  <img src={`${IMAGE_BASE}${one.image.path}`} />
                 </div>
+              ) : (
+                <button
+                  type="button"
+                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                >
+                  Featured Image
+                </button>
               )}
-            </Dropzone>
+            </section>
           </div>
           <div className="w-full md:w-1/2 pb-4">
             <label htmlFor="published_on">Published On</label>

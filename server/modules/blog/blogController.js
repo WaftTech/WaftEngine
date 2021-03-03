@@ -409,9 +409,7 @@ blogController.GetBlogCategory = async (req, res, next) => {
 blogController.GetBlogCatById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const blogcats = await blogCatSch.findOne({
-      _id: id,
-    });
+    const blogcats = await blogCatSch.findOne({ _id: id, }).populate([{ path: 'image', select: 'path' }])
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
   } catch (err) {
     next(err);
@@ -527,6 +525,8 @@ blogController.GetBlogBySlug = async (req, res, next) => {
     .populate([
       { path: 'author', select: '_id name avatar image bio author.bio social_link' },
       { path: 'category', select: '_id title slug_url' },
+      { path: 'image', select: 'path' },
+
     ]);
   if (!blogs) {
     return otherHelper.sendResponse(res, httpStatus.OK, false, blogs, 'no blog found', 'no blog found', null);
@@ -540,7 +540,7 @@ blogController.GetBlogById = async (req, res, next) => {
     const blogs = await blogSch.findOne({
       _id: id,
       is_deleted: false,
-    });
+    }).populate([{ path: 'image', select: 'path' }])
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
   } catch (err) {
     next(err);
@@ -753,7 +753,7 @@ blogController.CountBlogByCat = async (req, res, next) => {
 blogController.getstaticBlog = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const data = await blogSch.findOne({ _id: id }).select('title description image.path');
+    const data = await (await blogSch.findOne({ _id: id }).select('title description image')).populated([{ path: 'image', select: 'path' }]);
     let newdata = `<h1>${data.title}</h1><img src=${blogConfig.image_base + data.image.path} /><p>${data.description}</p>`;
     return otherHelper.sendResponse(res, httpStatus.OK, true, newdata, null, 'blog get successfull', null);
   } catch (err) {

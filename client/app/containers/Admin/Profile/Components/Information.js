@@ -20,6 +20,7 @@ import * as mapDispatchToProps from '../actions';
 import { FaCheck } from 'react-icons/fa';
 
 import { DATE_FORMAT } from '../../../App/constants';
+import DateInput from '../../../../components/DateInput';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -29,7 +30,7 @@ class UserPersonalInformationPage extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-
+    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object,
   };
@@ -87,16 +88,17 @@ class UserPersonalInformationPage extends React.PureComponent {
         <div className="w-full md:w-1/2">
           <label>Date Of Birth</label>
 
-          <DatePicker
-            name="date_of_birth"
-            className="inputbox"
-            value={
-              (one.date_of_birth &&
-                moment(one.date_of_birth).format(DATE_FORMAT)) ||
-              ''
-            }
-            onChange={this.handleDateChange('date_of_birth')}
-          />
+          <div className="border-2 p-2 mb-2 rounded">
+            <DateInput
+              onDateChange={date => {
+                this.props.setOneValue({
+                  key: 'date_of_birth',
+                  value: moment(date).format('YYYY-MM-DD'),
+                });
+              }}
+              birth_date={moment(one.date_of_birth).format('YYYY-MM-D')}
+            />
+          </div>
         </div>
 
         <div className="checkbox pb-4">

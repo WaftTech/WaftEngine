@@ -17,7 +17,12 @@ import Table from 'components/Table';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import {
+  makeSelectAll,
+  makeSelectQuery,
+  makeSelectLoading,
+  makeSelectCount,
+} from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -81,6 +86,7 @@ export class FaqCategory extends React.Component {
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
   handleKeyPress = e => {
@@ -95,6 +101,7 @@ export class FaqCategory extends React.Component {
 
   handleOpen = id => {
     this.setState({ open: true, deleteId: id });
+    this.props.getCountRequest(id);
   };
 
   handleClose = () => {
@@ -117,6 +124,7 @@ export class FaqCategory extends React.Component {
       all: { data, page, size, totalData },
       query,
       loading,
+      count,
     } = this.props;
     const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
@@ -153,6 +161,7 @@ export class FaqCategory extends React.Component {
           open={this.state.open}
           doClose={this.handleClose}
           doDelete={() => this.handleDelete(this.state.deleteId)}
+          body={`You have ${count} dependent with this faq category, if you delete this category all faqs including this category will be deleted. are you sure to delete?`}
         />
         <Helmet>
           <title>FAQ Listing</title>
@@ -212,6 +221,7 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
   loading: makeSelectLoading(),
+  count: makeSelectCount(),
 });
 
 const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });

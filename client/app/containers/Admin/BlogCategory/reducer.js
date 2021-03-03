@@ -24,6 +24,7 @@ export const initialState = {
   query: { find_title: '', size: 10 },
   loading: false,
   errors: { title: '', slug_url: '' },
+  count: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -87,6 +88,10 @@ const reducer = (state = initialState, action) =>
       case types.SET_ERROR_VALUE:
         draft.errors = action.payload;
         draft.loading = false;
+        break;
+
+      case types.GET_COUNT_SUCCESS:
+        draft.count = action.payload.data;
         break;
     }
   });

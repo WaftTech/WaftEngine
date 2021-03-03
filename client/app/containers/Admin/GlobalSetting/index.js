@@ -91,6 +91,7 @@ export const GlobalSetting = props => {
 
   const handleSearch = () => {
     loadWithdrawRequest(query);
+    setQueryValue({ key: 'page', value: 1 });
   };
 
   const handleKeyPress = e => {

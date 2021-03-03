@@ -271,41 +271,26 @@ const AddEdit = props => {
                               ( open URL )
                             </Link>
                           )}
+                        </div>
+                        <div className="w-full md:w-1/2 pb-4">
+                          <label className="label" htmlFor="grid-last-name">
+                            Order
+                        </label>
                           <input
                             className="inputbox"
                             id="grid-last-name"
-                            type="text"
-                            value={subMenu.url || ''}
-                            onChange={handleChildChange('url')}
+                            type="number"
+                            value={subMenu.order || ''}
+                            onChange={handleChildChange('order')}
                           />
-
                           {errors &&
                             errors.sub_menu_form &&
-                            errors.sub_menu_form.url && (
+                            errors.sub_menu_form.order && (
                               <div className="error">
-                                {errors.sub_menu_form.url}
+                                {errors.sub_menu_form.order}
                               </div>
                             )}
                         </div>
-                        {/* <div className="w-full md:w-1/2 pb-4">
-                        <label className="label" htmlFor="grid-last-name">
-                          Order
-                        </label>
-                        <input
-                          className="inputbox"
-                          id="grid-last-name"
-                          type="number"
-                          value={subMenu.order || ''}
-                          onChange={handleChildChange('order')}
-                        />
-                        {errors &&
-                          errors.sub_menu_form &&
-                          errors.sub_menu_form.order && (
-                            <div className="error">
-                              {errors.sub_menu_form.order}
-                            </div>
-                          )}
-                      </div> */}
                         <div className="w-full md:w-1/2 pb-4">
                           <label className="label" htmlFor="grid-last-name">
                             Category
