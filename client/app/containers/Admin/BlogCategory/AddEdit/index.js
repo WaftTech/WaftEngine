@@ -256,6 +256,23 @@ class AddEdit extends React.PureComponent {
             Save
           </button>
         </PageContent>
+        <Dialog
+          open={this.state.openMedia}
+          className="w-5/6 h-full overflow-auto"
+          onClose={this.handleClose}
+          title={`Select Images`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
+            </div>
+          }
+        />
       </div>
     );
   }
