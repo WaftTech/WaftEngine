@@ -564,6 +564,10 @@ blogController.GetBlogByCat = async (req, res, next) => {
           path: 'author',
           select: 'name',
         },
+        {
+          path: 'image',
+          select: 'path',
+        },
       ];
       selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by';
       searchQuery = {

@@ -16,4 +16,4 @@ const categorySchema = new schema({
   updated_by: { type: schema.Types.ObjectId, ref: 'users' },
 });
 
-module.exports = Category = mongoose.model('category', categorySchema);
+module.exports = blogCat = mongoose.model('blogcat', categorySchema);

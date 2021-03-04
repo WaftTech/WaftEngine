@@ -228,6 +228,22 @@ class AddEdit extends React.PureComponent {
             </label>
           </div>
 
+          <div className="checkbox">
+            <input
+              checked={one.is_page || false}
+              onClick={this.handleCheckedChange('is_page')}
+              onChange={this.handleCheckedChange('is_page')}
+              id="is_page"
+              type="checkbox"
+            />
+            <label htmlFor="is_page">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Page
+            </label>
+          </div>
+
           <button
             className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
