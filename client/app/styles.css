@@ -51,7 +51,7 @@ div.react-datepicker__input-container {
 .inputbox {
   @apply block w-full py-2 px-3 transition-all bg-white border border-gray-300 rounded text-sm;
 }
-select.inputbox { height:38px;}
+/* select.inputbox { height:38px;} */
 
 .inputbox:focus {
   outline: 0;

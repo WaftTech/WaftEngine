@@ -48,16 +48,16 @@ function CustomTable({ ...props }) {
             ))}
           </tbody>
         ) : (
-          loading && (
-            <tbody>
-              <tr>
-                <td colSpan={tableHead.length} className="py-2 text-center">
-                  <div className="circular_loader waftloader"></div>
-                </td>
-              </tr>
-            </tbody>
-          )
-        )}
+            loading && (
+              <tbody>
+                <tr>
+                  <td colSpan={tableHead.length} className="py-2 text-center">
+                    <div className="circular_loader waftloader"></div>
+                  </td>
+                </tr>
+              </tbody>
+            )
+          )}
       </table>
 
       {(tableData.length < 1 || pagination.totaldata === 0) &&
@@ -102,11 +102,10 @@ function CustomTable({ ...props }) {
                     page: pagination.page - 1,
                   });
                 }}
-                className={`${
-                  1 === pagination.page
+                className={`${1 === pagination.page
                     ? 'opacity-25 pointer-events-none'
                     : 'hover:bg-blue-500 hover:text-white'
-                } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
+                  } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
               >
                 <FaChevronLeft />
               </span>
@@ -123,12 +122,11 @@ function CustomTable({ ...props }) {
                     page: pagination.page + 1,
                   });
                 }}
-                className={`${
-                  Math.ceil(pagination.totaldata / pagination.size) ===
-                  pagination.page
+                className={`${Math.ceil(pagination.totaldata / pagination.size) ===
+                    pagination.page
                     ? 'opacity-25 pointer-events-none'
                     : 'hover:bg-blue-500 hover:text-white'
-                } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
+                  } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
               >
                 <FaChevronRight />
               </span>
