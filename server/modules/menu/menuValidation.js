@@ -53,6 +53,10 @@ validation.validate = async (req, res, next) => {
           condition: 'IsEmpty',
           msg: menuConfig.validate.empty,
         },
+        {
+          condition: 'IsProperKey',
+          msg: 'not Valid Input',
+        },
       ],
     }
   ];

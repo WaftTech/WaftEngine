@@ -100,6 +100,10 @@ templateValidation.validate = async (req, res, next) => {
           msg: templateConfig.validate.isLength50,
           option: { min: 2, max: 50 },
         },
+        {
+          condition: 'IsProperKey',
+          msg: 'not Valid Input',
+        },
       ],
     },
     {
