@@ -26,7 +26,11 @@ validations.validate = async (req, res, next) => {
                         {
                               condition: 'IsEmpty',
                               msg: 'this field is required',
-                        }
+                        },
+                        {
+                              condition: 'IsProperKey',
+                              msg: 'not Valid Input',
+                        },
                   ],
             }
       ]
@@ -43,6 +47,20 @@ validations.validate = async (req, res, next) => {
       }
       if (!isEmpty(errors)) {
             return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'Input Errors', null);
+      } else {
+            next();
+      }
+};
+
+validations.validateRootFolder = async (req, res, next) => {
+      const folderId = req.params.folder_id;
+      const temp = await folderSch.findById({ _id: folderId })
+      let errors
+      if (temp && temp.is_root) {
+            errors = { invalid_upload: 'You cannot upload files in root folder. Please create sub folder and upload images.' }
+      }
+      if (!isEmpty(errors)) {
+            return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'Invalid Actions', null);
       } else {
             next();
       }
