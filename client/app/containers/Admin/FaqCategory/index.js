@@ -171,6 +171,8 @@ export class FaqCategory extends React.Component {
           doClose={this.handleClose}
           doDelete={() => this.handleConfirmOpen()}
           body={`You have ${count} dependent with this faq category, if you delete this category all faqs including this category will be deleted. are you sure to delete?`}
+          closeButton="No"
+          confirmButton="Yes"
         />
         <DeleteDialog
           open={this.state.confirmOpen}
