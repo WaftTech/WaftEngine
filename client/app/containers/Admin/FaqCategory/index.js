@@ -51,6 +51,7 @@ export class FaqCategory extends React.Component {
   state = {
     open: false,
     deleteId: '',
+    confirmOpen: false,
   };
 
   componentDidMount() {
@@ -108,9 +109,17 @@ export class FaqCategory extends React.Component {
     this.setState({ open: false });
   };
 
+  handleConfirmOpen = () => {
+    this.setState({ confirmOpen: true });
+    this.setState({ open: false });
+  };
+
+  handleConfirmClose = () => {
+    this.setState({ confirmOpen: false });
+  };
+
   handleDelete = id => {
     this.props.deleteCatRequest(id);
-    this.setState({ open: false });
   };
 
   handleAdd = () => {
@@ -160,8 +169,13 @@ export class FaqCategory extends React.Component {
         <DeleteDialog
           open={this.state.open}
           doClose={this.handleClose}
-          doDelete={() => this.handleDelete(this.state.deleteId)}
+          doDelete={() => this.handleConfirmOpen()}
           body={`You have ${count} dependent with this faq category, if you delete this category all faqs including this category will be deleted. are you sure to delete?`}
+        />
+        <DeleteDialog
+          open={this.state.confirmOpen}
+          doClose={this.handleConfirmClose}
+          doDelete={() => this.handleDelete(this.state.deleteId)}
         />
         <Helmet>
           <title>FAQ Listing</title>
