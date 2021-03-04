@@ -410,7 +410,7 @@ const FileList = ({
       <Dialog
         open={dialogOpen}
         onClose={handleDialogClose}
-        title={`Cant Ulpoad here`}
+        title={`Cant Upload here`}
         body={`Create sub folder first and then ony you can upload image`}
         actions={
           <>
