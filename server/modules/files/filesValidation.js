@@ -47,4 +47,20 @@ validations.validate = async (req, res, next) => {
             next();
       }
 };
+
+validations.validateRootFolder = async (req, res, next) => {
+      const folderId = req.params.folder_id;
+      console.log('aaaaaaa', folderId)
+      const temp = await folderSch.findById({_id: folderId })
+      console.log('folder details', temp)
+      let errors
+      if (temp && temp.is_root) {
+            errors = { invalid_upload: 'You cannot upload files in root folder. Please create sub folder and upload images.' }
+      }
+      if (!isEmpty(errors)) {
+            return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'Invalid Actions', null);
+      } else {
+            next();
+      }
+};
 module.exports = validations;
