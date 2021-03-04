@@ -10,7 +10,6 @@
  */
 
 import React from 'react';
-import SlickSlider from '../../components/SlickSlider';
 import { Helmet } from 'react-helmet';
 import StaticContentDiv from '../../components/StaticContentDiv';
 
@@ -28,7 +27,7 @@ export default class HomePage extends React.PureComponent {
           </title>
         </Helmet>
         <div className="container mx-auto">
-          <SlickSlider slideKey="homeslider" /></div>
+          <StaticContentDiv contentKey="about" /></div>
       </>
     );
   }

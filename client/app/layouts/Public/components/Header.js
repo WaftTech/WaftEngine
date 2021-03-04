@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import logo from '../../../assets/img/logo.svg';
@@ -14,7 +14,6 @@ import {
   makeSelectUser
 } from '../../../containers/App/selectors';
 import './header.css';
-import HeaderMenu from './HeaderMenu';
 
 
 const Header = props => {
@@ -72,18 +71,6 @@ const Header = props => {
               <path className="line line-3" d="M5 73h90v14H5z" />
             </g>
           </svg>
-          <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
-            {HeaderMenu.map(each => (
-              <NavLink
-                key={each.key}
-                className="text-right md:text-left border-b md:border-none block no-underline px-5 py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
-                to={each.link}
-                onClick={handleToggle}
-              >
-                {each.name}
-              </NavLink>
-            ))}
-          </div>
         </div>
 
         {!token ? (

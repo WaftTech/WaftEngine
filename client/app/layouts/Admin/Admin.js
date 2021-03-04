@@ -14,9 +14,7 @@ import { logoutRequest } from '../../containers/App/actions';
 import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import routes from '../../routes/admin';
 import MainListItems from './components/MainListItem';
-
-
-
+import './admin.css';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');

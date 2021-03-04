@@ -91,6 +91,7 @@ export const GlobalSetting = props => {
 
   const handleSearch = () => {
     loadWithdrawRequest(query);
+    setQueryValue({ key: 'page', value: 1 });
   };
 
   const handleKeyPress = e => {
@@ -170,26 +171,14 @@ export const GlobalSetting = props => {
         </div>
       </div>
       <PageContent loading={loading}>
-        <div className="flex">
-          <div>
-            <select
-              name="find_removable"
-              className="m-auto inputbox pr-6 w-64 mr-4"
-              value={query.find_removable || ''}
-              onChange={handleQueryChange}
-            >
-              <option value="">Find Removable</option>
-              <option value="true">Removable</option>
-              <option value="false">Not Removable</option>
-            </select>
-          </div>
-          <div className="flex relative mr-2">
+        <div className="flex items-center">
+          <div className="flex-1 px-2">
             <select
               type="text"
               name="find_type"
               id="module-name"
               placeholder="Search by type"
-              className="m-auto inputbox pr-6"
+              className="inputbox"
               value={query.find_type}
               onChange={handleQueryChange}
             >
@@ -203,12 +192,12 @@ export const GlobalSetting = props => {
                 ))}
             </select>
           </div>
-          <div className="flex relative mr-2">
+          <div className="flex-1 px-2">
             <select
               type="text"
               name="find_sub_type"
               placeholder="Search by SubType"
-              className="m-auto inputbox pr-6"
+              className="inputbox"
               value={query.find_sub_type || ''}
               onChange={handleQueryChange}
             >
@@ -225,27 +214,44 @@ export const GlobalSetting = props => {
                     ))}
                 </>
               ) : (
-                <option value="">Choose type first</option>
-              )}
+                  <option value="">Choose type first</option>
+                )}
             </select>
           </div>
 
-          <div className="flex relative">
+          <div className="flex-1 px-2">
             <input
               type="text"
               name="find_key"
               id="module-name"
               placeholder="Search by key"
-              className="m-auto inputbox pr-6"
+              className="inputbox"
               value={query.find_key}
               onChange={handleQueryChange}
               onKeyDown={handleKeyPress}
             />
+
+          </div>
+
+          <div className="flex-1 px-2">
+            <select
+              name="find_removable"
+              className="inputbox"
+              value={query.find_removable || ''}
+              onChange={handleQueryChange}
+            >
+              <option value="">Select Both</option>
+              <option value="true">Removable</option>
+              <option value="false">Not Removable</option>
+            </select>
+          </div>
+
+          <div className="inline-flex-1 px-2">
             <span
-              className=" inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              className=" inline-flex px-2 items-center cursor-pointer text-blue-500"
               onClick={handleSearch}
             >
-              <FaSearch />
+              <FaSearch /> <span className="text-sm px-2">Search</span>
             </span>
           </div>
         </div>

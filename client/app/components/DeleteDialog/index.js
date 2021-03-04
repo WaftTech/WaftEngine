@@ -21,6 +21,7 @@ export default function DeleteDialog(props) {
         open={props.open}
         onClose={handleClose}
         title="Are you sure to delete?"
+        body={props.body || ''}
         actions={
           <div className="m-4 w-full flex justify-between px-1">
             <button
