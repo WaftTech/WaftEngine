@@ -21,22 +21,12 @@ class Footer extends React.Component {
     const { email } = this.state;
 
     return (
-      <footer className="footer bg-gray-900">
-        <div className="w-full bg-gray-900 border-b border-gray-800 p-2 text-center">
-          <h1 className="text-gray-500 mt-4 mb-2 uppercase text-2xl">
-            Get updates
-          </h1>
-          <p className="mb-5 text-gray-700">
-            Never miss any updates from WaftEngine.
-          </p>
-          <SubscriberPage />
-        </div>
+      <footer className="bg-gray-900">
         <div className="container mx-auto">
           <div className="flex flex-wrap p-3">
-            <div className="w-full lg:w-1/2 crorder my-auto">
-              <p className="text-gray-700 m-0">
-                Designed and built by the WaftTech Team
-              </p>
+            <div className="w-full lg:w-1/2 my-auto">
+              <p className="text-gray-500 text-sm">
+                Copyright © Waft Technology, 2021. MIT Licensed.</p>
             </div>
           </div>
         </div>

@@ -6,8 +6,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import './module.css';
 
 function useComponentVisible(initialIsVisible, setShowList) {
   const [isComponentVisible, setIsComponentVisible] = useState(
@@ -59,9 +60,8 @@ const Dialog = ({ open, onClose, className, title, body, actions }) => {
         onClick={onClose}
       />
       <div
-        className={`fixed overflow-auto left-2/4 top-2/4 z-50 shadow-lg transform -translate-x-2/4 -translate-y-2/4 rounded-lg bg-white slide-dialog ${
-          className && className !== '' ? className : 'max-w-xl'
-        } `}
+        className={`fixed overflow-auto left-2/4 top-2/4 z-50 shadow-lg transform -translate-x-2/4 -translate-y-2/4 rounded-lg bg-white slide-dialog ${className && className !== '' ? className : 'max-w-xl'
+          } `}
       >
         {title !== undefined && (
           <div className="flex flex-wrap items-center justify-between px-4 py-2 bg-primary rounded-tl-lg rounded-tr-lg">

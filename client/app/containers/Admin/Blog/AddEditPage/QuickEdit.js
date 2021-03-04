@@ -6,7 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 import Select from '../../../../components/Select';
 
 const customStyles = {
-  chip: () => {},
+  chip: () => { },
   option: (provided, state) => ({
     ...provided,
     background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
@@ -147,7 +147,7 @@ const QuickEdit = props => {
           />
         </div>
 
-        <div className="w-full md:w-1/2 pb-4">
+        <div className="w-full  pb-4">
           <label htmlFor="blog_author">Author</label>
           <Select
             className="React_Select"

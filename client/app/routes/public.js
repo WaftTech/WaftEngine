@@ -77,47 +77,14 @@ const publicRoutes = [
   },
   {
     exact: true,
-    path: '/subscribe',
-    component: SubscribePage,
-  },
-  {
-    exact: true,
     path: '/contact-us',
     component: ContactUsPage,
   },
   {
     exact: true,
-    path: '/about-us',
-    render: props => (
-      <StaticPage contentKey="about-us" title="About Us" {...props} />
-    ),
-  },
-  {
-    exact: true,
     path: '/term-and-condition',
     render: props => (
-      <StaticPage contentKey="term-and-condition" title="About Us" {...props} />
-    ),
-  },
-  {
-    exact: true,
-    path: '/data-policy',
-    render: props => (
-      <StaticPage contentKey="data-policy" title="About Us" {...props} />
-    ),
-  },
-  {
-    exact: true,
-    path: '/priacy-policy',
-    render: props => (
-      <StaticPage contentKey="priacy-policy" title="About Us" {...props} />
-    ),
-  },
-  {
-    exact: true,
-    path: '/cookies-policy',
-    render: props => (
-      <StaticPage contentKey="cookies-policy" title="About Us" {...props} />
+      <StaticPage contentKey="term-and-condition" title="Terms and Conditions" {...props} />
     ),
   },
   {

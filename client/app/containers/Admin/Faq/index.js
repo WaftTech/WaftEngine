@@ -176,24 +176,22 @@ export class FAQManagePage extends React.Component {
         </div>
         <PageContent loading={loading}>
           <div className="flex relative mr-4 max-w-lg">
-            <div className="w-full md:w-1/2 pb-4 mt-1 mr-2">
-              <select
-                className="inputbox"
-                value={query.find_category || ''}
-                name="find_category"
-                onChange={this.handleQueryChange}
-                onMouseLeave={this.handleSearch}
-              >
-                <option value="">Choose category</option>
-                {category &&
-                  category.length &&
-                  category.map(each => (
-                    <option key={each._id} value={each._id}>
-                      {each.title}
-                    </option>
-                  ))}
-              </select>
-            </div>
+            <select
+              className="inputbox mr-2"
+              value={query.find_category || ''}
+              name="find_category"
+              onChange={this.handleQueryChange}
+              onMouseLeave={this.handleSearch}
+            >
+              <option value="">Choose category</option>
+              {category &&
+                category.length &&
+                category.map(each => (
+                  <option key={each._id} value={each._id}>
+                    {each.title}
+                  </option>
+                ))}
+            </select>
 
             <input
               type="text"
