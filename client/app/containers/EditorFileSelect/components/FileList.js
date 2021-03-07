@@ -39,6 +39,7 @@ import {
   FaSearch,
   FaEdit,
 } from 'react-icons/fa';
+import { all } from 'redux-saga/effects';
 
 const LinkComponent = ({ children, staticContext, ...props }) => (
   <div {...props}>{children}</div>
@@ -96,6 +97,8 @@ const FileList = ({
   const [folderCheckbox, setfolderCheckbox] = useState(false);
   const [fileCheckbox, setfileCheckbox] = useState(false);
   const [selectedButton, setSelectedButton] = useState('');
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     if (!folderAdded) {
@@ -359,6 +362,14 @@ const FileList = ({
     deleteMultipleRequest();
   };
 
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <PageContent loading={loading}>
       <Dialog
@@ -391,6 +402,23 @@ const FileList = ({
               disabled={folderAdded}
             >
               Save
+            </button>
+          </>
+        }
+      />
+
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        title={`Cant Ulpoad here`}
+        body={`Create sub folder first and then ony you can upload image`}
+        actions={
+          <>
+            <button
+              onClick={handleDialogClose}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Close
             </button>
           </>
         }
@@ -436,18 +464,29 @@ const FileList = ({
             </button>
           )} */}
 
-          <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
-            {({ getRootProps, getInputProps }) => (
-              <div
-                className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
-                {...getRootProps()}
-              >
-                <input {...getInputProps()} />
-                <FaImage className="text-base mr-2" />
-                <span>Choose File</span>
-              </div>
-            )}
-          </Dropzone>
+          {window.location.pathname.includes('media-manage') &&
+          self.name === 'root' ? (
+            <div
+              onClick={() => handleDialogOpen()}
+              className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+            >
+              <FaImage className="text-base mr-2" />
+              <span>Choose File</span>
+            </div>
+          ) : (
+            <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
+              {({ getRootProps, getInputProps }) => (
+                <div
+                  className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+                  {...getRootProps()}
+                >
+                  <input {...getInputProps()} />
+                  <FaImage className="text-base mr-2" />
+                  <span>Choose File</span>
+                </div>
+              )}
+            </Dropzone>
+          )}
           <button
             onClick={handleAdd}
             className="items-center flex btn text-blue-500 bg-blue-100 border border-blue-200 hover:bg-blue-500 hover:border-blue-500 mr-2 hover:text-white"

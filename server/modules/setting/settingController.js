@@ -9,7 +9,7 @@ const settingController = {};
 
 settingController.GetSettingAll = async (req, res, next) => {
   try {
-    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_type && req.query.find_type != 'all') {
       searchQuery = { type: { $regex: req.query.find_type, $options: 'i' }, ...searchQuery };
     }
@@ -145,13 +145,6 @@ settingController.DeleteSettings = async (req, res, next) => {
     } else {
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, true, null, null, 'This setting is not Removable', null);
     }
-
-    // const temp = await settingSch.update({},
-    //   { $set: { 'email_setting': "" } },
-    //   { upsert: false, multi: true }
-    // )
-    // return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'setting delete success!', null);
-
   } catch (err) {
     next(err);
   }

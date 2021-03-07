@@ -12,7 +12,7 @@ const blogSchema = new schema({
   author: [{ type: schema.Types.ObjectId, ref: 'users' }],
   keywords: { type: [String] },
   slug_url: { type: String },
-  category: [{ type: schema.Types.ObjectId, ref: 'category' }],
+  category: [{ type: schema.Types.ObjectId, ref: 'blogcat' }],
   published_on: { type: Date, default: Date.now },
   is_published: { type: Boolean, required: true, default: true },
   is_highlight: { type: Boolean, default: false },

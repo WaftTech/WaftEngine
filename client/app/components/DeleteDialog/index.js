@@ -29,14 +29,14 @@ export default function DeleteDialog(props) {
               className="-ml-1 bg-gray-100 w-1/2 border rounded px-3 py-2 text-sm leading-none font-bold hover:bg-gray-300"
               onClick={handleClose}
             >
-              Don't Delete
+              {props.closeButton ? props.closeButton : `Don't Delete`}
             </button>
             <button
               type="button"
               className="-mr-1 bg-red-100 w-1/2 text-red-600 px-3 py-2 text-sm font-bold leading-none border border-red-300 hover:bg-red-600 hover:text-white rounded"
               onClick={handleDialogDelete}
             >
-              Delete
+              {props.confirmButton ? props.confirmButton : `Delete`}
             </button>
           </div>
         }

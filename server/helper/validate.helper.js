@@ -141,6 +141,18 @@ validationHelper.validation = (data, validationArray) => {
             }
           }
           break;
+
+        case 'IsProperKey':
+          if (!Validator.isEmpty(value)) {
+            var arr = ['`', '!', '@', ',', '#', '$', '%', '^', '&', '*', '(', ')', '+', '?', '/', '|', '.', '\\']
+            arr.forEach(element => {
+              let temp = value.includes(element)
+              if (temp) {
+                errors[validationObj.field] = `this field cannot contain special character  ::  ${element}`;
+              }
+            });
+          }
+          break;
         case 'IsPhone': if (!Validator.isEmpty(value)) {
           let pn = new PhoneNumber(value);
           if (pn.isValid()) {
