@@ -212,7 +212,7 @@ export class Dashboard extends React.PureComponent {
               </div>
             </div>
 
-            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
+            {/* <div className="w-1/2 -mr-4 bg-white rounded pb-4">
               <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
                 By Types{' '}
               </h3>
@@ -239,7 +239,7 @@ export class Dashboard extends React.PureComponent {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
