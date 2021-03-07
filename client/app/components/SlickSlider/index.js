@@ -93,7 +93,11 @@ class SlickSlider extends React.PureComponent {
             <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
               <>
                 <img
-                  src={`${IMAGE_BASE}${image.image.path}`}
+                  src={
+                    image.image && image.image.path && image.image.path !== null
+                      ? `${IMAGE_BASE}${image.image.path}`
+                      : ''
+                  }
                   alt={image.caption}
                 />
                 {show_caption && <h6>{image.caption}</h6>}
