@@ -464,11 +464,17 @@ userController.Verifymail = async (req, res, next) => {
   try {
     const email = req.body.email.toLowerCase();
     const code = req.body.code;
-    const user = await userSch.findOne({ email, email_verification_code: code });
+    const userVerified = await userSch.findOne({ email: email, email_verified: true })
+    if (userVerified && userVerified._id) {
+      let errors = {};
+      errors.verified = 'Email is already verified';
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, null, errors.verified, null);
+    }
+    const user = await userSch.findOne({ email: email, email_verification_code: code });
     const data = { email };
     if (!user) {
       let errors = {};
-      errors.email = 'Invalid Verification Code';
+      errors.email = 'Invalid Verification Code or Wrong Email Id';
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, data, null, errors.email, null);
     }
     const d = await userSch.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
