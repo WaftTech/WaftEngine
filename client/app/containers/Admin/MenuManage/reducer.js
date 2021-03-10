@@ -77,6 +77,7 @@ const menuManageReducer = (state = initialState, action) =>
       case types.ADD_EDIT_SUCCESS_2:
         draft.show_sub_menu = true;
         draft.sub_menu_form.menu_sch_id = action.payload.data._id;
+        draft.one._id = action.payload.data._id;
         break;
       case types.ADD_EDIT_CHILD_FAILURE:
         draft.errors.sub_menu_form = action.payload.errors;
