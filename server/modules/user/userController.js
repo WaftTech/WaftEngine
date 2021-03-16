@@ -309,15 +309,10 @@ userController.Register = async (req, res, next) => {
     newUser.last_password_change_date = new Date();
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
-    const email_footer = await settingsHelper('email', 'email_template', 'footer')
-    const email_header = await settingsHelper('email', 'email_template', 'header')
     const public_register_email_template = await settingsHelper('email', 'email_template', 'public_register_email_template')
-
     const renderedMail = await renderMail.renderTemplate(
       public_register_email_template,
       {
-        header: email_header,
-        footer: email_footer,
         name: newUser.name,
         email: newUser.email,
         code: newUser.email_verification_code,
@@ -500,15 +495,10 @@ userController.ResendVerificationCode = async (req, res, next) => {
         }
         const email_verification_code = otherHelper.generateRandomHexString(6);
         const newUser = await userSch.findOneAndUpdate({ email: email }, { $set: { email_verification_code, email_verified: false, email_verified_request_date: currentDate } }, { new: true });
-        const email_footer = await settingsHelper('email', 'email_template', 'footer')
-        const email_header = await settingsHelper('email', 'email_template', 'header')
         const verify_mail_template = await settingsHelper('email', 'email_template', 'verify_mail_template')
-
         const renderedMail = await renderMail.renderTemplate(
           verify_mail_template,
           {
-            header: email_header,
-            footer: email_footer,
             name: user.name,
             email: user.email,
             code: email_verification_code,
@@ -592,15 +582,10 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
-    const email_footer = await settingsHelper('email', 'email_template', 'footer')
-    const email_header = await settingsHelper('email', 'email_template', 'header')
     const forgot_password_mail_template = await settingsHelper('email', 'email_template', 'forgot_password_mail_template')
-
     const renderedMail = await renderMail.renderTemplate(
       forgot_password_mail_template,
       {
-        header: email_header,
-        footer: email_footer,
         name: user.name,
         email: user.email,
         code: user.password_reset_code,
@@ -681,14 +666,10 @@ userController.Login = async (req, res, next) => {
           const two_fa_time = new Date();
           const d = await userSch.findByIdAndUpdate(user._id, { $set: { 'multi_fa.email.code': two_fa_code, 'multi_fa.email.time': two_fa_time } });
           const two_fa_email_template = await settingsHelper('email', 'email_template', 'two_fa_email_template')
-          const email_footer = await settingsHelper('email', 'email_template', 'footer')
-          const email_header = await settingsHelper('email', 'email_template', 'header')
-          const two_fa_email_template = await settingsHelper('email', 'email_template', 'two_fa_email_template')
           const renderedMail = await renderMail.renderTemplate(
             two_fa_email_template,
             {
-              header: email_header,
-              footer: email_footer,
+
               name: user.name,
               email: user.email,
               code: two_fa_code,
@@ -902,15 +883,12 @@ userController.loginGOath = async (req, res, next) => {
     });
     user = await newUser.save();
   }
-  const email_footer = await settingsHelper('email', 'email_template', 'footer')
-  const email_header = await settingsHelper('email', 'email_template', 'header')
+
   const public_register_auth_template = await settingsHelper('email', 'email_template', 'public_register_auth_template')
 
   const renderedMail = await renderMail.renderTemplate(
     public_register_auth_template,
     {
-      header: email_header,
-      footer: email_footer,
       name: profile.name,
       email: profile.email,
       password: random_password,

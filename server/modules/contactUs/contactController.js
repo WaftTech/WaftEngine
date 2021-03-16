@@ -13,15 +13,13 @@ contactController.PostContact = async (req, res, next) => {
     const newUser = new contactSch({ name, email, message, subject });
     const user = await newUser.save();
     let admin_emails = await settingsHelper('email', 'admin_email', 'email_array')
-    const email_footer = await settingsHelper('email', 'email_template', 'footer')
-    const email_header = await settingsHelper('email', 'email_template', 'header')
+
     const contact_to_admin = await settingsHelper('email', 'email_template', 'contact_to_admin')
     const contact_to_user = await settingsHelper('email', 'email_template', 'contact_to_user')
 
     if (user) {
       const data = {
-        header: email_header,
-        footer: email_footer,
+
         name: user.name,
         email: user.email,
         msg: user.message,
