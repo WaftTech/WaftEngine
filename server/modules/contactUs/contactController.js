@@ -15,6 +15,8 @@ contactController.PostContact = async (req, res, next) => {
     let admin_emails = await settingsHelper('email', 'admin_email', 'email_array')
     const email_footer = await settingsHelper('email', 'email_template', 'footer')
     const email_header = await settingsHelper('email', 'email_template', 'header')
+    const contact_to_admin = await settingsHelper('email', 'email_template', 'contact_to_admin')
+    const contact_to_user = await settingsHelper('email', 'email_template', 'contact_to_user')
 
     if (user) {
       const data = {
@@ -27,7 +29,7 @@ contactController.PostContact = async (req, res, next) => {
       };
       if (admin_emails.length != -1) {
         for (i = 0; i < admin_emails.length; i++) {
-          const renderedMail = await renderMail.renderTemplate('contact_to_admin', data, admin_emails[i]);
+          const renderedMail = await renderMail.renderTemplate(contact_to_admin, data, admin_emails[i]);
           if (renderMail.error) {
             console.log('render mail error: ', renderMail.error);
           } else {
@@ -35,7 +37,7 @@ contactController.PostContact = async (req, res, next) => {
           }
         };
       }
-      const renderedMailForAdmin = await renderMail.renderTemplate('contact_to_user', data, user.email);
+      const renderedMailForAdmin = await renderMail.renderTemplate(contact_to_user, data, user.email);
       if (renderMail.error) {
         console.log('render mail error: ', renderMail.error);
       } else {
