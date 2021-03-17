@@ -464,8 +464,7 @@ const FileList = ({
             </button>
           )} */}
 
-          {window.location.pathname.includes('media-manage') &&
-          self.name === 'root' ? (
+          {self.name === 'root' ? (
             <div
               onClick={() => handleDialogOpen()}
               className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
