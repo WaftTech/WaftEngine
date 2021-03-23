@@ -92,7 +92,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
             [action.payload.data.key]: action.payload.data._id,
           },
           is_page: {
-            ...draft.content.ids,
+            ...draft.content.is_page,
             [action.payload.data.key]: action.payload.data.is_page,
           },
         };
