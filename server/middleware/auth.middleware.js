@@ -17,7 +17,7 @@ const settingsHelper = require('../helper/settings.helper');
 
 authMiddleware.authentication = async (req, res, next) => {
   try {
-    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
+    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key');
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
@@ -38,7 +38,7 @@ authMiddleware.authentication = async (req, res, next) => {
 
 authMiddleware.authenticationForLogout = async (req, res, next) => {
   try {
-    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
+    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key');
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
@@ -51,48 +51,46 @@ authMiddleware.authenticationForLogout = async (req, res, next) => {
     return next(err);
   }
 };
-
 authMiddleware.authorization = async (req, res, next) => {
   try {
     const user = req.user;
+    if (!user) {
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'User Information Not found', null);
+    }
     const role = await rolesSch.find({ _id: { $in: user.roles } }, { _id: 1 });
     let path = req.baseUrl + req.route.path;
     if (path.substr(path.length - 1) === '/') {
       path = path.slice(0, path.length - 1);
     }
     const method = req.method;
-    const GetModuleFilter = {
-      'path.server_routes.method': method,
-      'path.server_routes.route': path,
-    };
-    const modules = await modulesSch.findOne(GetModuleFilter, { path: 1 });
-    let moduleAccessTypeId = null;
-    if (!isEmpty(modules) && !isEmpty(modules.path)) {
-      for (let i = 0; i < modules.path.length; i++) {
-        const routes = modules.path[i].server_routes;
-        for (let j = 0; j < routes.length; j++) {
-          if (routes[j].method === method && routes[j].route === path) {
-            moduleAccessTypeId = modules.path[i]._id;
-          }
-        }
+    const modules_array = await modulesSch.find(
+      {
+        path: {
+          $elemMatch: {
+            server_routes: {
+              $elemMatch: { method: method, route: path },
+            },
+          },
+        },
+      },
+      { 'path.$': 1 },
+    );
+    let moduleId = [];
+    if (!isEmpty(modules_array)) {
+      for (let k = 0; k < modules_array.length; k++) {
+        moduleId.push(modules_array[k].path[0]._id);
       }
     } else {
-      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 3', null);
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Module Access Restricted', null);
     }
-
-    const moduleId = modules && modules._id;
-    if (role && role.length && moduleId && moduleAccessTypeId) {
-      for (let i = 0; i < role.length; i++) {
-        const activeRole = role[i];
-        const accessFilter = { role_id: activeRole._id, is_active: true, module_id: moduleId, access_type: moduleAccessTypeId };
-        const access = await accessSch.findOne(accessFilter);
-        if (access && access.access_type) {
-          return next();
-        }
+    if (role && role.length && moduleId) {
+      const access = await accessSch.findOne({ is_active: true, role_id: { $in: role }, access_type: { $in: moduleId } });
+      if (access && access.access_type) {
+        return next();
       }
-      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 1', null);
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Action not allowed for you', null);
     } else {
-      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Authorization Failed 2', null);
+      return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Access Denied', null);
     }
   } catch (err) {
     next(err);
@@ -125,11 +123,10 @@ authMiddleware.isPublicFacebookRegistrationAllow = async (req, res, next) => {
     } else {
       return next();
     }
-
   } catch (err) {
     next(err);
   }
-}
+};
 
 authMiddleware.isPublicGoogleRegistrationAllow = async (req, res, next) => {
   try {
@@ -140,9 +137,8 @@ authMiddleware.isPublicGoogleRegistrationAllow = async (req, res, next) => {
     } else {
       return next();
     }
-
   } catch (err) {
     next(err);
   }
-}
+};
 module.exports = authMiddleware;
