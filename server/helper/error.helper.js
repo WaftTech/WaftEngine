@@ -24,6 +24,8 @@ errorHelper.getErrorObj = (err, next) => {
       error_message: '',
       error_stack: '',
       error_type: '',
+      path: '',
+      method: '',
     };
     if (typeof err === 'string') {
       errorObj.error_message = err;
@@ -33,6 +35,8 @@ errorHelper.getErrorObj = (err, next) => {
       errorObj.error_message = err.message;
       errorObj.error_stack = err.stack;
       errorObj.error_type = err.name;
+      errorObj.path = err.path;
+      errorObj.method = err.method;
     }
     return errorObj;
   } catch (err) {
