@@ -142,7 +142,7 @@ export class Dashboard extends React.PureComponent {
         <div className="flex justify-between my-3">
           <PageHeader>Dashboard </PageHeader>
         </div>
-        <div className="bg-white rounded p-4">
+        <div className="border bg-white rounded p-4 my-3">
           {info.map(each => (
             <div key={each._id}>
               <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">
@@ -155,166 +155,88 @@ export class Dashboard extends React.PureComponent {
             </div>
           ))}
         </div>
-        <div className="flex justify-between mx-8 my-4">
-          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black">
-            <LinkBoth
-              to="/admin/blog-manage/add/"
-              className="text-gray-800 no-underline hover:text-black font-bold"
-            >
-              <FaStickyNote className="text-5xl mx-auto" />
-              <div className="mt-1">Write Post</div>
-            </LinkBoth>
-          </div>
-          <div className="w-1/4 bg-white rounded p-5 text-center hover:text-black">
-            <LinkBoth
-              className="text-gray-800 no-underline hover:text-black font-bold"
-              to="https://waftengine.org/documentation"
-              target="_blank"
-            >
-              <FaNewspaper className="text-5xl mx-auto" />
-              <div className="mt-1">View Doc</div>
-            </LinkBoth>
-          </div>
-          <div className="w-1/4 bg-white rounded p-5 flex justify-between hover:text-black">
-            <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <FaUser className="text-5xl mx-auto" />
-              <div className="mt-1">Total Users</div>
-            </span>
-            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-8 h-8 text-center rounded-full bg-waftprimary-light leading-loose">
-              {users.totaldata}
-            </span>
-          </div>
-          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black">
-            <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <FaExclamationCircle className="text-5xl mx-auto" />
-              <div className="mt-1">Total Errors</div>
-            </span>
-            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-8 h-8 text-center rounded-full bg-waftprimary-light leading-loose">
-              {errors.totaldata}
-            </span>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between mx-4 my-4">
-            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
-                By Roles{' '}
-              </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {users && users.data && users.data.role && (
-                  <PieChart
-                    dataKey="count"
-                    nameKey="name"
-                    data={this.convertRolesData(users.data.role)}
-                  />
-                )}
-              </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">
+              Roles{' '}
+            </h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              {users && users.data && users.data.role && (
+                <PieChart
+                  dataKey="count"
+                  nameKey="name"
+                  data={this.convertRolesData(users.data.role)}
+                />
+              )}
             </div>
-
-            {/* <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
-                By Types{' '}
-              </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {errors.data && errors.data.length ? (
-                  errors.data.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between h-10 items-center px-2">
-                        <span className="w-24 text-sm">{each._id}</span>
-                        <span className="inline-block text-waftprimary font-bold text-2xl text-right ">
-                          {each.count}
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="flex justify-between">
-                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
-                      No Errors
-                    </h2>
-                  </div>
-                )}
-              </div>
-            </div> */}
           </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between mx-4 my-4">
-            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
-                By Registration method
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">
+              Sign Ups
               </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {userByRegister && (
-                  <PieChart
-                    dataKey="count"
-                    nameKey="name"
-                    data={this.convertRegisterData(userByRegister)}
-                  />
-                )}
-              </div>
+            <div className="flex flex-wrap justify-between mx-4">
+              {userByRegister && (
+                <PieChart
+                  dataKey="count"
+                  nameKey="name"
+                  data={this.convertRegisterData(userByRegister)}
+                />
+              )}
             </div>
+          </div>
 
-            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
-                Blogs by Users{' '}
-              </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {blogsByUser.blog && blogsByUser.blog.length ? (
-                  <BarChart
-                    data={this.convertAuthorData(blogsByUser.blog)}
-                    key1="amt"
-                    XAxisKey="Author"
-                  />
-                ) : (
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">
+              Blogs{' '}
+            </h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              {blogsByUser.blog && blogsByUser.blog.length ? (
+                <BarChart
+                  data={this.convertAuthorData(blogsByUser.blog)}
+                  key1="amt"
+                  XAxisKey="Author"
+                />
+              ) : (
                   <div className="flex justify-between">
-                    <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">
+                    <h2 className="w-full m-auto h-full font-bold text-red-500">
                       No Blogs
                     </h2>
                   </div>
                 )}
-              </div>
             </div>
           </div>
-        </div>
 
-        <div>
-          <div className="flex justify-between mx-4 my-4">
-            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
-                Recent users
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">
+              Recent Users
               </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {recentUser &&
-                  recentUser.map(each => (
-                    <div
-                      key={each.email}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between px-2 h-10 items-center">
-                        {`${each.name}`}:{each.email}
-                      </div>
+            <div className="flex flex-wrap justify-between mx-4">
+              {recentUser &&
+                recentUser.map(each => (
+                  <div
+                    key={each.email}
+                    className="flex border-b py-2"
+                  >
+                    <div className="flex items-center justify-center w-10 h-10 border rounded-full"><FaUser className="text-gray-600" /></div>
+                    <div className="flex-1 pl-5">
+                      <h4 className="mb-0">{`${each.name}`}:</h4>
+                      <span className="text-sm text-gray-500">{each.email}</span>
                     </div>
-                  ))}
-              </div>
+                  </div>
+                ))}
             </div>
+          </div>
 
-            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">
-                Users by days{' '}
-              </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                <LineChart
-                  data={this.convertDateData(userByDays)}
-                  XAxisKey="date"
-                  Line1Key="users"
-                />
-              </div>
+          <div className="col-span-2 border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">
+              Users by Days{' '}
+            </h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              <LineChart
+                data={this.convertDateData(userByDays)}
+                XAxisKey="date"
+                Line1Key="users"
+              />
             </div>
           </div>
         </div>
