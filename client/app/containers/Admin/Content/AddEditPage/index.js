@@ -122,68 +122,68 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <>
-        <Helmet>
-          <title>
-            {' '}
-            {edit_id && edit_id !== ''
-              ? 'Edit Section Content'
-              : 'Add Section Content'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id
-              ? 'Edit Section Content'
-              : 'Add Section Content'}
-          </PageHeader>
-        </div>
-
-        <PageContent className="bg-white border- p-4">
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Content Title</label>
-            <input
-              className="inputbox"
-              id="content_title"
-              type="text"
-              value={one.name}
-              onChange={this.handleChange('name')}
-            />
-            {errors && errors.name && errors.name.trim() !== '' && (
-              <div className="error">{errors.name}</div>
-            )}
+        <>
+          <Helmet>
+            <title>
+              {' '}
+              {edit_id && edit_id !== ''
+                ? 'Edit Section Content'
+                : 'Add Section Content'}
+            </title>
+          </Helmet>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {match && match.params && match.params.id
+                ? 'Edit Section Content'
+                : 'Add Section Content'}
+            </PageHeader>
           </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Content Key</label>
-            <input
-              className="inputbox"
-              id="content_key"
-              type="text"
-              value={one.key}
-              onChange={this.handleChange('key')}
-            />
-            {errors && errors.key && errors.key.trim() !== '' && (
-              <div className="error">{errors && errors.key}</div>
-            )}
-          </div>
-
-          <div className="pb-4">
-            <WECkEditior
-              description={one.description}
-              setOneValue={this.props.setOneValue}
-            />
-            {errors &&
-              errors.description &&
-              errors.description.trim() !== '' && (
-                <div className="error">{errors.description}</div>
+          <PageContent className="bg-white border- p-4">
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Content Title</label>
+              <input
+                className="inputbox"
+                id="content_title"
+                type="text"
+                value={one.name}
+                onChange={this.handleChange('name')}
+              />
+              {errors && errors.name && errors.name.trim() !== '' && (
+                <div className="error">{errors.name}</div>
               )}
-          </div>
+            </div>
 
-          {/* <div className="w-full md:w-1/2 pb-4">
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Content Key</label>
+              <input
+                className="inputbox"
+                id="content_key"
+                type="text"
+                value={one.key}
+                onChange={this.handleChange('key')}
+              />
+              {errors && errors.key && errors.key.trim() !== '' && (
+                <div className="error">{errors && errors.key}</div>
+              )}
+            </div>
+
+            <div className="pb-4">
+              <WECkEditior
+                description={one.description}
+                setOneValue={this.props.setOneValue}
+              />
+              {errors &&
+                errors.description &&
+                errors.description.trim() !== '' && (
+                  <div className="error">{errors.description}</div>
+                )}
+            </div>
+
+            {/* <div className="w-full md:w-1/2 pb-4">
             <label className="text-sm" htmlFor="grid-last-name">
               Meta Tags
             </label>
@@ -212,47 +212,47 @@ class AddEdit extends React.PureComponent {
               })}
           </div> */}
 
-          <div className="checkbox">
-            <input
-              checked={one.is_active || false}
-              onClick={this.handleCheckedChange('is_active')}
-              onChange={this.handleCheckedChange('is_active')}
-              id="is_active"
-              type="checkbox"
-            />
-            <label htmlFor="is_active">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_active || false}
+                onClick={this.handleCheckedChange('is_active')}
+                onChange={this.handleCheckedChange('is_active')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Active
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_page || false}
-              onClick={this.handleCheckedChange('is_page')}
-              onChange={this.handleCheckedChange('is_page')}
-              id="is_page"
-              type="checkbox"
-            />
-            <label htmlFor="is_page">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_page || false}
+                onClick={this.handleCheckedChange('is_page')}
+                onChange={this.handleCheckedChange('is_page')}
+                id="is_page"
+                type="checkbox"
+              />
+              <label htmlFor="is_page">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Page
             </label>
-          </div>
+            </div>
 
-          <button
-            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-            onClick={this.handleSave}
-          >
-            Save Content
+            <button
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Save Content
           </button>
-        </PageContent>
-      </>
-    );
+          </PageContent>
+        </>
+      );
   }
 }
 

@@ -1,18 +1,15 @@
-import React from 'react';
+import BlogPages from '../containers/Blog';
+import ContactUsPage from '../containers/ContactUs/Loadable';
+import EditorFileSelectPage from '../containers/EditorFileSelect';
+import FaqPage from '../containers/FAQPage/Loadable';
+import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadable';
 import HomePage from '../containers/HomePage';
 import LoginAdminPage from '../containers/LoginAdminPage/Loadable';
 import LoginUserPage from '../containers/LoginUserPage/Loadable';
-import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadable';
-import SignupUserPage from '../containers/SignupUserPage/Loadable';
-import FaqPage from '../containers/FAQPage/Loadable';
-import ContactUsPage from '../containers/ContactUs/Loadable';
-import SubscribePage from '../containers/SubscriberPage/Loadable';
-import StaticPage from '../containers/StaticPages/Loadable';
-import EditorFileSelectPage from '../containers/EditorFileSelect';
-import BlogPages from '../containers/Blog';
-import VerifyEmail from '../containers/VerifyEmail/Loadable';
 import ResetPasswordPage from '../containers/ResetPasswordPage/Loadable';
+import SignupUserPage from '../containers/SignupUserPage/Loadable';
 import Static from '../containers/StaticPages/static';
+import VerifyEmail from '../containers/VerifyEmail/Loadable';
 
 const publicRoutes = [
   {
@@ -77,15 +74,8 @@ const publicRoutes = [
   },
   {
     exact: true,
-    path: '/contact-us',
+    path: '/contact',
     component: ContactUsPage,
-  },
-  {
-    exact: true,
-    path: '/term-and-condition',
-    render: props => (
-      <StaticPage contentKey="term-and-condition" title="Terms and Conditions" {...props} />
-    ),
   },
   {
     exact: true,

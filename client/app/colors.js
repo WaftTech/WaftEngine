@@ -15,6 +15,7 @@ module.exports = {
   info: '#17a2b8',
   light: '#f8f9fa',
   dark: '#343a40',
+  link: '#2563eb',
 
   // Social site color
   facebook: '#4B69B0',
