@@ -31,7 +31,7 @@ subscribeController.GetSubscribe = async (req, res, next) => {
 subscribeController.SaveSubscribe = async (req, res, next) => {
   try {
     let subscriber = req.body;
-    let user_subscribe = await settingsHelper('email', 'email_template', 'user_subscribe')
+    let user_subscribe = await settingsHelper('template', 'email', 'user_subscribe')
     const subscribeMail = await renderMail.renderTemplate(user_subscribe, { email: subscriber.email }, subscriber.email);
     if (subscribeMail.error) {
       console.log('render mail error: ', subscribeMail.error);

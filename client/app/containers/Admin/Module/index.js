@@ -120,8 +120,8 @@ export class AdminModuleManage extends React.Component {
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
       ({ _id, module_name, description, module_group }) => [
-        module_name,
         (module_group && module_group.module_group) || '-',
+        module_name,
         description,
         <>
           <div className="flex">
@@ -157,9 +157,9 @@ export class AdminModuleManage extends React.Component {
     const groupOptions =
       groups && groups.length > 0
         ? groups.map(each => {
-            const obj = { label: each.module_group, value: each._id };
-            return obj;
-          })
+          const obj = { label: each.module_group, value: each._id };
+          return obj;
+        })
         : [];
 
     return (
@@ -222,7 +222,7 @@ export class AdminModuleManage extends React.Component {
             </span>
           </div>
           <Table
-            tableHead={['Module Name', 'Module Group', 'Description', 'Action']}
+            tableHead={['Module Group', 'Module Name', 'Description', 'Action']}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}

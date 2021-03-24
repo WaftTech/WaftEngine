@@ -128,7 +128,7 @@ validation.itemValidate = (req, res, next) => {
           condition: 'IsLength',
           msg: menuConfig.validate.descriptionLength,
           option: {
-            min: 5,
+            min: 3,
             max: 2000,
           },
         },
