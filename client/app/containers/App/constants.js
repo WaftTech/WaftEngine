@@ -17,12 +17,12 @@ export const GOOGLE_CLIENT_ID =
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.waftengine.com/api/'
+    ? '/api/'
     : 'http://localhost:5050/api/';
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.waftengine.com/'
+    ? '/'
     : 'http://localhost:5050/';
 
 export const URL_BASE =
