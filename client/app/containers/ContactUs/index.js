@@ -66,7 +66,7 @@ class ContactUs extends React.Component {
         <div className="container mx-auto py-10 px-5 sm:px-0">
           <div className="max-w-xl">
             <h1 class="text-2xl">Contact</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <div className="mt-4">
               <div>
                 <label
                   className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
@@ -87,7 +87,7 @@ class ContactUs extends React.Component {
                   </div>
                 )}
               </div>
-              <div className="mt-10 lg:mt-0">
+              <div className="mt-4">
                 <label
                   className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
                   htmlFor="email"
@@ -108,7 +108,7 @@ class ContactUs extends React.Component {
                 )}
               </div>
             </div>
-            <div className="w-full mt-4">
+            <div className="mt-4">
               <label
                 className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
                 htmlFor="subject"
