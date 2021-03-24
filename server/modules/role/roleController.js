@@ -80,7 +80,7 @@ roleController.GetModule = async (req, res, next) => {
         model: 'modulegroups',
       },
     ];
-    sortQuery = { module_group: 1 }
+    sortQuery = { module_group: 1, module_name: 1 }
     let pulledData = await otherHelper.getQuerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
