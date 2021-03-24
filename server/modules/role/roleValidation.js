@@ -9,7 +9,7 @@ const moduleGroupSch = require('./moduleGroupSchema');
 const moduleAccessSch = require('./moduleSchema')
 const validations = {};
 
-validations.validateRole = (req, res, next) => {
+validations.validateRole = async (req, res, next) => {
   const data = req.body;
   const validationArray = [
     {
@@ -41,13 +41,24 @@ validations.validateRole = (req, res, next) => {
       ],
     },
   ];
-  const errors = validateHelper.validation(data, validationArray);
+  let errors = validateHelper.validation(data, validationArray);
+
+  let role_filter = { is_deleted: false, role_title: data.role_title }
+  if (data._id) {
+    role_filter = { ...role_filter, _id: { $ne: data._id } }
+  }
+  const already_role = await roleSch.findOne(role_filter);
+  if (already_role && already_role._id) {
+    errors = { ...errors, role_title: 'role already exist' }
+  }
+
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, roleConfig.errorIn.inputErrors, null);
   } else {
     next();
   }
 };
+
 validations.validateModule = async (req, res, next) => {
   const data = req.body;
   const validateArray = [

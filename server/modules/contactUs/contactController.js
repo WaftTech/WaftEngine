@@ -17,6 +17,7 @@ contactController.PostContact = async (req, res, next) => {
     let admin_emails = await settingsHelper('user', 'admin_email', 'email_array')
     if (user) {
       const data = {
+
         name: user.name,
         email: user.email,
         msg: user.message,
