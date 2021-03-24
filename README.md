@@ -31,12 +31,12 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
   - `npm install`
   - `cd ../server`
   - `npm install`
-- Import Default data into MongoDB server from `database/waftengine` folder
-  - `cd ../database/waftengine`
+- Import Default data into MongoDB server from `database` folder
+  - `cd ../database`
   - `run mongoimport command for all json file`
 - Configure Server
-  - Rename `config.bak` folder to `config`
-  - Update `keys.js` file in `mongoURI` section as your `MongoDB credential`
+  - Create `.env` file in `server`
+  - Update `.env` file with `MONGODB_URI=********` 
 - Running the application in development mode
   - Development Mode (Client only): `cd client` then `npm run start` then open `http://localhost:5051` in a browser
   - Development Mode (Server only): `cd server` then `npm run start` then open `http://localhost:5050` in a browser
