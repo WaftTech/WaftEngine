@@ -36,7 +36,7 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
   - `run mongoimport command for all json file`
 - Configure Server
   - Create `.env` file in `server`
-  - Update `.env` file with `MONGODB_URI=********` 
+  - Update `.env` file with `MONGODB_URI=mongodb://localhost:27017/waft-engine` 
 - Running the application in development mode
   - Development Mode (Client only): `cd client` then `npm run start` then open `http://localhost:5051` in a browser
   - Development Mode (Server only): `cd server` then `npm run start` then open `http://localhost:5050` in a browser
