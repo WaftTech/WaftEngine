@@ -15,6 +15,7 @@ import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import routes from '../../routes/admin';
 import MainListItems from './components/MainListItem';
 import './admin.css';
+import { IMAGE_BASE } from '../../containers/App/constants';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -205,7 +206,7 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 to="/"
               >
                 Visit Site
-                  <FaExternalLinkAlt className="ml-2 text-xs" />
+                <FaExternalLinkAlt className="ml-2 text-xs" />
               </Link>
               <a
                 className="pl-8 text-sm"
@@ -213,21 +214,21 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
               >
                 Docs
-                </a>
+              </a>
               <a
                 className="pl-8 text-sm"
                 target="_blank"
                 href="https://waftengine.org/blog"
               >
                 Blog
-                </a>
+              </a>
               <a
                 className="pl-8 text-sm"
                 target="_blank"
                 href="https://waftengine.org"
               >
                 Forum
-                </a>
+              </a>
             </div>
 
             <DropdownMenu
@@ -235,7 +236,11 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 <button className="flex items-center justify-end h-16 px-6 hover:bg-gray-100">
                   <img
                     className="w-8 h-8 rounded-full overflow-hidden"
-                    src={LogoIcon}
+                    src={
+                      users.image && users.image.path
+                        ? `${IMAGE_BASE}${users.image.path}`
+                        : LogoIcon
+                    }
                     alt="profile image"
                   />
                   <div className="px-3 text-left">
@@ -244,8 +249,8 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                     </span>
                     <span className="block leading-none truncate capitalize text-xs text-gray-600">
                       {users.roles &&
-                        users.roles[0] &&
-                        users.roles[0].role_title
+                      users.roles[0] &&
+                      users.roles[0].role_title
                         ? users.roles[0].role_title
                         : ''}
                     </span>
@@ -271,9 +276,12 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                   >
                     <p>Profile</p>
                   </Link>
-                  <p className="py-2 block px-4 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
+                  <p
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer"
+                    onClick={handleLogout}
+                  >
                     Log Out
-                    </p>
+                  </p>
                 </>
               }
             />
@@ -297,6 +305,5 @@ const mapStateToProps = ({ global }) => ({
 });
 
 const withConnect = connect(mapStateToProps, { logoutRequest, push });
-
 
 export default compose(withConnect)(AdminLayout);

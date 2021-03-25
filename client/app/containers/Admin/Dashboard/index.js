@@ -157,9 +157,7 @@ export class Dashboard extends React.PureComponent {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="border bg-white rounded">
-            <h3 className="px-4 py-2 text-lg border-b">
-              Roles{' '}
-            </h3>
+            <h3 className="px-4 py-2 text-lg border-b">Roles </h3>
             <div className="flex flex-wrap justify-between mx-4">
               {users && users.data && users.data.role && (
                 <PieChart
@@ -171,9 +169,7 @@ export class Dashboard extends React.PureComponent {
             </div>
           </div>
           <div className="border bg-white rounded">
-            <h3 className="px-4 py-2 text-lg border-b">
-              Sign Ups
-              </h3>
+            <h3 className="px-4 py-2 text-lg border-b">Sign Ups</h3>
             <div className="flex flex-wrap justify-between mx-4">
               {userByRegister && (
                 <PieChart
@@ -186,9 +182,7 @@ export class Dashboard extends React.PureComponent {
           </div>
 
           <div className="border bg-white rounded">
-            <h3 className="px-4 py-2 text-lg border-b">
-              Blogs{' '}
-            </h3>
+            <h3 className="px-4 py-2 text-lg border-b">Blogs </h3>
             <div className="flex flex-wrap justify-between mx-4">
               {blogsByUser.blog && blogsByUser.blog.length ? (
                 <BarChart
@@ -197,30 +191,36 @@ export class Dashboard extends React.PureComponent {
                   XAxisKey="Author"
                 />
               ) : (
-                  <div className="flex justify-between">
-                    <h2 className="w-full m-auto h-full font-bold text-red-500">
-                      No Blogs
-                    </h2>
-                  </div>
-                )}
+                <div className="flex justify-between">
+                  <h2 className="w-full m-auto h-full font-bold text-red-500">
+                    No Blogs
+                  </h2>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="border bg-white rounded">
-            <h3 className="px-4 py-2 text-lg border-b">
-              Recent Users
-              </h3>
+            <h3 className="px-4 py-2 text-lg border-b">Recent Users</h3>
             <div className="flex flex-wrap justify-between mx-4">
               {recentUser &&
                 recentUser.map(each => (
-                  <div
-                    key={each.email}
-                    className="flex border-b py-2"
-                  >
-                    <div className="flex items-center justify-center w-10 h-10 border rounded-full"><FaUser className="text-gray-600" /></div>
+                  <div key={each.email} className="flex border-b py-2">
+                    <div className="flex items-center justify-center w-10 h-10 border rounded-full">
+                      {each.image && each.image.path ? (
+                        <img
+                          src={`${IMAGE_BASE}${each.image.path}`}
+                          className="w-8 h-8 rounded-full overflow-hidden"
+                        />
+                      ) : (
+                        <FaUser className="text-gray-600" />
+                      )}
+                    </div>
                     <div className="flex-1 pl-5">
                       <h4 className="mb-0">{`${each.name}`}:</h4>
-                      <span className="text-sm text-gray-500">{each.email}</span>
+                      <span className="text-sm text-gray-500">
+                        {each.email}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -228,9 +228,7 @@ export class Dashboard extends React.PureComponent {
           </div>
 
           <div className="col-span-2 border bg-white rounded">
-            <h3 className="px-4 py-2 text-lg border-b">
-              Users by Days{' '}
-            </h3>
+            <h3 className="px-4 py-2 text-lg border-b">Users by Days </h3>
             <div className="flex flex-wrap justify-between mx-4">
               <LineChart
                 data={this.convertDateData(userByDays)}
