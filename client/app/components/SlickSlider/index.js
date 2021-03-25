@@ -90,7 +90,7 @@ class SlickSlider extends React.PureComponent {
       <div>
         <Slider {...settings}>
           {slide.images.map(image => (
-            <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
+            <LinkBoth to={`${image.link ? image.link : ''}`} key={image._id}>
               <>
                 <img
                   src={
