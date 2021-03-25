@@ -36,12 +36,14 @@ function* addEdit() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
+
   yield fork(
-    Api.post(
+    Api.multipartPost(
       'user/profile',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
+      { file: data.image },
       token,
     ),
   );
