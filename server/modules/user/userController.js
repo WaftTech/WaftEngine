@@ -358,6 +358,7 @@ userController.validLoginResponse = async (req, user, next) => {
       roles: user.roles,
       gender: user.gender,
       is_two_fa: user.is_two_fa,
+      image: user.image,
     };
     // Sign Token
     let token = await jwt.sign(payload, secretOrKey, {
@@ -669,7 +670,6 @@ userController.Login = async (req, res, next) => {
           const renderedMail = await renderMail.renderTemplate(
             two_fa_email_template,
             {
-
               name: user.name,
               email: user.email,
               code: two_fa_code,
