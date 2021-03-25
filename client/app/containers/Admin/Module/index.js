@@ -126,7 +126,7 @@ export class AdminModuleManage extends React.Component {
         <>
           <div className="flex">
             <span
-              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-green-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-green-100 rounded-full relative"
               onClick={() => this.handleAccessEdit(_id)}
             >
               <FaKey className="text-base text-green-500 hover:text-green-600" />
