@@ -3,6 +3,7 @@ const templateSch = require('./templateSchema');
 const otherHelper = require('../../helper/others.helper');
 const templateConfig = require('./templateConfig');
 const isEmpty = require('../../validation/isEmpty');
+const settingsHelper = require('../../helper/settings.helper')
 const templateController = {};
 const internal = {};
 
@@ -70,6 +71,9 @@ internal.renderTemplate = async (template_key, variables_OBJ, toEmail) => {
     body = body.replace(re, variables_OBJ[variables_keys[i]]);
     alternate_text = alternate_text.replace(re, variables_OBJ[variables_keys[i]]);
   }
+  const email_footer = await settingsHelper('email', 'header_footer', 'footer')
+  const email_header = await settingsHelper('email', 'header_footer', 'header')
+  body = `${email_header}${body}${email_footer}`;
   return { from, subject, html: body, text: alternate_text, to: toEmail };
 };
 

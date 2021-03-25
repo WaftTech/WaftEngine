@@ -53,6 +53,10 @@ validation.validate = async (req, res, next) => {
           condition: 'IsEmpty',
           msg: menuConfig.validate.empty,
         },
+        {
+          condition: 'IsProperKey',
+          msg: 'not Valid Input',
+        },
       ],
     }
   ];
@@ -124,7 +128,7 @@ validation.itemValidate = (req, res, next) => {
           condition: 'IsLength',
           msg: menuConfig.validate.descriptionLength,
           option: {
-            min: 5,
+            min: 3,
             max: 2000,
           },
         },
