@@ -30,11 +30,13 @@ const App = ({ location }) => (
   <ErrorBoundary>
     <Notifier />
     <ToastContainer hideProgressBar position="bottom-left" />
-    <Switch location={location}>
-      <UserRoute path="/user" component={RoutesUser} />
-      <AdminRoute path="/admin" component={RoutesAdmin} />
-      <Route path="/" component={RoutesPublic} />
-    </Switch>
+    <div className="flex flex-col min-h-screen">
+      <Switch location={location}>
+        <UserRoute path="/user" component={RoutesUser} />
+        <AdminRoute path="/admin" component={RoutesAdmin} />
+        <Route path="/" component={RoutesPublic} />
+      </Switch>
+    </div>
   </ErrorBoundary>
 );
 

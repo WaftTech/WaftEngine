@@ -98,9 +98,14 @@ class SlickSlider extends React.PureComponent {
                       ? `${IMAGE_BASE}${image.image.path}`
                       : ''
                   }
-                  alt={image.caption}
+                  alt="slider image"
                 />
-                {show_caption && <h6>{image.caption}</h6>}
+                <div
+                  className="ckEditor"
+                  dangerouslySetInnerHTML={{
+                    __html: image.caption,
+                  }}
+                />
               </>
             </LinkBoth>
           ))}
