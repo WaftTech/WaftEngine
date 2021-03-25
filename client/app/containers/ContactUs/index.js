@@ -25,7 +25,7 @@ const recaptchaRef = React.createRef();
 class ContactUs extends React.Component {
   state = { name: '', email: '', subject: '', message: '', reCaptcha: '' };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -61,132 +61,120 @@ class ContactUs extends React.Component {
     return (
       <div className="">
         <Helmet>
-          <title>Contact Us</title>
+          <title>Contact</title>
         </Helmet>
-        <div className="bg-star h-48 relative text-center py-12">
-          <h1 className="text-4xl mb-4">Contact Us</h1>
-        </div>
-        <div className="container mx-auto my-10">
-          <div className="flex flex-wrap">
-            <div className="w-full sm:w-full md:w-1/2">
-              <h2 class="text-xl font-bold">Get In Touch With Us</h2>
-              <div className="flex flex-wrap justify-start lg:justify-between lg:px-2">
-                <div className="w-full lg:w-1/2 pb-4 m-0 lg:-ml-2">
-                  <label
-                    className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
-                    htmlFor="name"
-                  >
-                    Name
-                  </label>
-                  <input
-                    onChange={this.handleChange('name')}
-                    value={name}
-                    className="inputbox"
-                    id="name"
-                    type="text"
-                  />
-                  {errors && errors.name && (
-                    <div className="text-red-400" id="component-error-text">
-                      {errors.name}
-                    </div>
-                  )}
-                </div>
-                <div className="w-full lg:w-1/2 pb-4 m-0 lg:-mr-2">
-                  <label
-                    className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    value={email}
-                    onChange={this.handleChange('email')}
-                    className="inputbox"
-                    id="email"
-                    type="text"
-                  />
-                  {errors && errors.email && (
-                    <div className="text-red-400" id="component-error-text">
-                      {errors.email}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="w-full pb-4">
+        <div className="container mx-auto py-10 px-5 sm:px-0">
+          <div className="max-w-xl">
+            <h1 class="text-2xl">Contact</h1>
+            <div className="mt-4">
+              <div>
                 <label
                   className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
-                  htmlFor="subject"
+                  htmlFor="name"
                 >
-                  Subject
-                </label>
+                  Name
+                  </label>
                 <input
-                  value={subject}
-                  onChange={this.handleChange('subject')}
+                  onChange={this.handleChange('name')}
+                  value={name}
                   className="inputbox"
-                  id="subject"
+                  id="name"
                   type="text"
                 />
-                {errors && errors.subject && (
-                  <div className="text-red-400" id="component-error-text">
-                    {errors.subject}
+                {errors && errors.name && (
+                  <div className="error">
+                    {errors.name}
                   </div>
                 )}
               </div>
-              <div className="w-full pb-4">
+              <div className="mt-4">
                 <label
                   className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
-                  htmlFor="subject"
+                  htmlFor="email"
                 >
-                  Message
-                </label>
-                <textarea
-                  rows="4"
-                  value={message}
-                  onChange={this.handleChange('message')}
+                  Email
+                  </label>
+                <input
+                  value={email}
+                  onChange={this.handleChange('email')}
                   className="inputbox"
-                  id="message"
+                  id="email"
                   type="text"
                 />
-                {errors && errors.message && (
-                  <div className="text-red-400" id="component-error-text">
-                    {errors.message}
+                {errors && errors.email && (
+                  <div className="error">
+                    {errors.email}
                   </div>
                 )}
               </div>
-
+            </div>
+            <div className="mt-4">
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
+                htmlFor="subject"
+              >
+                Subject
+                </label>
+              <input
+                value={subject}
+                onChange={this.handleChange('subject')}
+                className="inputbox"
+                id="subject"
+                type="text"
+              />
+              {errors && errors.subject && (
+                <div className="error">
+                  {errors.subject}
+                </div>
+              )}
+            </div>
+            <div className="w-full mt-4">
+              <label
+                className="block uppercase tracking-wide text-grey-darker text-xs mb-2 text-black"
+                htmlFor="subject"
+              >
+                Message
+                </label>
+              <textarea
+                rows="4"
+                value={message}
+                onChange={this.handleChange('message')}
+                className="inputbox"
+                id="message"
+                type="text"
+              />
+              {errors && errors.message && (
+                <div className="error">
+                  {errors.message}
+                </div>
+              )}
+            </div>
+            <div className="mt-4">
               {isRequesting && isRequesting == true ? (
                 <>Loading</>
               ) : (
-                <form onSubmit={this.onSubmit}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={RECAPTCHA_SITE_KEY}
-                    onChange={this.onChange}
-                  />
-                </form>
-              )}
+                  <form onSubmit={this.onSubmit}>
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={RECAPTCHA_SITE_KEY}
+                      onChange={this.onChange}
+                    />
+                  </form>
+                )}
               {errorMsg && errorMsg !== '' && (
-                <div className="text-red-400" id="component-error-text">
+                <div className="error">
                   {errorMsg}
                 </div>
               )}
-
-              <button
-                type="button"
-                className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-                disabled={isRequesting}
-                onClick={this.handleSave}
-              >
-                Save Message
+            </div>
+            <button
+              type="button"
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              disabled={isRequesting}
+              onClick={this.handleSave}
+            >
+              Send Message
               </button>
-              {/* <div>
-                <h1>{this.props.error}</h1>
-              </div> */}
-            </div>
-
-            <div className="w-full mt-10 sm:w-full md:w-1/2 md:pl-10 md:mt-0">
-              <StaticContentDiv contentKey="contactdetail" />
-            </div>
           </div>
         </div>
       </div>

@@ -15,7 +15,6 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
@@ -39,6 +38,7 @@ module.exports = {
       info: colors.info,
       light: colors.light,
       dark: colors.dark,
+      link: colors.link,
 
       facebook: colors.facebook,
       twitter: colors.twitter,

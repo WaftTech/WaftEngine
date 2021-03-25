@@ -56,18 +56,3 @@
 .edit-icon:hover .pencil {
   right: -4px;
 }
-
-.edit-icon:after {@apply left-0 top-0 -mt-6 absolute bg-gray-600 rounded px-1 py-px text-white 
-  text-xs transition-all scale-0 opacity-0;
-  content:'Edit';}
-
-.edit-icon:hover:after { @apply scale-100 -mt-6 opacity-100;}
-.edit-icon:hover { @apply z-50;}
-
-
-.trash-icon:after {@apply left-0 top-0 -mt-6 absolute bg-gray-600 rounded px-1 py-px text-white 
-  text-xs transition-all scale-0 opacity-0;
-  content:'Delete';}
-
-.trash-icon:hover:after { @apply scale-100 -mt-6 opacity-100;}
-.trash-icon:hover { @apply z-50;}

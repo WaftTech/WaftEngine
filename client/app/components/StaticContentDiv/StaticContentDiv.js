@@ -47,8 +47,8 @@ class StaticContent extends React.PureComponent {
                   }`}
                 target="_blank"
               >
-                <div className="flex w-8 h-8 bg-white shadow rounded-full absolute">
-                  <FaEdit className="text-sm inline-block text-black m-auto hover:text-primary" title="Edit" />
+                <div className="flex items-center justify-center w-8 h-8 bg-white shadow rounded-full absolute text-gray-600 hover:text-primary">
+                  <FaEdit className="text-sm" title="Edit" />
                 </div>
               </Link>
             ) : (
@@ -57,8 +57,8 @@ class StaticContent extends React.PureComponent {
                   }`}
                 target="_blank"
               >
-                <div className="flex w-8 h-8 bg-white shadow rounded-full absolute">
-                  <FaEdit className="text-sm inline-block text-black m-auto hover:text-primary" title="Edit" />
+                <div className="flex items-center justify-center w-8 h-8 bg-white shadow rounded-full absolute text-gray-600 hover:text-primary">
+                  <FaEdit className="text-sm" title="Edit" />
                 </div>
               </Link>
             ))}
