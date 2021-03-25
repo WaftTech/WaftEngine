@@ -40,6 +40,7 @@ import {
 import LineChart from './Charts/LineChart';
 import BarChart from './Charts/BarChart';
 import PieChart from './Charts/PieChart';
+import { IMAGE_BASE } from '../../App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Dashboard extends React.PureComponent {

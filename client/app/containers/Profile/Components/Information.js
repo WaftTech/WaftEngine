@@ -33,6 +33,7 @@ const UserPersonalInformationPage = props => {
     clearError,
     loadOneRequest,
     setOneValue,
+    addEditRequest,
   } = props;
 
   useEffect(() => {
