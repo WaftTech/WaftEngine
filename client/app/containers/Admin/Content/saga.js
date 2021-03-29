@@ -48,7 +48,7 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/admin/content-manage'));
+  yield put(push('/admin/section-content'));
 }
 
 function* addEdit() {
@@ -106,6 +106,7 @@ function* addEditSuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
+  yield put(actions.loadAllRequest());
 }
 
 function* addEditFailureFunc(action) {

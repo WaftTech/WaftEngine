@@ -25,22 +25,23 @@ export const initialState = {
   one: {
     title: '',
     key: '',
-    order: '',
+    // order: '',
     is_active: false,
   },
   sub_menu_form: {
     title: '',
-    order: '',
+    // order: '',
     is_internal: true,
     url: '',
     parent_menu: '',
     menu_sch_id: '',
     is_active: true,
-    target: '_blank',
+    target: '_self',
   },
   query: { find_title: '', find_key: '', size: 10 },
   loading: false,
   errors: { title: '', is_active: '', key: '', order: '', sub_menu_form: {} },
+  loadChild: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -76,6 +77,7 @@ const menuManageReducer = (state = initialState, action) =>
       case types.ADD_EDIT_SUCCESS_2:
         draft.show_sub_menu = true;
         draft.sub_menu_form.menu_sch_id = action.payload.data._id;
+        draft.one._id = action.payload.data._id;
         break;
       case types.ADD_EDIT_CHILD_FAILURE:
         draft.errors.sub_menu_form = action.payload.errors;
@@ -108,7 +110,11 @@ const menuManageReducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case types.LOAD_ALL_SUCCESS:
-        draft.all = action.payload;
+        draft.all = {
+          ...draft.all,
+          ...action.payload,
+          totaldata: action.payload.totalData,
+        };
         draft.loading = false;
         break;
 
@@ -132,9 +138,9 @@ const menuManageReducer = (state = initialState, action) =>
           ),
         };
         break;
-      // case types.LOAD_MENU_SUCCESS:
-      //   draft.sub_menu_form = action.payload.data;
-      //   break;
+      case types.SET_LOAD_CHILD:
+        draft.loadChild = action.payload;
+        break;
     }
   });
 

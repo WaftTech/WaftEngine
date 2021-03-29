@@ -1,33 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
-import IndeterminateCheckBoxOutlinedIcon from '@material-ui/icons/IndeterminateCheckBoxOutlined';
-import Collapse from '@material-ui/core/Collapse';
-import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import StopIcon from '@material-ui/icons/Stop';
-// import Loader from '../../assets/img/loader.gif';
-import FolderIcon from '@material-ui/icons/Folder';
-import DescriptionIcon from '@material-ui/icons/Description';
-import AddIcon from '@material-ui/icons/Add';
 import * as mapDispatchToProps from '../actions';
-
 import { makeSelectCategory, makeSelectLoading } from '../selectors';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing.unit * 4,
-  },
-});
+import { FaFolder, FaMinus, FaPlus, FaFile } from 'react-icons/fa';
 
 const SidebarCategoriesList = props => {
   const {
@@ -47,7 +25,6 @@ const SidebarCategoriesList = props => {
   };
 
   const handleClick = id => {
-    // setChildValue({ key: 'parent_menu', value: id });
     clearSubMenu();
     loadMenuRequest(id);
   };
@@ -62,118 +39,77 @@ const SidebarCategoriesList = props => {
   };
 
   const categoryFunction = (e, parentId = '') => (
-    <ul key={`show-category-${e._id}`}>
+    <ul key={`show-category-${e._id}-${parentId}`}>
       {e.child_menu && e.child_menu.length ? (
         <>
           <li
-            key={e._id}
-            className="abc pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
+            key={`${e._id}-${parentId}`}
+            className="py-2 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
             onClick={() => handleSetClick(e._id)}
           >
             {openSet[e._id] ? (
-              <div className="text-grey-darker hover:text-primary cursor-pointer">
-                <IndeterminateCheckBoxOutlinedIcon />
-                <FolderIcon />
+              <div className="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                <FaMinus className="mr-1 text-white" />
+                <FaFolder className="text-yellow-500 text-base" />
               </div>
             ) : (
-              <div className="text-grey-darker hover:text-primary cursor-pointer">
-                {e.child_menu[0]._id !== '' ? (
-                  <AddBoxOutlinedIcon />
-                ) : (
-                  // <h1>Data</h1>
-                  <CheckBoxOutlineBlankOutlinedIcon />
-                )}
-                <FolderIcon />
-              </div>
-            )}
+                <div className="flex items-center text-grey-darker text-gray-300 hover:text-white cursor-pointer">
+                  {e.child_menu[0]._id !== '' ? (
+                    <FaPlus className="mr-1 text-white" />
+                  ) : (
+                      <FaMinus className="mr-1 text-white" />
+                    )}
+                  <FaFolder className="text-yellow-500 text-base" />
+                </div>
+              )}
             <div className="flex items-center cursor-pointer">
               <span
                 onClick={() => handleClick(e._id)}
-                className="dropdown-title capitalize ml-2 cursor-pointer"
+                className="dropdown-title capitalize ml-2 cursor-pointer text-gray-300 hover:text-white"
               >
                 {e.title}
               </span>
             </div>
           </li>
 
-          <Collapse in={openSet[e._id]} timeout="auto" unmountOnExit>
-            <div className="list-reset pl-8">
+          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${!openSet[e._id] ? 'max-h-0' : 'max-h-screen'}`}>
+            <div className="list-reset pl-4 text-gray-300 hover:text-white">
               {e.child_menu.map(el => (
                 <div key={el._id}>{categoryFunction(el, e._id)}</div>
               ))}
             </div>
-          </Collapse>
+          </div>
         </>
       ) : (
-        <>
-          {/* {e._id === '' ? (
-            <div
-              onClick={() => handleChange('parent_category', parentId)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
-            >
-              <AddIcon />
-              Add subcategory
-            </div>
-          ) : ( */}
-          {e._id !== '' && (
-            <div
-              onClick={() => handleClick(e._id)}
-              className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-gray-800 hover:text-primary text-sm"
-            >
-              <DescriptionIcon />
-              {`${e.title}`}
-            </div>
-          )}
-          {/* )} */}
-        </>
-      )}
+          <>
+            {e._id !== '' && (
+              <div
+                onClick={() => handleClick(e._id)}
+                className="py-2 pr-4 pl-8 cursor-pointer flex items-center capitalize text-gray-300 text-sm hover:text-white"
+              >
+                <FaFile className="mr-2 text-sm text-white opacity-75" />
+                {`${e.title}`}
+              </div>
+            )}
+          </>
+        )}
     </ul>
   );
-  // return <div>{category && category.map(each => <h1>{each.title}</h1>)}</div>;
 
   return (
-    <div className="list-reset">
-      {/* <div className="p-4">
-        <input type="text" placeholder="Search" className="inputbox" />
-      </div>
-      <div className="px-4">
-        <button className="mb-2" type="button" onClick={handleCollapse}>
-          Collapse All
-        </button>
-        <span className="text-gray-800 px-4">|</span>
-        <button className="mb-2" type="button" onClick={handleExpand}>
-          Expand All
-        </button>
-      </div> */}
+    <div>
       <button
         type="button"
         onClick={() => clearSubMenu()}
-        className="py-2 px-6 w-full rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+        className="btn w-full margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
       >
         Add New
       </button>
       {category.length <= 0 ? (
-        // <img
-        //   src={Loader}
-        //   alt="loader"
-        //   className="m-auto mt-10"
-        //   height="100px"
-        //   width="100px"
-        // />
         <h1 />
       ) : (
-        category.map(e => <div key={e._id}>{categoryFunction(e)}</div>)
-      )}
-      {/* <div className="px-4 mt-5">
-        <button
-          className="btn-waft"
-          style={{ width: '100%' }}
-          type="button"
-          onClick={() => clearGeneralInfo()}
-        >
-          Add New Category
-        </button>
-      </div> */}
+          category.map(e => <div className="rounded my-1 bg-gray-600" key={e._id}>{categoryFunction(e)}</div>)
+        )}
     </div>
   );
 };
@@ -191,21 +127,5 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-const withStyle = withStyles(styles);
 
-export default compose(
-  withConnect,
-  withStyle,
-)(SidebarCategoriesList);
-
-// {e.child_category[0]._id.length <= 0 && (
-//             <>
-//               <div
-//                 onClick={() => handleClick(e._id)}
-//                 className="pt-1 pb-1 pr-4 pl-4 cursor-pointer flex items-center capitalize text-grey-darker hover:text-primary text-sm"
-//               >
-//                 {/* {e.title} */}
-//                 "Add Sub-category"
-//               </div>
-//             </>
-//           )}
+export default compose(withConnect)(SidebarCategoriesList);

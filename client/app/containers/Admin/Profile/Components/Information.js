@@ -9,12 +9,6 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import CheckBox from '@material-ui/core/Checkbox';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -23,7 +17,10 @@ import saga from '../saga';
 import { makeSelectOne, makeSelectErrors } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 
+import { FaCheck } from 'react-icons/fa';
+
 import { DATE_FORMAT } from '../../../App/constants';
+import DateInput from '../../../../components/DateInput';
 
 class UserPersonalInformationPage extends React.PureComponent {
   static propTypes = {
@@ -64,83 +61,74 @@ class UserPersonalInformationPage extends React.PureComponent {
     return (
       <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Name</label>
-          <FormControl
-            className="md:w-1/2"
-            error={errors && errors.name && errors.name.length > 0}
-          >
-            <input
-              className="inputbox"
-              id="name"
-              type="text"
-              value={one.name || ''}
-              onChange={this.handleChange('name')}
-            />
-            <FormHelperText id="component-error-text">
-              {errors.name}
-            </FormHelperText>
-          </FormControl>
-        </div>
-
-        <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Email</label>
-
-          <FormControl
-            className="md:w-1/2"
-            error={errors && errors.email && errors.email.length > 0}
-          >
-            <input
-              className="inputbox"
-              id="email"
-              type="text"
-              value={one.email || ''}
-              onChange={this.handleChange('name')}
-            />
-            <FormHelperText id="component-error-text">
-              {errors.email}
-            </FormHelperText>
-          </FormControl>
-        </div>
-
-        <div className="w-full md:w-1/2 pb-4">
-          <label className="block font-bold text-gray-700">Date Of Birth</label>
-
-          <DatePicker
-            name="date_of_birth"
+          <label>Name</label>
+          <input
             className="inputbox"
-            value={
-              (one.date_of_birth &&
-                moment(one.date_of_birth).format(DATE_FORMAT)) ||
-              ''
-            }
-            onChange={this.handleDateChange('date_of_birth')}
+            id="name"
+            type="text"
+            value={one.name || ''}
+            onChange={this.handleChange('name')}
+          />
+          <div className="error">{errors.name}</div>
+        </div>
+
+        <div className="w-full md:w-1/2 pb-4">
+          <label>Email</label>
+
+          <input
+            className="inputbox"
+            id="email"
+            type="text"
+            value={one.email || ''}
+            onChange={this.handleChange('name')}
+          />
+          <div className="error">{errors.email}</div>
+        </div>
+
+        <div className="w-full md:w-1/2">
+          <label>Date Of Birth</label>
+          <DateInput
+            onDateChange={date => {
+              this.props.setOneValue({
+                key: 'date_of_birth',
+                value: moment(date).format('YYYY-MM-DD'),
+              });
+            }}
+            birth_date={moment(one.date_of_birth).format('YYYY-MM-D')}
           />
         </div>
 
-        <FormControlLabel
-          control={
-            <CheckBox checked={one.email_verified || false} color="primary" />
-          }
-          label="Email Verified"
-        />
+        <div className="checkbox pb-4">
+          <input
+            checked={one.email_verified || false}
+            id="is_active"
+            type="checkbox"
+          />
+          <label htmlFor="is_active">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Email Verified
+          </label>
+        </div>
 
-        <div className="w-full pb-2">
-          You are one of{' '}
-          <span className="font-bold">
+        <div className="w-full mb-2 ">
+          <label>Roles</label>
+          <span className="rounded-full px-2 py-1 ml-2 text-xs border">
             {one.roles.map(each => `${each.role_title} `)}
           </span>
         </div>
 
-        <div className="w-full  pb-4">
-          Your account created at{' '}
-          <span className="font-bold">
+        <div className="w-full">
+          Account Created:
+          <span className="ml-2 font-bold">
             {moment(one.added_at).format(DATE_FORMAT)}
           </span>
         </div>
 
         <button
           type="button"
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+          className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
           onClick={this.handleSave}
         >
           Save
@@ -155,16 +143,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(UserPersonalInformationPage);
+export default compose(withConnect)(UserPersonalInformationPage);

@@ -9,7 +9,6 @@ const EmailInput = props => {
   const { email, setStoreValue, error } = props;
   const handleChange = e =>
     setStoreValue({ key: 'email', value: e.target.value });
-  // const hasError = Boolean(error);
   return (
     <>
       <input
@@ -17,11 +16,10 @@ const EmailInput = props => {
         id="grid-last-name"
         type="text"
         value={email}
-        // error={hasError}
         placeholder="Enter Email"
         onChange={handleChange}
       />
-      {error && <div id="component-error-text">{error}</div>}
+      {error && <div className="error">{error}</div>}
     </>
   );
 };

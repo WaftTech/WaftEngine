@@ -12,7 +12,6 @@ import saga from '../saga';
 
 const key = 'blogPage';
 
-/* eslint-disable react/prefer-stateless-function */
 const CategoryListingPage = props => {
   useInjectSaga({ key, saga });
   useEffect(() => {
@@ -23,8 +22,8 @@ const CategoryListingPage = props => {
       {props.category.map(each => (
         <div key={each._id} className="pr-8">
           <Link
-            className="block py-3 no-underline text-gray-700 hover:text-black whitespace-no-wrap text-lg"
-            to={`/news/category/${each.slug_url}`}
+            className="block py-3 no-underline text-gray-700 hover:text-black whitespace-nowrap text-lg"
+            to={`/blog/category/${each.slug_url}`}
           >
             {each.title}
           </Link>

@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const teamConfig = require('./teamConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
@@ -12,8 +14,27 @@ validation.sanitize = (req, res, next) => {
         trim: true,
       },
     },
+    {
+      field: 'email',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'position',
+      sanitize: {
+        trim: true,
+      },
+    },
+    {
+      field: 'description',
+      sanitize: {
+        trim: true,
+      },
+    },
+
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -53,12 +74,61 @@ validation.validate = (req, res, next) => {
           },
         },
       ],
+    }, {
+      field: 'date_of_birth',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'email',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'position',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'skills',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        }
+      ],
+    },
+    {
+      field: 'gender',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: teamConfig.validate.empty,
+        },
+        {
+          condition: 'IsIn',
+          msg: teamConfig.validate.empty,
+          option: ['male', 'female', 'other'],
+        }
+      ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
 
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, teamConfig.errorIn.inputErrors, null);
   } else {
     next();
   }

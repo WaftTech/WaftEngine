@@ -6,6 +6,7 @@ export const initialState = {
   success: false,
   errorMessage: '',
   contactDetail: {},
+  errors: {},
 };
 
 const reducer = (state = initialState, action) =>
@@ -30,6 +31,9 @@ const reducer = (state = initialState, action) =>
       case types.SAVE_CONTACT_FAILURE:
         draft.isRequesting = false;
         draft.success = false;
+        if (action.payload.errors) {
+          draft.errors = action.payload.errors;
+        }
         draft.errorMessage =
           typeof action.payload.errors === 'string'
             ? action.payload.errors

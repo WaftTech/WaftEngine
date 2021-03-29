@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import {
@@ -22,7 +21,6 @@ const Blog = ({ match: { url } }) => {
 
   return (
     <>
-      {/* <Helmet>Profile</Helmet> */}
       <Layout>
         <Switch>
           <Route exact path={`${url}`}>

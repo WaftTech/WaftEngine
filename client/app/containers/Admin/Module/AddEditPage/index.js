@@ -7,14 +7,6 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
 import Select from 'react-select';
-
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import IconButton from '@material-ui/core/IconButton';
-import Fab from '@material-ui/core/Fab';
-import SwapIcon from '@material-ui/icons/SwapHoriz';
-import BackIcon from '@material-ui/icons/ArrowBack';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -31,6 +23,7 @@ import PathComponent from './components/Path';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
+import { FaArrowLeft, FaExchangeAlt } from 'react-icons/fa';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -40,7 +33,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
@@ -92,73 +84,52 @@ class AddEdit extends React.PureComponent {
 
   handleAccessTypeChange = pathIndex => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].access_type = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
-    });
+
+    this.props.setAccessTypeChange({ pathIndex, data: event.target.value });
   };
 
   handleAdminRoutesChange = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].admin_routes[index] = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
-    });
+
+    this.props.setAdminRoutes({ pathIndex, index, data: event.target.value });
   };
 
   handleRemoveAdminRoute = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].admin_routes = [
-      ...tempPath[pathIndex].admin_routes.slice(0, index),
-      ...tempPath[pathIndex].admin_routes.slice(index + 1),
-    ];
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.removeAdminRoutes({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
   handleAddAdminRoute = pathIndex => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].admin_routes = [
-      ...tempPath[pathIndex].admin_routes,
-      '',
-    ];
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.addAdminRoutes({
+      pathIndex,
+      data: event.target.value,
     });
   };
 
   handleServerRoutesMethodChange = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].server_routes[index].method = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.setServerRouteMethod({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
   handleServerRoutesRouteChange = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].server_routes[index].route = event.target.value;
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.setServerRouteChange({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
@@ -171,32 +142,19 @@ class AddEdit extends React.PureComponent {
 
   handleAddServerRoute = index => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[index] = {
-      ...path[index],
-      server_routes: [
-        ...path[index].server_routes,
-        { route: '', method: 'GET' },
-      ],
-    };
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.addServerRoutes({
+      index,
     });
   };
 
   handleRemoveServerRoute = (pathIndex, index) => event => {
     event.persist();
-    const { path } = this.props.one;
-    const tempPath = [...path];
-    tempPath[pathIndex].server_routes = [
-      ...tempPath[pathIndex].server_routes.slice(0, index),
-      ...tempPath[pathIndex].server_routes.slice(index + 1),
-    ];
-    this.props.setOneValue({
-      key: 'path',
-      value: tempPath,
+
+    this.props.removeServerRoutes({
+      pathIndex,
+      index,
+      data: event.target.value,
     });
   };
 
@@ -240,25 +198,23 @@ class AddEdit extends React.PureComponent {
         <Helmet>
           <title>{id ? 'Edit' : 'Add'} Module</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>{' '}
+            <span className="backbtn" onClick={this.handleBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {id ? `Edit for ${one.module_name}` : 'Add Module'}
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Change Access"
-            className={classes.fab}
-            onClick={this.handleChangeAccess}
-          >
-            <SwapIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleChangeAccess}
+            >
+              <FaExchangeAlt />
+              <span className="pl-2">Change Accesss</span>
+            </button>
+          </div>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-2">
@@ -271,7 +227,7 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('module_name')}
             />
             {errors.module_name && (
-              <div id="component-error-text">{errors.module_name}</div>
+              <div className="error">{errors.module_name}</div>
             )}
           </div>
 
@@ -285,7 +241,7 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('description')}
             />
             {errors.description && (
-              <div id="component-error-text">{errors.description}</div>
+              <div className="error">{errors.description}</div>
             )}
           </div>
 
@@ -325,14 +281,14 @@ class AddEdit extends React.PureComponent {
 
           <div className="flex">
             <button
-              className="py-2 px-4 text-sm rounded border border-gray-600 hover:text-black hover:bg-gray-100 mr-2"
+              className="block btn text-white bg-green-500 border border-green-600 hover:bg-green-600 mr-2"
               onClick={this.handleAddPath}
             >
               Add Access Type
             </button>
 
             <button
-              className="block btn bg-primary hover:bg-secondary"
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
             >
               Save
@@ -354,10 +310,7 @@ const mapStateToProps = createStructuredSelector({
   sub_modules: makeSelectSubModules(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const customStyles = {
   control: (base, state) => ({
@@ -379,29 +332,4 @@ const customStyles = {
   }),
 };
 
-const styles = theme => ({
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-  withStyle,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

@@ -12,8 +12,6 @@ import {
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
 import RenderBlogs from '../components/BlogList';
-import CategoryList from '../components/CategoryList';
-import Archives from '../components/Archives';
 import RecentBlogs from '../components/RecentBlogs';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -43,7 +41,6 @@ export class BlogByAuthor extends React.Component {
   };
 
   handleLoadMore = paging => {
-    console.log('called', paging);
     this.props.loadMoreBlogByAuthorRequest({
       key: this.props.match.params.author,
       value: paging,
@@ -61,14 +58,14 @@ export class BlogByAuthor extends React.Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>News By Author</title>
+          <title>Blogs By Author</title>
         </Helmet>
         <div className="container mx-auto pt-10">
           <h1 className="pb-5 mb-0 border-b border-gray-300 text-black text-4xl font-light font-mukta">
             {data &&
               data.length > 0 &&
               data[0].author &&
-              `News By ${data[0].author[0].name}`}
+              `Blogs By ${data[0].author[0].name}`}
           </h1>
         </div>
         <div className="container mx-auto py-10">

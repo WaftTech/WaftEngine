@@ -76,3 +76,16 @@ export const setErrorValue = payload => ({
   type: types.SET_ERROR_VALUE,
   payload,
 });
+
+export const getCountRequest = payload => ({
+  type: types.GET_COUNT_REQUEST,
+  payload,
+});
+export const getCountSuccess = payload => ({
+  type: types.GET_COUNT_SUCCESS,
+  payload,
+});
+export const getCountFailure = payload => ({
+  type: types.GET_COUNT_FAILURE,
+  payload,
+});

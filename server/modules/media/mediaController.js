@@ -10,8 +10,9 @@ mediaController.GetMediaPagination = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [{ path: 'added_by' }];
-    let media = await otherHelper.getquerySendResponse(mediaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totaldata);
+    selectQuery = 'field_name type destination path field_name original_name mimetype size encoding added_at module';
+    let media = await otherHelper.getQuerySendResponse(mediaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totalData);
   } catch (err) {
     next(err);
   }

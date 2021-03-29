@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const sliderSchema = new schema({
-  slider_name: { type: String, required: true },
-  slider_key: { type: String, required: true, unique: true },
+  slider_name: { type: String },
+  slider_key: { type: String },
   slug_url: { type: String },
   images: [
     {

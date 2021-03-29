@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const fileUpload = require('../../helper/upload.helper')('public/media/');
-const uploader = fileUpload.uploader;
+const uploadHelper = require('../../helper/upload.helper')
 
 const dModule = require('../../modules/media/mediaController');
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authorization, authentication } = require('../../middleware/auth.middleware');
 
-router.get('/', authorization, authentication, dModule.GetMediaPagination);
-router.post('/single/:type', authorization, authentication, uploader.single('file'), dModule.SaveMedia);
-router.post('/multiple/:type', authorization, authentication, uploader.any('file'), dModule.SaveMultipleMedia);
+router.get('/', authentication, authorization, dModule.GetMediaPagination);
+router.post('/single/:type', authentication, authorization, uploadHelper.uploadFiles('public/media/', 'single', 'file'), dModule.SaveMedia);
+router.post('/multiple/:type', authentication, authorization, uploadHelper.uploadFiles('public/media/', 'any', 'file'), dModule.SaveMultipleMedia);
 router.get('/:id', dModule.GetMediaDetail);
-router.delete('/:id', authorization, authentication, dModule.DeleteMedia);
-router.post('/uploader', authorization, authentication, uploader.any('file'), dModule.UploadFromCkEditor);
-router.post('/deleteall', authorization, authentication, dModule.DeleteAllMedia);
+router.delete('/:id', authentication, authorization, dModule.DeleteMedia);
+router.post('/uploader', authentication, authorization, uploadHelper.uploadFiles('public/media/', 'any', 'file'), dModule.UploadFromCkEditor);
+router.post('/deleteall', authentication, authorization, dModule.DeleteAllMedia);
 
 module.exports = router;
+

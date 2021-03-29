@@ -22,3 +22,7 @@ export const SET_ONE_VALUE = 'app/BlogCategory/SET_ONE_VALUE';
 export const CLEAR_ONE = 'app/BlogCategory/CLEAR_ONE';
 export const CLEAR_ERRORS = 'app/BlogCategory/CLEAR_ERRORS';
 export const SET_ERROR_VALUE = 'app/BlogCategory/SET_ERROR_VALUE';
+
+export const GET_COUNT_REQUEST = 'app/BlogCategory/GET_COUNT_REQUEST';
+export const GET_COUNT_SUCCESS = 'app/BlogCategory/GET_COUNT_SUCCESS';
+export const GET_COUNT_FAILURE = 'app/BlogCategory/GET_COUNT_FAILURE';

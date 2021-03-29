@@ -4,8 +4,8 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import Select from 'react-select';
 
 const SelectWrapper = props => {
@@ -16,7 +16,7 @@ SelectWrapper.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
-      label: PropTypes.object,
+      label: PropTypes.string,
     }),
   ).isRequired,
 };

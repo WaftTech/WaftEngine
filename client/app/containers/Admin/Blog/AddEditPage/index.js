@@ -1,81 +1,45 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import Dropzone from 'react-dropzone';
 import moment from 'moment';
-import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Checkbox, IconButton } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-// import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
-import injectSaga from 'utils/injectSaga';
+import Dropzone from 'react-dropzone';
+import { Helmet } from 'react-helmet';
+import {
+  FaArrowLeft,
+  FaCheck,
+  FaTimes,
+  FaCloudUploadAlt,
+} from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-import BackIcon from '@material-ui/icons/ArrowBack';
+import injectSaga from 'utils/injectSaga';
+import defaultImage from '../../../../assets/img/logo.svg';
+import WECkEditior from '../../../../components/CkEditor';
+import Loading from '../../../../components/Loading';
+import PageContent from '../../../../components/PageContent/PageContent';
+import PageHeader from '../../../../components/PageHeader/PageHeader';
+import Select from '../../../../components/Select';
+import { IMAGE_BASE } from '../../../App/constants';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOne,
-  makeSelectUsers,
   makeSelectCategory,
   makeSelectChip,
-  makeSelectTag,
-  makeSelectMetaTag,
-  makeSelectMetaKeyword,
-  makeSelectLoading,
   makeSelectErrors,
+  makeSelectLoading,
+  makeSelectMetaKeyword,
+  makeSelectMetaTag,
+  makeSelectOne,
+  makeSelectTag,
+  makeSelectUsers,
 } from '../selectors';
-import * as mapDispatchToProps from '../actions';
-
-import PageHeader from '../../../../components/PageHeader/PageHeader';
-import PageContent from '../../../../components/PageContent/PageContent';
-import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
-import defaultImage from '../../../../assets/img/logo.svg';
-import Loading from '../../../../components/Loading';
-import WECkEditior from '../../../../components/CkEditor';
-import Inputs from '../../../../components/customComponents/Input';
-import Select from '../../../../components/Select';
-
-const styles = theme => ({
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
+import EditorFileSelect from '../../../EditorFileSelect';
+import Dialog from '../../../../components/Dialog/index';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -87,7 +51,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     category: PropTypes.array,
     tempTag: PropTypes.string,
@@ -95,10 +58,11 @@ class AddEdit extends React.PureComponent {
   };
 
   state = {
-    tempImage: defaultImage,
+    tempImage: '',
     startDate: new Date(),
     selected: [],
     slug_generated: false,
+    openMedia: false,
   };
 
   componentDidMount() {
@@ -135,7 +99,7 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
-  slugify = text => {
+  slugify = text =>
     // return text
     //   .toString()
     //   .toLowerCase()
@@ -154,14 +118,13 @@ class AddEdit extends React.PureComponent {
     // return slug;
 
     // nepali slug
-    return text
+    text
       .replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ')
       .toLowerCase()
       .replace(/^\s+|\s+$/gm, '')
       .replace(/\s+/g, '-')
       .trim()
       .toLowerCase();
-  };
 
   handleChange = name => event => {
     event.persist();
@@ -203,6 +166,19 @@ class AddEdit extends React.PureComponent {
   handleTempTag = e => {
     e.persist();
     this.props.setTagValue(e.target.value);
+  };
+
+  handleClose = () => {
+    this.setState({ openMedia: false });
+  };
+
+  handleSetImage = () => {
+    this.setState({ openMedia: true });
+  };
+
+  handleImageChange = file => {
+    this.props.setOneValue({ key: 'image', value: file });
+    this.setState({ openMedia: false });
   };
 
   onDrop = (files, name) => {
@@ -270,36 +246,42 @@ class AddEdit extends React.PureComponent {
 
   insertTags = event => {
     event.preventDefault();
-    if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
-      this.props.setOneValue({
-        key: 'tags',
-        value: [...this.props.one.tags, this.props.tempTag],
-      });
-      this.props.setTagValue('');
+    if (this.props.tempTag.trim() !== '') {
+      if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
+        this.props.setOneValue({
+          key: 'tags',
+          value: [...this.props.one.tags, this.props.tempTag],
+        });
+        this.props.setTagValue('');
+      }
     }
     return { tempTag: this.props.setTagValue('') };
   };
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };
 
   insertMetaKeywords = event => {
     event.preventDefault();
-    if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
-      this.props.setOneValue({
-        key: 'keywords',
-        value: [...this.props.one.keywords, this.props.tempMetaKeyword],
-      });
-      this.props.setMetaKeywordValue('');
+    if (this.props.tempMetaKeyword.trim() !== '') {
+      if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
+        this.props.setOneValue({
+          key: 'keywords',
+          value: [...this.props.one.keywords, this.props.tempMetaKeyword],
+        });
+        this.props.setMetaKeywordValue('');
+      }
     }
     return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
   };
@@ -352,14 +334,6 @@ class AddEdit extends React.PureComponent {
       return obj;
     });
 
-    const menuProps = {
-      PaperProps: {
-        style: {
-          maxHeight: 48 * 4.5 + 8,
-          width: 250,
-        },
-      },
-    };
     const cats = {};
     category.map(e => {
       cats[e._id] = e;
@@ -368,87 +342,72 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
+      <>
         <Helmet>
           <title>
             {match && match.params && match.params.id
-              ? 'Edit News'
-              : 'Add News'}
+              ? 'Edit Blog'
+              : 'Add Blog'}
           </title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <Dialog
+          open={this.state.openMedia}
+          className="w-5/6 h-full overflow-auto"
+          onClose={this.handleClose}
+          title={`Select Images`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
+            </div>
+          }
+        />
+        <div className="flex justify-between my-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
-              ? 'Edit News'
-              : 'Add News'}
+              ? 'Edit Blog'
+              : 'Add Blog'}
           </PageHeader>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Inputs
-              label="Title"
-              inputclassName="inputbox"
-              inputid="blog-title"
-              inputType="text"
+            <label>Title</label>
+            <input
+              className="inputbox"
+              id="blog-title"
+              type="text"
               value={(one && one.title) || ''}
               name="Blog Title"
               onChange={this.handleChange('title')}
-              error={errors && errors.title}
             />
+            {errors && errors.title && errors.title.trim() !== '' && (
+              <div className="error">{errors && errors.title}</div>
+            )}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <Inputs
-              label="Slug"
-              inputclassName="inputbox"
-              inputid="blog-slug-url"
-              inputType="text"
+            <label>Slug</label>
+            <input
+              className="inputbox"
+              id="blog-slug-url"
+              type="text"
               value={(one && one.slug_url) || ''}
               name="Blog Slug"
               onChange={this.handleChange('slug_url')}
-              error={errors && errors.slug_url}
-              disabled
             />
+            {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+              <div className="error">{errors && errors.slug_url}</div>
+            )}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="font-bold text-gray-700">Category</label>
-
-            {/* <FormControl className={classes.formControl}>
-              <Select
-                // className="inputbox"
-                multiple
-                displayEmpty
-                name="template_key"
-                value={one.category || []}
-                input={<Input />}
-                onChange={this.handleMultipleSelectChange}
-                renderValue={selected => {
-                  if (selected.length === 0) {
-                    return <em>Select Categories</em>;
-                  } else {
-                    return selected.join(', ');
-                  }
-                }}
-                MenuProps={menuProps}
-              >
-                <MenuItem value="" name="none" disabled>
-                  None
-                </MenuItem>
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id} name={each.title}>
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl> */}
-
-            {/* <FormControl className={classes.formControl}> */}
+            <label>Category</label>
             <Select
               className="React_Select"
               id="category"
@@ -474,37 +433,9 @@ class AddEdit extends React.PureComponent {
               options={listCategory}
               styles={customStyles}
             />
-            {/* <Select
-                multiple
-                displayEmpty
-                name="template_key"
-                value={one.category || []}
-                input={<Input />}
-                onChange={this.handleMultipleSelectChange}
-                renderValue={selected =>
-                  this.handleSelectedValue(selected, cats)
-                }
-                MenuProps={menuProps}
-              >
-                <MenuItem value="" name="none" disabled>
-                  None
-                </MenuItem>
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id} name={each.title}>
-                    <Checkbox checked={one.category.indexOf(each._id) > -1} />
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </Select> */}
-            {/* </FormControl> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="font-bold text-gray-700"
-              htmlFor="grid-blog-title"
-            >
-              Short Description
-            </label>
+            <label htmlFor="short_description">Short Description</label>
             <textarea
               className="inputbox"
               id="short_description"
@@ -515,37 +446,41 @@ class AddEdit extends React.PureComponent {
             />
           </div>
           <div>
-            <label className="font-bold text-gray-700">Blog Description</label>
+            <label>Blog Description</label>
             <WECkEditior
               description={one.description}
               setOneValue={this.props.setOneValue}
             />
-
-            <div id="component-error-text">{errors && errors.description}</div>
+            {errors &&
+              errors.description &&
+              errors.description.trim() !== '' && (
+                <div className="error">{errors && errors.description}</div>
+              )}
           </div>
 
-          <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label className="label" htmlFor="Image">
-              Image
-            </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <img
-                    className="inputbox cursor-pointer"
-                    src={tempImage}
-                    alt="Blogimage"
-                    style={{ height: '120px', width: '60%' }}
-                  />
+          <div className="w-full md:w-3/5 pb-4 mt-4">
+            <label htmlFor="Image">Image</label>
+
+            <section
+              onClick={this.handleSetImage}
+              className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+            >
+              {one && one.image && one.image.path ? (
+                <div>
+                  <img src={`${IMAGE_BASE}${one.image.path}`} />
                 </div>
+              ) : (
+                <button
+                  type="button"
+                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                >
+                  Featured Image
+                </button>
               )}
-            </Dropzone>
+            </section>
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Published On
-            </label>
+            <label htmlFor="published_on">Published On</label>
             <DatePicker
               showTimeSelect
               className="inputbox"
@@ -571,9 +506,7 @@ class AddEdit extends React.PureComponent {
             /> */}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Tags
-            </label>
+            <label htmlFor="blog-tags">Tags</label>
             <form onSubmit={this.insertTags}>
               <input
                 className="inputbox"
@@ -584,26 +517,18 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempTag}
               />
             </form>
-            <Paper>
-              {one.tags.map((tag, index) => {
-                const icon = null;
-                return (
-                  <Chip
-                    key={`${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
+            {one.tags.map((tag, index) => (
+              <label className="tag" key={`${tag}-${index}`}>
+                {tag}
+                <span>
+                  <FaTimes onClick={this.handleDelete(index)} />
+                </span>
+              </label>
+            ))}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Meta Tags
-            </label>
+            <label htmlFor="blog-meta-tags">Meta Tags</label>
             <form onSubmit={this.insertMetaTags}>
               <input
                 className="inputbox"
@@ -614,26 +539,21 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempMetaTag}
               />
             </form>
-            <Paper>
-              {one.meta_tag.map((tag, index) => {
-                const icon = null;
+            {one.meta_tag.map((tag, index) => {
+              const icon = null;
 
-                return (
-                  <Chip
-                    key={`meta-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaTagDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
+              return (
+                <label className="tag" key={`meta-${tag}-${index}`}>
+                  {tag}
+                  <span>
+                    <FaTimes onClick={this.handleMetaTagDelete(index)} />
+                  </span>
+                </label>
+              );
+            })}
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Meta Keywords
-            </label>
+            <label htmlFor="blog-meta-keyword">Meta Keywords</label>
 
             <form onSubmit={this.insertMetaKeywords}>
               <input
@@ -645,34 +565,30 @@ class AddEdit extends React.PureComponent {
                 onChange={this.handleTempMetaKeyword}
               />
             </form>
-            <Paper>
-              {one.keywords.map((tag, index) => {
-                const icon = null;
+            {one.keywords.map((tag, index) => {
+              const icon = null;
 
-                return (
-                  <Chip
-                    key={`metakeywords-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaKeywordDelete(index)}
-                    className={classes.chip}
-                  />
-                );
-              })}
-            </Paper>
+              return (
+                <label
+                  onDelete={this.handleMetaKeywordDelete(index)}
+                  className="tag"
+                  key={`metakeywords-${tag}-${index}`}
+                >
+                  {tag}
+                  <span>
+                    <FaTimes />
+                  </span>
+                </label>
+              );
+            })}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs mb-2"
-              htmlFor="grid-last-name"
-            >
-              Meta Description
-            </label>
+            <label htmlFor="blog-meta-description">Meta Description</label>
 
             <textarea
               className="inputbox"
-              id="blog-tags"
+              id="blog-meta-description"
               type="text"
               value={one.meta_description || ''}
               name="meta-description"
@@ -681,27 +597,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label className="label" htmlFor="grid-last-name">
-              Author
-            </label>
-            {/* 
-            <select
-              className="inputbox"
-              native="true"
-              value={(one && one.author) || ''}
-              onChange={this.handleDropDownChange('author')}
-            >
-              <option value="" disabled>
-                None
-              </option>
-              {users &&
-                users.map(each => (
-                  <option key={each._id} name={each.name} value={each._id}>
-                    {each.name}
-                  </option>
-                ))}
-            </select> */}
-
+            <label htmlFor="blog_author">Author</label>
             <Select
               className="React_Select"
               id="category"
@@ -720,7 +616,7 @@ class AddEdit extends React.PureComponent {
                 []
               }
               name="author"
-              placeholder="Select News Author"
+              placeholder="Select Blog Author"
               onChange={this.handleMultipleSelectAuthorChange}
               isSearchable
               isMulti
@@ -728,70 +624,84 @@ class AddEdit extends React.PureComponent {
               styles={customStyles}
             />
           </div>
-          <div id="component-error-text">{errors && errors.author}</div>
-          <div>
-            {/* <InputLabel style={{ color: '#AAAAAA' }}>Activity Type</InputLabel> */}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_active || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
+          {errors && errors.author && errors.author.trim() !== '' && (
+            <div className="error">{errors && errors.author}</div>
+          )}
+          <div className="checkbox">
+            <input
+              onClick={this.handleCheckedChange('is_active')}
+              checked={one.is_active || false}
+              id="is_active"
+              type="checkbox"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_published || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_published')}
-                  color="primary"
-                />
-              }
-              label="Is Published"
+            <label htmlFor="is_active">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Active
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <input
+              checked={one.is_published || false}
+              onClick={this.handleCheckedChange('is_published')}
+              id="is_published"
+              type="checkbox"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_highlight || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_highlight')}
-                  color="primary"
-                />
-              }
-              label="Is Highlight"
+            <label htmlFor="is_published">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Published
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <input
+              checked={one.is_highlight || false}
+              onClick={this.handleCheckedChange('is_highlight')}
+              id="is_highlight"
+              type="checkbox"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={one.is_showcase || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_showcase')}
-                  color="primary"
-                />
-              }
-              label="Is Showcase"
+            <label htmlFor="is_highlight">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Highlighted
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <input
+              checked={one.is_showcase || false}
+              onClick={this.handleCheckedChange('is_showcase')}
+              id="is_showcased"
+              type="checkbox"
             />
+            <label htmlFor="is_showcased">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Showcase
+            </label>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
             <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
               onClick={this.handleSave}
+              disabled={loading}
             >
               Save
             </button>
           </div>
         </PageContent>
-      </React.Fragment>
+      </>
     );
   }
 }
 
-const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
 
@@ -832,14 +742,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

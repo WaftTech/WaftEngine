@@ -10,12 +10,6 @@ import CKEditor from 'react-ckeditor-component';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-// core components
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-import Checkbox from '@material-ui/core/Checkbox';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -26,25 +20,12 @@ import {
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
 import { IMAGE_BASE } from '../../../App/constants';
 import defaultImage from '../../../../assets/img/logo.svg';
-import Input from '../../../../components/customComponents/Input';
-
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
+import { FaArrowLeft, FaCheck, FaCloudUploadAlt } from 'react-icons/fa';
+import EditorFileSelect from '../../../EditorFileSelect';
+import Dialog from '../../../../components/Dialog/index';
 class AddEdit extends React.PureComponent {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
@@ -53,13 +34,13 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
 
   state = {
-    tempImage: defaultImage,
+    tempImage: '',
+    openMedia: false,
   };
 
   componentDidMount() {
@@ -82,6 +63,19 @@ class AddEdit extends React.PureComponent {
       }
     }
   }
+
+  handleClose = () => {
+    this.setState({ openMedia: false });
+  };
+
+  handleSetImage = () => {
+    this.setState({ openMedia: true });
+  };
+
+  handleImageChange = file => {
+    this.props.setOneValue({ key: 'image', value: file });
+    this.setState({ openMedia: false });
+  };
 
   slugify = text => {
     return text
@@ -149,15 +143,11 @@ class AddEdit extends React.PureComponent {
               : 'Add Blog'}
           </title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.slug
               ? 'Edit Blog Category'
               : 'Add Blog Category'}
@@ -166,44 +156,50 @@ class AddEdit extends React.PureComponent {
 
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Blog Title"
-              inputclassName="inputbox"
-              inputid="title"
-              inputType="text"
+            <label>Title</label>
+            <input
+              className="inputbox"
+              id="title"
+              type="text"
               value={(one && one.title) || ''}
               onChange={this.handleChange('title')}
-              error={errors && errors.title}
             />
           </div>
+          {errors && errors.title && errors.title.trim() !== '' && (
+            <div className="error">{errors && errors.title}</div>
+          )}
+
           <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Slug"
-              inputclassName="inputbox"
-              inputid="slug"
-              inputType="text"
+            <label>Slug</label>
+            <input
+              className="inputbox"
+              id="slug"
+              type="text"
               value={(one && one.slug_url) || ''}
               name="slug"
               onChange={this.handleChange('slug_url')}
-              error={errors && errors.slug_url}
             />
+            {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+              <div className="error">{errors && errors.slug_url}</div>
+            )}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Order"
-              inputclassName="inputbox"
-              inputid="order"
-              inputType="text"
+            <label>Order</label>
+            <input
+              className="inputbox"
+              id="order"
+              type="number"
               value={(one && one.order) || ''}
               onChange={this.handleChange('order')}
-              error={errors && errors.order}
+              min="0"
             />
+            {errors && errors.order && errors.order.trim() !== '' && (
+              <div className="error">{errors && errors.order}</div>
+            )}
           </div>
           <div className="pb-4">
-            <label className="font-bold text-gray-700">
-              Blog Category Description
-            </label>
+            <label>Blog Category Description</label>
             <CKEditor
               name="cat-description"
               content={one && one.description}
@@ -214,51 +210,73 @@ class AddEdit extends React.PureComponent {
               }}
             />
           </div>
-          <div className="w-full md:w-1/2 pb-4 mt-4">
+          <div className="w-full md:w-3/5 pb-4 mt-4">
             <label className="label" htmlFor="Image">
               Image
             </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <img
-                    className="inputbox cursor-pointer"
-                    src={tempImage}
-                    alt="BlogCategoryImage"
-                    style={{ height: '120px', width: '60%' }}
-                  />
+            <section
+              onClick={this.handleSetImage}
+              className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+            >
+              {one && one.image && one.image.path ? (
+                <div>
+                  <img src={`${IMAGE_BASE}${one.image.path}`} />
                 </div>
+              ) : (
+                <button
+                  type="button"
+                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                >
+                  Featured Image
+                </button>
               )}
-            </Dropzone>
+            </section>
           </div>
-          <div>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={(one && one.is_active) || false}
-                  tabIndex={-1}
-                  onClick={this.handleCheckedChange('is_active')}
-                  color="primary"
-                />
-              }
-              label="Is Active"
+
+          <div className="checkbox">
+            <input
+              checked={(one && one.is_active) || false}
+              onClick={this.handleCheckedChange('is_active')}
+              id="is_active"
+              type="checkbox"
             />
+            <label htmlFor="is_active">
+              <span className="box">
+                <FaCheck className="check-icon" />
+              </span>
+              Is Active
+            </label>
           </div>
 
           <button
-            className="block btn bg-primary hover:bg-secondary"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
+            disabled={loading}
           >
             Save
           </button>
         </PageContent>
+        <Dialog
+          open={this.state.openMedia}
+          className="w-5/6 h-full overflow-auto"
+          onClose={this.handleClose}
+          title={`Select Images`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
+              </div>
+            </div>
+          }
+        />
       </div>
     );
   }
 }
-
-const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({
   key: 'BlogCategory',
@@ -272,13 +290,5 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

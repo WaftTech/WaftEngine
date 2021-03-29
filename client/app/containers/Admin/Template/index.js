@@ -4,46 +4,26 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { push } from 'connected-react-router';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { Helmet } from 'react-helmet';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-// import Close from '@material-ui/icons/Close';
-
-// core components
-
-import injectSaga from 'utils/injectSaga';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectAll, makeSelectOne, makeSelectLoading } from './selectors';
+import injectSaga from 'utils/injectSaga';
+import WECkEditior from '../../../components/CkEditor';
+import Loading from '../../../components/Loading';
+import PageContent from '../../../components/PageContent/PageContent';
+import PageHeader from '../../../components/PageHeader/PageHeader';
+import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import * as mapDispatchToProps from './actions';
-import PageHeader from '../../../components/PageHeader/PageHeader';
-import PageContent from '../../../components/PageContent/PageContent';
-import Loading from '../../../components/Loading';
-import WECkEditior from '../../../components/CkEditor';
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-});
+import { makeSelectAll, makeSelectLoading, makeSelectOne } from './selectors';
 
 export function Template({
   classes,
@@ -55,12 +35,17 @@ export function Template({
   all,
   one,
   loading,
+  match,
+  push,
 }) {
   const [data, setData] = useState('');
   useEffect(() => {
-    clearOne();
-    loadAllRequest();
+    if (match.params && match.params.key) {
+      loadOneRequest(match.params.key);
+      setData(match.params.key);
+    }
   }, []);
+
   const handleSubmit = e => {
     e.preventDefault();
     if (data) {
@@ -74,18 +59,32 @@ export function Template({
     setData(value);
     value && loadOneRequest(value);
   };
+
+  const handleGoBack = () => {
+    push('/admin/template-manage');
+  };
+
   const handleChange = e => {
     setOneValue({ key: e.target.name, value: e.target.value });
   };
   return (
     <>
-      <div className="flex justify-between mt-3 mb-3">
+      <Helmet>
+        <title>Email Template Manage</title>
+      </Helmet>
+      <div className="flex justify-between my-3">
         {loading && loading == true ? <Loading /> : <></>}
-        <PageHeader>Email Template Manage</PageHeader>
+
+        <PageHeader>
+          <span className="backbtn" onClick={handleGoBack}>
+            <FaArrowLeft className="text-xl" />
+          </span>
+          Email Template Manage
+        </PageHeader>
       </div>
       <PageContent>
         <form autoComplete="off" onSubmit={handleSubmit}>
-          <div className="w-full md:w-1/2 pb-4">
+          {/* <div className="w-full md:w-1/2 pb-4">
             <label className="label">Template Key</label>
             <select
               className="inputbox"
@@ -100,20 +99,20 @@ export function Template({
               {all.map(each => (
                 <option value={each.template_key} key={each._id}>
                   {each.template_key}
-                </option>
+                </option>‚
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="w-full md:w-1/2 pb-4">
             <label className="label">Template Name</label>
             <input
               type="text"
               className="inputbox"
-              readOnly
               id="template-name"
-              name="template-name"
+              name="template_name"
               value={one.template_name || ''}
+              onChange={handleChange}
             />
           </div>
 
@@ -122,10 +121,10 @@ export function Template({
             <input
               className="inputbox"
               type="text"
-              readOnly
               id="informations"
-              name="informations"
+              name="information"
               value={one.information || ''}
+              onChange={handleChange}
             />
           </div>
 
@@ -136,7 +135,6 @@ export function Template({
               type="text"
               id="variables"
               name="variables"
-              readOnly
               value={one.variables || ''}
               onChange={handleChange}
             />
@@ -178,18 +176,16 @@ export function Template({
             />
           </div>
 
-          {/* <div dangerouslySetInnerHTML={{ __html: one.body }} /> */}
-
           <div className="w-full pb-4">
             <label className="label">Body</label>
             <WECkEditior
               description={one.body || ''}
               setOneValue={setOneValue}
-              is_body={true}
+              is_body
             />
           </div>
 
-          <button className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme">
+          <button className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600">
             Save
           </button>
         </form>
@@ -201,7 +197,7 @@ export function Template({
 Template.propTypes = {
   all: PropTypes.array.isRequired,
   one: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   addEditRequest: PropTypes.func.isRequired,
   loadAllRequest: PropTypes.func.isRequired,
   loadOneRequest: PropTypes.func.isRequired,
@@ -215,18 +211,14 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-const withStyle = withStyles(styles);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminTemplateListingPage', reducer });
 const withSaga = injectSaga({ key: 'adminTemplateListingPage', saga });
 
 export default compose(
-  withStyle,
   withReducer,
   withSaga,
   withConnect,
+  withRouter,
 )(Template);

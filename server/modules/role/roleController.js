@@ -23,9 +23,9 @@ roleController.GetRoles = async (req, res, next) => {
       searchQuery = { is_active: true, ...searchQuery };
     }
 
-    let datas = await otherHelper.getquerySendResponse(roleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let pulledData = await otherHelper.getQuerySendResponse(roleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.roleGet, page, size, datas.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.roleGet, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -67,34 +67,64 @@ roleController.GetModule = async (req, res, next) => {
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
+    if (req.query.find_module_group) {
+      searchQuery2 = { module_group: { $regex: req.query.find_module_group, $options: 'i' }, is_deleted: false };
+      let pulledData = await otherHelper.getQuerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery2, selectQuery, next, populate);
+      const module_id = pulledData.data.map(id => id._id)
+      searchQuery = { ...searchQuery, module_group: { $in: module_id } }
+    }
     populate = [
       {
         path: 'module_group',
-        select: '',
+        select: 'module_group',
+        model: 'modulegroups',
       },
     ];
-    let datas = await otherHelper.getquerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
+    sortQuery = { module_group: 1, module_name: 1 }
+    let pulledData = await otherHelper.getQuerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.gets, page, size, pulledData.totalData);
+  } catch (err) {
+    next(err);
+  } req.query.find_module_group
+};
+
+
+roleController.GetModuleActive = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
+    searchQuery = { ...searchQuery, is_active: true }
+    selectQuery = 'module_name description order path module_group';
+    if (req.query.find_module_name) {
+      searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
+    }
+    populate = [
+      {
+        path: 'module_group',
+        select: 'module_group',
+        model: 'modulegroups',
+      },
+    ];
+    sortQuery = { module_group: 1 }
+    let pulledData = await otherHelper.getQuerySendResponse(moduleSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
 };
+
 roleController.GetModuleDetail = async (req, res, next) => {
   const modules = await moduleSch.findById(req.params.id);
   return otherHelper.sendResponse(res, httpStatus.OK, true, modules, null, roleConfig.moduleGet, null, 'Module Not Found');
 };
+
 roleController.GetModuleGroup = async (req, res, next) => {
   try {
-    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
-
-    selectQuery = 'module_group module_group_main description order path';
-
-    if (req.query.find_module_name) {
-      searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+    if (req.query.find_title) {
+      searchQuery = { module_group: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
     }
-    let datas = await otherHelper.getquerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, roleConfig.gets, page, size, datas.totaldata);
+    let pulledData = await otherHelper.getQuerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, roleConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -127,6 +157,7 @@ roleController.AddModuleGroupList = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, roleConfig.moduleSave, null);
     } else {
       moduleGroup.added_by = req.user.id;
+      moduleGroup.is_deleted = false
       const newModuleGroup = new moduleGroupSch(moduleGroup);
       await newModuleGroup.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, newModuleGroup, null, roleConfig.moduleSave, null);
@@ -161,15 +192,15 @@ roleController.SaveAccessList = async (req, res, next) => {
 };
 roleController.SaveAccessListFromRole = async (req, res, next) => {
   try {
-    const roleid = req.params.roleid;
+    const roleId = req.params.roleid;
     const access = req.body.Access;
     if (access.length) {
       for (let i = 0; i < access.length; i++) {
         if (access[i]._id) {
-          access[i].role_id = roleid;
+          access[i].role_id = roleId;
           await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
         } else {
-          access[i].role_id = roleid;
+          access[i].role_id = roleId;
           access[i].added_by = req.user.id;
           const newAccess = new accessSch(access[i]);
           await newAccess.save();
@@ -185,17 +216,17 @@ roleController.SaveAccessListFromRole = async (req, res, next) => {
 };
 roleController.SaveAccessListForModule = async (req, res, next) => {
   try {
-    const moduleid = req.params.moduleid;
+    const moduleId = req.params.moduleid;
     const access = req.body.Access;
     let d = [];
     if (access.length) {
       for (let i = 0; i < access.length; i++) {
         if (access[i]._id) {
-          access[i].module_id = moduleid;
+          access[i].module_id = moduleId;
           const newAccess = await accessSch.findByIdAndUpdate(access[i]._id, { $set: access[i] }, { new: true });
           d.push(newAccess);
         } else {
-          access[i].module_id = moduleid;
+          access[i].module_id = moduleId;
           access[i].added_by = req.user.id;
           const newAccess = new accessSch(access[i]);
           const data = await newAccess.save();
@@ -204,7 +235,7 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
       }
       return otherHelper.sendResponse(res, httpStatus.OK, true, d, null, 'Access update success!!', null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, true, update, null, '', null);
+      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, true, null, null, 'not found', null);
     }
   } catch (err) {
     next(err);
@@ -236,16 +267,19 @@ roleController.GetModulesWithHierarchy = async (req, res, next) => {
 };
 roleController.GetAccessListForRole = async (req, res, next) => {
   try {
-    const roleid = req.params.roleid;
-    const AccessForRole = await accessSch.find({ role_id: roleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
+    const roleId = req.params.roleid;
+    const AccessForRole = await accessSch.find({ role_id: roleId }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
     const Module = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
+    console.log('access', AccessForRole)
+    console.log('modules', Module)
+
     let Access = [];
     for (let i = 0; i < Module.length; i++) {
       const one_access = AccessForRole.find(x => x.module_id.toString() == Module[i]._id.toString());
       if (one_access) {
         Access.push(one_access);
       } else {
-        Access.push({ access_type: [], is_active: true, module_id: Module[i]._id, role_id: roleid });
+        Access.push({ access_type: [], is_active: true, module_id: Module[i]._id, role_id: roleId });
       }
     }
     return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: Access }, null, 'Access Get Success !!', null);
@@ -255,11 +289,23 @@ roleController.GetAccessListForRole = async (req, res, next) => {
 };
 roleController.GetAccessListForModule = async (req, res, next) => {
   try {
-    const moduleid = req.params.moduleid;
-    const AccessForModule = await accessSch.find({ module_id: moduleid }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
-    const ModulesForRole = await moduleSch.findOne({ _id: moduleid }, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
+    const moduleId = req.params.moduleid;
+    const AccessForModule = await accessSch.find({ module_id: moduleId }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
+    const ModulesForRole = await moduleSch.findOne({ _id: moduleId }, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
     const Roles = await roleSch.find({ is_deleted: false }, { _id: 1, role_title: 1, is_active: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: AccessForModule, Module: ModulesForRole, Roles: Roles }, null, roleConfig.accessGet, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+roleController.deleteModuleGroupList = async (req, res, next) => {
+  try {
+    const moduleGroupId = req.params.id;
+    console.log(moduleGroupId)
+    await moduleGroupSch.findByIdAndUpdate(moduleGroupId, { $set: { is_deleted: true, deleted_at: new Date() } }, { new: true });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, roleConfig.gModuleDelete, null);
+
   } catch (err) {
     next(err);
   }

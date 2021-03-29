@@ -7,6 +7,7 @@ import {
   makeSelectChosenFolders,
   makeSelectAll,
   makeSelectRenameFile,
+  makeSelectQuery,
 } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -18,13 +19,18 @@ function* loadFolders() {
 
 function* loadFiles(action) {
   const token = yield select(makeSelectToken());
-  let query = 'root';
-  if (action.payload) {
-    query = action.payload;
+  let query = '';
+  const searchParams = yield select(makeSelectQuery());
+  if (searchParams) {
+    Object.keys(searchParams).map(each => {
+      query = `${query}&${each}=${searchParams[each]}`;
+      return null;
+    });
   }
+  // console.log('from saga', query);
   yield call(
     Api.get(
-      `files/folder/${query}`,
+      `files/folder/${action.payload.path}?${query}`,
       actions.loadFilesSuccess,
       actions.loadFilesFailure,
       token,
@@ -89,6 +95,22 @@ function* createNewFolder(action) {
       token,
     ),
   );
+}
+
+function* createFolderFailFunc(action) {
+  const message =
+    action.payload.errors && action.payload.errors.name
+      ? action.payload.errors.name
+      : 'something went wrong';
+  const defaultError = {
+    message: message,
+    options: {
+      variant: 'warning',
+    },
+  };
+
+  yield put(enqueueSnackbar(defaultError));
+  yield;
 }
 
 function* multipleDelete(action) {
@@ -159,6 +181,8 @@ export default function* editorFileSelectSaga() {
   yield takeLatest(types.DELETE_FILE_REQUEST, deleteFile);
   yield takeLatest(types.ADD_MEDIA_REQUEST, addMedia);
   yield takeLatest(types.LOAD_NEW_FOLDER_REQUEST, createNewFolder);
+  yield takeLatest(types.LOAD_NEW_FOLDER_FAILURE, createFolderFailFunc);
+
   yield takeLatest(types.DELETE_MULTIPLE_REQUEST, multipleDelete);
   yield takeLatest(types.DELETE_MULTIPLE_SUCCESS, multiDeleteSuccessFunc);
   yield takeLatest(types.DELETE_MULTIPLE_FAILURE, multiDeleteFailureFunc);

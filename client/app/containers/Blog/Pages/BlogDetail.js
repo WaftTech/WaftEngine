@@ -17,13 +17,8 @@ import {
   makeSelectLoading,
   makeSelectMessage,
 } from '../selectors';
-import { makeSelectComment } from '../../Comments/selectors';
 import { makeSelectUser } from '../../App/selectors';
-import RelatedBlogs from '../components/RelatedBlogs';
-import Archives from '../components/Archives';
 import BlogDetail from '../components/BlogDetail';
-import StaticContentDiv from '../../../components/StaticContentDiv';
-import CategoryElement from '../../../components/CategoryElement';
 export class BlogPage extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
@@ -40,7 +35,6 @@ export class BlogPage extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.clearOne();
-    console.log('param', this.props.match.params);
 
     this.props.loadRecentBlogsRequest();
     this.props.loadRelatedBlogsRequest(this.props.match.params.slug_url);
@@ -61,7 +55,6 @@ export class BlogPage extends React.Component {
       loading,
       match: { url },
       message,
-      comments,
     } = this.props;
 
     return (
@@ -74,7 +67,6 @@ export class BlogPage extends React.Component {
             blog={blog}
             loading={loading}
             message={message}
-            comments={comments}
           />
         </div>
       </>
@@ -87,7 +79,6 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   user: makeSelectUser(),
   message: makeSelectMessage(),
-  comments: makeSelectComment(),
 });
 
 const withConnect = connect(

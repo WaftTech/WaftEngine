@@ -1,35 +1,20 @@
-import React, { useState } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
-import { Scrollbars } from 'react-custom-scrollbars';
-
-import { withStyles } from '@material-ui/core/styles';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-
-import MainListItems from './components/MainListItem';
-import { logoutRequest } from '../../containers/App/actions';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { FaAngleDown, FaExternalLinkAlt } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { Link, Route, Switch } from 'react-router-dom';
+import { compose } from 'redux';
+import LogoIcon from '../../assets/img/logo-icon-white.svg';
 import Logo from '../../assets/img/logo-white.svg';
-
-import routes from '../../routes/admin';
-
-import NotFoundPage from '../../containers/NotFoundPage/Loadable';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
-import Breadcrumb from '../../components/Breadcrumb';
+import DropdownMenu from '../../components/DropdownMenu/index';
+import { logoutRequest } from '../../containers/App/actions';
+import NotFoundPage from '../../containers/NotFoundPage/Loadable';
+import routes from '../../routes/admin';
+import MainListItems from './components/MainListItem';
+import './admin.css';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -119,9 +104,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: 0, // theme.spacing.unit * 7,
+    width: 0, //theme.spacing(7),
     // [theme.breakpoints.up('sm')]: {
-    //   width: 0, // theme.spacing.unit * 9,
+    //   width: 0, // theme.spacing(9),
     // },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -149,7 +134,6 @@ const styles = theme => ({
 });
 
 const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
-  // const [open, setOpen] = useState(true);
   const [anchorel, setAnchorel] = useState(null);
   const anchorOpen = Boolean(anchorel);
   const handleMenu = event => {
@@ -179,84 +163,129 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
       <Helmet>
         <title>Admin Dashboard</title>
       </Helmet>
-      <div className="flex justify-between px-4 text-white h-12 fixed z-50 w-full left-0 top-0 items-center bg-primary" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <div className="flex-1 flex items-center">
-        <Link target="_blank"  to="/">
-          <img style={{ height: 28 }}
-            src={Logo}
-            alt="waftengine"/>
-          </Link>
-          <Link target="_blank" className="rounded px-2 py-1 ml-6 leading-none flex items-center text-sm bg-blue-900 hover:bg-blue-700" to="/">Visit Site <i className="material-icons text-sm ml-1">open_in_new</i></Link>
-          <Link className="px-4" to="/">Docs</Link>
-          <Link className="px-4" to="/">Blog</Link>
-          <Link className="px-4" to="/">Forum</Link>
-        </div>
-        <div>
-          <button className="flex" onClick={handleMenu}>
-            <div className="m-auto mr-1">{users.name}</div>
-            <AccountCircle />
-            <i className="material-icons text-gray-200 opacity-50">arrow_drop_down</i>
-          </button>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorel}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={anchorOpen}
-            onClose={handleClose}
-          ><Link
-            to="/admin/dashboard"
-            style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-          >
-              <MenuItem>
-                Dashboard
-                </MenuItem>
-            </Link>
-            <Link
-              to="/admin/profile"
-              style={{ textDecoration: 'none', color: 'black' }} onClick={handleClose}
-            >
-              <MenuItem >
-                Profile
-                  </MenuItem>
-            </Link>
-            <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-          </Menu>
-        </div>
-      </div>
-      <div className="flex overflow-y-hidden bg-gray-200">
+      <div className="flex overflow-y-hidden bg-gray-100">
         <ColoredScrollbars
           autoHide
           autoHideTimeout={1000}
           autoHideDuration={200}
           style={{
-            width: 220,
+            width: 260,
             height: '100vh',
+            backgroundColor: '#2D3446',
           }}
-          className="bg-gray-900"
         >
-
+          <div
+            className="flex items-center px-4 py-3 fixed top-0 z-40"
+            style={{ width: 260, backgroundColor: '#1F2430' }}
+          >
+            <Link target="_blank" to="/">
+              <img
+                className="opacity-75"
+                style={{ height: 28 }}
+                src={Logo}
+                alt="waftengine"
+              />
+              <p className="text-xs text-white opacity-25 leading-none text-right">
+                v1.0.1
+              </p>
+            </Link>
+          </div>
 
           <MainListItems />
         </ColoredScrollbars>
-        <main className="h-screen flex-1 overflow-auto px-4 pt-12 flex flex-col justify-between">
-          {/* <Breadcrumb /> */}
-          <div className="flex-1">{switchRoutes(roles)}</div>
-          <p className="text-gray-700 py-4">version 1.0.1</p>
+        <main className="flex-1 flex flex-col justify-between pt-16 bg-gray-50 h-screen overflow-auto">
+          <div
+            className="bg-white dark:bg-gray-800 border-b flex top-0 justify-between fixed z-40"
+            style={{ width: 'calc(100% - 220px)' }}
+          >
+            <div className="flex-1 flex items-center h-16">
+              <Link
+                target="_blank"
+                className="rounded px-2 py-2 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 border border-blue-600 hover:bg-blue-600 transition-all duration-100 ease-in"
+                to="/"
+              >
+                Visit Site
+                  <FaExternalLinkAlt className="ml-2 text-xs" />
+              </Link>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
+              >
+                Docs
+                </a>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org/blog"
+              >
+                Blog
+                </a>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org"
+              >
+                Forum
+                </a>
+            </div>
+
+            <DropdownMenu
+              main={
+                <button className="flex items-center justify-end h-16 px-6 hover:bg-gray-100">
+                  <img
+                    className="w-8 h-8 rounded-full overflow-hidden"
+                    src={LogoIcon}
+                    alt="profile image"
+                  />
+                  <div className="px-3 text-left">
+                    <span className="block capitalize text-sm">
+                      {users.name}
+                    </span>
+                    <span className="block leading-none truncate capitalize text-xs text-gray-600">
+                      {users.roles &&
+                        users.roles[0] &&
+                        users.roles[0].role_title
+                        ? users.roles[0].role_title
+                        : ''}
+                    </span>
+                  </div>
+                  <FaAngleDown className="opacity-50" />
+                </button>
+              }
+              items={
+                <>
+                  <Link
+                    to="/admin/dashboard"
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                  >
+                    <p>Dashboard</p>
+                  </Link>
+                  <Link
+                    to="/admin/profile"
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                  >
+                    <p>Profile</p>
+                  </Link>
+                  <p className="py-2 block px-4 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
+                    Log Out
+                    </p>
+                </>
+              }
+            />
+          </div>
+          <div className="flex-1 mx-6 my-2">{switchRoutes(roles)}</div>
         </main>
-      </div >
-    </React.Fragment >
+      </div>
+    </React.Fragment>
   );
 };
 
 AdminLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
   logoutRequest: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,
@@ -267,14 +296,7 @@ const mapStateToProps = ({ global }) => ({
   users: global.user,
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { logoutRequest, push },
-);
+const withConnect = connect(mapStateToProps, { logoutRequest, push });
 
-const withStyle = withStyles(styles);
 
-export default compose(
-  withConnect,
-  withStyle,
-)(AdminLayout);
+export default compose(withConnect)(AdminLayout);

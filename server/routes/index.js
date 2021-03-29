@@ -53,8 +53,6 @@ router.use('/menu', menuRoutes);
 const teamRoutes = require('./api/team');
 router.use('/team', teamRoutes);
 
-// All route of comment module (comments)
-const commentRoutes = require('./api/comment');
-router.use('/comment', commentRoutes);
-
+const adminDashboard = require('./api/adminDashboard');
+router.use('/dashboard', adminDashboard);
 module.exports = router;

@@ -1,14 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { IMAGE_BASE } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
-import * as mapDispatchToProps from '../actions';
 import moment from 'moment';
+import * as mapDispatchToProps from '../actions';
 
 const HighLightList = props => {
   const { currentBlogs, loading } = props;
@@ -32,11 +31,11 @@ const HighLightList = props => {
             <div className="container mx-auto">
               <Link
                 className="block"
-                to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+                to={`/blog/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
                 key={slug_url}
               >
                 <div key={_id} className="">
-                  <h1 className="max-w-6xl mx-auto text-center text-4xl md:text-6xl px-5 md:px-10 pt-10 md:pt-20 hover:text-secondary leading-tighter font-bold md:font-normal">
+                  <h1 className="max-w-6xl mx-auto text-center text-4xl md:text-6xl px-5 md:px-10 pt-10 md:pt-20 hover:text-blue-500 leading-tighter font-bold md:font-normal">
                     {title}
                   </h1>
                   <div className="py-6 md:py-10">

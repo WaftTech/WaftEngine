@@ -8,8 +8,7 @@ import {
   makeSelectRecentBlogsIsLoading,
   makeSelectRecentBlogs,
 } from '../selectors';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
-import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
+import { IMAGE_BASE } from '../../App/constants';
 import clock from '../../../assets/img/clock.svg';
 
 function RecentBlogs(props) {
@@ -19,25 +18,18 @@ function RecentBlogs(props) {
   return (
     <div className="">
       <div className="bg-primary h-14 flex items-center pl-8">
-        <h2 className="font-bold text-3xl my-0">
-          Recent News
-        </h2>
+        <h2 className="font-bold text-3xl my-0">Recent Blog</h2>
       </div>
       {props.blogs.map(blog => (
         <div
           key={`recents-${blog._id}`}
           className="flex py-5  border-b border-gray-300 borderlist"
         >
-          <div
-            // onClick={() => push(`/news/${each.slug_url}`)}
-            key={blog._id}
-            className={`px-2 mb-4 h-full item-${index + 1}`}
-          >
+          <div key={blog._id} className={`px-2 mb-4 h-full item-${index + 1}`}>
             <div className="article-container bg-gray-100 h-full">
               <div className="article-img-container">
                 <Link
-                  to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
-                    blog._id
+                  to={`/blog/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
                     }`}
                 >
                   <img
@@ -51,10 +43,9 @@ function RecentBlogs(props) {
               </div>
               <div className="p-4 textpart">
                 <Link
-                  to={`/news/${moment(blog.added_at).format('YYYY/MM/DD')}/${
-                    blog._id
+                  to={`/blog/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
                     }`}
-                  className="text-xl leading-normal hover:text-secondary pointer no-underline article-title font-mukta"
+                  className="text-xl leading-normal hover:text-blue-500 pointer no-underline article-title font-mukta"
                 >
                   {blog.title}
                 </Link>

@@ -52,3 +52,5 @@ export const SAVE_ROLE_ACCESS_SUCCESS =
   'app/AdminRole/SAVE_ROLE_ACCESS_SUCCESS';
 export const SAVE_ROLE_ACCESS_FAILURE =
   'app/AdminRole/SAVE_ROLE_ACCESS_FAILURE';
+
+export const SET_SELECT_STATE = 'app/AdminRole/SET_SELECT_STATE';

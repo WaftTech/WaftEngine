@@ -2,48 +2,21 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
-@font-face { font-family: 'MaterialIcons-Regular'; 
-  src: url('../app/assets/font/MaterialIcons-Regular.eot') 
-  format('embedded-opentype'), 
-  url('../app/assets/font/MaterialIcons-Regular.woff') 
-  format('woff'), 
-  url('../app/assets/font/MaterialIcons-Regular.ttf') 
-  format('truetype'); 
-  font-weight: normal; font-style: normal; }
-
-  .material-icons {
-    font-family: 'MaterialIcons-Regular';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 18px;  /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-  
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-  
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-  
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-
-
 /* /* General Css Starts */
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  margin-top:0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-top: 0;
   margin-bottom: 0.5rem;
   font-family: inherit;
   font-weight: 500;
@@ -51,40 +24,13 @@ h1, h2, h3, h4, h5, h6,
   color: inherit;
 }
 
-h1, .h1 {
-  font-size: 2.5rem;
-}
-
-h2, .h2 {
-  font-size: 2rem;
-}
-
-h3, .h3 {
-  font-size: 1.75rem;
-}
-
-h4, .h4 {
-  font-size: 1.5rem;
-}
-
-h5, .h5 {
-  font-size: 1.25rem;
-}
-
-h6, .h6 {
-  font-size: 1rem;
-}
-
-.list-circle{
+.list-circle {
   list-style-type: circle;
-  padding-left:40px;
-} 
-
-/* custom css starts */
+  padding-left: 40px;
+}
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
 }
 
 button:focus,
@@ -97,30 +43,26 @@ div.react-datepicker__input-container {
   display: block;
 }
 .select-none .active {
-  color: #fff;
-  background-color: #43414d;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  box-shadow: inset 4px 0 0 #4299e1;
 }
 
 .inputbox {
-  display: block;
-  width: 100%;
-  padding: 6px 12px;
-  transition: all 0.2s ease-in-out;
-  font-size: 0.875rem;
-  background: #ffffff;
-  border: 1px solid #d4d9df;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  @apply block w-full py-2 px-3 transition-all bg-white border border-gray-300 rounded text-sm;
 }
+/* select.inputbox { height:38px;} */
+
 .inputbox:focus {
   outline: 0;
-  box-shadow: none;
+  box-shadow: 0 0 0 2px #bee3f8;
+  border: 1px solid #63b3ed;
 }
-.inputbox.bg-white {
-  background: #ffffff;
+
+.inputbox[disabled] {
+  opacity: 0.5;
 }
-select.inputbox {
-  height: 36px;
-}
+label { @apply text-sm}
 
 .waftsrchstyle {
   width: 40px;
@@ -136,13 +78,13 @@ select.inputbox {
   min-width: 300px;
 }
 
-div#component-error-text {
+.error {
+  position: relative;
+  top: 4px;
   color: #ff3b30;
   margin: 0;
   font-size: 0.75rem;
   text-align: left;
-  margin-top: 8px;
-  min-height: 1em;
 }
 
 .waft-gradient {
@@ -151,6 +93,7 @@ div#component-error-text {
   left: 0;
   right: 0;
   height: 2px;
+  z-index: 9000;
   background: repeating-linear-gradient(
     to right,
     #1c2260 0%,
@@ -175,20 +118,169 @@ div#component-error-text {
     background-position: -200% 0;
   }
 }
-
-.ease-in-out {
-  transition: all 0.2s ease-in-out;
-}
 .rotate-90 {
   transform: rotate(-90deg);
 }
 
-.btn{
-   padding: 0.5rem 1rem;
-   color:#FFFFFF;
-   border-radius: 0.25rem;
+.btn {
+  @apply py-2 px-4 rounded text-sm mt-4 transition-all duration-200;
 }
-.qr-code { transform: scale(4);}
+
+.btn.margin-none {
+  @apply mt-0;
+}
+.qr-code {
+  transform: scale(2);
+}
+.tag {
+  @apply cursor-pointer bg-gray-200 mt-2 mr-1 px-2 py-1 text-sm inline-flex items-center;
+}
+.tag span {
+  @apply text-xs p-1;
+}
+.fade {
+  transition: opacity 0.25s linear;
+}
+
+.Waft_Tab .active {
+  @apply border-t-2;
+  border-top-color: #2a3c85;
+}
+
+@keyframes arrowtip {
+  from {
+    top: 32px;
+  }
+  to {
+    top: 20px;
+  }
+}
+
+.circular_loader {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: whiteSmoke;
+  box-shadow: 4px -40px 60px 5px #283772 inset;
+}
+
+.waftloader {
+  background: linear-gradient(to right, #2A3C85 50%, transparent 50%);
+  animation: spin 1s infinite linear;
+}
+.waftloader:before {
+  display: block;
+  content: '';
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
 
 
+.arrow_box {
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #1e1e1e;
+  border-width: 10px;
+  animation: arrowtip 0.5s cubic-bezier(0, 1.1, 0.26, 1.08) 1s;
+}
 
+
+.checkbox {
+  @apply relative select-none inline-flex items-center mr-5 justify-start mt-4;
+}
+
+.checkbox input[type='checkbox'] {
+  @apply hidden;
+}
+
+.checkbox .box {
+  @apply w-5 h-5 border border-gray-300 rounded mr-2 cursor-pointer inline-flex justify-center items-center relative transition-all;
+}
+
+.checkbox label {
+  @apply flex items-center justify-center cursor-pointer text-sm;
+}
+
+.checkbox label:hover .box {
+  @apply border-blue-500;
+}
+
+.checkbox .check-icon {
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+  transform: scale(0);
+  @apply text-white text-xs;
+}
+
+.checkbox input[type='checkbox']:checked + label .box {
+  @apply bg-blue-500 border-blue-500;
+}
+
+.checkbox input:checked + label > .box > .check-icon {
+  transform: scale(1);
+}
+.checkbox input:checked + label .box:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #1890ff;
+  border-radius: 2px;
+  animation: CheckboxEffect 0.36s ease-in-out;
+  content: '';
+  @apply border-blue-500;
+}
+
+@keyframes CheckboxEffect {
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.label-inactive,
+.label-active {
+  @apply w-20 text-center rounded-full inline-block py-1 px-2 bg-gray-100 text-xs text-gray-400;
+}
+.label-active {
+  @apply bg-green-100 text-green-500 border-green-200;
+}
+
+.label-inactive {
+  @apply bg-red-100 text-red-500 border-red-200;
+}
+
+/* animation */
+
+.animate-none {
+  animation: none;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@tailwind utilities;

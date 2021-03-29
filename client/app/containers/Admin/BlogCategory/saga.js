@@ -61,14 +61,17 @@ function* addEdit() {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
   const errors = validate(data);
+  let main_data = { ...data };
+  if (data.image && data.image._id) {
+    main_data = { ...main_data, image: data.image._id };
+  }
   if (errors.isValid) {
     yield fork(
-      Api.multipartPost(
+      Api.post(
         'blog/category',
         actions.addEditSuccess,
         actions.addEditFailure,
-        data,
-        { file: data.image },
+        main_data,
         token,
       ),
     );
@@ -81,7 +84,7 @@ function* addEdit() {
 
 function* addEditSuccessFunc(action) {
   const snackbarData = {
-    message: action.payload.msg || 'Update success!!',
+    message: action.payload.msg || 'Save success!!',
     options: {
       variant: 'success',
     },
@@ -140,6 +143,18 @@ function* setErrorFunc() {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* getCount(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `blog/count/category/${action.payload}`,
+      actions.getCountSuccess,
+      actions.getCountFailure,
+      token,
+    ),
+  );
+}
+
 // Individual exports for testing
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
@@ -151,4 +166,5 @@ export default function* defaultSaga() {
   yield takeLatest(types.SET_ERROR_VALUE, setErrorFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
+  yield takeLatest(types.GET_COUNT_REQUEST, getCount);
 }

@@ -4,16 +4,16 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, Link } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { Link, NavLink } from 'react-router-dom';
 import { compose } from 'redux';
-import { makeSelectMenu } from '../../containers/App/selectors';
+import { createStructuredSelector } from 'reselect';
 import { loadMenuRequest } from '../../containers/App/actions';
-
+import { makeSelectMenu } from '../../containers/App/selectors';
 import './style.css';
+
 /* eslint-disable react/prefer-stateless-function */
 class StaticMenu extends React.PureComponent {
   static propTypes = {
@@ -42,10 +42,7 @@ class StaticMenu extends React.PureComponent {
     if (parentObj.child_menu.length) {
       parentObj.child_menu.map(childElement => {
         childContent.push(
-          // <ul
-          //   className={depth == 1 ? 'relative menu-child text-sm' : 'absolute'}
-          // >
-          <li>
+          <li key={childElement._id}>
             <Link to={childElement.url} onClick={this.handleToggle}>
               {childElement.title}
             </Link>
@@ -53,7 +50,6 @@ class StaticMenu extends React.PureComponent {
               <ul className="absolute">{this.getChildElement(childElement)}</ul>
             ) : null}
           </li>,
-          // </ul>,
         );
       });
       return childContent;
@@ -69,53 +65,31 @@ class StaticMenu extends React.PureComponent {
         <div className="flex text-sm nav md:w-full md:text-center lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
           {data.map(each => {
             if (each.is_internal) {
-              // if (each.child_menu && each.child_menu[0]._id !== '') {
-              //   return (
-              //     <>
-              //       <NavLink
-              //         to="#"
-              //         className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-              //         onClick={this.handleToggle}
-              //       >
-              //         {each.title}
-
-              //         {each.child_menu && each.child_menu[0]._id !== '' && (
-              //           <ul className="relative menu-child text-sm">
-              //             {this.getChildElement(each, 1)}
-              //           </ul>
-              //         )}
-              //       </NavLink>
-              //     </>
-              //   );
-              // }
               return (
-                <>
-                  <NavLink
-                    to={each.url}
-                    className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-                    onClick={this.handleToggle}
-                  >
-                    {each.title}
-                    {each.child_menu && each.child_menu.length > 0 && (
-                      // each.child_menu[0]._id !== '' &&
-                      <ul className="relative menu-child text-sm">
-                        {this.getChildElement(each, 1)}
-                      </ul>
-                    )}
-                  </NavLink>
-                </>
+                <NavLink
+                  key={each._id}
+                  to={each.url}
+                  className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
+                  onClick={this.handleToggle}
+                >
+                  {each.title}
+                  {each.child_menu && each.child_menu.length > 0 && (
+                    <ul className="relative menu-child text-sm">
+                      {this.getChildElement(each, 1)}
+                    </ul>
+                  )}
+                </NavLink>
               );
             }
             return (
-              <>
-                <a
-                  className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
-                  href={each.url}
-                  target={each.target}
-                >
-                  {each.title}
-                </a>
-              </>
+              <a
+                className="hidden md:block menu uppercase text-white text-center block no-underline py-2 hover:bg-primary md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block md:mr-5"
+                key={each._id}
+                href={each.url}
+                target={each.target}
+              >
+                {each.title}
+              </a>
             );
           })}
         </div>
@@ -138,23 +112,3 @@ const withConnect = connect(
 );
 
 export default compose(withConnect)(StaticMenu);
-// return data.map(each => (
-//   <div key={each._id}>
-//     {each.is_internal ? (
-//       <Link
-//         to={each.url}
-//         className="my-auto mr-8 sm:mr-0 items-center hover:text-primary"
-//       >
-//         {each.title}
-//       </Link>
-//     ) : (
-//       <a
-//         className="my-auto mr-8 sm:mr-0 items-center hover:text-primary"
-//         href={each.url}
-//         target={each.target}
-//       >
-//         {each.title}
-//       </a>
-//     )}
-//   </div>
-// ));

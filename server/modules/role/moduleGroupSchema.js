@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const moduleGroupSchema = new schema({
-  module_group: { type: String, required: true, unique: true },
+  module_group: { type: String },
   description: { type: String },
-  module_group_main: { type: schema.Types.ObjectId, path: 'moduleGroup' },
   order: { type: Number },
+  is_deleted: { type: Boolean, default: false }
 });
 
-module.exports = moduleGroup = mongoose.model('moduleGroup', moduleGroupSchema);
+module.exports = moduleGroup = mongoose.model('modulegroups', moduleGroupSchema);

@@ -31,8 +31,8 @@ sliderController.GetSlider = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    let sliders = await otherHelper.getquerySendResponse(sliderSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totaldata);
+    let sliders = await otherHelper.getQuerySendResponse(sliderSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totalData);
   } catch (err) {
     next(err);
   }

@@ -69,17 +69,17 @@ function* addEdit() {
   yield cancel(successWatcher);
 }
 
-function* deleteOne(action) {
-  const token = yield select(makeSelectToken());
-  yield call(
-    Api.delete(
-      `role/module-group/${action.payload}`,
-      actions.deleteOneSuccess,
-      actions.deleteOneFailure,
-      token,
-    ),
-  );
-}
+// function* deleteOne(action) {
+//   const token = yield select(makeSelectToken());
+//   yield call(
+//     Api.delete(
+//       `role/module-group/${action.payload}`,
+//       actions.deleteOneSuccess,
+//       actions.deleteOneFailure,
+//       token,
+//     ),
+//   );
+// }
 
 function* deleteSuccessFunc(action) {
   const snackbarData = {
@@ -89,6 +89,7 @@ function* deleteSuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
+  yield put(actions.loadAllRequest());
 }
 
 function* deleteFailureFunc(action) {
@@ -126,7 +127,7 @@ export default function* subModulesSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-  yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
+  // yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
   yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);

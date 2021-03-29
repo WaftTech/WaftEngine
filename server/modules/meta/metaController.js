@@ -25,8 +25,8 @@ metaController.getAllMeta = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    let metas = await otherHelper.getquerySendResponse(metaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, metas.data, metaConfig.get, page, size, metas.totaldata);
+    let pulledData = await otherHelper.getQuerySendResponse(metaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, metaConfig.get, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -58,15 +58,15 @@ metaController.saveMeta = async (req, res, next) => {
     let metaS = { client_route, title, meta_keywords, meta_description };
 
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
       metaS.meta_image = req.file;
     }
     if (_id) {

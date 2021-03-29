@@ -6,6 +6,9 @@ module.exports = {
     isLength: 'This field length should be minimum 2!!',
     isMongoID: 'This field is invalid',
   },
+  errorIn:{
+inputErrors:'Invalid Inputs'
+  },
   templateSave: 'Template saved successful!!',
   templateGet: 'Template get successful!!',
   namesGet: 'Template Names get successful!!',

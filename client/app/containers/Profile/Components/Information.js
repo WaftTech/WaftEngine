@@ -1,35 +1,28 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import CheckBox from '@material-ui/core/Checkbox';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import injectSaga from 'utils/injectSaga';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import { DATE_FORMAT } from '../../App/constants';
+import * as mapDispatchToProps from '../actions';
 // core components
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOne,
   makeSelectErrors,
   makeSelectLoading,
+  makeSelectOne,
 } from '../selectors';
-import { DATE_FORMAT } from '../../App/constants';
-import * as mapDispatchToProps from '../actions';
-import Input from '../../../components/customComponents/Input';
+import DateInput from '../../../components/DateInput';
 
-class UserPersonalInformationPage extends React.PureComponent {
+class UserPersonalInformationPage extends React.Component {
   static propTypes = {
     loadOneRequest: PropTypes.func.isRequired,
     addEditRequest: PropTypes.func.isRequired,
@@ -37,7 +30,6 @@ class UserPersonalInformationPage extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     errors: PropTypes.object,
   };
@@ -66,86 +58,71 @@ class UserPersonalInformationPage extends React.PureComponent {
   render() {
     const { classes, one, errors, loading } = this.props;
     return loading ? (
-      <div>Loading</div>
+      <div className="circular_loader waftloader"></div>
     ) : (
-      <React.Fragment>
-        <div
-          className="w-full md:w-1/2 pb-4"
-          error={errors && errors.name && errors.name.length > 0}
-        >
-          <Input
-            label="Name"
-            inputclassName="inputbox"
-            inputid="name"
-            inputType="text"
-            name="Name"
-            value={one.name || ''}
-            onChange={this.handleChange('name')}
-            error={errors.name}
-          />
-        </div>
-
-        <div
-          className="w-full md:w-1/2 pb-4"
-          error={errors && errors.email && errors.email.length > 0}
-        >
-          <Input
-            label="Email"
-            inputclassName="inputbox"
-            inputid="email"
-            inputType="text"
-            name="Email"
-            value={one.email || ''}
-            onChange={this.handleChange('name')}
-            error={errors.email}
-          />
-        </div>
-
-        <div className="md:w-1/2 pb-4">
-          <label className="font-bold text-gray-700">Date Of Birth</label>
-
-          <DatePicker
-            name="date_of_birth"
-            className="inputbox"
-            value={
-              (one.date_of_birth &&
-                moment(one.date_of_birth).format(DATE_FORMAT)) ||
-              ''
-            }
-            onChange={this.handleDateChange('date_of_birth')}
-          />
-        </div>
-
-        {/* <FormControlLabel
-          control={
-            <CheckBox checked={one.email_verified || false} color="primary" />
-          }
-          label="Email Verified"
-        /> */}
-
-        <div className="w-full pb-4">
-          <div>
-            <span className="font-bold text-gray-700">Role :</span>{' '}
-            {one.roles.map(each => (
-              <span key={each._id} className="rounded border px-4 py-2 mr-2">
-                {each.role_title}{' '}
-              </span>
-            ))}
+        <React.Fragment>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Name</label>
+            <input
+              className="inputbox"
+              id="name"
+              type="text"
+              name="Name"
+              value={one.name || ''}
+              onChange={this.handleChange('name')}
+            />
+            <div className="error">{errors.name}</div>
           </div>
-        </div>
 
-        {/* <div className="w-full  pb-4">
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Email</label>
+            <input
+              className="inputbox"
+              id="email"
+              type="text"
+              name="Email"
+              value={one.email || ''}
+              onChange={this.handleChange('name')}
+            />
+            <div className="error">{errors.email}</div>
+          </div>
+
+          <div className="md:w-1/2 pb-4">
+            <label className="text-sm">Date Of Birth</label>
+            <DateInput
+              onDateChange={date => {
+                this.props.setOneValue({
+                  key: 'date_of_birth',
+                  value: moment(date).format('YYYY-MM-DD'),
+                });
+              }}
+              birth_date={moment(one.date_of_birth).format('YYYY-MM-D')}
+            />
+          </div>
+
+          <div className="w-full pb-4">
+            <div>
+              <label className="text-sm">Role :</label>{' '}
+              {one.roles.map(each => (
+                <span key={each._id} className="rounded-full px-2 py-1 mr-2 text-xs border">
+                  {each.role_title}{' '}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* <div className="w-full  pb-4">
           Your account created at {moment(one.added_at).format(DATE_FORMAT)}
         </div> */}
 
-        <button
-          className="block btn bg-primary hover:bg-secondary"
-          onClick={this.handleSave}
-        >
-          Save
+          <button
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save Changes
         </button>
-      </React.Fragment>
-    );
+        </React.Fragment>
+      );
   }
 }
 
@@ -155,14 +132,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
@@ -174,5 +144,4 @@ export default compose(
   withConnect,
   withReducer,
   withSaga,
-  withStyle,
 )(UserPersonalInformationPage);

@@ -1,15 +1,16 @@
 const Jimp = require('jimp');
 const fs = require('fs');
+const path = require('path');
 
-const photomanipulate = {};
+const photoManipulate = {};
 
-photomanipulate.changephoto = async (req, res, next) => {
+photoManipulate.changephoto = async (req, res, next) => {
   try {
     let w = req.params.w - 0;
     let h = req.params.h - 0;
     let picpath = req.params[0];
 
-    if (fs.existsSync(`./public/${req.params.w}-${req.params.h}/${picpath}`)) {
+    if (fs.existsSync(`./public/${w}-${h}/${picpath}`)) {
       return next();
     }
     if (!fs.existsSync(`./public/${picpath}`)) {
@@ -19,21 +20,31 @@ photomanipulate.changephoto = async (req, res, next) => {
       h = Jimp.AUTO;
     }
     Jimp.read(`./public/${picpath}`, async (err, image) => {
-      if (err) next(err);
-      const i = await image.scaleToFit(w, h).write(`./public/${req.params.w}-${req.params.h}/${picpath}`);
-      fs.readFile(`./public/${req.params.w}-${req.params.h}/${picpath}`, function(err, data) {
-        if (err) {
-          return next(err);
+      if (err) {
+        return next();
+      }
+      if (image) {
+        var o_w = image.bitmap.width;
+        var o_h = image.bitmap.height;
+        if (o_w > w || o_h > h) {
+          const i = await image.scaleToFit(w, h).write(`./public/${w}-${h}/${picpath}`);
         } else {
-          res.send(data);
+          const i = await image.write(`./public/${w}-${h}/${picpath}`);
         }
-      });
-    }).catch(err => {
-      next(err);
+        fs.readFile(`./public/${w}-${h}/${picpath}`, async function (err, data) {
+          if (err) {
+            return res.sendFile(path.join(__dirname, `../public/${picpath}`));
+          } else {
+            return res.send(data);
+          }
+        });
+      }
+    }).catch((err) => {
+      return next();
     });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
-module.exports = photomanipulate;
+module.exports = photoManipulate;

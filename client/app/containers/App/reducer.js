@@ -14,6 +14,7 @@ import produce from 'immer';
 import * as types from './constants';
 import { LOAD_ALL_SUCCESS as MEDIA_LOAD_ALL_SUCCESS } from '../Admin/Media/constants';
 import * as utils from './utils';
+import { toast } from 'react-toastify';
 
 // The initial state of the App
 export const initialState = {
@@ -27,6 +28,10 @@ export const initialState = {
   latestBlogs: {},
   menu: {},
   blogLoading: false,
+  faqData: {
+    cat: {},
+    faq: [],
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -120,6 +125,8 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];
+        // console.log('action.paylod', action.payload);
+
         break;
       case types.REMOVE_SNACKBAR:
         draft.notifications = [
@@ -134,6 +141,9 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           [action.payload.data.key]: action.payload.data.child,
         };
         break;
+
+      case types.LOAD_FAQ_SUCCESS:
+        draft.faqData = action.payload.data;
     }
   });
 

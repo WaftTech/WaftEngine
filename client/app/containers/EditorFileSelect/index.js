@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import qs from 'query-string';
-
+import { Helmet } from 'react-helmet';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
@@ -33,17 +33,18 @@ export const EditorFileSelect = ({
   const queryObj = qs.parse(search);
 
   useEffect(() => {
-    loadFilesRequest(queryObj.path);
+    loadFilesRequest({ path: queryObj.path });
   }, [queryObj.path]);
 
-  return (
-    <div className="container mx-auto h-screen">
-      <FileList
-        queryObj={queryObj}
-        selectFile={selectFile}
-        uploadMultiple={uploadMultiple}
-      />
-    </div>
+  return (<>
+    <Helmet>
+      <title>Media Manage</title>
+    </Helmet>
+    <FileList
+      queryObj={queryObj}
+      selectFile={selectFile}
+      uploadMultiple={uploadMultiple}
+    /></>
   );
 };
 
@@ -62,12 +63,6 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(
-  withConnect,
-  memo,
-)(EditorFileSelect);
+export default compose(withConnect, memo)(EditorFileSelect);

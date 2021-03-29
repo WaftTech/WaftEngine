@@ -2,38 +2,84 @@ const httpStatus = require('http-status');
 const settingSch = require('./settingSchema');
 const settingConfig = require('./settingConfig');
 const otherHelper = require('../../helper/others.helper');
+const settingsHelper = require('../../helper/settings.helper');
+const NodeCache = require("node-cache");
+const myCache = new NodeCache();
 const settingController = {};
 
-settingController.GetSetting = async (req, res, next) => {
+settingController.GetSettingAll = async (req, res, next) => {
   try {
-    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
-
-    if (req.query.find_title) {
-      searchQuery = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+    if (req.query.find_type && req.query.find_type != 'all') {
+      searchQuery = { type: { $regex: req.query.find_type, $options: 'i' }, ...searchQuery };
     }
-    if (req.query.find_value) {
-      searchQuery = { value: { $regex: req.query.find_value, $options: 'i' }, ...searchQuery };
+    if (req.query.find_key) {
+      searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
     }
+    if (req.query.find_sub_type && req.query.find_type != 'all' && req.query.find_sub_type != 'all') {
+      searchQuery = { sub_type: { $regex: req.query.find_sub_type, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.find_removable) {
+      searchQuery = { is_removable: req.query.find_removable, ...searchQuery }
+    };
 
-    selectQuery = 'key value';
-
-    let setting = await otherHelper.getquerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totaldata);
+    sortQuery = { type: 1, sub_type: 1, key: 1 }
+    let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    if (setting) {
+      return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
+    }
   } catch (err) {
     next(err);
   }
 };
+
+
+settingController.GetSettingType = async (req, res, next) => {
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, null);
+
+    if (req.query.find_key) {
+      searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.find_value) {
+      searchQuery = { value: { $regex: req.query.find_value, $options: 'i' }, ...searchQuery };
+    }
+    searchQuery = { type: req.params.type, ...searchQuery };
+
+
+    let setting = await otherHelper.getQuerySendResponse(settingSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, setting.data, settingConfig.get, page, size, setting.totalData);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+settingController.GetSettingSingle = async (req, res, next) => {
+  try {
+    settingId = req.params.setting_id
+
+    let setting = await settingSch.findOne({ _id: settingId });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, setting, null, settingConfig.get, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 settingController.SaveSetting = async (req, res, next) => {
   try {
     let data = req.body;
     if (data._id) {
       data.updated_by = req.user.id;
+      settingsHelper('##$##', '##$##', data)
       let updated = await settingSch.findByIdAndUpdate(data._id, { $set: data });
       return otherHelper.sendResponse(res, httpStatus.OK, true, updated, null, settingConfig.save, null);
     } else {
+      data.type = req.params.type
       data.added_by = req.user.id;
-      let newsetting = new settingSch(data);
-      let saved = await newsetting.save();
+      let newSetting = new settingSch(data);
+      let saved = await newSetting.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, saved, null, settingConfig.save, null);
     }
   } catch (err) {
@@ -64,4 +110,44 @@ settingController.EditSetting = async (req, res, next) => {
     next(err);
   }
 };
+
+settingController.GetAllType = async (req, res, next) => {
+  try {
+    let setting = ['all']
+    let pulledData = await settingSch.distinct('type')
+    let temp = setting.concat(pulledData)
+    return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'successful get all type', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+settingController.GetSubTypeByType = async (req, res, next) => {
+  try {
+    const type = req.params.type
+    var temp
+    let setting = ['all']
+    let pulledData = await settingSch.find({ type: type }).distinct('sub_type')
+    temp = setting.concat(pulledData)
+    return otherHelper.sendResponse(res, httpStatus.OK, true, temp, null, 'successful get all sub-type', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+settingController.DeleteSettings = async (req, res, next) => {
+  try {
+    const settingId = req.params.id;
+    const temp = await settingSch.findOne({ _id: settingId, is_removable: true })
+    if (temp && temp._id) {
+      const del = await settingSch.findByIdAndUpdate(settingId, { $set: { is_deleted: true } });
+      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'setting delete success!', null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, true, null, null, 'This setting is not Removable', null);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = settingController;

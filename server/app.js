@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
 const httpStatus = require('http-status');
-const mongoURI = process.env.MONGODB_URI ? process.env.MONGODB_URI : require('./config/keys').mongoURI;
+const mongoURI = process.env.MONGODB_URI
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
@@ -22,7 +22,6 @@ const changephoto = require('./helper/photomanipulate').changephoto;
 const auth = require('./helper/auth.helper');
 
 const app = express();
-
 auth(passport);
 // Logger middleware
 app.use(logger('dev'));
@@ -84,10 +83,10 @@ async function MongoDBConnection(app) {
 app.use(passport.initialize());
 
 // Passport Config
-require('./helper/passport')(passport);
+require('./helper/passport.helper')(passport);
 
 // CORS setup for dev
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   req.client_ip_address = requestIp.getClientIp(req);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');

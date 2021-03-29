@@ -4,9 +4,8 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Crumb from './Crumb';
 

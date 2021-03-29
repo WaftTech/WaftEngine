@@ -6,8 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from '../reducer';
@@ -19,24 +17,11 @@ import {
   makeSelectErrors,
 } from '../selectors';
 import * as mapDispatchToProps from '../actions';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
-
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
+import { FaArrowLeft } from 'react-icons/fa';
+import CKEditor from 'react-ckeditor-component';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -47,7 +32,7 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
+
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     category: PropTypes.array.isRequired,
@@ -71,6 +56,11 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
+  handleEditorChange = (e, name) => {
+    const newContent = e.editor.getData();
+    this.props.setOneValue({ key: name, value: newContent });
+  };
+
   handleGoBack = () => {
     this.props.push('/admin/faq-manage');
   };
@@ -90,56 +80,51 @@ class AddEdit extends React.PureComponent {
             {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq '}
           </title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={this.handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id ? 'Edit Faq' : 'Add Faq'}
           </PageHeader>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-          <Input
-              label="Question"
-              inputclassName="inputbox"
-              inputid="faq"
-              inputType="text"
+            <label>Question</label>
+            <input
+              className="inputbox"
+              id="faq"
+              type="text"
               name="Question"
               value={one.question || ''}
               onChange={this.handleChange('question')}
             />
           </div>
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="font-bold text-gray-700"
-              htmlFor="grid-last-name"
-            >
-              Answer
-            </label>
-            <textarea
-              className="inputbox"
-              multiline="true"
-              rows="5"
+            <label>Answer</label>
+            {/* <textarea
+                className="inputbox"
+                multiline="true"
+                rows="5"
+                name="Answer"
+                id="faq-answer"
+                value={one.title || ''}
+                onChange={this.handleChange('title')}
+              /> */}
+
+            <CKEditor
               name="Answer"
-              id="faq-answer"
-              value={one.title || ''}
-              onChange={this.handleChange('title')}
+              content={one && one.title}
+              config={{ allowedContent: true }}
+              events={{
+                change: e => this.handleEditorChange(e, 'title'),
+                value: (one && one.title) || '',
+              }}
             />
-            {/* <div id="component-error-text">{errors.title}</div> */}
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label
-              className="block uppercase tracking-wide text-gray-800 text-xs font-bold mb-2"
-              htmlFor="category"
-            >
-              Category
-            </label>
+            <label>Category</label>
             <select
               className="inputbox"
               value={one.category || ''}
@@ -163,7 +148,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
-            className="block btn bg-primary hover:bg-secondary"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
             Save
@@ -173,8 +158,6 @@ class AddEdit extends React.PureComponent {
     );
   }
 }
-
-const withStyle = withStyles(styles);
 
 const withReducer = injectReducer({ key: 'faqManagePage', reducer });
 const withSaga = injectSaga({ key: 'faqManagePage', saga });
@@ -186,13 +169,5 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

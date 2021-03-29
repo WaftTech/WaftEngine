@@ -1,7 +1,10 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const templateConfig = require('./templateConfig');
+const templateSch = require('./templateSchema');
 const templateValidation = {};
 
 templateValidation.sanitized = (req, res, next) => {
@@ -55,19 +58,16 @@ templateValidation.sanitized = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
-templateValidation.validate = (req, res, next) => {
+templateValidation.validate = async (req, res, next) => {
+  const data = req.body
   const validateArray = [
     {
       field: '_id',
       validate: [
-        {
-          condition: 'IsEmpty',
-          msg: templateConfig.validate.isEmpty,
-        },
         {
           condition: 'IsMongoId',
           msg: templateConfig.validate.isMongoID,
@@ -99,6 +99,10 @@ templateValidation.validate = (req, res, next) => {
           condition: 'IsLength',
           msg: templateConfig.validate.isLength50,
           option: { min: 2, max: 50 },
+        },
+        {
+          condition: 'IsProperKey',
+          msg: 'not Valid Input',
         },
       ],
     },
@@ -182,9 +186,20 @@ templateValidation.validate = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(req.body, validateArray);
+  let errors = validateHelper.validation(req.body, validateArray);
+
+  let key_filter = { is_deleted: false, template_key: data.template_key }
+  if (data._id) {
+    key_filter = { ...key_filter, _id: { $ne: data._id } }
+  }
+  const already_key = await templateSch.findOne(key_filter);
+  if (already_key && already_key._id) {
+    errors = { ...errors, template_key: 'template_key already exist' }
+  }
+
+
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, templateConfig.errorIn.inputErrors, null);
   } else {
     next();
   }

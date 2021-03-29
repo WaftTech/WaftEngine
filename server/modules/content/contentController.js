@@ -24,9 +24,9 @@ contentController.GetContent = async (req, res, next) => {
       searchQuery = { ...searchQuery, is_page: req.query.find_is_page };
     }
     populate = [{ path: 'image' }];
-    let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    let pulledData = await otherHelper.getQuerySendResponse(contentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, contentConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -34,6 +34,7 @@ contentController.GetContent = async (req, res, next) => {
 contentController.SaveContent = async (req, res, next) => {
   try {
     const contents = req.body;
+    console.log(contents)
     if (contents && contents._id) {
       const update = await contentSch.findByIdAndUpdate(contents._id, { $set: contents }, { new: true });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, contentConfig.save, null);
@@ -59,8 +60,8 @@ contentController.GetContentDetail = async (req, res, next) => {
 contentController.GetContentByKey = async (req, res, next) => {
   try {
     const key = req.params.key;
-    const contents = await contentSch.findOne({ key, is_deleted: false }).populate([{ path: 'image' }]);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
+    const contents = await contentSch.findOne({ key, is_deleted: false, is_active: true }).populate([{ path: 'image' }]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, contents ? contents : { key: req.params.key, description: `<div class="text-sm border border-red-100 bg-red-50 rounded px-2 py-1 text-red-600 inline-block m-4">Content not found [key=${req.params.key}]</div>` }, null, contentConfig.get, null);
   } catch (err) {
     next(err);
   }

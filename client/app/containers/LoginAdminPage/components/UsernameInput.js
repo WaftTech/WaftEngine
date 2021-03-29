@@ -16,7 +16,7 @@ const EmailInput = props => {
         {'Email'}
       </label>
       <input
-        error={hasError.toString()}
+        // error={hasError.toString()}
         onChange={handleChange}
         value={email}
         className="inputbox"
@@ -24,7 +24,7 @@ const EmailInput = props => {
         type="text"
         placeholder="Username"
       />
-      {error && <div id="component-error-text">{error}</div>}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };

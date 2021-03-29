@@ -12,7 +12,6 @@ import reducer from '../reducer';
 import saga from '../saga';
 import { loadArchivesRequest } from '../actions';
 import { makeSelectArchives, makeSelectArchiveLoading } from '../selectors';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
 import ArchiveSkeleton from '../Skeleton/Archive';
 
 function Archives(props) {
@@ -38,7 +37,7 @@ function Archives(props) {
                   >
                     <Link
                       className="block py-3 no-underline text-gray-700 hover:text-black"
-                      to={`/news/date/${moment(each).format('YYYY-MM')}`}
+                      to={`/blog/date/${moment(each).format('YYYY-MM')}`}
                     >
                       <time>{moment(each).format('MMMM YYYY')}</time>
                     </Link>

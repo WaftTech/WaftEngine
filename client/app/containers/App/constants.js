@@ -11,18 +11,18 @@
 
 export const FB_APP_ID = '308391736756480';
 export const FB_APP_FIELDS = 'id,email,name';
-export const RECAPTCHA_SITE_KEY = '6LftqoQUAAAAAOnGULHOWhdUACVQYeHFggJdRojU';
+export const RECAPTCHA_SITE_KEY = '6LdYQrAUAAAAAAtG3BDxM0YcJU4XbGQGb6QVA49G';
 export const GOOGLE_CLIENT_ID =
   '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com';
 
 export const API_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.waftengine.com/api/'
+    ? '/api/'
     : 'http://localhost:5050/api/';
 
 export const IMAGE_BASE =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.waftengine.com/'
+    ? '/'
     : 'http://localhost:5050/';
 
 export const URL_BASE =
@@ -69,3 +69,7 @@ export const LOAD_LATEST_BLOGS_FAILURE = 'app/App/LOAD_LATEST_BLOGS_FAILURE';
 export const LOAD_MENU_REQUEST = 'app/App/LOAD_MENU_REQUEST';
 export const LOAD_MENU_SUCCESS = 'app/App/LOAD_MENU_SUCCESS';
 export const LOAD_MENU_FAILURE = 'app/App/LOAD_MENU_FAILURE';
+
+export const LOAD_FAQ_REQUEST = 'app/App/LOAD_FAQ_REQUEST';
+export const LOAD_FAQ_SUCCESS = 'app/App/LOAD_FAQ_SUCCESS';
+export const LOAD_FAQ_FAILURE = 'app/App/LOAD_FAQ_FAILURE';

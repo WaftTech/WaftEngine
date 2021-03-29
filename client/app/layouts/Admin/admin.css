@@ -1,0 +1,58 @@
+.pageheader {
+  display: flex;
+  align-items: center;
+}
+
+.backbtn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  margin-right: 20px;
+  justify-content: center;
+  box-shadow: inset 0 0 0 20px #fff;
+  @apply bg-blue-500;
+}
+.backbtn:hover {
+  box-shadow: inset 0 0 0 0px #fff;
+  @apply text-white;
+}
+
+.trash-lid {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+}
+.pencil,
+.trash-lid,
+.dash {
+  transition: all 0.1s ease-in-out;
+}
+.pencil {
+  position: relative;
+  right: 0;
+  color: #3b82f6;
+  font-size: 18px;
+}
+
+.trash-icon:hover .trash-lid {
+  top: 7px;
+}
+.dash {
+  position: absolute;
+  height: 2px;
+  width: 0px;
+  background: #4299e1;
+  left: 8px;
+  bottom:7px;
+}
+.edit-icon:hover .dash {
+  width: 5px;
+}
+.edit-icon:hover .pencil {
+  right: -4px;
+}

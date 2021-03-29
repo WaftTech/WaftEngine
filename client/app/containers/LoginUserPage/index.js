@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { Helmet } from 'react-helmet';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { createStructuredSelector } from 'reselect';
@@ -16,8 +16,6 @@ import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
-import { Input } from '../../components/customComponents';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import { FB_APP_ID, FB_APP_FIELDS, GOOGLE_CLIENT_ID } from '../App/constants';
@@ -34,7 +32,9 @@ import {
   makeSelectTwoFactor,
 } from './selectors';
 import Modal from '../../components/Modal';
+import Dialog from '../../components/Dialog/index';
 import '../../assets/styles/loading.css';
+import { makeSelectErrorMsg } from '../ContactUs/selectors';
 
 const LoginUserPage = props => {
   const {
@@ -49,6 +49,7 @@ const LoginUserPage = props => {
     twoFactor,
     loadingObj: { loggingUser, sendingCode },
     helperObj: { showEmailTwoFactor, showGoogleTwoFactor },
+    setOpen,
   } = props;
 
   const handleClose = () => {
@@ -101,8 +102,17 @@ const LoginUserPage = props => {
     props.addTwoFactorRequest();
   };
 
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <Helmet>
+        <title>
+          Login
+          </title>
+      </Helmet>
       <Modal
         open={showEmailTwoFactor || showGoogleTwoFactor}
         handleClose={handleClose}
@@ -120,38 +130,37 @@ const LoginUserPage = props => {
               </div>
             </>
           ) : (
-            'Continue'
-          )
+              'Continue'
+            )
         }
         width="sm"
       >
         {showEmailTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <label>Enter the code</label>
+            <label className="text-xs">Check inbox for the code</label>
+            <input
               id="code"
               name="code"
-              subLabel="Check inbox for the code"
-              label="Enter the code"
-              error={errors && errors.multi_fa && errors.multi_fa.email.code}
               value={twoFactor && twoFactor.email && twoFactor.email.code}
               onChange={e => handleChange(e, 'email')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">
+              {errors && errors.multi_fa && errors.multi_fa.email.code}
+            </div>
           </div>
         )}
 
         {showGoogleTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <label>Enter the code</label>
+            <label className="text-xs">
+              Copy code from Google Authentication App
+            </label>
+            <input
               id="code"
               name="code"
-              subLabel="Copy code from Google Authentication App"
-              label="Enter the code"
-              error={
-                errors &&
-                errors.multi_fa &&
-                errors.multi_fa.google_authenticate.code
-              }
               value={
                 twoFactor &&
                 twoFactor.google_authenticate &&
@@ -160,31 +169,14 @@ const LoginUserPage = props => {
               onChange={e => handleChange(e, 'google_authenticate')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">
+              {errors &&
+                errors.multi_fa &&
+                errors.multi_fa.google_authenticate.code}
+            </div>
           </div>
         )}
       </Modal>
-      {/* <Modal
-        open={showGoogleTwoFactor}
-        handleClose={handleClose}
-        handleUpdate={handleSubmitCode}
-        width="sm"
-      >
-        <div className="">
-          <Input
-            id="code"
-            name="code"
-            subLabel="Check inbox for the code"
-            label="Enter the code"
-            error={errors.code}
-            value={
-              twoFactor &&
-              twoFactor.google_authenticate &&
-              twoFactor.google_authenticate.code
-            }
-            onChange={e => handleChange(e, 'google_authenticate')}
-          />
-        </div>
-      </Modal> */}
       <div className="container mx-auto mb-10">
         <div className="mx-auto max-w-md p-5 md:p-16">
           <h1 className="font-bold text-2xl">LOGIN</h1>{' '}
@@ -192,20 +184,20 @@ const LoginUserPage = props => {
             <UsernameInput />
             <PasswordInput />
             <button
-              className="btn mt-4 w-full bg-primary hover:bg-secondary"
+              className="btn text-white mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
               type="submit"
             >
               {loading ? (
                 <div className="btn_loading">
-                  <div />
-                  <div />
-                  <div />
-                  <div />
                   <span className="ml-2">Login</span>
+                  <div />
+                  <div />
+                  <div />
+                  <div />
                 </div>
               ) : (
-                'Login'
-              )}
+                  'Login'
+                )}
             </button>
           </form>
           <Link
@@ -246,7 +238,7 @@ const LoginUserPage = props => {
               icon="fa-facebook"
             />
             <GoogleLogin
-              className={`${classes.googbtn} flex jusitify-center flex-1`}
+              // className={`${classes.googbtn} flex jusitify-center flex-1`}
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Google"
               onSuccess={loginWithGoogleRequest}
@@ -272,7 +264,6 @@ const LoginUserPage = props => {
 };
 
 LoginUserPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   loginWithFbRequest: PropTypes.func.isRequired,
   loginWithGoogleRequest: PropTypes.func.isRequired,
@@ -288,27 +279,9 @@ const mapStateToProps = createStructuredSelector({
   loadingObj: makeSelectLoadingObj(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'loginUserPage', reducer });
 const withSaga = injectSaga({ key: 'loginUserPage', saga });
 
-const styles = {
-  googbtn: {
-    boxShadow: 'none!important',
-    border: '1px solid gainsboro!important',
-    borderLeft: 'none!important',
-  },
-};
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(LoginUserPage);
+export default compose(withReducer, withSaga, withConnect)(LoginUserPage);

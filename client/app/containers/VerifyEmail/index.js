@@ -18,8 +18,6 @@ import { makeSelectLoading } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-import Input from '../../components/customComponents/Input';
-
 const key = 'verifyEmail';
 
 export const VerifyEmail = props => {
@@ -30,39 +28,42 @@ export const VerifyEmail = props => {
     loading,
   } = props;
 
-  const [form_email, setEmail] = useState('');
-  const [form_code, setCode] = useState('');
+  const [formEmail, setEmail] = useState('');
+  const [formCode, setCode] = useState('');
 
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
     if (email !== '' && code !== undefined) {
-      props.loadVerifyEmailRequest({ email: email, code: code });
+      props.loadVerifyEmailRequest({ email, code });
     }
     if (email !== '') {
       setEmail(email);
     }
+    if (code !== undefined && code !== '') {
+      setCode(code);
+    }
   }, []);
   const handleVerify = () => {
-    if (form_code !== '' && form_email !== '') {
-      props.loadVerifyEmailRequest({ email: form_email, code: form_code });
+    if (formCode !== '' && formEmail !== '') {
+      props.loadVerifyEmailRequest({ email: formEmail, code: formCode });
     }
   };
 
-  const handleEmail = name => event => {
-    const value = event.target.value;
+  const handleEmail = () => event => {
+    const { value } = event.target;
     setEmail(value);
   };
 
-  const handleCode = name => event => {
-    const value = event.target.value;
+  const handleCode = () => event => {
+    const { value } = event.target;
     setCode(value);
   };
 
   const handleResend = () => {
-    if (form_email !== '') {
-      props.resendMailRequest({ email: form_email });
+    if (formEmail !== '') {
+      props.resendMailRequest({ email: formEmail });
     }
   };
 
@@ -73,24 +74,24 @@ export const VerifyEmail = props => {
       ) : (
         <div className="mt-4">
           <div className="m-auto w-1/2">
-            <Input
-              label="Email"
-              inputclassName="inputbox"
+            <label htmlFor="email">Email</label>
+            <input
+              className="inputbox"
               onChange={handleEmail('email')}
-              value={form_email}
-              inputid="email"
-              inputType="text"
+              value={formEmail}
+              id="email"
+              type="text"
               name="Email"
             />
           </div>
           <div className="m-auto w-1/2 mt-2">
-            <Input
-              label="Code"
-              inputclassName="inputbox"
+            <label htmlFor="code">Code</label>
+            <input
+              className="inputbox"
               onChange={handleCode('code')}
-              value={form_code}
-              inputid="code"
-              inputType="text"
+              value={formCode}
+              id="code"
+              type="text"
               name="Code"
             />
           </div>
@@ -120,17 +121,19 @@ export const VerifyEmail = props => {
 
 VerifyEmail.propTypes = {
   loading: PropTypes.bool.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      email: PropTypes.string,
+      code: PropTypes.string,
+    }),
+  }),
+  loadVerifyEmailRequest: PropTypes.func.isRequired,
+  resendMailRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-export default compose(
-  withConnect,
-  memo,
-)(VerifyEmail);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
+export default compose(withConnect, memo)(VerifyEmail);

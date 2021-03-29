@@ -1,12 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import {
+  makeSelectLocation,
   makeSelectToken,
   makeSelectUserIsAdmin,
-  makeSelectLocation,
 } from '../../../containers/App/selectors';
 import NotFoundPage from '../../../containers/NotFoundPage';
 
@@ -20,7 +20,7 @@ const AdminRoute = ({ token, isAdmin, ...rest }) => {
       render={props => (
         <Redirect
           to={{
-            pathname: '/login-admin',
+            pathname: '/', ///login-admin redirect from here
             state: { from: props.location },
           }}
         />

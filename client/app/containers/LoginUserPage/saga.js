@@ -48,7 +48,6 @@ export function* loginAction(action) {
   const data = { email, password };
   const errors = validate(data);
   if (errors.isValid) {
-    // const successWatcher = yield fork(redirectOnSuccess, action.redirect);
     yield fork(
       Api.post('user/login', actions.loginSuccess, actions.loginFailure, data),
     );

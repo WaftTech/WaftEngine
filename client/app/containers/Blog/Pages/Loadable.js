@@ -20,10 +20,6 @@ export const BlogsByTag = loadable(() => import('./BlogsByTag'), {
 export const BlogDetail = loadable(() => import('./BlogDetail'), {
   fallback: <Loading />,
 });
-export const BlogDetailMobile = loadable(() => import('./BlogDetailMobile'), {
-  fallback: <Loading />,
-});
-
 export const CategoryDetail = loadable(() => import('./CategoryDetail'), {
   fallback: <Loading />,
 });

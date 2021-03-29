@@ -38,6 +38,7 @@ export const initialState = {
   showRename: false,
   fileRenameLoading: false,
   query: { search: '' },
+  errors: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -87,6 +88,7 @@ const editorFileSelectReducer = (state = initialState, action) =>
         break;
       case types.RENAME_FOLDER_FAILURE:
         draft.folderRename = false;
+        draft.errors = action.payload.errors;
         break;
       case types.LOAD_NEW_FOLDER_FAILURE:
         draft.folderAddRequest = false;
@@ -182,10 +184,10 @@ const editorFileSelectReducer = (state = initialState, action) =>
         draft.fileRenameLoading = false;
         draft.showRename = false;
 
-        state.all.files.data.map((each, index) => {
-          if (each._id === state.rename_file._id) {
-            state.all.files.data[index].renamed_name =
-              state.rename_file.renamed_name;
+        draft.all.files.data.map((each, index) => {
+          if (each._id === draft.rename_file._id) {
+            draft.all.files.data[index].renamed_name =
+              draft.rename_file.renamed_name;
           }
         });
 

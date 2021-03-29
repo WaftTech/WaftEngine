@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
-// @material-ui/core components
-import { Checkbox } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
-
-// import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
-import Inputs from '../../../../components/customComponents/Input';
+import { FaCheck } from 'react-icons/fa';
 import Select from '../../../../components/Select';
 
 const customStyles = {
@@ -41,23 +33,12 @@ const customStyles = {
 
 const QuickEdit = props => {
   const {
-    handleEditorChange,
     handleCheckedChange,
     handleChange,
-    slugify,
     handleDropDownChange,
     handleMultipleSelectCategoryChange,
-    handleTempMetaKeyword,
-    handleTempMetaTag,
-    handleTempTag,
     handlePublishedOn,
-    handleSave,
-    handleMetaKeywordDelete,
-    handleMetaTagDelete,
-    handleDelete,
-    insertTags,
-    insertMetaTags,
-    insertMetaKeywords,
+    handleMultipleSelectAuthorChange,
   } = props;
   const {
     one,
@@ -83,51 +64,43 @@ const QuickEdit = props => {
     };
     return obj;
   });
-
-  const menuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 48 * 4.5 + 8,
-        width: 250,
-      },
-    },
-  };
   const cats = {};
   category.map(e => {
     cats[e._id] = e;
     return null;
   });
 
+  let listAuthorNormalized = {};
+  const listAuthor = users.map(each => {
+    const obj = {
+      label: each.name,
+      value: each._id,
+    };
+    listAuthorNormalized = {
+      ...listAuthorNormalized,
+      [each._id]: obj,
+    };
+    return obj;
+  });
+
   return (
     <>
       <div>
-        <h2 className="text-2xl mb-4">Quick Edit</h2>
-        <div className="w-full  pb-4">
-          <Inputs
-            label="Title"
-            inputclassName="inputbox"
-            inputid="blog-title"
-            inputType="text"
+        <div className="w-full pb-4">
+          <label>Title</label>
+          <input
+            className="inputbox"
+            id="blog-title"
+            type="text"
             value={(one && one.title) || ''}
             name="Blog Title"
             onChange={handleChange('title')}
-            error={errors && errors.title}
           />
+          <div className="error">{errors && errors.title}</div>
         </div>
-        {/* <div className="w-full  pb-4">
-          <Inputs
-            label="Slug"
-            inputclassName="inputbox"
-            inputid="blog-slug-url"
-            inputType="text"
-            value={(one && one.slug_url) || ''}
-            name="Blog Slug"
-            onChange={handleChange('slug_url')}
-            error={errors && errors.slug_url}
-          />
-        </div> */}
+
         <div className="w-full  pb-4">
-          <label htmlFor="category" className="font-bold text-gray-700">
+          <label htmlFor="category" className="text-sm">
             Category
           </label>
           <Select
@@ -156,19 +129,7 @@ const QuickEdit = props => {
             styles={customStyles}
           />
         </div>
-        {/* <div className="w-full  pb-4">
-          <label className="font-bold text-gray-700" htmlFor="grid-blog-title">
-            Short Description
-          </label>
-          <textarea
-            className="inputbox"
-            id="short_description"
-            type="text"
-            value={one.short_description || ''}
-            name="short_description"
-            onChange={handleChange('short_description')}
-          />
-        </div> */}
+
         <div className="w-full  pb-4">
           <label className="label" htmlFor="grid-last-name">
             Published On
@@ -185,155 +146,67 @@ const QuickEdit = props => {
             onChange={handlePublishedOn}
           />
         </div>
-        {/* <div className="w-full  pb-4">
-          <label className="label" htmlFor="grid-last-name">
-            Tags
-          </label>
-          <form onSubmit={insertTags}>
-            <input
-              className="inputbox"
-              id="blog-tags"
-              type="text"
-              value={tempTag || ''}
-              name="Tags"
-              onChange={handleTempTag}
-            />
-          </form>
-          <Paper>
-            {one.tags.map((tag, index) => {
-              const icon = null;
-              return (
-                <Chip
-                  key={`${tag}-${index}`}
-                  icon={icon}
-                  label={tag}
-                  onDelete={handleDelete(index)}
-                  className={customStyles.chip}
-                />
-              );
-            })}
-          </Paper>
-        </div>
 
         <div className="w-full  pb-4">
-          <label className="label" htmlFor="grid-last-name">
-            Meta Tags
-          </label>
-          <form onSubmit={insertMetaTags}>
-            <input
-              className="inputbox"
-              id="blog-meta-tags"
-              type="text"
-              value={tempMetaTag || ''}
-              name="Tags"
-              onChange={handleTempMetaTag}
-            />
-          </form>
-          <Paper>
-            {one.meta_tag.map((tag, index) => {
-              const icon = null;
-
-              return (
-                <Chip
-                  key={`meta-${tag}-${index}`}
-                  icon={icon}
-                  label={tag}
-                  onDelete={handleMetaTagDelete(index)}
-                  className={customStyles.chip}
-                />
-              );
-            })}
-          </Paper>
-        </div>
-        <div className="w-full  pb-4">
-          <label className="label" htmlFor="grid-last-name">
-            Meta Keywords
-          </label>
-
-          <form onSubmit={insertMetaKeywords}>
-            <input
-              className="inputbox"
-              id="blog-meta-keyword"
-              type="text"
-              value={tempMetaKeyword || ''}
-              name="Tags"
-              onChange={handleTempMetaKeyword}
-            />
-          </form>
-          <Paper>
-            {one.keywords.map((tag, index) => {
-              const icon = null;
-              return (
-                <Chip
-                  key={`metakeywords-${tag}-${index}`}
-                  icon={icon}
-                  label={tag}
-                  onDelete={handleMetaKeywordDelete(index)}
-                  className={customStyles.chip}
-                />
-              );
-            })}
-          </Paper>
-        </div>
-
-        <div className="w-full  pb-4">
-          <label className="label" htmlFor="grid-last-name">
-            Meta Description
-          </label>
-          <textarea
-            className="inputbox"
-            id="blog-tags"
-            type="text"
-            value={one.meta_description || ''}
-            name="meta-description"
-            onChange={handleChange('meta_description')}
+          <label htmlFor="blog_author">Author</label>
+          <Select
+            className="React_Select"
+            id="category"
+            value={
+              (one.author &&
+                one.author.map((each, index) => {
+                  const authorObj = listAuthorNormalized[each];
+                  if (!authorObj) {
+                    return {
+                      label: null,
+                      value: index,
+                    };
+                  }
+                  return authorObj;
+                })) ||
+              []
+            }
+            name="author"
+            placeholder="Select Blog Author"
+            onChange={handleMultipleSelectAuthorChange}
+            isSearchable
+            isMulti
+            options={listAuthor}
+            styles={customStyles}
           />
-        </div> */}
-
-        <div className="w-full  pb-4">
-          <label className="label" htmlFor="grid-last-name">
-            Author
-          </label>
-          <select
-            className="inputbox"
-            native="true"
-            value={(one && one.author) || ''}
-            onChange={handleDropDownChange('author')}
-          >
-            <option value="" disabled>
-              None
-            </option>
-            {users &&
-              users.map(each => (
-                <option key={each._id} name={each.name} value={each._id}>
-                  {each.name}
-                </option>
-              ))}
-          </select>
         </div>
-        <div id="component-error-text">{errors && errors.author}</div>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={one.is_active || false}
-              tabIndex={-1}
-              onClick={handleCheckedChange('is_active')}
-              color="primary"
-            />
-          }
-          label="Is Active"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={one.is_published || false}
-              tabIndex={-1}
-              onClick={handleCheckedChange('is_published')}
-              color="primary"
-            />
-          }
-          label="Is Published"
-        />
+        {errors && errors.author && errors.author.trim() !== '' && (
+          <div className="error">{errors && errors.author}</div>
+        )}
+        <div className="checkbox">
+          <input
+            checked={one.is_active || false}
+            onClick={handleCheckedChange('is_active')}
+            id="is_active"
+            type="checkbox"
+            onChange={null}
+          />
+          <label htmlFor="is_active">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Is Active
+          </label>
+        </div>
+        <div className="checkbox">
+          <input
+            checked={one.is_published || false}
+            onClick={handleCheckedChange('is_published')}
+            id="is_published"
+            type="checkbox"
+          />
+          <label htmlFor="is_published">
+            <span className="box">
+              <FaCheck className="check-icon" />
+            </span>
+            Is Published
+          </label>
+        </div>
       </div>
     </>
   );

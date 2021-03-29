@@ -4,17 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { push } from 'connected-react-router';
 import 'react-datepicker/dist/react-datepicker.css';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import { FaArrowLeft } from 'react-icons/fa';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -26,19 +21,6 @@ import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
-
-const styles = {
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-};
 
 const key = 'subModules';
 
@@ -80,7 +62,11 @@ const AddEdit = props => {
   };
 
   const handleSave = () => {
-    addEditRequest();
+    if (one.module_group === '') {
+      props.setErrors({ key: 'module_group', value: 'This field is required' });
+    } else {
+      addEditRequest();
+    }
   };
 
   const handleCheckedChange = name => event => {
@@ -92,60 +78,51 @@ const AddEdit = props => {
     <Loading />
   ) : (
     <>
-      {/* <Helmet>
+      <Helmet>
         <title>
           {match && match.params && match.params.id
-            ? 'Edit Country'
-            : 'Add Country'}
+            ? 'Edit Group Module'
+            : 'Add Group Module'}
         </title>
-      </Helmet> */}
+      </Helmet>
       <div>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           <PageHeader>
-            <IconButton
-              className={`${classes.backbtn} cursor-pointer`}
-              onClick={handleGoBack}
-              aria-label="Back"
-            >
-              <BackIcon />
-            </IconButton>
+            <span className="backbtn" onClick={handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
             {match && match.params && match.params.id
-              ? 'Edit Sub Module'
-              : 'Add Sub Module'}
+              ? 'Edit Group Module'
+              : 'Add Group Module'}
           </PageHeader>
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Module Group"
-              inputclassName="inputbox"
-              inputid="grid-group"
-              inputType="text"
+            <label>Module Group</label>
+            <input
+              className="inputbox"
+              id="grid-group"
+              type="text"
               value={one.module_group}
               onChange={handleChange('module_group')}
-              error={errors.module_group}
             />
+            <div className="error">{errors.module_group}</div>
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Order"
-              inputclassName="inputbox"
-              inputid="grid-value"
-              inputType="text"
+            <label>Order</label>
+            <input
+              className="inputbox"
+              id="grid-value"
+              type="text"
               value={one.order}
               onChange={handleChange('order')}
-              error={errors.order}
             />
+            <div className="error">{errors.order}</div>
           </div>
 
           <div className="w-full md:w-1/2">
-            <label
-              className="block uppercase tracking-wide text-grey-darker text-xs mb-2"
-              htmlFor="grid-country-code-2"
-            >
-              Description
-            </label>
+            <label htmlFor="grid-country-code-2">Description</label>
             <textarea
               className="inputbox"
               id="grid-description"
@@ -153,34 +130,24 @@ const AddEdit = props => {
               value={one.description}
               onChange={handleChange('description')}
             />
-            <div id="component-error-text">{errors.description}</div>
+            <div className="error">{errors.description}</div>
           </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Module Group Main"
-              inputclassName="inputbox"
-              inputid="grid-group"
-              inputType="text"
+          {/* <div className="w-full md:w-1/2 pb-4">
+            <label>Module Group Main</label>
+            <input
+              className="inputbox"
+              id="grid-group"
+              type="text"
               value={one.module_group_main}
               onChange={handleChange('module_group_main')}
-              error={errors.module_group_main}
             />
-          </div>
-          {/* <FormControlLabel
-            control={
-              <Checkbox
-                checked={one.is_active || false}
-                tabIndex={-1}
-                onClick={handleCheckedChange('is_active')}
-                color="primary"
-              />
-            }
-            label="Is Active"
-          /> */}
+            <div className="error">{errors.module_group_main}</div>
+          </div> */}
+
           <button
             type="button"
-            className="text-white py-2 px-4 rounded mt-4 bg-primary uppercase btn-theme"
+            className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded mt-5"
             onClick={handleSave}
           >
             Save
@@ -199,14 +166,11 @@ AddEdit.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
-  classes: PropTypes.object.isRequired,
   one: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   clearErrors: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
-
-const withStyle = withStyles(styles);
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
@@ -214,15 +178,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withRouter,
-  withStyle,
-  // withReducer,
-  // withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withRouter, withConnect)(AddEdit);

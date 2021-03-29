@@ -22,14 +22,13 @@ import SubscribePage from '../containers/Admin/Subscribe/Loadable';
 import SubscribeViewPage from '../containers/Admin/Subscribe/SubscribeView';
 import ContactListPage from '../containers/Admin/Contact/Loadable';
 import ContactViewPage from '../containers/Admin/Contact/ViewContactList';
-import TemplateListingPage from '../containers/Admin/Template/Loadable';
+import TemplateListingPage from '../containers/Admin/Template/List';
+import TemplateAddEdit from '../containers/Admin/Template/Loadable';
+
 import ErrorManagePage from '../containers/Admin/Error/Loadable';
 import FaqCatAddEditPage from '../containers/Admin/FaqCategory/AddEdit/Loadable';
 import BlogCatManagePage from '../containers/Admin/BlogCategory/Loadable';
-import BlogCommentManagePage from '../containers/Admin/Comment/Loadable';
-import ViewCommentManagePage from '../containers/Admin/Comment/ViewComment/Loadable';
 import BlogCatAddEditPage from '../containers/Admin/BlogCategory/AddEdit/Loadable';
-// import Report from '../containers/Admin/Report/Loadable';
 import Integration from '../containers/Admin/Integration/Loadable';
 import UserProfilePage from '../containers/Admin/Profile/index';
 import SettingsManage from '../containers/Admin/SettingsManagePage';
@@ -40,6 +39,8 @@ import AddEditPageManage from '../containers/Admin/PageContent/AddEditPage/Loada
 
 import SubModules from '../containers/Admin/SubModules/Loadable';
 import AddEditSubModules from '../containers/Admin/SubModules/AddEditPage/Loadable';
+import GlobalSetting from '../containers/Admin/GlobalSetting/Loadable';
+import GlobalSettingAddEdit from '../containers/Admin/GlobalSetting/AddEdit';
 
 const routes = [
   {
@@ -48,17 +49,17 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/page-manage/add',
+    path: '/admin/page-content/add',
     component: AddEditPageManage,
     exact: true,
   },
   {
-    path: '/admin/page-manage/edit/:id',
+    path: '/admin/page-content/edit/:id',
     component: AddEditPageManage,
     exact: true,
   },
   {
-    path: '/admin/page-manage',
+    path: '/admin/page-content',
     component: PageManage,
     exact: true,
   },
@@ -83,17 +84,17 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/content-manage/edit/:id',
+    path: '/admin/section-content/edit/:id',
     component: ContentManageAddEdit,
     exact: true,
   },
   {
-    path: '/admin/content-manage/add',
+    path: '/admin/section-content/add',
     component: ContentManageAddEdit,
     exact: true,
   },
   {
-    path: '/admin/content-manage',
+    path: '/admin/section-content',
     component: ContentManagePage,
     exact: true,
   },
@@ -217,16 +218,6 @@ const routes = [
     exact: true,
   },
   {
-    path: '/admin/blog-comment-manage',
-    component: BlogCommentManagePage,
-    exact: true,
-  },
-  {
-    path: '/admin/comment/view/:id',
-    component: ViewCommentManagePage,
-    exact: true,
-  },
-  {
     path: '/admin/subscribe-manage/view/:id',
     component: SubscribeViewPage,
     exact: true,
@@ -249,6 +240,16 @@ const routes = [
   {
     path: '/admin/template-manage',
     component: TemplateListingPage,
+    exact: true,
+  },
+  {
+    path: '/admin/template-manage/add',
+    component: TemplateAddEdit,
+    exact: true,
+  },
+  {
+    path: '/admin/template-manage/edit/:key',
+    component: TemplateAddEdit,
     exact: true,
   },
   {
@@ -301,6 +302,23 @@ const routes = [
     exact: true,
     path: '/admin/sub-modules/add',
     component: AddEditSubModules,
+  },
+  {
+    exact: true,
+    path: '/admin/global-setting',
+    component: GlobalSetting,
+  },
+
+  {
+    exact: true,
+    path: '/admin/global-setting/add',
+    component: GlobalSettingAddEdit,
+  },
+
+  {
+    exact: true,
+    path: '/admin/global-setting/edit/:id',
+    component: GlobalSettingAddEdit,
   },
 ];
 

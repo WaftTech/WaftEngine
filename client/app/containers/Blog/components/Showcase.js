@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -13,11 +13,9 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 
 import { Link } from 'react-router-dom';
-import { IMAGE_BASE, DATE_FORMAT } from '../../../containers/App/constants';
+import { IMAGE_BASE } from '../../App/constants';
 import * as mapDispatchToProps from '../actions';
 
-import Skeleton from '../../../components/CategoryElement/skeleton';
-import style from '../../../components/CategoryElement/category.css';
 import clock from '../../../assets/img/clock.svg';
 
 const ShowCase = props => {
@@ -37,10 +35,10 @@ const ShowCase = props => {
                   key={each._id}
                   className={`px-2 mb-4 h-full item-${index + 1}`}
                 >
-                  <div className="article-container clearfix">
+                  <div className="article-container flow-root">
                     <div className="article-img-container">
                       <Link
-                        to={`/news/${moment(each.added_at).format(
+                        to={`/blog/${moment(each.added_at).format(
                           'YYYY/MM/DD',
                         )}/${each._id}`}
                       >
@@ -55,10 +53,10 @@ const ShowCase = props => {
                     </div>
                     <div className="textpart">
                       <Link
-                        to={`/news/${moment(each.added_at).format(
+                        to={`/blog/${moment(each.added_at).format(
                           'YYYY/MM/DD',
                         )}/${each._id}`}
-                        className="text-xl leading-normal py-5 hover:text-secondary pointer no-underline article-title font-bold md:font-normal"
+                        className="text-xl leading-normal py-5 hover:text-blue-500 pointer no-underline article-title font-bold md:font-normal"
                       >
                         {each.title}
                       </Link>
