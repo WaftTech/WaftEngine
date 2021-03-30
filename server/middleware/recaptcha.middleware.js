@@ -48,7 +48,6 @@ reCaptchaValidator.validate = async (req, res, next) => {
         return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, { reCaptcha: 'invalid Captcha Validation ' }, 'Verify you are human4', null);
       }
     }
-
   } catch (err) {
     return next(err);
   }

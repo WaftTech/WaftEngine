@@ -6,6 +6,8 @@ const bugSchema = new schema({
   error_stack: { type: String },
   error_type: { type: String },
   added_at: { type: Date, default: Date.now },
+  path: { type: String },
+  method: { type: String },
   last_added_at: { type: Date },
   added_by: { type: schema.Types.ObjectId, ref: 'users' },
   is_deleted: { type: Boolean, default: false },

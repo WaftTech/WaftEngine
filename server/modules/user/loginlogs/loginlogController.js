@@ -13,7 +13,7 @@ internal.addloginlog = async (req, token, next) => {
     let jwtPayLoad = await jwt.verify(token, secretOrKey);
     let expires_in = new Date(jwtPayLoad.exp * 1000);
     let user_id = jwtPayLoad.id;
-    const newLog = new loginLogSch({ user_id, expires_in, ip_address: req.clinfo.ip, device_info: req.clinfo.device, browser_info: req.clinfo.browser, token });
+    const newLog = new loginLogSch({ user_id, expires_in, ip_address: req.client_info.ip, device_info: req.client_info.device, browser_info: req.client_info.browser, token });
     return newLog.save();
   } catch (err) {
     next(err);

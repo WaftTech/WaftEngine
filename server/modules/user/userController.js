@@ -17,7 +17,7 @@ const userController = {};
 
 userController.PostUser = async (req, res, next) => {
   try {
-    const user = req.body;
+    let user = req.body;
     if (user && user._id) {
       const update = await userSch.findByIdAndUpdate(user._id, {
         $set: user,
@@ -25,6 +25,7 @@ userController.PostUser = async (req, res, next) => {
       });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!!', null);
     } else {
+      user.email = user.email.toLowerCase();
       const newUser = new userSch(user);
       const userSave = await newUser.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!!', null);
@@ -38,7 +39,7 @@ userController.PostUserPwd = async (req, res, next) => {
   try {
     let user = {};
     const { email, name, email_verified, roles, bio } = req.body;
-    user = { email, name, email_verified, roles, bio };
+    user = { email: email.toLowerCase(), name, email_verified, roles, bio };
     let salt = await bcrypt.genSalt(10);
     let hashPwd = await bcrypt.hash(req.body.password, salt);
     if (req.body && req.body._id) {

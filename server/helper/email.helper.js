@@ -2,9 +2,6 @@
 const nodemailer = require('nodemailer');
 const apiCall = require('./apicall.helper');
 const settingsHelper = require('./settings.helper')
-
-
-
 const sendMail = {};
 
 
