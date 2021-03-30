@@ -340,7 +340,6 @@ const FileList = ({
   };
 
   const onChooseFile = image => {
-    console.log('here', image);
     addChosenFile(image);
   };
 
@@ -473,19 +472,19 @@ const FileList = ({
               <span>Choose File</span>
             </div>
           ) : (
-              <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
-                    {...getRootProps()}
-                  >
-                    <input {...getInputProps()} />
-                    <FaImage className="text-base mr-2" />
-                    <span>Choose File</span>
-                  </div>
-                )}
-              </Dropzone>
-            )}
+            <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
+              {({ getRootProps, getInputProps }) => (
+                <div
+                  className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+                  {...getRootProps()}
+                >
+                  <input {...getInputProps()} />
+                  <FaImage className="text-base mr-2" />
+                  <span>Choose File</span>
+                </div>
+              )}
+            </Dropzone>
+          )}
           <button
             onClick={handleAdd}
             className="items-center flex btn text-blue-500 bg-blue-100 border border-blue-200 hover:bg-blue-500 hover:border-blue-500 mr-2 hover:text-white"
@@ -502,22 +501,22 @@ const FileList = ({
           </button>
           {selectedButton === 'Delete' &&
             (chosen_files.length > 0 || chosen_folders.length > 0) ? (
-              <button
-                onClick={confirmDelete}
-                className="blink items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
-              >
-                <FaTrash className="text-base mr-2" />
-                <span>Confirm Delete</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleDeleteButton}
-                className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
-              >
-                <FaTrash className="text-base mr-2" />
-                <span>Delete</span>
-              </button>
-            )}
+            <button
+              onClick={confirmDelete}
+              className="blink items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
+            >
+              <FaTrash className="text-base mr-2" />
+              <span>Confirm Delete</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDeleteButton}
+              className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
+            >
+              <FaTrash className="text-base mr-2" />
+              <span>Delete</span>
+            </button>
+          )}
         </div>
       </div>
       <div className="my-auto">

@@ -27,7 +27,6 @@ function* loadFiles(action) {
       return null;
     });
   }
-  // console.log('from saga', query);
   yield call(
     Api.get(
       `files/folder/${action.payload.path}?${query}`,

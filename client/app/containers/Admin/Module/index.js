@@ -87,7 +87,6 @@ export class AdminModuleManage extends React.Component {
   };
 
   handleKeyPress = e => {
-    console.log('keydown');
     if (e.key === 'Enter') {
       this.handleSearch();
     }

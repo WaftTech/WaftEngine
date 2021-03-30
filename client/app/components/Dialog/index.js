@@ -31,7 +31,6 @@ function useComponentVisible(initialIsVisible, setShowList) {
   };
 
   const handleHideDropdown = event => {
-    // console.log('key', event.key);
     if (event.key === 'Escape') {
       setShowList(false);
     }
