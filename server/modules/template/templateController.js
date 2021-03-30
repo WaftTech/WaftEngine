@@ -34,7 +34,6 @@ templateController.getTemplateDetail = async (req, res, next) => {
 templateController.postTemplate = async (req, res, next) => {
   try {
     const template = req.body
-    console.log(template)
     template.updated_by = req.user.id
     template.updated_at = Date.now()
     if (template && template._id) {

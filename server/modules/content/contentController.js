@@ -61,7 +61,6 @@ contentController.GetContentForCounter = async (req, res, next) => {
     var doc = 0;
     counterSch.findByIdAndUpdate({ _id: 'visitor_counter' }, { $inc: { seq: 1 } }, { new: true, upsert: true }, function (error, counterSch) {
       if (error) return next(error);
-      console.log(counterSch);
       doc = (counterSch && counterSch.seq) || 1;
       const contents = { description: '<div>Visitor : <span class="visitor_counter">' + doc + '</span></div>', key: 'counter', name: 'counter' };
       return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);

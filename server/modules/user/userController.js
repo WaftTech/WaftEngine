@@ -483,7 +483,6 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       user.email,
     );
-    console.log('inside forgot password controller:', renderedMail)
 
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
