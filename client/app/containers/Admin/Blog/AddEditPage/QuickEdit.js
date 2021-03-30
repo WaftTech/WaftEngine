@@ -5,32 +5,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { FaCheck } from 'react-icons/fa';
 import Select from '../../../../components/Select';
 
-const customStyles = {
-  chip: () => { },
-  option: (provided, state) => ({
-    ...provided,
-    background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
-    color: state.isFocused || state.isSelected ? 'white' : 'black',
-    padding: '6px 12px',
-  }),
-
-  menuList: () => ({
-    background: '#FFFFFF',
-    border: '1px solid #d4d9df',
-    boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-  }),
-
-  indicatorSeparator: () => ({
-    background: 'transparent',
-  }),
-
-  container: provided => ({
-    ...provided,
-    width: '100%',
-    minWidth: '100px',
-  }),
-};
-
 const QuickEdit = props => {
   const {
     handleCheckedChange,
@@ -126,7 +100,6 @@ const QuickEdit = props => {
             isSearchable
             isMulti
             options={listCategory}
-            styles={customStyles}
           />
         </div>
 
@@ -172,7 +145,6 @@ const QuickEdit = props => {
             isSearchable
             isMulti
             options={listAuthor}
-            styles={customStyles}
           />
         </div>
         {errors && errors.author && errors.author.trim() !== '' && (

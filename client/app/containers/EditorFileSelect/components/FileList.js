@@ -473,19 +473,19 @@ const FileList = ({
               <span>Choose File</span>
             </div>
           ) : (
-            <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
-              {({ getRootProps, getInputProps }) => (
-                <div
-                  className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
-                  {...getRootProps()}
-                >
-                  <input {...getInputProps()} />
-                  <FaImage className="text-base mr-2" />
-                  <span>Choose File</span>
-                </div>
-              )}
-            </Dropzone>
-          )}
+              <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
+                {({ getRootProps, getInputProps }) => (
+                  <div
+                    className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+                    {...getRootProps()}
+                  >
+                    <input {...getInputProps()} />
+                    <FaImage className="text-base mr-2" />
+                    <span>Choose File</span>
+                  </div>
+                )}
+              </Dropzone>
+            )}
           <button
             onClick={handleAdd}
             className="items-center flex btn text-blue-500 bg-blue-100 border border-blue-200 hover:bg-blue-500 hover:border-blue-500 mr-2 hover:text-white"
@@ -612,7 +612,7 @@ const FileList = ({
         {folders.data.map(each => (
           <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5" key={each._id}>
             <div
-              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100 relative"
+              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px relative"
               onMouseOver={() => handleMouseOver(each._id)}
               onMouseLeave={() => handleMouseOver('')}
             >
@@ -668,7 +668,7 @@ const FileList = ({
         {files.data.map((each, index) => (
           <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
             <div
-              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px opacity-75 hover:opacity-100 relative"
+              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px relative"
               key={each._id}
               onMouseOver={() => handleMouseOverFile(each._id)}
               onMouseLeave={() => handleMouseOverFile('')}

@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
-import Select from 'react-select';
+import Select from '../../../../components/Select';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -194,109 +194,108 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>{id ? 'Edit' : 'Add'} Module</title>
-        </Helmet>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {id ? `Edit for ${one.module_name}` : 'Add Module'}
-          </PageHeader>
+        <React.Fragment>
+          <Helmet>
+            <title>{id ? 'Edit' : 'Add'} Module</title>
+          </Helmet>
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {id ? `Edit for ${one.module_name}` : 'Add Module'}
+            </PageHeader>
 
-          <div className="flex items-center">
-            <button
-              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
-              onClick={this.handleChangeAccess}
-            >
-              <FaExchangeAlt />
-              <span className="pl-2">Change Accesss</span>
+            <div className="flex items-center">
+              <button
+                className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+                onClick={this.handleChangeAccess}
+              >
+                <FaExchangeAlt />
+                <span className="pl-2">Change Accesss</span>
+              </button>
+            </div>
+          </div>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-2">
+              <label className="label">Module Name</label>
+              <input
+                className="inputbox"
+                id="module_name"
+                type="text"
+                value={one.module_name}
+                onChange={this.handleChange('module_name')}
+              />
+              {errors.module_name && (
+                <div className="error">{errors.module_name}</div>
+              )}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-2">
+              <label className="label">Description</label>
+              <textarea
+                className="inputbox"
+                id="description"
+                type="text"
+                value={one.description}
+                onChange={this.handleChange('description')}
+              />
+              {errors.description && (
+                <div className="error">{errors.description}</div>
+              )}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-2">
+              <label className="label">Sub Module</label>
+              <Select
+                className="React_Select"
+                id="category"
+                placeholder="Choose"
+                value={listSubModulesNormalized[one.module_group] || null}
+                classNamePrefix="select"
+                onChange={this.handleDropdownChange('module_group')}
+                isSearchable
+                options={listSubModules}
+              />
+            </div>
+
+            {one.path.map((each, pathIndex) => (
+              <PathComponent
+                key={`${each._id}-${pathIndex}`}
+                each={each}
+                pathIndex={pathIndex}
+                handleAccessTypeChange={this.handleAccessTypeChange}
+                handleAdminRoutesChange={this.handleAdminRoutesChange}
+                handleRemoveAdminRoute={this.handleRemoveAdminRoute}
+                handleAddAdminRoute={this.handleAddAdminRoute}
+                handleServerRoutesMethodChange={
+                  this.handleServerRoutesMethodChange
+                }
+                handleServerRoutesRouteChange={this.handleServerRoutesRouteChange}
+                handleRemoveServerRoute={this.handleRemoveServerRoute}
+                handleAddServerRoute={this.handleAddServerRoute}
+                handleRemovePath={this.handleRemovePath}
+              />
+            ))}
+
+            <div className="flex">
+              <button
+                className="block btn text-white bg-green-500 border border-green-600 hover:bg-green-600 mr-2"
+                onClick={this.handleAddPath}
+              >
+                Add Access Type
             </button>
-          </div>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-2">
-            <label className="label">Module Name</label>
-            <input
-              className="inputbox"
-              id="module_name"
-              type="text"
-              value={one.module_name}
-              onChange={this.handleChange('module_name')}
-            />
-            {errors.module_name && (
-              <div className="error">{errors.module_name}</div>
-            )}
-          </div>
 
-          <div className="w-full md:w-1/2 pb-2">
-            <label className="label">Description</label>
-            <textarea
-              className="inputbox"
-              id="description"
-              type="text"
-              value={one.description}
-              onChange={this.handleChange('description')}
-            />
-            {errors.description && (
-              <div className="error">{errors.description}</div>
-            )}
-          </div>
-
-          <div className="w-full md:w-1/2 pb-2">
-            <label className="label">Sub Module</label>
-            <Select
-              className="React_Select"
-              id="category"
-              placeholder="Choose"
-              value={listSubModulesNormalized[one.module_group] || null}
-              classNamePrefix="select"
-              onChange={this.handleDropdownChange('module_group')}
-              isSearchable
-              options={listSubModules}
-              styles={customStyles}
-            />
-          </div>
-
-          {one.path.map((each, pathIndex) => (
-            <PathComponent
-              key={`${each._id}-${pathIndex}`}
-              each={each}
-              pathIndex={pathIndex}
-              handleAccessTypeChange={this.handleAccessTypeChange}
-              handleAdminRoutesChange={this.handleAdminRoutesChange}
-              handleRemoveAdminRoute={this.handleRemoveAdminRoute}
-              handleAddAdminRoute={this.handleAddAdminRoute}
-              handleServerRoutesMethodChange={
-                this.handleServerRoutesMethodChange
-              }
-              handleServerRoutesRouteChange={this.handleServerRoutesRouteChange}
-              handleRemoveServerRoute={this.handleRemoveServerRoute}
-              handleAddServerRoute={this.handleAddServerRoute}
-              handleRemovePath={this.handleRemovePath}
-            />
-          ))}
-
-          <div className="flex">
-            <button
-              className="block btn text-white bg-green-500 border border-green-600 hover:bg-green-600 mr-2"
-              onClick={this.handleAddPath}
-            >
-              Add Access Type
+              <button
+                className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                onClick={this.handleSave}
+              >
+                Save
             </button>
-
-            <button
-              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-              onClick={this.handleSave}
-            >
-              Save
-            </button>
-          </div>
-        </PageContent>
-      </React.Fragment>
-    );
+            </div>
+          </PageContent>
+        </React.Fragment>
+      );
   }
 }
 
@@ -311,25 +310,5 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
-
-const customStyles = {
-  control: (base, state) => ({
-    ...base,
-    background: '#fff',
-    borderColor: '#e0e3e8',
-    minHeight: '35px',
-    height: '35px',
-    width: '100%',
-    boxShadow: state.isFocused ? null : null,
-    marginRight: '8px',
-  }),
-  placeholder: state => ({
-    color: '#000',
-    fontSize: '15px',
-  }),
-  indicatorSeparator: state => ({
-    display: 'none',
-  }),
-};
 
 export default compose(withReducer, withSaga, withConnect)(AddEdit);
