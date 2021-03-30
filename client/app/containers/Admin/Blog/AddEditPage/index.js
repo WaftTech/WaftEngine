@@ -4,26 +4,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Dropzone from 'react-dropzone';
 import { Helmet } from 'react-helmet';
 import {
   FaArrowLeft,
   FaCheck,
-  FaTimes,
-  FaCloudUploadAlt,
+  FaTimes
 } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import defaultImage from '../../../../assets/img/logo.svg';
 import WECkEditior from '../../../../components/CkEditor';
+import Dialog from '../../../../components/Dialog/index';
 import Loading from '../../../../components/Loading';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Select from '../../../../components/Select';
 import { IMAGE_BASE } from '../../../App/constants';
+import EditorFileSelect from '../../../EditorFileSelect';
 import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -36,10 +35,8 @@ import {
   makeSelectMetaTag,
   makeSelectOne,
   makeSelectTag,
-  makeSelectUsers,
+  makeSelectUsers
 } from '../selectors';
-import EditorFileSelect from '../../../EditorFileSelect';
-import Dialog from '../../../../components/Dialog/index';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -409,7 +406,6 @@ class AddEdit extends React.PureComponent {
             <div className="w-full md:w-1/2 pb-4">
               <label>Category</label>
               <Select
-                className="React_Select"
                 id="category"
                 value={
                   (one.category &&
@@ -431,7 +427,6 @@ class AddEdit extends React.PureComponent {
                 isSearchable
                 isMulti
                 options={listCategory}
-                styles={customStyles}
               />
             </div>
             <div className="w-full md:w-1/2 pb-4">
@@ -621,7 +616,6 @@ class AddEdit extends React.PureComponent {
                 isSearchable
                 isMulti
                 options={listAuthor}
-                styles={customStyles}
               />
             </div>
             {errors && errors.author && errors.author.trim() !== '' && (
@@ -704,31 +698,6 @@ class AddEdit extends React.PureComponent {
 
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
-
-const customStyles = {
-  option: (provided, state) => ({
-    ...provided,
-    background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
-    color: state.isFocused || state.isSelected ? 'white' : 'black',
-    padding: '6px 12px',
-  }),
-
-  menuList: () => ({
-    background: '#FFFFFF',
-    border: '1px solid #d4d9df',
-    boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-  }),
-
-  indicatorSeparator: () => ({
-    background: 'transparent',
-  }),
-
-  container: provided => ({
-    ...provided,
-    width: '100%',
-    minWidth: '100px',
-  }),
-};
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),

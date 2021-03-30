@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-import Select from 'react-select';
+import Select from '../../../components/Select';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -145,15 +145,6 @@ export class AdminModuleManage extends React.Component {
       ],
     );
 
-    const customStyles = {
-      container: state => ({
-        width: '100%',
-      }),
-      indicatorSeparator: state => ({
-        display: 'none',
-      }),
-    };
-
     const groupOptions =
       groups && groups.length > 0
         ? groups.map(each => {
@@ -182,33 +173,25 @@ export class AdminModuleManage extends React.Component {
         </div>
 
         <PageContent loading={loading}>
-          <div className="flex items-center">
-            <div className="flex relative w-64 pr-5">
+          <div className="flex">
+            <div className="w-64">
               <Select
-                styles={customStyles}
                 name="find_module_group"
                 id="module-group"
-                placeholder="Search by group"
+                placeholder="Search by Group"
                 value={this.state.tempGroup}
                 onChange={this.handleDropdown}
                 options={groupOptions}
                 onKeyDown={this.handleKeyPress}
               />
-              {/* <span
-                className="mt-3 inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
-                onClick={this.handleSearch}
-              >
-                <FaSearch />
-              </span> */}
             </div>
-
-            <div>
+            <div className="w-64 ml-3">
               <input
                 type="text"
                 name="find_module_name"
                 id="module-name"
-                placeholder="Search by name"
-                className="m-auto inputbox pr-6 w-64"
+                placeholder="Search by Name"
+                className="m-auto inputbox"
                 value={query.find_module_name}
                 onChange={this.handleQueryChange}
                 onKeyDown={this.handleKeyPress}
