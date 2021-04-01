@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
-const { slugify } = require('../../helper/others.helper');
+// const { slugify } = require('../../helper/others.helper');
 
 const blogViewCountSchema = new schema({
   blog_id: { type: schema.Types.ObjectId, ref: 'blog' },
