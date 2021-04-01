@@ -3,8 +3,6 @@ const settingSch = require('./settingSchema');
 const settingConfig = require('./settingConfig');
 const otherHelper = require('../../helper/others.helper');
 const settingsHelper = require('../../helper/settings.helper');
-const NodeCache = require("node-cache");
-const myCache = new NodeCache();
 const settingController = {};
 
 settingController.GetSettingAll = async (req, res, next) => {
