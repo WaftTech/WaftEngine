@@ -32,7 +32,19 @@ function CustomTable({ ...props }) {
             </tr>
           </thead>
         ) : null}
-        {tableData.length > 0 ? (
+        {loading ? (
+          <tbody>
+            <tr>
+              <td colSpan={tableHead.length} className="py-2 text-center">
+                <div className="circular_loader waftloader"></div>
+              </td>
+            </tr>
+          </tbody>
+        ) : (tableData.length < 1 || (pagination && pagination.totaldata === 0)) ? (
+          <p className="text-center px-2 py-1 text-sm border-gray-200 text-gray-700">
+            {emptyDataMsg || 'No Data Found'}
+          </p>
+        ) : (
           <tbody>
             {tableData.map((prop, key) => (
               <tr key={key}>
@@ -47,26 +59,8 @@ function CustomTable({ ...props }) {
               </tr>
             ))}
           </tbody>
-        ) : (
-            loading && (
-              <tbody>
-                <tr>
-                  <td colSpan={tableHead.length} className="py-2 text-center">
-                    <div className="circular_loader waftloader"></div>
-                  </td>
-                </tr>
-              </tbody>
-            )
-          )}
-      </table>
-
-      {(tableData.length < 1 || pagination.totaldata === 0) &&
-        (loading === false || !loading) && (
-          <p className="text-center px-2 py-1 text-sm border-gray-200 text-gray-700">
-            {emptyDataMsg || 'No Data Found'}
-          </p>
         )}
-
+      </table>
       {pagination && handlePagination && (
         <>
           <div className="flex justify-end items-center pt-2 border-t border-gray-200">
@@ -103,8 +97,8 @@ function CustomTable({ ...props }) {
                   });
                 }}
                 className={`${1 === pagination.page
-                    ? 'opacity-25 pointer-events-none'
-                    : 'hover:bg-blue-500 hover:text-white'
+                  ? 'opacity-25 pointer-events-none'
+                  : 'hover:bg-blue-500 hover:text-white'
                   } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
               >
                 <FaChevronLeft />
@@ -123,9 +117,9 @@ function CustomTable({ ...props }) {
                   });
                 }}
                 className={`${Math.ceil(pagination.totaldata / pagination.size) ===
-                    pagination.page
-                    ? 'opacity-25 pointer-events-none'
-                    : 'hover:bg-blue-500 hover:text-white'
+                  pagination.page
+                  ? 'opacity-25 pointer-events-none'
+                  : 'hover:bg-blue-500 hover:text-white'
                   } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
               >
                 <FaChevronRight />

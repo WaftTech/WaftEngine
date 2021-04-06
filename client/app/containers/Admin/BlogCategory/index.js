@@ -235,6 +235,7 @@ export class BlogCategory extends React.Component {
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}
+            loading={loading}
           />
         </PageContent>
       </>
