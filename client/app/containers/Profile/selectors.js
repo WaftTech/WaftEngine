@@ -21,6 +21,25 @@ export const makeSelectLoading = () =>
     selectUserPersonalInformationPageDomain,
     substate => substate.loading,
   );
+
+export const makeSelectLoadingObj = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.loadingObj,
+  );
+
+export const makeSelectTwoFactor = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.twoFactor,
+  );
+
+export const makeSelectHelperObj = () =>
+  createSelector(
+    selectUserPersonalInformationPageDomain,
+    substate => substate.helperObj,
+  );
+
 export const makeSelectCode = () =>
   createSelector(
     selectUserPersonalInformationPageDomain,

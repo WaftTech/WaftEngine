@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { NavLink, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { push } from 'connected-react-router';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Button, Grid, Menu, MenuItem } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { FaUserAlt } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import logo from '../../../assets/img/logo.svg';
+import DropdownMenu from '../../../components/DropdownMenu/index';
+import { logoutRequest } from '../../../containers/App/actions';
+import { IMAGE_BASE } from '../../../containers/App/constants';
 import {
   makeSelectToken,
   makeSelectUser,
 } from '../../../containers/App/selectors';
-import { logoutRequest } from '../../../containers/App/actions';
-import logo from '../../../assets/img/logo.svg';
-import HeaderMenu from './HeaderMenu';
-import style from './header.css';
-
-const styles = theme => ({});
+import './header.css';
 
 const Header = props => {
   const { classes, token, user, logoutRequest: logout } = props;
@@ -49,8 +46,8 @@ const Header = props => {
   };
 
   return (
-    <header className="WaftHeader border-b lg:border-b">
-      <div className="container flex justify-between flex-wrap relative">
+    <header className="border-b lg:border-b">
+      <div className="container mx-auto flex justify-between flex-wrap relative">
         <div className="py-2 p w-full md:w-1/2 lg:w-1/6 order-2 md:order-none">
           <Link to="/">
             <img src={logo} alt="WaftEngine" />
@@ -74,18 +71,6 @@ const Header = props => {
               <path className="line line-3" d="M5 73h90v14H5z" />
             </g>
           </svg>
-          <div className="text-base nav md:w-full md:text-center md:border-t lg:w-auto lg:m-auto lg:border-t-0 lg:text-left fadeInDown animated">
-            {HeaderMenu.map(each => (
-              <NavLink
-                key={each.key}
-                className="text-right md:text-left border-b md:border-none block no-underline px-5 py-2 hover:bg-primary-dark md:text-black md:hover:bg-transparent md:hover:text-primary md:inline-block nav-link"
-                to={each.link}
-                onClick={handleToggle}
-              >
-                {each.name}
-              </NavLink>
-            ))}
-          </div>
         </div>
 
         {!token ? (
@@ -104,54 +89,60 @@ const Header = props => {
             </button>
           </div>
         ) : (
-            <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
-              <button className={classes.dropDown} onClick={handleMenu}>
-                <div className="text-base flex">
-                  <span className="ml-2 mr-2">{user.name} | </span>
-                  <AccountCircle />
-                </div>
-              </button>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                {user.isAdmin && (
+          <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
+            <DropdownMenu
+              main={
+                <button>
+                  <div className="text-base flex items-center">
+                    <span className="ml-2 mr-2">{user.name} | </span>
+                    {user.image && user.image.path ? (
+                      <img
+                        src={`${IMAGE_BASE}${user.image.path}`}
+                        className="w-8 h-8 rounded-full overflow-hidden"
+                      />
+                    ) : (
+                      <FaUserAlt className="text-base" />
+                    )}
+                  </div>
+                </button>
+              }
+              items={
+                <>
+                  {user.isAdmin && (
+                    <Link
+                      to="/admin/dashboard"
+                      style={{ textDecoration: 'none', color: 'black' }}
+                      onClick={handleClose}
+                      className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                    >
+                      <p>Dashboard</p>
+                    </Link>
+                  )}
                   <Link
-                    to="/admin/dashboard"
+                    to="/user/profile"
                     style={{ textDecoration: 'none', color: 'black' }}
                     onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
                   >
-                    <MenuItem>Dashboard</MenuItem>
+                    <p>Profile</p>
                   </Link>
-                )}
-                <Link
-                  to="/user/profile"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                  onClick={handleClose}
-                >
-                  <MenuItem>Profile</MenuItem>
-                </Link>
-                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-              </Menu>
-            </div>
-          )}
+                  <p
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer"
+                    onClick={handleLogout}
+                  >
+                    Log Out
+                  </p>
+                </>
+              }
+            />
+          </div>
+        )}
       </div>
     </header>
   );
 };
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   push: PropTypes.func.isRequired,
@@ -163,14 +154,6 @@ const mapStateToProps = createStructuredSelector({
   user: makeSelectUser(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { push, logoutRequest },
-);
+const withConnect = connect(mapStateToProps, { push, logoutRequest });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(Header);
+export default compose(withConnect)(Header);

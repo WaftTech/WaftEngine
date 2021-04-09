@@ -4,9 +4,8 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Crumb from './Crumb';
 
@@ -36,7 +35,7 @@ const Breadcrumb = ({
 
   const LinkComponent = linkcomponent;
   return (
-    <div className="pt-2 text-right">
+    <div>
       <ol className="list-reset inline-flex text-gray-700 rounded text-sm items-center">
         {breadcrumbs.map((link, index) => {
           if (link.path === '/admin')

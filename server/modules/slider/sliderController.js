@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const sliderSch = require('./sliderSchema');
 const sliderConfig = require('./sliderConfig');
@@ -7,7 +6,7 @@ const sliderController = {};
 
 sliderController.GetSlider = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [
       {
         path: 'images.image',
@@ -15,25 +14,25 @@ sliderController.GetSlider = async (req, res, next) => {
       },
     ];
     if (req.query.find_slider_name) {
-      searchq = {
+      searchQuery = {
         slider_name: {
           $regex: req.query.find_slider_name,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_slider_key) {
-      searchq = {
+      searchQuery = {
         slider_key: {
           $regex: req.query.find_slider_key,
           $options: 'i',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let sliders = await otherHelper.getquerySendResponse(sliderSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totaldata);
+    let sliders = await otherHelper.getQuerySendResponse(sliderSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, sliders.data, sliderConfig.get, page, size, sliders.totalData);
   } catch (err) {
     next(err);
   }
@@ -80,22 +79,33 @@ sliderController.GetSliderById = async (req, res, next) => {
 };
 sliderController.GetSliderByKey = async (req, res, next) => {
   const id = req.params.key;
+  let selectq = { added_by: 0, added_at: 0 };
   const slider = await sliderSch
-    .findOne({
-      slider_key: id,
-      is_deleted: false,
-    })
+    .findOne(
+      {
+        slider_key: id,
+        is_deleted: false,
+      },
+      selectq,
+    )
     .populate('images.image');
   return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
 };
 sliderController.DeleteSlider = async (req, res, next) => {
   const id = req.params.id;
-  const sliderDel = await sliderSch.findByIdAndUpdate(id, {
-    $set: {
-      is_deleted: true,
-      deleted_at: Date.now,
+  const sliderDel = await sliderSch.findOneAndUpdate(
+    { _id: id, is_removal: true },
+    {
+      $set: {
+        is_deleted: true,
+        deleted_at: Date.now,
+      },
     },
-  });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, sliderDel, null, sliderConfig.delete, null);
+  );
+  if (sliderDel && sliderDel._id) {
+    return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.delete, null);
+  } else {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
+  }
 };
 module.exports = sliderController;

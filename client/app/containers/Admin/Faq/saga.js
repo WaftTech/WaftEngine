@@ -19,7 +19,7 @@ function* loadCategory() {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      'faq/cat',
+      'faq/category/all',
       actions.loadCategorySuccess,
       actions.loadCategoryFailure,
       token,

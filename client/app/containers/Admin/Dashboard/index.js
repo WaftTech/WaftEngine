@@ -11,8 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import {
@@ -20,29 +18,29 @@ import {
   makeSelectUsers,
   makeSelectInfo,
   makeSelectBlog,
+  makeSelectUserByRegister,
+  makeSelectBlogsByUser,
+  makeSelectRecentUser,
+  makeSelectUserByDays,
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import LinkBoth from '../../../components/LinkBoth';
-import AccountBox from '@material-ui/icons/AccountBox';
-import Error from '@material-ui/icons/Error';
-import NoteAdd from '@material-ui/icons/NoteAdd';
-import Note from '@material-ui/icons/Note';
+import Dialog from '../../../components/Dialog/index';
 
-const styles = theme => ({
-  dashicon: {
-    fontSize: '50px',
-    display: 'block',
-    width: '100%',
-    marginBottom: '10px',
-    color: '#666',
-    '&:hover': {
-      color: '#000000',
-    },
-  },
-});
+import {
+  FaStickyNote,
+  FaExclamationCircle,
+  FaUser,
+  FaNewspaper,
+} from 'react-icons/fa';
+
+import LineChart from './Charts/LineChart';
+import BarChart from './Charts/BarChart';
+import PieChart from './Charts/PieChart';
+import { IMAGE_BASE } from '../../App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Dashboard extends React.PureComponent {
@@ -51,19 +49,108 @@ export class Dashboard extends React.PureComponent {
     this.props.loadErrorRequest();
     this.props.loadInfoRequest();
     this.props.loadBlogRequest();
+    this.props.loadUserByRegisterRequest();
+    this.props.loadBlogsByUserRequest();
+    this.props.loadRecentUserRequest();
+    this.props.loadUserByDaysRequest();
   }
 
+  state = { open: false };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  convertDateData = dates => {
+    let newData = [];
+    if (dates.length > 0) {
+      for (let index = 0; index < dates.length; index++) {
+        const element = dates[index];
+        let obj = {
+          date: `${element._id}/${element.month}/${element.day}`,
+          users: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertAuthorData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          Author: element.author,
+          amt: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertRolesData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          name: element.role_title,
+          count: element.count,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
+  convertRegisterData = data => {
+    let newData = [];
+    if (data.length > 0) {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        let obj = {
+          name: element._id,
+          count: element.amt,
+        };
+        newData.push(obj);
+      }
+    }
+    return newData;
+  };
+
   render() {
-    const { classes, users, info, errors, blogs } = this.props;
+    const {
+      classes,
+      users,
+      info,
+      errors,
+      blogs,
+      userByRegister,
+      blogsByUser,
+      recentUser,
+      userByDays,
+    } = this.props;
+
     return (
       <>
-        <div className="flex justify-between mt-3 mb-3">
-          <PageHeader>Dashboard</PageHeader>
+        <div className="flex justify-between my-3">
+          <PageHeader>Dashboard </PageHeader>
         </div>
-        <div className="bg-white rounded p-4 shadow">
+
+        <span onClick={() => this.handleOpen()}>open dialog</span>
+        <div className="border bg-white rounded p-4 my-3">
           {info.map(each => (
             <div key={each._id}>
-              <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">{each.title}</h3>
+              <h3 className="border-b text-2xl font-bold border-gray-300 pb-2">
+                {each.title}
+              </h3>
               <div
                 className="mt-2 flex flex-wrap justify-between p-4 rounded"
                 dangerouslySetInnerHTML={{ __html: each.detail }}
@@ -71,116 +158,142 @@ export class Dashboard extends React.PureComponent {
             </div>
           ))}
         </div>
-
-        {/* <div className="bg-white rounded my-4 p-4 ">
-          <h3 className="border-b text-2xl font-bold border-gray-300  pb-2">Latest Blogs</h3>
-          {blogs.map(each => (
-            <LinkBoth
-              className="mt-2 bg-gray-200 flex flex-wrap justify-between p-2 rounded"
-              key={each._id}
-              to={`https://www.waftengine.org/blog/${each.slug_url}`}
-            >
-              <div>
-                <h4>{each.title}</h4>
-              </div>
-            </LinkBoth>
-          ))}
-        </div> */}
-
-        <div className="flex justify-between mx-8 my-4">
-          <div className="w-1/4 -ml-8 bg-white rounded p-5 text-center hover:text-black shadow">
-            <LinkBoth
-              to="/admin/blog-manage/add/"
-              className="text-gray-800 no-underline hover:text-black font-bold"
-            >
-              <NoteAdd className={classes.dashicon} />
-              Write Post
-            </LinkBoth>
-          </div>
-          <div className="w-1/4 -ml-4 bg-white rounded p-5 text-center hover:text-black shadow">
-            <LinkBoth
-              className="text-gray-800 no-underline hover:text-black font-bold"
-              to="https://www.waftengine.org/documentation"
-              target="_blank"
-            >
-              <Note className={classes.dashicon} />
-              View Doc
-            </LinkBoth>
-          </div>
-          <div className="w-1/4 -ml-4 -mr-4 bg-white rounded p-5 flex justify-between hover:text-black shadow">
-            <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <AccountBox className={classes.dashicon} />
-              Total Users{' '}
-            </span>
-            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
-              {users.totaldata}
-            </span>
-          </div>
-          <div className="w-1/4 -mr-8 bg-white rounded p-5 flex justify-between hover:text-black shadow">
-            <span className="text-gray-800 m-auto w-24 text-center font-bold">
-              <Error className={classes.dashicon} />
-              Total Errors
-            </span>
-            <span className="m-auto inline-block text-black text-2xl font-bold ml-4 w-12 h-12 text-center rounded-full bg-waftprimary-light leading-loose">
-              {errors.totaldata}
-            </span>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between mx-4 my-4">
-            <div className="w-1/2 -ml-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">By Roles </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {users &&
-                  users.data &&
-                  users.data.role &&
-                  users.data.role.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between px-2 h-10 items-center">
-                        <span>{each.role_title}: </span>
-                        <span className="inline-block text-waftprimary text-2xl text-right font-bold">
-                          {users.data &&
-                            users.data.user &&
-                            users.data.user.filter(e =>
-                              e.roles.includes(each._id),
-                            ).length}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-              </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">Roles </h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              {users && users.data && users.data.role && (
+                <PieChart
+                  dataKey="count"
+                  nameKey="name"
+                  data={this.convertRolesData(users.data.role)}
+                />
+              )}
             </div>
+          </div>
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">Sign Ups</h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              {userByRegister && (
+                <PieChart
+                  dataKey="count"
+                  nameKey="name"
+                  data={this.convertRegisterData(userByRegister)}
+                />
+              )}
+            </div>
+          </div>
 
-            <div className="w-1/2 -mr-4 bg-white rounded pb-4">
-              <h3 className="p-4 font-bold text-2xl border-b border-gray-300">By Types </h3>
-              <div className="flex flex-wrap justify-between mx-4">
-                {errors.data && errors.data.length ? (
-                  errors.data.map(each => (
-                    <div
-                      key={each._id}
-                      className="w-1/2 p-2 bg-gray-200 my-2 -ml-2 -mr-2 rounded"
-                    >
-                      <div className="flex justify-between h-10 items-center px-2">
-                        <span className="w-24 text-sm">{each._id}</span>
-                        <span className="inline-block text-waftprimary font-bold text-2xl text-right ">
-                          {each.count}
-                        </span>
-                      </div>
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">Blogs </h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              {blogsByUser.blog && blogsByUser.blog.length ? (
+                <BarChart
+                  data={this.convertAuthorData(blogsByUser.blog)}
+                  key1="amt"
+                  XAxisKey="Author"
+                />
+              ) : (
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full font-bold text-red-500">
+                      No Blogs
+                  </h2>
+                  </div>
+                )}
+            </div>
+          </div>
+
+          <div className="border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">Recent Users</h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              {recentUser &&
+                recentUser.map(each => (
+                  <div key={each.email} className="flex border-b py-2">
+                    <div className="flex items-center justify-center w-10 h-10 border rounded-full">
+                      {each.image && each.image.path ? (
+                        <img
+                          src={`${IMAGE_BASE}${each.image.path}`}
+                          className="w-8 h-8 rounded-full overflow-hidden"
+                        />
+                      ) : (
+                          <FaUser className="text-gray-600" />
+                        )}
                     </div>
-                  ))
-                ) : (
-                    <div className="flex justify-between">
-                      <h2 className="w-full m-auto h-full text-xl font-bold text-red-500">No Errors</h2>
+                    <div className="flex-1 pl-5">
+                      <h4 className="mb-0">{`${each.name}`}:</h4>
+                      <span className="text-sm text-gray-500">
+                        {each.email}
+                      </span>
                     </div>
-                  )}
-              </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          <div className="col-span-2 border bg-white rounded">
+            <h3 className="px-4 py-2 text-lg border-b">Users by Days </h3>
+            <div className="flex flex-wrap justify-between mx-4">
+              <LineChart
+                data={this.convertDateData(userByDays)}
+                XAxisKey="date"
+                Line1Key="users"
+              />
             </div>
           </div>
         </div>
+
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          title={<h2> Demo Dialog </h2>}
+          body={
+            <div>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+
+
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </div>
+
+          }
+          actions={
+            <button
+              type="button"
+              className="bg-red-400 p-2 text-white"
+              onClick={this.handleClose}
+            >
+              Close
+            </button>
+          }
+        />
       </>
     );
   }
@@ -200,20 +313,15 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
   info: makeSelectInfo(),
   blogs: makeSelectBlog(),
+  userByRegister: makeSelectUserByRegister(),
+  blogsByUser: makeSelectBlogsByUser(),
+  recentUser: makeSelectRecentUser(),
+  userByDays: makeSelectUserByDays(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminDashboard', reducer });
 const withSaga = injectSaga({ key: 'adminDashboard', saga });
-const withStyle = withStyles(styles);
 
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(Dashboard);
+export default compose(withReducer, withSaga, withConnect)(Dashboard);

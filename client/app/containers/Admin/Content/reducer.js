@@ -12,7 +12,7 @@ export const initialState = {
     data: [],
     page: 1,
     size: 10,
-    totaldata: 0,
+    totalData: 0,
   },
   one: {
     name: '',
@@ -22,10 +22,13 @@ export const initialState = {
     is_active: false,
     is_page: false,
     publish_to: '',
+    // meta_tag: [],
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,
   errors: { name: '', key: '', description: '' },
+  tempMetaTag: '',
+  showForm: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -39,11 +42,15 @@ const reducer = (state = initialState, action) =>
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
         break;
+      case types.ADD_EDIT_SUCCESS:
+        draft.showForm = false;
+        break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
         break;
       case types.CLEAR_ONE:
         draft.one = initialState.one;
+        draft.tempMetaTag = '';
         break;
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
@@ -64,7 +71,7 @@ const reducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.one = action.payload.data;
+        draft.one = { ...initialState.one, ...action.payload.data };
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
@@ -76,6 +83,13 @@ const reducer = (state = initialState, action) =>
             each => each._id != action.payload.data._id,
           ),
         };
+        break;
+      case types.SET_META_TAG_VALUE:
+        draft.tempMetaTag = action.payload;
+        break;
+
+      case types.SET_SHOW_FORM:
+        draft.showForm = action.payload;
         break;
     }
   });

@@ -17,29 +17,17 @@ const selectFaqCategoryDomain = state =>
  */
 
 export const makeSelectAll = () =>
-  createSelector(
-    selectFaqCategoryDomain,
-    substate => substate.all,
-  );
+  createSelector(selectFaqCategoryDomain, substate => substate.all);
 
 export const makeSelectQuery = () =>
-  createSelector(
-    selectFaqCategoryDomain,
-    substate => substate.query,
-  );
+  createSelector(selectFaqCategoryDomain, substate => substate.query);
 export const makeSelectOne = () =>
-  createSelector(
-    selectFaqCategoryDomain,
-    substate => substate.one,
-  );
+  createSelector(selectFaqCategoryDomain, substate => substate.one);
+
+export const makeSelectCount = () =>
+  createSelector(selectFaqCategoryDomain, substate => substate.count);
 
 export const makeSelectLoading = () =>
-  createSelector(
-    selectFaqCategoryDomain,
-    substate => substate.loading,
-  );
+  createSelector(selectFaqCategoryDomain, substate => substate.loading);
 export const makeSelectErrors = () =>
-  createSelector(
-    selectFaqCategoryDomain,
-    state => state.errors,
-  );
+  createSelector(selectFaqCategoryDomain, state => state.errors);

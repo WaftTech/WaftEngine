@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
 const validations = require('../../modules/subscribe/subscribeValidation');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
 const subscribeModule = require('../../modules/subscribe/subscribeController');
 
-router.get('/', authorization, authentication, subscribeModule.GetSubscribe);
-router.get('/:id', authorization, authentication, subscribeModule.GetSubscribeById);
+router.get('/', authentication, authorization, subscribeModule.GetSubscribe);
+router.get('/:id', authentication, authorization, subscribeModule.GetSubscribeById);
 router.post('/', validations.sanitize, validations.validate, subscribeModule.SaveSubscribe);
-router.delete('/:id', authorization, authentication, subscribeModule.DeleteSubscribe);
+router.delete('/:id', authentication, authorization, subscribeModule.DeleteSubscribe);
+
 module.exports = router;

@@ -1,25 +1,25 @@
+import { LOCATION_CHANGE, push } from 'connected-react-router';
 import {
-  takeLatest,
-  take,
   call,
+  cancel,
   fork,
   put,
   select,
-  cancel,
+  take,
+  takeLatest,
 } from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
 import Api from 'utils/Api';
-import { makeSelectOne } from './selectors';
-import { makeSelectToken } from '../../App/selectors';
 import { enqueueSnackbar } from '../../App/actions';
-import * as types from './constants';
+import { makeSelectToken } from '../../App/selectors';
 import * as actions from './actions';
+import * as types from './constants';
+import { makeSelectOne } from './selectors';
 
 function* loadCategory(action) {
   const token = yield select(makeSelectToken());
   yield call(
     Api.get(
-      'blog/category',
+      'blog/category/active',
       actions.loadCategorySuccess,
       actions.loadCategoryFailure,
       token,
@@ -39,12 +39,9 @@ function* loadAll(action) {
     });
   }
 
-  if (action.payload.sort) {
-    sort = `&sort=${action.payload.sort}`;
-  }
   yield call(
     Api.get(
-      `blog/auth?${query}&${sort}`,
+      `blog/auth?${query}`,
       actions.loadAllSuccess,
       actions.loadAllFailure,
       token,
@@ -95,14 +92,18 @@ function* addEdit() {
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
   const errors = validate(data);
+  let main_data = { ...data };
+  if (data.image && data.image._id) {
+    main_data = { ...main_data, image: data.image._id };
+  }
   if (errors.isValid) {
+    // const { image, ...dataObj } = data;
     yield fork(
-      Api.multipartPost(
+      Api.post(
         'blog',
         actions.addEditSuccess,
         actions.addEditFailure,
-        data,
-        { file: data.image },
+        main_data,
         token,
       ),
     );
@@ -121,6 +122,7 @@ function* addEditSuccessFunc(action) {
     },
   };
   yield put(enqueueSnackbar(snackbarData));
+  yield put(actions.loadAllRequest());
 }
 
 function* addEditFailureFunc(action) {

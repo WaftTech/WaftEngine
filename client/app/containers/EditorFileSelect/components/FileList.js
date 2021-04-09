@@ -7,17 +7,9 @@ import queryString from 'query-string';
 import { createStructuredSelector } from 'reselect';
 import Dropzone from 'react-dropzone';
 
-// material
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Edit from '@material-ui/icons/Edit';
-import Cancel from '@material-ui/icons/Cancel';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import WithStyles from '@material-ui/core/styles/withStyles';
-import InputBase from '@material-ui/core/InputBase';
+import Dialog from '../../../components/Dialog/index';
+import PageContent from '../../../components/PageContent/PageContent';
+import { FaCheck, FaFolderOpen } from 'react-icons/fa';
 
 import * as mapDispatchToProps from '../actions';
 import {
@@ -26,9 +18,28 @@ import {
   makeSelectfolderAddRequest,
   makeSelectLoading,
   makeSelectfolderRenameRequest,
+  makeSelectChosen,
+  makeSelectChosenFiles,
+  makeSelectChosenFolders,
+  makeSelectFileRenameLoading,
+  makeSelectRenameFile,
+  makeSelectShowRename,
+  makeSelectQuery,
 } from '../selectors';
 import { IMAGE_BASE } from '../../App/constants';
 import BreadCrumb from '../../../components/Breadcrumb/Loadable';
+import DeleteDialog from '../../../components/DeleteDialog';
+import {
+  FaPlusCircle,
+  FaImages,
+  FaImage,
+  FaPenSquare,
+  FaTrash,
+  FaFolder,
+  FaSearch,
+  FaEdit,
+} from 'react-icons/fa';
+import { all } from 'redux-saga/effects';
 
 const LinkComponent = ({ children, staticContext, ...props }) => (
   <div {...props}>{children}</div>
@@ -53,6 +64,22 @@ const FileList = ({
   folderRename,
   clearValue,
   loading,
+  addChosenFile,
+  chosen,
+  chosen_files,
+  clearChosen,
+  addChosenFolder,
+  chosen_folders,
+  deleteMultipleRequest,
+  setRenameFileValue,
+  setShowRename,
+  rename_file,
+  fileRenameLoading,
+  showRename,
+  renameFileRequest,
+  setQueryValue,
+  query,
+  classes,
   ...props
 }) => {
   const [open, setOpen] = useState(false);
@@ -62,18 +89,35 @@ const FileList = ({
   const [show, setShow] = useState(false);
   const [rename_id, setRenameId] = useState('');
   const [rename, setRename] = useState('');
+  const [deleteId, setdeleteId] = useState('');
+  const [deleteFile, setdeleteFile] = useState('');
+  const [deleteOpen, setdeleteOpen] = useState(false);
+  const [fileOpen, setfileOpen] = useState(false);
+
+  const [folderCheckbox, setfolderCheckbox] = useState(false);
+  const [fileCheckbox, setfileCheckbox] = useState(false);
+  const [selectedButton, setSelectedButton] = useState('');
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   useEffect(() => {
     if (!folderAdded) {
       setOpen(false);
       clearValue();
     }
+    clearChosen();
   }, [folderAdded]);
 
   useEffect(() => {
     if (!folderRename) {
       setShow(false);
     }
+    clearChosen();
   }, [folderRename]);
+
+  useEffect(() => {
+    setSelectedButton('');
+  }, [files]);
 
   const onSelect = image => {
     if (props.selectFile) {
@@ -89,6 +133,14 @@ const FileList = ({
 
   const handleAdd = () => {
     setOpen(true);
+  };
+
+  const handleDelClose = () => {
+    setdeleteOpen(false);
+  };
+
+  const handleFileClose = () => {
+    setfileOpen(false);
   };
 
   const handleClose = () => {
@@ -145,6 +197,16 @@ const FileList = ({
     renameFolderRequest();
   };
 
+  const handleRenameFile = (id, name) => {
+    setRenameFileValue({ key: '_id', value: id });
+    setRenameFileValue({ key: 'renamed_name', value: name });
+    setShowRename(true);
+  };
+
+  const closeFileRename = () => {
+    setShowRename(false);
+  };
+
   const handleRenameClose = () => {
     setShow(false);
   };
@@ -153,8 +215,16 @@ const FileList = ({
     setRename(e.target.value);
   };
 
+  const handleEditFile = e => {
+    setRenameFileValue({ key: 'renamed_name', value: e.target.value });
+  };
+
   const handleSaveRename = () => {
     loadNewFolderRequest({ key: self._id, value: rename_id, name: rename });
+  };
+
+  const handleSaveFileRename = () => {
+    renameFileRequest();
   };
 
   const handleEnter = e => {
@@ -163,14 +233,31 @@ const FileList = ({
     }
   };
 
+  const handleFileEnter = e => {
+    if (e.key === 'Enter') {
+      renameFileRequest();
+    }
+  };
+
   const handleDeleteFolder = id => {
-    folderDeleteRequest(id);
+    setdeleteId(id);
+    setdeleteOpen(true);
   };
 
   const handleDeleteFile = id => {
-    fileDeleteRequest(id);
+    setdeleteFile(id);
+    setfileOpen(true);
   };
 
+  const handleFolderDel = () => {
+    folderDeleteRequest(deleteId);
+    setdeleteOpen(false);
+  };
+
+  const handleFileDel = () => {
+    fileDeleteRequest(deleteFile);
+    setfileOpen(false);
+  };
   let routeList = [];
   self.path.map(each => {
     routeList = [
@@ -198,186 +285,467 @@ const FileList = ({
     handleFolderLink(linkObj.id);
   };
 
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="new-folder">
-        <DialogTitle>New Folder</DialogTitle>
-        <DialogContent>
-          <input
-            autoFocus
-            id="name"
-            type="text"
-            className="inputbox"
-            onChange={handleInput}
-            value={one.name}
-          />
-        </DialogContent>
-        <DialogActions>
+  const handleQueryChange = name => event => {
+    event.persist();
+    const { value } = event.target;
+    setQueryValue({ key: name, value });
+  };
+
+  const handleQueryEnter = event => {
+    if (event.key === 'Enter') {
+      loadFilesRequest(queryObj);
+    }
+  };
+
+  const handleSearch = () => {
+    loadFilesRequest(queryObj);
+  };
+
+  const handleSelectMultipleButton = () => {
+    if (selectedButton === 'Multiple') {
+      setfileCheckbox(!fileCheckbox);
+    } else {
+      setfileCheckbox(true);
+    }
+    setfolderCheckbox(false);
+    setSelectedButton('Multiple');
+    clearChosen();
+  };
+
+  const handleRenameButton = () => {
+    if (selectedButton === 'Rename') {
+      setfileCheckbox(!fileCheckbox);
+
+      setfolderCheckbox(!folderCheckbox);
+    } else {
+      setfolderCheckbox(true);
+      setfileCheckbox(true);
+    }
+    // setfileCheckbox(false);
+    setSelectedButton('Rename');
+    clearChosen();
+  };
+
+  const handleDeleteButton = () => {
+    if (selectedButton === 'Delete') {
+      setfileCheckbox(!fileCheckbox);
+      setfolderCheckbox(!folderCheckbox);
+    } else {
+      setfileCheckbox(true);
+      setfolderCheckbox(true);
+    }
+
+    setSelectedButton('Delete');
+    clearChosen();
+  };
+
+  const onChooseFile = image => {
+    addChosenFile(image);
+  };
+
+  const onChooseFolder = folder => {
+    addChosenFolder(folder);
+  };
+
+  const handleUploadMultiple = () => {
+    if (props.uploadMultiple) {
+      props.uploadMultiple(chosen_files);
+    } else {
+      window.alert(
+        'Define function for multiple upload where this component is called. Pass it as uploadMultiple in props',
+      );
+    }
+  };
+
+  const confirmDelete = () => {
+    deleteMultipleRequest();
+  };
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  return (
+    <PageContent loading={loading}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        title={`New Folder`}
+        body={
+          <div className="w-5/6 sm:w-80">
+            <input
+              autoFocus
+              id="name"
+              type="text"
+              className="inputbox"
+              onChange={handleInput}
+              value={one.name}
+            />
+          </div>
+        }
+        actions={
+          <>
+            <button
+              onClick={handleClose}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              disabled={folderAdded}
+            >
+              Save
+            </button>
+          </>
+        }
+      />
+
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        title={`Cant Upload here`}
+        body={`Create sub folder first and then ony you can upload image`}
+        actions={
+          <>
+            <button
+              onClick={handleDialogClose}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Close
+            </button>
+          </>
+        }
+      />
+      <div className="flex items-center justify-between my-3">
+        <div className="flex">
+          <div className="flex relative">
+            <input
+              type="text"
+              id="contents-name"
+              placeholder="Search files by name"
+              className="m-auto inputbox pr-6"
+              value={query.search}
+              onChange={handleQueryChange('search')}
+              style={{ minWidth: '300px' }}
+              onKeyPress={handleQueryEnter}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              onClick={handleSearch}
+            >
+              <FaSearch />
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center media_btn -mt-4">
+          {/* {selectedButton === 'Multiple' && chosen_files.length > 0 ? (
+            <button
+              onClick={handleUploadMultiple}
+              className="blink items-center text-black flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
+            >
+              <FaImages className="text-base mr-2" />
+              <span>Upload Multiple</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleSelectMultipleButton}
+              className="items-center text-black flex btn bg-pink-100 border border-pink-200 hover:bg-pink-500 hover:text-white mr-2 hover:border-pink-500"
+            >
+              <FaImages className="text-base mr-2" />
+              <span>Select Multiple</span>
+            </button>
+          )} */}
+
+          {self.name === 'root' ? (
+            <div
+              onClick={() => handleDialogOpen()}
+              className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+            >
+              <FaImage className="text-base mr-2" />
+              <span>Choose File</span>
+            </div>
+          ) : (
+            <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
+              {({ getRootProps, getInputProps }) => (
+                <div
+                  className="items-center flex btn text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+                  {...getRootProps()}
+                >
+                  <input {...getInputProps()} />
+                  <FaImage className="text-base mr-2" />
+                  <span>Choose File</span>
+                </div>
+              )}
+            </Dropzone>
+          )}
           <button
-            onClick={handleClose}
-            color="bg-secondary px-4 py-2 text-sm rounded text-white flex items-center"
+            onClick={handleAdd}
+            className="items-center flex btn text-blue-500 bg-blue-100 border border-blue-200 hover:bg-blue-500 hover:border-blue-500 mr-2 hover:text-white"
           >
-            Cancel
+            <FaPlusCircle className="text-base mr-2" />
+            <span>New Folder</span>
           </button>
           <button
-            onClick={handleSave}
-            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
+            onClick={handleRenameButton}
+            className="items-center flex text-orange-500 bg-orange-100 border border-orange-200 hover:border-orange-500 hover:bg-orange-500 btn mr-2 hover:text-white"
           >
-            Save
+            <FaPenSquare className="text-base mr-2" />
+            <span>Rename</span>
           </button>
-        </DialogActions>
-      </Dialog>
-      <div className="m-2 flex items-center justify-between">
+          {selectedButton === 'Delete' &&
+            (chosen_files.length > 0 || chosen_folders.length > 0) ? (
+            <button
+              onClick={confirmDelete}
+              className="blink items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
+            >
+              <FaTrash className="text-base mr-2" />
+              <span>Confirm Delete</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDeleteButton}
+              className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
+            >
+              <FaTrash className="text-base mr-2" />
+              <span>Delete</span>
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="my-auto">
         <BreadCrumb
           linkcomponent={LinkComponent}
           routeList={routeList}
           onClick={onClick}
         />
-        <div className="flex-1 flex">
-          <Dropzone onDrop={file => handleFileUpload(file, self._id)}>
-            {({ getRootProps, getInputProps }) => (
-              <section className="text-black hover:text-primary hover:border-primary text-center self-start py-2 px-4 border border-gray-500 rounded  cursor-pointer mr-2 =">
-                <div className="flex items-center " {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <i className="material-icons text-base mr-2">add_to_photos</i>
-                  <span>Choose File</span>
-                </div>
-              </section>
-            )}
-          </Dropzone>
-          <button
-            onClick={handleAdd}
-            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
-          >
-            <i className="material-icons text-base mr-2">add</i>
-            New Folder
-          </button>
-        </div>
       </div>
       <Dialog
         open={show}
         onClose={handleRenameClose}
-        aria-labelledby="rename-folder"
-      >
-        <DialogTitle>Rename Folder</DialogTitle>
-        <DialogContent>
-          <input
-            autoFocus
-            id="rename"
-            type="text"
-            className="inputbox"
-            onChange={handleEdit}
-            value={rename}
-            onKeyDown={handleEnter}
-          />
-        </DialogContent>
-        <DialogActions>
-          <button
-            onClick={handleRenameClose}
-            color="bg-secondary px-4 py-2 text-sm rounded text-white flex items-center"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSaveRename}
-            className="bg-primary px-4 py-2 text-sm rounded text-white flex items-center"
-          >
-            Save
-          </button>
-        </DialogActions>
-      </Dialog>
-      <div className="flex flex-wrap p-4 overflow-hidden m-2 border rounded">
-        {folders.data.map(each => (
-          <div
-            key={each._id}
-            // className="w-56 h-30 mb-8 p-2"
-            onMouseOver={() => handleMouseOver(each._id)}
-            onMouseLeave={() => handleMouseOver('')}
-          >
-            {over === each._id ? (
-              <div className="flex justify-between">
-                <button
-                  className="hover:text-blue-500"
-                  onClick={() => handleRename(each._id, each.name)}
-                >
-                  <Edit />
-                </button>
-                <button
-                  className="hover:text-primary"
-                  onClick={() => handleDeleteFolder(each._id)}
-                >
-                  <Cancel />
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
-            <div
-              data-tooltip={each.name}
-              className={`${
-                selected === each._id ? 'folder_media' : ''
-              } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
-              onClick={() => handleSingleClick(each._id)}
-              onDoubleClick={() => handleFolderLink(each._id)}
-              onKeyDown={() => handleFolderLink(each._id)}
-              role="presentation"
+        title={`Rename Folder`}
+        body={
+          <div className="w-5/6 sm:w-80">
+            <input
+              autoFocus
+              id="rename"
+              type="text"
+              className="inputbox"
+              onChange={handleEdit}
+              value={rename}
+              onKeyDown={handleEnter}
+            />
+          </div>
+        }
+        actions={
+          <>
+            <button
+              onClick={handleRenameClose}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
             >
-              <i
-                className="material-icons text-yellow-500 self-center"
-                style={{ fontSize: '7rem' }}
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveRename}
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            >
+              Save
+            </button>
+          </>
+        }
+      />
+
+      <Dialog
+        open={showRename}
+        onClose={closeFileRename}
+        title={`Rename File`}
+        body={
+          <div className="w-5/6 sm:w-80">
+            <input
+              autoFocus
+              id="rename"
+              type="text"
+              className="inputbox"
+              onChange={handleEditFile}
+              value={rename_file.renamed_name}
+              onKeyDown={handleFileEnter}
+            />
+          </div>
+        }
+        actions={
+          <>
+            <button
+              onClick={closeFileRename}
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveFileRename}
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            >
+              Save
+            </button>
+          </>
+        }
+      />
+
+      {/* end file rename */}
+      <DeleteDialog
+        open={deleteOpen}
+        doClose={handleDelClose}
+        doDelete={handleFolderDel}
+      />
+      <DeleteDialog
+        open={fileOpen}
+        doClose={handleFileClose}
+        doDelete={handleFileDel}
+      />
+      <div className="flex flex-wrap bg-white mt-1">
+        {folders.data.map(each => (
+          <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5" key={each._id}>
+            <div
+              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px relative"
+              onMouseOver={() => handleMouseOver(each._id)}
+              onMouseLeave={() => handleMouseOver('')}
+            >
+              <div className={`${folderCheckbox ? '' : 'mediaCheck'} absolute`}>
+                {selectedButton === 'Rename' && (
+                  <button
+                    className="flex w-8 h-8 bg-white shadow rounded-full"
+                    onClick={() => handleRename(each._id, each.name)}
+                  >
+                    <FaEdit
+                      className="text-sm inline-block text-black m-auto hover:text-primary"
+                      title="Edit"
+                    />
+                  </button>
+                )}
+                {selectedButton === 'Delete' && (
+                  <>
+                    <div className="checkbox">
+                      <input
+                        id={`${each._id}-secondary`}
+                        type="checkbox"
+                        onClick={() => addChosenFolder(each)}
+                      />
+                      <label htmlFor={`${each._id}-secondary`}>
+                        <span className="box">
+                          <FaCheck className="check-icon" />
+                        </span>
+                      </label>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div
+                // data-tooltip={each.name}
+                className={`${selected === each._id ? 'folder_media' : ''
+                  } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
+                onClick={() => handleSingleClick(each._id)}
+                onDoubleClick={() => handleFolderLink(each._id)}
+                onKeyDown={() => handleFolderLink(each._id)}
+                role="presentation"
               >
-                folder
-              </i>
-              <span className="block text-sm truncate">{each.name}</span>
+                <div className="flex justify-center">
+                  <FaFolder
+                    className="text-yellow-500"
+                    style={{ fontSize: '6rem' }}
+                  />
+                </div>
+                <div className="block text-sm truncate py-1">{each.name}</div>
+              </div>
             </div>
           </div>
         ))}
         {files.data.map((each, index) => (
-          <div
-            key={each._id}
-            onMouseOver={() => handleMouseOverFile(each._id)}
-            onMouseLeave={() => handleMouseOverFile('')}
-          >
-            {overFile === each._id ? (
-              <div className="flex">
-                <button
-                  className="hover:text-primary"
-                  onClick={() => handleDeleteFile(each._id)}
-                >
-                  <Cancel />
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
+          <div className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
             <div
-              data-tooltip={each.filename}
-              className={`${
-                selected === each._id ? 'folder_media' : ''
-              } flex flex-col justify-between w-48 h-28 mb-4 p-1 text-center mr-4 border border-transparent hover:border-yellow-300 cursor-pointer rounded`}
+              className="h-48 mediaCont p-4 text-center border -ml-px -mb-px relative"
+              key={each._id}
+              onMouseOver={() => handleMouseOverFile(each._id)}
+              onMouseLeave={() => handleMouseOverFile('')}
             >
-              <img
-                className="w-full h-24 object-contain"
-                src={`${IMAGE_BASE}${each.path}`}
-                alt={each.filename}
-                onClick={() => handleSingleClick(each._id)}
-                onDoubleClick={() => onSelect(each)}
-                onKeyDown={() => handleFolderLink(each._id)}
-                role="presentation"
-              />
-              <div className="truncate text-sm pt-2">{each.filename}</div>
+              {selectedButton === 'Rename' && (
+                <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
+                  <button
+                    className="flex w-8 h-8 bg-white shadow rounded-full"
+                    onClick={() =>
+                      handleRenameFile(each._id, each.renamed_name)
+                    }
+                  >
+                    <FaEdit
+                      className="text-sm inline-block text-black m-auto hover:text-primary"
+                      title="Edit"
+                    />
+                  </button>
+                </div>
+              )}
+              <div className={`${fileCheckbox ? '' : 'mediaCheck'} absolute`}>
+                {selectedButton === 'Multiple' && (
+                  <div className="checkbox">
+                    <input
+                      id={`${index}-multipleselect`}
+                      type="checkbox"
+                      onClick={() => onChooseFile(each)}
+                    />
+                    <label htmlFor={`${index}-multipleselect`}>
+                      <span className="box">
+                        <FaCheck className="check-icon" />
+                      </span>
+                    </label>
+                  </div>
+                )}
+                {selectedButton === 'Delete' && (
+                  <div className="checkbox">
+                    <input
+                      id={`${index}-dltmultiple`}
+                      type="checkbox"
+                      onClick={() => addChosenFile(each)}
+                    />
+                    <label htmlFor={`${index}-dltmultiple`}>
+                      <span className="box">
+                        <FaCheck className="check-icon" />
+                      </span>
+                    </label>
+                  </div>
+                )}
+              </div>
+              <div
+                // data-tooltip={each.filename}
+                className={`${selected === each._id ? 'folder_media' : ''
+                  } flex flex-col w-full h-36 text-center cursor-pointer overflow-hidden mt-10`}
+              >
+                <div className="flex">
+                  <img
+                    className="w-full h-24 object-contain"
+                    src={`${IMAGE_BASE}${each.path}`}
+                    alt={each.filename}
+                    onClick={() => handleSingleClick(each._id)}
+                    onDoubleClick={() => onSelect(each)}
+                    onKeyDown={() => handleFolderLink(each._id)}
+                    role="presentation"
+                  />
+                </div>
+                <div className="truncate text-sm py-1">{each.renamed_name}</div>
+              </div>
             </div>
           </div>
         ))}
         {folders.data.length < 1 && files.data.length < 1 && (
-          <div className="text-center w-full text-sm h-64">
-            This Folder is Empty
+          <div className="h-64 flex items-center justify-center flex-col w-full">
+            <FaFolderOpen style={{ fontSize: '6rem' }} className="mb-5 opacity-10 mx-auto" />
+            <p className="text-gray-400">This folder is empty.</p>
           </div>
         )}
       </div>
-    </div>
+    </PageContent>
   );
 };
 
@@ -400,28 +768,15 @@ const mapStateToProps = createStructuredSelector({
   folderAdded: makeSelectfolderAddRequest(),
   folderRename: makeSelectfolderRenameRequest(),
   loading: makeSelectLoading(),
+  chosen: makeSelectChosen(),
+  chosen_files: makeSelectChosenFiles(),
+  chosen_folders: makeSelectChosenFolders(),
+  fileRenameLoading: makeSelectFileRenameLoading(),
+  rename_file: makeSelectRenameFile(),
+  showRename: makeSelectShowRename(),
+  query: makeSelectQuery(),
 });
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-});
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-const withStyle = WithStyles(styles);
-
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(FileList);
+export default compose(withConnect)(FileList);

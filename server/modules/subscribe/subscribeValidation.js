@@ -1,11 +1,13 @@
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const subscribeSch = require('./subscribeSchema');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
-  otherHelper.sanitize(req, [
+  sanitizeHelper.sanitize(req, [
     {
       field: 'email',
       sanitize: {
@@ -16,8 +18,8 @@ validations.sanitize = (req, res, next) => {
   next();
 };
 validations.validate = async (req, res, next) => {
-  const data = await subscribeSch.countDocuments({ email: req.body.email });
-  let errors = otherHelper.validation(req.body, [
+  const data = req.body
+  const validateArray = [
     {
       field: 'email',
       validate: [
@@ -39,9 +41,15 @@ validations.validate = async (req, res, next) => {
         },
       ],
     },
-  ]);
-  if (data) {
-    errors['email'] = 'This email has already been subscribed! Thank You!!';
+  ]
+
+  let errors = validateHelper.validation(data, validateArray);
+  let subscribe_filter = { is_deleted: true, email: data.email }
+
+  const already_subscribe = await subscribeSch.findOne(subscribe_filter);
+
+  if (already_subscribe && already_subscribe._id) {
+    errors = { ...errors, subscribe: 'You cannot subscribe anymore' }
   }
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);

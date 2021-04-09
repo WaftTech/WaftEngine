@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const metaSchema = new schema({
-  client_route: { type: String, required: true },
-  title: { type: String, required: true },
-  meta_description: { type: String, required: true },
-  meta_keywords: { type: String, required: true },
+  client_route: { type: String },
+  title: { type: String },
+  meta_description: { type: String },
+  meta_keywords: { type: String },
   meta_image: { type: schema.Types.Mixed },
   is_deleted: { type: Boolean, required: true, default: false },
   deleted_at: { type: Date },

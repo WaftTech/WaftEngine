@@ -10,31 +10,32 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-//@material components
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
-import { makeSelectSettings, makeSelectLoading } from './selectors';
+import {
+  makeSelectSettings,
+  makeSelectLoading,
+  makeSelectSettingsNormalized,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import Loading from '../../../components/Loading';
+import { FaCheck } from 'react-icons/fa';
 
 const key = 'settingsManagePage';
 
-const styles = {};
-
 export const SettingsManagePage = props => {
-  const { loadAllSettingsRequest, settings, setValue } = props;
+  const {
+    loadAllSettingsRequest,
+    settings,
+    setValue,
+    classes,
+    setting_normalized,
+    editSettingsRequest,
+    loading,
+    sendTestMailRequest,
+  } = props;
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -42,239 +43,272 @@ export const SettingsManagePage = props => {
     loadAllSettingsRequest();
   }, []);
 
-  const [comment_status, setCommentStatus] = useState('');
-
-  const handleDropDownChange = name => {
-    const data = [...settings.data];
-    setValue(data);
+  const handleDropDownChange = name => e => {
+    setValue({ key: name, value: e.target.value });
   };
 
-  let setting_normalized = {};
-  console.log(settings, 'settings');
-  settings.data.reduce((acc, curr) => {
-    return acc + curr;
-  }, {});
+  const handleCheckedChange = name => e => {
+    setValue({ key: name, value: e.target.checked });
+  };
+
+  const handleChange = name => e => {
+    setValue({ key: name, value: e.target.value });
+  };
+
+  const handleSave = () => {
+    editSettingsRequest();
+  };
+
+  const sendTestMail = () => {
+    sendTestMailRequest();
+  };
 
   const commentStatus = ['posted', 'onhold', 'approved', 'disapproved'];
-  const emailChannel = ['waft', 'smtp', 'mailgun', 'sendgri'];
+  const emailChannel = ['waft', 'smtp', 'mailgun', 'sendgrid'];
 
   return (
     <>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="comment-settings"
-          id="comment-settings-header"
-        >
-          <h3 className="border-b text-xl font-bold border-gray-300 pb-2">
-            Comment Settings
-          </h3>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div className="bg-white rounded p-4 shadow">
-            {/* {settings.data.map((each, index) => (
-        <div key={each._id} className="flex">
-          <label>{each.title}</label>
-          {typeof each.value === 'string' && <input value={each.value} />}
-          {typeof each.value === 'boolean' && (
-            <input type="checkbox" checked={each.value} />
-          )}
+      <div className="flex justify-between my-3">
+        {loading && loading === true ? <Loading /> : <></>}
+      </div>
+
+      <div>
+        <div className="bg-white rounded p-6 shadow">
+          <div className="max-w-xl">
+            <h3 className="text-lg font-bold pb-2">Basic Settings</h3>
+            <label className="text-sm mt-4 mr-2" htmlFor="grid-comment-status">
+              Default status of comment
+            </label>
+            <select
+              className="inputbox flex-1"
+              native="true"
+              value={
+                Object.keys(setting_normalized).length &&
+                setting_normalized.default_status_of_comment &&
+                setting_normalized.default_status_of_comment.value
+              }
+              // onChange={e => setCommentStatus(e.target.value)}
+              onChange={handleDropDownChange('default_status_of_comment')}
+            >
+              <option value="" disabled>
+                None
+              </option>
+              {commentStatus.map((each, index) => (
+                <option key={`${each}-${index}`} name="name" value={each}>
+                  {each}
+                </option>
+              ))}
+            </select>
+            <div className="checkbox mt-4">
+              <input
+                checked={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.recaptcha_check &&
+                    setting_normalized.recaptcha_check.value) ||
+                  false
+                }
+                onClick={handleCheckedChange('recaptcha_check')}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Recaptcha Check
+              </label>
+            </div>
+            <div className="checkbox">
+              <input
+                checked={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.is_login_required &&
+                    setting_normalized.is_login_required.value) ||
+                  false
+                }
+                onClick={handleCheckedChange('is_login_required')}
+                id="is_login"
+                type="checkbox"
+              />
+              <label htmlFor="is_login">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Login Required
+              </label>
+            </div>
+          </div>
         </div>
-      ))} */}
-            <div className="flex">
-              <label className="label" htmlFor="grid-comment-status">
-                Default status of comment
+      </div>
+
+      <div>
+        <div className="bg-white rounded p-6 shadow mt-6">
+          <h3 className="text-lg font-bold pb-2">Email Settings</h3>
+          <div className="max-w-xl">
+            <div className="pt-4">
+              <label className="text-sm mt-4" htmlFor="grid-email-channel">
+                Email Channel
               </label>
               <select
                 className="inputbox"
                 native="true"
-                value={comment_status}
-                onChange={e => setCommentStatus(e.target.value)}
+                value={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.email_channel &&
+                    setting_normalized.email_channel.value) ||
+                  ''
+                }
+                onChange={handleDropDownChange('email_channel')}
               >
                 <option value="" disabled>
                   None
                 </option>
-                {commentStatus.map(each => (
-                  <option name="name" value={each}>
+                {emailChannel.map((each, index) => (
+                  <option key={`${each}-${index}`} name="name" value={each}>
                     {each}
                   </option>
                 ))}
               </select>
             </div>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={true}
-                    tabIndex={-1}
-                    // onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
+            <div className="pt-4">
+              <label>Email to send test mail</label>
+              <input
+                className="inputbox"
+                id="email-to-send-test-mail"
+                type="email"
+                value={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.email_to_send_test_mail &&
+                    setting_normalized.email_to_send_test_mail.value) ||
+                  ''
                 }
-                label="Recaptcha Check"
+                name="email_to_send_test_mail"
+                onChange={handleChange('email_to_send_test_mail')}
               />
-            </div>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={false}
-                    tabIndex={-1}
-                    // onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Login Required"
-              />
+              <button
+                type="button"
+                className="btn bg-blue-500 hover:bg-blue-600"
+                onClick={sendTestMail}
+              >
+                Send Test Mail
+              </button>
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="email-setting"
-          id="email-setting-header"
-        >
-          <h3 className="border-b text-xl font-bold border-gray-300 pb-2">
-            Email Settings
-          </h3>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div className="bg-white rounded p-4 shadow">
-            <div className="flex justify-between">
-              <div className="w-1/2">
-                <label className="label" htmlFor="grid-email-channel">
-                  Email Channel
-                </label>
-                <select
-                  className="inputbox"
-                  native="true"
-                  value="waft"
-                  // onChange={e => setCommentStatus(e.target.value)}
-                >
-                  <option value="" disabled>
-                    None
-                  </option>
-                  {emailChannel.map(each => (
-                    <option name="name" value={each}>
-                      {each}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="w-1/2 ml-4">
-                <label className="label" htmlFor="grid-email-to-send-mail">
-                  Email to send test mail
-                </label>
-                <input
-                  className="inputbox"
-                  id="email-to-send-test-mail"
-                  type="text"
-                  value=""
-                  name="email_to_send_test_mail"
-                  // onChange={this.handleTempMetaKeyword}
-                />
-              </div>
-            </div>
-            <br />
-            <div className="flex">
-              <div className="w-1/2">
-                <div>
-                  <label className="label" htmlFor="grid-protocol">
-                    Protocol
-                  </label>
+          {Object.keys(setting_normalized).length &&
+            setting_normalized.email_channel &&
+            setting_normalized.email_channel.value === 'smtp' && (
+              <div className="flex-wrap px-4">
+                <div className="w-1/2 pb-4">
+                  <label>Protocal</label>
                   <input
                     className="inputbox"
                     id="protocol"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.protocol &&
+                        setting_normalized.protocol.value) ||
+                      ''
+                    }
                     name="protocol"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('protocol')}
                   />
                 </div>
-                <br />
-                <div>
-                  <label className="label" htmlFor="grid-email">
-                    Email
-                  </label>
+                <div className="w-1/2 pb-4">
+                  <label>Email</label>
                   <input
                     className="inputbox"
                     id="email"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.email &&
+                        setting_normalized.email.value) ||
+                      ''
+                    }
                     name="email"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('email')}
                   />
                 </div>
-                <br />
-                <div>
-                  <label className="label" htmlFor="grid-password">
-                    Password
-                  </label>
+                <div className="w-1/2 pb-4">
+                  <label>Password</label>
                   <input
                     className="inputbox"
                     id="password"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.password &&
+                        setting_normalized.password.value) ||
+                      ''
+                    }
                     name="password"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('password')}
                   />
                 </div>
-                <br />
-                <div>
-                  <label className="label" htmlFor="grid-server">
-                    Server
-                  </label>
+                <div className="w-1/2 pb-4">
+                  <label>Server</label>
                   <input
                     className="inputbox"
                     id="server"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.server &&
+                        setting_normalized.server.value) ||
+                      ''
+                    }
                     name="server"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('server')}
                   />
                 </div>
-                <br />
-                <div>
-                  <label className="label" htmlFor="grid-port">
-                    Port
-                  </label>
+
+                <div className="w-1/2 pb-4">
+                  <label>Port</label>
                   <input
                     className="inputbox"
                     id="port"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.port &&
+                        setting_normalized.port.value) ||
+                      ''
+                    }
                     name="port"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('port')}
                   />
                 </div>
-                <br />
-                <div>
-                  <label className="label" htmlFor="grid-security">
-                    Security
-                  </label>
+                <div className="w-1/2 pb-4">
+                  <label>Security</label>
                   <input
                     className="inputbox"
                     id="security"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.security &&
+                        setting_normalized.security.value) ||
+                      ''
+                    }
                     name="security"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('security')}
                   />
                 </div>
-                <br />
-                <div>
-                  <label className="label" htmlFor="grid-password">
-                    Secure
-                  </label>
+                <div className="w-1/2 pb-4">
+                  <label className="text-sm mt-4">Secure</label>
                   <select
                     className="inputbox"
                     native="true"
-                    value={true}
-                    // onChange={e => setCommentStatus(e.target.value)}
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.secure &&
+                        setting_normalized.secure.value) ||
+                      false
+                    }
+                    onChange={handleDropDownChange('secure')}
                   >
-                    <option name="secure" value={true}>
+                    <option name="secure" value>
                       True
                     </option>
                     <option name="secure" value={false}>
@@ -283,221 +317,326 @@ export const SettingsManagePage = props => {
                   </select>
                 </div>
               </div>
-              <div className="w-1/2 ml-4">
-                <div>
-                  <label className="label" htmlFor="grid-api-key">
-                    Api Key
-                  </label>
+            )}
+
+          {Object.keys(setting_normalized).length &&
+            setting_normalized.email_channel &&
+            setting_normalized.email_channel.value === 'mailgun' && (
+              <div className="flex justify-between px-4">
+                <div className="w-1/3 pb-4 -ml-4">
+                  <label>API Key</label>
                   <input
                     className="inputbox"
                     id="api-key"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.api_key &&
+                        setting_normalized.api_key.value) ||
+                      ''
+                    }
                     name="api_key"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('api_key')}
                   />
                 </div>
-                <div>
-                  <label className="label" htmlFor="grid-domain">
-                    Domain
-                  </label>
+                <div className="w-1/3 pb-4">
+                  <label>Domain</label>
                   <input
                     className="inputbox"
                     id="domain"
                     type="text"
-                    value=""
+                    value={
+                      (Object.keys(setting_normalized).length &&
+                        setting_normalized.domain &&
+                        setting_normalized.domain.value) ||
+                      ''
+                    }
                     name="domain"
-                    // onChange={this.handleTempMetaKeyword}
+                    onChange={handleChange('domain')}
                   />
                 </div>
               </div>
+            )}
+          {Object.keys(setting_normalized).length &&
+            setting_normalized.email_channel &&
+            setting_normalized.email_channel.value === 'sendgrid' && (
+              <div className="flex justify-between px-4">
+                <label className="label" htmlFor="grid-sendgrid-api-key">
+                  Api Key
+                </label>
+                <input
+                  className="inputbox"
+                  id="sendgrid-api-key"
+                  type="text"
+                  value={
+                    (Object.keys(setting_normalized).length &&
+                      setting_normalized['sendgrid_api_key'] &&
+                      setting_normalized['sendgrid_api_key'].value) ||
+                    ''
+                  }
+                  name="sendgrid-api-key"
+                  onChange={handleChange('sendgrid_api_key')}
+                />
+              </div>
+            )}
+        </div>
+      </div>
+
+      <div className="bg-white rounded p-6 shadow mt-6">
+        <h3 className="text-lg font-bold pb-2">Register & Login Setting</h3>
+        <div>
+          <div>
+            <div className="checkbox">
+              <input
+                checked={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.is_public_registration &&
+                    setting_normalized.is_public_registration.value) ||
+                  false
+                }
+                tabIndex={-1}
+                onClick={handleCheckedChange('is_public_registration')}
+                id="is_fb_login"
+                type="checkbox"
+              />
+              <label htmlFor="is_fb_login">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Is Public Registration
+              </label>
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="login-settings"
-          id="login-settings-header"
-        >
-          <h3 className="border-b text-xl font-bold border-gray-300 pb-2">
-            Register and login Settings
-          </h3>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div className="bg-white rounded p-4 shadow">
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={true}
-                    tabIndex={-1}
-                    // onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
-                }
-                label="Is Public Registration"
-              />
-            </div>
-            <div className="flex">
-              <label className="label" htmlFor="grid-secret-key">
-                Secret Key
-              </label>
+          <div className="flex justify-between px-4">
+            <div className="w-1/2 -ml-4">
+              <label>Secret Key</label>
               <input
                 className="inputbox"
                 id="secret-key"
                 type="text"
-                value=""
+                value={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.secret_key &&
+                    setting_normalized.secret_key.value) ||
+                  ''
+                }
                 name="secret_key"
-                // onChange={this.handleTempMetaKeyword}
+                onChange={handleChange('secret_key')}
               />
             </div>
-            <br />
-            <div className="flex">
-              <label className="label" htmlFor="grid-token-expire-time">
-                Token Expire Time
-              </label>
+            <div className="w-1/2 -mr-4">
+              <label>Token Expire Time</label>
               <input
                 className="inputbox"
                 id="token-expire-time"
                 type="text"
-                value=""
+                value={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.token_expire_time &&
+                    setting_normalized.token_expire_time.value) ||
+                  ''
+                }
                 name="token_expire_time"
-                // onChange={this.handleTempMetaKeyword}
+                onChange={handleChange('token_expire_time')}
               />
             </div>
-            <br />
-            <div className="flex justify-between">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={true}
-                    tabIndex={-1}
-                    // onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
+          </div>
+          <div className="flex my-4">
+            <div className="checkbox">
+              <input
+                checked={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.allow_google_login &&
+                    setting_normalized.allow_google_login.value) ||
+                  false
                 }
-                label="Allow Google Login"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={true}
-                    tabIndex={-1}
-                    // onClick={this.handleCheckedChange('is_active')}
-                    color="primary"
-                  />
+                disabled={
+                  Object.keys(setting_normalized).length &&
+                  setting_normalized.is_public_registration
+                    ? !setting_normalized.is_public_registration.value
+                    : true
                 }
-                label="Allow Facebook Login"
+                tabIndex={-1}
+                onClick={handleCheckedChange('allow_google_login')}
+                id="is_fb_login"
+                type="checkbox"
               />
+              <label htmlFor="is_fb_login">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Allow Google Login
+              </label>
             </div>
-            <div className="flex justify-between">
-              <div className="w-1/2">
-                <label className="label" htmlFor="grid-client-id">
-                  Client Id
-                </label>
+
+            <div className="checkbox">
+              <input
+                checked={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.allow_facebook_login &&
+                    setting_normalized.allow_facebook_login.value) ||
+                  false
+                }
+                disabled={
+                  Object.keys(setting_normalized).length &&
+                  setting_normalized.is_public_registration
+                    ? !setting_normalized.is_public_registration.value
+                    : true
+                }
+                onClick={handleCheckedChange('allow_facebook_login')}
+                id="is_fb_login"
+                type="checkbox"
+              />
+              <label htmlFor="is_fb_login">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
+                Allow Facebook Login
+              </label>
+            </div>
+          </div>
+          <div className="flex justify-between px-4">
+            <div className="w-1/2 pb-4 -ml-4">
+              <div>
+                <label>Client ID</label>
                 <input
                   className="inputbox"
                   id="client-id"
                   type="text"
-                  value=""
+                  value={
+                    (Object.keys(setting_normalized).length &&
+                      setting_normalized.client_id &&
+                      setting_normalized.client_id.value) ||
+                    ''
+                  }
+                  disabled={
+                    Object.keys(setting_normalized).length &&
+                    setting_normalized.allow_google_login
+                      ? !setting_normalized.allow_google_login.value
+                      : true
+                  }
                   name="client_id"
-                  // onChange={this.handleTempMetaKeyword}
+                  onChange={handleChange('client_id')}
                 />
               </div>
-              <div className="w-1/2 ml-4">
-                <label className="label" htmlFor="grid-app-id">
-                  App Id
-                </label>
+              <div>
+                <label>Client Secret</label>
                 <input
                   className="inputbox"
-                  id="app-id"
+                  id="client-secret"
                   type="text"
-                  value=""
-                  name="app_id"
-                  // onChange={this.handleTempMetaKeyword}
+                  value={
+                    (Object.keys(setting_normalized).length &&
+                      setting_normalized.client_secret &&
+                      setting_normalized.client_secret.value) ||
+                    ''
+                  }
+                  disabled={
+                    Object.keys(setting_normalized).length &&
+                    setting_normalized.allow_google_login
+                      ? !setting_normalized.allow_google_login.value
+                      : true
+                  }
+                  name="client_secret"
+                  onChange={handleChange('client_secret')}
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="w-1/2">
-                <label className="label" htmlFor="grid-client-secret">
-                  Client Secret
-                </label>
-                <input
-                  className="inputbox"
-                  id="client-id"
-                  type="text"
-                  value=""
-                  name="client_id"
-                  // onChange={this.handleTempMetaKeyword}
-                />
-              </div>
-              <div className="w-1/2 ml-4">
-                <label className="label" htmlFor="grid-app-id">
-                  App Secret
-                </label>
+            <div className="w-1/2 pb-4 -mr-4">
+              <div>
+                <label>App ID</label>
                 <input
                   className="inputbox"
                   id="app-id"
                   type="text"
-                  value=""
+                  value={
+                    (Object.keys(setting_normalized).length &&
+                      setting_normalized.app_id &&
+                      setting_normalized.app_id.value) ||
+                    ''
+                  }
+                  disabled={
+                    Object.keys(setting_normalized).length &&
+                    setting_normalized.allow_facebook_login
+                      ? !setting_normalized.allow_facebook_login.value
+                      : true
+                  }
                   name="app_id"
-                  // onChange={this.handleTempMetaKeyword}
+                  onChange={handleChange('app_id')}
+                />
+              </div>
+              <div>
+                <label>App Secret</label>
+                <input
+                  className="inputbox"
+                  id="app-secret"
+                  type="text"
+                  value={
+                    (Object.keys(setting_normalized).length &&
+                      setting_normalized.app_secret &&
+                      setting_normalized.app_secret.value) ||
+                    ''
+                  }
+                  disabled={
+                    Object.keys(setting_normalized).length &&
+                    setting_normalized.allow_facebook_login
+                      ? !setting_normalized.allow_facebook_login.value
+                      : true
+                  }
+                  name="app_secret"
+                  onChange={handleChange('app_secret')}
                 />
               </div>
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="captcha-keys"
-          id="captcha-keys-header"
-        >
-          <h3 className="border-b text-xl font-bold border-gray-300 pb-2">
-            Captcha Keys
-          </h3>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div className="bg-white rounded p-4 shadow">
-            <div className="flex">
-              <label className="label" htmlFor="grid-email-channel">
-                Secret Key
-              </label>
+        </div>
+      </div>
+
+      <div className="bg-white rounded p-6 shadow mt-6">
+        <h3 className="text-lg font-bold pb-2">Captcha Keys</h3>
+        <div className="max-w-xl">
+          <div className="flex justify-between px-4">
+            <div className="w-1/2 pb-4 -ml-4">
+              <label>Secret Key</label>
               <input
                 className="inputbox"
                 id="secret-key"
                 type="text"
-                value=""
-                name="secret_key"
-                // onChange={this.handleTempMetaKeyword}
+                value={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.captcha_secret_key &&
+                    setting_normalized.captcha_secret_key.value) ||
+                  ''
+                }
+                name="captcha_secret_key"
+                onChange={handleChange('captcha_secret_key')}
               />
             </div>
-            <br />
-            <div className="flex">
-              <label className="label" htmlFor="grid-email-to-send-mail">
-                Site Key
-              </label>
+
+            <div className="w-1/2 pb-4 -mr-4">
+              <label>Site Key</label>
               <input
                 className="inputbox"
                 id="site-key"
                 type="text"
-                value=""
+                value={
+                  (Object.keys(setting_normalized).length &&
+                    setting_normalized.captcha_site_key &&
+                    setting_normalized.captcha_site_key.value) ||
+                  ''
+                }
                 name="site_key"
-                // onChange={this.handleTempMetaKeyword}
+                onChange={handleChange('captcha_site_key')}
               />
             </div>
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </div>
+      </div>
       <button
-        className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme justify-center"
-        // onClick={this.handleSave}
+        className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+        onClick={handleSave}
       >
-        Save
+        Save Settings
       </button>
     </>
   );
@@ -506,10 +645,12 @@ export const SettingsManagePage = props => {
 SettingsManagePage.propTypes = {
   loadAllSettingsRequest: PropTypes.func.isRequired,
   settings: PropTypes.object.isRequired,
+  setting_normalized: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   settings: makeSelectSettings(),
+  setting_normalized: makeSelectSettingsNormalized(),
   loading: makeSelectLoading(),
 });
 

@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+import { makeSelectUser } from '../../App/selectors';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectUser } from '../../App/selectors';
 import { makeSelectToken } from '../selectors';
-import Tick from '@material-ui/icons/Done';
-import Clear from '@material-ui/icons/Clear';
+import { FaCheck , FaTimes } from 'react-icons/fa';
+
 
 function App(props) {
   const { user, token } = props;
@@ -24,21 +23,21 @@ function App(props) {
             className="mb-2 block text-green-500 hover:text-primary"
             to="/user/profile"
           >
-            Email verified <Tick />
+            Email verified <FaCheck />
           </NavLink>
         ) : (
-          <NavLink
-            className="mb-2 block text-red-500 text-primary"
-            to="/user/profile/verify"
-          >
-            Email not verified <Clear />
-          </NavLink>
-        )}
+            <NavLink
+              className="mb-2 block text-red-500 text-primary"
+              to="/user/profile/verify"
+            >
+              Email not verified <FaTimes />
+            </NavLink>
+          )}
         <h2 className="text-2xl mb-2 font-bold">Profile</h2>
 
         <NavLink
           className="block text-gray-800 hover:text-primary"
-          to="/user/profile"
+          to="/user/profile/information"
         >
           Information
         </NavLink>
@@ -47,6 +46,12 @@ function App(props) {
           to="/user/profile/change-password"
         >
           Change Password
+        </NavLink>
+        <NavLink
+          className="block text-gray-800 hover:text-primary"
+          to="/user/profile/two-factor"
+        >
+          Two Factor Authentication
         </NavLink>
       </div>
     </>

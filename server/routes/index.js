@@ -34,9 +34,6 @@ router.use('/slider', sliderRoutes);
 // All route of faqs
 const faqRoutes = require('./api/faq');
 router.use('/faq', faqRoutes);
-// All route of Dynamic Module
-const dynamicModuleRoutes = require('./api/module');
-router.use('/module', dynamicModuleRoutes);
 // All route of Subscribe
 const subscribeRoutes = require('./api/subscribe');
 router.use('/subscribe', subscribeRoutes);
@@ -49,11 +46,8 @@ router.use('/meta', metaRoutes);
 // All route of menu module
 const menuRoutes = require('./api/menu');
 router.use('/menu', menuRoutes);
-// All route of Team module
-const teamRoutes = require('./api/team');
-router.use('/team', teamRoutes);
-// All route of comment module (comments)
-const commentRoutes = require('./api/comment');
-router.use('/comment', commentRoutes);
+
+const adminDashboard = require('./api/adminDashboard');
+router.use('/dashboard', adminDashboard);
 
 module.exports = router;

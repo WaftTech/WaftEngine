@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export default class DateInput extends React.PureComponent {
   static propTypes = {
@@ -34,6 +34,8 @@ export default class DateInput extends React.PureComponent {
         text: `${each - index}`,
       }));
 
+    this.dateOptions.shift();
+
     const numberOfDayOptions = 31;
     this.dayOptions = Array(numberOfDayOptions)
       .fill(1)
@@ -66,55 +68,57 @@ export default class DateInput extends React.PureComponent {
     const { year, month, day } = this.state;
     return (
       <>
-        <select
-          value={month}
-          onChange={this.handleChange('month')}
-          onBlur={this.handleChange('month')}
-        >
-          <option disabled="" value="">
-            Month
+        <div className="flex items-center">
+          <select className="inputbox mr-2 w-40"
+            value={month}
+            onChange={this.handleChange('month')}
+            onBlur={this.handleChange('month')}
+          >
+            <option disabled="" value="">
+              Month
           </option>
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
-        <select
-          value={day}
-          onChange={this.handleChange('day')}
-          onBlur={this.handleChange('day')}
-        >
-          <option disabled="" value="">
-            Day
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <select className="inputbox mr-2 w-24"
+            value={day}
+            onChange={this.handleChange('day')}
+            onBlur={this.handleChange('day')}
+          >
+            <option disabled="" value="">
+              Day
           </option>
-          {this.dayOptions.map(each => (
-            <option key={`day-${each.text}`} value={each.value}>
-              {each.text}
-            </option>
-          ))}
-        </select>
-        <select
-          value={year}
-          onChange={this.handleChange('year')}
-          onBlur={this.handleChange('year')}
-        >
-          <option disabled="" value="">
-            Year
+            {this.dayOptions.map(each => (
+              <option key={`day-${each.text}`} value={each.value}>
+                {each.text}
+              </option>
+            ))}
+          </select>
+          <select className="inputbox w-36"
+            value={year}
+            onChange={this.handleChange('year')}
+            onBlur={this.handleChange('year')}
+          >
+            <option disabled="" value="">
+              Year
           </option>
-          {this.dateOptions.map(each => (
-            <option key={`year-${each.text}`} value={each.value}>
-              {each.text}
-            </option>
-          ))}
-        </select>
+            {this.dateOptions.map(each => (
+              <option key={`year-${each.text}`} value={each.value}>
+                {each.text}
+              </option>
+            ))}
+          </select>
+        </div>
       </>
     );
   }

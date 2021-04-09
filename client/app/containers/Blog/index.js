@@ -14,7 +14,6 @@ import {
 
 import reducer from './reducer';
 import saga from './saga';
-import style from './blogLayout.css';
 
 const key = 'blogPage';
 
@@ -23,14 +22,31 @@ const Blog = () => {
   useInjectSaga({ key, saga });
 
   return (
-    <Switch>
-      <Route exact path="/blog" component={BlogList} />
-      <Route exact path="/blog/:slug_url" component={BlogDetail} />
-      <Route exact path="/blog/category/:slug_url" component={CategoryDetail} />
-      <Route exact path="/blog/tag/:tag" component={BlogsByTag} />
-      <Route exact path="/blog/author/:author" component={BlogsByAuthor} />
-      <Route exact path="/blog/date/:date" component={BlogDate} />
-    </Switch>
+    <div className="bg-white">
+      <Switch>
+        <Route exact path="/blog" component={BlogList} />
+        <Route path="/blog/:yy/:mm/:dd/:slug_url" component={BlogDetail} />
+        <Route exact path="/blog/:slug_url" component={BlogDetail} />
+
+        <Route
+          exact
+          path="/blog/category/:slug_url"
+          component={CategoryDetail}
+        />
+        <Route exact path="/blog/tag/:tag" component={BlogsByTag} />
+        <Route exact path="/blog/author/:author" component={BlogsByAuthor} />
+        <Route exact path="/blog/date/:date" component={BlogDate} />
+        <Route exact path="/blog" component={BlogList} />
+        <Route
+          exact
+          path="/blog/category/:slug_url"
+          component={CategoryDetail}
+        />
+        <Route exact path="/blog/tag/:tag" component={BlogsByTag} />
+        <Route exact path="/blog/author/:author" component={BlogsByAuthor} />
+        <Route exact path="/blog/date/:date" component={BlogDate} />
+      </Switch>
+    </div>
   );
 };
 

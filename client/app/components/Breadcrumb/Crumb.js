@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { FaAngleRight } from 'react-icons/fa';
 
 export default function Crumb(props) {
   return (
@@ -8,7 +9,7 @@ export default function Crumb(props) {
       {!props.isLast && (
         <li>
           <span className="flex items-center">
-            <i className="material-icons">keyboard_arrow_right</i>
+            <FaAngleRight />
           </span>
         </li>
       )}

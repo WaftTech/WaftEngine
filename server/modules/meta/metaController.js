@@ -6,27 +6,27 @@ const metaController = {};
 
 metaController.getAllMeta = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     if (req.query.find_title) {
-      searchq = {
+      searchQuery = {
         title: {
           $regex: req.query.find_title,
           $options: 'i x',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
     if (req.query.find_client_route) {
-      searchq = {
+      searchQuery = {
         client_route: {
           $regex: req.query.find_client_route,
           $options: 'i x',
         },
-        ...searchq,
+        ...searchQuery,
       };
     }
-    let metas = await otherHelper.getquerySendResponse(metaSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, metas.data, metaConfig.get, page, size, metas.totaldata);
+    let pulledData = await otherHelper.getQuerySendResponse(metaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, metaConfig.get, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -58,15 +58,15 @@ metaController.saveMeta = async (req, res, next) => {
     let metaS = { client_route, title, meta_keywords, meta_description };
 
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+      //   req.file.destination =
+      //     req.file.destination
+      //       .split('\\')
+      //       .join('/')
+      //       .split('server/')[1] + '/';
+      //   req.file.path = req.file.path
+      //     .split('\\')
+      //     .join('/')
+      //     .split('server/')[1];
       metaS.meta_image = req.file;
     }
     if (_id) {

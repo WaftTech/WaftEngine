@@ -116,6 +116,18 @@ function* addEditSuccessFunc(action) {
   yield put(enqueueSnackbar(snackbarData));
 }
 
+function* getCount(action) {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      `faq/count/category/${action.payload}`,
+      actions.getCountSuccess,
+      actions.getCountFailure,
+      token,
+    ),
+  );
+}
+
 // Individual exports for testing
 export default function* defaultSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
@@ -126,4 +138,6 @@ export default function* defaultSaga() {
   yield takeLatest(types.DELETE_CAT_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);
   yield takeLatest(types.ADD_EDIT_SUCCESS, addEditSuccessFunc);
+
+  yield takeLatest(types.GET_COUNT_REQUEST, getCount);
 }

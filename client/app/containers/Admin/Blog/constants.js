@@ -3,6 +3,7 @@
  * BlogManagePage constants
  *
  */
+export const SET_VALUE = 'app/BlogManagePage/SET_VALUE';
 export const SET_ONE_VALUE = 'app/BlogManagePage/SET_ONE_VALUE';
 export const SET_QUERY_VALUE = 'app/BlogManagePage/SET_QUERY_VALUE';
 export const CLEAR_ONE = 'app/BlogManagePage/CLEAR_ONE';
@@ -40,3 +41,6 @@ export const LOAD_USERS_FAILURE = 'app/BlogManagePage/LOAD_USERS_FAILURE';
 export const CLEAR_ERRORS = 'app/BlogManagePage/CLEAR_ERRORS';
 export const SET_ERROR_VALUE = 'app/BlogManagePage/SET_ERROR_VALUE';
 export const SET_CATEGORY_VALUE = 'app/BlogManagePage/SET_CATEGORY_VALUE';
+export const SET_AUTHOR_VALUE = 'app/BlogManagePage/SET_AUTHOR_VALUE';
+
+export const SET_UPDATE_CALLED = 'app/BlogManagePage/SET_UPDATE_CALLED';

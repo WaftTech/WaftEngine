@@ -98,6 +98,20 @@ export const loadBlogByAuthorFailure = payload => ({
   type: types.LOAD_BLOG_BY_AUTHOR_FAILURE,
   payload,
 });
+
+export const loadMoreBlogByAuthorRequest = payload => ({
+  type: types.LOAD_MORE_BLOG_BY_AUTHOR_REQUEST,
+  payload,
+});
+export const loadMoreBlogByAuthorSuccess = payload => ({
+  type: types.LOAD_MORE_BLOG_BY_AUTHOR_SUCCESS,
+  payload,
+});
+export const loadMoreBlogByAuthorFailure = payload => ({
+  type: types.LOAD_MORE_BLOG_BY_AUTHOR_FAILURE,
+  payload,
+});
+
 export const loadBlogByTagRequest = payload => ({
   type: types.LOAD_BLOG_BY_TAG_REQUEST,
   payload,
@@ -110,6 +124,20 @@ export const loadBlogByTagFailure = payload => ({
   type: types.LOAD_BLOG_BY_TAG_FAILURE,
   payload,
 });
+
+export const loadMoreBlogByTagRequest = payload => ({
+  type: types.LOAD_MORE_BLOG_BY_TAG_REQUEST,
+  payload,
+});
+export const loadMoreBlogByTagSuccess = payload => ({
+  type: types.LOAD_MORE_BLOG_BY_TAG_SUCCESS,
+  payload,
+});
+export const loadMoreBlogByTagFailure = payload => ({
+  type: types.LOAD_MORE_BLOG_BY_TAG_FAILURE,
+  payload,
+});
+
 export const loadBlogDateRequest = payload => ({
   type: types.LOAD_BLOG_DATE_REQUEST,
   payload,
@@ -149,6 +177,72 @@ export const loadBlogOfCatFailure = payload => ({
   payload,
 });
 
+export const loadMoreBlogOfCatRequest = payload => ({
+  type: types.LOAD_MORE_BLOG_OF_CAT_REQUEST,
+  payload,
+});
+export const loadMoreBlogOfCatSuccess = payload => ({
+  type: types.LOAD_MORE_BLOG_OF_CAT_SUCCESS,
+  payload,
+});
+export const loadMoreBlogOfCatFailure = payload => ({
+  type: types.LOAD_MORE_BLOG_OF_CAT_FAILURE,
+  payload,
+});
+
 export const clearBlog = () => ({
   type: types.CLEAR_BLOG,
+});
+
+export const loadHighlightRequest = payload => ({
+  type: types.LOAD_HIGHLIGHT_REQUEST,
+  payload,
+});
+export const loadHighlightSuccess = payload => ({
+  type: types.LOAD_HIGHLIGHT_SUCCESS,
+  payload,
+});
+export const loadHighlightFailure = payload => ({
+  type: types.LOAD_HIGHLIGHT_FAILURE,
+  payload,
+});
+
+export const loadShowcaseRequest = payload => ({
+  type: types.LOAD_SHOWCASE_REQUEST,
+  payload,
+});
+export const loadShowcaseSuccess = payload => ({
+  type: types.LOAD_SHOWCASE_SUCCESS,
+  payload,
+});
+export const loadShowcaseFailure = payload => ({
+  type: types.LOAD_SHOWCASE_FAILURE,
+  payload,
+});
+
+export const loadTrendingRequest = payload => ({
+  type: types.LOAD_TRENDING_REQUEST,
+  payload,
+});
+export const loadTrendingSuccess = payload => ({
+  type: types.LOAD_TRENDING_SUCCESS,
+  payload,
+});
+export const loadTrendingFailure = payload => ({
+  type: types.LOAD_TRENDING_FAILURE,
+  payload,
+});
+
+export const countIncrease = payload => ({
+  type: types.COUNT_INCREASE,
+  payload,
+});
+
+export const countIncreaseSuccess = payload => ({
+  type: types.COUNT_INCREASE_SUCCESS,
+  payload,
+});
+export const countIncreaseFailure = payload => ({
+  type: types.COUNT_INCREASE_FAILURE,
+  payload,
 });

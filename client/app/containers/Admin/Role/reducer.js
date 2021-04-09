@@ -22,6 +22,13 @@ export const initialState = {
   query: { find_role_title: '' },
   loading: false,
   errors: { role_title: '', description: '' },
+  module_data: [],
+  role_data: { Access: [] },
+  loaders: {
+    module_loading: false,
+    role_loading: false,
+  },
+  selectStates: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -52,7 +59,11 @@ const adminRoleReducer = (state = initialState, action) =>
         break;
       case types.LOAD_ALL_SUCCESS:
         draft.loading = false;
-        draft.all = action.payload;
+        draft.all = {
+          ...draft.all,
+          ...action.payload,
+          totaldata: action.payload.totalData,
+        };
         break;
       case types.LOAD_ALL_FAILURE:
         draft.loading = false;
@@ -72,6 +83,45 @@ const adminRoleReducer = (state = initialState, action) =>
           ...draft.all,
           data: draft.all.data.filter(e => e._id != action.payload.data._id),
         };
+        break;
+
+      case types.LOAD_MODULE_GROUP_REQUEST:
+        draft.loaders.module_loading = true;
+        break;
+      case types.LOAD_MODULE_GROUP_SUCCESS:
+        draft.loaders.module_loading = false;
+        draft.module_data = action.payload.data;
+        for (let index = 0; index < action.payload.data.length; index++) {
+          const element = action.payload.data[index];
+          draft.selectStates = {
+            ...draft.selectStates,
+            [element._id]: false,
+          };
+        }
+        break;
+      case types.LOAD_MODULE_GROUP_FAILURE:
+        draft.loaders.module_loading = false;
+        break;
+
+      case types.LOAD_ROLE_ACCESS_REQUEST:
+        draft.loaders.role_loading = true;
+        break;
+      case types.LOAD_ROLE_ACCESS_SUCCESS:
+        draft.loaders.role_loading = false;
+        draft.role_data = action.payload.data;
+
+        break;
+      case types.LOAD_ROLE_ACCESS_FAILURE:
+        draft.loaders.role_loading = false;
+        break;
+
+      case types.SET_ACCESS_ARRAY:
+        draft.role_data.Access[action.payload.index].access_type =
+          action.payload.value;
+        break;
+
+      case types.SET_SELECT_STATE:
+        draft.selectStates[action.payload.key] = action.payload.value;
         break;
     }
   });

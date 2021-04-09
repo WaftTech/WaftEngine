@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"waft-engine.users"},{"v":{"$numberInt":"2"},"unique":true,"key":{"email":{"$numberInt":"1"}},"name":"email_1","ns":"waft-engine.users","background":true}],"uuid":"23e6ed00c8e044d887a2ea4a0b6add0c"}

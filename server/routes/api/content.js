@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const contentValidation = require('./../../modules/content/contentValidation');
-
 const dModule = require('../../modules/content/contentController');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
 
-router.get('/', authorization, authentication, dModule.GetContent);
-router.post('/', authorization, authentication, contentValidation.sanitize, contentValidation.validation, dModule.SaveContent);
-router.get('/:id', authorization, authentication, dModule.GetContentDetail);
+router.get('/', authentication, authorization, dModule.GetContent);
+router.post('/', authentication, authorization, contentValidation.sanitize, contentValidation.validation, dModule.SaveContent);
+router.get('/:id', authentication, authorization, dModule.GetContentDetail);
 router.get('/key/:key', dModule.GetContentByKey);
-router.delete('/:id', authorization, authentication, dModule.DeleteContent);
+router.delete('/:id', authentication, authorization, dModule.DeleteContent);
 
 module.exports = router;

@@ -8,5 +8,5 @@ import React from 'react';
 import loadable from 'utils/loadable';
 
 export default loadable(() => import('./StaticContentDiv'), {
-  fallback: <div>Loading...</div>,
+  fallback: <div className="circular_loader waftloader"></div>,
 });

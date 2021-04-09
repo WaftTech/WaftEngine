@@ -1,7 +1,15 @@
 import * as types from './constants';
 
+export const clearData = payload => ({
+  type: types.CLEAR_DATA,
+  payload,
+});
 export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
+  payload,
+});
+export const setValue = payload => ({
+  type: types.SET_VALUE,
   payload,
 });
 export const setCodeValue = payload => ({
@@ -75,5 +83,57 @@ export const resendCodeSuccess = payload => ({
 });
 export const resendCodeFailure = payload => ({
   type: types.RESEND_CODE_FAILURE,
+  payload,
+});
+
+export const loadTwoFactorRequest = payload => ({
+  type: types.LOAD_TWO_FACTOR_REQUEST,
+  payload,
+});
+export const loadTwoFactorSuccess = payload => ({
+  type: types.LOAD_TWO_FACTOR_SUCCESS,
+  payload,
+});
+export const loadTwoFactorFailure = payload => ({
+  type: types.LOAD_TWO_FACTOR_FAILURE,
+  payload,
+});
+
+export const addEmailTwoFactorRequest = payload => ({
+  type: types.ADD_EMAIL_TWO_FACTOR_REQUEST,
+  payload,
+});
+export const addEmailTwoFactorSuccess = payload => ({
+  type: types.ADD_EMAIL_TWO_FACTOR_SUCCESS,
+  payload,
+});
+export const addEmailTwoFactorFailure = payload => ({
+  type: types.ADD_EMAIL_TWO_FACTOR_FAILURE,
+  payload,
+});
+
+export const addGoogleTwoFactorRequest = payload => ({
+  type: types.ADD_GOOGLE_TWO_FACTOR_REQUEST,
+  payload,
+});
+export const addGoogleTwoFactorSuccess = payload => ({
+  type: types.ADD_GOOGLE_TWO_FACTOR_SUCCESS,
+  payload,
+});
+export const addGoogleTwoFactorFailure = payload => ({
+  type: types.ADD_GOOGLE_TWO_FACTOR_FAILURE,
+  payload,
+});
+
+export const setGoogleTwoFactorRequest = payload => ({
+  type: types.SET_GOOGLE_TWO_FACTOR_REQUEST,
+  payload,
+});
+export const setGoogleTwoFactorSuccess = payload => ({
+  type: types.SET_GOOGLE_TWO_FACTOR_SUCCESS,
+  payload,
+});
+export const setGoogleTwoFactorFailure = payload => ({
+  type: types.SET_GOOGLE_TWO_FACTOR_FAILURE,
   payload,
 });

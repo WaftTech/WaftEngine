@@ -48,22 +48,24 @@ export class SubscriberPage extends React.PureComponent {
     const hasError = Boolean(errors);
     return (
       <>
-        <input
-          type="text"
-          className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4"
-          placeholder="Enter Your Email"
-          value={email}
-          onChange={this.handleChange('email')}
-        />
-        <div id="component-error-text">{errors}</div>
+        <div className="flex justify-center">
+          <input
+            type="text"
+            className="appearance-none outline-none shadow text-white bg-gray-900 font-sans border border-gray-600 rounded py-2 px-3 text-white leading-tight md:1/2 lg:w-1/4 border-r-0"
+            placeholder="Enter Your Email"
+            value={email}
+            onChange={this.handleChange('email')}
+          />
 
-        <button
-          type="submit"
-          className="text-white py-2 px-4 rounded border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
-          onClick={this.handleSubmit}
-        >
-          {loading ? '...' : 'Subscribe'}
-        </button>
+          <button
+            type="submit"
+            className="text-white py-2 px-4 rounded border border-gray-600 font-bold shadow font-sans leading-normal text-sm"
+            onClick={this.handleSubmit}
+          >
+            {loading ? '...' : 'Subscribe'}
+          </button>
+        </div>
+        {errors && <div className="error">{errors}</div>}
       </>
     );
   }
@@ -76,16 +78,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'subscriberPage', reducer });
 const withSaga = injectSaga({ key: 'subscriberPage', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(SubscriberPage);
+export default compose(withReducer, withSaga, withConnect)(SubscriberPage);

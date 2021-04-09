@@ -4,7 +4,7 @@ const contactConfig = require('./contactConfig');
 const contactSch = require('./contactSchema');
 const renderMail = require('./../template/templateController').internal;
 const emailHelper = require('./../../helper/email.helper');
-
+const settingsHelper = require('./../../helper/settings.helper')
 const contactController = {};
 
 contactController.PostContact = async (req, res, next) => {
@@ -12,24 +12,32 @@ contactController.PostContact = async (req, res, next) => {
     let { name, email, message, subject } = req.body;
     const newUser = new contactSch({ name, email, message, subject });
     const user = await newUser.save();
+    let contact_to_admin = await settingsHelper('template', 'email', 'contact_to_admin')
+    let contact_to_user = await settingsHelper('template', 'email', 'contact_to_user')
+    let admin_emails = await settingsHelper('user', 'admin_email', 'email_array')
     if (user) {
       const data = {
+
         name: user.name,
         email: user.email,
         msg: user.message,
         sub: user.subject,
       };
-      const renderedMail = await renderMail.renderTemplate('contact_to_admin', data, contactConfig.admin);
-      if (renderMail.error) {
-        console.log('render mail error: ', renderMail.error);
-      } else {
-        emailHelper.send(renderedMail);
+      if (admin_emails.length != -1) {
+        for (i = 0; i < admin_emails.length; i++) {
+          const renderedMail = await renderMail.renderTemplate(contact_to_admin, data, admin_emails[i]);
+          if (renderMail.error) {
+            console.log('render mail error: ', renderMail.error);
+          } else {
+            emailHelper.send(renderedMail, next);
+          }
+        };
       }
-      const renderedMailforAdmin = await renderMail.renderTemplate('contact_to_user', data, user.email);
+      const renderedMailForAdmin = await renderMail.renderTemplate(contact_to_user, data, user.email);
       if (renderMail.error) {
         console.log('render mail error: ', renderMail.error);
       } else {
-        emailHelper.send(renderedMailforAdmin);
+        emailHelper.send(renderedMailForAdmin, next);
       }
       return otherHelper.sendResponse(res, httpStatus.OK, true, user, null, contactConfig.save, null);
     } else {
@@ -40,18 +48,19 @@ contactController.PostContact = async (req, res, next) => {
   }
 };
 contactController.GetContact = async (req, res, next) => {
-  let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+  let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
   if (req.query.find_name) {
-    searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
+    searchQuery = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchQuery };
   }
   if (req.query.find_subject) {
-    searchq = { subject: { $regex: req.query.find_subject, $options: 'i' }, ...searchq };
+    searchQuery = { subject: { $regex: req.query.find_subject, $options: 'i' }, ...searchQuery };
   }
   if (req.query.find_added_at) {
-    searchq = { added_at: { $regex: req.query.find_added_at, $options: 'i' }, ...searchq };
+    searchQuery = { added_at: { $regex: req.query.find_added_at, $options: 'i' }, ...searchQuery };
   }
-  let contacts = await otherHelper.getquerySendResponse(contactSch, page, size, sortq, searchq, selectq, next, populate);
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totaldata);
+  selectQuery = 'name email message subject added_at is_deleted';
+  let contacts = await otherHelper.getQuerySendResponse(contactSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, contacts.data, contactConfig.gets, page, size, contacts.totalData);
 };
 
 contactController.GetContactById = async (req, res, next) => {

@@ -27,7 +27,11 @@ const adminSubscribePageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_SUBSCRIBER_SUCCESS:
         draft.loading = false;
-        draft.all = action.payload;
+        draft.all = {
+          ...draft.all,
+          ...action.payload,
+          totaldata: action.payload.totalData,
+        };
         break;
       case types.LOAD_SUBSCRIBER_FAILURE:
         draft.loading = false;

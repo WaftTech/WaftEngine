@@ -1,32 +1,17 @@
 const express = require('express');
 const router = express.Router();
+
 const { menuController, menuItemController } = require('../../modules/menu/menucontroller');
-const { sanitize, validate, itemsanitize, itemvalidate } = require('../../modules/menu/menuValidation');
-const { authorization } = require('../../middleware/authentication.middleware');
+const { sanitize, validate, itemSanitize, itemValidate } = require('../../modules/menu/menuValidation');
+const { authentication } = require('../../middleware/auth.middleware');
 
 router.get('/', menuController.getMenu);
-
-router.post('/', sanitize, validate, authorization, menuController.saveMenu);
-
-router.post('/menuitem', itemsanitize, itemvalidate, authorization, menuItemController.saveMenuItem);
-
+router.post('/', sanitize, validate, authentication, menuController.saveMenu);
+router.post('/menuitem', itemSanitize, itemValidate, authentication, menuItemController.saveMenuItem);
+router.get('/menuitem/:id', authentication, menuItemController.getMenuItem);
+router.delete('/menuitem/:id', authentication, menuItemController.deleteMenuItem);
 router.get('/detail/:id', menuController.getEditMenu);
-
-
 router.get('/detailforuser/:key', menuController.getMenuForUser);
-
-router.delete('/:id', authorization, menuController.deleteMenu);
-
-// router.get('/', menuController.getMenu);
-
-// router.post('/', sanitize, validate, authorization, menuController.saveMenu);
-
-// router.delete('/:id', authorization, menuController.deleteMenu);
-// router.get('/menuitem/:id', menuItemController.getMenuItem);
-// //router.get('/menuitem/:id', menuItemController.getMenuItemDetail);
-
-// router.get('/:id', menuController.getEditMenu);
-
-// router.post('/menuitem', itemsanitize, authorization, menuItemController.saveMenuItem); //itemvalidate,
+router.delete('/:id', authentication, menuController.deleteMenu);
 
 module.exports = router;

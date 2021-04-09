@@ -110,3 +110,61 @@ export const deleteOneFailure = payload => ({
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
 });
+
+export const loadSubModuleRequest = payload => ({
+  type: types.LOAD_SUB_MODULE_REQUEST,
+  payload,
+});
+export const loadSubModuleSuccess = payload => ({
+  type: types.LOAD_SUB_MODULE_SUCCESS,
+  payload,
+});
+export const loadSubModuleFailure = payload => ({
+  type: types.LOAD_SUB_MODULE_FAILURE,
+  payload,
+});
+
+export const setAccessTypeChange = payload => ({
+  type: types.SET_ACCESS_TYPE_CHANGE,
+  payload,
+});
+
+export const setAdminRoutes = payload => ({
+  type: types.SET_ADMIN_ROUTES,
+  payload,
+});
+
+export const removeAdminRoutes = payload => ({
+  type: types.REMOVE_ADMIN_ROUTES,
+  payload,
+});
+
+export const addAdminRoutes = payload => ({
+  type: types.ADD_ADMIN_ROUTES,
+  payload,
+});
+
+export const setServerRouteMethod = payload => ({
+  type: types.SET_SERVER_ROUTE_METHOD,
+  payload,
+});
+
+export const setServerRouteChange = payload => ({
+  type: types.SET_SERVER_ROUTE_CHANGE,
+  payload,
+});
+
+export const addServerRoutes = payload => ({
+  type: types.ADD_SERVER_ROUTES,
+  payload,
+});
+
+export const removeServerRoutes = payload => ({
+  type: types.REMOVE_SERVER_ROUTES,
+  payload,
+});
+
+export const setAccessUpdate = payload => ({
+  type: types.SET_ACCESS_UPDATE,
+  payload,
+});

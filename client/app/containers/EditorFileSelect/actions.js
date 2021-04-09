@@ -107,3 +107,57 @@ export const fileDeleteFailure = payload => ({
   type: types.DELETE_FILE_FAILURE,
   payload,
 });
+
+export const addChosenFile = payload => ({
+  type: types.ADD_CHOSEN_FILE,
+  payload,
+});
+export const clearChosen = payload => ({
+  type: types.CLEAR_CHOSEN,
+  payload,
+});
+export const addChosenFolder = payload => ({
+  type: types.ADD_CHOSEN_FOLDER,
+  payload,
+});
+
+export const deleteMultipleRequest = payload => ({
+  type: types.DELETE_MULTIPLE_REQUEST,
+  payload,
+});
+export const deleteMultipleSuccess = payload => ({
+  type: types.DELETE_MULTIPLE_SUCCESS,
+  payload,
+});
+export const deleteMultipleFailure = payload => ({
+  type: types.DELETE_MULTIPLE_FAILURE,
+  payload,
+});
+
+export const setRenameFileValue = payload => ({
+  type: types.SET_RENAME_FILE_VALUE,
+  payload,
+});
+
+export const renameFileRequest = payload => ({
+  type: types.RENAME_FILE_REQUEST,
+  payload,
+});
+export const renameFileSuccess = payload => ({
+  type: types.RENAME_FILE_SUCCESS,
+  payload,
+});
+export const renameFileFailure = payload => ({
+  type: types.RENAME_FILE_FAILURE,
+  payload,
+});
+
+export const setShowRename = payload => ({
+  type: types.SET_SHOW_RENAME,
+  payload,
+});
+
+export const setQueryValue = payload => ({
+  type: types.SET_QUERY_VALUE,
+  payload,
+});

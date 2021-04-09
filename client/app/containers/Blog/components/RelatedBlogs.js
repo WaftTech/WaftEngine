@@ -8,47 +8,64 @@ import {
   makeSelectRelatedBlogsIsLoading,
   makeSelectRelatedBlogs,
 } from '../selectors';
-import { IMAGE_BASE, DATE_FORMAT } from '../../App/constants';
-import RecentBlogsSkeleton from '../Skeleton/RecentBlogs';
+import { IMAGE_BASE } from '../../App/constants';
+import clock from '../../../assets/img/clock.svg';
 
 function RelatedBlogs(props) {
   if (props.loading) {
-    return <RecentBlogsSkeleton />;
+    return null;
   }
-  // if (props.blogs.length === 0) {
-  //   return null;
-  // }
+
   return (
-    <div className="mt-10 mb-4">
-      <h3 className="font-medium text-xl uppercase">Related Blogs</h3>
-      {props.blogs.map(blog => (
-        <div
-          key={`relateds-${blog._id}`}
-          className="blog-det flex py-3 border-b border-dashed"
-        >
-          <div style={{ width: '80px', height: '80px' }}>
-            <Link to={`/blog/${blog.slug_url}`}>
-              <img
-                src={`${IMAGE_BASE}${blog.image.path}`}
-                alt="blog image"
-                className="mr-4"
-                style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-              />
-            </Link>
+    <div
+      className="static lg:sticky"
+      style={{
+        top: 80,
+      }}
+    >
+      {props.blogs.length > 0 && (
+        <>
+          <div className="mt-10">
+            <div className="bg-primary h-14 flex items-center pl-8 mb-4">
+              <h2 className="font-bold text-3xl text-white my-0">Related</h2>
+            </div>
+            {props.blogs.map(blog => (
+              <div key={`relateds-${blog._id}`} className="flex py-4">
+                <div className="flex-1 mr-7">
+                  <Link
+                    className="no-underline hover:text-blue-500 text-xl block text-gray-700"
+                    to={`/blog/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
+                      }`}
+                  >
+                    {blog.title}
+                  </Link>
+                  <div className="inline-flex items-center text-gray-600 md:text-gray-800 text-sm sans-serif mt-3 article-date">
+                    <img className="mr-2 clock" src={clock} />
+                    {moment(blog.added_at).fromNow()}
+                  </div>
+                </div>
+                <Link
+                  className="block overflow-hidden w-24 h-24 article-img-container"
+                  to={`/blog/${moment(blog.added_at).format('YYYY/MM/DD')}/${blog._id
+                    }`}
+                >
+                  <img
+                    src={`${IMAGE_BASE}${blog &&
+                      blog.image &&
+                      blog.image.path}`}
+                    alt={blog.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </Link>
+              </div>
+            ))}
           </div>
-          <div className="flex-1 ml-4">
-            <h4 className="font-bold">
-              <Link
-                className="text-black no-underline hover:text-waftprimary"
-                to={`/blog/${blog.slug_url}`}
-              >
-                {blog.title}
-              </Link>
-            </h4>
-            <time>{moment(blog.added_at).format(DATE_FORMAT)}</time>
-          </div>
-        </div>
-      ))}
+        </>
+      )}
     </div>
   );
 }

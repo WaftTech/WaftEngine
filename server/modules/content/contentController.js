@@ -1,33 +1,32 @@
 const httpStatus = require('http-status');
-var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
 const contentSch = require('./contentSchema');
 const contentConfig = require('./contentConfig');
 const contentController = {};
-const internal = {};
 
 contentController.GetContent = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
 
     if (req.query.find_name) {
-      searchq = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchq };
+      searchQuery = { name: { $regex: req.query.find_name, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_key) {
-      searchq = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchq };
+      searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_publish_from) {
-      searchq = { publish_from: { $regex: req.query.find_publish_from, $options: 'i' }, ...searchq };
+      searchQuery = { publish_from: { $regex: req.query.find_publish_from, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_publish_to) {
-      searchq = { publish_to: { $regex: req.query.find_publish_to, $options: 'i' }, ...searchq };
+      searchQuery = { publish_to: { $regex: req.query.find_publish_to, $options: 'i' }, ...searchQuery };
     }
     if (req.query.find_is_page) {
-      searchq = { ...searchq, is_page: req.query.find_is_page };
+      searchQuery = { ...searchQuery, is_page: req.query.find_is_page };
     }
-    let datas = await otherHelper.getquerySendResponse(contentSch, page, size, sortq, searchq, selectq, next, populate);
+    populate = [{ path: 'image' }];
+    let pulledData = await otherHelper.getQuerySendResponse(contentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
 
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, contentConfig.gets, page, size, datas.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, contentConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -51,8 +50,21 @@ contentController.SaveContent = async (req, res, next) => {
 contentController.GetContentDetail = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const contents = await contentSch.findOne({ _id: id, is_deleted: false });
+    const contents = await contentSch.findOne({ _id: id, is_deleted: false }).populate([{ path: 'image' }]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
+  } catch (err) {
+    next(err);
+  }
+};
+contentController.GetContentForCounter = async (req, res, next) => {
+  try {
+    var doc = 0;
+    counterSch.findByIdAndUpdate({ _id: 'visitor_counter' }, { $inc: { seq: 1 } }, { new: true, upsert: true }, function (error, counterSch) {
+      if (error) return next(error);
+      doc = (counterSch && counterSch.seq) || 1;
+      const contents = { description: '<div>Visitor : <span class="visitor_counter">' + doc + '</span></div>', key: 'counter', name: 'counter' };
+      return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
+    });
   } catch (err) {
     next(err);
   }
@@ -60,8 +72,8 @@ contentController.GetContentDetail = async (req, res, next) => {
 contentController.GetContentByKey = async (req, res, next) => {
   try {
     const key = req.params.key;
-    const contents = await contentSch.findOne({ key, is_deleted: false });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, contents, null, contentConfig.get, null);
+    const contents = await contentSch.findOne({ key, is_deleted: false, is_active: true }).populate([{ path: 'image' }]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, contents ? contents : { key: req.params.key, description: `<div class="text-sm border border-red-100 bg-red-50 rounded px-2 py-1 text-red-600 inline-block m-4">Content not found [key=${req.params.key}]</div>` }, null, contentConfig.get, null);
   } catch (err) {
     next(err);
   }
@@ -70,7 +82,11 @@ contentController.DeleteContent = async (req, res, next) => {
   try {
     const id = req.params.id;
     const del = await contentSch.findByIdAndUpdate(id, { $set: { is_deleted: true } }, { new: true });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'content delete success!!', null);
+    if (del && del._id) {
+      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'content delete success!!', null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
+    }
   } catch (err) {
     next(err);
   }

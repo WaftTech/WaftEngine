@@ -18,6 +18,12 @@ export const makeSelectAll = () =>
     substate => substate.all,
   );
 
+export const makeSelectShowForm = () =>
+  createSelector(
+    selectContentsListingPageDomain,
+    substate => substate.showForm,
+  );
+
 export const makeSelectOne = () =>
   createSelector(
     selectContentsListingPageDomain,
@@ -40,6 +46,12 @@ export const makeSelectErrors = () =>
   createSelector(
     selectContentsListingPageDomain,
     state => state.errors,
+  );
+
+export const makeSelectMetaTag = () =>
+  createSelector(
+    selectContentsListingPageDomain,
+    state => state.tempMetaTag,
   );
 
 /**

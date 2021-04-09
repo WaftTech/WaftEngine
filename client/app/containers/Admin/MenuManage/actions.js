@@ -32,6 +32,7 @@ export const loadOneFailure = payload => ({
   payload,
 });
 
+// to load individual menu data
 export const loadMenuRequest = payload => ({
   type: types.LOAD_MENU_REQUEST,
   payload,
@@ -107,6 +108,11 @@ export const setChildValue = payload => ({
   payload,
 });
 
+export const setLoadChild = payload => ({
+  type: types.SET_LOAD_CHILD,
+  payload,
+});
+
 export const clearSubMenu = () => ({
   type: types.CLEAR_SUB_MENU,
 });
@@ -127,5 +133,18 @@ export const clearErrors = () => ({
 
 export const showSubMenu = payload => ({
   type: types.SHOW_SUB_MENU,
+  payload,
+});
+
+export const deleteMenuItemRequest = payload => ({
+  type: types.DELETE_MENU_ITEM_REQUEST,
+  payload,
+});
+export const deleteMenuItemSuccess = payload => ({
+  type: types.DELETE_MENU_ITEM_SUCCESS,
+  payload,
+});
+export const deleteMenuItemFailure = payload => ({
+  type: types.DELETE_MENU_ITEM_FAILURE,
   payload,
 });

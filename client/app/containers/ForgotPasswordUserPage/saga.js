@@ -7,7 +7,7 @@ import {
   cancel,
 } from 'redux-saga/effects';
 import Api from 'utils/Api';
-import { LOCATION_CHANGE } from 'connected-react-router';
+import { LOCATION_CHANGE, push } from 'connected-react-router';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectEmail } from './selectors';
@@ -21,15 +21,10 @@ export const validate = data => {
 };
 
 export function* redirectOnSuccess() {
-  // const { payload } = yield take(types.FORGOT_PASSWORD_SUCCESS);
-  // const { token, data } = payload;
-  // yield put(setUser(data));
-  // yield put(setToken(token));
-  // if (redirect) {
-  //   yield put(push(redirect));
-  // } else {
-  //   yield put(push('/'));
-  // }
+  const { payload } = yield take(types.FORGOT_PASSWORD_SUCCESS);
+  const email = yield select(makeSelectEmail());
+
+  yield put(push(`/reset-password/${email}`));
 }
 
 export function* forgotPasswordAction(action) {

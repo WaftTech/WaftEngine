@@ -38,3 +38,27 @@ export const DELETE_ONE_REQUEST = 'app/AdminModuleManage/DELETE_ONE_REQUEST';
 export const DELETE_ONE_SUCCESS = 'app/AdminModuleManage/DELETE_ONE_SUCCESS';
 export const DELETE_ONE_FAILURE = 'app/AdminModuleManage/DELETE_ONE_FAILURE';
 export const CLEAR_ERRORS = 'app/AdminModuleManage/CLEAR_ERRORS';
+
+export const LOAD_SUB_MODULE_REQUEST =
+  'app/AdminModuleManage/LOAD_SUB_MODULE_REQUEST';
+export const LOAD_SUB_MODULE_SUCCESS =
+  'app/AdminModuleManage/LOAD_SUB_MODULE_SUCCESS';
+export const LOAD_SUB_MODULE_FAILURE =
+  'app/AdminModuleManage/LOAD_SUB_MODULE_FAILURE';
+
+export const SET_ACCESS_TYPE_CHANGE =
+  'app/AdminModuleManage/SET_ACCESS_TYPE_CHANGE';
+export const SET_ADMIN_ROUTES = 'app/AdminModuleManage/SET_ADMIN_ROUTES';
+export const REMOVE_ADMIN_ROUTES = 'app/AdminModuleManage/REMOVE_ADMIN_ROUTES';
+export const ADD_ADMIN_ROUTES = 'app/AdminModuleManage/ADD_ADMIN_ROUTES';
+
+export const SET_SERVER_ROUTE_METHOD =
+  'app/AdminModuleManage/SET_SERVER_ROUTE_METHOD';
+export const ADD_SERVER_ROUTES = 'app/AdminModuleManage/ADD_SERVER_ROUTES';
+export const REMOVE_SERVER_ROUTES =
+  'app/AdminModuleManage/REMOVE_SERVER_ROUTES';
+
+export const SET_SERVER_ROUTE_CHANGE =
+  'app/AdminModuleManage/SET_SERVER_ROUTE_CHANGE';
+
+export const SET_ACCESS_UPDATE = 'app/AdminModuleManage/SET_ACCESS_UPDATE';

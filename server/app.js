@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
 const httpStatus = require('http-status');
-const mongoURI = process.env.MONGODB_URI ? process.env.MONGODB_URI : require('./config/keys').mongoURI;
+const mongoURI = process.env.MONGODB_URI
 const routes = require('./routes/index');
 const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
@@ -22,7 +22,6 @@ const changephoto = require('./helper/photomanipulate').changephoto;
 const auth = require('./helper/auth.helper');
 
 const app = express();
-
 auth(passport);
 // Logger middleware
 app.use(logger('dev'));
@@ -84,14 +83,10 @@ async function MongoDBConnection(app) {
 app.use(passport.initialize());
 
 // Passport Config
-require('./helper/passport')(passport);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+require('./helper/passport.helper')(passport);
 
 // CORS setup for dev
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   req.client_ip_address = requestIp.getClientIp(req);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
@@ -118,14 +113,15 @@ app.use((err, req, res, next) => {
     return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, err, 'Route Not Found', null);
   } else {
     console.log('\x1b[41m', err);
+    let path = req.baseUrl + req.route && req.route.path;
+    if (path.substr(path.length - 1) === '/') {
+      path = path.slice(0, path.length - 1);
+    }
+    err.method = req.method;
+    err.path = req.path;
     AddErrorToLogs(req, res, next, err);
     return otherHelper.sendResponse(res, httpStatus.INTERNAL_SERVER_ERROR, false, null, err, null, null);
   }
-  // res.status(err.status || 500);
-  // res.render('error', {
-  //   message: err.message,
-  //   error: app.get('env') === 'development' ? err : {},
-  // });
 });
 
 module.exports = app;

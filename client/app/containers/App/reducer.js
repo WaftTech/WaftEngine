@@ -14,18 +14,24 @@ import produce from 'immer';
 import * as types from './constants';
 import { LOAD_ALL_SUCCESS as MEDIA_LOAD_ALL_SUCCESS } from '../Admin/Media/constants';
 import * as utils from './utils';
+import { toast } from 'react-toastify';
 
 // The initial state of the App
 export const initialState = {
   user: { isAdmin: false },
   token: '',
-  content: {},
+  content: { image: {}, ids: {}, is_page: {} },
   media: {},
   slide: {},
   notifications: [],
   access: {},
   latestBlogs: {},
+  menu: {},
   blogLoading: false,
+  faqData: {
+    cat: {},
+    faq: [],
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -76,6 +82,19 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         draft.content = {
           ...draft.content,
           [action.payload.data.key]: action.payload.data.description,
+          image: {
+            ...draft.content.image,
+            [action.payload.data.key]: action.payload.data.image,
+          },
+
+          ids: {
+            ...draft.content.ids,
+            [action.payload.data.key]: action.payload.data._id,
+          },
+          is_page: {
+            ...draft.content.is_page,
+            [action.payload.data.key]: action.payload.data.is_page,
+          },
         };
         break;
       case types.LOAD_MEDIA_SUCCESS:
@@ -106,6 +125,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];
+
         break;
       case types.REMOVE_SNACKBAR:
         draft.notifications = [
@@ -114,6 +134,15 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           ),
         ];
         break;
+      case types.LOAD_MENU_SUCCESS:
+        draft.menu = {
+          ...draft.menu,
+          [action.payload.data.key]: action.payload.data.child,
+        };
+        break;
+
+      case types.LOAD_FAQ_SUCCESS:
+        draft.faqData = action.payload.data;
     }
   });
 

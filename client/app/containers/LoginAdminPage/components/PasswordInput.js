@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { makeSelectPassword, makeSelectPasswordError } from '../selectors';
 import * as mapDispatchToProps from '../actions';
+import { makeSelectPassword, makeSelectPasswordError } from '../selectors';
 
 const PasswordInput = props => {
   const { password, setStoreValue, error, classes } = props;
@@ -23,16 +21,13 @@ const PasswordInput = props => {
   return (
     <div className="mb-4">
       <div className="flex justify-between">
-        <label
-          className="label"
-          htmlFor="Password"
-        >
+        <label className="label" htmlFor="Password">
           Password
         </label>
       </div>
       <div className="relative">
         <input
-          error={hasError.toString()}
+          // error={hasError.toString()}
           onChange={handleChange}
           value={password}
           id="Password"
@@ -41,12 +36,13 @@ const PasswordInput = props => {
           className="inputbox"
         />
         <span
-          className={classes.EyeIcon}
+          className="absolute right-0 top-0 mt-2 mr-2"
           aria-label="Toggle password visibility"
           onClick={handleTogglePassword}
         >
-          {isSecure ? <Visibility /> : <VisibilityOff />}
+          {isSecure ? <FaRegEye /> : <FaRegEyeSlash />}
         </span>
+        {error && <div className="error">{error}</div>}
       </div>
     </div>
   );
@@ -56,7 +52,6 @@ PasswordInput.propTypes = {
   password: PropTypes.string.isRequired,
   setStoreValue: PropTypes.func.isRequired,
   error: PropTypes.string,
-  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -69,13 +64,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const styles = theme => ({
-  EyeIcon: { position: 'absolute', right: 12, top: 6 },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(PasswordInput);
+export default compose(withConnect)(PasswordInput);

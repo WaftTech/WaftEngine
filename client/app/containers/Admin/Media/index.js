@@ -5,16 +5,6 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Dropzone from 'react-dropzone';
 import { Helmet } from 'react-helmet';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import reducer from './reducer';
@@ -26,18 +16,7 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import { IMAGE_BASE } from '../../App/constants';
 import Loading from '../../../components/Loading';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-});
+import { FaTrashAlt, FaKey, FaPencilAlt, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Media extends React.Component {
@@ -45,7 +24,7 @@ export class Media extends React.Component {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     addMediaRequest: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -60,7 +39,7 @@ export class Media extends React.Component {
   }
 
   handleAdd = files => {
-    this.props.addMediaRequest(files)
+    this.props.addMediaRequest(files);
   };
 
   copyToClipboard = textField => {
@@ -90,22 +69,22 @@ export class Media extends React.Component {
         <Helmet>
           <title>Media Manage</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Media Manage</PageHeader>
           <Dropzone onDrop={this.handleAdd}>
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <Fab
-                  color="primary"
-                  aria-label="Add"
-                  className={classes.fab}
-                  round="true"
-                  elevation={0}
-                >
-                  <AddIcon />
-                </Fab>
+                <div className="flex items-center">
+                  <button
+                    className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+                    onClick={this.handleAdd}
+                  >
+                    <FaPlus />
+                    <span className="pl-2">Add Image/File</span>
+                  </button>
+                </div>
               </div>
             )}
           </Dropzone>
@@ -125,32 +104,30 @@ export class Media extends React.Component {
                       alt="image"
                     />
                   </div>
-                  <CardContent>
-                    <Typography component="p" style={{ minHeight: '40px' }}>
+                  <div>
+                    <div component="p" style={{ minHeight: '40px' }}>
                       {each.encoding} | {each.mimetype} | {each.size}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
+                    </div>
+                  </div>
+                  <div>
                     <div>
-                      <Button
-                        size="small"
-                        color="primary"
+                      <button
+                        className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                         onClick={() =>
                           this.copyToClipboard(`${IMAGE_BASE}${each.path}`)
                         }
                       >
                         Copy Path
-                      </Button>
+                      </button>
                     </div>
 
-                    <Button
-                      size="small"
-                      color="primary"
+                    <button
+                      className="block btn text-white bg-red-500 border border-red-600 hover:bg-red-600"
                       onClick={() => this.handleDelete(each._id)}
                     >
                       Delete
-                    </Button>
-                  </CardActions>
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>
@@ -166,19 +143,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'adminMediaPage', reducer });
 const withSaga = injectSaga({ key: 'adminMediaPage', saga });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(Media);
+export default compose(withReducer, withSaga, withConnect)(Media);

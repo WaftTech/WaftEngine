@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const fileUpload = require('../../helper/upload.helper')('public/files/');
-const uploader = fileUpload.uploader;
-
+const uploadHelper = require('../../helper/upload.helper')
+const filesValidation = require('./../../modules/files/filesValidation')
 const dModule = require('../../modules/files/filesController');
-const { authentication, authorization } = require('../../middleware/authentication.middleware');
+const { authentication } = require('../../middleware/auth.middleware');
 
-router.get('/folder/:id', authorization, dModule.GetFileAndFolder);
-router.post('/folder/:id', authorization, dModule.AddFolders);
-router.post('/file/:folder_id', authorization, uploader.any('file'), dModule.UploadFiles);
-router.delete('/folder/:id', authorization, dModule.DeleteFolder);
-router.delete('/file/:id', authorization, dModule.DeleteFile);
+router.get('/folder/:id', authentication, dModule.GetFileAndFolder);
+router.post('/folder/:id', authentication, filesValidation.validate, dModule.AddFolders);
+router.post('/file/:folder_id', authentication, filesValidation.validateRootFolder, uploadHelper.uploadFiles('public/files/', 'any', 'file'), dModule.UploadFiles);
+router.post('/rename/file', authentication, dModule.RenameFolder);
+router.post('/file/type/:type', authentication, filesValidation.validateRootFolder, uploadHelper.uploadFiles('public/files/', 'any', 'file'), dModule.UploadFilesToRoot);
+router.delete('/folder/:id', authentication, dModule.DeleteFolder);
+router.delete('/file/:id', authentication, dModule.DeleteFile);
 
 module.exports = router;

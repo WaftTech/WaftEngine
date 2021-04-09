@@ -9,11 +9,12 @@ import {
 } from 'redux-saga/effects';
 import { push, LOCATION_CHANGE } from 'connected-react-router';
 import Api from 'utils/Api';
-import { makeSelectToken } from '../App/selectors';
+import { makeSelectToken, makeSelectUser } from '../App/selectors';
 import * as types from './constants';
 import { enqueueSnackbar } from '../App/actions';
 import * as actions from './actions';
-import { makeSelectUser } from '../App/selectors';
+
+import { makeSelectOne, makeSelectTwoFactor } from './selectors';
 
 function* loadOne() {
   const token = yield select(makeSelectToken());
@@ -29,19 +30,20 @@ function* loadOne() {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  // yield put(push('/user/my-account'));
 }
 
 function* addEdit() {
   const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
+
   yield fork(
-    Api.post(
+    Api.multipartPost(
       'user/profile',
       actions.addEditSuccess,
       actions.addEditFailure,
       data,
+      { file: data.image },
       token,
     ),
   );
@@ -62,7 +64,6 @@ function* addEditSuccessful(action) {
 
 function* redirectOnSuccessChangePP() {
   yield take(types.CHANGE_PASSWORD_SUCCESS);
-  // yield put(logoutRequest());
 }
 
 function* changePassword(action) {
@@ -174,6 +175,62 @@ function* resendCodeFailFunc(action) {
   yield put(enqueueSnackbar(defaultMsg));
 }
 
+function* loadTwoFactor() {
+  const token = yield select(makeSelectToken());
+  yield call(
+    Api.get(
+      'user/mfa',
+      actions.loadTwoFactorSuccess,
+      actions.loadTwoFactorFailure,
+      token,
+    ),
+  );
+}
+
+// use this to send the google code update
+function* setGoogleTwoFactor() {
+  const token = yield select(makeSelectToken());
+  const data = yield select(makeSelectTwoFactor());
+  const { code } = data.google_authenticate;
+  yield call(
+    Api.post(
+      'user/mfa/ga/verify',
+      actions.setGoogleTwoFactorSuccess,
+      actions.setGoogleTwoFactorFailure,
+      { code },
+      token,
+    ),
+  );
+}
+
+function* addEmailTwoFactor({ payload }) {
+  const token = yield select(makeSelectToken());
+  // const data = yield select(makeSelectTwoFactor());
+  yield call(
+    Api.post(
+      'user/mfa/email',
+      actions.addEmailTwoFactorSuccess,
+      actions.addEmailTwoFactorFailure,
+      payload,
+      token,
+    ),
+  );
+}
+
+function* addGoogleTwoFactor({ payload }) {
+  const token = yield select(makeSelectToken());
+  // const data = yield select(makeSelectTwoFactor());
+  yield call(
+    Api.post(
+      'user/mfa/ga',
+      actions.addGoogleTwoFactorSuccess,
+      actions.addGoogleTwoFactorFailure,
+      payload,
+      token,
+    ),
+  );
+}
+
 export default function* userPersonalInformationPageSaga() {
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.VERIFY_EMAIL_REQUEST, verifyEmail);
@@ -186,4 +243,8 @@ export default function* userPersonalInformationPageSaga() {
   yield takeLatest(types.RESEND_CODE_REQUEST, resendCode);
   yield takeLatest(types.RESEND_CODE_SUCCESS, resendCodeSuccFunc);
   yield takeLatest(types.RESEND_CODE_FAILURE, resendCodeFailFunc);
+  yield takeLatest(types.LOAD_TWO_FACTOR_REQUEST, loadTwoFactor);
+  yield takeLatest(types.SET_GOOGLE_TWO_FACTOR_REQUEST, setGoogleTwoFactor);
+  yield takeLatest(types.ADD_EMAIL_TWO_FACTOR_REQUEST, addEmailTwoFactor);
+  yield takeLatest(types.ADD_GOOGLE_TWO_FACTOR_REQUEST, addGoogleTwoFactor);
 }

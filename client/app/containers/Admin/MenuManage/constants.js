@@ -35,6 +35,7 @@ export const DELETE_ONE_FAILURE = 'app/MenuManage/DELETE_ONE_FAILURE';
 export const SET_ONE_VALUE = 'app/MenuManage/SET_ONE_VALUE';
 export const SET_CHILD_VALUE = 'app/MenuManage/SET_CHILD_VALUE';
 export const CLEAR_ONE = 'app/MenuManage/CLEAR_ONE';
+export const SET_LOAD_CHILD = 'app/MenuManage/SET_LOAD_CHILD';
 
 export const CLEAR_SUB_MENU = 'app/MenuManage/CLEAR_SUB_MENU';
 
@@ -44,3 +45,10 @@ export const CLEAR_QUERY = 'app/MenuManage/CLEAR_QUERY';
 export const CLEAR_ERRORS = 'app/MenuManage/CLEAR_ERRORS';
 
 export const SHOW_SUB_MENU = 'app/MenuManage/SHOW_SUB_MENU';
+
+export const DELETE_MENU_ITEM_REQUEST =
+  'app/MenuManage/DELETE_MENU_ITEM_REQUEST';
+export const DELETE_MENU_ITEM_SUCCESS =
+  'app/MenuManage/DELETE_MENU_ITEM_SUCCESS';
+export const DELETE_MENU_ITEM_FAILURE =
+  'app/MenuManage/DELETE_MENU_ITEM_FAILURE';

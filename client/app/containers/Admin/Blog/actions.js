@@ -6,6 +6,10 @@
 
 import * as types from './constants';
 
+export const setValue = payload => ({
+  type: types.SET_VALUE,
+  payload,
+});
 export const setOneValue = payload => ({
   type: types.SET_ONE_VALUE,
   payload,
@@ -28,6 +32,10 @@ export const setMetaKeywordValue = payload => ({
 });
 export const setCategoryValue = payload => ({
   type: types.SET_CATEGORY_VALUE,
+  payload,
+});
+export const setAuthorValue = payload => ({
+  type: types.SET_AUTHOR_VALUE,
   payload,
 });
 export const clearOne = payload => ({
@@ -121,5 +129,10 @@ export const clearErrors = () => ({
 
 export const setErrorValue = payload => ({
   type: types.SET_ERROR_VALUE,
+  payload,
+});
+
+export const setUpdateCalled = payload => ({
+  type: types.SET_UPDATE_CALLED,
   payload,
 });

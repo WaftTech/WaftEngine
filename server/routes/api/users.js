@@ -2,69 +2,44 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const validateRegisterInput = require('../../modules/user/userValidations');
+const reCaptchaValidator = require('../../middleware/recaptcha.middleware')
 
-const loginlogs = require('../../modules/user/loginlogs/loginlogController').loginlogController;
-
-const fileUpload = require('../../helper/upload.helper')('public/user/');
-const uploader = fileUpload.uploader;
+const loginLogs = require('../../modules/user/loginlogs/loginlogController').loginLogController;
+const uploadHelper = require('../../helper/upload.helper')
 const userModule = require('../../modules/user/userController');
-const { authorization, authorizationForLogout, authentication, getClientInfo } = require('../../middleware/authentication.middleware');
-/**
- * @route GET api/user/test
- * @description Tests users route
- * @access Public
- */
-router.get('/test', (req, res) =>
-  res.json({
-    msg: 'Users Works',
-  }),
-);
+const { authentication, authenticationForLogout, authorization, getClientInfo, isPublicGoogleRegistrationAllow } = require('../../middleware/auth.middleware');
 
-/**
- * @route GET api/user
- * @description Check user is returning user or new  || for admin
- * @access Public
- */
-router.get('/', authorization, authentication, userModule.GetAllUser);
 
+router.get('/', authentication, authorization, userModule.GetAllUser);
+router.post('/', userModule.CheckMail);
+router.get('/mfa', authentication, userModule.getMultiFAStatus);
+router.post('/mfa/email', authentication, userModule.postEmailFAStatus);
+router.post('/mfa/ga', authentication, userModule.postGoogleFAStatus);
+router.post('/mfa/ga/verify', authentication, userModule.verifyGoogleFAStatus);
 /**
  * @route GET api/user/grby
  * @description Check user is returning user group by or new  || for admin
  * @access Public
  */
-router.get('/grby', authorization, userModule.GetAllUserGRBY);
+router.get('/grby', authentication, authorization, userModule.GetAllUserGroupBy);
 
-/**
- * @route GET api/user
- * @description Check user is returning user or new || for admin
- * @access Public
- */
-router.get('/detail/:id', authorization, authentication, userModule.GetUserDetail);
-/**
- * @route GET api/user
- * @description Check user is returning user or new || for admin
- * @access Public
- */
-router.post('/detail/:id', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
-/**
- * @route POST api/user
- * @description Check user is returning user or new
- * @access Public
- */
-router.post('/', userModule.CheckMail);
+router.get('/detail/:id', authentication, authorization, userModule.GetUserDetail);
+
+router.post('/detail/:id', authentication, authorization, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeUpdateProfile, validateRegisterInput.validateUpdateProfile, userModule.UpdateUserDetail);
+
 /**
  * @route POST api/user/change
  * @description update basic information of user
- * @access Public
+ * @access User
  */
-router.post('/change', authorization, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateEdit, userModule.PostUser);
+router.post('/change', authentication, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateEdit, userModule.PostUser);
 
 /**
  * @route POST api/user/changepw
  * @description Update user is returning user or new
  * @access Public
  */
-router.post('/changepw', authorization, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateAdd, userModule.PostUserPw);
+router.post('/changepw', authentication, validateRegisterInput.sanitizeAdd, validateRegisterInput.validateAdd, userModule.PostUserPwd);
 
 /**
  * @route POST api/user/register
@@ -78,7 +53,7 @@ router.post('/register', validateRegisterInput.sanitizeRegister, validateRegiste
  * @description Register user route
  * @access Public
  */
-router.post('/login/google/', getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
+router.post('/login/google/', isPublicGoogleRegistrationAllow, getClientInfo, passport.authenticate('google-token'), userModule.loginGOath);
 
 /**
  * @route POST api/user/login/facebook/
@@ -86,27 +61,32 @@ router.post('/login/google/', getClientInfo, passport.authenticate('google-token
  * @access Public
  */
 router.post('/login/facebook/', getClientInfo, passport.authenticate('facebook-token'), userModule.loginGOath);
-
 /**
- * @route POST api/user/register
+ * @route POST api/user/login/github
+ * @description Login user using Github
+ * @access Public
+ */
+router.post('/login/github/', getClientInfo, passport.authenticate('github-token'), userModule.loginGOath);
+/**
+ * @route POST api/user/register/admin
  * @description Register user route || for admin
  * @access Public
  */
-router.post('/register/admin', authorization, authentication, uploader.single('file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
+router.post('/register/admin', authentication, authorization, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeRegister, validateRegisterInput.validateRegisterInput, userModule.RegisterFromAdmin);
 
 /**
  * @route POST api/user/verifymail
  * @description Verify mail by user
  * @access Public
  */
-router.post('/verifymail', userModule.Verifymail);
+router.post('/verifymail', getClientInfo, userModule.Verifymail);
 
 /**
- * @route POST api/user/verifymail
- * @description Verify mail by user
+ * @route POST api/user/verifymail/resend
+ * @description Resent Verify mail by user
  * @access Public
  */
-router.post('/verifymail/resend', authorization, userModule.ResendVerificationCode);
+router.post('/verifymail/resend', userModule.ResendVerificationCode);
 
 /**
  * @route POST api/user/login
@@ -115,6 +95,9 @@ router.post('/verifymail/resend', authorization, userModule.ResendVerificationCo
  */
 router.post('/login', validateRegisterInput.sanitizeLogin, validateRegisterInput.validateLoginInput, getClientInfo, userModule.Login);
 
+router.post('/login/mfa', getClientInfo, userModule.LoginAfterMultiFa);
+// router.post('/login/2fa', getClientInfo, userModule.LoginAfterTwoFa);
+// router.post('/login/2faga', getClientInfo, userModule.LoginAfterTwoFaGa);
 /**
  * @route POST api/user/forgotpassword
  * @description Forgot Password
@@ -127,69 +110,55 @@ router.post('/forgotpassword', userModule.ForgotPassword);
  * @description Forgot Password
  * @access Public
  */
-router.post('/resetpassword', userModule.ResetPassword);
+router.post('/resetpassword', getClientInfo, userModule.ResetPassword);
 
 /**
  * @route POST api/user/changepassword
  * @description change Password
  * @access Public
  */
-router.post('/changepassword', authorization, validateRegisterInput.validatechangePassword, userModule.changePassword);
-
-/**
- * @route POST api/user/login/github
- * @description Login user using Github
- * @access Public
- */
-router.post('/login/github/:access_token', userModule.GithubLogin);
-
-/**
- * @route POST api/user/login/google
- * @description Login user using Google
- * @access Public
- */
-router.post('/login/google/:access_token', userModule.OauthCodeToToken, userModule.GoogleLogin);
+router.post('/changepassword', authentication, validateRegisterInput.validateChangePassword, userModule.changePassword);
 
 /**
  * @route POST api/user/info
  * @description returns the user info
  * @access Public
  */
-router.get('/info', authorization, userModule.Info);
+router.get('/info', authentication, userModule.Info);
 
 /**
  * @route POST api/user/loginlogs
  * @description returns the loginlogs
  * @access Private
  */
-router.get('/loginlogs', authorization, authentication, loginlogs.getLogList);
+router.get('/loginlogs', authentication, authorization, loginLogs.getLogList);
 
 /**
  * @route POST api/user/loginlogs/logout
  * @description remove token from loginlog
  * @access Private
  */
-router.post('/loginlogs/logout', authorization, validateRegisterInput.validateLoginlogsLogut, loginlogs.removeToken);
+router.post('/loginlogs/logout', authentication, validateRegisterInput.validateLogsLogoutAction, loginLogs.removeToken);
 
 /**
  * @route POST api/user/logout
  * @description remove token from loginlog
  * @access Public
  */
-router.get('/logout', authorizationForLogout, loginlogs.logout);
+router.get('/logout', authenticationForLogout, loginLogs.logout);
 
 /**
  * @route GET api/user/profile
  * @description get user profile info
  * @access Public
  */
-router.get('/profile', authorization, userModule.GetProfile);
+router.get('/profile', authentication, userModule.GetProfile);
 
 /**
  * @route POST api/user/profile
  * @description POST user profile info
  * @access Public
  */
-router.post('/profile', authorization, uploader.single('file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
+router.post('/profile', authentication, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
 
 module.exports = router;

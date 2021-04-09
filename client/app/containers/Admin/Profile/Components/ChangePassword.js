@@ -5,20 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-
-// core components
 import * as mapDispatchToProps from '../actions';
 import { makeSelectErrors } from '../selectors';
-
-const styles = theme => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 export class ChangePassword extends React.Component {
   static propTypes = {
     changePasswordRequest: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
   };
 
   state = {
@@ -33,9 +26,7 @@ export class ChangePassword extends React.Component {
     this.props.clearError();
   }
 
-  static getDerivedStateFromProps = nextProps => {
-    return { errors: nextProps.errors };
-  };
+  static getDerivedStateFromProps = nextProps => ({ errors: nextProps.errors });
 
   handleChange = e => {
     e.persist();
@@ -52,18 +43,6 @@ export class ChangePassword extends React.Component {
     if (!newPassword2) errors.newPassword2 = "Can't be empty";
     return { errors, isValid: !Object.keys(errors).length };
   };
-
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   const { errors, isValid } = this.validate();
-  //   this.setState({ errors });
-  //   // const { oldPassword, newPassword, newPassword2 } = this.state;
-  //   // this.props.changePasswordRequest({ oldPassword, newPassword, newPassword2 });
-  //   if (isValid) {
-  //     const { oldPassword, newPassword, newPassword2 } = this.state;
-  //     this.props.changePasswordRequest({ oldPassword, newPassword, newPassword2 });
-  //   }
-  // };
 
   handleSave = e => {
     e.preventDefault();
@@ -90,14 +69,9 @@ export class ChangePassword extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <div className="ml-4 p-4 border">
         <div className="w-full md:w-1/2 pb-4">
-          <label
-            className="label"
-            htmlFor="oldPassword"
-          >
-            Old Password
-          </label>
+          <label htmlFor="oldPassword">Old Password</label>
           <input
             className="inputbox"
             id="oldPassword"
@@ -111,12 +85,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label
-            className="label"
-            htmlFor="newPassword"
-          >
-            New Password
-          </label>
+          <label htmlFor="newPassword">New Password</label>
           <input
             className="inputbox"
             id="newPassword"
@@ -130,12 +99,7 @@ export class ChangePassword extends React.Component {
         </div>
 
         <div className="w-full md:w-1/2 pb-4">
-          <label
-            className="label"
-            htmlFor="newPassword"
-          >
-            Confirm New Password
-          </label>
+          <label htmlFor="newPassword">Confirm New Password</label>
           <input
             className="inputbox"
             id="newPassword2"
@@ -149,12 +113,13 @@ export class ChangePassword extends React.Component {
         </div>
 
         <button
-          className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
+          type="button"
+          className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
           onClick={this.handleSave}
         >
           Save
         </button>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -163,14 +128,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withConnect,
-)(ChangePassword);
+export default compose(withConnect)(ChangePassword);

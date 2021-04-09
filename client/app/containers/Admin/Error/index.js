@@ -12,19 +12,7 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import { Button } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-
+import Dialog from 'components/Dialog/index';
 // core components
 import Table from 'components/Table';
 
@@ -40,26 +28,8 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
-
-const styles = theme => ({
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaRegEye, FaTrashAlt, FaSearch } from 'react-icons/fa';
+import lid from '../../../assets/img/lid.svg';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Error extends React.Component {
@@ -69,7 +39,6 @@ export class Error extends React.Component {
     deleteAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -90,6 +59,25 @@ export class Error extends React.Component {
   componentDidMount() {
     this.props.loadAllRequest(this.props.query);
   }
+
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
 
   handleOpen = id => {
     this.setState({ open: true, deleteId: id });
@@ -119,15 +107,21 @@ export class Error extends React.Component {
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
   };
 
   handleShow = (id, stack) => {
@@ -153,34 +147,27 @@ export class Error extends React.Component {
         _id,
       }) => [
         error_message,
-        // error_stack,
         error_type,
         count,
         moment(added_at).format(DATE_FORMAT),
-        // console.log(last_added_at, 'dsds'),
         last_added_at != null
           ? moment(last_added_at).format(DATE_FORMAT)
           : moment(added_at).format(DATE_FORMAT),
         <React.Fragment>
           <div className="flex">
-            <button
-              aria-label="Edit"
-              className=" px-1 text-center leading-none"
+            <span
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
               onClick={() => this.handleShow(_id, error_stack)}
             >
-              <i className="material-icons text-base text-indigo-500 hover:text-indigo-700">
-                visibility
-              </i>
-            </button>
-
-            <button
-              className="ml-2 px-1 text-center leading-none"
+              <FaRegEye className="text-base text-blue-500" />
+            </span>
+            <span
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
-              <i className="material-icons text-base text-red-400 hover:text-red-600">
-                delete
-              </i>
-            </button>
+              <img className="trash-lid" src={lid} alt="trash-id" />
+              <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+            </span>
           </div>
         </React.Fragment>,
       ],
@@ -196,20 +183,37 @@ export class Error extends React.Component {
               : this.handleDeleteAll()
           }
         />
-        <Dialog open={this.state.show} maxWidth="md" onClose={this.handleClose}>
+
+        <Dialog
+          open={this.state.show}
+          className="w-5/6"
+          onClose={this.handleClose}
+          title={`Error Stack`}
+          body={<p>{this.state.stack}</p>}
+          actions={
+            <button
+              type="button"
+              className="block btn margin-none text-white bg-red-500 border border-red-600 hover:bg-red-600"
+              onClick={this.handleClose}
+            >
+              Close
+            </button>
+          }
+        />
+        {/* <Dialog open={this.state.show} maxWidth="md" onClose={this.handleClose}>
           <DialogTitle>Error Stack</DialogTitle>
           <DialogContent>
             <p>{this.state.stack}</p>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
         <Helmet>
           <title>Error Listing</title>
         </Helmet>
-        <div className="flex justify-between mt-3 mb-3">
+        <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>Error Manage</PageHeader>
           <button
-           className="btn bg-danger hover:bg-secondary"
+            className="items-center flex btn bg-red-100 border border-red-200 text-red-500 hover:bg-red-500 hover:border-red-500 hover:text-white"
             onClick={this.handleOpenAll}
           >
             Delete All
@@ -223,17 +227,17 @@ export class Error extends React.Component {
                 name="find_errors"
                 id="error-message"
                 placeholder="Search Errors"
-                className="m-auto inputbox"
+                className="m-auto inputbox pr-6"
                 value={query.find_errors}
                 onChange={this.handleQueryChange}
               />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
+
+              <span
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
                 onClick={this.handleSearch}
               >
-                <SearchIcon />
-              </IconButton>
+                <FaSearch />
+              </span>
             </div>
           </div>
           <Table
@@ -262,19 +266,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminErrorManagePage', reducer });
 const withSaga = injectSaga({ key: 'adminErrorManagePage', saga });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(Error);
+export default compose(withReducer, withSaga, withConnect)(Error);

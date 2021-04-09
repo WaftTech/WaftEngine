@@ -1,29 +1,54 @@
-import React, { useState } from 'react';
-import PropTypes, { number } from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
+/* eslint-disable no-nested-ternary */
+import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { IMAGE_BASE, DATE_FORMAT } from 'containers/App/constants';
+import { IMAGE_BASE } from 'containers/App/constants';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import * as mapDispatchToProps from '../actions';
-import BlogListSkeleton from '../Skeleton/BlogList';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import reducer from '../reducer';
+import saga from '../saga';
+import clock from '../../../assets/img/clock.svg';
 
 const RenderBlogs = props => {
-  const { currentBlogs, loading, pagination, handlePagination } = props;
+  const {
+    currentBlogs,
+    loading,
+    pagination,
+    handlePagination,
+    handleLoadMore,
+    loading_more,
+  } = props;
   const maxPage = Math.ceil(pagination.totaldata / pagination.size);
   const pagenumber = [];
   for (let i = 1; i <= Math.ceil(pagination.totaldata / pagination.size); i++) {
     pagenumber.push(i);
   }
+  const [lastTop, setLastTop] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, lastTop - 140);
+  }, [loading_more]);
+  const lastDiv = useRef(null);
+
+  const handleLoadMoreContent = () => {
+    handleLoadMore({ ...pagination, page: pagination.page + 1 });
+    const top = lastDiv.current.offsetTop;
+    setLastTop(top);
+  };
+
   return loading ? (
     <>
-      <BlogListSkeleton />
+      <div />
     </>
   ) : currentBlogs.length > 0 ? (
     <>
-      {currentBlogs.map(each => {
+      {currentBlogs.map((each, index) => {
         const {
           image,
           title,
@@ -32,131 +57,66 @@ const RenderBlogs = props => {
           short_description,
           added_at,
           tags,
+          _id,
         } = each;
 
         return (
-          <div
-            key={slug_url}
-            className="border-b border-dotted py-5 md:flex article-container"
+          <Link
+            className="block pb-6 mb-6 border-b border-gray-300"
+            to={`/blog/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+            key={`${slug_url}-${_id}`}
           >
-            <div className="md:w-1/4 article-heading">
-              <Link
-                className="text-black no-underline capitalize mb-2 bold block mt-4"
-                to={`/blog/${slug_url}`}
-              >
-                <h2 className="text-2xl font-medium leading-tight hover:text-primary">
-                  {title}
-                </h2>
-              </Link>
-              <span className="my-2 text-sm">
-                by{' '}
-                {author && author.name ? (
-                  <Link
-                    to={`/blog/author/${author._id}`}
-                    className="text-primary font-bold no-underline hover:underline"
-                  >
-                    {author.name}
-                  </Link>
-                ) : (
-                  'unknown'
-                )}
-              </span>
-            </div>
-            <div className="md:w-1/2 py-4 md:p-4 article-details">
-              <span className="text-gray-700 mr-2 article-date">
-                {moment(added_at).format(DATE_FORMAT)}
-              </span>
-              {tags && tags.length > 0 ? (
-                <Link
-                  className="text-blue-700 no-underline article-tag"
-                  to={`/blog/${each.slug_url}`}
-                >
-                  <span> {tags.join(', ') || ''} </span>
-                </Link>
-              ) : (
-                ''
-              )}
-              {short_description && (
-                <Link
-                  className="text-grey-darker text-base no-underline"
-                  to={`/blog/${slug_url}`}
-                >
-                  <div
-                    className="leading-normal text-sm text-gray-600 overflow-hidden"
-                    dangerouslySetInnerHTML={{ __html: short_description }}
-                  />
-                </Link>
-              )}
-            </div>
-
-            <div className="md:w-1/4 h-48 overflow-hidden p-8 article-image">
-              <Link to={`/blog/${slug_url}`}>
+            <div
+              key={_id}
+              className="flex article-container"
+              ref={index === currentBlogs.length - 1 ? lastDiv : null}
+            >
+              <div className="overflow-hidden h-20 md:h-48 w-24 md:w-64 article-image">
                 <img
+                  className="object-cover"
                   src={image && `${IMAGE_BASE}${image.path}`}
                   alt={`${title}`}
                 />
-              </Link>
+              </div>
+
+              <div className="flex-1 px-4 md:px-10">
+                <h2 className="text-xl md:text-3xl hover:text-blue-500 font-normal">
+                  {title}
+                </h2>
+
+                <div className="inline-flex items-center text-gray-600 md:text-gray-800 text-sm sans-serif mt-3 article-date">
+                  <img className="mr-2 clock" src={clock} />
+                  {moment(each.added_at).fromNow()}
+                </div>
+              </div>
             </div>
-          </div>
+          </Link>
         );
       })}
-      <div className="flex clearfix w-full pagination">
-        <div className="w-full md:w-1/4" />
-        <div className="w-3/4 flex mt-3 ">
-          {pagination.page !== 1 && (
-            <span className="inline-block pr-2">
-              <button
-                className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded flex items-center justify-center"
-                onClick={() =>
-                  handlePagination({
-                    ...pagination,
-                    page: pagination.page - 1,
-                  })
-                }
-              >
-                <i className="material-icons">keyboard_arrow_left</i>
-              </button>
-            </span>
-          )}
-          {pagenumber.length > 0 &&
-            pagenumber.map(each => (
-              <span className="inline-block pr-2" key={each}>
-                <button
-                  id={each}
-                  className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded"
-                  onClick={e => {
-                    handlePagination({
-                      ...pagination,
-                      page: e.target.id,
-                    });
-                  }}
-                >
-                  {each}
-                </button>
-              </span>
-            ))}
-          <span className="inline-block pr-2">
-            <button
-              className="border border-gray-500 hover:bg-gray-600 hover:border-gray-600 hover:text-white text-gray-800 font-bold w-10 h-10 rounded flex items-center justify-center"
-              disabled={pagination.page === maxPage}
-              onClick={() =>
-                handlePagination({ ...pagination, page: pagination.page + 1 })
-              }
-            >
-              <i className="material-icons">keyboard_arrow_right</i>
-            </button>
-          </span>
-        </div>
+      <div className="flex flow-root w-full pagination ">
+        {loading_more && '....'}
+        {currentBlogs.length < pagination.totaldata && (
+          <button
+            type="button"
+            className="btn w-full border border-secondary bg-blue-100 mb-8 text-blue-500 mt-4"
+            onClick={handleLoadMoreContent}
+          >
+            Load More
+          </button>
+        )}
       </div>
     </>
   ) : (
-    <div>Blogs Not Found</div>
-  );
+        <div>No Blog Found</div>
+      );
 };
+
+const withSaga = injectSaga({ key: 'blogPage', saga });
+const withReducer = injectReducer({ key: 'blogPage', reducer });
 
 RenderBlogs.propTypes = {
   currentBlogs: PropTypes.array.isRequired,
-  loading: PropTypes.string,
+  loading: PropTypes.bool,
   pagination: PropTypes.object,
   handlePagination: PropTypes.func,
 };
@@ -167,4 +127,8 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-export default compose(withConnect)(RenderBlogs);
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(RenderBlogs);

@@ -71,3 +71,16 @@ export const clearQuery = () => ({
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
 });
+
+export const getCountRequest = payload => ({
+  type: types.GET_COUNT_REQUEST,
+  payload,
+});
+export const getCountSuccess = payload => ({
+  type: types.GET_COUNT_SUCCESS,
+  payload,
+});
+export const getCountFailure = payload => ({
+  type: types.GET_COUNT_FAILURE,
+  payload,
+});

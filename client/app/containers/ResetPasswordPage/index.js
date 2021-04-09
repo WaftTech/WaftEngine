@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -28,7 +28,9 @@ export const ResetPasswordPage = props => {
     loadResetRequest,
     setData,
     clearErrors,
-    match: { params: email },
+    match: {
+      params: { email, code },
+    },
     defaultData,
     loading,
     errors,
@@ -36,21 +38,43 @@ export const ResetPasswordPage = props => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  useEffect(() => {
+    if (email !== '') {
+      setData({ key: 'email', value: email });
+    }
+    if (code !== undefined && code !== '') {
+      setData({ key: 'code', value: code });
+    } else {
+      setData({ key: 'code', value: '' });
+    }
+  }, []);
+
   const handleChange = e => {
     e.persist();
     setData({ key: e.target.name, value: e.target.value });
   };
 
   const handleSubmit = () => {
-    // e.preventDefault();
-    loadResetRequest(email);
+    loadResetRequest();
   };
 
   return (
     <div className="max-w-lg mx-auto p-16">
       <h1 className="text-2xl font-bold">
-        Reset your password with the help of code sent to your email...
+        Reset your password
       </h1>
+      <input
+        className="inputbox w-full"
+        id="code"
+        name="email"
+        type="text"
+        value={defaultData.email}
+        placeholder="Enter email"
+        onChange={handleChange}
+        disabled
+      />
+      <div className="error">{errors && errors.email}</div>
+
       <input
         className="inputbox w-full"
         id="code"
@@ -60,27 +84,27 @@ export const ResetPasswordPage = props => {
         placeholder="Enter code"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.code}</div>
+      <div className="error">{errors && errors.code}</div>
       <input
         className="inputbox w-full mt-4"
         id="password"
         name="password"
-        type="text"
+        type="password"
         value={defaultData.password}
         placeholder="Enter password"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.password}</div>
+      <div className="error">{errors && errors.password}</div>
       <input
         className="inputbox w-full mt-4"
         id="confirm-password"
         name="confirm_password"
-        type="text"
+        type="password"
         value={defaultData.confirm_password}
         placeholder="Confirm password"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.confirm_password}</div>
+      <div className="error">{errors && errors.confirm_password}</div>
       <button
         className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
         onClick={handleSubmit}
@@ -104,11 +128,5 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-export default compose(
-  withConnect,
-  memo,
-)(ResetPasswordPage);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+export default compose(withConnect, memo)(ResetPasswordPage);

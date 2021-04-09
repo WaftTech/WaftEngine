@@ -1,10 +1,12 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const metaConfig = require('./metaConfig');
 const metaValidation = {};
 
-metaValidation.Santize = (req, res, next) => {
+metaValidation.Sanitized = (req, res, next) => {
   const sanitizeArray = [
     {
       field: 'title',
@@ -19,7 +21,7 @@ metaValidation.Santize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
@@ -67,9 +69,9 @@ metaValidation.Validate = (req, res, next) => {
       ],
     },
   ];
-  const errors = otherHelper.validation(req.body, validateArray);
+  const errors = validateHelper.validation(req.body, validateArray);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'invalid input', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, metaConfig.errorIn.inputErrors, null);
   } else {
     next();
   }

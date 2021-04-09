@@ -3,6 +3,7 @@ const templateSch = require('./templateSchema');
 const otherHelper = require('../../helper/others.helper');
 const templateConfig = require('./templateConfig');
 const isEmpty = require('../../validation/isEmpty');
+const settingsHelper = require('../../helper/settings.helper')
 const templateController = {};
 const internal = {};
 
@@ -32,37 +33,18 @@ templateController.getTemplateDetail = async (req, res, next) => {
 
 templateController.postTemplate = async (req, res, next) => {
   try {
-    const { _id, template_name, template_key, information, variables, from, subject, alternate_text, body } = req.body;
-
-    // if (_id) {
-    const update = await templateSch.findOneAndUpdate(
-      { _id, template_name, template_key },
-      {
-        $set: {
-          template_name,
-          template_key,
-          information,
-          variables,
-          from,
-          subject,
-          alternate_text,
-          body,
-          updated_by: req.user.id,
-          updated_at: Date.now(),
-        },
-      },
-    );
-
-    if (update) {
-      return otherHelper.sendResponse(res, httpStatus.OK, true, req.body, null, templateConfig.templateSave, null);
+    const template = req.body
+    template.updated_by = req.user.id
+    template.updated_at = Date.now()
+    if (template && template._id) {
+      const update = await templateSch.findByIdAndUpdate({ _id: template._id }, { $set: template }, { new: true },);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, templateConfig.templateSave, null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, templateConfig.templateNotFound, null);
+      let newTemplate = new templateSch(template);
+      let saved = await newTemplate.save();
+      return otherHelper.sendResponse(res, httpStatus.OK, true, saved, null, templateConfig.templateSave, null);
+
     }
-    // } else {
-    //   const tmeplate = new templateSch({ template_name, template_key, information, variables, from, subject, body });
-    //   const template = tmeplate.save();
-    //   return otherHelper.sendResponse(res, httpStatus.OK, true, template, null, templateConfig.templateSave, null);
-    // }
   } catch (err) {
     next(err);
   }
@@ -80,6 +62,12 @@ internal.renderTemplate = async (template_key, variables_OBJ, toEmail) => {
   let body = unrendered.body + '';
   let subject = unrendered.subject + '';
   let alternate_text = unrendered.alternate_text + '';
+  const client_url = await settingsHelper('global', 'url', 'client_url')
+  const server_url = await settingsHelper('global', 'url', 'server_url')
+  const application_name = await settingsHelper('global', 'application', 'application_name')
+  variables_OBJ.client_url = client_url;
+  variables_OBJ.server_url = server_url;
+  variables_OBJ.application_name = application_name;
   let variables_keys = Object.keys(variables_OBJ);
 
   for (let i = 0; i < variables_keys.length; i++) {
@@ -88,6 +76,10 @@ internal.renderTemplate = async (template_key, variables_OBJ, toEmail) => {
     body = body.replace(re, variables_OBJ[variables_keys[i]]);
     alternate_text = alternate_text.replace(re, variables_OBJ[variables_keys[i]]);
   }
+  const email_footer = await settingsHelper('template', 'email', 'footer')
+  const email_header = await settingsHelper('template', 'email', 'header')
+  body = `${email_header}${body}${email_footer}`;
+
   return { from, subject, html: body, text: alternate_text, to: toEmail };
 };
 

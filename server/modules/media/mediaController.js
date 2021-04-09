@@ -1,15 +1,18 @@
 const httpStatus = require('http-status');
-var objectId = require('mongoose').Types.ObjectId;
 const otherHelper = require('../../helper/others.helper');
+const folderSch = require('../files/folderSchema');
+const fileSch = require('../files/fileSchema');
+
 const mediaSch = require('./mediaSchema');
 const mediaController = {};
 
 mediaController.GetMediaPagination = async (req, res, next) => {
   try {
-    let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     populate = [{ path: 'added_by' }];
-    let media = await otherHelper.getquerySendResponse(mediaSch, page, size, sortq, searchq, selectq, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totaldata);
+    selectQuery = 'field_name type destination path field_name original_name mimetype size encoding added_at module';
+    let media = await otherHelper.getQuerySendResponse(mediaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totalData);
   } catch (err) {
     next(err);
   }
@@ -82,13 +85,13 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
 };
 mediaController.GetMediaDetail = async (req, res, next) => {
   const id = req.params.id;
-  const media = await mediaSch.findOne({ _id: objectId(id), is_deleted: false });
+  const media = await mediaSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Get Success !!', null);
 };
 mediaController.DeleteMedia = async (req, res, next) => {
   const id = req.params.id;
   const media = await mediaSch.findByIdAndUpdate(
-    objectId(id),
+    id,
     {
       $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
     },
@@ -96,19 +99,36 @@ mediaController.DeleteMedia = async (req, res, next) => {
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
 };
+
+mediaController.DeleteAllMedia = async (req, res, next) => {
+  let folder_id = req.body.folder_id;
+  let file_id = req.body.file_id;
+
+  let file, folder;
+
+  for (let i = 0; i < folder_id.length; i++) {
+    folder = await folderSch.findByIdAndUpdate(
+      folder_id[i],
+      {
+        $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+      },
+      { new: true },
+    );
+  }
+  for (let i = 0; i < file_id.length; i++) {
+    file = await fileSch.findByIdAndUpdate(
+      file_id[i],
+      {
+        $set: { is_deleted: true, deleted_by: req.user.id, deleted_at: new Date() },
+      },
+      { new: true },
+    );
+  }
+
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { file, folder }, null, 'Media Delete Success !!', null);
+};
 mediaController.UploadFromCkEditor = async (req, res, next) => {
   try {
-    console.log(req.files);
-
-    // media.destination =
-    //   media.destination
-    //     .split('\\')
-    //     .join('/')
-    //     .split('server/')[1] + '/';
-    // media.path = media.path
-    //   .split('\\')
-    //   .join('/')
-    //   .split('server/')[1];
     let html = '';
     html += `<script type='text/javascript'>
     var funcNum = ${req.query.CKEditorFuncNum};

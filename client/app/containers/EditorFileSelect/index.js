@@ -4,13 +4,13 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import qs from 'query-string';
-
+import { Helmet } from 'react-helmet';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import * as mapDispatchToProps from './actions';
@@ -26,18 +26,25 @@ export const EditorFileSelect = ({
   loadFilesRequest,
   location: { search },
   selectFile,
+  uploadMultiple,
 }) => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const queryObj = qs.parse(search);
 
   useEffect(() => {
-    loadFilesRequest(queryObj.path);
+    loadFilesRequest({ path: queryObj.path });
   }, [queryObj.path]);
-  return (
-    <div className="container mx-auto h-full">
-      <FileList queryObj={queryObj} selectFile={selectFile} />
-    </div>
+
+  return (<>
+    <Helmet>
+      <title>Media Manage</title>
+    </Helmet>
+    <FileList
+      queryObj={queryObj}
+      selectFile={selectFile}
+      uploadMultiple={uploadMultiple}
+    /></>
   );
 };
 
@@ -45,6 +52,7 @@ EditorFileSelect.propTypes = {
   loadFilesRequest: PropTypes.func.isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
   selectFile: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  uploadMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 };
 
 EditorFileSelect.defaultProps = {
@@ -55,12 +63,6 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(
-  withConnect,
-  memo,
-)(EditorFileSelect);
+export default compose(withConnect, memo)(EditorFileSelect);

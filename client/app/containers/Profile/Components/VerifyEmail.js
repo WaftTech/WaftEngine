@@ -1,20 +1,16 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import injectSaga from 'utils/injectSaga';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-// core components
+import injectSaga from 'utils/injectSaga';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectCode } from '../selectors';
-import * as mapDispatchToProps from '../actions';
 
 class VerifyEmail extends React.PureComponent {
   static propTypes = {
@@ -22,7 +18,6 @@ class VerifyEmail extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
   };
 
   handleChange = name => event => {
@@ -76,14 +71,7 @@ const mapStateToProps = createStructuredSelector({
   code: makeSelectCode(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
-
-const styles = theme => ({});
-
-const withStyle = withStyles(styles);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({
   key: 'userPersonalInformationPage',
@@ -91,9 +79,4 @@ const withReducer = injectReducer({
 });
 const withSaga = injectSaga({ key: 'userPersonalInformationPage', saga });
 
-export default compose(
-  withConnect,
-  withReducer,
-  withSaga,
-  withStyle,
-)(VerifyEmail);
+export default compose(withConnect, withReducer, withSaga)(VerifyEmail);

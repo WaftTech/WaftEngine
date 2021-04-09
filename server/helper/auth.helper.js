@@ -1,131 +1,63 @@
-const {
-  oauthConfig: { googleAuth, facebookAuth },
-  isOauthConfig: { isGoogleAuth, isFacebookAuth },
-} = require('../config/keys');
 
-const randomHexGenerator = require('./../helper/others.helper').generateRandomHexString;
-const bcrypt = require('bcryptjs');
-const userSch = require('./../modules/user/userSchema');
+const settingsHelper = require('./settings.helper')
 
-const emailHelper = require('./email.helper');
-const renderMail = require('./../modules/template/templateController').internal;
-
-module.exports = passport => {
+module.exports = async passport => {
   passport.serializeUser((user, done) => {
     done(null, user);
   });
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
-  if (isGoogleAuth) {
+  const isFacebookAuth = await settingsHelper('auth', 'facebook', 'allow_login');
+  const isGoogleAuth = await settingsHelper('auth', 'google', 'allow_login');
+
+  if (isGoogleAuth == true) {
+    const clientID = await settingsHelper('auth', 'google', 'client_id')
+    const clientSecret = await settingsHelper('auth', 'google', 'secret')
+
     const GoogleTokenStrategy = require('passport-google-token').Strategy;
     passport.use(
       new GoogleTokenStrategy(
         {
-          clientID: googleAuth.client_id,
-          clientSecret: googleAuth.client_secret,
+          clientID: clientID,
+          clientSecret: clientSecret,
         },
-        async (accessToken, refreshToken, profile, cb) => {
+        async (accessToken, refreshToken, profile, cb, req) => {
           try {
             // Extract the minimal profile information we need from the profile object
-            const existingUser = await userSch.findOne({ email: profile.emails[0].value });
-            if (existingUser) {
-              return cb(null, existingUser);
-            }
-
-            const randompassword = await randomHexGenerator(12);
-
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(randompassword, salt);
-
-            const newUser = new userSch({
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              password: hash,
-              email_verified: true,
-              roles: ['5bf7ae90736db01f8fa21a24'],
-            });
-
-            const retuser = await newUser.save();
-
-            const renderedMail = await renderMail.renderTemplate(
-              'third_party_signup',
-              {
-                name: profile.displayName,
-                email: profile.emails[0].value,
-                password: randompassword,
-                account: 'Google',
-              },
-              profile.emails[0].value,
-            );
-            if (renderMail.error) {
-              console.log('render mail error: ', renderMail.error);
-            } else {
-              emailHelper.send(renderedMail);
-            }
-            cb(null, retuser);
+            const user = { name: profile.displayName, first_name: profile.name.givenName, last_name: profile.name.familyName, email: profile.emails[0].value, picture: profile._json.picture, provider: 'google', id: profile.id };
+            return cb(null, user);
           } catch (err) {
             console.log('err:', err);
+            return cb(err, null);
           }
         },
       ),
     );
   }
-  if (isFacebookAuth) {
+  if (isFacebookAuth == true) {
     const FacebookTokenStrategy = require('passport-facebook-token');
+    const FACEBOOK_APP_ID = await settingsHelper('auth', 'facebook', 'app_id');
+    const FACEBOOK_APP_SECRET = await settingsHelper('auth', 'sub_type', 'app_secret');
+
     passport.use(
       new FacebookTokenStrategy(
         {
-          clientID: facebookAuth.FACEBOOK_APP_ID,
-          clientSecret: facebookAuth.FACEBOOK_APP_SECRET,
+          clientID: FACEBOOK_APP_ID,
+          clientSecret: FACEBOOK_APP_SECRET,
         },
         async (accessToken, refreshToken, profile, done) => {
           try {
             if (profile.emails && profile.emails[0].value) {
               // Extract the minimal profile information we need from the profile object
-              const existingUser = await userSch.findOne({ email: profile.emails[0].value });
-              if (existingUser) {
-                return done(null, existingUser);
-              }
-
-              const randompassword = await randomHexGenerator(12);
-
-              const salt = await bcrypt.genSalt(10);
-              const hash = await bcrypt.hash(randompassword, salt);
-
-              const displayName = profile.name.givenName + ' ' + profile.name.familyName;
-
-              const newUser = new userSch({
-                name: displayName,
-                email: profile.emails[0].value,
-                password: hash,
-                email_verified: true,
-                roles: ['5bf7ae90736db01f8fa21a24'],
-              });
-
-              const retuser = await newUser.save();
-
-              const renderedMail = await renderMail.renderTemplate(
-                'third_party_signup',
-                {
-                  name: displayName,
-                  email: profile.emails[0].value,
-                  password: randompassword,
-                  account: 'Facebook',
-                },
-                profile.emails[0].value,
-              );
-              if (renderMail.error) {
-                console.log('render mail error: ', renderMail.error);
-              } else {
-                emailHelper.send(renderedMail);
-              }
-              done(null, retuser);
+              const user = { name: profile.displayName, first_name: profile.name.givenName, last_name: profile.name.familyName, email: profile.emails[0].value, picture: profile.photos[0].value, provider: 'facebook', id: profile.id };
+              return done(null, user);
             } else {
               done(null, false);
             }
           } catch (err) {
             console.log('err:', err);
+            return cb(err, null);
           }
         },
       ),

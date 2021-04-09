@@ -22,10 +22,13 @@ export const initialState = {
     is_active: false,
     is_feature: false,
     publish_to: '',
+    meta_tag: [],
+    is_page: true,
   },
   query: { find_name: '', find_key: '', size: 10 },
   loading: false,
   errors: { name: '', key: '', description: '' },
+  tempMetaTag: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -55,7 +58,11 @@ const reducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case types.LOAD_ALL_SUCCESS:
-        draft.all = action.payload;
+        draft.all = {
+          ...draft.all,
+          ...action.payload,
+          totaldata: action.payload.totalData,
+        };
         draft.loading = false;
         break;
 
@@ -64,7 +71,7 @@ const reducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        draft.one = action.payload.data;
+        draft.one = { ...initialState.one, ...action.payload.data };
         break;
       case types.LOAD_ONE_FAILURE:
         draft.loading = false;
@@ -76,6 +83,9 @@ const reducer = (state = initialState, action) =>
             each => each._id != action.payload.data._id,
           ),
         };
+        break;
+      case types.SET_META_TAG_VALUE:
+        draft.tempMetaTag = action.payload;
         break;
     }
   });

@@ -83,8 +83,20 @@ export const makeSelectCategory = () =>
     state => state.category,
   );
 
-export const makeSelecBlogLoading = () =>
+export const makeSelectMenu = () =>
+  createSelector(
+    selectGlobal,
+    state => state.menu,
+  );
+
+export const makeSelectBlogLoading = () =>
   createSelector(
     selectGlobal,
     state => state.blogLoading,
+  );
+
+export const makeSelectFaqData = () =>
+  createSelector(
+    selectGlobal,
+    state => state.faqData,
   );

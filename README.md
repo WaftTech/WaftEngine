@@ -1,9 +1,8 @@
 # WaftEngine (MERN Stack Engine)
 
-[WaftEngine](https://www.waftengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
+[WaftEngine](https://waftengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
 
 [![Gitter](https://badges.gitter.im/waftengine/community.svg)](https://gitter.im/waftengine/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Known Vulnerabilities](https://snyk.io/test/github/mkmpvtltd/WaftEngine/badge.svg)](https://snyk.io/test/github/mkmpvtltd/WaftEngine)
 
 ## Features
 
@@ -22,7 +21,7 @@ WaftEngine core features include:
 - Development ready setup
 - Production ready setup
 
-Since anything in our codebase can be extended, overwritten, or installed as a package, you may also develop, scale, and customize anything on our platform. 
+Since anything in our codebase can be extended, overwritten, or installed as a package, you may also develop, scale, and customize anything on our platform.
 
 ## Installation
 
@@ -32,24 +31,24 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
   - `npm install`
   - `cd ../server`
   - `npm install`
-- Import Default data into MongoDB server from `db` folder
-  - `cd db`
-  - `mongorestore -h <server>:<port> -d <dbname> -u <user> -p <password> ./`
+- Import Default data into MongoDB server from `database` folder
+  - `cd ../database`
+  - `run mongoimport command for all json file`
 - Configure Server
-  - Rename `config.bak` folder to `config`
-  - Update `keys.js` file in `mongoURI` section as your `MongoDB credential`
+  - Create `.env` file in `server`
+  - Update `.env` file with `MONGODB_URI=mongodb://localhost:27017/waft-engine` 
 - Running the application in development mode
   - Development Mode (Client only): `cd client` then `npm run start` then open `http://localhost:5051` in a browser
   - Development Mode (Server only): `cd server` then `npm run start` then open `http://localhost:5050` in a browser
-- Default Credentials : Email : admin+we@wafttech.com , Password : Test@1234
+- Default Credentials : Email : admin@waftengine.org , Password : Test@1234
 - For more [Getting started](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
 
 ## Get involved
 
 Read documentation & tutorials
 
-- [Developer Documentation](https://www.waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
-- [Architecture](https://www.waftengine.org/architecture)
+- [Developer Documentation](https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
+- [Architecture](https://waftengine.org/architecture)
 
 ## Get help & contact the team
 

@@ -1,131 +1,91 @@
 const httpStatus = require('http-status');
 
-const { menusch, menu_item } = require('./menuschema');
+const { menuSch, menu_item } = require('./menuschema');
 const otherHelper = require('../../helper/others.helper');
 const menuConfig = require('./menuConfig');
-const objectId = require('mongoose').Types.ObjectId;
+const utils = require('./utils');
 const menuController = {};
 const menuItemController = {};
 
 menuController.getMenu = async (req, res, next) => {
-  let { page, size, populate, selectq, searchq, sortq } = otherHelper.parseFilters(req, 10, false);
-  searchq = { is_deleted: false };
+  let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+  searchQuery = { is_deleted: false };
   if (req.query.find_title) {
-    searchq = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchq };
+    searchQuery = { title: { $regex: req.query.find_title, $options: 'i' }, ...searchQuery };
   }
   if (req.query.find_key) {
-    searchq = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchq };
+    searchQuery = { key: { $regex: req.query.find_key, $options: 'i' }, ...searchQuery };
   }
 
-  selectq = 'title key order';
-  let data = await otherHelper.getquerySendResponse(menusch, page, size, sortq, searchq, selectq, next, populate);
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
+  selectQuery = 'title key order is_active';
+  let data = await otherHelper.getQuerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totalData);
 };
 
 const menuControl = async (req, res, next) => {
-  const size_default = 10;
-  let page;
-  let size;
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
-  }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-  if (req.query.sort) {
-    let sortfield = req.query.sort.slice(1);
-    let sortby = req.query.sort.charAt(0);
-    if (sortby == 1 && !isNaN(sortby) && sortfield) {
-      //one is ascending
-      sortq = sortfield;
-    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-      //zero is descending
-      sortq = '-' + sortfield;
+  const all_menu = await menu_item
+    .find({ menu_sch_id: req.body.menu_sch_id, is_deleted: false })
+    .sort({ order: 1 })
+    .lean();
+  const baseParents = [];
+  const baseChildren = [];
+  all_menu.forEach(each => {
+    if (each.parent_menu == null) {
+      baseParents.push(each);
     } else {
-      sortq = '';
+      baseChildren.push(each);
     }
-  }
+  });
 
-  //const parent = await menusch.findById(req.params.id).select('title key order is_active');
-
-  let child = await menu_item.aggregate([
-    {
-      $match: { parent_menu: null, menu_sch_id: objectId(req.body.menu_sch_id) },
-    },
-    {
-      $lookup: {
-        from: 'menu_items',
-        localField: '_id',
-        foreignField: 'parent_menu',
-        as: 'child_menu',
-      },
-    },
-    {
-      $unwind: { path: '$child_menu', preserveNullAndEmptyArrays: true },
-    },
-    {
-      $project: {
-        _id: 1,
-        is_active: 1,
-        order: 1,
-        title: 1,
-        target: 1,
-        url: 1,
-        is_internal: 1,
-        parent_menu: 1,
-        'child_menu._id': { $ifNull: ['$child_menu._id', ''] },
-        'child_menu.is_active': 1,
-        'child_menu.order': 1,
-        'child_menu.title': 1,
-        'child_menu.target': 1,
-        'child_menu.url': 1,
-        'child_menu.is_internal': 1,
-        'child_menu.parent_menu': 1,
-      },
-    },
-
-    {
-      $lookup: {
-        from: 'menu_items',
-        localField: 'child_menu._id',
-        foreignField: 'parent_menu',
-        as: 'child_menu.child_menu',
-      },
-    },
-    {
-      $group: {
-        _id: '$_id',
-        is_active: { $first: '$is_active' },
-        order: { $first: '$order' },
-        title: { $first: '$title' },
-        url: { $first: '$url' },
-        child_menu: { $push: '$child_menu' },
-        target: { $first: '$target' },
-        is_internal: { $first: '$is_internal' },
-        parent_menu: { $first: '$parent_menu' },
-      },
-    },
-
-    {
-      $skip: (page - 1) * size,
-    },
-    {
-      $limit: size,
-    },
-  ]);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
   return child;
 };
-
+menuItemController.getMenuItem = async (req, res, next) => {
+  try {
+    const menu = await menu_item.findById(req.params.id);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.get, null);
+  } catch (err) {
+    next(err);
+  }
+};
+menuItemController.deleteMenuItem = async (req, res, next) => {
+  try {
+    const menuId = req.params.id;
+    const menu = await menu_item.findByIdAndUpdate(
+      menuId,
+      {
+        $set: { is_deleted: true },
+      },
+      { new: true },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.delete, null);
+  } catch (err) {
+    next(err);
+  }
+};
 menuItemController.saveMenuItem = async (req, res, next) => {
   try {
     let menuitem = req.body;
+
+    if (menuitem.parent_menu) {
+      const hierarchy = await menu_item
+        .findById(menuitem.parent_menu)
+        .select('parent_hierarchy')
+        .lean();
+
+      menuitem.parent_hierarchy = [...hierarchy.parent_hierarchy, hierarchy._id];
+    }
+
     if (menuitem && menuitem._id) {
       menuitem.updated_at = new Date();
       menuitem.updated_by = req.user.id;
+
+      const isLoop = otherHelper.mongoIdExistInArray(menuitem.parent_hierarchy, menuitem._id);
+      if (isLoop) {
+        const errors = { parent_menu: 'Circular Dependencies detected' };
+        return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'Invalid Call', null);
+      }
+
       const update = await menu_item.findByIdAndUpdate(
         menuitem._id,
         {
@@ -133,7 +93,8 @@ menuItemController.saveMenuItem = async (req, res, next) => {
         },
         { new: true },
       );
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, menuConfig.save, null);
+      const child = await menuControl(req, res, next);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, child, null, menuConfig.save, null);
     } else {
       menuitem.added_at = new Date();
       menuitem.added_by = req.user.id;
@@ -150,36 +111,16 @@ menuItemController.saveMenuItem = async (req, res, next) => {
 menuController.saveMenu = async (req, res, next) => {
   try {
     let menu = req.body;
-    if (menu && menu._id && menu.key) {
-      const checkIf = await menusch.findOne({ key: menu.key, is_deleted: false, _id: { $ne: menu._id } });
-      if (checkIf) {
-        const error = { key: 'Key already exists!!' };
-        return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
-      }
-
+    if (menu && menu._id) {
       menu.updated_by = req.user.id;
       menu.updated_at = new Date();
-
-      const update = await menusch.findByIdAndUpdate(
-        menu._id,
-        {
-          $set: menu,
-        },
-        { new: true },
-      );
-
+      const update = await menuSch.findByIdAndUpdate(menu._id, { $set: menu, }, { new: true },);
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, menuConfig.save, null);
     } else {
-      const checkIf = await menusch.findOne({ key: menu.key, is_deleted: false });
-      if (checkIf) {
-        const error = { key: 'Key already exists!!' };
-        return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
-      }
       menu.added_by = req.user.id;
       menu.added_at = new Date();
-      const newMenu = new menusch(menu);
+      const newMenu = new menuSch(menu);
       const MenuSave = await newMenu.save();
-
       // const data = await menuControl(req, res, next);
       return otherHelper.sendResponse(res, httpStatus.OK, true, MenuSave, null, menuConfig.save, null);
     }
@@ -188,117 +129,33 @@ menuController.saveMenu = async (req, res, next) => {
   }
 };
 
-// menuController.getEditMenu = async (req, res, next) => {
-//   const menuId = req.params.menuId;
-//   const menu = await menusch.findById(menuId).populate([{ path: 'sub_menu.menu_item', select: 'title' }]);
-//   return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.get, null);
-// };
-
 menuController.getEditMenu = async (req, res, next) => {
-  const size_default = 10;
-  let page;
-  let size;
-  // let searchq = { menu_sch_id: req.params.id };
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
-  }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-  if (req.query.sort) {
-    let sortfield = req.query.sort.slice(1);
-    let sortby = req.query.sort.charAt(0);
-    if (sortby == 1 && !isNaN(sortby) && sortfield) {
-      //one is ascending
-      sortq = sortfield;
-    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-      //zero is descending
-      sortq = '-' + sortfield;
+  const parent = await menuSch.findById(req.params.id).select('title key order is_active');
+  const all_menu = await menu_item
+    .find({ menu_sch_id: req.params.id, is_deleted: false })
+    .sort({ order: 1 })
+    .lean();
+
+  const baseParents = [];
+  const baseChildren = [];
+  all_menu.forEach(each => {
+    if (each.parent_menu == null) {
+      baseParents.push(each);
     } else {
-      sortq = '';
+      baseChildren.push(each);
     }
-  }
+  });
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
 
-  const parent = await menusch.findById(req.params.id).select('title key order is_active');
-
-  let child = await menu_item.aggregate([
-    {
-      $match: { parent_menu: null, menu_sch_id: objectId(req.params.id) },
-    },
-    {
-      $lookup: {
-        from: 'menu_items',
-        localField: '_id',
-        foreignField: 'parent_menu',
-        as: 'child_menu',
-      },
-    },
-    {
-      $unwind: { path: '$child_menu', preserveNullAndEmptyArrays: true },
-    },
-    {
-      $project: {
-        _id: 1,
-        is_active: 1,
-        order: 1,
-        title: 1,
-        target: 1,
-        url: 1,
-        is_internal: 1,
-        parent_menu: 1,
-        'child_menu._id': { $ifNull: ['$child_menu._id', ''] },
-        'child_menu.is_active': 1,
-        'child_menu.order': 1,
-        'child_menu.title': 1,
-        'child_menu.target': 1,
-        'child_menu.url': 1,
-        'child_menu.is_internal': 1,
-        'child_menu.parent_menu': 1,
-      },
-    },
-
-    {
-      $lookup: {
-        from: 'menu_items',
-        localField: 'child_menu._id',
-        foreignField: 'parent_menu',
-        as: 'child_menu.child_menu',
-      },
-    },
-    {
-      $group: {
-        _id: '$_id',
-        is_active: { $first: '$is_active' },
-        order: { $first: '$order' },
-        title: { $first: '$title' },
-        url: { $first: '$url' },
-        child_menu: { $push: '$child_menu' },
-        target: { $first: '$target' },
-        is_internal: { $first: '$is_internal' },
-        parent_menu: { $first: '$parent_menu' },
-      },
-    },
-
-    {
-      $skip: (page - 1) * size,
-    },
-    {
-      $limit: size,
-    },
-  ]);
   return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!!', null);
 };
 
 menuController.deleteMenu = async (req, res, next) => {
   const menuId = req.params.id;
-  const menu = await menusch.findByIdAndUpdate(
+  const menu = await menuSch.findByIdAndUpdate(
     menuId,
     {
-      $set: { is_deleted: true },
+      $set: { is_deleted: true, key: '' },
     },
     { new: true },
   );
@@ -306,101 +163,23 @@ menuController.deleteMenu = async (req, res, next) => {
 };
 
 menuController.getMenuForUser = async (req, res, next) => {
-  const size_default = 10;
-  let page;
-  let size;
-  if (req.query.page && !isNaN(req.query.page) && req.query.page != 0) {
-    page = Math.abs(req.query.page);
-  } else {
-    page = 1;
+  const id = await menuSch.findOne({ key: req.params.key, is_active: true }).select('key');
+  const baseParents = [];
+  const baseChildren = [];
+  let key = req.params.key;
+  if (id && id._id) {
+    key = id.key;
+    const all_menu = await menu_item.find({ menu_sch_id: id._id, is_deleted: false }).sort({ order: 1 }).lean();
+    all_menu.forEach((each) => {
+      if (each.parent_menu == null) {
+        baseParents.push(each);
+      } else {
+        baseChildren.push(each);
+      }
+    });
   }
-  if (req.query.size && !isNaN(req.query.size) && req.query.size != 0) {
-    size = Math.abs(req.query.size);
-  } else {
-    size = size_default;
-  }
-  if (req.query.sort) {
-    let sortfield = req.query.sort.slice(1);
-    let sortby = req.query.sort.charAt(0);
-    if (sortby == 1 && !isNaN(sortby) && sortfield) {
-      //one is ascending
-      sortq = sortfield;
-    } else if (sortby == 0 && !isNaN(sortby) && sortfield) {
-      //zero is descending
-      sortq = '-' + sortfield;
-    } else {
-      sortq = '';
-    }
-  }
-
-  const id = await menusch.findOne({ key: req.params.key }).select('key');
-
-  let child = await menu_item.aggregate([
-    {
-      $match: { parent_menu: null, menu_sch_id: objectId(id._id) },
-    },
-    {
-      $lookup: {
-        from: 'menu_items',
-        localField: '_id',
-        foreignField: 'parent_menu',
-        as: 'child_menu',
-      },
-    },
-    {
-      $unwind: { path: '$child_menu', preserveNullAndEmptyArrays: true },
-    },
-    {
-      $project: {
-        _id: 1,
-        is_active: 1,
-        order: 1,
-        title: 1,
-        target: 1,
-        url: 1,
-        is_internal: 1,
-        parent_menu: 1,
-        'child_menu._id': { $ifNull: ['$child_menu._id', ''] },
-        'child_menu.is_active': 1,
-        'child_menu.order': 1,
-        'child_menu.title': 1,
-        'child_menu.target': 1,
-        'child_menu.url': 1,
-        'child_menu.is_internal': 1,
-        'child_menu.parent_menu': 1,
-      },
-    },
-
-    {
-      $lookup: {
-        from: 'menu_items',
-        localField: 'child_menu._id',
-        foreignField: 'parent_menu',
-        as: 'child_menu.child_menu',
-      },
-    },
-    {
-      $group: {
-        _id: '$_id',
-        is_active: { $first: '$is_active' },
-        order: { $first: '$order' },
-        title: { $first: '$title' },
-        url: { $first: '$url' },
-        child_menu: { $push: '$child_menu' },
-        target: { $first: '$target' },
-        is_internal: { $first: '$is_internal' },
-        parent_menu: { $first: '$parent_menu' },
-      },
-    },
-
-    {
-      $skip: (page - 1) * size,
-    },
-    {
-      $limit: size,
-    },
-  ]);
-  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: id.key }, null, 'Child menu get success!!', null);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!!', null);
 };
 
 module.exports = { menuController, menuItemController };

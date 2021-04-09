@@ -4,9 +4,9 @@
  *
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import CKEditor from 'react-ckeditor-component';
-import PropTypes, { oneOfType } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 const CkEditor = props => {
@@ -21,7 +21,6 @@ const CkEditor = props => {
       <CKEditor
         name="description"
         content={description}
-        // scriptUrl="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"
         config={{
           allowedContent: true,
           image_previewText: ' ',

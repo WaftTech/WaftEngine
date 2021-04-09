@@ -2,6 +2,9 @@ const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const menuConfig = require('./menuConfig');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
+const { menuSch } = require('./menuschema')
 const validation = {};
 
 validation.sanitize = (req, res, next) => {
@@ -9,21 +12,21 @@ validation.sanitize = (req, res, next) => {
     {
       field: 'title',
       sanitize: {
-        rtrim: true,
+        trim: true,
       },
     },
-    // {
-    //   field: 'link',
-    //   sanitize: {
-    //     trim: true,
-    //   },
-    // },
+    {
+      field: 'key',
+      sanitize: {
+        trim: true,
+      },
+    },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
-validation.validate = (req, res, next) => {
+validation.validate = async (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
@@ -50,20 +53,32 @@ validation.validate = (req, res, next) => {
           condition: 'IsEmpty',
           msg: menuConfig.validate.empty,
         },
+        {
+          condition: 'IsProperKey',
+          msg: 'not Valid Input',
+        },
       ],
-    },
+    }
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  let errors = validateHelper.validation(data, validateArray);
 
-  //   console.log('error',errors);
+  let key_filter = { is_deleted: false, key: data.key }
+  if (data._id) {
+    key_filter = { ...key_filter, _id: { $ne: data._id } }
+  }
+  const already_key = await menuSch.findOne(key_filter);
+  if (already_key && already_key._id) {
+    errors = { ...errors, key: 'key already exist' }
+  }
+
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, menuConfig.errorIn.invalidInputs, null);
   } else {
     next();
   }
 };
 
-validation.itemsanitize = (req, res, next) => {
+validation.itemSanitize = (req, res, next) => {
   const sanitizeArray = [
     {
       field: 'title',
@@ -78,11 +93,11 @@ validation.itemsanitize = (req, res, next) => {
       },
     },
   ];
-  otherHelper.sanitize(req, sanitizeArray);
+  sanitizeHelper.sanitize(req, sanitizeArray);
   next();
 };
 
-validation.itemvalidate = (req, res, next) => {
+validation.itemValidate = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
@@ -113,7 +128,7 @@ validation.itemvalidate = (req, res, next) => {
           condition: 'IsLength',
           msg: menuConfig.validate.descriptionLength,
           option: {
-            min: 5,
+            min: 3,
             max: 2000,
           },
         },
@@ -151,20 +166,15 @@ validation.itemvalidate = (req, res, next) => {
         {
           condition: 'IsEmpty',
           msg: menuConfig.validate.empty,
+          option: ['_blank', '_self', '_parent', '_top']
         },
-        // {
-        //   condition: 'IsIn',
-        //   msg: menuConfig.validate.invalid,
-        //   enum: ['_blank', '_self', '_parent', '_top'],
-        // },
       ],
     },
   ];
-  const errors = otherHelper.validation(data, validateArray);
+  const errors = validateHelper.validation(data, validateArray);
 
-  //   console.log('error',errors);
   if (!isEmpty(errors)) {
-    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, 'input errors', null);
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, menuConfig.errorIn.invalidInputs, null);
   } else {
     next();
   }
