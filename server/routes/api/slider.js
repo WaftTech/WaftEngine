@@ -7,7 +7,7 @@ const validations = require('../../modules/slider/sliderValidations');
 
 router.get('/', authentication, authorization, sliderModule.GetSlider);
 router.get('/key/:key', sliderModule.GetSliderByKey);
-router.get('/:id', authentication, sliderModule.GetSliderById);
+router.get('/:id', authentication, authorization, sliderModule.GetSliderById);
 router.post('/', authentication, authorization, validations.sanitize, validations.validate, sliderModule.SaveSlider);
 router.delete('/:id', authentication, authorization, sliderModule.DeleteSlider);
 
