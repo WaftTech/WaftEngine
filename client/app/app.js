@@ -81,9 +81,7 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          {/* <SnackbarProvider maxSnack={3}> */}
           <App />
-          {/* </SnackbarProvider> */}
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

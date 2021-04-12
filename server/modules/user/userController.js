@@ -15,117 +15,6 @@ const settingsHelper = require('../../helper/settings.helper');
 
 const userController = {};
 
-userController.test = async (req, res, next) => {
-  try {
-    const api_key = await settingsHelper('email', 'sendgrid', 'api_key');
-    sgMail.setApiKey(api_key);
-    const msg = {
-      to: 'saileshkandel789@gmail.com',
-      from: 'kulchan.sailesh@gmail.com',
-      subject: 'Sending with Twilio SendGrid is Fun',
-      text: 'and easy to do anywhere, even with Node.js',
-      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    };
-    sgMail.send(msg);
-    // return otherHelper.sendResponse(res,httpStatus.OK,true,msg,null,'send successfull',null);
-  } catch (err) {
-    next(err);
-  }
-}
-userController.testmailgun = async (req, res, next) => {
-  try {
-    const api_key = await settingsHelper('email', 'mailgun', 'api_key');
-    const domain = await settingsHelper('email', 'mailgun', 'domain')
-
-    // const api_key = '7329ce5a129fcb9bf6a692df899d929d-aa4b0867-61ff9ed0';
-    // const domain = 'sandbox6bd462cc8a284bfda9abe26f2842688d.mailgun.org';
-    const mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
-
-    const data = {
-      from: 'sailesh <saileshkandel789@gmail.com>',
-      to: 'saileshkandel789@gmail.com',
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomeness!'
-    };
-
-    mailgun.messages().send(data, function (error, body) {
-      if (error) {
-        console.log(error);
-      }
-      console.log(body);
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-userController.sendsmtp = async (req, res, next) => {
-  try {
-    // const SERVER_PORT = 465;
-    // const SERVER_HOST = false;
-    let smtp = {
-      protocal: 'SMTP',
-      email: 'kulchan.sailesh@gmail.com',
-      password: 'roeings453',
-      server: 'smtp-relay.gmail.com',
-      port: '465',
-      secure: true,
-      security: 'Yes',
-    };
-    // const transporter = nodemailer.createTransport({
-    //   host: smtp.server,
-    //   port: smtp.port,
-    //   secure: smtp.secure, // true for 465, false for other ports
-    //   auth: {
-    //     user: smtp.email, // generated ethereal user
-    //     pass: smtp.password, // generated ethereal password
-    //   },
-    //   pool: true
-    //   // tls: {
-    //   //   rejectUnauthorized: true,
-    //   // },
-    // },null);
-    const transporter = nodemailer.createTransport({
-      host: smtp.server,
-      service: 'gmail',
-      port: smtp.port,
-      secure: true,
-      auth: {
-        type: 'OAuth2',
-        clientId: '369455033516-hocu02pc8312mp7dj418a11kv3i2qvkv.apps.googleusercontent.com',
-        clientSecret: 'f8n5KVaZp4OJSKdWhLRzir-2',
-        user: 'kulchan.sailesh@gmail.com',
-        password: 'roeings453'
-      },
-      tls: {
-        rejectUnauthorized: true,
-      },
-    })
-    const message = {
-      from: 'kulchan.sailesh@gmail.com',
-      to: 'saileshkandel789@gmail.com',
-      subject: 'message title',
-      text: 'plain text',
-      html: '<p>hello</p>'
-    }
-    await transporter.sendMail(message, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log('message sent', info.messageId);
-      return res.send({
-        success: true,
-        message: 'Done'
-      })
-    });
-    // return otherHelper.sendResponse(res, httpStatus.OK, true,null, null, null, null);
-
-
-  } catch (err) {
-    next(err);
-  }
-}
-
 userController.PostUser = async (req, res, next) => {
   try {
     const user = req.body;
@@ -358,6 +247,7 @@ userController.validLoginResponse = async (req, user, next) => {
       roles: user.roles,
       gender: user.gender,
       is_two_fa: user.is_two_fa,
+      image: user.image,
     };
     // Sign Token
     let token = await jwt.sign(payload, secretOrKey, {
@@ -380,15 +270,6 @@ userController.RegisterFromAdmin = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
       if (req.file) {
-        //   req.file.destination =
-        //     req.file.destination
-        //       .split('\\')
-        //       .join('/')
-        //       .split('server/')[1] + '/';
-        //   req.file.path = req.file.path
-        //     .split('\\')
-        //     .join('/')
-        //     .split('server/')[1];
         req.body.image = req.file;
       }
       const { name, email, password, date_of_birth, bio, location, phone, description, is_active, email_verified, roles, image, company_name, company_location, company_established, company_phone_no } = req.body;
@@ -429,15 +310,6 @@ userController.UpdateUserDetail = async (req, res, next) => {
     let newData = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
 
     if (req.file) {
-      //   req.file.destination =
-      //     req.file.destination
-      //       .split('\\')
-      //       .join('/')
-      //       .split('server/')[1] + '/';
-      //   req.file.path = req.file.path
-      //     .split('\\')
-      //     .join('/')
-      //     .split('server/')[1];
       newData.image = req.file;
     }
 
@@ -669,7 +541,6 @@ userController.Login = async (req, res, next) => {
           const renderedMail = await renderMail.renderTemplate(
             two_fa_email_template,
             {
-
               name: user.name,
               email: user.email,
               code: two_fa_code,
@@ -803,15 +674,6 @@ userController.GetProfile = async (req, res, next) => {
 userController.postProfile = async (req, res, next) => {
   try {
     if (req.file) {
-      //   req.file.destination =
-      //     req.file.destination
-      //       .split('\\')
-      //       .join('/')
-      //       .split('server/')[1] + '/';
-      //   req.file.path = req.file.path
-      //     .split('\\')
-      //     .join('/')
-      //     .split('server/')[1];
       req.body.image = req.file;
     }
     const { name, date_of_birth, bio, description, image, phone, location, is_two_fa, company_name, company_location, company_established, company_phone_no } = req.body;

@@ -123,7 +123,7 @@ label { @apply text-sm}
 }
 
 .btn {
-  @apply py-2 px-4 rounded text-sm mt-4 transition-all duration-200;
+  @apply py-2 px-6 rounded text-sm mt-4 transition-all duration-200;
 }
 
 .btn.margin-none {

@@ -9,12 +9,12 @@ import { createStructuredSelector } from 'reselect';
 import logo from '../../../assets/img/logo.svg';
 import DropdownMenu from '../../../components/DropdownMenu/index';
 import { logoutRequest } from '../../../containers/App/actions';
+import { IMAGE_BASE } from '../../../containers/App/constants';
 import {
   makeSelectToken,
-  makeSelectUser
+  makeSelectUser,
 } from '../../../containers/App/selectors';
 import './header.css';
-
 
 const Header = props => {
   const { classes, token, user, logoutRequest: logout } = props;
@@ -89,42 +89,54 @@ const Header = props => {
             </button>
           </div>
         ) : (
-            <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
-              <DropdownMenu
-                main={
-                  <button>
-                    <div className="text-base flex items-center">
-                      <span className="ml-2 mr-2">{user.name} | </span>
+          <div className="w-full text-base flex flex-wrap justify-end header_right pb-2 border-b px-5 md:w-1/2 md:border-b-0 md:pb-0 lg:w-1/3">
+            <DropdownMenu
+              main={
+                <button>
+                  <div className="text-base flex items-center">
+                    <span className="ml-2 mr-2">{user.name} | </span>
+                    {user.image && user.image.path ? (
+                      <img
+                        src={`${IMAGE_BASE}${user.image.path}`}
+                        className="w-8 h-8 rounded-full overflow-hidden"
+                      />
+                    ) : (
                       <FaUserAlt className="text-base" />
-                    </div>
-                  </button>
-                }
-                items={
-                  <>
-                    {user.isAdmin && (
-                      <Link
-                        to="/admin/dashboard"
-                        style={{ textDecoration: 'none', color: 'black' }}
-                        onClick={handleClose}
-                        className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
-                      >
-                        <p>Dashboard</p>
-                      </Link>
                     )}
+                  </div>
+                </button>
+              }
+              items={
+                <>
+                  {user.isAdmin && (
                     <Link
-                      to="/user/profile"
+                      to="/admin/dashboard"
                       style={{ textDecoration: 'none', color: 'black' }}
                       onClick={handleClose}
                       className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
                     >
-                      <p>Profile</p>
+                      <p>Dashboard</p>
                     </Link>
-                    <p className="py-2 block px-4 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>Log Out</p>
-                  </>
-                }
-              />
-            </div>
-          )}
+                  )}
+                  <Link
+                    to="/user/profile"
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                  >
+                    <p>Profile</p>
+                  </Link>
+                  <p
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer"
+                    onClick={handleLogout}
+                  >
+                    Log Out
+                  </p>
+                </>
+              }
+            />
+          </div>
+        )}
       </div>
     </header>
   );
