@@ -2,7 +2,7 @@ import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { FaArrowLeft, FaTrashAlt, FaArrowsAlt, FaImage } from 'react-icons/fa';
+import { FaArrowLeft, FaTrashAlt, FaArrowsAlt, FaImage, FaCheck } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -71,10 +71,10 @@ const SortableImageList = SortableContainer(({ items, _this }) => (
                       /></div>
                   ) : (
 
-                      <div className="bg-white border border-gray-300 hover:border-gray-400 flex items-center justify-center text-gray-300 hover:text-gray-500 h-32 cursor-pointer" onClick={_this.handleSetImage(index)}>
-                        <FaImage className="text-4xl" />
-                      </div>
-                    )}
+                    <div className="bg-white border border-gray-300 hover:border-gray-400 flex items-center justify-center text-gray-300 hover:text-gray-500 h-32 cursor-pointer" onClick={_this.handleSetImage(index)}>
+                      <FaImage className="text-4xl" />
+                    </div>
+                  )}
                   <input
                     className="inputbox rounded-none mt-1"
                     id={`slider-link-${index}`}
@@ -247,7 +247,28 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: 'images', value: tempImages });
     // this.props.setOneValue({ key: name, value: newContent });
   };
+  handleSliderChange = name => event => {
+    event.persist();
+    if (name === 'slidesPerRow') {
+      if (Number(event.target.value) > 6) {
+        this.props.setSliderValue({ key: name, value: 6 });
+      } else if (Number(event.target.value) < 1) {
+        this.props.setSliderValue({ key: name, value: 1 });
+      } else {
+        this.props.setSliderValue({
+          key: name,
+          value: Number(event.target.value),
+        });
+      }
+    } else {
+      this.props.setSliderValue({ key: name, value: event.target.value });
+    }
+  };
 
+  handleCheckedChange = name => event => {
+    event.persist();
+    this.props.setSliderValue({ key: name, value: event.target.checked });
+  };
   render() {
     const { one, classes, media, match, loading, errors } = this.props;
     // media next prev logic
@@ -259,37 +280,37 @@ class AddEdit extends React.PureComponent {
     return loading ? (
       <Loading />
     ) : (
-        <>
-          <div className="flex justify-between my-3">
-            <PageHeader>
-              <span className="backbtn" onClick={this.handleGoBack}>
-                <FaArrowLeft className="text-xl" />
-              </span>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </PageHeader>
-          </div>
+      <>
+        <div className="flex justify-between my-3">
+          <PageHeader>
+            <span className="backbtn" onClick={this.handleGoBack}>
+              <FaArrowLeft className="text-xl" />
+            </span>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </PageHeader>
+        </div>
 
-          <Dialog
-            className="w-5/6 h-full overflow-auto"
-            open={this.state.open}
-            onClose={this.handleClose}
-            title={`Select Media`}
-            body={
-              <div>
-                <EditorFileSelect
-                  location={location}
-                  selectFile={file => this.handleImageImageChange(file)}
-                />
-                <div className="mt-2 text-xs">
-                  Note: Please Double Click to open folder and select images.
+        <Dialog
+          className="w-5/6 h-full overflow-auto"
+          open={this.state.open}
+          onClose={this.handleClose}
+          title={`Select Media`}
+          body={
+            <div>
+              <EditorFileSelect
+                location={location}
+                selectFile={file => this.handleImageImageChange(file)}
+              />
+              <div className="mt-2 text-xs">
+                Note: Please Double Click to open folder and select images.
               </div>
-              </div>
-            }
-          />
+            </div>
+          }
+        />
 
-          {/* <Dialog
+        {/* <Dialog
             aria-labelledby="max-width-dialog-title"
             open={this.state.open}
             onClose={this.handleClose}
@@ -305,85 +326,262 @@ class AddEdit extends React.PureComponent {
             </DialogContent>
           </Dialog> */}
 
-          <Helmet>
-            <title>
-              {match && match.params && match.params.id
-                ? 'Edit Slider'
-                : 'Add Slider'}
-            </title>
-          </Helmet>
-          <PageContent>
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Slider Name</label>
-              <input
-                className="inputbox"
-                id="slider-name"
-                type="text"
-                value={one.slider_name}
-                name="slider_name"
-                onChange={this.handleChange('slider_name')}
-              />
-              {errors && errors.slider_name && (
-                <div className="error">{errors.slider_name}</div>
-              )}
-            </div>
+        <Helmet>
+          <title>
+            {match && match.params && match.params.id
+              ? 'Edit Slider'
+              : 'Add Slider'}
+          </title>
+        </Helmet>
+        <PageContent>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Name</label>
+            <input
+              className="inputbox"
+              id="slider-name"
+              type="text"
+              value={one.slider_name}
+              name="slider_name"
+              onChange={this.handleChange('slider_name')}
+            />
+            {errors && errors.slider_name && (
+              <div className="error">{errors.slider_name}</div>
+            )}
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Slider Key</label>
-              <input
-                className="inputbox"
-                id="slider-key"
-                type="text"
-                value={one.slider_key}
-                name="slider_key"
-                onChange={this.handleChange('slider_key')}
-              />
-              {errors && errors.slider_key && (
-                <div className="error">{errors.slider_key}</div>
-              )}
-            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Key</label>
+            <input
+              className="inputbox"
+              id="slider-key"
+              type="text"
+              value={one.slider_key}
+              name="slider_key"
+              onChange={this.handleChange('slider_key')}
+            />
+            {errors && errors.slider_key && (
+              <div className="error">{errors.slider_key}</div>
+            )}
+          </div>
 
-            <div className="w-full md:w-1/2 pb-4">
-              <label>Slider Settings</label>
-              <textarea
-                name="slider settings"
-                id="slider_setting"
-                className="inputbox"
-                cols="50"
-                rows="5"
-                onChange={this.handleChange('settings')}
-                value={one.settings || ''}
-              />
-            </div>
+          <div className="w-full md:w-1/2 pb-4">
+            <label>Slider Settings</label>
+            <textarea
+              name="slider settings"
+              id="slider_setting"
+              className="inputbox"
+              cols="50"
+              rows="5"
+              onChange={this.handleChange('settings')}
+              value={one.settings || ''}
+            />
+          </div>
+          <div className="mb-2 py-2 px-2 bg-gray-100 relative">
+            <h3 className="text-lg">Slider Settings</h3>
+            <table className="w-full table-auto">
+              <thead>
+                <tr>
+                  <th className="border px-2 py-1">Arrow</th>
+                  <th className="border px-2 py-1">Arrow Position</th>
+                  <th className="border px-2 py-1">Dots</th>
+                  <th className="border px-2 py-1">Dots Position</th>
+                  <th className="border px-2 py-1">Slides To Show</th>
+                  <th className="border px-2 py-1">Slides To Scroll</th>
+                  <th className="border px-2 py-1">Slides Per Row</th>
+                  <th className="border px-2 py-1">AutoPlay </th>
+                  <th className="border px-2 py-1">AutoPlay Speed </th>
+                  <th className="border px-2 py-1">Center Mode </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="align-middle text-center border px-2 py-1">
+                    <div className="checkbox" style={{ marginRight: '0px' }}>
+                      <input
+                        onChange={this.handleCheckedChange('arrows', null)}
+                        name="arrows"
+                        checked={one.slider_setting.arrows || false}
+                        id="arrow"
+                        type="checkbox"
+                      />
+                      <label htmlFor="arrow">
+                        <span className="box">
+                          <FaCheck className="check-icon" />
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                  <td className="border px-2 py-1">
+                    {' '}
+                    <input
+                      className="inputbox"
+                      id="arrow_position"
+                      type="text"
+                      value={one.slider_setting.arrow_position}
+                      name="arrow_position"
+                      onChange={this.handleSliderChange('arrow_position')}
+                    />
+                  </td>
+                  <td className="align-middle text-center border px-2 py-1">
+                    <div className="checkbox" style={{ marginRight: '0px' }}>
+                      <input
+                        onChange={this.handleCheckedChange('dots', null)}
+                        checked={one.slider_setting.dots || false}
+                        id="dots"
+                        name="dots"
+                        type="checkbox"
+                      />
+                      <label htmlFor="dots">
+                        <span className="box">
+                          <FaCheck className="check-icon" />
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                  <td className="border px-2 py-1">
+                    <input
+                      className="inputbox"
+                      id="dot_position"
+                      type="text"
+                      value={one.slider_setting.dot_position}
+                      name="dot_position"
+                      onChange={this.handleSliderChange('dot_position')}
+                    // error={errors.dot_position}
+                    />
+                  </td>
+                  <td className="border px-2 py-1">
+                    <input
+                      className="inputbox"
+                      id="slidesToShow"
+                      type="text"
+                      value={one.slider_setting.slidesToShow}
+                      name="slidesToShow"
+                      onChange={this.handleSliderChange('slidesToShow')}
+                      error={errors.slidesToShow}
+                    />
+                  </td>
+
+                  <td className="border px-2 py-1">
+                    {' '}
+                    <input
+                      className="inputbox"
+                      id="slidesToScroll"
+                      type="text"
+                      value={one.slider_setting.slidesToScroll}
+                      name="slidesToScroll"
+                      onChange={this.handleSliderChange('slidesToScroll')}
+                      error={errors.slidesToScroll}
+                    />
+                  </td>
+                  <td className="border px-2 py-1">
+                    {' '}
+                    <input
+                      className="inputbox"
+                      id="slidesPerRow"
+                      type="number"
+                      value={one.slider_setting.slidesPerRow}
+                      name="slidesPerRow"
+                      onChange={this.handleSliderChange('slidesPerRow')}
+                      error={errors.slidesPerRow}
+                    />
+                  </td>
+                  <td className="align-middle text-center border px-2 py-1">
+                    {' '}
+                    {/* <Checkbox
+                      color="primary"
+                      checked={one.slider_setting.autoplay || false}
+                      name="autoplay"
+                      onChange={this.handleCheckedChange('autoplay', null)}
+                      style={{ padding: '6px' }}
+                    /> */}
+                    <div className="checkbox" style={{ marginRight: '0px' }}>
+                      <input
+                        onChange={this.handleCheckedChange('autoplay', null)}
+                        checked={one.slider_setting.autoplay || false}
+                        id="autoplay"
+                        name="autoplay"
+                        style={{ padding: '6px' }}
+                        type="checkbox"
+                      />
+                      <label htmlFor="autoplay">
+                        <span className="box">
+                          <FaCheck className="check-icon" />
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                  <td className="border px-2 py-1">
+                    {' '}
+                    <input
+                      className="inputbox"
+                      id="autoplaySpeed"
+                      type="number"
+                      value={one.slider_setting.autoplaySpeed}
+                      name="autoplaySpeed"
+                      onChange={this.handleSliderChange('autoplaySpeed')}
+                      error={errors.autoplaySpeed}
+                    />
+                  </td>
+                  <td className="align-middle text-center border px-2 py-1">
+                    {/* <Checkbox
+                      color="primary"
+                      checked={one.slider_setting.centerMode || false}
+                      name="centerMode"
+                      onChange={this.handleCheckedChange('centerMode', null)}
+                      style={{ padding: '6px' }}
+                    /> */}
+                    <div className="checkbox" style={{ marginRight: '0px' }}>
+                      <input
+                        onChange={this.handleCheckedChange(
+                          'centerMode',
+                          null,
+                        )}
+                        checked={one.slider_setting.centerMode || false}
+                        id="centerMode"
+                        name="centerMode"
+                        style={{ padding: '6px' }}
+                        type="checkbox"
+                      />
+                      <label htmlFor="centerMode">
+                        <span className="box">
+                          <FaCheck className="check-icon" />
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
 
-            <div>
-              <SortableImageList
-                items={one.images}
-                _this={this}
-                onSortEnd={this.onImageSortEnd}
-                useDragHandle
-              />
-            </div>
+          <div>
+            <SortableImageList
+              items={one.images}
+              _this={this}
+              onSortEnd={this.onImageSortEnd}
+              useDragHandle
+            />
+          </div>
 
-            <button
-              type="button"
-              className="btn inline-flex items-center justify-center text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
-              onClick={this.handleAddSlide}
-            >
-              Add Slide
+          <button
+            type="button"
+            className="btn inline-flex items-center justify-center text-green-500 bg-green-100 border border-green-200 hover:bg-green-500 hover:border-green-500 mr-2 hover:text-white cursor-pointer"
+            onClick={this.handleAddSlide}
+          >
+            Add Slide
           </button>
 
-            <button
-              type="button"
-              className="inline-flex btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-              onClick={this.handleSave}
-            >
-              Save Slider
+          <button
+            type="button"
+            className="inline-flex btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            onClick={this.handleSave}
+          >
+            Save Slider
           </button>
-          </PageContent>
-        </>
-      );
+        </PageContent>
+      </>
+    );
   }
 }
 

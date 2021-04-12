@@ -75,25 +75,14 @@ adminDashboardController.getLastXDayUserRegistration = async (req, res, next) =>
 };
 
 adminDashboardController.getLatestFiveUsers = async (req, res, next) => {
-<<<<<<< HEAD
   try {
     let top = 5;
     top = Number.parseInt(top);
-    const fiveUsers = await userSch.find({ is_deleted: false }).select('name email').sort({ _id: -1 }).limit(top);
+    const fiveUsers = await userSch.find({ is_deleted: false }).select('name email image').sort({ "_id": -1 }).limit(top)
     return otherHelper.sendResponse(res, httpStatus.OK, true, fiveUsers, null, 'Get User by Day', null);
   } catch (err) {
     next(err);
   }
-=======
-      try {
-            let top = 5;
-            top = Number.parseInt(top);
-            const fiveUsers = await userSch.find({ is_deleted: false }).select('name email image').sort({ "_id": -1 }).limit(top)
-            return otherHelper.sendResponse(res, httpStatus.OK, true, fiveUsers, null, 'Get User by Day', null);
-      } catch (err) {
-            next(err);
-      }
->>>>>>> 700348280fc09015371d7d62cc278af56dc1cae2
 };
 
 adminDashboardController.getNoOfBlogByBlogWriter = async (req, res, next) => {
