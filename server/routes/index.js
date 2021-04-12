@@ -53,6 +53,16 @@ router.use('/menu', menuRoutes);
 const teamRoutes = require('./api/team');
 router.use('/team', teamRoutes);
 
+const socialMedia = require('./api/socialMedia');
+router.use('/social', socialMedia);
+
+const popup = require('./api/popup');
+router.use('/popup', popup);
+
+const testimonialRoutes = require('./api/testimonial');
+router.use('/testimonial', testimonialRoutes);
+``;
+
 const adminDashboard = require('./api/adminDashboard');
 router.use('/dashboard', adminDashboard);
 module.exports = router;

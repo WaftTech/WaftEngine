@@ -79,22 +79,33 @@ sliderController.GetSliderById = async (req, res, next) => {
 };
 sliderController.GetSliderByKey = async (req, res, next) => {
   const id = req.params.key;
+  let selectq = { added_by: 0, added_at: 0 };
   const slider = await sliderSch
-    .findOne({
-      slider_key: id,
-      is_deleted: false,
-    })
+    .findOne(
+      {
+        slider_key: id,
+        is_deleted: false,
+      },
+      selectq,
+    )
     .populate('images.image');
   return otherHelper.sendResponse(res, httpStatus.OK, true, slider, null, sliderConfig.get, null);
 };
 sliderController.DeleteSlider = async (req, res, next) => {
   const id = req.params.id;
-  const sliderDel = await sliderSch.findByIdAndUpdate(id, {
-    $set: {
-      is_deleted: true,
-      deleted_at: Date.now,
+  const sliderDel = await sliderSch.findOneAndUpdate(
+    { _id: id, is_removal: true },
+    {
+      $set: {
+        is_deleted: true,
+        deleted_at: Date.now,
+      },
     },
-  });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, sliderDel, null, sliderConfig.delete, null);
+  );
+  if (sliderDel && sliderDel._id) {
+    return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.delete, null);
+  } else {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
+  }
 };
 module.exports = sliderController;
