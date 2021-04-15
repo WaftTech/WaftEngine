@@ -9,5 +9,8 @@ router.post('/', validate, authentication, testimonialController.saveTestimonial
 router.get('/', testimonialController.getTestimonial);
 router.get('/:id', testimonialController.getTestimonialDetail);
 router.delete('/delete_team', authentication, testimonialController.deleteTestimonial);
+router.get('/settings/get', authentication, testimonialController.getTestimonialSetting);
+router.post('/settings/save', authentication, testimonialController.saveTestimonialSetting);
+router.post('/multiple', authentication, testimonialController.selectMultipleData);
 
 module.exports = router;
