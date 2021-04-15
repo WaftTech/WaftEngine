@@ -155,7 +155,6 @@ validation.catValidate = async (req, res, next) => {
 
   ];
   let errors = validateHelper.validation(data, validateArray);
-  console.log('req.body', req.body)
   let slug_url_filter = { is_deleted: false, slug_url: data.slug_url }
   if (data._id) {
     slug_url_filter = { ...slug_url_filter, _id: { $ne: data._id } }

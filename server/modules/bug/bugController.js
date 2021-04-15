@@ -24,7 +24,7 @@ bugController.GetErrors = async (req, res, next) => {
       searchQuery = { error_stack: { $regex: req.query.find_errors, $options: 'i' }, ...searchQuery };
     }
     let bugs = await otherHelper.getQuerySendResponse(bugSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totalData, sortQuery);
   } catch (err) {
     next(err);
   }

@@ -14,6 +14,7 @@ const contentSchema = new schema({
   is_active: { type: Boolean, required: true, default: false },
   is_page: { type: Boolean, required: true, default: false },
   is_deleted: { type: Boolean, required: true, default: false },
+  is_removal: { type: Boolean, default: true },
   added_by: { type: schema.Types.ObjectId, ref: 'users' },
   added_at: { type: Date, default: Date.now },
 });

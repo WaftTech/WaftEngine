@@ -2,6 +2,9 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const roleSch = require('./roleSchema');
 const moduleSch = require('./moduleSchema');
+const roleSchema = require('./roleSchema');
+const accessSchema = require('./accessSchema');
+const moduleSchema = require('./moduleSchema');
 const moduleGroupSch = require('./moduleGroupSchema');
 const accessSch = require('./accessSchema');
 const roleConfig = require('./roleConfig');
@@ -44,6 +47,17 @@ roleController.AddRoles = async (req, res, next) => {
       role.added_by = req.user.id;
       const newRole = new roleSch(role);
       await newRole.save();
+      //create new access with every module
+      const all_modules = await moduleSchema.find().select('_id').lean()
+      let save = []
+      for (let i = 0; i < all_modules.length; i++) {
+        let new_access = {}
+        new_access.role_id = newRole._id
+        new_access.module_id = all_modules[i]._id
+        new_access.access_type = []
+        save = [...save, new_access]
+      }
+      await accessSchema.insertMany(save)
       return otherHelper.sendResponse(res, httpStatus.OK, true, newRole, null, roleConfig.roleSave, null);
     }
   } catch (err) {
@@ -143,6 +157,16 @@ roleController.AddModuleList = async (req, res, next) => {
       modules.added_by = req.user.id;
       const newModules = new moduleSch(modules);
       await newModules.save();
+      const all_roles = await roleSchema.find().select('_id').lean()
+      let save = []
+      for (let i = 0; i < all_roles.length; i++) {
+        let new_access = {}
+        new_access.role_id = all_roles[i]._id
+        new_access.module_id = newModules._id
+        new_access.access_type = []
+        save = [...save, new_access]
+      }
+      await accessSchema.insertMany(save)
       return otherHelper.sendResponse(res, httpStatus.OK, true, newModules, null, roleConfig.moduleSave, null);
     }
   } catch (err) {
@@ -270,8 +294,6 @@ roleController.GetAccessListForRole = async (req, res, next) => {
     const roleId = req.params.roleid;
     const AccessForRole = await accessSch.find({ role_id: roleId }, { _id: 1, access_type: 1, is_active: 1, module_id: 1, role_id: 1 });
     const Module = await moduleSch.find({}, { _id: 1, module_name: 1, 'path.access_type': 1, 'path._id': 1 });
-    console.log('access', AccessForRole)
-    console.log('modules', Module)
 
     let Access = [];
     for (let i = 0; i < Module.length; i++) {
@@ -302,10 +324,39 @@ roleController.GetAccessListForModule = async (req, res, next) => {
 roleController.deleteModuleGroupList = async (req, res, next) => {
   try {
     const moduleGroupId = req.params.id;
-    console.log(moduleGroupId)
     await moduleGroupSch.findByIdAndUpdate(moduleGroupId, { $set: { is_deleted: true, deleted_at: new Date() } }, { new: true });
     return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, roleConfig.gModuleDelete, null);
 
+  } catch (err) {
+    next(err);
+  }
+};
+
+roleController.fixRoleModuleAccessProblem = async (req, res, next) => {
+  try {
+    const all_roles = await roleSchema.find().select('_id').lean()
+    const all_modules = await moduleSchema.find().select('_id').lean()
+    //delete all accesses which doesnt have roles or roles are deleted
+    await accessSchema.deleteMany({ role_id: { $nin: all_roles } })
+    let save = []
+    //find if all roles and modules have accesses data, if not create one
+    for (let i = 0; i < all_roles.length; i++) {
+      for (let j = 0; j < all_modules.length; j++) {
+
+        const all_access = await accessSchema.find({ module_id: all_modules[j]._id, role_id: all_roles[i]._id }).lean()
+
+        if (all_access.length < 1) {
+          let new_access = {}
+          new_access.role_id = all_roles[i]._id
+          new_access.module_id = all_modules[j]._id
+          new_access.access_type = []
+          save = [...save, new_access]
+        }
+      }
+    }
+    await accessSchema.insertMany(save)
+
+    return otherHelper.sendResponse(res, httpStatus.OK, true, save, null, 'Access fixed', null);
   } catch (err) {
     next(err);
   }

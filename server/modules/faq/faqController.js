@@ -8,7 +8,6 @@ const faqController = {};
 faqController.PostFaq = async (req, res, next) => {
   try {
     const faqs = req.body;
-    console.log('post faq', faqs)
     if (faqs && faqs._id) {
       faqs.updated_at = new Date();
       faqs.updated_by = req.user.id;
@@ -48,7 +47,6 @@ faqController.GetFaq = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
 
-    console.log('aaaa', req.query)
     if (req.query.find_title) {
       searchQuery = {
         title: {

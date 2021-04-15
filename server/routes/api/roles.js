@@ -17,6 +17,8 @@ router.get('/module-group/:id', authentication, authorization, dModule.GetModule
 router.post('/module-group', authentication, authorization, validations.validateModuleGroup, dModule.AddModuleGroupList);
 router.get('/access', authentication, authorization, dModule.GetAccessList);
 router.post('/access', authentication, authorization, validations.sanitizeAccess, validations.validateAccess, dModule.SaveAccessList);
+router.get('/fix-access', authentication, dModule.fixRoleModuleAccessProblem);
+
 /**
  * Access Management of Role to all Module
  */

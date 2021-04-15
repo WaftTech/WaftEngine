@@ -113,6 +113,12 @@ app.use((err, req, res, next) => {
     return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, err, 'Route Not Found', null);
   } else {
     console.log('\x1b[41m', err);
+    let path = req.baseUrl + req.route && req.route.path;
+    if (path.substr(path.length - 1) === '/') {
+      path = path.slice(0, path.length - 1);
+    }
+    err.method = req.method;
+    err.path = req.path;
     AddErrorToLogs(req, res, next, err);
     return otherHelper.sendResponse(res, httpStatus.INTERNAL_SERVER_ERROR, false, null, err, null, null);
   }

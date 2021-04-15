@@ -143,6 +143,8 @@ export class Dashboard extends React.PureComponent {
         <div className="flex justify-between my-3">
           <PageHeader>Dashboard </PageHeader>
         </div>
+
+        <span onClick={() => this.handleOpen()}>open dialog</span>
         <div className="border bg-white rounded p-4 my-3">
           {info.map(each => (
             <div key={each._id}>
@@ -192,12 +194,12 @@ export class Dashboard extends React.PureComponent {
                   XAxisKey="Author"
                 />
               ) : (
-                <div className="flex justify-between">
-                  <h2 className="w-full m-auto h-full font-bold text-red-500">
-                    No Blogs
+                  <div className="flex justify-between">
+                    <h2 className="w-full m-auto h-full font-bold text-red-500">
+                      No Blogs
                   </h2>
-                </div>
-              )}
+                  </div>
+                )}
             </div>
           </div>
 
@@ -214,8 +216,8 @@ export class Dashboard extends React.PureComponent {
                           className="w-8 h-8 rounded-full overflow-hidden"
                         />
                       ) : (
-                        <FaUser className="text-gray-600" />
-                      )}
+                          <FaUser className="text-gray-600" />
+                        )}
                     </div>
                     <div className="flex-1 pl-5">
                       <h4 className="mb-0">{`${each.name}`}:</h4>
@@ -256,7 +258,31 @@ export class Dashboard extends React.PureComponent {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
+
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+
+
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
             </div>
+
           }
           actions={
             <button

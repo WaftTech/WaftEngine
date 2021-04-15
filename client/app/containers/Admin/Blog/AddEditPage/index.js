@@ -4,26 +4,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Dropzone from 'react-dropzone';
 import { Helmet } from 'react-helmet';
 import {
   FaArrowLeft,
   FaCheck,
-  FaTimes,
-  FaCloudUploadAlt,
+  FaTimes
 } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import defaultImage from '../../../../assets/img/logo.svg';
 import WECkEditior from '../../../../components/CkEditor';
+import Dialog from '../../../../components/Dialog/index';
 import Loading from '../../../../components/Loading';
 import PageContent from '../../../../components/PageContent/PageContent';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import Select from '../../../../components/Select';
 import { IMAGE_BASE } from '../../../App/constants';
+import EditorFileSelect from '../../../EditorFileSelect';
 import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -36,10 +35,8 @@ import {
   makeSelectMetaTag,
   makeSelectOne,
   makeSelectTag,
-  makeSelectUsers,
+  makeSelectUsers
 } from '../selectors';
-import EditorFileSelect from '../../../EditorFileSelect';
-import Dialog from '../../../../components/Dialog/index';
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -342,157 +339,155 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit Blog'
-              : 'Add Blog'}
-          </title>
-        </Helmet>
-        <Dialog
-          open={this.state.openMedia}
-          className="w-5/6 h-full overflow-auto"
-          onClose={this.handleClose}
-          title={`Select Images`}
-          body={
-            <div>
-              <EditorFileSelect
-                location={location}
-                selectFile={file => this.handleImageChange(file)}
-              />
-              <div className="mt-2 text-xs">
-                Note: Please Double Click to open folder and select images.
+        <>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Blog'
+                : 'Add Blog'}
+            </title>
+          </Helmet>
+          <Dialog
+            open={this.state.openMedia}
+            className="w-5/6"
+            onClose={this.handleClose}
+            title={`Select Media Files`}
+            body={
+              <div>
+                <EditorFileSelect
+                  location={location}
+                  selectFile={file => this.handleImageChange(file)}
+                />
+                <div className="mt-2 text-xs">
+                  Note: Please Double Click to open folder and select images.
               </div>
+              </div>
+            }
+          />
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {match && match.params && match.params.id
+                ? 'Edit Blog'
+                : 'Add Blog'}
+            </PageHeader>
+          </div>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Title</label>
+              <input
+                className="inputbox"
+                id="blog-title"
+                type="text"
+                value={(one && one.title) || ''}
+                name="Blog Title"
+                onChange={this.handleChange('title')}
+              />
+              {errors && errors.title && errors.title.trim() !== '' && (
+                <div className="error">{errors && errors.title}</div>
+              )}
             </div>
-          }
-        />
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id
-              ? 'Edit Blog'
-              : 'Add Blog'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Title</label>
-            <input
-              className="inputbox"
-              id="blog-title"
-              type="text"
-              value={(one && one.title) || ''}
-              name="Blog Title"
-              onChange={this.handleChange('title')}
-            />
-            {errors && errors.title && errors.title.trim() !== '' && (
-              <div className="error">{errors && errors.title}</div>
-            )}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Slug</label>
-            <input
-              className="inputbox"
-              id="blog-slug-url"
-              type="text"
-              value={(one && one.slug_url) || ''}
-              name="Blog Slug"
-              onChange={this.handleChange('slug_url')}
-            />
-            {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
-              <div className="error">{errors && errors.slug_url}</div>
-            )}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label>Category</label>
-            <Select
-              className="React_Select"
-              id="category"
-              value={
-                (one.category &&
-                  one.category.map((each, index) => {
-                    const catObj = listCategoryNormalized[each];
-                    if (!catObj) {
-                      return {
-                        label: 'loading',
-                        value: index,
-                      };
-                    }
-                    return catObj;
-                  })) ||
-                []
-              }
-              name="category"
-              placeholder="Select Blog Category"
-              onChange={this.handleMultipleSelectCategoryChange}
-              isSearchable
-              isMulti
-              options={listCategory}
-              styles={customStyles}
-            />
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="short_description">Short Description</label>
-            <textarea
-              className="inputbox"
-              id="short_description"
-              type="text"
-              value={one.short_description || ''}
-              name="short_description"
-              onChange={this.handleChange('short_description')}
-            />
-          </div>
-          <div>
-            <label>Blog Description</label>
-            <WECkEditior
-              description={one.description}
-              setOneValue={this.props.setOneValue}
-            />
-            {errors &&
-              errors.description &&
-              errors.description.trim() !== '' && (
-                <div className="error">{errors && errors.description}</div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Slug</label>
+              <input
+                className="inputbox"
+                id="blog-slug-url"
+                type="text"
+                value={(one && one.slug_url) || ''}
+                name="Blog Slug"
+                onChange={this.handleChange('slug_url')}
+              />
+              {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+                <div className="error">{errors && errors.slug_url}</div>
               )}
-          </div>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Category</label>
+              <Select
+                id="category"
+                value={
+                  (one.category &&
+                    one.category.map((each, index) => {
+                      const catObj = listCategoryNormalized[each];
+                      if (!catObj) {
+                        return {
+                          label: 'loading',
+                          value: index,
+                        };
+                      }
+                      return catObj;
+                    })) ||
+                  []
+                }
+                name="category"
+                placeholder="Select Blog Category"
+                onChange={this.handleMultipleSelectCategoryChange}
+                isSearchable
+                isMulti
+                options={listCategory}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="short_description">Short Description</label>
+              <textarea
+                className="inputbox"
+                id="short_description"
+                type="text"
+                value={one.short_description || ''}
+                name="short_description"
+                onChange={this.handleChange('short_description')}
+              />
+            </div>
+            <div>
+              <label>Blog Description</label>
+              <WECkEditior
+                description={one.description}
+                setOneValue={this.props.setOneValue}
+              />
+              {errors &&
+                errors.description &&
+                errors.description.trim() !== '' && (
+                  <div className="error">{errors && errors.description}</div>
+                )}
+            </div>
 
-          <div className="w-full md:w-3/5 pb-4 mt-4">
-            <label htmlFor="Image">Image</label>
+            <div className="w-full md:w-3/5 pb-4 mt-4">
+              <label htmlFor="Image">Image</label>
 
-            <section
-              onClick={this.handleSetImage}
-              className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
-            >
-              {one && one.image && one.image.path ? (
-                <div>
-                  <img src={`${IMAGE_BASE}${one.image.path}`} />
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
-                >
-                  Featured Image
-                </button>
-              )}
-            </section>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="published_on">Published On</label>
-            <DatePicker
-              showTimeSelect
-              className="inputbox"
-              dateFormat="Pp"
-              // selected={new Date(one.published_on)}
-              selected={this.state.startDate}
-              onChange={this.handlePublishedOn}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              timeFormat="HH:mm"
-              showTimeInput
-            />
-            {/* <input
+              <section
+                onClick={this.handleSetImage}
+                className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+              >
+                {one && one.image && one.image.path ? (
+                  <div>
+                    <img src={`${IMAGE_BASE}${one.image.path}`} />
+                  </div>
+                ) : (
+                    <button
+                      type="button"
+                      className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                    >
+                      Featured Image
+                    </button>
+                  )}
+              </section>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="published_on">Published On</label>
+              <DatePicker
+                showTimeSelect
+                className="inputbox"
+                dateFormat="Pp"
+                // selected={new Date(one.published_on)}
+                selected={this.state.startDate}
+                onChange={this.handlePublishedOn}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeFormat="HH:mm"
+                showTimeInput
+              />
+              {/* <input
               className="inputbox"
               id="blog-title"
               type="date"
@@ -504,231 +499,205 @@ class AddEdit extends React.PureComponent {
               name="published_on"
               onChange={this.handlePublishedOn}
             /> */}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-tags">Tags</label>
-            <form onSubmit={this.insertTags}>
-              <input
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-tags">Tags</label>
+              <form onSubmit={this.insertTags}>
+                <input
+                  className="inputbox"
+                  id="blog-tags"
+                  type="text"
+                  value={tempTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempTag}
+                />
+              </form>
+              {one.tags.map((tag, index) => (
+                <label className="tag" key={`${tag}-${index}`}>
+                  {tag}
+                  <span>
+                    <FaTimes onClick={this.handleDelete(index)} />
+                  </span>
+                </label>
+              ))}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-meta-tags">Meta Tags</label>
+              <form onSubmit={this.insertMetaTags}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-tags"
+                  type="text"
+                  value={tempMetaTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaTag}
+                />
+              </form>
+              {one.meta_tag.map((tag, index) => {
+                const icon = null;
+
+                return (
+                  <label className="tag" key={`meta-${tag}-${index}`}>
+                    {tag}
+                    <span>
+                      <FaTimes onClick={this.handleMetaTagDelete(index)} />
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-meta-keyword">Meta Keywords</label>
+
+              <form onSubmit={this.insertMetaKeywords}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-keyword"
+                  type="text"
+                  value={tempMetaKeyword || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaKeyword}
+                />
+              </form>
+              {one.keywords.map((tag, index) => {
+                const icon = null;
+
+                return (
+                  <label
+                    onDelete={this.handleMetaKeywordDelete(index)}
+                    className="tag"
+                    key={`metakeywords-${tag}-${index}`}
+                  >
+                    {tag}
+                    <span>
+                      <FaTimes />
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-meta-description">Meta Description</label>
+
+              <textarea
                 className="inputbox"
-                id="blog-tags"
+                id="blog-meta-description"
                 type="text"
-                value={tempTag || ''}
-                name="Tags"
-                onChange={this.handleTempTag}
+                value={one.meta_description || ''}
+                name="meta-description"
+                onChange={this.handleChange('meta_description')}
               />
-            </form>
-            {one.tags.map((tag, index) => (
-              <label className="tag" key={`${tag}-${index}`}>
-                {tag}
-                <span>
-                  <FaTimes onClick={this.handleDelete(index)} />
+            </div>
+
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog_author">Author</label>
+              <Select
+                className="React_Select"
+                id="category"
+                value={
+                  (one.author &&
+                    one.author.map((each, index) => {
+                      const authorObj = listAuthorNormalized[each];
+                      if (!authorObj) {
+                        return {
+                          label: null,
+                          value: index,
+                        };
+                      }
+                      return authorObj;
+                    })) ||
+                  []
+                }
+                name="author"
+                placeholder="Select Blog Author"
+                onChange={this.handleMultipleSelectAuthorChange}
+                isSearchable
+                isMulti
+                options={listAuthor}
+              />
+            </div>
+            {errors && errors.author && errors.author.trim() !== '' && (
+              <div className="error">{errors && errors.author}</div>
+            )}
+            <div className="checkbox">
+              <input
+                onClick={this.handleCheckedChange('is_active')}
+                checked={one.is_active || false}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
                 </span>
-              </label>
-            ))}
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-meta-tags">Meta Tags</label>
-            <form onSubmit={this.insertMetaTags}>
-              <input
-                className="inputbox"
-                id="blog-meta-tags"
-                type="text"
-                value={tempMetaTag || ''}
-                name="Tags"
-                onChange={this.handleTempMetaTag}
-              />
-            </form>
-            {one.meta_tag.map((tag, index) => {
-              const icon = null;
-
-              return (
-                <label className="tag" key={`meta-${tag}-${index}`}>
-                  {tag}
-                  <span>
-                    <FaTimes onClick={this.handleMetaTagDelete(index)} />
-                  </span>
-                </label>
-              );
-            })}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-meta-keyword">Meta Keywords</label>
-
-            <form onSubmit={this.insertMetaKeywords}>
-              <input
-                className="inputbox"
-                id="blog-meta-keyword"
-                type="text"
-                value={tempMetaKeyword || ''}
-                name="Tags"
-                onChange={this.handleTempMetaKeyword}
-              />
-            </form>
-            {one.keywords.map((tag, index) => {
-              const icon = null;
-
-              return (
-                <label
-                  onDelete={this.handleMetaKeywordDelete(index)}
-                  className="tag"
-                  key={`metakeywords-${tag}-${index}`}
-                >
-                  {tag}
-                  <span>
-                    <FaTimes />
-                  </span>
-                </label>
-              );
-            })}
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog-meta-description">Meta Description</label>
-
-            <textarea
-              className="inputbox"
-              id="blog-meta-description"
-              type="text"
-              value={one.meta_description || ''}
-              name="meta-description"
-              onChange={this.handleChange('meta_description')}
-            />
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4">
-            <label htmlFor="blog_author">Author</label>
-            <Select
-              className="React_Select"
-              id="category"
-              value={
-                (one.author &&
-                  one.author.map((each, index) => {
-                    const authorObj = listAuthorNormalized[each];
-                    if (!authorObj) {
-                      return {
-                        label: null,
-                        value: index,
-                      };
-                    }
-                    return authorObj;
-                  })) ||
-                []
-              }
-              name="author"
-              placeholder="Select Blog Author"
-              onChange={this.handleMultipleSelectAuthorChange}
-              isSearchable
-              isMulti
-              options={listAuthor}
-              styles={customStyles}
-            />
-          </div>
-          {errors && errors.author && errors.author.trim() !== '' && (
-            <div className="error">{errors && errors.author}</div>
-          )}
-          <div className="checkbox">
-            <input
-              onClick={this.handleCheckedChange('is_active')}
-              checked={one.is_active || false}
-              id="is_active"
-              type="checkbox"
-            />
-            <label htmlFor="is_active">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
               Is Active
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_published || false}
-              onClick={this.handleCheckedChange('is_published')}
-              id="is_published"
-              type="checkbox"
-            />
-            <label htmlFor="is_published">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_published || false}
+                onClick={this.handleCheckedChange('is_published')}
+                id="is_published"
+                type="checkbox"
+              />
+              <label htmlFor="is_published">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Published
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_highlight || false}
-              onClick={this.handleCheckedChange('is_highlight')}
-              id="is_highlight"
-              type="checkbox"
-            />
-            <label htmlFor="is_highlight">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_highlight || false}
+                onClick={this.handleCheckedChange('is_highlight')}
+                id="is_highlight"
+                type="checkbox"
+              />
+              <label htmlFor="is_highlight">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Highlighted
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_showcase || false}
-              onClick={this.handleCheckedChange('is_showcase')}
-              id="is_showcased"
-              type="checkbox"
-            />
-            <label htmlFor="is_showcased">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_showcase || false}
+                onClick={this.handleCheckedChange('is_showcase')}
+                id="is_showcased"
+                type="checkbox"
+              />
+              <label htmlFor="is_showcased">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Showcase
             </label>
-          </div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <button
-              className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
-              onClick={this.handleSave}
-              disabled={loading}
-            >
-              Save
+            <div className="w-full md:w-1/2 pb-4">
+              <button
+                className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                onClick={this.handleSave}
+                disabled={loading}
+              >
+                Save
             </button>
-          </div>
-        </PageContent>
-      </>
-    );
+            </div>
+          </PageContent>
+        </>
+      );
   }
 }
 
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
-
-const customStyles = {
-  option: (provided, state) => ({
-    ...provided,
-    background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
-    color: state.isFocused || state.isSelected ? 'white' : 'black',
-    padding: '6px 12px',
-  }),
-
-  menuList: () => ({
-    background: '#FFFFFF',
-    border: '1px solid #d4d9df',
-    boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-  }),
-
-  indicatorSeparator: () => ({
-    background: 'transparent',
-  }),
-
-  container: provided => ({
-    ...provided,
-    width: '100%',
-    minWidth: '100px',
-  }),
-};
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
