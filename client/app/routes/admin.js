@@ -3,6 +3,8 @@ import RolePage from '../containers/Admin/Role/Loadable';
 import RoleEditPage from '../containers/Admin/Role/AddEditPage/Loadable';
 import RoleAccess from '../containers/Admin/Role/RoleAccess/Loadable';
 
+import Testimonial from '../containers/Admin/Testimonial/Loadable';
+import TestimonialAddEdit from '../containers/Admin/Testimonial/AddEditPage/Loadable';
 import ModuleManagePage from '../containers/Admin/Module/Loadable';
 import ModuleManageEditPage from '../containers/Admin/Module/AddEditPage/Loadable';
 import ModuleAccessManagePage from '../containers/Admin/Module/AccessManagePage/Loadable';
@@ -336,7 +338,21 @@ const routes = [
     path: '/admin/social-media/add',
     component: AddEditSocialMedia,
   },
-
+  {
+    exact: true,
+    path: '/admin/testimonial-manage',
+    component: Testimonial,
+  },
+  {
+    exact: true,
+    path: '/admin/testimonial-manage/edit/:id',
+    component: TestimonialAddEdit,
+  },
+  {
+    exact: true,
+    path: '/admin/testimonial-manage/add',
+    component: TestimonialAddEdit,
+  },
 ];
 
 export default routes;
