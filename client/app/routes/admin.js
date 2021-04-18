@@ -41,7 +41,8 @@ import SubModules from '../containers/Admin/SubModules/Loadable';
 import AddEditSubModules from '../containers/Admin/SubModules/AddEditPage/Loadable';
 import GlobalSetting from '../containers/Admin/GlobalSetting/Loadable';
 import GlobalSettingAddEdit from '../containers/Admin/GlobalSetting/AddEdit';
-
+import SocialMedia from '../containers/Admin/SocialMedia/Loadable';
+import AddEditSocialMedia from '../containers/Admin/SocialMedia/AddEditPage/Loadable';
 const routes = [
   {
     path: '/admin/dashboard',
@@ -320,6 +321,22 @@ const routes = [
     path: '/admin/global-setting/edit/:id',
     component: GlobalSettingAddEdit,
   },
+  {
+    exact: true,
+    path: '/admin/social-media',
+    component: SocialMedia,
+  },
+  {
+    exact: true,
+    path: '/admin/social-media/edit/:id',
+    component: AddEditSocialMedia,
+  },
+  {
+    exact: true,
+    path: '/admin/social-media/add',
+    component: AddEditSocialMedia,
+  },
+
 ];
 
 export default routes;
