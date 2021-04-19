@@ -74,4 +74,36 @@ socialMediaController.deleteMedia = async (req, res, next) => {
   }
 };
 
+
+socialMediaController.selectMultipleData = async (req, res, next) => {
+  try {
+    const { social_media_id, type } = req.body;
+    if (type == 'is_active') {
+      const Data = await socialMediaSchema.updateMany(
+        { _id: { $in: social_media_id } },
+        [{
+          $set: {
+            is_active: { $not: "$is_active" }
+          },
+        }],
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+    }
+    else {
+      const Data = await socialMediaSchema.updateMany(
+        { _id: { $in: social_media_id } },
+        {
+          $set: {
+            is_deleted: true,
+            deleted_at: new Date(),
+          },
+        },
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+    };
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = socialMediaController;

@@ -81,6 +81,12 @@ roleController.GetModule = async (req, res, next) => {
     if (req.query.find_module_name) {
       searchQuery = { module_name: { $regex: req.query.find_module_name, $options: 'i' }, ...searchQuery };
     }
+    if (req.query.server_url) {
+      searchQuery = { 'path.server_routes.route': { $regex: req.query.server_url, $options: 'i' }, ...searchQuery };
+    }
+    if (req.query.client_url) {
+      searchQuery = { 'path.admin_routes': { $regex: req.query.client_url, $options: 'i' }, ...searchQuery };
+    }
     if (req.query.find_module_group) {
       searchQuery2 = { module_group: { $regex: req.query.find_module_group, $options: 'i' }, is_deleted: false };
       let pulledData = await otherHelper.getQuerySendResponse(moduleGroupSch, page, size, sortQuery, searchQuery2, selectQuery, next, populate);
@@ -362,4 +368,18 @@ roleController.fixRoleModuleAccessProblem = async (req, res, next) => {
   }
 };
 
+roleController.selectMultipleData = async (req, res, next) => {
+  const { role_id, type } = req.body;
+  if (type == 'is_active') {
+    const Data = await roleSchema.updateMany(
+      { _id: { $in: role_id } },
+      [{
+        $set: {
+          is_active: { $not: "$is_active" }
+        },
+      }],
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  }
+}
 module.exports = roleController;

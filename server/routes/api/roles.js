@@ -34,4 +34,6 @@ router.post('/access/module/:moduleid', authentication, authorization, dModule.S
 
 // router.get('/active', authentication, authorization, dModule.GetModuleActive)
 // router.delete('/module-group/:id', authentication, authorization, dModule.deleteModuleGroupList)
+router.post('/multiple', authentication, authorization, dModule.selectMultipleData);
+
 module.exports = router;
