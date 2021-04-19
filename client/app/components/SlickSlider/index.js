@@ -14,9 +14,9 @@ import { loadSlideRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import { makeSelectSlide } from '../../containers/App/selectors';
 import LinkBoth from '../LinkBoth';
-import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa';
-import './slick.css';
-
+import './index.css'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 /* eslint-disable react/prefer-stateless-function */
 class SlickSlider extends React.PureComponent {
   static propTypes = {
