@@ -121,8 +121,9 @@ export const Testimonial = props => {
     setQueryValue({ key: 'sort', value: `${name}:${value}` });
   };
 
-  const tablePagination = { page, size, totalData };
-  const tableData = data && data.map(
+  const tablePagination = { page, size, totaldata: totalData };
+  debugger
+  const tableData = data.map(
     ({ _id, name, designation, company, description, date }) => [
       name,
       designation,

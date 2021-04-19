@@ -110,7 +110,7 @@ export const SocialMedia = props => {
     setQueryValue({ key: 'sort', value: `${name}:${value}` });
   };
 
-  const tablePagination = { page, size, totalData };
+  const tablePagination = { page, size, totaldata: totalData };
   const tableData = data.map(({ _id, title, url, order, is_active }) => [
     title,
     url,
