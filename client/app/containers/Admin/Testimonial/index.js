@@ -158,7 +158,6 @@ export const Testimonial = props => {
   );
   const handleSliderSettings = name => event => {
     const value = event.target.value
-    debugger
     if (event.target.type === 'number') {
       sliderSettingChange({
         key: name,

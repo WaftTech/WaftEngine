@@ -35,10 +35,7 @@ class SlickSlider extends React.PureComponent {
   render() {
     const { slideObj, show_link, show_caption } = this.props;
     const slide = slideObj[this.props.slideKey];
-    let settings = {
-      nextArrow: <FaChevronCircleRight />,
-      prevArrow: <FaChevronCircleLeft />,
-    };
+    let settings
     try {
       if (slide.settings && typeof slide.settings === 'string') {
         settings = JSON.parse(`${slide.settings}`);
@@ -47,13 +44,16 @@ class SlickSlider extends React.PureComponent {
       console.log('something went wrong!', err);
     }
     let combined;
-
     if (!slide) return null; // maybe add a loader here
     if (slide && slide.settings !== undefined) {
       combined = { ...slide.slider_setting, ...settings };
     } else {
-      combined = { ...slide.slider_setting };
+      combined = {
+        ...slide.slider_setting
+      };
     }
+    console.log("slider", combined)
+
     if (!slide) return null; // maybe add a loader here
     return (
       <div>
