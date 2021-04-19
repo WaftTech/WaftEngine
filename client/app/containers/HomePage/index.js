@@ -27,7 +27,7 @@ export default class HomePage extends React.PureComponent {
             Home
           </title>
         </Helmet>
-        <Slider slideKey="temp" />
+        <Slider slideKey="home-slider" />
         <StaticContentDiv contentKey="about" />
       </>
     );

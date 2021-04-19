@@ -36,46 +36,8 @@ class SlickSlider extends React.PureComponent {
     const { slideObj, show_link, show_caption } = this.props;
     const slide = slideObj[this.props.slideKey];
     let settings = {
-      dots: true,
-      infinite: true,
-      adaptiveHeight: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: 0,
       nextArrow: <FaChevronCircleRight />,
       prevArrow: <FaChevronCircleLeft />,
-      responsive: [
-        {
-          breakpoint: 1100,
-          settings: {
-            arrows: false,
-            dots: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,
-          },
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            arrows: false,
-            dots: false,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            arrows: false,
-            dots: false,
-            adaptiveHeight: false,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-      ],
     };
     try {
       if (slide.settings && typeof slide.settings === 'string') {
@@ -84,11 +46,18 @@ class SlickSlider extends React.PureComponent {
     } catch (err) {
       console.log('something went wrong!', err);
     }
+    let combined;
 
+    if (!slide) return null; // maybe add a loader here
+    if (slide && slide.settings !== undefined) {
+      combined = { ...slide.slider_setting, ...settings };
+    } else {
+      combined = { ...slide.slider_setting };
+    }
     if (!slide) return null; // maybe add a loader here
     return (
       <div>
-        <Slider {...settings}>
+        <Slider {...combined}>
           {slide.images.map(image => (
             <LinkBoth to={`${image.link ? image.link : ''}`} key={image._id}>
               <>
