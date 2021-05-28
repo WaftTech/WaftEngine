@@ -47,6 +47,16 @@ router.use('/meta', metaRoutes);
 const menuRoutes = require('./api/menu');
 router.use('/menu', menuRoutes);
 
+const socialMedia = require('./api/socialMedia');
+router.use('/social', socialMedia);
+
+const popup = require('./api/popup');
+router.use('/popup', popup);
+
+const testimonialRoutes = require('./api/testimonial');
+router.use('/testimonial', testimonialRoutes);
+``;
+
 const adminDashboard = require('./api/adminDashboard');
 router.use('/dashboard', adminDashboard);
 
