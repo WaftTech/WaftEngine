@@ -3,6 +3,8 @@ import RolePage from '../containers/Admin/Role/Loadable';
 import RoleEditPage from '../containers/Admin/Role/AddEditPage/Loadable';
 import RoleAccess from '../containers/Admin/Role/RoleAccess/Loadable';
 
+import Testimonial from '../containers/Admin/Testimonial/Loadable';
+import TestimonialAddEdit from '../containers/Admin/Testimonial/AddEditPage/Loadable';
 import ModuleManagePage from '../containers/Admin/Module/Loadable';
 import ModuleManageEditPage from '../containers/Admin/Module/AddEditPage/Loadable';
 import ModuleAccessManagePage from '../containers/Admin/Module/AccessManagePage/Loadable';
@@ -41,7 +43,8 @@ import SubModules from '../containers/Admin/SubModules/Loadable';
 import AddEditSubModules from '../containers/Admin/SubModules/AddEditPage/Loadable';
 import GlobalSetting from '../containers/Admin/GlobalSetting/Loadable';
 import GlobalSettingAddEdit from '../containers/Admin/GlobalSetting/AddEdit';
-
+import SocialMedia from '../containers/Admin/SocialMedia/Loadable';
+import AddEditSocialMedia from '../containers/Admin/SocialMedia/AddEditPage/Loadable';
 const routes = [
   {
     path: '/admin/dashboard',
@@ -319,6 +322,36 @@ const routes = [
     exact: true,
     path: '/admin/global-setting/edit/:id',
     component: GlobalSettingAddEdit,
+  },
+  {
+    exact: true,
+    path: '/admin/social-media',
+    component: SocialMedia,
+  },
+  {
+    exact: true,
+    path: '/admin/social-media/edit/:id',
+    component: AddEditSocialMedia,
+  },
+  {
+    exact: true,
+    path: '/admin/social-media/add',
+    component: AddEditSocialMedia,
+  },
+  {
+    exact: true,
+    path: '/admin/testimonial-manage',
+    component: Testimonial,
+  },
+  {
+    exact: true,
+    path: '/admin/testimonial-manage/edit/:id',
+    component: TestimonialAddEdit,
+  },
+  {
+    exact: true,
+    path: '/admin/testimonial-manage/add',
+    component: TestimonialAddEdit,
   },
 ];
 

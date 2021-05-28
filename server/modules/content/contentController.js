@@ -92,4 +92,31 @@ contentController.DeleteContent = async (req, res, next) => {
   }
 };
 
+contentController.selectMultipleData = async (req, res, next) => {
+  const { content_id, type } = req.body;
+
+  if (type == 'is_active') {
+    const Data = await contentSch.updateMany(
+      { _id: { $in: content_id } },
+      [{
+        $set: {
+          is_active: { $not: "$is_active" }
+        },
+      }],
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  }
+  else {
+    const Data = await contentSch.updateMany(
+      { _id: { $in: content_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  };
+}
 module.exports = contentController;

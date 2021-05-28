@@ -27,7 +27,7 @@ import {
   FaAddressCard,
   FaMailBulk,
   FaExclamationTriangle,
-  FaCommentDots, FaTenge
+  FaCommentDots, FaTenge, FaShareSquare, FaQuoteLeft
 } from 'react-icons/fa';
 
 const menu = [
@@ -98,6 +98,7 @@ const menu = [
           },
         ],
       },
+
       {
         key: '2.2',
         name: 'FAQ',
@@ -116,6 +117,18 @@ const menu = [
             link: '/admin/faq-cat-manage',
           },
         ],
+      },
+      {
+        key: '2.8',
+        name: 'Testimonial',
+        icon: <FaQuoteLeft />,
+        link: '/admin/testimonial-manage',
+      },
+      {
+        key: '2.3',
+        name: 'Social Media',
+        icon: <FaShareSquare />,
+        link: '/admin/social-media',
       },
     ],
   },

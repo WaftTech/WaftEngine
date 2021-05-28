@@ -10,5 +10,6 @@ router.get('/public', socialModule.getSocialMediasForPublic);
 router.get('/:id', authentication, authorization, socialModule.getSocialMedia);
 router.post('/', authentication, authorization, validation.validate, socialModule.postSocialMedia);
 router.delete('/:id', authentication, authorization, socialModule.deleteMedia);
+router.post('/multiple', authentication, authorization, socialModule.selectMultipleData);
 
 module.exports = router;

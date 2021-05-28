@@ -12,6 +12,7 @@ router.post('/:type', authentication, authorization, validation.validate, settin
 router.get('/all/type', authentication, settingModule.GetAllType);
 router.get('/all/subtype/:type', authentication, settingModule.GetSubTypeByType);
 router.delete('/delete/:id', authentication, authorization, settingModule.DeleteSettings)
+router.post('/multiple', authentication, authorization, settingModule.selectMultipleData);
 
 
 module.exports = router;

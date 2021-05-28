@@ -148,4 +148,18 @@ settingController.DeleteSettings = async (req, res, next) => {
   }
 };
 
+settingController.selectMultipleData = async (req, res, next) => {
+  const { setting_id, type } = req.body;
+  if (type == 'is_active') {
+    const Data = await settingSch.updateMany(
+      { _id: { $in: setting_id } },
+      [{
+        $set: {
+          is_active: { $not: "$is_active" }
+        },
+      }],
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  }
+}
 module.exports = settingController;

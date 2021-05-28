@@ -180,6 +180,34 @@ menuController.getMenuForUser = async (req, res, next) => {
   }
   const child = utils.recursiveChildFinder(baseParents, baseChildren);
   return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!!', null);
-};
+}
+
+menuController.selectMultipleData = async (req, res, next) => {
+  const { menu_item_id, type } = req.body;
+
+  if (type == 'is_active') {
+    const Data = await menuSch.updateMany(
+      { _id: { $in: menu_item_id } },
+      [{
+        $set: {
+          is_active: { $not: "$is_active" }
+        },
+      }],
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  }
+  else {
+    const Data = await menuSch.updateMany(
+      { _id: { $in: menu_item_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  };
+}
 
 module.exports = { menuController, menuItemController };

@@ -1,26 +1,10 @@
+/*
+ *
+ * Testimonial actions
+ *
+ */
+
 import * as types from './constants';
-
-export const setOneValue = payload => ({
-  type: types.SET_ONE_VALUE,
-  payload,
-});
-export const clearOne = payload => ({
-  type: types.CLEAR_ONE,
-  payload,
-});
-
-export const setQueryValue = payload => ({
-  type: types.SET_QUERY_VALUE,
-  payload,
-});
-export const setQueryObj = payload => ({
-  type: types.SET_QUERY_OBJ,
-  payload,
-});
-export const clearQuery = payload => ({
-  type: types.CLEAR_QUERY,
-  payload,
-});
 
 export const loadAllRequest = payload => ({
   type: types.LOAD_ALL_REQUEST,
@@ -47,18 +31,6 @@ export const loadOneFailure = payload => ({
   type: types.LOAD_ONE_FAILURE,
   payload,
 });
-export const loadMediaRequest = payload => ({
-  type: types.LOAD_MEDIA_REQUEST,
-  payload,
-});
-export const loadMediaSuccess = payload => ({
-  type: types.LOAD_MEDIA_SUCCESS,
-  payload,
-});
-export const loadMediaFailure = payload => ({
-  type: types.LOAD_MEDIA_FAILURE,
-  payload,
-});
 
 export const addEditRequest = payload => ({
   type: types.ADD_EDIT_REQUEST,
@@ -73,6 +45,26 @@ export const addEditFailure = payload => ({
   payload,
 });
 
+export const setOneValue = payload => ({
+  type: types.SET_ONE_VALUE,
+  payload,
+});
+export const setQueryValue = payload => ({
+  type: types.SET_QUERY_VALUE,
+  payload,
+});
+export const clearErrors = payload => ({
+  type: types.CLEAR_ERRORS,
+  payload,
+});
+export const clearQuery = payload => ({
+  type: types.CLEAR_QUERY,
+  payload,
+});
+export const clearOne = payload => ({
+  type: types.CLEAR_ONE,
+  payload,
+});
 export const deleteOneRequest = payload => ({
   type: types.DELETE_ONE_REQUEST,
   payload,
@@ -85,10 +77,8 @@ export const deleteOneFailure = payload => ({
   type: types.DELETE_ONE_FAILURE,
   payload,
 });
-export const clearErrors = () => ({
-  type: types.CLEAR_ERRORS,
-});
-export const setSliderValue = payload => ({
-  type: types.SET_SLIDER_VALUE,
+
+export const addFromMedia = payload => ({
+  type: types.ADD_FROM_MEDIA,
   payload,
 });

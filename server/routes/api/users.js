@@ -159,5 +159,6 @@ router.get('/profile', authentication, userModule.GetProfile);
  * @access Public
  */
 router.post('/profile', authentication, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
+router.post('/multiple', authentication, authorization, userModule.selectMultipleData);
 
 module.exports = router;

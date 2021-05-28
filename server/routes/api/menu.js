@@ -13,5 +13,6 @@ router.delete('/menuitem/:id', authentication, menuItemController.deleteMenuItem
 router.get('/detail/:id', menuController.getEditMenu);
 router.get('/detailforuser/:key', menuController.getMenuForUser);
 router.delete('/:id', authentication, menuController.deleteMenu);
+router.post('/multiple', authentication, menuController.selectMultipleData);
 
 module.exports = router;

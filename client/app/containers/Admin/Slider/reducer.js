@@ -13,6 +13,39 @@ export const initialState = {
     slider_key: '',
     settings: '',
     images: [],
+    slider_setting: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: false,
+      arrows: false,
+      centerMode: false,
+      centerPadding: '',
+      arrow_position: '',
+      dot_position: '',
+      autoplay: true,
+      autoplaySpeed: 2000,
+      focusOnSelect: true,
+      slidesPerRow: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: true,
+          },
+        },
+      ],
+    },
   },
   media: {
     data: [],
@@ -78,6 +111,9 @@ const reducer = (state = initialState, action) =>
         break;
       case types.CLEAR_ERRORS:
         draft.errors = initialState.errors;
+        break;
+      case types.SET_SLIDER_VALUE:
+        draft.one.slider_setting[action.payload.key] = action.payload.value;
         break;
     }
   });

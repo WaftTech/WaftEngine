@@ -48,9 +48,6 @@ testimonialController.selectMultipleData = async (req, res, next) => {
 }
 testimonialController.getTestimonial = async (req, res, next) => {
   try {
-    // const get_testimonial = await testimonialSch.find({ is_deleted: false }).populate({ path: 'image' });
-    // return otherHelper.sendResponse(res, httpStatus.OK, true, get_testimonial, null, testimonialConfig.save, null);
-
     let { page, size, sortQuery, searchQuery, selectQuery, populate } = otherHelper.parseFilters(req, 10, false);
     searchQuery = { ...searchQuery };
     if (req.query.name) {
@@ -126,4 +123,23 @@ testimonialController.getTestimonialSetting = async (req, res, next) => {
     next(err);
   }
 };
+
+testimonialController.selectMultipleData = async (req, res, next) => {
+  try {
+    const { testimonial_id } = req.body;
+    const Data = await testimonialSch.updateMany(
+      { _id: { $in: testimonial_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = testimonialController;

@@ -766,4 +766,47 @@ userController.loginGOath = async (req, res, next) => {
   const { token, payload } = await userController.validLoginResponse(req, user, next);
   return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, 'Register Successfully', token);
 };
+
+
+userController.selectMultipleData = async (req, res, next) => {
+  try {
+    const { user_id, type } = req.body;
+    if (type == 'is_active') {
+      const Data = await userSch.updateMany(
+        { _id: { $in: user_id } },
+        [{
+          $set: {
+            is_active: { $not: "$is_active" }
+          },
+        }],
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+    }
+    else if (type == 'email_verified') {
+      const User = await userSch.updateMany(
+        { _id: { $in: user_id } },
+        [{
+          $set: {
+            email_verified: { $not: "$email_verified" }
+          },
+        }],
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, User, null, 'Status Change Success', null);
+    }
+    else {
+      const User = await userSch.updateMany(
+        { _id: { $in: user_id } },
+        {
+          $set: {
+            is_deleted: true,
+            deleted_at: new Date(),
+          },
+        },
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, User, null, 'Multiple Data Delete Success', null);
+    };
+  } catch (err) {
+    next(err);
+  }
+}
 module.exports = userController;

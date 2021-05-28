@@ -40,7 +40,7 @@ const Panel = ({ title, body, open, key }) => {
           </span>
         </div>
       </div>
-      <div className={`overflow-hidden transition-all duration-300 ease-in-out text-sm  leading-loose select-none ${openVal ? 'max-h-screen' : 'max-h-0'}`}><div className="border-t py-2 px-4">{body}</div></div>
+      <div className={`overflow-scroll transition-all duration-300 ease-in-out text-sm  leading-loose select-none ${openVal ? 'max-h-screen' : 'max-h-0'}`}><div className="border-t py-2 px-4">{body}</div></div>
     </div>
   );
 };
