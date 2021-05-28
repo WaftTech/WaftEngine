@@ -125,7 +125,7 @@ const menu = [
         link: '/admin/testimonial-manage',
       },
       {
-        key: '2.3',
+        key: '2.9',
         name: 'Social Media',
         icon: <FaShareSquare />,
         link: '/admin/social-media',

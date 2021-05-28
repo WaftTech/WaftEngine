@@ -71,11 +71,12 @@ const testimonialReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
       case types.LOAD_ALL_SUCCESS:
+        debugger
         draft.all.data = action.payload.data.testimonial_data;
         draft.all.page = action.payload.page
         draft.all.size = action.payload.size
         draft.all.totalData = action.payload.totalData
-        draft.all.sort = action.payload.sort
+        // draft.all.sort = action.payload.sort
         draft.loading = false;
         break;
 

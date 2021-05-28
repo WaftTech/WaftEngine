@@ -20,8 +20,6 @@ export const initialState = {
       arrows: false,
       centerMode: false,
       centerPadding: '',
-      arrow_position: '',
-      dot_position: '',
       autoplay: true,
       autoplaySpeed: 2000,
       focusOnSelect: true,

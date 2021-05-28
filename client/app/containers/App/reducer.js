@@ -125,7 +125,6 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];
-
         break;
       case types.REMOVE_SNACKBAR:
         draft.notifications = [
