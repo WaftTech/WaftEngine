@@ -365,7 +365,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <div className="w-full md:w-1/2 pb-4">
-            <label>Slider Settings</label>
+            <label>Responsive Settings</label>
             <textarea
               name="slider settings"
               id="slider_setting"
@@ -409,7 +409,6 @@ class AddEdit extends React.PureComponent {
                       </label>
                     </div>
                   </td>
-
                   <td className="align-middle text-center border px-2 py-1">
                     <div className="checkbox" style={{ marginRight: '0px' }}>
                       <input
@@ -426,7 +425,6 @@ class AddEdit extends React.PureComponent {
                       </label>
                     </div>
                   </td>
-
                   <td className="border px-2 py-1">
                     <input
                       className="inputbox"

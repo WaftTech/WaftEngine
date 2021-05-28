@@ -14,7 +14,7 @@ import { loadSlideRequest } from '../../containers/App/actions';
 import { IMAGE_BASE } from '../../containers/App/constants';
 import { makeSelectSlide } from '../../containers/App/selectors';
 import LinkBoth from '../LinkBoth';
-import './index.css'
+import './index.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 /* eslint-disable react/prefer-stateless-function */
@@ -33,9 +33,9 @@ class SlickSlider extends React.PureComponent {
   }
 
   render() {
-    const { slideObj, show_link, show_caption } = this.props;
+    const { slideObj } = this.props;
     const slide = slideObj[this.props.slideKey];
-    let settings
+    let settings;
     try {
       if (slide.settings && typeof slide.settings === 'string') {
         settings = JSON.parse(`${slide.settings}`);
@@ -52,8 +52,14 @@ class SlickSlider extends React.PureComponent {
         ...slide.slider_setting
       };
     }
-    console.log("slider", combined)
+    console.log("slider", combined);
 
+    if (!slide) return null; // maybe add a loader here
+    if (slide && slide.settings !== undefined) {
+      combined = { ...slide.slider_setting, ...settings };
+    } else {
+      combined = { ...slide.slider_setting };
+    }
     if (!slide) return null; // maybe add a loader here
     return (
       <div>
