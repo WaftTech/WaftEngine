@@ -15,15 +15,20 @@ import { makeSelectFaqData } from '../../containers/App/selectors';
 import Panel from '../Panel';
 
 const FaqContent = props => {
-  const {
-    faqKey,
-    faqData: { cat, faq },
-    loadFaqRequest,
-  } = props;
+  const { faqKey, faqData, loadFaqRequest } = props;
 
   useEffect(() => {
     loadFaqRequest(faqKey);
   }, [faqKey]);
+
+  const cat =
+    faqData[faqKey] && faqData[faqKey].cat !== undefined
+      ? faqData[faqKey].cat
+      : { title: '' };
+  const faq =
+    faqData[faqKey] && faqData[faqKey].faq !== undefined
+      ? faqData[faqKey].faq
+      : [];
 
   return (
     <div className="my-10 container mx-auto">
@@ -32,7 +37,12 @@ const FaqContent = props => {
         <div style={{ display: 'block', paddingLeft: 0 }}>
           {faq &&
             faq.length > 0 &&
-            faq.map(each => <Panel title={each.question} body={<p dangerouslySetInnerHTML={{ __html: each.title }} />} />)}
+            faq.map(each => (
+              <Panel
+                title={each.question}
+                body={<p dangerouslySetInnerHTML={{ __html: each.title }} />}
+              />
+            ))}
         </div>
       </div>
     </div>
@@ -49,9 +59,6 @@ const mapStateToProps = createStructuredSelector({
   faqData: makeSelectFaqData(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { loadFaqRequest },
-);
+const withConnect = connect(mapStateToProps, { loadFaqRequest });
 
 export default compose(withConnect)(FaqContent);
