@@ -4,7 +4,7 @@ const settingsSch = require('../setting/settingSchema');
 const otherHelper = require('../../helper/others.helper');
 const testimonialConfig = require('./testimonialConfig');
 const testimonialController = {};
-const settingsHelper = require('./../../helper/settings.helper')
+const { getSetting } = require('./../../helper/settings.helper');
 
 testimonialController.saveTestimonial = async (req, res, next) => {
   try {
@@ -45,7 +45,7 @@ testimonialController.selectMultipleData = async (req, res, next) => {
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
 
-}
+};
 testimonialController.getTestimonial = async (req, res, next) => {
   try {
     let { page, size, sortQuery, searchQuery, selectQuery, populate } = otherHelper.parseFilters(req, 10, false);
@@ -56,9 +56,9 @@ testimonialController.getTestimonial = async (req, res, next) => {
         ...searchQuery,
       };
     }
-    populate = [{ path: 'image' }]
+    populate = [{ path: 'image' }];
     let testimonial_data = await otherHelper.getQuerySendResponse(testimonialSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    const testimonial_settings = await settingsSch.findOne({ type: 'testimonial', sub_type: 'settings', key: 'testimonial_settings' }).lean()
+    const testimonial_settings = await settingsSch.findOne({ type: 'testimonial', sub_type: 'settings', key: 'testimonial_settings' }).lean();
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { testimonial_data: testimonial_data.data, settings: testimonial_settings }, 'Testimonial Get Success', page, size, testimonial_data.totalData, sortQuery);
 
   } catch (err) {
@@ -94,17 +94,17 @@ testimonialController.getTestimonialDetail = async (req, res, next) => {
 
 testimonialController.saveTestimonialSetting = async (req, res, next) => {
   try {
-    let data = req.body
-    const testimonial_settings = await settingsSch.findOne({ type: 'testimonial', sub_type: 'settings', key: 'testimonial_settings' })
+    let data = req.body;
+    const testimonial_settings = await settingsSch.findOne({ type: 'testimonial', sub_type: 'settings', key: 'testimonial_settings' });
     if (testimonial_settings) {
-      testimonial_settings.value = data
-      testimonial_settings.save()
+      testimonial_settings.value = data;
+      testimonial_settings.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, testimonial_settings, null, "Testimonial Settings Updated", null);
     }
-    let settings_data = {}
-    settings_data.type = 'testimonial'
-    settings_data.sub_type = 'settings'
-    settings_data.key = 'testimonial_settings'
+    let settings_data = {};
+    settings_data.type = 'testimonial';
+    settings_data.sub_type = 'settings';
+    settings_data.key = 'testimonial_settings';
     settings_data.added_by = req.user.id;
     settings_data.value = data;
     let newSetting = new settingsSch(settings_data);
@@ -117,7 +117,7 @@ testimonialController.saveTestimonialSetting = async (req, res, next) => {
 
 testimonialController.getTestimonialSetting = async (req, res, next) => {
   try {
-    const testimonial_settings = await settingsSch.findOne({ type: 'testimonial', sub_type: 'settings', key: 'testimonial_settings' }).lean()
+    const testimonial_settings = await settingsSch.findOne({ type: 'testimonial', sub_type: 'settings', key: 'testimonial_settings' }).lean();
     return otherHelper.sendResponse(res, httpStatus.OK, true, testimonial_settings.value, null, "Testimonial Settings get", null);
   } catch (err) {
     next(err);

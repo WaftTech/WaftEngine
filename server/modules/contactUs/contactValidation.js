@@ -5,7 +5,7 @@ const validateHelper = require('../../helper/validate.helper');
 const config = require('./contactConfig');
 const apiCallHelper = require('../../helper/apicall.helper');
 const isEmpty = require('../../validation/isEmpty');
-const settingsHelper = require('../../helper/settings.helper');
+const { getSetting } = require('../../helper/settings.helper');
 const validateInput = {};
 validateInput.sanitize = (req, res, next) => {
   const sanitizeArray = [
@@ -40,9 +40,9 @@ validateInput.sanitize = (req, res, next) => {
 validateInput.validate = async (req, res, next) => {
   const data = req.body;
   let code = data.reCaptcha;
-  const reCaptchaCheck = await settingsHelper('auth', 'recaptcha', 'check')
+  const reCaptchaCheck = await getSetting('auth', 'recaptcha', 'check');
   if (reCaptchaCheck) {
-    const secretKey = await settingsHelper('auth', 'recaptcha', 'secret_key')
+    const secretKey = await getSetting('auth', 'recaptcha', 'secret_key');
     const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${code}&remoteip=${req.connection.remoteAddress}`;
     let verified = await apiCallHelper.requestThirdPartyApi(req, verifyUrl, null, null, 'POST', next);
     if (!(verified && verified.success)) {
@@ -72,7 +72,7 @@ validateInput.validate = async (req, res, next) => {
           msg: config.validate.emailEmp,
         },
         {
-          condition: 'IsEmail',
+          condition: 'isEmail',
           msg: config.validate.isEmail,
         },
       ],
@@ -97,7 +97,7 @@ validateInput.validate = async (req, res, next) => {
         {
           condition: 'IsEmpty',
           msg: config.validate.msgEmp,
-        }
+        },
       ],
     },
   ];

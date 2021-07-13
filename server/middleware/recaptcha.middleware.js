@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const otherHelper = require('../helper/others.helper');
 const apiCallHelper = require('../helper/apicall.helper');
-const settingsHelper = require('../helper/settings.helper');
+const { getSetting } = require('../helper/settings.helper');
 
 const reCaptchaValidator = {};
 
@@ -10,13 +10,10 @@ reCaptchaValidator.validate = async (req, res, next) => {
     let code = req.body.reCaptcha;
     let code_android = req.body.reCaptcha_android;
     let code_ios = req.body.reCaptcha_iOS;
-    let secretKey = await settingsHelper('auth', 'recaptcha', 'secret_key');
-    let checkrecaptcha = await settingsHelper('auth', 'recaptcha', 'check');
-    let secretKey_mobile = await settingsHelper('auth', 'recaptcha', 'secret_key_mobile');
-    let secretKey_ios = await settingsHelper('auth', 'recaptcha', 'secret_key_ios');
-
-
-
+    let secretKey = await getSetting('auth', 'recaptcha', 'secret_key');
+    let checkrecaptcha = await getSetting('auth', 'recaptcha', 'check');
+    let secretKey_mobile = await getSetting('auth', 'recaptcha', 'secret_key_mobile');
+    let secretKey_ios = await getSetting('auth', 'recaptcha', 'secret_key_ios');
     if (checkrecaptcha == false) {
       next();
     } else {

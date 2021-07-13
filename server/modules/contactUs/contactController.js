@@ -4,7 +4,7 @@ const contactConfig = require('./contactConfig');
 const contactSch = require('./contactSchema');
 const renderMail = require('./../template/templateController').internal;
 const emailHelper = require('./../../helper/email.helper');
-const settingsHelper = require('./../../helper/settings.helper')
+const { getSetting } = require('./../../helper/settings.helper');
 const contactController = {};
 
 contactController.PostContact = async (req, res, next) => {
@@ -12,12 +12,11 @@ contactController.PostContact = async (req, res, next) => {
     let { name, email, message, subject } = req.body;
     const newUser = new contactSch({ name, email, message, subject });
     const user = await newUser.save();
-    let contact_to_admin = await settingsHelper('template', 'email', 'contact_to_admin')
-    let contact_to_user = await settingsHelper('template', 'email', 'contact_to_user')
-    let admin_emails = await settingsHelper('user', 'admin_email', 'email_array')
+    let contact_to_admin = await getSetting('template', 'email', 'contact_to_admin');
+    let contact_to_user = await getSetting('template', 'email', 'contact_to_user');
+    let admin_emails = await getSetting('user', 'admin_email', 'email_array');
     if (user) {
       const data = {
-
         name: user.name,
         email: user.email,
         msg: user.message,
@@ -68,6 +67,7 @@ contactController.GetContactById = async (req, res, next) => {
   let contact = await contactSch.findOne({ _id: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, contact, null, contactConfig.get, null);
 };
+
 contactController.DeleteContact = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -77,4 +77,23 @@ contactController.DeleteContact = async (req, res, next) => {
     next(err);
   }
 };
+
+contactController.selectMultipleData = async (req, res, next) => {
+  try {
+    const { contact_id } = req.body;
+    const Data = await contactSch.updateMany(
+      { _id: { $in: contact_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = contactController;

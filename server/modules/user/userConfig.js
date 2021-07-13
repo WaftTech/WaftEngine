@@ -20,6 +20,7 @@ module.exports = {
   validate: {
     empty: 'This field is required',
     invalid: 'Invalid entry',
+    isNotNumber: 'Invalid. Must be only numbers',
     isEmail: 'Please enter Valid Email',
     isMongoId: 'This is not mongo id',
     isEightChar: 'The password must be at least 8 character',
@@ -45,7 +46,7 @@ module.exports = {
   registerAdmin: 'User Register Successfully.',
   emailVerify: 'Email Verified Successful',
   subscribeFail: 'Subscription failed',
-  alverified: {'message':'Already verified. You can log in', is_verified: true},
-  alregistered: {'message':'Email/phone already registered. Check your mail or sms for verification code.', is_verified: false},
-  regnotverifed: {'message':'Email/mobile no not verified. Please check your mail or otp message.', is_verified:false}
+  alverified: { message: 'Already verified. You can log in', is_verified: true },
+  alregistered: { message: 'Email/phone already registered. Check your mail or sms for verification code.', is_verified: false },
+  regnotverifed: { message: 'Email/mobile no not verified. Please check your mail or otp message.', is_verified: false },
 };

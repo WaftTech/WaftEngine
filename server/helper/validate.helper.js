@@ -6,8 +6,7 @@ const validationHelper = {};
 
 validationHelper.validation = (data, validationArray) => {
   let errors = {};
-  validationArray.forEach(validationObj => {
-
+  validationArray.forEach((validationObj) => {
     let value = data[validationObj.field];
     value = !isEmpty(value) ? value + '' : '';
     const validation = validationObj.validate;
@@ -41,7 +40,7 @@ validationHelper.validation = (data, validationArray) => {
         case 'IsNumeric':
           if (!Validator.isEmpty(value)) {
             if (val.option) {
-              if (!Validator.IsNumeric(value)) {
+              if (!Validator.isNumeric(value, val.option)) {
                 errors[validationObj.field] = val.msg;
               }
             }
@@ -93,37 +92,41 @@ validationHelper.validation = (data, validationArray) => {
             }
           }
           break;
-        case 'IsAfter': if (!Validator.isEmpty(value)) {
-          if (val.option) {
-            if (!Validator.isAfter(value, val.option.date)) {
-              errors[validationObj.field] = val.msg;
+        case 'IsAfter':
+          if (!Validator.isEmpty(value)) {
+            if (val.option) {
+              if (!Validator.isAfter(value, val.option.date)) {
+                errors[validationObj.field] = val.msg;
+              }
             }
           }
-        }
           break;
-        case 'IsBefore': if (!Validator.isEmpty(value)) {
-          if (val.option) {
-            if (!Validator.IsBefore(value, val.option.date)) {
-              errors[validationObj.field] = val.msg;
+        case 'IsBefore':
+          if (!Validator.isEmpty(value)) {
+            if (val.option) {
+              if (!Validator.IsBefore(value, val.option.date)) {
+                errors[validationObj.field] = val.msg;
+              }
             }
           }
-        }
           break;
-        case 'IsJSON': if (!Validator.isEmpty(value)) {
-          if (val.option) {
-            if (!Validator.isJSON(value)) {
-              errors[validationObj.field] = val.msg;
+        case 'IsJSON':
+          if (!Validator.isEmpty(value)) {
+            if (val.option) {
+              if (!Validator.isJSON(value)) {
+                errors[validationObj.field] = val.msg;
+              }
             }
           }
-        }
           break;
-        case 'IsJWT': if (!Validator.isEmpty(value)) {
-          if (val.option) {
-            if (!Validator.IsJWT(value)) {
-              errors[validationObj.field] = val.msg;
+        case 'IsJWT':
+          if (!Validator.isEmpty(value)) {
+            if (val.option) {
+              if (!Validator.IsJWT(value)) {
+                errors[validationObj.field] = val.msg;
+              }
             }
           }
-        }
           break;
         case 'IsURL':
           if (!Validator.isEmpty(value)) {
@@ -144,33 +147,34 @@ validationHelper.validation = (data, validationArray) => {
 
         case 'IsProperKey':
           if (!Validator.isEmpty(value)) {
-            var arr = ['`', '!', '@', ',', '#', '$', '%', '^', '&', '*', '(', ')', '+', '?', '/', '|', '.', '\\']
-            arr.forEach(element => {
-              let temp = value.includes(element)
+            var arr = ['`', '!', '@', ',', '#', '$', '%', '^', '&', '*', '(', ')', '+', '?', '/', '|', '.', '\\'];
+            arr.forEach((element) => {
+              let temp = value.includes(element);
               if (temp) {
                 errors[validationObj.field] = `this field cannot contain special character  ::  ${element}`;
               }
             });
           }
           break;
-        case 'IsPhone': if (!Validator.isEmpty(value)) {
-          let pn = new PhoneNumber(value);
-          if (pn.isValid()) {
-            if (val.option) {
-              if (val.option.isMobile) {
-                if (!pn.isMobile()) {
-                  errors[validationObj.field] = 'Enter mobile number';
-                }
-              } else {
-                if (!pn.isFixedLine()) {
-                  errors[validationObj.field] = 'Enter landline number';
+        case 'IsPhone':
+          if (!Validator.isEmpty(value)) {
+            let pn = new PhoneNumber(value);
+            if (pn.isValid()) {
+              if (val.option) {
+                if (val.option.isMobile) {
+                  if (!pn.isMobile()) {
+                    errors[validationObj.field] = 'Enter mobile number';
+                  }
+                } else {
+                  if (!pn.isFixedLine()) {
+                    errors[validationObj.field] = 'Enter landline number';
+                  }
                 }
               }
+            } else {
+              errors[validationObj.field] = val.msg;
             }
-          } else {
-            errors[validationObj.field] = val.msg;
           }
-        }
           break;
         default:
           break;

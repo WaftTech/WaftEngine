@@ -58,4 +58,19 @@ bugController.DeleteAll = async (req, res, next) => {
     next(err);
   }
 };
+
+bugController.selectMultipleData = async (req, res, next) => {
+  const { bug_id } = req.body;
+  const Data = await bugSch.updateMany(
+    { _id: { $in: bug_id } },
+    {
+      $set: {
+        is_deleted: true,
+        deleted_at: new Date(),
+      },
+    },
+  );
+  return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+
+}
 module.exports = bugController;

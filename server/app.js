@@ -12,22 +12,16 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const hpp = require('hpp');
 const httpStatus = require('http-status');
-const mongoURI = process.env.MONGODB_URI
-const routes = require('./routes/index');
+const mongoURI = process.env.MONGODB_URI;
 const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
-
 const changephoto = require('./helper/photomanipulate').changephoto;
-
-const auth = require('./helper/auth.helper');
-
+const { initSettings } = require('./helper/settings.helper');
 const app = express();
-auth(passport);
 // Logger middleware
 app.use(logger('dev'));
 app.use(device.capture());
 // Body parser middleware
-
 // create application/json parser
 app.use(
   bodyParser.json({
@@ -53,16 +47,18 @@ app.use(
 );
 app.use(cookieParser());
 
+// Passport middleware
+app.use(passport.initialize());
+
 // DB Config
 mongoose.Promise = global.Promise;
 
-let defaults = {};
 Promise.resolve(app)
-  .then(MongoDBConnection)
+  .then(MongoDBConnection())
   .catch(err => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
 
 // Database Connection
-async function MongoDBConnection(app) {
+async function MongoDBConnection() {
   console.log(`| MongoDB URL  : ${mongoURI}`);
   await mongoose
     .connect(mongoURI, {
@@ -74,16 +70,21 @@ async function MongoDBConnection(app) {
     .then(() => {
       console.log('| MongoDB Connected');
       console.log('|--------------------------------------------');
+      SettingInitiate();
     });
 
-  return app;
+  return null;
 }
 
-// Passport middleware
-app.use(passport.initialize());
-
-// Passport Config
-require('./helper/passport.helper')(passport);
+async function SettingInitiate() {
+  await initSettings().then(() => {
+    const auth = require('./helper/auth.helper');
+    auth(passport);
+    // Passport Config
+    require('./helper/passport.helper')(passport);
+  });
+  return null;
+}
 
 // CORS setup for dev
 app.use(function (req, res, next) {
@@ -94,9 +95,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+const routes = require('./routes/index');
 // Use Routes
 app.use('/api', routes);
-
 app.use('/public/:w-:h/*', changephoto);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler

@@ -11,15 +11,25 @@ otherHelper.mongoIdExistInArray = (mongodbIdArray, mongoDbId) => {
   return false;
 };
 
-otherHelper.generateRandomHexString = len => {
+otherHelper.generateRandomHexString = (len) => {
   return crypto
     .randomBytes(Math.ceil(len / 2))
     .toString('hex') // convert to hexadecimal format
     .slice(0, len)
     .toUpperCase(); // return required number of characters
 };
-otherHelper.generateRandomNumberString = len => {
+otherHelper.generateRandomNumberString = (len) => {
   return Math.floor(Math.random() * 8999 + 1000);
+};
+otherHelper.mongoIdExistInArray = (mongodbIdArray, mongoDbId) => {
+  if (mongodbIdArray) {
+  } else {
+    mongodbIdArray = [];
+  }
+  for (let i = 0; i < mongodbIdArray.length; i++) {
+    if (mongodbIdArray[i].toString() === mongoDbId.toString()) return true;
+  }
+  return false;
 };
 otherHelper.parsePhoneNo = (phone, RegionCode) => {
   try {
@@ -55,6 +65,7 @@ otherHelper.parseFilters = (req, defaults, is_deleted) => {
   let page;
   let size;
   let sortQuery = { _id: -1 };
+  let sort_key;
   let searchQuery = {};
   let populate = [];
   let selectQuery = { __v: 0 };
@@ -127,7 +138,7 @@ otherHelper.getQuerySendResponse = async (model, page, size, sortQuery, searchQu
     next(err);
   }
 };
-otherHelper.slugify = text => {
+otherHelper.slugify = (text) => {
   return text
     .toString()
     .toLowerCase()
@@ -136,5 +147,8 @@ otherHelper.slugify = text => {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, ''); // Trim - from end of text
+};
+otherHelper.regexp = (text) => {
+  return text.replace(/[-[\]{}()*+?.,\\/^$|#]/g, ''); // Remove all non-word chars
 };
 module.exports = otherHelper;

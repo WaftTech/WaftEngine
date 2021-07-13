@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const fileSch = require('./fileSchema');
 const folderSch = require('./folderSchema');
+const userSch = require('../user/userSchema');
+const { getSetting } = require('../../helper/settings.helper');
 const fileController = {};
 
 fileController.GetFileAndFolder = async (req, res, next) => {

@@ -20,6 +20,10 @@ blogController.GetBlogAuthorize = async (req, res, next) => {
         path: 'category',
         select: '_id title',
       },
+      {
+        path: 'image',
+        select: 'path',
+      },
     ];
     selectQuery = 'title summary tags author short_description meta_tag meta-description category keywords slug_url is_published published_on is_active image added_by added_at updated_at updated_by is_highlight is_showcase';
     if (req.query.find_title) {
@@ -77,6 +81,10 @@ blogController.getLatestBlog = async (req, res, next) => {
           path: 'author',
           select: '_id name',
         },
+        {
+          path: 'image',
+          select: 'path',
+        },
       ])
       .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
       .sort({ published_on: -1 })
@@ -97,6 +105,10 @@ blogController.getShowcaseBlog = async (req, res, next) => {
           path: 'author',
           select: '_id name',
         },
+        {
+          path: 'image',
+          select: 'path',
+        },
       ])
       .select({ slug_url: 1, title: 1, added_at: 1, image: 1, published_on: 1, short_description: 1 })
       .sort({ published_on: -1 })
@@ -107,6 +119,67 @@ blogController.getShowcaseBlog = async (req, res, next) => {
     next(err);
   }
 };
+
+blogController.selectMultipleDataBlog = async (req, res, next) => {
+  const { blog_id, type } = req.body;
+
+  if (type == 'is_published') {
+    const Data = await blogSch.updateMany({ _id: { $in: blog_id } }, [
+      {
+        $set: {
+          is_published: { $not: '$is_published' },
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  } else if (type == 'is_active') {
+    const Data = await blogSch.updateMany({ _id: { $in: blog_id } }, [
+      {
+        $set: {
+          is_active: { $not: '$is_active' },
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  } else {
+    const Data = await blogSch.updateMany(
+      { _id: { $in: blog_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  }
+};
+
+blogController.selectMultipleDataCat = async (req, res, next) => {
+  const { blog_category_id, type } = req.body;
+  if (type == 'is_active') {
+    const Data = await blogCatSch.updateMany({ _id: { $in: blog_category_id } }, [
+      {
+        $set: {
+          is_active: { $not: '$is_active' },
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  } else {
+    const Data = await blogCatSch.updateMany(
+      { _id: { $in: blog_category_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  }
+};
+
 blogController.getTrendingBlog = async (req, res, next) => {
   try {
     const trendblog_ids = await blogViewCountSch.aggregate([
@@ -167,6 +240,10 @@ blogController.getLatestBlogByCat = async (req, res, next) => {
       .populate([
         { path: 'category', select: 'title' },
         { path: 'author', select: 'name' },
+        {
+          path: 'image',
+          select: 'path',
+        },
       ])
       .sort({ _id: -1 })
       .skip(0)
@@ -230,7 +307,7 @@ blogController.GetBlogArchives = async (req, res, next) => {
       .skip(0)
       .limit(10);
     const month = [];
-    const months = blogArchives.map(each => {
+    const months = blogArchives.map((each) => {
       if (month.includes(each.added_at.getMonth())) {
         return null;
       } else {
@@ -255,6 +332,10 @@ blogController.GetBlogNonAuthorize = async (req, res, next) => {
       {
         path: 'author',
         select: '_id name',
+      },
+      {
+        path: 'image',
+        select: 'path',
       },
     ];
     selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url published_on is_active image added_by added_at updated_at updated_by is_showcase';
@@ -300,12 +381,13 @@ blogController.getHighlightBlog = async (req, res, next) => {
       is_highlight: true,
       published_on: { $lte: current_date },
     };
-    const highlight_blog = await blogSch.find(searchQuery);
+    const highlight_blog = await blogSch.find(searchQuery).populate([{ path: 'image', select: 'path' }]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, highlight_blog, null, 'highlighted blog get successfully', null);
   } catch (err) {
     next(err);
   }
 };
+
 blogController.GetBlogUnauthorize = async (req, res, next) => {
   try {
     const size_default = 12;
@@ -348,6 +430,10 @@ blogController.GetBlogUnauthorize = async (req, res, next) => {
         path: 'author',
         select: '_id name',
       },
+      {
+        path: 'image',
+        select: 'path',
+      },
     ];
     selectQuery = 'title description summary tags author short_description meta_tag meta-description category keywords slug_url is_active image added_by added_at updated_at updated_by published_on';
     const current_date = new Date();
@@ -388,18 +474,29 @@ blogController.GetBlogCategory = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
     selectQuery = 'title slug_url description image is_active added_by added_at updated_at updated_by is_deleted';
-    if (req.query.find_title) {
-      searchQuery = {
-        title: {
-          $regex: req.query.find_title,
-          $options: 'i',
-        },
-        ...searchQuery,
-      };
+    searchQuery = { ...searchQuery, is_active: true };
+
+    if (req.query.find_title || req.query.size || req.query.is_active || req.query.page) {
+      delete searchQuery.is_active;
+      if (req.query.find_title) {
+        searchQuery = {
+          title: {
+            $regex: req.query.find_title,
+            $options: 'i',
+          },
+          ...searchQuery,
+        };
+      }
+      if (req.query.is_active) {
+        searchQuery = { is_active: true, ...searchQuery };
+      }
     }
-    if (req.query.is_active) {
-      searchQuery = { is_active: true, ...searchQuery };
-    }
+    populate = [
+      {
+        path: 'image',
+        select: 'path',
+      },
+    ];
     let blogCategories = await otherHelper.getQuerySendResponse(blogCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogCategories.data, blogConfig.cget, page, size, blogCategories.totalData);
   } catch (err) {
@@ -409,7 +506,7 @@ blogController.GetBlogCategory = async (req, res, next) => {
 blogController.GetBlogCatById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const blogcats = await blogCatSch.findOne({ _id: id, }).populate([{ path: 'image', select: 'path' }])
+    const blogcats = await blogCatSch.findOne({ _id: id }).populate([{ path: 'image', select: 'path' }]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogcats, null, blogConfig.cget, null);
   } catch (err) {
     next(err);
@@ -418,21 +515,19 @@ blogController.GetBlogCatById = async (req, res, next) => {
 blogController.SaveBlog = async (req, res, next) => {
   try {
     let blogs = req.body;
-    if (blogs.is_highlight !== ('true' || 'false')) {
+    if (blogs.is_highlight !== (true || false)) {
       blogs.is_highlight = false;
     }
-    if (blogs.is_highlight == 'true') {
+    if (blogs.is_highlight == true) {
       await blogSch.updateMany({}, { $set: { is_highlight: false } }, { new: true });
       blogs.is_highlight === true;
     }
     if (blogs && blogs._id) {
-
       if (!blogs.meta_tag) blogs.meta_tag = [];
       if (!blogs.category) blogs.category = [];
       if (!blogs.tags) blogs.tags = [];
       if (!blogs.keywords) blogs.keywords = [];
       if (!blogs.author) blogs.author = req.user.id;
-
 
       const update = await blogSch.findByIdAndUpdate(
         blogs._id,
@@ -504,7 +599,6 @@ blogController.GetBlogBySlug = async (req, res, next) => {
       { path: 'author', select: '_id name avatar image bio author.bio social_link' },
       { path: 'category', select: '_id title slug_url' },
       { path: 'image', select: 'path' },
-
     ]);
   if (!blogs) {
     return otherHelper.sendResponse(res, httpStatus.OK, false, blogs, 'no blog found', 'no blog found', null);
@@ -515,10 +609,12 @@ blogController.GetBlogBySlug = async (req, res, next) => {
 blogController.GetBlogById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const blogs = await blogSch.findOne({
-      _id: id,
-      is_deleted: false,
-    }).populate([{ path: 'image', select: 'path' }])
+    const blogs = await blogSch
+      .findOne({
+        _id: id,
+        is_deleted: false,
+      })
+      .populate([{ path: 'image', select: 'path' }]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, blogs, null, blogConfig.get, null);
   } catch (err) {
     next(err);
@@ -603,7 +699,13 @@ blogController.GetBlogByTag = async (req, res, next) => {
     }
 
     const tag = req.params.tag;
-    populateq = [{ path: 'author', select: 'name' }];
+    populateq = [
+      { path: 'author', select: 'name' },
+      {
+        path: 'image',
+        select: 'path',
+      },
+    ];
     const current_date = new Date();
     searchQuery = {
       is_deleted: false,
@@ -641,7 +743,13 @@ blogController.GetBlogByAuthor = async (req, res, next) => {
     }
 
     const authorId = req.params.author;
-    populateq = [{ path: 'author', select: 'name' }];
+    populateq = [
+      { path: 'author', select: 'name' },
+      {
+        path: 'image',
+        select: 'path',
+      },
+    ];
     const current_date = new Date();
     searchQuery = { is_deleted: false, is_active: true, author: authorId, is_published: true, published_on: { $lte: current_date } };
     const blogByAuthor = await otherHelper.getQuerySendResponse(blogSch, page, size, { published_on: -1 }, searchQuery, '', next, populateq);
@@ -695,6 +803,10 @@ blogController.GetBlogByDate = async (req, res, next) => {
     populateq = [
       { path: 'category', select: 'title' },
       { path: 'author', select: 'name' },
+      {
+        path: 'image',
+        select: 'path',
+      },
     ];
 
     const tagBlog = await otherHelper.getQuerySendResponse(blogSch, page, size, '', searchQuery, '', next, populateq);
@@ -721,16 +833,15 @@ blogController.DeleteBlogCat = async (req, res, next) => {
       deleted_at: new Date(),
     },
   });
-  await blogSch.updateMany({ category: id }, { $set: { is_deleted: true } })
+  await blogSch.updateMany({ category: id }, { $set: { is_deleted: true } });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogCat, null, blogConfig.deleteCat, null);
 };
 
 blogController.CountBlogByCat = async (req, res, next) => {
   const id = req.params.id;
-  const blogCount = await blogSch.countDocuments({ category: id, is_deleted: false })
+  const blogCount = await blogSch.countDocuments({ category: id, is_deleted: false });
   return otherHelper.sendResponse(res, httpStatus.OK, true, blogCount, null, 'blog count by category', null);
 };
-
 
 blogController.getstaticBlog = async (req, res, next) => {
   try {

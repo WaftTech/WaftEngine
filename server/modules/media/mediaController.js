@@ -132,7 +132,7 @@ mediaController.UploadFromCkEditor = async (req, res, next) => {
     let html = '';
     html += `<script type='text/javascript'>
     var funcNum = ${req.query.CKEditorFuncNum};
-    var url = "http://localhost:5051/public/media/${req.files[0].filename}";
+    var url = "${keyConfig.server_url}/public/media/${req.files[0].filename}";
     var message = "Uploaded file successfully";
    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);
     </script>`;

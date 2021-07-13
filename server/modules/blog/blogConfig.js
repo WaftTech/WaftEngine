@@ -4,15 +4,14 @@ module.exports = {
     titleLength: 'This field should be between 3 to 100',
     descriptionLength: 'This field should be between 5 to 2000',
     isMongoId: 'Invalid MongoId',
-    isInt: 'please input valid number'
+    isInt: 'Please input valid number'
   }, errorIn: {
-    inputErrors: 'input errors'
+    inputErrors: 'Input errors'
   },
-  save: 'blog saved successfully.',
-  get: 'blogs get successfully.',
-  delete: 'blog deleted successfully!!',
-  update: 'blog updated successfully ',
-  categorySave: 'blog category saved successfully.',
-  categoryUpdate: 'blog category updated successfully ',
-
+  save: 'Blog saved successfully.',
+  get: 'Blogs get successfully.',
+  delete: 'Blog deleted successfully!!',
+  update: 'Blog updated successfully ',
+  categorySave: 'Blog category saved successfully.',
+  categoryUpdate: 'Blog category updated successfully ',
 };

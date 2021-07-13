@@ -6,9 +6,7 @@
   "scripts": {
     "client": "npm start --prefix ../client",
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -49,6 +47,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
-  },
-  "snyk": true
+  }
 }

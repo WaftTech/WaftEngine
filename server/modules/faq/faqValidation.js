@@ -8,7 +8,7 @@ const faqValidation = {};
 faqValidation.Sanitize = (req, res, next) => {
   const sanitizeArray = [
     {
-      field: 'title',
+      field: 'description',
       sanitize: {
         trim: true,
       },
@@ -27,7 +27,7 @@ faqValidation.Sanitize = (req, res, next) => {
 faqValidation.Validation = (req, res, next) => {
   const validateArray = [
     {
-      field: 'title',
+      field: 'description',
       validate: [
         {
           condition: 'IsEmpty',
@@ -58,7 +58,7 @@ faqValidation.Validation = (req, res, next) => {
         {
           condition: 'IsMongoId',
           msg: faqConfig.validate.isMongoId,
-        }
+        },
       ],
     },
   ];

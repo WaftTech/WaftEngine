@@ -11,7 +11,7 @@ const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
 const loginLogs = require('./loginlogs/loginlogController').internal;
-const settingsHelper = require('../../helper/settings.helper');
+const { getSetting } = require('../../helper/settings.helper');
 
 const userController = {};
 
@@ -176,7 +176,7 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  const public_register_allow = await settingsHelper('auth', 'user', 'is_public_registration')
+  const public_register_allow = await getSetting('auth', 'user', 'is_public_registration');
   if (!public_register_allow) {
     return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, null, 'Public Registration not allowed.', null);
   }
@@ -194,12 +194,12 @@ userController.Register = async (req, res, next) => {
     newUser.password = hash;
     newUser.email_verification_code = otherHelper.generateRandomHexString(12);
     newUser.email_verified = false;
-    const temp = await settingsHelper('auth', 'roles', 'public_register_role')
-    newUser.roles.push(temp)
+    const temp = await getSetting('auth', 'roles', 'public_register_role');
+    newUser.roles.push(temp);
     newUser.last_password_change_date = new Date();
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
-    const public_register_email_template = await settingsHelper('template', 'email', 'public_register_email_template')
+    const public_register_email_template = await getSetting('template', 'email', 'public_register_email_template');
     const renderedMail = await renderMail.renderTemplate(
       public_register_email_template,
       {
@@ -214,7 +214,7 @@ userController.Register = async (req, res, next) => {
     } else {
       emailHelper.send(renderedMail, next);
     }
-    const force_allow_email_verify = await settingsHelper('user', 'email', 'force_allow_email_verify')
+    const force_allow_email_verify = await getSetting('user', 'email', 'force_allow_email_verify');
     if (force_allow_email_verify) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, { email_verified: false, email: email }, null, 'Verification email sent.', null);
     }
@@ -235,9 +235,9 @@ userController.validLoginResponse = async (req, user, next) => {
         }
       }
     }
-    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key')
-    var tokenExpireTime = await settingsHelper('auth', 'token', 'expiry_time')
-    tokenExpireTime = Number.parseInt(tokenExpireTime)
+    const secretOrKey = await getSetting('auth', 'token', 'secret_key');
+    var tokenExpireTime = await getSetting('auth', 'token', 'expiry_time');
+    tokenExpireTime = Number.parseInt(tokenExpireTime);
     // Create JWT payload
 
     const payload = {
@@ -332,7 +332,7 @@ userController.Verifymail = async (req, res, next) => {
   try {
     const email = req.body.email.toLowerCase();
     const code = req.body.code;
-    const userVerified = await userSch.findOne({ email: email, email_verified: true })
+    const userVerified = await userSch.findOne({ email: email, email_verified: true });
     if (userVerified && userVerified._id) {
       let errors = {};
       errors.verified = 'Email is already verified';
@@ -368,7 +368,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         }
         const email_verification_code = otherHelper.generateRandomHexString(6);
         const newUser = await userSch.findOneAndUpdate({ email: email }, { $set: { email_verification_code, email_verified: false, email_verified_request_date: currentDate } }, { new: true });
-        const verify_mail_template = await settingsHelper('template', 'email', 'verify_mail_template')
+        const verify_mail_template = await getSetting('template', 'email', 'verify_mail_template');
         const renderedMail = await renderMail.renderTemplate(
           verify_mail_template,
           {
@@ -397,7 +397,7 @@ userController.VerifyServerMail = async (req, res, next) => {
     const { id, code } = req.params;
     const user = await userSch.findOne({ _id: id, email_verification_code: code });
     if (!user) {
-      return res.redirect(302, 'http://localhost:5050?verify=false');
+      return res.redirect(302, 'http://localhost:5460?verify=false');
     }
     const d = await userSch.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     const payload = {
@@ -410,9 +410,9 @@ userController.VerifyServerMail = async (req, res, next) => {
       gender: user.gender,
     };
     // Sign Token
-    let secret_key = await settingsHelper('auth', 'token', 'secret_key');
-    let token_expire_time = await settingsHelper('auth', 'token', 'expiry_time');
-    token_expire_time = Number.parseInt(token_expire_time)
+    let secret_key = await getSetting('auth', 'token', 'secret_key');
+    let token_expire_time = await getSetting('auth', 'token', 'expiry_time');
+    token_expire_time = Number.parseInt(token_expire_time);
     jwt.sign(payload, secret_key, { expiresIn: token_expire_time }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;
@@ -455,7 +455,7 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
-    const forgot_password_mail_template = await settingsHelper('template', 'email', 'forgot_password_mail_template')
+    const forgot_password_mail_template = await getSetting('template', 'email', 'forgot_password_mail_template');
     const renderedMail = await renderMail.renderTemplate(
       forgot_password_mail_template,
       {
@@ -517,7 +517,7 @@ userController.Login = async (req, res, next) => {
         errors.inactive = 'Please Contact Admin to reactivate your account';
         return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, errors.inactive, null);
       }
-      const force_allow_email_verify = await settingsHelper('user', 'email', 'force_allow_email_verify')
+      const force_allow_email_verify = await getSetting('user', 'email', 'force_allow_email_verify');
       if (force_allow_email_verify && !user.email_verified) {
         return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, { email: email, email_verified: false }, null, 'Please Verify your Email', null);
       }
@@ -537,7 +537,7 @@ userController.Login = async (req, res, next) => {
           const two_fa_code = otherHelper.generateRandomHexString(6);
           const two_fa_time = new Date();
           const d = await userSch.findByIdAndUpdate(user._id, { $set: { 'multi_fa.email.code': two_fa_code, 'multi_fa.email.time': two_fa_time } });
-          const two_fa_email_template = await settingsHelper('template', 'email', 'two_fa_email_template')
+          const two_fa_email_template = await getSetting('template', 'email', 'two_fa_email_template');
           const renderedMail = await renderMail.renderTemplate(
             two_fa_email_template,
             {
@@ -733,7 +733,7 @@ userController.loginGOath = async (req, res, next) => {
   } else {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(random_password, salt);
-    const public_register_role = await settingsHelper('auth', 'roles', 'public_register_role')
+    const public_register_role = await getSetting('auth', 'roles', 'public_register_role');
     const newUser = new userSch({
       name: profile.name,
       email: profile.email,
@@ -746,7 +746,7 @@ userController.loginGOath = async (req, res, next) => {
     user = await newUser.save();
   }
 
-  const public_register_auth_template = await settingsHelper('template', 'email', 'public_register_auth_template')
+  const public_register_auth_template = await getSetting('template', 'email', 'public_register_auth_template');
 
   const renderedMail = await renderMail.renderTemplate(
     public_register_auth_template,
@@ -808,5 +808,5 @@ userController.selectMultipleData = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
 module.exports = userController;

@@ -10,14 +10,32 @@ const otherHelper = require('../helper/others.helper');
 const accessSch = require('../modules/role/accessSchema');
 const modulesSch = require('../modules/role/moduleSchema');
 const rolesSch = require('../modules/role/roleSchema');
+const userSch = require('../modules/user/userSchema');
 const authMiddleware = {};
 
 const isEmpty = require('../validation/isEmpty');
-const settingsHelper = require('../helper/settings.helper');
+const { getSetting } = require('../helper/settings.helper');
 
+authMiddleware.retrieveClientInfo = async (req, res, next) => {
+  try {
+    let platform = req.headers['platform'];
+    if (platform) {
+      if (platform == 'android' || platform == 'ios') {
+      } else {
+        platform = 'web';
+      }
+    } else {
+      platform = 'web';
+    }
+    req.platform = platform;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
 authMiddleware.authentication = async (req, res, next) => {
   try {
-    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key');
+    const secretOrKey = await getSetting('auth', 'token', 'secret_key');
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
@@ -38,7 +56,7 @@ authMiddleware.authentication = async (req, res, next) => {
 
 authMiddleware.authenticationForLogout = async (req, res, next) => {
   try {
-    const secretOrKey = await settingsHelper('auth', 'token', 'secret_key');
+    const secretOrKey = await getSetting('auth', 'token', 'secret_key');
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization || req.headers.token;
     if (token && token.length) {
       token = token.replace('Bearer ', '');
@@ -116,8 +134,8 @@ authMiddleware.getClientInfo = async (req, res, next) => {
 
 authMiddleware.isPublicFacebookRegistrationAllow = async (req, res, next) => {
   try {
-    let checkis_public_registration = await settingsHelper('auth', 'auth', 'is_public_registration');
-    let checkis_fblogin = await settingsHelper('auth', 'facebook', 'allow_login');
+    let checkis_public_registration = await getSetting('auth', 'auth', 'is_public_registration');
+    let checkis_fblogin = await getSetting('auth', 'facebook', 'allow_login');
     if (checkis_public_registration == false || checkis_fblogin == false) {
       return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, null, 'facebook login function disabled', 'null');
     } else {
@@ -130,8 +148,8 @@ authMiddleware.isPublicFacebookRegistrationAllow = async (req, res, next) => {
 
 authMiddleware.isPublicGoogleRegistrationAllow = async (req, res, next) => {
   try {
-    let checkis_public_registration = await settingsHelper('auth', 'auth', 'is_public_registration');
-    let checkis_googleLogin = await settingsHelper('auth', 'google', 'allow_login');
+    let checkis_public_registration = await getSetting('auth', 'auth', 'is_public_registration');
+    let checkis_googleLogin = await getSetting('auth', 'google', 'allow_login');
     if (checkis_public_registration == false || checkis_googleLogin == false) {
       return otherHelper.sendResponse(res, HttpStatus.NOT_ACCEPTABLE, false, null, null, 'google login function disabled', 'null');
     } else {

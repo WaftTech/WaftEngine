@@ -74,7 +74,6 @@ socialMediaController.deleteMedia = async (req, res, next) => {
   }
 };
 
-
 socialMediaController.selectMultipleData = async (req, res, next) => {
   try {
     const { social_media_id, type } = req.body;

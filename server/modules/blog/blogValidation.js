@@ -56,6 +56,15 @@ validation.validate = (req, res, next) => {
       ],
     },
     {
+      field: 'image',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+      ],
+    },
+    {
       field: 'description',
       validate: [
         {
@@ -131,6 +140,15 @@ validation.catValidate = async (req, res, next) => {
       ],
     },
     {
+      field: 'image',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: blogConfig.validate.empty,
+        },
+      ],
+    },
+    {
       field: 'description',
       validate: [
         {
@@ -152,16 +170,15 @@ validation.catValidate = async (req, res, next) => {
         },
       ],
     },
-
   ];
   let errors = validateHelper.validation(data, validateArray);
-  let slug_url_filter = { is_deleted: false, slug_url: data.slug_url }
+  let slug_url_filter = { is_deleted: false, slug_url: data.slug_url };
   if (data._id) {
-    slug_url_filter = { ...slug_url_filter, _id: { $ne: data._id } }
+    slug_url_filter = { ...slug_url_filter, _id: { $ne: data._id } };
   }
   const already_slug_url = await categorySch.findOne(slug_url_filter);
   if (already_slug_url && already_slug_url._id) {
-    errors = { ...errors, slug_url: 'slug_url already exist' }
+    errors = { ...errors, slug_url: 'slug_url already exist' };
   }
   if (!isEmpty(errors)) {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, blogConfig.errorIn.inputErrors, null);
@@ -169,8 +186,6 @@ validation.catValidate = async (req, res, next) => {
     next();
   }
 };
-
-
 
 validation.countSanitize = (req, res, next) => {
   sanitizeHelper.sanitize(req, [
@@ -192,7 +207,6 @@ validation.countSanitize = (req, res, next) => {
 validation.countValidate = (req, res, next) => {
   const data = req.body;
   const validateArray = [
-
     {
       field: 'count',
       validate: [
@@ -211,7 +225,6 @@ validation.countValidate = (req, res, next) => {
         },
       ],
     },
-
   ];
 
   const errors = validateHelper.validation(data, validateArray);
