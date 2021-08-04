@@ -17,8 +17,14 @@ fileController.GetFileAndFolder = async (req, res, next) => {
 
     let id = '';
     if (req.params.id == 'undefined' || req.params.id === 'root') {
-      const root = await folderSch.findOne({ is_root: true });
-      id = root._id;
+      const root = await folderSch.findOne({ is_root: true, added_by: req.user.id, is_deleted: false });
+      if (root) {
+        id = root._id;
+      } else {
+        const rootFolder = new folderSch({ name: 'Root', is_root: true, path: [], added_by: req.user.id });
+        let root = await rootFolder.save();
+        id = root._id;
+      }
     } else {
       id = req.params.id;
     }
