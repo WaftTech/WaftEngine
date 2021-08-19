@@ -33,7 +33,7 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
   - `npm install`
 - Import Default data into MongoDB server from `database` folder
   - `cd ../database`
-  - `run mongoimport command for all json file`
+  -  `run 'mongorestore' to import all BSON/json files`
 - Configure Server
   - Create `.env` file in `server`
   - Update `.env` file with `MONGODB_URI=mongodb://localhost:27017/waft-engine` 
