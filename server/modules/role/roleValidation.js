@@ -9,6 +9,7 @@ const moduleGroupSch = require('./moduleGroupSchema');
 const moduleAccessSch = require('./moduleSchema');
 const roleSch = require('./roleSchema');
 const validations = {};
+const roleSch = require('./roleSchema');
 
 validations.validateRole = async (req, res, next) => {
   const data = req.body;

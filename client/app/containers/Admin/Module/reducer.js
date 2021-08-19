@@ -192,6 +192,7 @@ const adminRoleReducer = (state = initialState, action) =>
             },
           ];
         }
+		 draft.access.Access = tempAccess //tuanv2t fixbug
         break;
     }
   });
