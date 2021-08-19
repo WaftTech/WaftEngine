@@ -1,81 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import Dropzone from 'react-dropzone';
 import moment from 'moment';
-import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Checkbox, IconButton } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Input from '@material-ui/core/Input';
-import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
-import injectSaga from 'utils/injectSaga';
+import { Helmet } from 'react-helmet';
+import {
+  FaArrowLeft,
+  FaCheck,
+  FaTimes
+} from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-import BackIcon from '@material-ui/icons/ArrowBack';
+import injectSaga from 'utils/injectSaga';
+import WECkEditior from '../../../../components/CkEditor';
+import Dialog from '../../../../components/Dialog/index';
+import Loading from '../../../../components/Loading';
+import PageContent from '../../../../components/PageContent/PageContent';
+import PageHeader from '../../../../components/PageHeader/PageHeader';
+import Select from '../../../../components/Select';
+import { IMAGE_BASE } from '../../../App/constants';
+import EditorFileSelect from '../../../EditorFileSelect';
+import * as mapDispatchToProps from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOne,
-  makeSelectUsers,
   makeSelectCategory,
   makeSelectChip,
-  makeSelectTag,
-  makeSelectMetaTag,
-  makeSelectMetaKeyword,
-  makeSelectLoading,
   makeSelectErrors,
+  makeSelectLoading,
+  makeSelectMetaKeyword,
+  makeSelectMetaTag,
+  makeSelectOne,
+  makeSelectTag,
+  makeSelectUsers
 } from '../selectors';
-import * as mapDispatchToProps from '../actions';
-
-import PageHeader from '../../../../components/PageHeader/PageHeader';
-import PageContent from '../../../../components/PageContent/PageContent';
-import { IMAGE_BASE, DATE_FORMAT } from '../../../App/constants';
-import defaultImage from '../../../../assets/img/logo.svg';
-import Loading from '../../../../components/Loading';
-import WECkEditior from '../../../../components/CkEditor';
-import Inputs from '../../../../components/customComponents/Input';
-import Select from '../../../../components/Select';
-import { FaArrowLeft, FaCheck } from 'react-icons/fa';
-
-const styles = theme => ({
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
 
 class AddEdit extends React.PureComponent {
   static propTypes = {
@@ -87,7 +48,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     category: PropTypes.array,
     tempTag: PropTypes.string,
@@ -95,10 +55,11 @@ class AddEdit extends React.PureComponent {
   };
 
   state = {
-    tempImage: defaultImage,
+    tempImage: '',
     startDate: new Date(),
     selected: [],
     slug_generated: false,
+    openMedia: false,
   };
 
   componentDidMount() {
@@ -135,7 +96,7 @@ class AddEdit extends React.PureComponent {
     this.props.setOneValue({ key: name, value: event.target.checked });
   };
 
-  slugify = text => {
+  slugify = text =>
     // return text
     //   .toString()
     //   .toLowerCase()
@@ -154,14 +115,13 @@ class AddEdit extends React.PureComponent {
     // return slug;
 
     // nepali slug
-    return text
+    text
       .replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ')
       .toLowerCase()
       .replace(/^\s+|\s+$/gm, '')
       .replace(/\s+/g, '-')
       .trim()
       .toLowerCase();
-  };
 
   handleChange = name => event => {
     event.persist();
@@ -203,6 +163,19 @@ class AddEdit extends React.PureComponent {
   handleTempTag = e => {
     e.persist();
     this.props.setTagValue(e.target.value);
+  };
+
+  handleClose = () => {
+    this.setState({ openMedia: false });
+  };
+
+  handleSetImage = () => {
+    this.setState({ openMedia: true });
+  };
+
+  handleImageChange = file => {
+    this.props.setOneValue({ key: 'image', value: file });
+    this.setState({ openMedia: false });
   };
 
   onDrop = (files, name) => {
@@ -270,36 +243,42 @@ class AddEdit extends React.PureComponent {
 
   insertTags = event => {
     event.preventDefault();
-    if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
-      this.props.setOneValue({
-        key: 'tags',
-        value: [...this.props.one.tags, this.props.tempTag],
-      });
-      this.props.setTagValue('');
+    if (this.props.tempTag.trim() !== '') {
+      if (this.props.one.tags.indexOf(this.props.tempTag) === -1) {
+        this.props.setOneValue({
+          key: 'tags',
+          value: [...this.props.one.tags, this.props.tempTag],
+        });
+        this.props.setTagValue('');
+      }
     }
     return { tempTag: this.props.setTagValue('') };
   };
 
   insertMetaTags = event => {
     event.preventDefault();
-    if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
-      this.props.setOneValue({
-        key: 'meta_tag',
-        value: [...this.props.one.meta_tag, this.props.tempMetaTag],
-      });
-      this.props.setMetaTagValue('');
+    if (this.props.tempMetaTag.trim() !== '') {
+      if (this.props.one.meta_tag.indexOf(this.props.tempMetaTag) === -1) {
+        this.props.setOneValue({
+          key: 'meta_tag',
+          value: [...this.props.one.meta_tag, this.props.tempMetaTag],
+        });
+        this.props.setMetaTagValue('');
+      }
     }
     return { tempMetaTag: this.props.setMetaTagValue('') };
   };
 
   insertMetaKeywords = event => {
     event.preventDefault();
-    if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
-      this.props.setOneValue({
-        key: 'keywords',
-        value: [...this.props.one.keywords, this.props.tempMetaKeyword],
-      });
-      this.props.setMetaKeywordValue('');
+    if (this.props.tempMetaKeyword.trim() !== '') {
+      if (this.props.one.keywords.indexOf(this.props.tempMetaKeyword) === -1) {
+        this.props.setOneValue({
+          key: 'keywords',
+          value: [...this.props.one.keywords, this.props.tempMetaKeyword],
+        });
+        this.props.setMetaKeywordValue('');
+      }
     }
     return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
   };
@@ -352,14 +331,6 @@ class AddEdit extends React.PureComponent {
       return obj;
     });
 
-    const menuProps = {
-      PaperProps: {
-        style: {
-          maxHeight: 48 * 4.5 + 8,
-          width: 250,
-        },
-      },
-    };
     const cats = {};
     category.map(e => {
       cats[e._id] = e;
@@ -368,189 +339,155 @@ class AddEdit extends React.PureComponent {
     return loading && loading == true ? (
       <Loading />
     ) : (
-      <React.Fragment>
-        <Helmet>
-          <title>
-            {match && match.params && match.params.id
-              ? 'Edit News'
-              : 'Add News'}
-          </title>
-        </Helmet>
-        <div className="flex justify-between my-3">
-          <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
-              <FaArrowLeft className="text-xl" />
-            </span>
-            {match && match.params && match.params.id
-              ? 'Edit News'
-              : 'Add News'}
-          </PageHeader>
-        </div>
-        <PageContent>
-          <div className="w-full md:w-1/2 pb-4">
-            <Inputs
-              label="Title"
-              inputclassName="inputbox"
-              inputid="blog-title"
-              inputType="text"
-              value={(one && one.title) || ''}
-              name="Blog Title"
-              onChange={this.handleChange('title')}
-              error={errors && errors.title}
-            />
+        <>
+          <Helmet>
+            <title>
+              {match && match.params && match.params.id
+                ? 'Edit Blog'
+                : 'Add Blog'}
+            </title>
+          </Helmet>
+          <Dialog
+            open={this.state.openMedia}
+            className="w-5/6"
+            onClose={this.handleClose}
+            title={`Select Media Files`}
+            body={
+              <div>
+                <EditorFileSelect
+                  location={location}
+                  selectFile={file => this.handleImageChange(file)}
+                />
+                <div className="mt-2 text-xs">
+                  Note: Please Double Click to open folder and select images.
+              </div>
+              </div>
+            }
+          />
+          <div className="flex justify-between my-3">
+            <PageHeader>
+              <span className="backbtn" onClick={this.handleGoBack}>
+                <FaArrowLeft className="text-xl" />
+              </span>
+              {match && match.params && match.params.id
+                ? 'Edit Blog'
+                : 'Add Blog'}
+            </PageHeader>
           </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <Inputs
-              label="Slug"
-              inputclassName="inputbox"
-              inputid="blog-slug-url"
-              inputType="text"
-              value={(one && one.slug_url) || ''}
-              name="Blog Slug"
-              onChange={this.handleChange('slug_url')}
-              error={errors && errors.slug_url}
-              disabled
-            />
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm">Category</label>
-
-            {/* <FormControl className={classes.formControl}>
-              <Select
-                // className="inputbox"
-                multiple
-                displayEmpty
-                name="template_key"
-                value={one.category || []}
-                input={<Input />}
-                onChange={this.handleMultipleSelectChange}
-                renderValue={selected => {
-                  if (selected.length === 0) {
-                    return <em>Select Categories</em>;
-                  } else {
-                    return selected.join(', ');
-                  }
-                }}
-                MenuProps={menuProps}
-              >
-                <MenuItem value="" name="none" disabled>
-                  None
-                </MenuItem>
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id} name={each.title}>
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl> */}
-
-            {/* <FormControl className={classes.formControl}> */}
-            <Select
-              className="React_Select"
-              id="category"
-              value={
-                (one.category &&
-                  one.category.map((each, index) => {
-                    const catObj = listCategoryNormalized[each];
-                    if (!catObj) {
-                      return {
-                        label: 'loading',
-                        value: index,
-                      };
-                    }
-                    return catObj;
-                  })) ||
-                []
-              }
-              name="category"
-              placeholder="Select Blog Category"
-              onChange={this.handleMultipleSelectCategoryChange}
-              isSearchable
-              isMulti
-              options={listCategory}
-              styles={customStyles}
-            />
-            {/* <Select
-                multiple
-                displayEmpty
-                name="template_key"
-                value={one.category || []}
-                input={<Input />}
-                onChange={this.handleMultipleSelectChange}
-                renderValue={selected =>
-                  this.handleSelectedValue(selected, cats)
-                }
-                MenuProps={menuProps}
-              >
-                <MenuItem value="" name="none" disabled>
-                  None
-                </MenuItem>
-                {category.map(each => (
-                  <MenuItem key={each._id} value={each._id} name={each.title}>
-                    <Checkbox checked={one.category.indexOf(each._id) > -1} />
-                    {each.title}
-                  </MenuItem>
-                ))}
-              </Select> */}
-            {/* </FormControl> */}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-blog-title">
-              Short Description
-            </label>
-            <textarea
-              className="inputbox"
-              id="short_description"
-              type="text"
-              value={one.short_description || ''}
-              name="short_description"
-              onChange={this.handleChange('short_description')}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Blog Description</label>
-            <WECkEditior
-              description={one.description}
-              setOneValue={this.props.setOneValue}
-            />
-
-            <div id="component-error-text">{errors && errors.description}</div>
-          </div>
-
-          <div className="w-full md:w-1/2 pb-4 mt-4">
-            <label className="text-sm" htmlFor="Image">
-              Image
-            </label>
-            <Dropzone onDrop={files => this.onDrop(files, 'image')}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <img
-                    className="inputbox cursor-pointer"
-                    src={tempImage}
-                    alt="Blogimage"
-                    style={{ height: '120px', width: '60%' }}
-                  />
-                </div>
+          <PageContent>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Title</label>
+              <input
+                className="inputbox"
+                id="blog-title"
+                type="text"
+                value={(one && one.title) || ''}
+                name="Blog Title"
+                onChange={this.handleChange('title')}
+              />
+              {errors && errors.title && errors.title.trim() !== '' && (
+                <div className="error">{errors && errors.title}</div>
               )}
-            </Dropzone>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Published On
-            </label>
-            <DatePicker
-              showTimeSelect
-              className="inputbox"
-              dateFormat="Pp"
-              // selected={new Date(one.published_on)}
-              selected={this.state.startDate}
-              onChange={this.handlePublishedOn}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              timeFormat="HH:mm"
-              showTimeInput
-            />
-            {/* <input
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Slug</label>
+              <input
+                className="inputbox"
+                id="blog-slug-url"
+                type="text"
+                value={(one && one.slug_url) || ''}
+                name="Blog Slug"
+                onChange={this.handleChange('slug_url')}
+              />
+              {errors && errors.slug_url && errors.slug_url.trim() !== '' && (
+                <div className="error">{errors && errors.slug_url}</div>
+              )}
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label>Category</label>
+              <Select
+                id="category"
+                value={
+                  (one.category &&
+                    one.category.map((each, index) => {
+                      const catObj = listCategoryNormalized[each];
+                      if (!catObj) {
+                        return {
+                          label: 'loading',
+                          value: index,
+                        };
+                      }
+                      return catObj;
+                    })) ||
+                  []
+                }
+                name="category"
+                placeholder="Select Blog Category"
+                onChange={this.handleMultipleSelectCategoryChange}
+                isSearchable
+                isMulti
+                options={listCategory}
+              />
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="short_description">Short Description</label>
+              <textarea
+                className="inputbox"
+                id="short_description"
+                type="text"
+                value={one.short_description || ''}
+                name="short_description"
+                onChange={this.handleChange('short_description')}
+              />
+            </div>
+            <div>
+              <label>Blog Description</label>
+              <WECkEditior
+                description={one.description}
+                setOneValue={this.props.setOneValue}
+              />
+              {errors &&
+                errors.description &&
+                errors.description.trim() !== '' && (
+                  <div className="error">{errors && errors.description}</div>
+                )}
+            </div>
+
+            <div className="w-full md:w-3/5 pb-4 mt-4">
+              <label htmlFor="Image">Image</label>
+
+              <section
+                onClick={this.handleSetImage}
+                className="text-black hover:border-primary hover:text-primary text-center self-start py-3 px-4 border border-gray-500 rounded-lg border-dashed cursor-pointer"
+              >
+                {one && one.image && one.image.path ? (
+                  <div>
+                    <img src={`${IMAGE_BASE}${one.image.path}`} />
+                  </div>
+                ) : (
+                    <button
+                      type="button"
+                      className="text-black py-2 px-4 rounded font-bold bg-waftprimary hover:text-primary"
+                    >
+                      Featured Image
+                    </button>
+                  )}
+              </section>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="published_on">Published On</label>
+              <DatePicker
+                showTimeSelect
+                className="inputbox"
+                dateFormat="Pp"
+                // selected={new Date(one.published_on)}
+                selected={this.state.startDate}
+                onChange={this.handlePublishedOn}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeFormat="HH:mm"
+                showTimeInput
+              />
+              {/* <input
               className="inputbox"
               id="blog-title"
               type="date"
@@ -562,262 +499,205 @@ class AddEdit extends React.PureComponent {
               name="published_on"
               onChange={this.handlePublishedOn}
             /> */}
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Tags
-            </label>
-            <form onSubmit={this.insertTags}>
-              <input
-                className="inputbox"
-                id="blog-tags"
-                type="text"
-                value={tempTag || ''}
-                name="Tags"
-                onChange={this.handleTempTag}
-              />
-            </form>
-            {one.tags.map((tag, index) => {
-              const icon = null;
-              return (
-                <label key={`${tag}-${index}`}>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-tags">Tags</label>
+              <form onSubmit={this.insertTags}>
+                <input
+                  className="inputbox"
+                  id="blog-tags"
+                  type="text"
+                  value={tempTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempTag}
+                />
+              </form>
+              {one.tags.map((tag, index) => (
+                <label className="tag" key={`${tag}-${index}`}>
                   {tag}
-                  <span onClick={this.handleDelete(index)}>
-                    <FaTimes />
+                  <span>
+                    <FaTimes onClick={this.handleDelete(index)} />
                   </span>
                 </label>
-              );
-            })}
-          </div>
+              ))}
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Meta Tags
-            </label>
-            <form onSubmit={this.insertMetaTags}>
-              <input
-                className="inputbox"
-                id="blog-meta-tags"
-                type="text"
-                value={tempMetaTag || ''}
-                name="Tags"
-                onChange={this.handleTempMetaTag}
-              />
-            </form>
-            <Paper elevation={2}>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-meta-tags">Meta Tags</label>
+              <form onSubmit={this.insertMetaTags}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-tags"
+                  type="text"
+                  value={tempMetaTag || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaTag}
+                />
+              </form>
               {one.meta_tag.map((tag, index) => {
                 const icon = null;
 
                 return (
-                  <Chip
-                    key={`meta-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
-                    onDelete={this.handleMetaTagDelete(index)}
-                    className={classes.chip}
-                  />
+                  <label className="tag" key={`meta-${tag}-${index}`}>
+                    {tag}
+                    <span>
+                      <FaTimes onClick={this.handleMetaTagDelete(index)} />
+                    </span>
+                  </label>
                 );
               })}
-            </Paper>
-          </div>
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Meta Keywords
-            </label>
+            </div>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-meta-keyword">Meta Keywords</label>
 
-            <form onSubmit={this.insertMetaKeywords}>
-              <input
-                className="inputbox"
-                id="blog-meta-keyword"
-                type="text"
-                value={tempMetaKeyword || ''}
-                name="Tags"
-                onChange={this.handleTempMetaKeyword}
-              />
-            </form>
-            <Paper elevation={2}>
+              <form onSubmit={this.insertMetaKeywords}>
+                <input
+                  className="inputbox"
+                  id="blog-meta-keyword"
+                  type="text"
+                  value={tempMetaKeyword || ''}
+                  name="Tags"
+                  onChange={this.handleTempMetaKeyword}
+                />
+              </form>
               {one.keywords.map((tag, index) => {
                 const icon = null;
 
                 return (
-                  <Chip
-                    key={`metakeywords-${tag}-${index}`}
-                    icon={icon}
-                    label={tag}
+                  <label
                     onDelete={this.handleMetaKeywordDelete(index)}
-                    className={classes.chip}
-                  />
+                    className="tag"
+                    key={`metakeywords-${tag}-${index}`}
+                  >
+                    {tag}
+                    <span>
+                      <FaTimes />
+                    </span>
+                  </label>
                 );
               })}
-            </Paper>
-          </div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Meta Description
-            </label>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog-meta-description">Meta Description</label>
 
-            <textarea
-              className="inputbox"
-              id="blog-tags"
-              type="text"
-              value={one.meta_description || ''}
-              name="meta-description"
-              onChange={this.handleChange('meta_description')}
-            />
-          </div>
+              <textarea
+                className="inputbox"
+                id="blog-meta-description"
+                type="text"
+                value={one.meta_description || ''}
+                name="meta-description"
+                onChange={this.handleChange('meta_description')}
+              />
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <label className="text-sm" htmlFor="grid-last-name">
-              Author
-            </label>
-            {/* 
-            <select
-              className="inputbox"
-              native="true"
-              value={(one && one.author) || ''}
-              onChange={this.handleDropDownChange('author')}
-            >
-              <option value="" disabled>
-                None
-              </option>
-              {users &&
-                users.map(each => (
-                  <option key={each._id} name={each.name} value={each._id}>
-                    {each.name}
-                  </option>
-                ))}
-            </select> */}
-
-            <Select
-              className="React_Select"
-              id="category"
-              value={
-                (one.author &&
-                  one.author.map((each, index) => {
-                    const authorObj = listAuthorNormalized[each];
-                    if (!authorObj) {
-                      return {
-                        label: null,
-                        value: index,
-                      };
-                    }
-                    return authorObj;
-                  })) ||
-                []
-              }
-              name="author"
-              placeholder="Select News Author"
-              onChange={this.handleMultipleSelectAuthorChange}
-              isSearchable
-              isMulti
-              options={listAuthor}
-              styles={customStyles}
-            />
-          </div>
-          <div id="component-error-text">{errors && errors.author}</div>
-          <div className="checkbox">
-            <input
-              onClick={this.handleCheckedChange('is_active')}
-              checked={one.is_active || false}
-              id="is_active"
-              type="checkbox"
-            />
-            <label htmlFor="is_active">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="w-full md:w-1/2 pb-4">
+              <label htmlFor="blog_author">Author</label>
+              <Select
+                className="React_Select"
+                id="category"
+                value={
+                  (one.author &&
+                    one.author.map((each, index) => {
+                      const authorObj = listAuthorNormalized[each];
+                      if (!authorObj) {
+                        return {
+                          label: null,
+                          value: index,
+                        };
+                      }
+                      return authorObj;
+                    })) ||
+                  []
+                }
+                name="author"
+                placeholder="Select Blog Author"
+                onChange={this.handleMultipleSelectAuthorChange}
+                isSearchable
+                isMulti
+                options={listAuthor}
+              />
+            </div>
+            {errors && errors.author && errors.author.trim() !== '' && (
+              <div className="error">{errors && errors.author}</div>
+            )}
+            <div className="checkbox">
+              <input
+                onClick={this.handleCheckedChange('is_active')}
+                checked={one.is_active || false}
+                id="is_active"
+                type="checkbox"
+              />
+              <label htmlFor="is_active">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Active
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_published || false}
-              onClick={this.handleCheckedChange('is_published')}
-              id="is_published"
-              type="checkbox"
-            />
-            <label htmlFor="is_published">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_published || false}
+                onClick={this.handleCheckedChange('is_published')}
+                id="is_published"
+                type="checkbox"
+              />
+              <label htmlFor="is_published">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Published
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_highlight || false}
-              onClick={this.handleCheckedChange('is_highlight')}
-              id="is_highlight"
-              type="checkbox"
-            />
-            <label htmlFor="is_highlight">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_highlight || false}
+                onClick={this.handleCheckedChange('is_highlight')}
+                id="is_highlight"
+                type="checkbox"
+              />
+              <label htmlFor="is_highlight">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Highlighted
             </label>
-          </div>
+            </div>
 
-          <div className="checkbox">
-            <input
-              checked={one.is_showcase || false}
-              onClick={this.handleCheckedChange('is_showcase')}
-              id="is_showcased"
-              type="checkbox"
-            />
-            <label htmlFor="is_showcased">
-              <span className="box">
-                <FaCheck className="check-icon" />
-              </span>
+            <div className="checkbox">
+              <input
+                checked={one.is_showcase || false}
+                onClick={this.handleCheckedChange('is_showcase')}
+                id="is_showcased"
+                type="checkbox"
+              />
+              <label htmlFor="is_showcased">
+                <span className="box">
+                  <FaCheck className="check-icon" />
+                </span>
               Is Showcase
             </label>
-          </div>
+            </div>
 
-          <div className="w-full md:w-1/2 pb-4">
-            <button
-              className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
-              onClick={this.handleSave}
-            >
-              Save
+            <div className="w-full md:w-1/2 pb-4">
+              <button
+                className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                onClick={this.handleSave}
+                disabled={loading}
+              >
+                Save
             </button>
-          </div>
-        </PageContent>
-      </React.Fragment>
-    );
+            </div>
+          </PageContent>
+        </>
+      );
   }
 }
 
-const withStyle = withStyles(styles);
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
-
-const customStyles = {
-  option: (provided, state) => ({
-    ...provided,
-    background: state.isFocused || state.isSelected ? '#5897FB' : 'white',
-    color: state.isFocused || state.isSelected ? 'white' : 'black',
-    padding: '6px 12px',
-  }),
-
-  menuList: () => ({
-    background: '#FFFFFF',
-    border: '1px solid #d4d9df',
-    boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-  }),
-
-  indicatorSeparator: () => ({
-    background: 'transparent',
-  }),
-
-  container: provided => ({
-    ...provided,
-    width: '100%',
-    minWidth: '100px',
-  }),
-};
 
 const mapStateToProps = createStructuredSelector({
   one: makeSelectOne(),
@@ -831,14 +711,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

@@ -1,11 +1,13 @@
 const httpStatus = require('http-status');
 const isEmpty = require('../../validation/isEmpty');
 const otherHelper = require('../../helper/others.helper');
+const sanitizeHelper = require('../../helper/sanitize.helper');
+const validateHelper = require('../../helper/validate.helper');
 const sliderConfig = require('./sliderConfig');
 const validations = {};
 
 validations.sanitize = (req, res, next) => {
-  otherHelper.sanitize(req, [
+  sanitizeHelper.sanitize(req, [
     {
       field: 'slider_name',
       sanitize: {
@@ -22,7 +24,7 @@ validations.sanitize = (req, res, next) => {
   next();
 };
 validations.validate = async (req, res, next) => {
-  let errors = otherHelper.validation(req.body, [
+  let errors = validateHelper.validation(req.body, [
     {
       field: 'slider_name',
       validate: [

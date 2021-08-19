@@ -4,23 +4,20 @@
  *
  */
 
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import Button from '@material-ui/core/Button';
-
-import { Link } from 'react-router-dom';
-import injectSaga from 'utils/injectSaga';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import * as mapDispatchToProps from './actions';
+import UsernameInput from './components/UsernameInput';
 import reducer from './reducer';
 import saga from './saga';
-import * as mapDispatchToProps from './actions';
 import { makeSelectErrors } from './selectors';
 
-import UsernameInput from './components/UsernameInput';
-import logo from '../../images/logo.png';
+
 
 const ForgotPasswordUser = ({
   classes,

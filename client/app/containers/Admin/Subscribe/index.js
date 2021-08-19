@@ -13,12 +13,6 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
 import Table from 'components/Table/Table';
 
 import injectSaga from 'utils/injectSaga';
@@ -33,35 +27,15 @@ import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
-import { FaTrashAlt, FaRegEye } from 'react-icons/fa';
-
-const styles = theme => ({
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaTrashAlt, FaRegEye, FaSearch } from 'react-icons/fa';
+import lid from '../../../assets/img/lid.svg';
 
 /* eslint-disable react/prefer-stateless-function */
-export class Subscribe extends React.PureComponent {
+export class Subscribe extends React.Component {
   static propTypes = {
     loadSubscriberRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -80,17 +54,46 @@ export class Subscribe extends React.PureComponent {
     this.props.loadSubscriberRequest(this.props.query);
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadSubscriberRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadSubscriberRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
+
   handleView = id => {
     this.props.push(`/admin/subscribe-manage/view/${id}`);
   };
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
     this.props.loadSubscriberRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
+  };
+
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
   };
 
   handleOpen = id => {
@@ -104,10 +107,6 @@ export class Subscribe extends React.PureComponent {
   handleDelete = id => {
     this.props.deleteOneRequest(id);
     this.setState({ open: false });
-  };
-
-  handlePagination = paging => {
-    this.props.loadSubscriberRequest(paging);
   };
 
   render() {
@@ -125,20 +124,19 @@ export class Subscribe extends React.PureComponent {
 
       <React.Fragment>
         <div className="flex">
-          <button
-            aria-label="Edit"
-            className=" px-1 text-center leading-none"
+          <span
+            className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative"
             onClick={() => this.handleView(_id)}
           >
-            <FaRegEye className="text-base text-blue-500 hover:text-blue-700" />
-          </button>
-
-          <button
-            className="ml-2 px-1 text-center leading-none"
+            <FaRegEye className="text-base text-blue-500" />
+          </span>
+          <span
+            className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
             onClick={() => this.handleOpen(_id)}
           >
-            <FaTrashAlt className="text-base text-red-400 hover:text-red-600" />
-          </button>
+            <img className="trash-lid" src={lid} alt="trash-id" />
+            <span className="w-3 h-3 rounded-b-sm bg-red-500 mt-1" />
+          </span>
         </div>
       </React.Fragment>,
     ]);
@@ -157,25 +155,23 @@ export class Subscribe extends React.PureComponent {
           <PageHeader>Subscribe Manage</PageHeader>
         </div>
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_email"
-                id="email"
-                placeholder="Search Subscriber"
-                className="m-auto inputbox"
-                value={query.find_email}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="inline-flex relative mr-4 w-64 mt-4">
+            <input
+              type="text"
+              name="find_email"
+              id="email"
+              placeholder="Search Subscriber"
+              className="m-auto inputbox pr-6"
+              value={query.find_email}
+              onChange={this.handleQueryChange}
+              onKeyDown={this.handleKeyPress}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
 
           <Table
@@ -196,19 +192,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminSubscribePage', reducer });
 const withSaga = injectSaga({ key: 'adminSubscribePage', saga });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(Subscribe);
+export default compose(withReducer, withSaga, withConnect)(Subscribe);

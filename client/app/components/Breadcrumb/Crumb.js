@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 
 export default function Crumb(props) {

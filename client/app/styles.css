@@ -2,6 +2,8 @@
 
 @tailwind components;
 
+/* /* General Css Starts */
+
 h1,
 h2,
 h3,
@@ -17,39 +19,9 @@ h6,
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
   color: inherit;
-}
-
-h1,
-.h1 {
-  font-size: 2.5rem;
-}
-
-h2,
-.h2 {
-  font-size: 2rem;
-}
-
-h3,
-.h3 {
-  font-size: 1.75rem;
-}
-
-h4,
-.h4 {
-  font-size: 1.5rem;
-}
-
-h5,
-.h5 {
-  font-size: 1.25rem;
-}
-
-h6,
-.h6 {
-  font-size: 1rem;
 }
 
 .list-circle {
@@ -57,11 +29,8 @@ h6,
   padding-left: 40px;
 }
 
-/* custom css starts */
-
 body {
   font-family: 'Roboto', sans-serif;
-  color: #555;
 }
 
 button:focus,
@@ -80,29 +49,20 @@ div.react-datepicker__input-container {
 }
 
 .inputbox {
-  display: block;
-  width: 100%;
-  padding: 8px 12px;
-  transition: all 0.2s ease-out;
-  background: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.875rem;
+  @apply block w-full py-2 px-3 transition-all bg-white border border-gray-300 rounded text-sm;
 }
+/* select.inputbox { height:38px;} */
+
 .inputbox:focus {
   outline: 0;
   box-shadow: 0 0 0 2px #bee3f8;
   border: 1px solid #63b3ed;
 }
-.inputbox.bg-white {
-  background: #ffffff;
-}
-select.inputbox {
-  height: 36px;
-}
+
 .inputbox[disabled] {
   opacity: 0.5;
 }
+label { @apply text-sm}
 
 .waftsrchstyle {
   width: 40px;
@@ -118,13 +78,13 @@ select.inputbox {
   min-width: 300px;
 }
 
-div#component-error-text {
+.error {
+  position: relative;
+  top: 4px;
   color: #ff3b30;
   margin: 0;
   font-size: 0.75rem;
   text-align: left;
-  margin-top: 8px;
-  min-height: 1em;
 }
 
 .waft-gradient {
@@ -158,19 +118,33 @@ div#component-error-text {
     background-position: -200% 0;
   }
 }
-
-.ease-in-out {
-  transition: all 0.2s ease-in-out;
-}
 .rotate-90 {
   transform: rotate(-90deg);
 }
 
 .btn {
-  @apply py-2 px-4 rounded text-white text-sm mt-4 transition-all duration-200;
+  @apply py-2 px-6 rounded text-sm mt-4 transition-all duration-200;
+}
+
+.btn.margin-none {
+  @apply mt-0;
 }
 .qr-code {
-  transform: scale(4);
+  transform: scale(2);
+}
+.tag {
+  @apply cursor-pointer bg-gray-200 mt-2 mr-1 px-2 py-1 text-sm inline-flex items-center;
+}
+.tag span {
+  @apply text-xs p-1;
+}
+.fade {
+  transition: opacity 0.25s linear;
+}
+
+.Waft_Tab .active {
+  @apply border-t-2;
+  border-top-color: #2a3c85;
 }
 
 @keyframes arrowtip {
@@ -181,6 +155,33 @@ div#component-error-text {
     top: 20px;
   }
 }
+
+.circular_loader {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: whiteSmoke;
+  box-shadow: 4px -40px 60px 5px #283772 inset;
+}
+
+.waftloader {
+  background: linear-gradient(to right, #2A3C85 50%, transparent 50%);
+  animation: spin 1s infinite linear;
+}
+.waftloader:before {
+  display: block;
+  content: '';
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
 
 .arrow_box {
   border: solid transparent;
@@ -194,29 +195,6 @@ div#component-error-text {
   animation: arrowtip 0.5s cubic-bezier(0, 1.1, 0.26, 1.08) 1s;
 }
 
-.pageheader {
-  display: flex;
-  align-items: center;
-}
-
-.backbtn {
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  margin-right: 20px;
-  justify-content: center;
-  box-shadow: inset 0 0 0 20px #fff;
-  @apply bg-blue-500;
-}
-.backbtn:hover {
-  box-shadow: inset 0 0 0 0px #fff;
-  @apply text-white;
-}
 
 .checkbox {
   @apply relative select-none inline-flex items-center mr-5 justify-start mt-4;
@@ -227,7 +205,7 @@ div#component-error-text {
 }
 
 .checkbox .box {
-  @apply w-5 h-5 rounded-sm border border-gray-400 mr-2 cursor-pointer inline-flex justify-center items-center relative transition duration-200;
+  @apply w-5 h-5 border border-gray-300 rounded mr-2 cursor-pointer inline-flex justify-center items-center relative transition-all;
 }
 
 .checkbox label {
@@ -276,14 +254,33 @@ div#component-error-text {
 }
 .label-inactive,
 .label-active {
-  @apply inline-block rounded-full py-px px-2 border bg-gray-100 text-xs text-gray-400;
+  @apply w-20 text-center rounded-full inline-block py-1 px-2 bg-gray-100 text-xs text-gray-400;
 }
 .label-active {
   @apply bg-green-100 text-green-500 border-green-200;
 }
 
-@tailwind utilities;
-
-.font-bold {
-  font-weight: 500;
+.label-inactive {
+  @apply bg-red-100 text-red-500 border-red-200;
 }
+
+/* animation */
+
+.animate-none {
+  animation: none;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@tailwind utilities;

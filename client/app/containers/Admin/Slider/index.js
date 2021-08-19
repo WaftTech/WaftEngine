@@ -8,18 +8,6 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 import qs from 'query-string';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Edit from '@material-ui/icons/Edit';
-import Close from '@material-ui/icons/Close';
-
-// core components
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table/Table';
 
 import { DATE_FORMAT } from '../../App/constants';
@@ -36,37 +24,12 @@ import PageContent from '../../../components/PageContent/PageContent';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt, FaPlus, FaRegQuestionCircle } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import {
+  FaPencilAlt,
+  FaPlus,
+  FaRegQuestionCircle,
+  FaSearch,
+} from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
 export class SliderPage extends React.Component {
@@ -74,13 +37,12 @@ export class SliderPage extends React.Component {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -107,6 +69,25 @@ export class SliderPage extends React.Component {
     this.props.loadAllRequest(this.props.query);
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
+
   handleAdd = () => {
     this.props.clearOne();
     this.props.push('/admin/slider-manage/add');
@@ -119,7 +100,10 @@ export class SliderPage extends React.Component {
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
     const queryString = qs.stringify({
       ...this.props.query,
       [e.target.name]: e.target.value,
@@ -132,14 +116,13 @@ export class SliderPage extends React.Component {
   handleSearch = e => {
     e.preventDefault();
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
-    const queryString = qs.stringify(paging);
-    this.props.push({
-      search: queryString,
-    });
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
   };
 
   handleOpen = id => {
@@ -168,11 +151,11 @@ export class SliderPage extends React.Component {
 
     const {
       classes,
-      all: { data, page, size, totaldata },
+      all: { data, page, size, totalData },
       query,
       loading,
     } = this.props;
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({ slider_name, slider_key, images, added_at, _id }) => [
         slider_name,
@@ -183,14 +166,14 @@ export class SliderPage extends React.Component {
         <React.Fragment>
           <div className="flex">
             <span
-              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
               <FaPencilAlt className="pencil" />
               <span className="bg-blue-500 dash" />
             </span>
             <span
-              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
               <img className="trash-lid" src={lid} alt="trash-id" />
@@ -255,25 +238,23 @@ export class SliderPage extends React.Component {
         )}
 
         <PageContent loading={loading}>
-          <div className="flex justify-between">
-            <div className="flex relative mr-2">
-              <input
-                type="text"
-                name="find_slider_name"
-                id="slider-name"
-                placeholder="Search Slider"
-                className="m-auto inputbox"
-                value={query.find_slider_name}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="flex relative mr-4 max-w-sm">
+            <input
+              type="text"
+              name="find_slider_name"
+              id="slider-name"
+              placeholder="Search Slider"
+              className="m-auto inputbox pr-6"
+              value={query.find_slider_name}
+              onChange={this.handleQueryChange}
+              onKeyDown={this.handleKeyPress}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
 
           <Table
@@ -287,6 +268,7 @@ export class SliderPage extends React.Component {
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}
+            emptyDataMsg="No Slider Found"
           />
         </PageContent>
       </>
@@ -300,19 +282,13 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'sliderManagePage', reducer });
 const withSaga = injectSaga({ key: 'sliderManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

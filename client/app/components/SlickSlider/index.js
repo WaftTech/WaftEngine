@@ -4,18 +4,16 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { makeSelectSlide } from '../../containers/App/selectors';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { loadSlideRequest } from '../../containers/App/actions';
-import LinkBoth from '../LinkBoth';
 import { IMAGE_BASE } from '../../containers/App/constants';
+import { makeSelectSlide } from '../../containers/App/selectors';
+import LinkBoth from '../LinkBoth';
 import './index.css';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -34,38 +32,54 @@ class SlickSlider extends React.PureComponent {
   }
 
   render() {
-    const { slideObj, show_link, show_caption } = this.props;
+    const { slideObj } = this.props;
     const slide = slideObj[this.props.slideKey];
-    let settings = {
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      dots: true,
-      centerMode: true,
-      centerPadding: '40px',
-      autoplay: true,
-      autoplaySpeed: 2000,
-      focusOnSelect: true,
-    };
+    let settings;
     try {
       if (slide.settings && typeof slide.settings === 'string') {
-        settings = JSON.parse(slide.settings);
+        settings = JSON.parse(`${slide.settings}`);
       }
     } catch (err) {
       console.log('something went wrong!', err);
     }
+    let combined;
+    if (!slide) return null; // maybe add a loader here
+    if (slide && slide.settings !== undefined) {
+      combined = { ...slide.slider_setting, ...settings };
+    } else {
+      combined = {
+        ...slide.slider_setting,
+      };
+    }
+    console.log('slider', combined);
+
+    if (!slide) return null; // maybe add a loader here
+    if (slide && slide.settings !== undefined) {
+      combined = { ...slide.slider_setting, ...settings };
+    } else {
+      combined = { ...slide.slider_setting };
+    }
     if (!slide) return null; // maybe add a loader here
     return (
-      <div className="slider">
-        <Slider {...settings}>
+      <div>
+        <Slider {...combined}>
           {slide.images.map(image => (
-            <LinkBoth to={show_link ? `${image.link}` : ''} key={image._id}>
+            <LinkBoth to={`${image.link ? image.link : ''}`} key={image._id}>
               <>
                 <img
-                  src={`${IMAGE_BASE}${image.image.path}`}
-                  style={{ maxWidth: 200, maxHeight: 200 }}
-                  alt="slider media"
+                  src={
+                    image.image && image.image.path && image.image.path !== null
+                      ? `${IMAGE_BASE}${image.image.path}`
+                      : ''
+                  }
+                  alt="slider image"
                 />
-                {show_caption && <h6>{image.caption}</h6>}
+                <div
+                  className="ckEditor"
+                  dangerouslySetInnerHTML={{
+                    __html: image.caption,
+                  }}
+                />
               </>
             </LinkBoth>
           ))}
@@ -83,9 +97,6 @@ const mapDispatchToProps = dispatch => ({
   loadSlide: payload => dispatch(loadSlideRequest(payload)),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(SlickSlider);

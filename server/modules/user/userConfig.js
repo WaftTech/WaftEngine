@@ -20,7 +20,8 @@ module.exports = {
   validate: {
     empty: 'This field is required',
     invalid: 'Invalid entry',
-    isEmail: 'Please input the email type data',
+    isNotNumber: 'Invalid. Must be only numbers',
+    isEmail: 'Please enter Valid Email',
     isMongoId: 'This is not mongo id',
     isEightChar: 'The password must be at least 8 character',
     invalidInput: 'invalid input',
@@ -34,6 +35,8 @@ module.exports = {
     isEqual: 'Password does not match',
     isGender: 'Provide valid gender',
     noGender: 'Please select your gender',
+    invalidLength: 'Please select Referal code between 6 to 8 length',
+    isPhone: 'Invalid phone no.',
   },
   save: 'User data saved successfully!!',
   delete: 'User data deleted successfully!!',
@@ -43,4 +46,7 @@ module.exports = {
   registerAdmin: 'User Register Successfully.',
   emailVerify: 'Email Verified Successful',
   subscribeFail: 'Subscription failed',
+  alverified: { message: 'Already verified. You can log in', is_verified: true },
+  alregistered: { message: 'Email/phone already registered. Check your mail or sms for verification code.', is_verified: false },
+  regnotverifed: { message: 'Email/mobile no not verified. Please check your mail or otp message.', is_verified: false },
 };

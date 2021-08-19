@@ -88,3 +88,7 @@ export const deleteOneFailure = payload => ({
 export const clearErrors = () => ({
   type: types.CLEAR_ERRORS,
 });
+export const setSliderValue = payload => ({
+  type: types.SET_SLIDER_VALUE,
+  payload,
+});

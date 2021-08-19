@@ -15,8 +15,7 @@ import {
   makeSelectPassword,
   makeSelectName,
 } from './selectors';
-import { setUser, setToken } from '../App/actions';
-import { enqueueSnackbar } from '../App/actions';
+import { setUser, setToken, enqueueSnackbar } from '../App/actions';
 
 // Individual exports for testing
 
@@ -41,7 +40,7 @@ export function* redirectOnSuccess(redirect) {
     yield put(push(redirect));
   } else {
     // do something
-    yield put(push('/'));
+    yield put(push(`/verify/${data.email}`));
   }
 }
 

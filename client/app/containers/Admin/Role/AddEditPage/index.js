@@ -5,12 +5,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
-
-// @material-ui/core
-import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 // core components
@@ -24,11 +18,7 @@ import {
 import * as mapDispatchToProps from '../actions';
 import PageHeader from '../../../../components/PageHeader/PageHeader';
 import PageContent from '../../../../components/PageContent/PageContent';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import SearchIcon from '@material-ui/icons/Search';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../../components/Loading';
-import Input from '../../../../components/customComponents/Input';
 import '../../../../components/Table/table.css';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
@@ -40,7 +30,6 @@ class AddEdit extends React.PureComponent {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
   };
@@ -95,15 +84,17 @@ class AddEdit extends React.PureComponent {
         </div>
         <PageContent>
           <div className="w-full md:w-1/2 pb-4">
-            <Input
-              label="Role Title"
-              inputclassName="inputbox"
-              inputid="role_title"
-              inputType="text"
+            <label>Role Title</label>
+            <input
+              className="inputbox"
+              id="role_title"
+              type="text"
               value={one.role_title}
               onChange={this.handleChange('role_title')}
-              error={errors.role_title}
             />
+            {errors && errors.role_title && errors.role_title.trim() !== '' && (
+              <div className="error">{errors.role_title}</div>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -116,13 +107,17 @@ class AddEdit extends React.PureComponent {
               onChange={this.handleChange('description')}
               required
             />
-            <div id="component-error-text">{errors.description}</div>
+            {errors &&
+              errors.description &&
+              errors.description.trim() !== '' && (
+                <div className="error">{errors.description}</div>
+              )}
           </div>
 
           <div className="checkbox">
             <input
               checked={one.is_active}
-              onClick={this.handleCheckedChange('is_active')}
+              onChange={this.handleChecked('is_active')}
               id="is_active"
               type="checkbox"
             />
@@ -135,7 +130,7 @@ class AddEdit extends React.PureComponent {
           </div>
 
           <button
-            className="block btn bg-blue-500 border border-blue-600 hover:bg-blue-600"
+            className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
             onClick={this.handleSave}
           >
             Save
@@ -155,39 +150,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-  withStyle,
-)(AddEdit);
+export default compose(withReducer, withSaga, withConnect)(AddEdit);

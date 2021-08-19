@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { Helmet } from 'react-helmet';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -24,7 +24,6 @@ import {
 } from './selectors';
 import * as mapDispatchToProps from './actions';
 
-import { Input } from '../../components/customComponents';
 import UsernameInput from './components/UsernameInput';
 import PasswordInput from './components/PasswordInput';
 import logo from '../../assets/img/logo.svg';
@@ -87,6 +86,9 @@ const LoginAdminPage = props => {
 
   return (
     <>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <Modal
         open={showEmailTwoFactor || showGoogleTwoFactor}
         handleClose={handleClose}
@@ -96,27 +98,28 @@ const LoginAdminPage = props => {
       >
         {showEmailTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <label>Enter the code</label>
+            <label className="text-xs">Check inbox for the code</label>
+            <input
               id="code"
               name="code"
-              subLabel="Check inbox for the code"
-              label="Enter the code"
-              error={errors.code}
               value={twoFactor && twoFactor.email && twoFactor.email.code}
               onChange={e => handleChange(e, 'email')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">{errors.code}</div>
           </div>
         )}
 
         {showGoogleTwoFactor && (
           <div className="border p-2 m-2">
-            <Input
+            <label>Enter the code</label>
+            <label className="text-xs">
+              Copy code from Google Authentication App
+            </label>
+            <input
               id="code"
               name="code"
-              subLabel="Copy code from Google Authentication App"
-              label="Enter the code"
-              error={errors.code}
               value={
                 twoFactor &&
                 twoFactor.google_authenticate &&
@@ -125,6 +128,7 @@ const LoginAdminPage = props => {
               onChange={e => handleChange(e, 'google_authenticate')}
               onKeyPress={e => e.key === 'Enter' && handleSubmitCode(e)}
             />
+            <div className="error">{errors.code}</div>
           </div>
         )}
       </Modal>
@@ -157,16 +161,16 @@ const LoginAdminPage = props => {
               <UsernameInput />
               <PasswordInput />
               <button
-                className="btn mt-4 w-full bg-blue-500 border border-blue-600 hover:bg-blue-600"
+                className="btn mt-4 w-full text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                 type="submit"
               >
                 {loading ? (
                   <div className="btn_loading">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
                     <span className="ml-2">Login</span>
+                    <div />
+                    <div />
+                    <div />
+                    <div />
                   </div>
                 ) : (
                   'Login'
@@ -181,7 +185,6 @@ const LoginAdminPage = props => {
 };
 
 LoginAdminPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -195,21 +198,9 @@ const mapStateToProps = createStructuredSelector({
   helperObj: makeSelectHelperObj(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'loginAdminPage', reducer });
 const withSaga = injectSaga({ key: 'loginAdminPage', saga });
 
-const styles = {};
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(LoginAdminPage);
+export default compose(withReducer, withSaga, withConnect)(LoginAdminPage);

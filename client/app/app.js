@@ -15,8 +15,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import jwtDecode from 'jwt-decode';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { SnackbarProvider } from 'notistack';
+// import { SnackbarProvider } from 'notistack';
 
 import history from 'utils/history';
 
@@ -77,26 +76,13 @@ if (tokenWithBearer) {
   }
 }
 
-const theme = createMuiTheme({
-  typography: {
-    // useNextVariants: true,
-  },
-  // palette: {
-  //   primary: 'blue',
-  // },
-});
-
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <MuiThemeProvider theme={theme}>
-          <ConnectedRouter history={history}>
-            <SnackbarProvider maxSnack={3}>
-              <App />
-            </SnackbarProvider>
-          </ConnectedRouter>
-        </MuiThemeProvider>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,

@@ -1,38 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- The first thing in any HTML file should be the charset -->
-    <meta charset="utf-8" />
 
-    <!-- Make the page mobile compatible -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <!-- The first thing in any HTML file should be the charset -->
+  <meta charset="utf-8" />
 
-    <!-- Allow installing the app to the homescreen -->
-    <meta name="mobile-web-app-capable" content="yes" />
+  <!-- Make the page mobile compatible -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- <link rel="icon" type="image/png" href="./assets/img/logo-icon.png"> -->
+  <!-- Allow installing the app to the homescreen -->
+  <meta name="mobile-web-app-capable" content="yes" />
 
-    <title>WaftEngine</title>
-    <meta
-      name="description"
-      content="WaftEngine is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost."
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <!-- <link rel="icon" type="image/png" href="./assets/img/logo-icon.png"> -->
 
-  <body>
-    <!-- Display a message if JS has been disabled on the browser. -->
-    <noscript
-      >If you're seeing this message, that means
-      <strong>JavaScript has been disabled on your browser</strong>, please
-      <strong>enable JS</strong> to make this app work.</noscript
-    >
+  <title>WaftEngine</title>
+  <meta name="description"
+    content="WaftEngine is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost." />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet" />
+</head>
 
-    <!-- The app hooks into this div -->
-    <div id="app" class="flex flex-col min-h-screen"></div>
-    <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically injects all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this file. Don't add any assets here! (Check out webpack.dev.babel.js and webpack.prod.babel.js if you want to know more) -->
-  </body>
+<body>
+  <!-- Display a message if JS has been disabled on the browser. -->
+  <noscript>If you're seeing this message, that means
+    <strong>JavaScript has been disabled on your browser</strong>, please
+    <strong>enable JS</strong> to make this app work.</noscript>
+
+  <!-- The app hooks into this div -->
+  <div id="app"></div>
+  <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically injects all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this file. Don't add any assets here! (Check out webpack.dev.babel.js and webpack.prod.babel.js if you want to know more) -->
+</body>
+
 </html>

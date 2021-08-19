@@ -19,7 +19,7 @@ menuController.getMenu = async (req, res, next) => {
 
   selectQuery = 'title key order is_active';
   let data = await otherHelper.getQuerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totaldata);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totalData);
 };
 
 const menuControl = async (req, res, next) => {
@@ -28,16 +28,16 @@ const menuControl = async (req, res, next) => {
     .sort({ order: 1 })
     .lean();
   const baseParents = [];
-  const childrens = [];
+  const baseChildren = [];
   all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
-      childrens.push(each);
+      baseChildren.push(each);
     }
   });
 
-  const child = utils.recursiveChildFinder(baseParents, childrens);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
   return child;
 };
 menuItemController.getMenuItem = async (req, res, next) => {
@@ -111,36 +111,16 @@ menuItemController.saveMenuItem = async (req, res, next) => {
 menuController.saveMenu = async (req, res, next) => {
   try {
     let menu = req.body;
-    if (menu && menu._id && menu.key) {
-      const checkIf = await menuSch.findOne({ key: menu.key, is_deleted: false, _id: { $ne: menu._id } });
-      if (checkIf) {
-        const error = { key: 'Key already exists!!' };
-        return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
-      }
-
+    if (menu && menu._id) {
       menu.updated_by = req.user.id;
       menu.updated_at = new Date();
-
-      const update = await menuSch.findByIdAndUpdate(
-        menu._id,
-        {
-          $set: menu,
-        },
-        { new: true },
-      );
-
+      const update = await menuSch.findByIdAndUpdate(menu._id, { $set: menu, }, { new: true },);
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, menuConfig.save, null);
     } else {
-      const checkIf = await menuSch.findOne({ key: menu.key, is_deleted: false });
-      if (checkIf) {
-        const error = { key: 'Key already exists!!' };
-        return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
-      }
       menu.added_by = req.user.id;
       menu.added_at = new Date();
       const newMenu = new menuSch(menu);
       const MenuSave = await newMenu.save();
-
       // const data = await menuControl(req, res, next);
       return otherHelper.sendResponse(res, httpStatus.OK, true, MenuSave, null, menuConfig.save, null);
     }
@@ -157,15 +137,15 @@ menuController.getEditMenu = async (req, res, next) => {
     .lean();
 
   const baseParents = [];
-  const childrens = [];
+  const baseChildren = [];
   all_menu.forEach(each => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
-      childrens.push(each);
+      baseChildren.push(each);
     }
   });
-  const child = utils.recursiveChildFinder(baseParents, childrens);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
 
   return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!!', null);
 };
@@ -185,7 +165,7 @@ menuController.deleteMenu = async (req, res, next) => {
 menuController.getMenuForUser = async (req, res, next) => {
   const id = await menuSch.findOne({ key: req.params.key, is_active: true }).select('key');
   const baseParents = [];
-  const childrens = [];
+  const baseChildren = [];
   let key = req.params.key;
   if (id && id._id) {
     key = id.key;
@@ -194,12 +174,40 @@ menuController.getMenuForUser = async (req, res, next) => {
       if (each.parent_menu == null) {
         baseParents.push(each);
       } else {
-        childrens.push(each);
+        baseChildren.push(each);
       }
     });
   }
-  const child = utils.recursiveChildFinder(baseParents, childrens);
+  const child = utils.recursiveChildFinder(baseParents, baseChildren);
   return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!!', null);
-};
+}
+
+menuController.selectMultipleData = async (req, res, next) => {
+  const { menu_item_id, type } = req.body;
+
+  if (type == 'is_active') {
+    const Data = await menuSch.updateMany(
+      { _id: { $in: menu_item_id } },
+      [{
+        $set: {
+          is_active: { $not: "$is_active" }
+        },
+      }],
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  }
+  else {
+    const Data = await menuSch.updateMany(
+      { _id: { $in: menu_item_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  };
+}
 
 module.exports = { menuController, menuItemController };

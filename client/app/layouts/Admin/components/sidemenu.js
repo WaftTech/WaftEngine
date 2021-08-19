@@ -1,4 +1,3 @@
-// https://material.io/tools/icons
 import React from 'react';
 
 import {
@@ -28,7 +27,7 @@ import {
   FaAddressCard,
   FaMailBulk,
   FaExclamationTriangle,
-  FaCommentDots,
+  FaCommentDots, FaTenge, FaShareSquare, FaQuoteLeft
 } from 'react-icons/fa';
 
 const menu = [
@@ -45,15 +44,22 @@ const menu = [
     menu: [
       {
         key: '2.1',
-        name: 'Section',
-        link: '/admin/content-manage',
-        icon: <FaAlignLeft />,
-      },
-      {
-        key: '2.2',
-        name: 'Page',
-        icon: <FaRegFile />,
-        link: '/admin/page-manage',
+        name: 'HTML',
+        icon: <FaTenge />,
+        menu: [
+          {
+            key: '2.1.1',
+            name: 'Section',
+            icon: <FaAlignLeft />,
+            link: '/admin/section-content',
+          },
+          {
+            key: '2.1.2',
+            name: 'Page',
+            icon: <FaRegFile />,
+            link: '/admin/page-content',
+          },
+        ],
       },
       {
         key: '2.7',
@@ -92,6 +98,7 @@ const menu = [
           },
         ],
       },
+
       {
         key: '2.2',
         name: 'FAQ',
@@ -110,6 +117,18 @@ const menu = [
             link: '/admin/faq-cat-manage',
           },
         ],
+      },
+      {
+        key: '2.8',
+        name: 'Testimonial',
+        icon: <FaQuoteLeft />,
+        link: '/admin/testimonial-manage',
+      },
+      {
+        key: '2.9',
+        name: 'Social Media',
+        icon: <FaShareSquare />,
+        link: '/admin/social-media',
       },
     ],
   },
@@ -162,11 +181,17 @@ const menu = [
         icon: <FaEnvelope />,
         link: '/admin/template-manage',
       },
+      // {
+      //   key: '4.2',
+      //   name: 'General Settings',
+      //   icon: <FaCog />,
+      //   link: '/admin/settings',
+      // },
       {
         key: '4.2',
-        name: 'General Settings',
-        icon: <FaCog />,
-        link: '/admin/settings',
+        name: 'Global Settings',
+        icon: <FaCogs />,
+        link: '/admin/global-setting',
       },
     ],
   },
@@ -192,12 +217,6 @@ const menu = [
         name: 'Errors',
         icon: <FaExclamationTriangle />,
         link: '/admin/errors',
-      },
-      {
-        key: '5.5',
-        name: 'Comment',
-        icon: <FaCommentDots />,
-        link: '/admin/blog-comment-manage',
       },
     ],
   },

@@ -61,7 +61,7 @@ export const ResetPasswordPage = props => {
   return (
     <div className="max-w-lg mx-auto p-16">
       <h1 className="text-2xl font-bold">
-        Reset your password with the help of code sent to your email...
+        Reset your password
       </h1>
       <input
         className="inputbox w-full"
@@ -73,7 +73,7 @@ export const ResetPasswordPage = props => {
         onChange={handleChange}
         disabled
       />
-      <div id="component-error-text">{errors && errors.email}</div>
+      <div className="error">{errors && errors.email}</div>
 
       <input
         className="inputbox w-full"
@@ -84,27 +84,27 @@ export const ResetPasswordPage = props => {
         placeholder="Enter code"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.code}</div>
+      <div className="error">{errors && errors.code}</div>
       <input
         className="inputbox w-full mt-4"
         id="password"
         name="password"
-        type="text"
+        type="password"
         value={defaultData.password}
         placeholder="Enter password"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.password}</div>
+      <div className="error">{errors && errors.password}</div>
       <input
         className="inputbox w-full mt-4"
         id="confirm-password"
         name="confirm_password"
-        type="text"
+        type="password"
         value={defaultData.confirm_password}
         placeholder="Confirm password"
         onChange={handleChange}
       />
-      <div id="component-error-text">{errors && errors.confirm_password}</div>
+      <div className="error">{errors && errors.confirm_password}</div>
       <button
         className="py-2 px-6 rounded mt-4 text-sm text-white bg-primary uppercase btn-theme"
         onClick={handleSubmit}
@@ -128,11 +128,5 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-export default compose(
-  withConnect,
-  memo,
-)(ResetPasswordPage);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+export default compose(withConnect, memo)(ResetPasswordPage);

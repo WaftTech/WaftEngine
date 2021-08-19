@@ -19,7 +19,7 @@ export const initialState = {
     data: [],
     page: 1,
     size: 10,
-    totaldata: 0,
+    totalData: 0,
   },
   one: {
     title: '',
@@ -51,6 +51,7 @@ export const initialState = {
   tempMetaKeyword: '',
   loading: false,
   errors: { title: '', slug_url: '', description: '' },
+  updateCalled: false,
 };
 
 /* eslint-disable default-case */
@@ -126,11 +127,21 @@ const reducer = (state = initialState, action) =>
       case types.SET_ERROR_VALUE:
         draft.errors = action.payload;
         break;
+      case types.ADD_EDIT_REQUEST:
+        draft.loading = true;
+        break;
       case types.ADD_EDIT_SUCCESS:
         draft.helper.showQuickEdit = false;
+        draft.loading = false;
+
         break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
+        draft.loading = false;
+        break;
+
+      case types.SET_UPDATE_CALLED:
+        draft.updateCalled = action.payload;
         break;
     }
   });

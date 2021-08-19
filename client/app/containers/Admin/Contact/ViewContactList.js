@@ -8,8 +8,6 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -19,8 +17,6 @@ import { makeSelectOne, makeSelectLoading } from './selectors';
 import { DATE_FORMAT } from '../../App/constants';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
 import Loading from '../../../components/Loading';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -31,7 +27,6 @@ export class ViewContacts extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
   };
 
@@ -56,7 +51,7 @@ export class ViewContacts extends React.Component {
         </Helmet>
         <div className="flex justify-between my-3">
           <PageHeader>
-            <span className="backbtn" onClick={this.handleGoBack}>
+            <span className="backbtn" onClick={this.handleBack}>
               <FaArrowLeft className="text-xl" />
             </span>
             Contact Details
@@ -100,31 +95,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminContactListPage', reducer });
 const withSaga = injectSaga({ key: 'adminContactListPage', saga });
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-  withStyle,
-)(ViewContacts);
+export default compose(withReducer, withSaga, withConnect)(ViewContacts);

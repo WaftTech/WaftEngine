@@ -2,26 +2,90 @@ const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
 const fileSch = require('./fileSchema');
 const folderSch = require('./folderSchema');
+const userSch = require('../user/userSchema');
+const { getSetting } = require('../../helper/settings.helper');
 const fileController = {};
 
 fileController.GetFileAndFolder = async (req, res, next) => {
   try {
+    const is_seller = req.query.is_seller == 'true' ? true : false;
+    const search = req.query.search;
+    let { page, size, sortQuery, searchQuery, selectQuery, populate } = otherHelper.parseFilters(req, 10, false);
+
+    let term;
+    // if (search) {
+    term = { $regex: search || '', $options: 'i' };
+    let seller_id = null;
+    if (is_seller) {
+      const d = await userSch.findById(req.user.id).select({ seller: 1 });
+      seller_id = d.seller.seller;
+    }
     let id = '';
     if (req.params.id == 'undefined' || req.params.id === 'root') {
-      const root = await folderSch.findOne({ is_root: true });
-      id = root._id;
+      if (is_seller) {
+        const root = await folderSch.findOne({ is_root: true, is_seller: is_seller, seller_id: seller_id });
+        if (root && root._id) id = root._id;
+        else {
+          const rootFolder = new folderSch({ name: 'Root', is_root: true, path: [], added_by: req.user.id, is_seller: true, seller_id: seller_id });
+          const root = await rootFolder.save();
+          id = root._id;
+        }
+      } else {
+        const root = await folderSch.findOne({ is_root: true, is_seller: is_seller });
+        id = root._id;
+      }
     } else {
       id = req.params.id;
     }
+    let selfFilter = { is_deleted: false, _id: id, is_seller: is_seller };
+    let fileFilter = { is_deleted: false, folder_id: id, is_seller: is_seller, renamed_name: term };
+    let folderFilter = { is_deleted: false, parent_folder: id, is_seller: is_seller, name: term };
+    if (is_seller) {
+      selfFilter = { ...selfFilter, seller_id: seller_id };
+      fileFilter = { ...fileFilter, seller_id: seller_id, renamed_name: term };
+      folderFilter = { ...folderFilter, seller_id: seller_id, name: term };
+    }
     const self = await folderSch
-      .findOne({ is_deleted: false, _id: id })
+      .findOne(selfFilter)
       .populate([{ path: 'path', select: { name: 1 } }])
-      .select({ name: 1, path: 1 });
-    const files = await fileSch.find({ is_deleted: false, folder_id: id });
-    const folders = await folderSch.find({ is_deleted: false, parent_folder: id }).select({ name: 1 });
-    const totalFile = files.length;
-    const totalFolder = folders.length;
-    otherHelper.sendResponse(res, httpStatus.OK, true, { folders: { data: folders, totaldata: totalFolder }, files: { data: files, totaldata: totalFile }, self: self }, null, 'files and folders get success!!', null);
+      .select({ name: 1, path: 1, _id: 1 })
+    sortQuery = { "added_at": 1 }
+
+    let folders = await otherHelper.getQuerySendResponse(folderSch, page, size, sortQuery, folderFilter, selectQuery, next, populate);
+    let totalFolderCount = await folderSch.countDocuments(folderFilter);
+    let totalFilesCount = await fileSch.countDocuments(fileFilter);
+    total = totalFolderCount + totalFilesCount;
+
+    let tempRatio = totalFolderCount / size;
+    if (tempRatio > page) {
+      var skipFiles = 0;
+      var limitFiles = size - folders.data.length;
+    } else {
+      if (folders.data.length == 0) {
+        skipFiles = (page - 1) * size - totalFolderCount;
+        limitFiles = size;
+      } else {
+        skipFiles = 0;
+        limitFiles = size - folders.data.length;
+      }
+    }
+    let files = {};
+    if (limitFiles != 0) {
+      files.data = await fileSch.find(fileFilter).select(selectQuery).sort(sortQuery).skip(skipFiles).limit(limitFiles);
+    } else {
+      files.data = [];
+    }
+
+    return otherHelper.paginationSendResponse(
+      res,
+      httpStatus.OK,
+      true,
+      {
+        folders: { data: folders.data, totalData: folders.data.length },
+        files: { data: files.data, totalData: files.data.length },
+        self: self,
+      },
+      'files and folders get success!!', page, size, total, sortQuery);
   } catch (err) {
     next(err);
   }
@@ -66,15 +130,7 @@ fileController.UploadFiles = async (req, res, next) => {
       let file = req.files[i];
       file.added_by = req.user.id;
       file.renamed_name = file.originalname;
-      file.destination =
-        file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      file.path = file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
+
       file.folder_id = req.params.folder_id;
       const newFile = new fileSch(file);
       const fileSave = await newFile.save();
@@ -100,15 +156,6 @@ fileController.UploadFilesToRoot = async (req, res, next) => {
       let file = req.files[i];
       file.added_by = req.user.id;
       file.renamed_name = file.originalname;
-      file.destination =
-        file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      file.path = file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
       if (id) file.folder_id = id;
       const newFile = new fileSch(file);
       const fileSave = await newFile.save();

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bugModule = require('../../modules/bug/bugController');
-const { authorization, authentication } = require('../../middleware/authentication.middleware');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
 
-router.get('/', authorization, authentication, bugModule.GetErrors);
-router.get('/grby', authorization, bugModule.GetErrorsGroupBy);
-router.delete('/all', authorization, authentication, bugModule.DeleteAll);
-router.delete('/:id', authorization, authentication, bugModule.DeleteError);
+router.get('/', authentication, authorization, bugModule.GetErrors);
+router.get('/grby', authentication, bugModule.GetErrorsGroupBy);
+router.delete('/all', authentication, authorization, bugModule.DeleteAll);
+router.delete('/:id', authentication, authorization, bugModule.DeleteError);
 
 module.exports = router;

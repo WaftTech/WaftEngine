@@ -1,28 +1,23 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-
-import injectSaga from 'utils/injectSaga';
+import { FaArrowLeft } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-import reducer from './reducer';
-import * as mapDispatchToProps from './actions';
-import saga from './saga';
-import { makeSelectOne, makeSelectLoading } from './selectors';
-import { DATE_FORMAT } from '../../App/constants';
+import injectSaga from 'utils/injectSaga';
+import Loading from '../../../components/Loading';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
-import BackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
-import Loading from '../../../components/Loading';
-import { FaArrowLeft } from 'react-icons/fa';
+import { DATE_FORMAT } from '../../App/constants';
+import * as mapDispatchToProps from './actions';
+import reducer from './reducer';
+import saga from './saga';
+import { makeSelectLoading, makeSelectOne } from './selectors';
 
 export class ViewSubscriber extends React.Component {
   static propTypes = {
@@ -31,7 +26,6 @@ export class ViewSubscriber extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.object,
     }),
-    classes: PropTypes.object.isRequired,
     one: PropTypes.object.isRequired,
   };
 
@@ -90,31 +84,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'adminSubscribePage', reducer });
 const withSaga = injectSaga({ key: 'adminSubscribePage', saga });
 
-const styles = theme => ({
-  backbtn: {
-    padding: 0,
-    height: '40px',
-    width: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: '50%',
-    marginRight: '5px',
-  },
-});
-
-const withStyle = withStyles(styles);
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-  withStyle,
-)(ViewSubscriber);
+export default compose(withReducer, withSaga, withConnect)(ViewSubscriber);

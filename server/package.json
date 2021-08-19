@@ -6,9 +6,7 @@
   "scripts": {
     "client": "npm start --prefix ../client",
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +30,7 @@
     "mongoose": "^5.9.11",
     "morgan": "^1.10.0",
     "multer": "^1.4.0",
+    "node-cache": "^5.1.2",
     "nodemailer": "^4.6.7",
     "passport": "^0.4.0",
     "passport-facebook-token": "^3.3.0",
@@ -42,11 +41,11 @@
     "request-promise": "^4.2.2",
     "snyk": "^1.316.1",
     "speakeasy": "^2.0.0",
+    "uniq": "^1.0.1",
     "useragent": "^2.3.0",
     "validator": "^10.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
-  },
-  "snyk": true
+  }
 }

@@ -1,30 +1,29 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-// @material-ui/core components
-import TablePagination from '@material-ui/core/TablePagination';
-import style from './table.css';
-
-// core components
+import React from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import './table.css';
 
 /* eslint-disable react/no-array-index-key */
 function CustomTable({ ...props }) {
   const {
     classes,
+    loading,
     tableHead,
     tableData,
     tableHeaderColor,
     pagination,
     handlePagination,
+    emptyDataMsg,
   } = props;
   return (
-    <div className="bg-white mt-4 border-t">
+    <div className="bg-white mt-4">
       <table className="w-full text-left table table-auto">
         {tableHead !== undefined ? (
           <thead>
             <tr>
               {tableHead.map((prop, key) => (
                 <th
-                  className="py-2 px-2 font-bold text-sm text-gray-800 border-b border-gray-300"
+                  className="py-2 px-2 font-medium text-sm text-gray-500 border-t border-b border-gray-300"
                   key={key}
                 >
                   {prop}
@@ -33,49 +32,102 @@ function CustomTable({ ...props }) {
             </tr>
           </thead>
         ) : null}
-        <tbody>
-          {tableData.map((prop, key) => (
-            <tr key={key}>
-              {prop.map((each, index) => (
-                <td
-                  className="px-2 py-1 text-sm border-gray-200 text-gray-700"
-                  key={index}
-                >
-                  {each}
-                </td>
-              ))}
+        {loading ? (
+          <tbody>
+            <tr>
+              <td colSpan={tableHead.length} className="py-2 text-center">
+                <div className="circular_loader waftloader"></div>
+              </td>
             </tr>
-          ))}
-        </tbody>
+          </tbody>
+        ) : (tableData.length < 1 || (pagination && pagination.totaldata === 0)) ? (
+          <p className="text-center px-2 py-1 text-sm border-gray-200 text-gray-700">
+            {emptyDataMsg || 'No Data Found'}
+          </p>
+        ) : (
+          <tbody>
+            {tableData.map((prop, key) => (
+              <tr key={key}>
+                {prop.map((each, index) => (
+                  <td
+                    className="px-2 py-1 text-sm border-gray-200 text-gray-700"
+                    key={index}
+                  >
+                    {each}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        )}
       </table>
-      <table className="w-full border-t border-gray-300">
-        <tbody>
-          <tr>
-            {pagination && handlePagination && (
-              <TablePagination
-                style={{ display: 'flex', justifyContent: 'flex-start' }}
-                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                colSpan={3}
-                count={pagination.totaldata}
-                rowsPerPage={pagination.size}
-                page={pagination.page - 1}
-                backIconButtonProps={{
-                  'aria-label': 'Previous Page',
+      {pagination && handlePagination && (
+        <>
+          <div className="flex justify-end items-center pt-2 border-t border-gray-200">
+            <div className="inline-flex items-center justify-end ">
+              <span className="text-xs text-gray-500">rows per page</span>{' '}
+              <select
+                className="inputbox text-xs w-12 h-6 p-0 mx-2"
+                value={pagination.size || 10}
+                onChange={e => {
+                  handlePagination({ ...pagination, size: e.target.value });
                 }}
-                nextIconButtonProps={{
-                  'aria-label': 'Next Page',
+              >
+                {[5, 10, 25, 50, 100].map(each => (
+                  <option value={each} key={each}>
+                    {each}
+                  </option>
+                ))}
+              </select>
+              <span className="mr-5 text-xs text-gray-500">
+                page {pagination.page} of{' '}
+                {Math.ceil(pagination.totaldata / pagination.size)}
+                <span className="pl-4">
+                  total data : {pagination.totaldata}
+                </span>
+              </span>
+              <span
+                onClick={() => {
+                  if (1 === pagination.page) {
+                    return;
+                  }
+                  handlePagination({
+                    ...pagination,
+                    page: pagination.page - 1,
+                  });
                 }}
-                onChangePage={(e, page) =>
-                  handlePagination({ ...pagination, page: page + 1 })
-                }
-                onChangeRowsPerPage={e =>
-                  handlePagination({ ...pagination, size: e.target.value })
-                }
-              />
-            )}
-          </tr>
-        </tbody>
-      </table>{' '}
+                className={`${1 === pagination.page
+                  ? 'opacity-25 pointer-events-none'
+                  : 'hover:bg-blue-500 hover:text-white'
+                  } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
+              >
+                <FaChevronLeft />
+              </span>
+              <span
+                onClick={() => {
+                  if (
+                    Math.ceil(pagination.totaldata / pagination.size) ===
+                    pagination.page
+                  ) {
+                    return;
+                  }
+                  handlePagination({
+                    ...pagination,
+                    page: pagination.page + 1,
+                  });
+                }}
+                className={`${Math.ceil(pagination.totaldata / pagination.size) ===
+                  pagination.page
+                  ? 'opacity-25 pointer-events-none'
+                  : 'hover:bg-blue-500 hover:text-white'
+                  } w-8 h-8 rounded cursor-pointer inline-flex items-center justify-center ml-1 text-blue-500`}
+              >
+                <FaChevronRight />
+              </span>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

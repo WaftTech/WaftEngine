@@ -7,17 +7,7 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import Fab from '@material-ui/core/Fab';
 import Table from 'components/Table';
-
 import { DATE_FORMAT } from '../../App/constants';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import PageContent from '../../../components/PageContent/PageContent';
@@ -27,48 +17,24 @@ import reducer from './reducer';
 import saga from './saga';
 import * as mapDispatchToProps from './actions';
 
-import { makeSelectAll, makeSelectQuery, makeSelectLoading } from './selectors';
+import {
+  makeSelectAll,
+  makeSelectQuery,
+  makeSelectLoading,
+  makeSelectCategory,
+} from './selectors';
 import DeleteDialog from '../../../components/DeleteDialog';
 import Loading from '../../../components/Loading';
 import lid from '../../../assets/img/lid.svg';
-import { FaPencilAlt } from 'react-icons/fa';
-
-const styles = theme => ({
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
+import { FaPencilAlt, FaSearch, FaPlus } from 'react-icons/fa';
 
 /* eslint-disable react/prefer-stateless-function */
-export class FAQManagePage extends React.PureComponent {
+export class FAQManagePage extends React.Component {
   static propTypes = {
     loadAllRequest: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     clearOne: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -86,7 +52,27 @@ export class FAQManagePage extends React.PureComponent {
   componentDidMount() {
     this.props.clearQuery();
     this.props.loadAllRequest(this.props.query);
+    this.props.loadCategoryRequest();
   }
+
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
 
   handleAdd = () => {
     this.props.clearOne();
@@ -98,12 +84,22 @@ export class FAQManagePage extends React.PureComponent {
   };
 
   handleQueryChange = e => {
-    e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    // e.persist();
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
+  };
+
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
   };
 
   handleOpen = id => {
@@ -119,16 +115,13 @@ export class FAQManagePage extends React.PureComponent {
     this.setState({ open: false });
   };
 
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
-  };
-
   render() {
     const { classes } = this.props;
     const {
       all: { data, page, size, totaldata },
       query,
       loading,
+      category,
     } = this.props;
     const tablePagination = { page, size, totaldata };
     const tableData = data.map(
@@ -140,14 +133,14 @@ export class FAQManagePage extends React.PureComponent {
         <>
           <div className="flex">
             <span
-              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
               <FaPencilAlt className="pencil" />
               <span className="bg-blue-500 dash" />
             </span>
             <span
-              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
               <img className="trash-lid" src={lid} alt="trash-id" />
@@ -171,37 +164,51 @@ export class FAQManagePage extends React.PureComponent {
         <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>FAQ Manage</PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <PageContent loading={loading}>
-          <div className="flex">
-            <div className="flex relative">
-              <input
-                type="text"
-                name="find_question"
-                id="faq-question"
-                placeholder="Search FAQs by question"
-                className="m-auto inputbox"
-                value={query.find_question}
-                onChange={this.handleQueryChange}
-              />
-              <IconButton
-                aria-label="Search"
-                className={`${classes.waftsrch} waftsrchstyle`}
-                onClick={this.handleSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </div>
+          <div className="flex relative mr-4 max-w-lg">
+            <select
+              className="inputbox mr-2"
+              value={query.find_category || ''}
+              name="find_category"
+              onChange={this.handleQueryChange}
+              onMouseLeave={this.handleSearch}
+            >
+              <option value="">Choose category</option>
+              {category &&
+                category.length &&
+                category.map(each => (
+                  <option key={each._id} value={each._id}>
+                    {each.title}
+                  </option>
+                ))}
+            </select>
+
+            <input
+              type="text"
+              name="find_question"
+              id="faq-question"
+              placeholder="Search Questions"
+              className="m-auto inputbox pr-6"
+              value={query.find_question}
+              onChange={this.handleQueryChange}
+              onKeyDown={this.handleKeyPress}
+            />
+            <span
+              className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
+              onClick={this.handleSearch}
+            >
+              <FaSearch />
+            </span>
           </div>
           <Table
             tableHead={[
@@ -229,21 +236,16 @@ const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
   query: makeSelectQuery(),
   loading: makeSelectLoading(),
+  category: makeSelectCategory(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'faqManagePage', reducer });
 const withSaga = injectSaga({ key: 'faqManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

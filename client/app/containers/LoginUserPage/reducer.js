@@ -14,6 +14,7 @@ export const initialState = {
   twoFactor: {},
   helperObj: { showEmailTwoFactor: false, showGoogleTwoFactor: false },
   loadingObj: { loggingUser: false, sendingCode: false },
+  open: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -63,6 +64,14 @@ const loginUserPageReducer = (state = initialState, action) =>
         break;
       case types.ADD_TWO_FACTOR_SUCCESS:
         draft.loadingObj.sendingCode = false;
+        break;
+
+      case types.SET_OPEN:
+        draft.open = action.payload;
+        break;
+
+      case types.LOGIN_WITH_GOOGLE_SUCCESS:
+        draft.open = true;
         break;
     }
   });

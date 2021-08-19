@@ -1,24 +1,21 @@
-import React, { useState } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-
-import { withStyles } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
-import MainListItems from './components/MainListItem';
-import { logoutRequest } from '../../containers/App/actions';
-import Logo from '../../assets/img/logo-white.svg';
-import LogoIcon from '../../assets/img/logo-icon-white.svg';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { FaAngleDown, FaExternalLinkAlt } from 'react-icons/fa';
-import routes from '../../routes/admin';
-
-import NotFoundPage from '../../containers/NotFoundPage/Loadable';
+import { connect } from 'react-redux';
+import { Link, Route, Switch } from 'react-router-dom';
+import { compose } from 'redux';
+import LogoIcon from '../../assets/img/logo-icon-white.svg';
+import Logo from '../../assets/img/logo-white.svg';
 import ColoredScrollbars from '../../components/ColoredScrollbars';
+import DropdownMenu from '../../components/DropdownMenu/index';
+import { logoutRequest } from '../../containers/App/actions';
+import NotFoundPage from '../../containers/NotFoundPage/Loadable';
+import routes from '../../routes/admin';
+import MainListItems from './components/MainListItem';
+import './admin.css';
+import { IMAGE_BASE } from '../../containers/App/constants';
 
 const switchRoutes = roles => {
   const route = window.localStorage.getItem('routes');
@@ -197,115 +194,106 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
 
           <MainListItems />
         </ColoredScrollbars>
-        <ColoredScrollbars
-          autoHide
-          autoHideTimeout={1000}
-          autoHideDuration={200}
-          style={{
-            height: '100vh',
-            backgroundColor: '#f9f9f9',
-          }}
-        >
-          <main className="flex-1 flex flex-col justify-between pt-16">
-            <div
-              className="bg-white border-b flex top-0 justify-between fixed z-40"
-              style={{ width: 'calc(100% - 220px)' }}
-            >
-              <div className="flex-1 flex items-center h-16">
-                <Link
-                  target="_blank"
-                  className="rounded px-2 py-2 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 border border-blue-600 hover:bg-blue-600 transition-all duration-100 ease-in"
-                  to="/"
-                >
-                  Visit Site
-                  <FaExternalLinkAlt className="ml-2 text-xs" />
-                </Link>
-                <a
-                  className="pl-8 text-sm"
-                  target="_blank"
-                  href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
-                >
-                  Docs
-                </a>
-                <a
-                  className="pl-8 text-sm"
-                  target="_blank"
-                  href="https://waftengine.org/blog"
-                >
-                  Blog
-                </a>
-                <a
-                  className="pl-8 text-sm"
-                  target="_blank"
-                  href="https://waftengine.org"
-                >
-                  Forum
-                </a>
-              </div>
-
-              <button
-                className="flex items-center justify-end px-6 hover:bg-gray-100"
-                onClick={handleMenu}
+        <main className="flex-1 flex flex-col justify-between pt-16 bg-gray-50 h-screen overflow-auto">
+          <div
+            className="bg-white dark:bg-gray-800 border-b flex top-0 justify-between fixed z-40"
+            style={{ width: 'calc(100% - 220px)' }}
+          >
+            <div className="flex-1 flex items-center h-16">
+              <Link
+                target="_blank"
+                className="rounded px-2 py-2 ml-6 leading-none flex items-center text-sm text-white bg-blue-500 border border-blue-600 hover:bg-blue-600 transition-all duration-100 ease-in"
+                to="/"
               >
-                <img
-                  className="w-8 h-8 rounded-full overflow-hidden"
-                  src={LogoIcon}
-                  alt="profile image"
-                />
-                <div className="px-3 text-left">
-                  <span className="block capitalize text-sm">{users.name}</span>
-                  <span className="block leading-none truncate capitalize text-xs text-gray-600">
-                    superadmin
-                  </span>
-                </div>
-                <FaAngleDown className="opacity-50" />
-              </button>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorel}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={anchorOpen}
-                onClose={handleClose}
+                Visit Site
+                <FaExternalLinkAlt className="ml-2 text-xs" />
+              </Link>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
               >
-                <Link
-                  to="/admin/dashboard"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                  onClick={handleClose}
-                >
-                  <MenuItem>Dashboard</MenuItem>
-                </Link>
-                <Link
-                  to="/admin/profile"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                  onClick={handleClose}
-                >
-                  <MenuItem>Profile</MenuItem>
-                </Link>
-                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-              </Menu>
+                Docs
+              </a>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org/blog"
+              >
+                Blog
+              </a>
+              <a
+                className="pl-8 text-sm"
+                target="_blank"
+                href="https://waftengine.org"
+              >
+                Forum
+              </a>
             </div>
-            <div className="flex-1 m-6">{switchRoutes(roles)}</div>
-            {/* <div className="border-t bg-white h-16 flex items-center justify-center">
-              <p className="text-center text-gray-500 text-sm">
-                WaftEngine v1.0.1
-              </p>
-            </div> */}
-          </main>
-        </ColoredScrollbars>
+
+            <DropdownMenu
+              main={
+                <button className="flex items-center justify-end h-16 px-6 hover:bg-gray-100">
+                  <img
+                    className="w-8 h-8 rounded-full overflow-hidden"
+                    src={
+                      users.image && users.image.path
+                        ? `${IMAGE_BASE}${users.image.path}`
+                        : LogoIcon
+                    }
+                    alt="profile image"
+                  />
+                  <div className="px-3 text-left">
+                    <span className="block capitalize text-sm">
+                      {users.name}
+                    </span>
+                    <span className="block leading-none truncate capitalize text-xs text-gray-600">
+                      {users.roles &&
+                      users.roles[0] &&
+                      users.roles[0].role_title
+                        ? users.roles[0].role_title
+                        : ''}
+                    </span>
+                  </div>
+                  <FaAngleDown className="opacity-50" />
+                </button>
+              }
+              items={
+                <>
+                  <Link
+                    to="/admin/dashboard"
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                  >
+                    <p>Dashboard</p>
+                  </Link>
+                  <Link
+                    to="/admin/profile"
+                    style={{ textDecoration: 'none', color: 'black' }}
+                    onClick={handleClose}
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                  >
+                    <p>Profile</p>
+                  </Link>
+                  <p
+                    className="py-2 block px-4 hover:bg-gray-100 cursor-pointer"
+                    onClick={handleLogout}
+                  >
+                    Log Out
+                  </p>
+                </>
+              }
+            />
+          </div>
+          <div className="flex-1 mx-6 my-2">{switchRoutes(roles)}</div>
+        </main>
       </div>
     </React.Fragment>
   );
 };
 
 AdminLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
   logoutRequest: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,
@@ -316,14 +304,6 @@ const mapStateToProps = ({ global }) => ({
   users: global.user,
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { logoutRequest, push },
-);
+const withConnect = connect(mapStateToProps, { logoutRequest, push });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withConnect,
-  withStyle,
-)(AdminLayout);
+export default compose(withConnect)(AdminLayout);

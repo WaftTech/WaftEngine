@@ -48,11 +48,11 @@ function* loadOne(action) {
 
 function* redirectOnSuccess() {
   yield take(types.ADD_EDIT_SUCCESS);
-  yield put(push('/admin/content-manage'));
+  yield put(push('/admin/section-content'));
 }
 
 function* addEdit() {
-  // const successWatcher = yield fork(redirectOnSuccess);
+  const successWatcher = yield fork(redirectOnSuccess);
   const token = yield select(makeSelectToken());
   const data = yield select(makeSelectOne());
   yield fork(
@@ -65,7 +65,7 @@ function* addEdit() {
     ),
   );
   yield take([LOCATION_CHANGE, types.ADD_EDIT_FAILURE]);
-  // yield cancel(successWatcher);
+  yield cancel(successWatcher);
 }
 function* deleteContent(action) {
   const token = yield select(makeSelectToken());

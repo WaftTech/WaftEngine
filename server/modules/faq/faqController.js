@@ -23,6 +23,7 @@ faqController.PostFaq = async (req, res, next) => {
     next(err);
   }
 };
+
 faqController.PostFaqCat = async (req, res, next) => {
   try {
     const faqCat = req.body;
@@ -47,23 +48,17 @@ faqController.GetFaq = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
 
-    if (req.query.find_title) {
+    if (req.query.find_description) {
       searchQuery = {
-        title: {
-          $regex: req.query.find_title,
+        description: {
+          $regex: req.query.find_description,
           $options: 'i',
         },
         ...searchQuery,
       };
     }
     if (req.query.find_category) {
-      searchQuery = {
-        category: {
-          $regex: req.query.find_category,
-          $options: 'i',
-        },
-        ...searchQuery,
-      };
+      searchQuery = { category: req.query.find_category, ...searchQuery };
     }
     if (req.query.find_question) {
       searchQuery = {
@@ -76,7 +71,7 @@ faqController.GetFaq = async (req, res, next) => {
     }
     populate = [{ path: 'category', select: '_id title' }];
     let faq = await otherHelper.getQuerySendResponse(faqSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faq.data, faqConfig.faqGet, page, size, faq.totaldata);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faq.data, faqConfig.faqGet, page, size, faq.totalData);
   } catch (err) {
     next(err);
   }
@@ -89,22 +84,36 @@ faqController.GetFaqById = async (req, res, next) => {
 faqController.GetFaqCat = async (req, res, next) => {
   try {
     let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
-    if (req.query.page && req.query.page == 0) {
-      selectQuery = 'title is_active';
-      const faqCats = await faqCatSch.find({ searchQuery }).select(selectQuery);
-      return otherHelper.sendResponse(res, httpStatus.OK, true, faqCats, null, 'all faq cats get success!!', null);
+    searchQuery = { ...searchQuery, is_active: true };
+
+    if (req.query.find_title || req.query.size || req.query.is_active || req.query.page) {
+      delete searchQuery.is_active;
+      if (req.query.page && req.query.page == 0) {
+        selectQuery = 'title is_active';
+        const faqCats = await faqCatSch.find({ searchQuery }).select(selectQuery);
+        return otherHelper.sendResponse(res, httpStatus.OK, true, faqCats, null, 'all faq category get success!!', null);
+      }
+      if (req.query.find_title) {
+        searchQuery = {
+          title: {
+            $regex: req.query.find_title,
+            $options: 'i',
+          },
+          ...searchQuery,
+        };
+      }
     }
-    if (req.query.find_title) {
-      searchQuery = {
-        title: {
-          $regex: req.query.find_title,
-          $options: 'i',
-        },
-        ...searchQuery,
-      };
-    }
-    let faqcat = await otherHelper.getQuerySendResponse(faqCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faqcat.data, faqConfig.catGet, page, size, faqcat.totaldata);
+    let faqCat = await otherHelper.getQuerySendResponse(faqCatSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, faqCat.data, faqConfig.catGet, page, size, faqCat.totalData);
+  } catch (err) {
+    next(err);
+  }
+};
+faqController.GetFaqCatDropDown = async (req, res, next) => {
+  try {
+    let selectQuery = 'title is_active';
+    const faqCats = await faqCatSch.find({ is_deleted: false, is_active: true }).select(selectQuery);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, faqCats, null, 'all faq category get success!!', null);
   } catch (err) {
     next(err);
   }
@@ -121,6 +130,7 @@ faqController.GetFaqCatById = async (req, res, next) => {
     next(err);
   }
 };
+
 faqController.GetFaqByCat = async (req, res, next) => {
   try {
     let page;
@@ -142,9 +152,9 @@ faqController.GetFaqByCat = async (req, res, next) => {
       is_deleted: false,
       category: id,
     };
-    const catgoryFaq = await faqSch.find(searchQuery);
-    const totaldata = await faqSch.countDocuments(searchQuery);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, catgoryFaq, faqConfig.faqGet, page, size, totaldata);
+    const categoryFaq = await faqSch.find(searchQuery);
+    const totalData = await faqSch.countDocuments(searchQuery);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, categoryFaq, faqConfig.faqGet, page, size, totalData);
   } catch (err) {
     next(err);
   }
@@ -169,7 +179,8 @@ faqController.DeleteFaqCat = async (req, res, next) => {
         deleted_at: new Date(),
       },
     });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, delCat, null, 'faq cat deleted!!', null);
+    await faqSch.updateMany({ category: id, is_deleted: false }, { $set: { is_deleted: true } });
+    return otherHelper.sendResponse(res, httpStatus.OK, true, delCat, null, 'faq category deleted!!', null);
   } catch (err) {
     next(err);
   }
@@ -177,8 +188,82 @@ faqController.DeleteFaqCat = async (req, res, next) => {
 
 faqController.GetFaqAndCat = async (req, res, next) => {
   const cat = await faqCatSch.find().select('title');
-  const faq = await faqSch.find({ is_deleted: false }).select('title question category');
+  const faq = await faqSch.find({ is_deleted: false }).select('description question category');
   return otherHelper.sendResponse(res, httpStatus.OK, true, { cat, faq }, null, null, null);
 };
 
+faqController.GetCatByKey = async (req, res, next) => {
+  try {
+    const key = req.params.key;
+    const cat = await faqCatSch.findOne({
+      key,
+      is_deleted: false,
+    });
+    if (!cat) return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, null, 'Key not Found', null);
+
+    const faq = await faqSch.find({ is_deleted: false, category: cat }).select('description question category');
+
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { cat, faq }, null, faqConfig.catGet, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+faqController.CountFaqByCat = async (req, res, next) => {
+  const id = req.params.id;
+  const faqCount = await faqSch.countDocuments({ category: id, is_deleted: false });
+  return otherHelper.sendResponse(res, httpStatus.OK, true, faqCount, null, 'faq count by category', null);
+};
+
+faqController.selectMultipleData = async (req, res, next) => {
+  const { faq_id, type } = req.body;
+
+  if (type == 'is_active') {
+    const Data = await faqSch.updateMany({ _id: { $in: faq_id } }, [
+      {
+        $set: {
+          is_active: { $not: '$is_active' },
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  } else {
+    const Data = await faqSch.updateMany(
+      { _id: { $in: faq_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  }
+};
+
+faqController.selectMultipleDataCat = async (req, res, next) => {
+  const { faq_category_id, type } = req.body;
+
+  if (type == 'is_active') {
+    const Data = await faqCatSch.updateMany({ _id: { $in: faq_category_id } }, [
+      {
+        $set: {
+          is_active: { $not: '$is_active' },
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+  } else {
+    const Data = await faqCatSch.updateMany(
+      { _id: { $in: faq_category_id } },
+      {
+        $set: {
+          is_deleted: true,
+          deleted_at: new Date(),
+        },
+      },
+    );
+    return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
+  }
+};
 module.exports = faqController;

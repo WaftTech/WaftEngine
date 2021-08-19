@@ -6,18 +6,6 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
-import Fab from '@material-ui/core/Fab';
-import Close from '@material-ui/icons/Close';
-
-// core components
 import Table from 'components/Table';
 
 import injectSaga from '../../../utils/injectSaga';
@@ -41,36 +29,6 @@ import {
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
-
 /* eslint-disable react/prefer-stateless-function */
 export class ContentsListingPage extends React.Component {
   static propTypes = {
@@ -80,7 +38,7 @@ export class ContentsListingPage extends React.Component {
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
@@ -100,22 +58,51 @@ export class ContentsListingPage extends React.Component {
     this.props.loadAllRequest(this.props.query);
   }
 
+  shouldComponentUpdate(props) {
+    if (this.state.cleared) {
+      this.setState({ cleared: false });
+      props.loadAllRequest(props.query);
+    }
+    if (
+      props.query.size != this.props.query.size ||
+      props.query.page != this.props.query.page
+    ) {
+      props.loadAllRequest(props.query);
+    }
+    return true;
+  }
+
+  handlePagination = paging => {
+    this.props.setQueryValue({ key: 'page', value: paging.page });
+    this.props.setQueryValue({ key: 'size', value: paging.size });
+  };
+
   handleAdd = () => {
     this.props.clearOne();
-    this.props.push('/admin/page-manage/add');
+    this.props.push('/admin/page-content/add');
   };
 
   handleEdit = id => {
-    this.props.push(`/admin/page-manage/edit/${id}`);
+    this.props.push(`/admin/page-content/edit/${id}`);
   };
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
+    this.props.setQueryValue({ key: 'page', value: 1 });
+  };
+
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSearch();
+    }
   };
 
   handleOpen = id => {
@@ -131,9 +118,6 @@ export class ContentsListingPage extends React.Component {
     this.setState({ open: false });
   };
 
-  handlePagination = paging => {
-    this.props.loadAllRequest(paging);
-  };
   toggleHelp = () => {
     this.setState({ help: !this.state.help });
   };
@@ -157,8 +141,6 @@ export class ContentsListingPage extends React.Component {
         >
           {`/page/${key}`}
         </Link>,
-        moment(publish_from).format(DATE_FORMAT),
-        moment(publish_to).format(DATE_FORMAT),
         <>
           {is_active ? (
             <span className="label-active">active</span>
@@ -169,14 +151,14 @@ export class ContentsListingPage extends React.Component {
         <>
           <div className="flex">
             <span
-              className="w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
+              className="w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-blue-100 rounded-full relative edit-icon"
               onClick={() => this.handleEdit(_id)}
             >
               <FaPencilAlt className="pencil" />
               <span className="bg-blue-500 dash" />
             </span>
             <span
-              className="ml-4 w-12 h-12 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
+              className="ml-4 w-8 h-8 inline-flex justify-center items-center leading-none cursor-pointer hover:bg-red-100 rounded-full relative trash-icon"
               onClick={() => this.handleOpen(_id)}
             >
               <img className="trash-lid" src={lid} alt="trash-id" />
@@ -230,9 +212,8 @@ export class ContentsListingPage extends React.Component {
               </span>
               <br />
               <br />
-              &lt;<span style={{ color: '#529BD8' }}>
-                StaticContentDiv
-              </span>{' '}
+              &lt;
+              <span style={{ color: '#529BD8' }}>StaticContentDiv</span>{' '}
               <span style={{ color: '#9ADCFF' }} />
               contentKey=
               <span style={{ color: '#CE9076' }}>"about"</span> /&gt;
@@ -251,9 +232,10 @@ export class ContentsListingPage extends React.Component {
                 value={query.find_name}
                 onChange={this.handleQueryChange}
                 style={{ paddingRight: '50px' }}
+                onKeyDown={this.handleKeyPress}
               />
               <span
-                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
                 onClick={this.handleSearch}
               >
                 <FaSearch />
@@ -269,9 +251,10 @@ export class ContentsListingPage extends React.Component {
                 className="m-auto inputbox pr-6"
                 value={query.find_key}
                 onChange={this.handleQueryChange}
+                onKeyDown={this.handleKeyPress}
               />
               <span
-                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer hover:text-blue-600"
+                className="inline-flex border-l absolute right-0 top-0 h-8 px-2 mt-1 items-center cursor-pointer text-blue-500"
                 onClick={this.handleSearch}
               >
                 <FaSearch />
@@ -280,15 +263,7 @@ export class ContentsListingPage extends React.Component {
           </div>
 
           <Table
-            tableHead={[
-              'Name',
-              'Key',
-              'Link',
-              'Pub From',
-              'Pub To',
-              'Is Active',
-              'Action',
-            ]}
+            tableHead={['Name', 'Key', 'Link', 'Is Active', 'Action']}
             tableData={tableData}
             pagination={tablePagination}
             handlePagination={this.handlePagination}
@@ -305,19 +280,9 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'PagecontentListing', reducer });
 const withSaga = injectSaga({ key: 'PagecontentListing', saga });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withReducer,
-  withSaga,
-  withConnect,
-)(ContentsListingPage);
+export default compose(withReducer, withSaga, withConnect)(ContentsListingPage);

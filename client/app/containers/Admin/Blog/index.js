@@ -1,90 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import moment from 'moment';
+import Table from 'components/Table';
 import { push } from 'connected-react-router';
-import { Helmet } from 'react-helmet';
-import Select from 'react-select';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit';
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import Fab from '@material-ui/core/Fab';
-import View from '@material-ui/icons/RemoveRedEyeOutlined';
-import { Checkbox } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-// core components
-import Table from 'components/Table';
-
-import { DATE_FORMAT } from '../../App/constants';
-import injectSaga from '../../../utils/injectSaga';
+import { Helmet } from 'react-helmet';
+import { FaBan, FaPlus, FaRegCheckCircle } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import Select from '../../../components/Select';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import DeleteDialog from '../../../components/DeleteDialog';
+import Dialog from '../../../components/Dialog/index';
+import Loading from '../../../components/Loading';
+import PageContent from '../../../components/PageContent/PageContent';
+import PageHeader from '../../../components/PageHeader/PageHeader';
 import injectReducer from '../../../utils/injectReducer';
+import injectSaga from '../../../utils/injectSaga';
+import { DATE_FORMAT } from '../../App/constants';
+import * as mapDispatchToProps from './actions';
+import QuickEdit from './AddEditPage/QuickEdit';
 import reducer from './reducer';
 import saga from './saga';
-import * as mapDispatchToProps from './actions';
 import {
   makeSelectAll,
-  makeSelectQuery,
-  makeSelectHelper,
-  makeSelectLoading,
-  makeSelectOne,
-  makeSelectUsers,
   makeSelectCategory,
   makeSelectChip,
-  makeSelectTag,
-  makeSelectMetaTag,
-  makeSelectMetaKeyword,
   makeSelectErrors,
+  makeSelectHelper,
+  makeSelectLoading,
+  makeSelectMetaKeyword,
+  makeSelectMetaTag,
+  makeSelectOne,
+  makeSelectQuery,
+  makeSelectTag,
+  makeSelectUpateCalled,
+  makeSelectUsers
 } from './selectors';
-
-import PageHeader from '../../../components/PageHeader/PageHeader';
-import PageContent from '../../../components/PageContent/PageContent';
-import DeleteDialog from '../../../components/DeleteDialog';
-import Modal from '../../../components/Modal';
-import Loading from '../../../components/Loading';
-import LinkBoth from '../../../components/LinkBoth';
-import QuickEdit from './AddEditPage/QuickEdit';
-import { FaBan, FaRegCheckCircle } from 'react-icons/fa';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  fab: {
-    width: '40px',
-    height: '40px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  tableActionButton: {
-    padding: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-
-  waftsrch: {
-    padding: 0,
-    position: 'absolute',
-    borderLeft: '1px solid #d9e3e9',
-    borderRadius: 0,
-    '&:hover': {
-      background: 'transparent',
-      color: '#404040',
-    },
-  },
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class BlogManagePage extends React.Component {
@@ -98,13 +52,13 @@ export class BlogManagePage extends React.Component {
     clearOne: PropTypes.func.isRequired,
     setQueryValue: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
     query: PropTypes.object.isRequired,
     all: PropTypes.shape({
       data: PropTypes.array.isRequired,
       page: PropTypes.number.isRequired,
       size: PropTypes.number.isRequired,
-      totaldata: PropTypes.number.isRequired,
+      totalData: PropTypes.number.isRequired,
     }),
   };
 
@@ -132,6 +86,7 @@ export class BlogManagePage extends React.Component {
     ) {
       props.loadAllRequest(props.query);
     }
+
     return true;
   }
 
@@ -145,7 +100,7 @@ export class BlogManagePage extends React.Component {
   };
 
   handleView = slug_url => {
-    this.props.push(`/news/${slug_url}`);
+    this.props.push(`/blog/${slug_url}`);
   };
 
   handleOpen = id => {
@@ -163,17 +118,15 @@ export class BlogManagePage extends React.Component {
 
   handleQueryChange = e => {
     e.persist();
-    this.props.setQueryValue({ key: e.target.name, value: e.target.value });
+    this.props.setQueryValue({
+      key: e.target.name,
+      value: e.target.value,
+    });
   };
 
   handleSearch = () => {
     this.props.loadAllRequest(this.props.query);
-  };
-
-  handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      this.handleSearch();
-    }
+    this.props.setQueryValue({ key: 'page', value: 1 });
   };
 
   handlePagination = paging => {
@@ -187,7 +140,12 @@ export class BlogManagePage extends React.Component {
     this.props.loadOneRequest(id);
     this.props.loadCategoryRequest();
     this.props.loadUsersRequest();
-    this.props.setValue({ name: 'helper', key: 'showQuickEdit', value: true });
+    this.props.setValue({
+      name: 'helper',
+      key: 'showQuickEdit',
+      value: true,
+    });
+    this.props.setUpdateCalled(false);
   };
 
   handleEditorChange = (e, name) => {
@@ -238,7 +196,9 @@ export class BlogManagePage extends React.Component {
   };
 
   handleMultipleSelectCategoryChange = e => {
-    this.props.setCategoryValue({ value: e && e.map(each => each.value) });
+    this.props.setCategoryValue({
+      value: e && e.map(each => each.value),
+    });
   };
 
   handleTempMetaKeyword = e => {
@@ -267,6 +227,7 @@ export class BlogManagePage extends React.Component {
 
   handleSave = () => {
     this.props.addEditRequest();
+    this.props.setUpdateCalled(true);
   };
 
   handleMetaKeywordDelete = index => () => {
@@ -329,12 +290,24 @@ export class BlogManagePage extends React.Component {
     return { tempMetaKeyword: this.props.setMetaKeywordValue('') };
   };
 
+  handleMultipleSelectAuthorChange = e => {
+    this.props.setAuthorValue({ value: e && e.map(each => each.value) });
+  };
+
   // for quick edit end
+
+  handleQuickEditClose = () => {
+    this.props.setValue({
+      name: 'helper',
+      key: 'showQuickEdit',
+      value: false,
+    });
+  };
 
   render() {
     const { classes } = this.props;
     const {
-      all: { data, page, size, totaldata, msg },
+      all: { data, page, size, totalData, msg },
       query,
       loading,
       users,
@@ -381,7 +354,7 @@ export class BlogManagePage extends React.Component {
       helper: { showQuickEdit },
     } = this.props;
 
-    const tablePagination = { page, size, totaldata };
+    const tablePagination = { page, size, totaldata: totalData };
     const tableData = data.map(
       ({
         title,
@@ -396,61 +369,67 @@ export class BlogManagePage extends React.Component {
         author,
         _id,
       }) => [
-        <>
-          <Link
-            to={`/news/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
-            target="_blank"
-            className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
-          >
-            {title}
-          </Link>{' '}
-          <div className="flex py-2">
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
-              onClick={() => this.handleEdit(_id)}
+          <>
+            <Link
+              to={`/blog/${moment(added_at).format('YYYY/MM/DD')}/${_id}`}
+              target="_blank"
+              className="block font-bold text-base text-blue-500 cursor-pointer hover:underline"
             >
-              Edit
+              {title}
+            </Link>{' '}
+            <div className="flex py-2">
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+                onClick={() => this.handleEdit(_id)}
+              >
+                Edit
             </button>
-            <button
-              aria-label="Edit"
-              type="button"
-              className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-no-wrap text-sm"
-              onClick={() => this.handleLoadOne(_id)}
-            >
-              Quick Edit
+              <button
+                aria-label="Edit"
+                type="button"
+                className="border-r px-1 text-center leading-none hover:text-blue-500 whitespace-nowrap text-sm"
+                onClick={() => this.handleLoadOne(_id)}
+              >
+                Quick Edit
             </button>
 
-            <button
-              className="px-1 text-center leading-none text-red-500 whitespace-no-wrap text-sm"
-              type="button"
-              onClick={() => this.handleOpen(_id)}
-            >
-              Delete
+              <button
+                className="px-1 text-center leading-none text-red-500 whitespace-nowrap text-sm"
+                type="button"
+                onClick={() => this.handleOpen(_id)}
+              >
+                Delete
             </button>
-          </div>
-        </>,
-        (category && category.map(each => each.title).join(', ')) || 'No',
-        <span className="whitespace-no-wrap">
-          {moment(added_at).format(DATE_FORMAT)}
-        </span>,
-        <span className="whitespace-no-wrap">
-          {moment(published_on).format('YYYY-MM-DD HH:mm')}
-        </span>,
-        // `${is_highlight}`,
-        // `${is_showcase}`,
-        // `${is_active}`,
-        <>{is_published ? <FaRegCheckCircle /> : <FaBan />} </>,
-        // tags.join(','),
-        (
-          <p className="">
-            {author &&
-              author.length > 0 &&
-              author.map(author => author.name).join(', ')}
-          </p>
-        ) || '',
-      ],
+            </div>
+          </>,
+          (category && category.map(each => each.title).join(', ')) || 'No',
+          <span className="whitespace-nowrap">
+            {moment(added_at).format(DATE_FORMAT)}
+          </span>,
+          <span className="whitespace-nowrap">
+            {moment(published_on).format('YYYY-MM-DD HH:mm')}
+          </span>,
+          // `${is_highlight}`,
+          // `${is_showcase}`,
+          // `${is_active}`,
+          <div className="flex justify-center">
+            {is_published ? (
+              <FaRegCheckCircle className="text-green-500" />
+            ) : (
+                <FaBan className="text-red-400" />
+              )}{' '}
+          </div>,
+          // tags.join(','),
+          (
+            <p className="">
+              {author &&
+                author.length > 0 &&
+                author.map(author => author.name).join(', ')}
+            </p>
+          ) || '',
+        ],
     );
 
     const activeData =
@@ -466,51 +445,62 @@ export class BlogManagePage extends React.Component {
           doDelete={() => this.handleDeleteBlog(this.state.deleteId)}
         />
         <Helmet>
-          <title>News Listing</title>
+          <title>Blogs</title>
         </Helmet>
-        <Modal
+        <Dialog
           open={showQuickEdit}
-          handleClose={() =>
-            this.props.setValue({
-              name: 'helper',
-              key: 'showQuickEdit',
-              value: false,
-            })
+          className="w-5/6 sm:w-96"
+          onClose={this.handleQuickEditClose}
+          // loading={loading}
+          // handleUpdate={this.handleSave}
+          title={`Quick Edit`}
+          body={
+            <QuickEdit
+              handleEditorChange={this.handleEditorChange}
+              handleCheckedChange={this.handleCheckedChange}
+              handleChange={this.handleChange}
+              slugify={this.slugify}
+              handleDropDownChange={this.handleDropDownChange}
+              handleMultipleSelectCategoryChange={
+                this.handleMultipleSelectCategoryChange
+              }
+              handleTempMetaKeyword={this.handleTempMetaKeyword}
+              handleTempMetaTag={this.handleTempMetaTag}
+              handlePublishedOn={this.handlePublishedOn}
+              handleSave={this.handleSave}
+              handleMetaKeywordDelete={this.handleMetaKeywordDelete}
+              handleMetaTagDelete={this.handleMetaTagDelete}
+              handleDelete={this.handleDelete}
+              insertTags={this.insertTags}
+              insertMetaTags={this.insertMetaTags}
+              insertMetaKeywords={this.insertMetaKeywords}
+              one={one}
+              category={category}
+              users={users}
+              tempTag={tempTag}
+              tempMetaTag={tempMetaTag}
+              tempMetaKeyword={tempMetaKeyword}
+              errors={errors}
+              setUpdateCalled={this.props.setUpdateCalled}
+              handleMultipleSelectAuthorChange={
+                this.handleMultipleSelectAuthorChange
+              }
+            />
           }
-          handleUpdate={this.handleSave}
-        >
-          <QuickEdit
-            handleEditorChange={this.handleEditorChange}
-            handleCheckedChange={this.handleCheckedChange}
-            handleChange={this.handleChange}
-            slugify={this.slugify}
-            handleDropDownChange={this.handleDropDownChange}
-            handleMultipleSelectCategoryChange={
-              this.handleMultipleSelectCategoryChange
-            }
-            handleTempMetaKeyword={this.handleTempMetaKeyword}
-            handleTempMetaTag={this.handleTempMetaTag}
-            handlePublishedOn={this.handlePublishedOn}
-            handleSave={this.handleSave}
-            handleMetaKeywordDelete={this.handleMetaKeywordDelete}
-            handleMetaTagDelete={this.handleMetaTagDelete}
-            handleDelete={this.handleDelete}
-            insertTags={this.insertTags}
-            insertMetaTags={this.insertMetaTags}
-            insertMetaKeywords={this.insertMetaKeywords}
-            one={one}
-            category={category}
-            users={users}
-            tempTag={tempTag}
-            tempMetaTag={tempMetaTag}
-            tempMetaKeyword={tempMetaKeyword}
-            errors={errors}
-          />
-        </Modal>
+          actions={
+            <button
+              type="button"
+              className="block btn margin-none text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
+              onClick={this.handleSave}
+            >
+              Update
+            </button>
+          }
+        />
         <div className="flex justify-between my-3">
           {loading && loading == true ? <Loading /> : <></>}
           <PageHeader>
-            News
+            Blog
             <span className="text-sm border-r-1 p-2 m-2 ml-6">
               Published({msg && msg.published ? msg.published : null})
             </span>
@@ -524,16 +514,16 @@ export class BlogManagePage extends React.Component {
               Showcase({msg && msg.showcase ? msg.showcase : null})
             </span>
           </PageHeader>
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            round="true"
-            onClick={this.handleAdd}
-            elevation={0}
-          >
-            <AddIcon />
-          </Fab>
+
+          <div className="flex items-center">
+            <button
+              className="bg-blue-500 border border-blue-600 px-3 py-2 leading-none inline-flex items-center cursor-pointer hover:bg-blue-600 transition-all duration-100 ease-in text-sm text-white rounded"
+              onClick={this.handleAdd}
+            >
+              <FaPlus />
+              <span className="pl-2">Add New</span>
+            </button>
+          </div>
         </div>
         <div className="bg-white rounded p-2 mb-4">
           <div className="flex -mx-1 items-center">
@@ -542,7 +532,7 @@ export class BlogManagePage extends React.Component {
                 type="text"
                 name="find_title"
                 id="blog-title"
-                placeholder="Search News Title"
+                placeholder="Search Blog Title"
                 className="inputbox"
                 value={query.find_title}
                 onChange={this.handleQueryChange}
@@ -560,7 +550,6 @@ export class BlogManagePage extends React.Component {
                 onChange={this.handleQueryDropDownChange('find_category')}
                 isSearchable
                 options={listCategory}
-                styles={customStyles}
               />
             </div>
             <div className="px-1 w-1/6">
@@ -574,7 +563,6 @@ export class BlogManagePage extends React.Component {
                 onChange={this.handleQueryDropDownChange('find_author')}
                 isSearchable
                 options={listAuthor}
-                styles={customStyles}
               />
             </div>
 
@@ -630,11 +618,13 @@ export class BlogManagePage extends React.Component {
               />
             </div>
             <div className="px-1 w-1/6">
+              <label></label>
               <button
                 aria-label="Search"
-                className="bg-secondary mt-4 px-4 py-2 font-lg block text-white text-center w-full rounded leading-tighter mt-6"
+                className="block btn text-white bg-blue-500 border border-blue-600 hover:bg-blue-600"
                 onClick={this.handleSearch}
                 type="button"
+                style={{ marginTop: '1.5rem' }}
               >
                 Search
               </button>
@@ -662,33 +652,13 @@ export class BlogManagePage extends React.Component {
             handlePagination={this.handlePagination}
             activeData={activeData}
             loading={loading}
-            emptyDataMsg="No News Found"
+            emptyDataMsg="No Blog Found"
           />
         </PageContent>
       </>
     );
   }
 }
-
-const customStyles = {
-  control: (base, state) => ({
-    ...base,
-    background: '#fff',
-    borderColor: '#e0e3e8',
-    minHeight: '35px',
-    height: '35px',
-    width: '100%',
-    boxShadow: state.isFocused ? null : null,
-    marginRight: '8px',
-  }),
-  placeholder: state => ({
-    color: '#000',
-    fontSize: '15px',
-  }),
-  indicatorSeparator: state => ({
-    display: 'none',
-  }),
-};
 
 const mapStateToProps = createStructuredSelector({
   all: makeSelectAll(),
@@ -704,21 +674,16 @@ const mapStateToProps = createStructuredSelector({
   tempMetaKeyword: makeSelectMetaKeyword(),
   users: makeSelectUsers(),
   errors: makeSelectErrors(),
+  updateCalled: makeSelectUpateCalled(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
 const withReducer = injectReducer({ key: 'blogManagePage', reducer });
 const withSaga = injectSaga({ key: 'blogManagePage', saga });
 
-const withStyle = withStyles(styles);
-
 export default compose(
   withRouter,
-  withStyle,
   withReducer,
   withSaga,
   withConnect,

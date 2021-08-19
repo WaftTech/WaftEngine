@@ -7,19 +7,17 @@ const httpStatus = require('http-status');
 const emailHelper = require('./../../helper/email.helper');
 const twoFaHelper = require('./../../helper/2fa.helper');
 const renderMail = require('./../template/templateController').internal;
-const thirdPartyApiRequesterHelper = require('../../helper/apicall.helper');
 const otherHelper = require('../../helper/others.helper');
 const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
-const { secretOrKey, oauthConfig, tokenExpireTime } = require('../../config/keys');
 const loginLogs = require('./loginlogs/loginlogController').internal;
-const appSetting = require('../../config/settings');
+const { getSetting } = require('../../helper/settings.helper');
 
 const userController = {};
 
 userController.PostUser = async (req, res, next) => {
   try {
-    const user = req.body;
+    let user = req.body;
     if (user && user._id) {
       const update = await userSch.findByIdAndUpdate(user._id, {
         $set: user,
@@ -27,6 +25,7 @@ userController.PostUser = async (req, res, next) => {
       });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!!', null);
     } else {
+      user.email = user.email.toLowerCase();
       const newUser = new userSch(user);
       const userSave = await newUser.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!!', null);
@@ -39,8 +38,8 @@ userController.PostUser = async (req, res, next) => {
 userController.PostUserPwd = async (req, res, next) => {
   try {
     let user = {};
-    const { email, name, email_verified, roles } = req.body;
-    user = { email, name, email_verified, roles };
+    const { email, name, email_verified, roles, bio } = req.body;
+    user = { email: email.toLowerCase(), name, email_verified, roles, bio };
     let salt = await bcrypt.genSalt(10);
     let hashPwd = await bcrypt.hash(req.body.password, salt);
     if (req.body && req.body._id) {
@@ -149,10 +148,10 @@ userController.GetAllUser = async (req, res, next) => {
     if (req.query.filter_author) {
       searchQuery = { roles: { $in: roles }, ...searchQuery };
     }
-    selectQuery = 'name email password bio email_verified roles';
+    selectQuery = 'name email password bio email_verified roles is_active';
     populate = [{ path: 'roles', select: 'role_title' }];
-    const datas = await otherHelper.getQuerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, datas.data, config.gets, page, size, datas.totaldata);
+    const pulledData = await otherHelper.getQuerySendResponse(userSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, config.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }
@@ -167,6 +166,7 @@ userController.GetUserDetail = async (req, res, next) => {
       email: 1,
       bio: 1,
       updated_at: 1,
+      is_active: 1,
     });
     const role = await roleSch.find({ is_deleted: false }, { role_title: 1, _id: 1 });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { users: user, roles: role }, null, config.get, null);
@@ -176,7 +176,8 @@ userController.GetUserDetail = async (req, res, next) => {
 };
 
 userController.Register = async (req, res, next) => {
-  if (!appSetting.public_register_allow) {
+  const public_register_allow = await getSetting('auth', 'user', 'is_public_registration');
+  if (!public_register_allow) {
     return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, null, 'Public Registration not allowed.', null);
   }
   let email = req.body.email && req.body.email.toLowerCase();
@@ -193,12 +194,14 @@ userController.Register = async (req, res, next) => {
     newUser.password = hash;
     newUser.email_verification_code = otherHelper.generateRandomHexString(12);
     newUser.email_verified = false;
-    newUser.roles = appSetting.public_register_role;
+    const temp = await getSetting('auth', 'roles', 'public_register_role');
+    newUser.roles.push(temp);
     newUser.last_password_change_date = new Date();
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
+    const public_register_email_template = await getSetting('template', 'email', 'public_register_email_template');
     const renderedMail = await renderMail.renderTemplate(
-      appSetting.public_register_email_template,
+      public_register_email_template,
       {
         name: newUser.name,
         email: newUser.email,
@@ -209,9 +212,10 @@ userController.Register = async (req, res, next) => {
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
-      emailHelper.send(renderedMail);
+      emailHelper.send(renderedMail, next);
     }
-    if (appSetting.force_allow_email_verify) {
+    const force_allow_email_verify = await getSetting('user', 'email', 'force_allow_email_verify');
+    if (force_allow_email_verify) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, { email_verified: false, email: email }, null, 'Verification email sent.', null);
     }
     const { token, payload } = await userController.validLoginResponse(req, user, next);
@@ -231,8 +235,11 @@ userController.validLoginResponse = async (req, user, next) => {
         }
       }
     }
-
+    const secretOrKey = await getSetting('auth', 'token', 'secret_key');
+    var tokenExpireTime = await getSetting('auth', 'token', 'expiry_time');
+    tokenExpireTime = Number.parseInt(tokenExpireTime);
     // Create JWT payload
+
     const payload = {
       id: user._id,
       name: user.name,
@@ -241,6 +248,7 @@ userController.validLoginResponse = async (req, user, next) => {
       roles: user.roles,
       gender: user.gender,
       is_two_fa: user.is_two_fa,
+      image: user.image,
     };
     // Sign Token
     let token = await jwt.sign(payload, secretOrKey, {
@@ -263,15 +271,6 @@ userController.RegisterFromAdmin = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, data, errors, errors.email, null);
     } else {
       if (req.file) {
-        req.file.destination =
-          req.file.destination
-            .split('\\')
-            .join('/')
-            .split('server/')[1] + '/';
-        req.file.path = req.file.path
-          .split('\\')
-          .join('/')
-          .split('server/')[1];
         req.body.image = req.file;
       }
       const { name, email, password, date_of_birth, bio, location, phone, description, is_active, email_verified, roles, image, company_name, company_location, company_established, company_phone_no } = req.body;
@@ -309,29 +308,20 @@ userController.UpdateUserDetail = async (req, res, next) => {
     const { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no } = req.body;
     const id = req.params.id;
 
-    let newdatas = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
+    let newData = { name, date_of_birth, email_verified, roles, bio, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() };
 
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
-      newdatas.image = req.file;
+      newData.image = req.file;
     }
 
-    const updateUser = await userSch.findByIdAndUpdate(id, { $set: newdatas });
+    const updateUser = await userSch.findByIdAndUpdate(id, { $set: newData });
     const msg = 'User Update Success';
-    const msgfail = 'User not found';
+    const msgFail = 'User not found';
 
     if (updateUser) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, req.body, null, msg, null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgfail, null);
+      return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgFail, null);
     }
   } catch (err) {
     return next(err);
@@ -342,11 +332,17 @@ userController.Verifymail = async (req, res, next) => {
   try {
     const email = req.body.email.toLowerCase();
     const code = req.body.code;
-    const user = await userSch.findOne({ email, email_verification_code: code });
+    const userVerified = await userSch.findOne({ email: email, email_verified: true });
+    if (userVerified && userVerified._id) {
+      let errors = {};
+      errors.verified = 'Email is already verified';
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, null, errors.verified, null);
+    }
+    const user = await userSch.findOne({ email: email, email_verification_code: code });
     const data = { email };
     if (!user) {
       let errors = {};
-      errors.email = 'Invalid Verification Code';
+      errors.email = 'Invalid Verification Code or Wrong Email Id';
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, data, null, errors.email, null);
     }
     const d = await userSch.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
@@ -372,8 +368,9 @@ userController.ResendVerificationCode = async (req, res, next) => {
         }
         const email_verification_code = otherHelper.generateRandomHexString(6);
         const newUser = await userSch.findOneAndUpdate({ email: email }, { $set: { email_verification_code, email_verified: false, email_verified_request_date: currentDate } }, { new: true });
+        const verify_mail_template = await getSetting('template', 'email', 'verify_mail_template');
         const renderedMail = await renderMail.renderTemplate(
-          appSetting.verify_mail_template,
+          verify_mail_template,
           {
             name: user.name,
             email: user.email,
@@ -384,7 +381,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         if (renderMail.error) {
           console.log('render mail error: ', renderMail.error);
         } else {
-          emailHelper.send(renderedMail);
+          emailHelper.send(renderedMail, next);
           const dataReturn = { email: user.email, name: user.name };
           return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'Email verification code Sent!!', null);
         }
@@ -400,7 +397,7 @@ userController.VerifyServerMail = async (req, res, next) => {
     const { id, code } = req.params;
     const user = await userSch.findOne({ _id: id, email_verification_code: code });
     if (!user) {
-      return res.redirect(302, 'http://localhost:5050?verify=false');
+      return res.redirect(302, 'http://localhost:5460?verify=false');
     }
     const d = await userSch.findByIdAndUpdate(user._id, { $set: { email_verified: true }, $unset: { email_verification_code: 1 } }, { new: true });
     const payload = {
@@ -413,7 +410,10 @@ userController.VerifyServerMail = async (req, res, next) => {
       gender: user.gender,
     };
     // Sign Token
-    jwt.sign(payload, secretOrKey, { expiresIn: tokenExpireTime }, (err, token) => {
+    let secret_key = await getSetting('auth', 'token', 'secret_key');
+    let token_expire_time = await getSetting('auth', 'token', 'expiry_time');
+    token_expire_time = Number.parseInt(token_expire_time);
+    jwt.sign(payload, secret_key, { expiresIn: token_expire_time }, (err, token) => {
       const msg = config.emailVerify;
       token = `${token}`;
 
@@ -455,9 +455,9 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       { new: true },
     );
-
+    const forgot_password_mail_template = await getSetting('template', 'email', 'forgot_password_mail_template');
     const renderedMail = await renderMail.renderTemplate(
-      appSetting.forgot_password_mail_template,
+      forgot_password_mail_template,
       {
         name: user.name,
         email: user.email,
@@ -465,10 +465,11 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       user.email,
     );
+
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
-      emailHelper.send(renderedMail);
+      emailHelper.send(renderedMail, next);
     }
 
     const msg = `Password Reset Code For ${email} is sent to email`;
@@ -490,8 +491,8 @@ userController.ResetPassword = async (req, res, next) => {
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, data, errors, errors.email, null);
     }
     let salt = await bcrypt.genSalt(10);
-    let hashpw = await bcrypt.hash(password, salt);
-    const d = await userSch.findByIdAndUpdate(user._id, { $set: { password: hashpw, last_password_change_date: Date.now(), email_verified: true }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
+    let hashPw = await bcrypt.hash(password, salt);
+    const d = await userSch.findByIdAndUpdate(user._id, { $set: { password: hashPw, last_password_change_date: Date.now(), email_verified: true }, $unset: { password_reset_code: 1, password_reset_request_date: 1 } }, { new: true });
     // Create JWT payload
 
     const { token, payload } = await userController.validLoginResponse(req, d, next);
@@ -507,11 +508,17 @@ userController.Login = async (req, res, next) => {
     const password = req.body.password;
     let email = req.body.email.toLowerCase();
     const user = await userSch.findOne({ email }).populate([{ path: 'roles', select: 'role_title' }]);
+
     if (!user) {
       errors.email = 'User not found';
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, errors, errors.email, null);
     } else {
-      if (appSetting.force_allow_email_verify && !user.email_verified) {
+      if (!user.is_active) {
+        errors.inactive = 'Please Contact Admin to reactivate your account';
+        return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, null, errors, errors.inactive, null);
+      }
+      const force_allow_email_verify = await getSetting('user', 'email', 'force_allow_email_verify');
+      if (force_allow_email_verify && !user.email_verified) {
         return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, { email: email, email_verified: false }, null, 'Please Verify your Email', null);
       }
       // Check Password
@@ -530,8 +537,9 @@ userController.Login = async (req, res, next) => {
           const two_fa_code = otherHelper.generateRandomHexString(6);
           const two_fa_time = new Date();
           const d = await userSch.findByIdAndUpdate(user._id, { $set: { 'multi_fa.email.code': two_fa_code, 'multi_fa.email.time': two_fa_time } });
+          const two_fa_email_template = await getSetting('template', 'email', 'two_fa_email_template');
           const renderedMail = await renderMail.renderTemplate(
-            appSetting.two_fa_email_template,
+            two_fa_email_template,
             {
               name: user.name,
               email: user.email,
@@ -542,7 +550,7 @@ userController.Login = async (req, res, next) => {
           if (renderMail.error) {
             console.log('render mail error: ', renderMail.error);
           } else {
-            const da = await emailHelper.send(renderedMail);
+            const da = await emailHelper.send(renderedMail, next);
           }
           if (!success) {
           }
@@ -666,15 +674,6 @@ userController.GetProfile = async (req, res, next) => {
 userController.postProfile = async (req, res, next) => {
   try {
     if (req.file) {
-      req.file.destination =
-        req.file.destination
-          .split('\\')
-          .join('/')
-          .split('server/')[1] + '/';
-      req.file.path = req.file.path
-        .split('\\')
-        .join('/')
-        .split('server/')[1];
       req.body.image = req.file;
     }
     const { name, date_of_birth, bio, description, image, phone, location, is_two_fa, company_name, company_location, company_established, company_phone_no } = req.body;
@@ -695,6 +694,10 @@ userController.changePassword = async (req, res, next) => {
   try {
     let errors = {};
     const { oldPassword, newPassword } = req.body;
+    if (oldPassword == newPassword) {
+      errors.oldPassword = 'Old and New password cannot be same';
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, errors, null, null);
+    }
     const user = await userSch.findById(req.user.id);
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (isMatch) {
@@ -730,6 +733,7 @@ userController.loginGOath = async (req, res, next) => {
   } else {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(random_password, salt);
+    const public_register_role = await getSetting('auth', 'roles', 'public_register_role');
     const newUser = new userSch({
       name: profile.name,
       email: profile.email,
@@ -737,12 +741,15 @@ userController.loginGOath = async (req, res, next) => {
       email_verified: true,
       last_password_change_date: currentDate,
       register_method: profile.provider,
-      roles: appSetting.public_register_role,
+      roles: public_register_role,
     });
     user = await newUser.save();
   }
+
+  const public_register_auth_template = await getSetting('template', 'email', 'public_register_auth_template');
+
   const renderedMail = await renderMail.renderTemplate(
-    appSetting.public_register_oauth_template,
+    public_register_auth_template,
     {
       name: profile.name,
       email: profile.email,
@@ -754,9 +761,52 @@ userController.loginGOath = async (req, res, next) => {
   if (renderMail.error) {
     console.log('render mail error: ', renderMail.error);
   } else {
-    emailHelper.send(renderedMail);
+    emailHelper.send(renderedMail, next);
   }
   const { token, payload } = await userController.validLoginResponse(req, user, next);
   return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, 'Register Successfully', token);
+};
+
+
+userController.selectMultipleData = async (req, res, next) => {
+  try {
+    const { user_id, type } = req.body;
+    if (type == 'is_active') {
+      const Data = await userSch.updateMany(
+        { _id: { $in: user_id } },
+        [{
+          $set: {
+            is_active: { $not: "$is_active" }
+          },
+        }],
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
+    }
+    else if (type == 'email_verified') {
+      const User = await userSch.updateMany(
+        { _id: { $in: user_id } },
+        [{
+          $set: {
+            email_verified: { $not: "$email_verified" }
+          },
+        }],
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, User, null, 'Status Change Success', null);
+    }
+    else {
+      const User = await userSch.updateMany(
+        { _id: { $in: user_id } },
+        {
+          $set: {
+            is_deleted: true,
+            deleted_at: new Date(),
+          },
+        },
+      );
+      return otherHelper.sendResponse(res, httpStatus.OK, true, User, null, 'Multiple Data Delete Success', null);
+    };
+  } catch (err) {
+    next(err);
+  }
 };
 module.exports = userController;

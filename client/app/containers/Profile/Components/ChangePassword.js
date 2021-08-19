@@ -4,21 +4,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-
-// core components
 import * as mapDispatchToProps from '../actions';
 import { makeSelectErrors } from '../selectors';
-
-const styles = theme => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 export class ChangePassword extends React.Component {
   static propTypes = {
     changePasswordRequest: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
   };
 
   state = {
@@ -105,7 +97,7 @@ export class ChangePassword extends React.Component {
             type={showPassword ? 'text' : 'password'}
           />
           {errors.oldPassword && (
-            <div id="component-error-text">{errors.oldPassword}</div>
+            <div className="error">{errors.oldPassword}</div>
           )}
         </div>
 
@@ -123,7 +115,7 @@ export class ChangePassword extends React.Component {
             type={showPassword ? 'text' : 'password'}
           />
           {errors.newPassword && (
-            <div id="component-error-text">{errors.newPassword}</div>
+            <div className="error">{errors.newPassword}</div>
           )}
         </div>
 
@@ -141,7 +133,7 @@ export class ChangePassword extends React.Component {
             type={showPassword ? 'text' : 'password'}
           />
           {errors.newPassword2 && (
-            <div id="component-error-text">{errors.newPassword2}</div>
+            <div className="error">{errors.newPassword2}</div>
           )}
         </div>
 
@@ -160,14 +152,6 @@ const mapStateToProps = createStructuredSelector({
   errors: makeSelectErrors(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  { ...mapDispatchToProps, push },
-);
+const withConnect = connect(mapStateToProps, { ...mapDispatchToProps, push });
 
-const withStyle = withStyles(styles);
-
-export default compose(
-  withStyle,
-  withConnect,
-)(ChangePassword);
+export default compose(withConnect)(ChangePassword);

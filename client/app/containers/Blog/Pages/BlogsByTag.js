@@ -60,7 +60,7 @@ export class BlogsByTag extends React.Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>News By Tag</title>
+          <title>Blogs By Tag</title>
         </Helmet>
         <div className="container mx-auto pt-10">
           <h1 className="pb-5 mb-0 border-b border-gray-300 text-black text-4xl font-light font-mukta">

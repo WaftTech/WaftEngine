@@ -18,7 +18,7 @@ import * as mapDispatchToProps from '../actions';
 import HighLightList from '../components/HighlightList';
 import Showcase from '../components/Showcase';
 import Trending from '../components/Trending';
-import CategoryElement from '../../../components/CategoryElement';
+// import CategoryElement from '../../../components/CategoryElement';
 import RecentBlogs from '../components/RecentBlogs2';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -55,38 +55,29 @@ export class BlogListPage extends React.Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>News</title>
+          <title>Blogs</title>
         </Helmet>
 
-        <HighLightList
+        {/* <HighLightList
           loading={highlightLoading}
           currentBlogs={highlight}
           pagination={pagination}
           handlePagination={this.handlePagination}
         />
-        <Showcase loading={showcaseLoading} showcase={showcase} />
+        <Showcase loading={showcaseLoading} showcase={showcase} /> */}
 
         <div className="container mx-auto lg:flex">
           <div className="lg:w-3/4 lg:pr-10">
             <div className="layout-2 no-container no-bg">
-              <CategoryElement cat_id="5d52700c8113842418772129" size={3} />
             </div>
           </div>
           <div className="lg:w-1/4 mt-16 lg:mt-32 headline-only">
             <RecentBlogs />
+            {/* <Trending loading={trending.length === 0} trending={trending} /> */}
+
           </div>
         </div>
 
-        <div className="container mx-auto lg:flex pb-12">
-          <div className="lg:w-3/4 lg:pr-4">
-            <div className="layout-7 no-container item4">
-              <CategoryElement cat_id="5d6f55f9846a9b0f58e2d2cd" size={4} />
-            </div>
-          </div>
-          <div className="lg:w-1/4">
-            <Trending loading={trending.length === 0} trending={trending} />
-          </div>
-        </div>
       </React.Fragment>
     );
   }
