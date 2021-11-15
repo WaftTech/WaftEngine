@@ -16,7 +16,7 @@ roleController.GetRoles = async (req, res, next) => {
     if (req.query.page && req.query.page == 0) {
       selectQuery = 'role_title description is_active is_deleted';
       const roles = await roleSch.find(searchQuery).select(selectQuery);
-      return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, roles, null, 'all roles get success!', null);
     }
     if (req.query.find_role_title) {
       searchQuery = { role_title: { $regex: req.query.find_role_title, $options: 'i' }, ...searchQuery };
@@ -248,7 +248,7 @@ roleController.SaveAccessListFromRole = async (req, res, next) => {
       }
       return otherHelper.sendResponse(res, httpStatus.OK, false, access, null, roleConfig.accessSave, null);
     } else {
-      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, false, null, 'Nothing to save!!', 'Nothing to save!!', null);
+      return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, false, null, 'Nothing to save!', 'Nothing to save!', null);
     }
   } catch (err) {
     next(err);
@@ -274,7 +274,7 @@ roleController.SaveAccessListForModule = async (req, res, next) => {
           d.push(data);
         }
       }
-      return otherHelper.sendResponse(res, httpStatus.OK, true, d, null, 'Access update success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, d, null, 'Access update success!', null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.NOT_MODIFIED, true, null, null, 'not found', null);
     }
@@ -313,7 +313,7 @@ roleController.GetAccessListForRole = async (req, res, next) => {
         Access.push({ access_type: [], is_active: true, module_id: Module[i]._id, role_id: roleId });
       }
     }
-    return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: Access }, null, 'Access Get Success !!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { Access: Access }, null, 'Access Get Success !', null);
   } catch (err) {
     next(err);
   }

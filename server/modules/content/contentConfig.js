@@ -10,7 +10,7 @@ module.exports = {
   errorIn: {
     inputErrors: 'input errors'
   },
-  get: 'Content get successful!!',
+  get: 'Content get successful!',
   save: 'Content saved successful',
   gets: 'Contents get successful',
 };

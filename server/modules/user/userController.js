@@ -23,12 +23,12 @@ userController.PostUser = async (req, res, next) => {
         $set: user,
         updated_at: Date.now(),
       });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!', null);
     } else {
       user.email = user.email.toLowerCase();
       const newUser = new userSch(user);
       const userSave = await newUser.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!', null);
     }
   } catch (err) {
     next(err);
@@ -46,13 +46,13 @@ userController.PostUserPwd = async (req, res, next) => {
       const update = await userSch.findByIdAndUpdate(req.body._id, {
         $set: { password: hashPwd, last_password_change_date: new Date() },
       });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!', null);
     } else {
       user.password = hashPwd;
       user.last_password_change_date = new Date();
       const newUser = new userSch(user);
       const userSave = await newUser.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!', null);
     }
   } catch (err) {
     next(err);
@@ -128,7 +128,7 @@ userController.GetAllUserGroupBy = async (req, res, next) => {
     const role = await roleSch.find({ is_deleted: false }).select('role_title');
     let user = await userSch.find({ is_deleted: false });
     let totalData = await userSch.countDocuments({ is_deleted: false });
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role, user }, 'users by group by get success!!', 1, 1, totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role, user }, 'users by group by get success!', 1, 1, totalData);
   } catch (err) {
     next(err);
   }
@@ -383,7 +383,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         } else {
           emailHelper.send(renderedMail, next);
           const dataReturn = { email: user.email, name: user.name };
-          return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'Email verification code Sent!!', null);
+          return otherHelper.sendResponse(res, httpStatus.OK, true, dataReturn, null, 'Email verification code Sent!', null);
         }
       }
     }

@@ -8,12 +8,12 @@ module.exports = {
   }, errorIn: {
     inputErrors: 'Invalid Inputs',
   },
-  roleSave: 'roles saved successfully!!',
-  moduleSave: 'module saved successfully!!',
-  delete: 'data deleted successfully!!',
-  moduleGet: 'module get successful!!',
-  roleGet: 'role get successful!!',
+  roleSave: 'roles saved successfully!',
+  moduleSave: 'module saved successfully!',
+  delete: 'data deleted successfully!',
+  moduleGet: 'module get successful!',
+  roleGet: 'role get successful!',
   accessSave: 'access saved successful',
   accessGet: 'access get successful',
-  gModuleDelete: 'group module delete successfully!!',
+  gModuleDelete: 'group module delete successfully!',
 };

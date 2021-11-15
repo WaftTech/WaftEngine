@@ -19,7 +19,7 @@ menuController.getMenu = async (req, res, next) => {
 
   selectQuery = 'title key order is_active';
   let data = await otherHelper.getQuerySendResponse(menuSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!!', page, size, data.totalData);
+  return otherHelper.paginationSendResponse(res, httpStatus.OK, true, data.data, 'Menu get success!', page, size, data.totalData);
 };
 
 const menuControl = async (req, res, next) => {
@@ -147,7 +147,7 @@ menuController.getEditMenu = async (req, res, next) => {
   });
   const child = utils.recursiveChildFinder(baseParents, baseChildren);
 
-  return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!', null);
 };
 
 menuController.deleteMenu = async (req, res, next) => {
@@ -179,8 +179,8 @@ menuController.getMenuForUser = async (req, res, next) => {
     });
   }
   const child = utils.recursiveChildFinder(baseParents, baseChildren);
-  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!!', null);
-}
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { child, key: key }, null, 'Child menu get success!', null);
+};
 
 menuController.selectMultipleData = async (req, res, next) => {
   const { menu_item_id, type } = req.body;
@@ -208,6 +208,6 @@ menuController.selectMultipleData = async (req, res, next) => {
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
   };
-}
+};
 
 module.exports = { menuController, menuItemController };

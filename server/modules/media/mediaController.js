@@ -12,7 +12,7 @@ mediaController.GetMediaPagination = async (req, res, next) => {
     populate = [{ path: 'added_by' }];
     selectQuery = 'field_name type destination path field_name original_name mimetype size encoding added_at module';
     let media = await otherHelper.getQuerySendResponse(mediaSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!!', page, size, media.totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, media.data, 'media get success!', page, size, media.totalData);
   } catch (err) {
     next(err);
   }
@@ -25,7 +25,7 @@ mediaController.GetMedia = async (req, res, next) => {
     .skip(12 * page)
     .sort({ _id: -1 })
     .select('_id path field_name original_name mimetype size encoding');
-  return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Get Success !!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Get Success !', null);
 };
 mediaController.SaveMedia = async (req, res, next) => {
   try {
@@ -35,7 +35,7 @@ mediaController.SaveMedia = async (req, res, next) => {
         media = req.file;
       }
       const update = await mediaSch.findByIdAndUpdate(media._id, { $set: media }, { new: true });
-      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'Media Saved Success !!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'Media Saved Success !', null);
     } else {
       media = req.file;
       media.added_by = req.user.id;
@@ -52,7 +52,7 @@ mediaController.SaveMedia = async (req, res, next) => {
       media.added_by = req.user.id;
       const newMedia = new mediaSch(media);
       const mediaSave = await newMedia.save();
-      return otherHelper.sendResponse(res, httpStatus.OK, true, mediaSave, null, 'Media Saved Success !!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, mediaSave, null, 'Media Saved Success !', null);
     }
   } catch (err) {
     next(err);
@@ -78,7 +78,7 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
       const mediaSave = await newMedia.save();
       medias.push(mediaSave);
     }
-    return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Saved Success !!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, medias, null, 'Media Saved Success !', null);
   } catch (err) {
     next(err);
   }
@@ -86,7 +86,7 @@ mediaController.SaveMultipleMedia = async (req, res, next) => {
 mediaController.GetMediaDetail = async (req, res, next) => {
   const id = req.params.id;
   const media = await mediaSch.findOne({ _id: id, is_deleted: false });
-  return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Get Success !!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Get Success !', null);
 };
 mediaController.DeleteMedia = async (req, res, next) => {
   const id = req.params.id;
@@ -97,7 +97,7 @@ mediaController.DeleteMedia = async (req, res, next) => {
     },
     { new: true },
   );
-  return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, media, null, 'Media Delete Success !', null);
 };
 
 mediaController.DeleteAllMedia = async (req, res, next) => {
@@ -125,7 +125,7 @@ mediaController.DeleteAllMedia = async (req, res, next) => {
     );
   }
 
-  return otherHelper.sendResponse(res, httpStatus.OK, true, { file, folder }, null, 'Media Delete Success !!', null);
+  return otherHelper.sendResponse(res, httpStatus.OK, true, { file, folder }, null, 'Media Delete Success !', null);
 };
 mediaController.UploadFromCkEditor = async (req, res, next) => {
   try {

@@ -72,7 +72,7 @@ contactController.DeleteContact = async (req, res, next) => {
   try {
     const id = req.params.id;
     const delContact = await contactSch.findByIdAndUpdate(id, { $set: { is_deleted: true, deleted_at: new Date() } });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, delContact, null, 'contact delete success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, delContact, null, 'contact delete success!', null);
   } catch (err) {
     next(err);
   }
