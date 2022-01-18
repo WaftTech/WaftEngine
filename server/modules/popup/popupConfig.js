@@ -5,9 +5,9 @@ module.exports = {
     descriptionLength: 'The length should be between 5 to 200',
     keyLength: 'The length should be between 2 to 20',
     isDate: 'Please input date type data',
-    invalid:"invalid input"
+    invalid: "invalid input"
   },
-  get: 'popup get successful!!',
+  get: 'popup get successful!',
   save: 'popup save successful',
   gets: 'popups get successful',
 };

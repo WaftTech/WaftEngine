@@ -35,7 +35,7 @@ adminDashboardController.GetErrorsGroupBy = async (req, res, next) => {
     bugs.forEach((each) => {
       totalData = totalData + each.count;
     });
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs, 'errors by group by get success!!', 1, 1, totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs, 'errors by group by get success!', 1, 1, totalData);
   } catch (err) {
     next(err);
   }
@@ -120,7 +120,7 @@ adminDashboardController.GetAllUserGroupBy = async (req, res, next) => {
     for (var j = 0; j < role.length; j++) {
       role[j].count = await userSch.countDocuments({ roles: { $in: [role[j]._id] }, is_deleted: false });
     }
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role }, 'users by group by get success!!', 1, 1, totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role }, 'users by group by get success!', 1, 1, totalData);
   } catch (err) {
     next(err);
   }

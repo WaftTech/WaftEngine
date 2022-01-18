@@ -43,7 +43,7 @@ socialMediaController.postSocialMedia = async (req, res, next) => {
     if (socialMedia && socialMedia._id) {
       let ifExists = await socialMediaSchema.find({ _id: { $nin: [socialMedia._id] }, is_deleted: false, $or: [{ title: socialMedia.title }, { order: socialMedia.order }] });
       if (ifExists.length > 0) {
-        error = { titleOrOrder: 'Oops!!!Name already exists or this order is taken.' };
+        error = { titleOrOrder: 'Oops!Name already exists or this order is taken.' };
         return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
       }
       const update = await socialMediaSchema.findByIdAndUpdate({ _id: socialMedia._id }, { $set: socialMedia }, { new: true });
@@ -52,7 +52,7 @@ socialMediaController.postSocialMedia = async (req, res, next) => {
       let ifExists = await socialMediaSchema.find({ is_deleted: false, $or: [{ title: socialMedia.title }, { order: socialMedia.order }] });
 
       if (ifExists.length > 0) {
-        error = { titleOrOrder: 'Oops!!!Name already exists or this order is taken.' };
+        error = { titleOrOrder: 'Oops!Name already exists or this order is taken.' };
         return otherHelper.sendResponse(res, httpStatus.CONFLICT, false, null, error, null, null);
       }
       const newSocialMedia = new socialMediaSchema(socialMedia);
@@ -103,6 +103,6 @@ socialMediaController.selectMultipleData = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
 
 module.exports = socialMediaController;

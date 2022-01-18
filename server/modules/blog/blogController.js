@@ -90,7 +90,7 @@ blogController.getLatestBlog = async (req, res, next) => {
       .sort({ published_on: -1 })
       .skip(0)
       .limit(5);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!', null);
   } catch (err) {
     next(err);
   }
@@ -114,7 +114,7 @@ blogController.getShowcaseBlog = async (req, res, next) => {
       .sort({ published_on: -1 })
       .skip(0)
       .limit(5);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!', null);
   } catch (err) {
     next(err);
   }
@@ -208,7 +208,7 @@ blogController.getTrendingBlog = async (req, res, next) => {
       .sort({ published_on: -1 })
       .skip(0)
       .limit(6);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Trending Blog get success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Trending Blog get success!', null);
   } catch (err) {
     next(err);
   }
@@ -315,7 +315,7 @@ blogController.GetBlogArchives = async (req, res, next) => {
         return each.added_at;
       }
     });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, months, null, 'archives get success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, months, null, 'archives get success!', null);
   } catch (err) {
     next(err);
   }
@@ -753,7 +753,7 @@ blogController.GetBlogByAuthor = async (req, res, next) => {
     const current_date = new Date();
     searchQuery = { is_deleted: false, is_active: true, author: authorId, is_published: true, published_on: { $lte: current_date } };
     const blogByAuthor = await otherHelper.getQuerySendResponse(blogSch, page, size, { published_on: -1 }, searchQuery, '', next, populateq);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogByAuthor.data, 'blogs by author get success!!', page, size, blogByAuthor.totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, blogByAuthor.data, 'blogs by author get success!', page, size, blogByAuthor.totalData);
   } catch (err) {
     next(err);
   }
@@ -921,7 +921,7 @@ blogController.selectMultipleDataBlog = async (req, res, next) => {
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
   };
-}
+};
 
 
 blogController.selectMultipleDataCat = async (req, res, next) => {
@@ -950,6 +950,6 @@ blogController.selectMultipleDataCat = async (req, res, next) => {
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
   };
-}
+};
 
 module.exports = blogController;

@@ -37,7 +37,6 @@ fileController.GetFileAndFolder = async (req, res, next) => {
       .populate([{ path: 'path', select: { name: 1 } }])
       .select({ name: 1, path: 1, _id: 1 });
     sortQuery = { added_at: 1 };
-
     let folders = await otherHelper.getQuerySendResponse(folderSch, page, size, sortQuery, folderFilter, selectQuery, next, populate);
     let totalFolderCount = await folderSch.countDocuments(folderFilter);
     let totalFilesCount = await fileSch.countDocuments(fileFilter);

@@ -50,9 +50,9 @@ popupController.SavePopup = async (req, res, next) => {
 };
 popupController.getPopupDetail = async (req, res, next) => {
   try {
-  const id = await otherHelper.returnIdIfSlug(req.params.id, 'key', popupSch);
+    const id = await otherHelper.returnIdIfSlug(req.params.id, 'key', popupSch);
     let selectq = '';
-    let populateq=[{path:"added_by",select:'name'},{path:"templateRequirement.image",select:'filename size path mimetype '}]
+    let populateq = [{ path: "added_by", select: 'name' }, { path: "templateRequirement.image", select: 'filename size path mimetype ' }];
     const popup = await popupSch.findOne({ _id: id, is_deleted: false }).select(selectq).populate(populateq);
     return otherHelper.sendResponse(res, httpStatus.OK, true, popup, null, popupConfig.get, null);
   } catch (err) {
@@ -62,8 +62,8 @@ popupController.getPopupDetail = async (req, res, next) => {
 popupController.getPopupByKey = async (req, res, next) => {
   try {
     const key = req.params.key;
-    let selectq = {added_by:0,added_at:0,}
-    const popup = await popupSch.findOne({ key, is_deleted: false },selectq);
+    let selectq = { added_by: 0, added_at: 0, };
+    const popup = await popupSch.findOne({ key, is_deleted: false }, selectq);
     return otherHelper.sendResponse(res, httpStatus.OK, true, popup, null, popupConfig.get, null);
   } catch (err) {
     next(err);
@@ -72,12 +72,12 @@ popupController.getPopupByKey = async (req, res, next) => {
 popupController.DeletePopup = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const del = await popupSch.findOneAndUpdate({_id:id,is_removal:true}, { $set: { is_deleted: true } }, { new: true });
-    if(del&&del._id){
-      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'popup delete success!!', null);
+    const del = await popupSch.findOneAndUpdate({ _id: id, is_removal: true }, { $set: { is_deleted: true } }, { new: true });
+    if (del && del._id) {
+      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'popup delete success!', null);
 
-    }else{
-   return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
+    } else {
+      return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
 
     }
   } catch (err) {

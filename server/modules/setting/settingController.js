@@ -140,7 +140,7 @@ settingController.EditSetting = async (req, res, next) => {
     );
 
     if (Object.keys(allData).length) {
-      return otherHelper.sendResponse(res, httpStatus.OK, true, allData, null, 'settings edit success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, allData, null, 'settings edit success!', null);
     }
   } catch (err) {
     next(err);

@@ -6,8 +6,8 @@ const sanitizeHelper = require('../../helper/sanitize.helper');
 const validateHelper = require('../../helper/validate.helper');
 const roleConfig = require('./roleConfig');
 const moduleGroupSch = require('./moduleGroupSchema');
-const moduleAccessSch = require('./moduleSchema')
-const roleSch = require('./roleSchema')
+const moduleAccessSch = require('./moduleSchema');
+const roleSch = require('./roleSchema');
 const validations = {};
 
 validations.validateRole = async (req, res, next) => {
@@ -44,13 +44,13 @@ validations.validateRole = async (req, res, next) => {
   ];
   let errors = validateHelper.validation(data, validationArray);
 
-  let role_filter = { is_deleted: false, role_title: data.role_title }
+  let role_filter = { is_deleted: false, role_title: data.role_title };
   if (data._id) {
-    role_filter = { ...role_filter, _id: { $ne: data._id } }
+    role_filter = { ...role_filter, _id: { $ne: data._id } };
   }
   const already_role = await roleSch.findOne(role_filter);
   if (already_role && already_role._id) {
-    errors = { ...errors, role_title: 'role already exist' }
+    errors = { ...errors, role_title: 'role already exist' };
   }
 
   if (!isEmpty(errors)) {
@@ -102,13 +102,13 @@ validations.validateModule = async (req, res, next) => {
     },
   ];
   let errors = validateHelper.validation(data, validateArray);
-  let key_filter = { is_deleted: false, module_name: data.module_name }
+  let key_filter = { is_deleted: false, module_name: data.module_name };
   if (data._id) {
-    key_filter = { ...key_filter, _id: { $ne: data._id } }
+    key_filter = { ...key_filter, _id: { $ne: data._id } };
   }
   const already_key = await moduleAccessSch.findOne(key_filter);
   if (already_key && already_key._id) {
-    errors = { ...errors, module_name: 'module_name already exist' }
+    errors = { ...errors, module_name: 'module_name already exist' };
   }
 
   if (!isEmpty(errors)) {
@@ -174,13 +174,13 @@ validations.validateModuleGroup = async (req, res, next) => {
     },
   ];
   let errors = validateHelper.validation(data, validateArray);
-  let key_filter = { is_deleted: false, module_group: data.module_group }
+  let key_filter = { is_deleted: false, module_group: data.module_group };
   if (data._id) {
-    key_filter = { ...key_filter, _id: { $ne: data._id } }
+    key_filter = { ...key_filter, _id: { $ne: data._id } };
   }
   const already_key = await moduleGroupSch.findOne(key_filter);
   if (already_key && already_key._id) {
-    errors = { ...errors, module_group: 'module_group already exist' }
+    errors = { ...errors, module_group: 'module_group already exist' };
   }
 
   if (!isEmpty(errors)) {

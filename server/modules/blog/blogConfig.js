@@ -10,7 +10,7 @@ module.exports = {
   },
   save: 'Blog saved successfully.',
   get: 'Blogs get successfully.',
-  delete: 'Blog deleted successfully!!',
+  delete: 'Blog deleted successfully!',
   update: 'Blog updated successfully ',
   categorySave: 'Blog category saved successfully.',
   categoryUpdate: 'Blog category updated successfully ',

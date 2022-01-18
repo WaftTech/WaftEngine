@@ -83,7 +83,7 @@ contentController.DeleteContent = async (req, res, next) => {
     const id = req.params.id;
     const del = await contentSch.findByIdAndUpdate(id, { $set: { is_deleted: true } }, { new: true });
     if (del && del._id) {
-      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'content delete success!!', null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, del, null, 'content delete success!', null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
     }
@@ -118,5 +118,5 @@ contentController.selectMultipleData = async (req, res, next) => {
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
   };
-}
+};
 module.exports = contentController;

@@ -24,7 +24,7 @@ bugController.GetErrors = async (req, res, next) => {
       searchQuery = { error_stack: { $regex: req.query.find_errors, $options: 'i' }, ...searchQuery };
     }
     let bugs = await otherHelper.getQuerySendResponse(bugSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!!', page, size, bugs.totalData, sortQuery);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs.data, 'Here are the error folks!', page, size, bugs.totalData, sortQuery);
   } catch (err) {
     next(err);
   }
@@ -36,7 +36,7 @@ bugController.GetErrorsGroupBy = async (req, res, next) => {
     bugs.forEach(each => {
       totalData = totalData + each.count;
     });
-    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs, 'errors by group by get success!!', 1, 1, totalData);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, bugs, 'errors by group by get success!', 1, 1, totalData);
   } catch (err) {
     next(err);
   }
@@ -53,7 +53,7 @@ bugController.DeleteError = async (req, res, next) => {
 bugController.DeleteAll = async (req, res, next) => {
   try {
     const dels = await bugSch.remove({});
-    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'all errors deleted!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'all errors deleted!', null);
   } catch (err) {
     next(err);
   }
@@ -72,5 +72,5 @@ bugController.selectMultipleData = async (req, res, next) => {
   );
   return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
 
-}
+};
 module.exports = bugController;
