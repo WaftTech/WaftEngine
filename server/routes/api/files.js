@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const uploadHelper = require('../../helper/upload.helper')
-const filesValidation = require('./../../modules/files/filesValidation')
+const uploadHelper = require('../../helper/upload.helper');
+const filesValidation = require('./../../modules/files/filesValidation');
 const dModule = require('../../modules/files/filesController');
 const { authentication } = require('../../middleware/auth.middleware');
 

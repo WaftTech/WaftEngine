@@ -72,7 +72,7 @@ fileController.GetFileAndFolder = async (req, res, next) => {
         files: { data: files.data, totalData: files.data.length },
         self: self,
       },
-      'files and folders get success!!',
+      'files and folders get success!',
       page,
       size,
       total,
@@ -128,7 +128,7 @@ fileController.UploadFiles = async (req, res, next) => {
       const fileSave = await newFile.save();
       files.push(fileSave);
     }
-    return otherHelper.sendResponse(res, httpStatus.OK, true, files, null, 'File Saved Success !!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, files, null, 'File Saved Success !', null);
   } catch (err) {
     next(err);
   }
@@ -153,7 +153,7 @@ fileController.UploadFilesToRoot = async (req, res, next) => {
       const fileSave = await newFile.save();
       files.push(fileSave);
     }
-    return otherHelper.sendResponse(res, httpStatus.OK, true, files, null, 'File Saved Success !!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, files, null, 'File Saved Success !', null);
   } catch (err) {
     next(err);
   }
@@ -162,7 +162,7 @@ fileController.DeleteFolder = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = await folderSch.findByIdAndUpdate(id, { $set: { is_deleted: true, deleted_at: new Date(), deleted_by: req.user.id } }, { new: true });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'folder delete success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'folder delete success!', null);
   } catch (err) {
     next(err);
   }
@@ -172,7 +172,7 @@ fileController.DeleteFile = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = await fileSch.findByIdAndUpdate(id, { $set: { is_deleted: true, deleted_at: new Date(), deleted_by: req.user.id } }, { new: true });
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'file delete success!!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'file delete success!', null);
   } catch (err) {
     next(err);
   }
