@@ -1,18 +1,15 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const HttpStatus = require('http-status');
-
 const useragent = require('useragent');
 const requestIp = require('request-ip');
 const loginLogSch = require('../modules/user/loginlogs/loginlogSchema');
-
 const otherHelper = require('../helper/others.helper');
 const accessSch = require('../modules/role/accessSchema');
 const modulesSch = require('../modules/role/moduleSchema');
 const rolesSch = require('../modules/role/roleSchema');
 const userSch = require('../modules/user/userSchema');
 const authMiddleware = {};
-
 const isEmpty = require('../validation/isEmpty');
 const { getSetting } = require('../helper/settings.helper');
 
