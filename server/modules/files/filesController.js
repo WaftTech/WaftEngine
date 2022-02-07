@@ -84,8 +84,7 @@ fileController.GetFileAndFolder = async (req, res, next) => {
         folders: { data: folders.data, totalData: folders.data.length },
         files: { data: files.data, totalData: files.data.length },
         self: self,
-      },
-      'files and folders get success!', page, size, total, sortQuery);
+      }, 'files and folders get success!', page, size, total, sortQuery);
   } catch (err) {
     next(err);
   }
