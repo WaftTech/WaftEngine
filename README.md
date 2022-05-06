@@ -52,9 +52,13 @@ Read documentation & tutorials
 
 ## Backers 
 
-[Become a backer](https://opencollective.com/waftengine) and show your support to our open source project on [our site](https://mochajs.org/#backers).
+[Become a backer](https://opencollective.com/waftengine) and show your support to our open source project on [our site](https://waftengine.org).
 
 <a href="https://opencollective.com/waftengine"><img src="https://opencollective.com/waftengine/tiers/backers.svg?limit=30&button=false&avatarHeight=46&width=750"></a>
+
+## Sponsor
+
+Does your company use WaftEngine? Ask your manager or marketing team if your company would be interested in supporting our project. Support will allow the maintainers to dedicate more time for maintenance and new features for everyone. Also, your company's logo will show [on GitHub](https://github.com/WaftTech/WaftEngine#readme) and on [our site](https://waftengine.org/) - who doesn't want a little extra exposure? [Here's the info](https://opencollective.com/waftengine).
 
 ## Get help & contact the team
 
