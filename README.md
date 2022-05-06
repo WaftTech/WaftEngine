@@ -50,6 +50,12 @@ Read documentation & tutorials
 - [Developer Documentation](https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
 - [Architecture](https://waftengine.org/architecture)
 
+## Backers 
+
+[Become a backer](https://opencollective.com/waftengine) and show your support to our open source project on [our site](https://mochajs.org/#backers).
+
+<a href="https://opencollective.com/waftengine"><img src="https://opencollective.com/waftengine/tiers/backers.svg?limit=30&button=false&avatarHeight=46&width=750"></a>
+
 ## Get help & contact the team
 
 - [WaftEngine Gitter Chat](https://gitter.im/waftengine/community)
