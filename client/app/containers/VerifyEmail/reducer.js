@@ -13,7 +13,7 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const verifyEmailReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case types.LOAD_VERIFY_EMAIL_REQUEST:
         draft.loading = true;

@@ -7,8 +7,8 @@ import {
   select,
   cancel,
 } from 'redux-saga/effects';
-import { LOCATION_CHANGE, push } from 'connected-react-router';
-import Api from 'utils/Api';
+import { LOCATION_CHANGE, push } from 'redux-first-history';
+import Api from '../../../utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -21,7 +21,7 @@ function* loadAll(action) {
   let sort = '';
 
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });
@@ -43,7 +43,7 @@ function* loadMedia(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });
@@ -81,7 +81,6 @@ function* redirectOnSuccess(goBack) {
   };
   yield put(enqueueSnackbar(snackbarData));
   yield put(push('/admin/slider-manage'));
-  // goBack();
 }
 
 function* addEdit({ payload }) {

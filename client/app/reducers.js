@@ -1,21 +1,27 @@
 /**
  * Combine all reducers in this file and export the combined reducers.
  */
-
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-import history from 'utils/history';
-import languageProviderReducer from 'containers/LanguageProvider/reducer';
-import global from './containers/App/reducer';
+import { createReduxHistoryContext } from 'redux-first-history';
+import { createBrowserHistory } from 'history';
+import globalReducer from './containers/App/reducer';
+
+const history = createBrowserHistory();
+const { createReduxHistory, routerMiddleware, routerReducer } =
+  createReduxHistoryContext({
+    history,
+    //other options if needed
+  });
+
+export { createReduxHistory, routerMiddleware };
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
-    language: languageProviderReducer,
-    router: connectRouter(history),
-    global,
+    global: globalReducer,
+    router: routerReducer,
     ...injectedReducers,
   });
 

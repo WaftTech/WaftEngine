@@ -7,8 +7,8 @@ import {
   fork,
   cancel,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
-import { LOCATION_CHANGE, push } from 'connected-react-router';
+import Api from '../../../utils/Api';
+import { LOCATION_CHANGE, push } from 'redux-first-history';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectOne } from './selectors';
@@ -19,7 +19,7 @@ function* loadAll(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });
@@ -49,7 +49,7 @@ function* redirectOnSuccess() {
   yield put(push('/admin/blog-cat-manage'));
 }
 
-export const validate = data => {
+export const validate = (data) => {
   const errors = {};
   if (!data.title) errors.title = 'Title field is required!!';
   if (!data.slug_url) errors.slug_url = 'Slug field is required!!';

@@ -31,16 +31,15 @@ export const initialState = {
   loading: false,
   errors: { name: '', roles: '', password: '' },
 };
-// Object.keys(action.payload.value).filter(e => {draft.one.users[e] !== ''})
 
 /* eslint-disable default-case, no-param-reassign */
 const adminUserManagePageReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     const normalizedData = {};
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
-        Object.keys(action.payload.value).map(each => {
+        Object.keys(action.payload.value).map((each) => {
           if (typeof draft.one.users[each] === 'string') {
             if (draft.one.users[each] !== '') {
               draft.errors[each] = '';
@@ -91,7 +90,7 @@ const adminUserManagePageReducer = (state = initialState, action) =>
         break;
       case types.LOAD_ONE_SUCCESS:
         draft.loading = false;
-        action.payload.data.roles.map(each => {
+        action.payload.data.roles.map((each) => {
           normalizedData[each._id] = each;
           return null;
         });

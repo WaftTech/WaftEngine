@@ -1,6 +1,5 @@
 import { takeLatest, call, select, put } from 'redux-saga/effects';
-// import { push, LOCATION_CHANGE } from 'connected-react-router';
-import Api from 'utils/Api';
+import Api from '../../../utils/Api';
 import * as types from './constants';
 import { makeSelectToken } from '../../App/selectors';
 import * as actions from './actions';
@@ -10,7 +9,7 @@ function* loadSubscriber(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });

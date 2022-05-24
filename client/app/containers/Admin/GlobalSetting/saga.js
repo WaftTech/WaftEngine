@@ -7,8 +7,8 @@ import {
   fork,
   select,
 } from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
-import Api from 'utils/Api';
+import { push, LOCATION_CHANGE } from 'redux-first-history';
+import Api from '../../../utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -20,7 +20,7 @@ function* loadWithdraw(action) {
 
   let query = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });

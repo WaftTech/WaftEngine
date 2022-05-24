@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"waft-engine.menusches"}],"uuid":"fe8f6eebe99346e7bf66f72acb30e1ca"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"a88f0ad158aa4cc9809d5897345868ef","collectionName":"menusches","type":"collection"}

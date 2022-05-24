@@ -7,8 +7,8 @@ import {
   select,
   cancel,
 } from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
-import Api from 'utils/Api';
+import { push, LOCATION_CHANGE } from 'redux-first-history';
+import Api from '../../utils/Api';
 import { makeSelectToken, makeSelectUser } from '../App/selectors';
 import * as types from './constants';
 import { enqueueSnackbar } from '../App/actions';
@@ -205,7 +205,6 @@ function* setGoogleTwoFactor() {
 
 function* addEmailTwoFactor({ payload }) {
   const token = yield select(makeSelectToken());
-  // const data = yield select(makeSelectTwoFactor());
   yield call(
     Api.post(
       'user/mfa/email',
@@ -219,7 +218,6 @@ function* addEmailTwoFactor({ payload }) {
 
 function* addGoogleTwoFactor({ payload }) {
   const token = yield select(makeSelectToken());
-  // const data = yield select(makeSelectTwoFactor());
   yield call(
     Api.post(
       'user/mfa/ga',

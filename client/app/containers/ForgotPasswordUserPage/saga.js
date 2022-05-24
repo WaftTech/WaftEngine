@@ -6,15 +6,15 @@ import {
   take,
   cancel,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
-import { LOCATION_CHANGE, push } from 'connected-react-router';
+import Api from '../../utils/Api';
+import { LOCATION_CHANGE, push } from 'redux-first-history';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectEmail } from './selectors';
 import { enqueueSnackbar } from '../App/actions';
 
 // Individual exports for testing
-export const validate = data => {
+export const validate = (data) => {
   const errors = {};
   if (!data.email) errors.email = 'email is required';
   return { errors, isValid: !Object.keys(errors).length };

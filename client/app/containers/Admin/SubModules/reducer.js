@@ -16,7 +16,6 @@ export const initialState = {
   one: {
     module_group: '',
     description: '',
-    // module_group_main: '',
     order: '',
   },
   query: { find_title: '', size: 10 },
@@ -27,7 +26,7 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const subModulesReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case types.SET_ONE_VALUE:
         draft.one[action.payload.key] = action.payload.value;
@@ -77,7 +76,7 @@ const subModulesReducer = (state = initialState, action) =>
           draft.all = {
             ...draft.all,
             data: draft.all.data.filter(
-              each => each._id != action.payload.data._id,
+              (each) => each._id != action.payload.data._id,
             ),
           };
         }

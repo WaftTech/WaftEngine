@@ -31,9 +31,6 @@ router.use('/blog', blogRoutes);
 // All route of sliders
 const sliderRoutes = require('./api/slider');
 router.use('/slider', sliderRoutes);
-// All route of faqs
-const faqRoutes = require('./api/faq');
-router.use('/faq', faqRoutes);
 // All route of Subscribe
 const subscribeRoutes = require('./api/subscribe');
 router.use('/subscribe', subscribeRoutes);
@@ -46,16 +43,8 @@ router.use('/meta', metaRoutes);
 // All route of menu module
 const menuRoutes = require('./api/menu');
 router.use('/menu', menuRoutes);
-
-const socialMedia = require('./api/socialMedia');
-router.use('/social', socialMedia);
-
 const popup = require('./api/popup');
 router.use('/popup', popup);
-
-const testimonialRoutes = require('./api/testimonial');
-router.use('/testimonial', testimonialRoutes);
-``;
 
 const adminDashboard = require('./api/adminDashboard');
 router.use('/dashboard', adminDashboard);

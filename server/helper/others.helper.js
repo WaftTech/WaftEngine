@@ -1,6 +1,7 @@
 'use strict';
 const crypto = require('crypto');
 const PhoneNumber = require('awesome-phonenumber');
+const Validator = require('validator');
 
 const otherHelper = {};
 
@@ -136,6 +137,19 @@ otherHelper.getQuerySendResponse = async (model, page, size, sortQuery, searchQu
     return pulledData;
   } catch (err) {
     next(err);
+  }
+};
+otherHelper.returnIdIfSlug = async (slug_url, slug_key, schema) => {
+  if (Validator.isMongoId(slug_url)) {
+    return slug_url;
+  } else {
+    const filter = { [slug_key]: slug_url.toLowerCase(), is_deleted: false };
+    const d = await schema.findOne(filter).select({ _id: 1 });
+    if (d) {
+      return d._id;
+    } else {
+      return null;
+    }
   }
 };
 otherHelper.slugify = (text) => {

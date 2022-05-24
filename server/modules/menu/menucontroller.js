@@ -23,13 +23,10 @@ menuController.getMenu = async (req, res, next) => {
 };
 
 const menuControl = async (req, res, next) => {
-  const all_menu = await menu_item
-    .find({ menu_sch_id: req.body.menu_sch_id, is_deleted: false })
-    .sort({ order: 1 })
-    .lean();
+  const all_menu = await menu_item.find({ menu_sch_id: req.body.menu_sch_id, is_deleted: false }).sort({ order: 1 }).lean();
   const baseParents = [];
   const baseChildren = [];
-  all_menu.forEach(each => {
+  all_menu.forEach((each) => {
     if (each.parent_menu == null) {
       baseParents.push(each);
     } else {
@@ -68,10 +65,7 @@ menuItemController.saveMenuItem = async (req, res, next) => {
     let menuitem = req.body;
 
     if (menuitem.parent_menu) {
-      const hierarchy = await menu_item
-        .findById(menuitem.parent_menu)
-        .select('parent_hierarchy')
-        .lean();
+      const hierarchy = await menu_item.findById(menuitem.parent_menu).select('parent_hierarchy').lean();
 
       menuitem.parent_hierarchy = [...hierarchy.parent_hierarchy, hierarchy._id];
     }
@@ -114,7 +108,7 @@ menuController.saveMenu = async (req, res, next) => {
     if (menu && menu._id) {
       menu.updated_by = req.user.id;
       menu.updated_at = new Date();
-      const update = await menuSch.findByIdAndUpdate(menu._id, { $set: menu, }, { new: true },);
+      const update = await menuSch.findByIdAndUpdate(menu._id, { $set: menu }, { new: true });
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, menuConfig.save, null);
     } else {
       menu.added_by = req.user.id;
@@ -130,24 +124,28 @@ menuController.saveMenu = async (req, res, next) => {
 };
 
 menuController.getEditMenu = async (req, res, next) => {
-  const parent = await menuSch.findById(req.params.id).select('title key order is_active');
-  const all_menu = await menu_item
-    .find({ menu_sch_id: req.params.id, is_deleted: false })
-    .sort({ order: 1 })
-    .lean();
+  const id = await otherHelper.returnIdIfSlug(req.params.id, 'key', menuSch);
+  if (!id) {
+    return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, true, null, null, 'Menu not found', null);
+  }
+  const parent = await menuSch.findById(id).select('title key order is_active');
+  if (parent) {
+    const all_menu = await menu_item.find({ menu_sch_id: parent._id, is_deleted: false }).sort({ order: 1 }).lean();
+    const baseParents = [];
+    const baseChildren = [];
+    all_menu.forEach((each) => {
+      if (each.parent_menu == null) {
+        baseParents.push(each);
+      } else {
+        baseChildren.push(each);
+      }
+    });
+    const child = utils.recursiveChildFinder(baseParents, baseChildren);
 
-  const baseParents = [];
-  const baseChildren = [];
-  all_menu.forEach(each => {
-    if (each.parent_menu == null) {
-      baseParents.push(each);
-    } else {
-      baseChildren.push(each);
-    }
-  });
-  const child = utils.recursiveChildFinder(baseParents, baseChildren);
-
-  return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, { parent, child }, null, 'Child menu get success!', null);
+  } else {
+    return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, null, 'Not Found', null);
+  }
 };
 
 menuController.deleteMenu = async (req, res, next) => {
@@ -186,17 +184,15 @@ menuController.selectMultipleData = async (req, res, next) => {
   const { menu_item_id, type } = req.body;
 
   if (type == 'is_active') {
-    const Data = await menuSch.updateMany(
-      { _id: { $in: menu_item_id } },
-      [{
+    const Data = await menuSch.updateMany({ _id: { $in: menu_item_id } }, [
+      {
         $set: {
-          is_active: { $not: "$is_active" }
+          is_active: { $not: '$is_active' },
         },
-      }],
-    );
+      },
+    ]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
-  }
-  else {
+  } else {
     const Data = await menuSch.updateMany(
       { _id: { $in: menu_item_id } },
       {
@@ -207,7 +203,7 @@ menuController.selectMultipleData = async (req, res, next) => {
       },
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
-  };
+  }
 };
 
 module.exports = { menuController, menuItemController };

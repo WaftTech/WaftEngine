@@ -7,8 +7,8 @@ import {
   select,
   cancel,
 } from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
-import Api from 'utils/Api';
+import { push, LOCATION_CHANGE } from 'redux-first-history';
+import Api from '../../../utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import { enqueueSnackbar } from '../../App/actions';
 import * as types from './constants';
@@ -19,7 +19,7 @@ function* loadAll(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });
@@ -68,7 +68,7 @@ function* redirectOnSuccess(goBack) {
   };
 
   yield put(enqueueSnackbar(defaultMsg));
-  goBack();
+  yield put(push('/admin/user-manage'));
 }
 
 function* redirectOnPwReset() {
@@ -120,16 +120,6 @@ function* addEditFail(action) {
 
   yield put(enqueueSnackbar(defaultError));
 }
-
-// function* addEditSuccessFunc(action) {
-//   const snackbarData = {
-//     message: action.payload.msg || 'update success!!',
-//     options: {
-//       variant: 'success',
-//     },
-//   };
-//   yield put(enqueueSnackbar(snackbarData));
-// }
 
 function* updateFail(action) {
   const defaultError = {

@@ -1,5 +1,5 @@
 import { takeLatest, call, select, put } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../../utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -11,7 +11,7 @@ function* loadAll(action) {
   let sort = '';
 
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });

@@ -1,4 +1,4 @@
-# WaftEngine (MERN Stack Framework)
+# WaftEngine (MERN Stack Engine)
 
 [WaftEngine](https://waftengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
 
@@ -33,14 +33,17 @@ Since anything in our codebase can be extended, overwritten, or installed as a p
   - `npm install`
 - Import Default data into MongoDB server from `database` folder
   - `cd ../database`
-  -  `run 'mongorestore' to import all BSON/json files`
+  - run `mongorestore` to import all BSON/json files
 - Configure Server
   - Create `.env` file in `server`
-  - Update `.env` file with `MONGODB_URI=mongodb://localhost:27017/waft-engine` 
+  - Update `.env` file with `MONGODB_URI=mongodb://localhost:27017/waft-engine`
+- Configure Client
+  - Create `.env` file in `client`
+  - Update `.env` file with `VITE_API_BASE=http://localhost:5050/api/`
 - Running the application in development mode
   - Development Mode (Client only): `cd client` then `npm run start` then open `http://localhost:5051` in a browser
   - Development Mode (Server only): `cd server` then `npm run start` then open `http://localhost:5050` in a browser
-- Default Credentials : Email : admin@waftengine.org , Password : Test@1234
+- Default Credentials : Email : `admin@waftengine.org` , Password : `Test@1234`
 - For more [Getting started](https://waftengine.org/documentation/2019-7-1-getting-started-with-waftengine)
 
 ## Get involved
@@ -50,7 +53,7 @@ Read documentation & tutorials
 - [Developer Documentation](https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine)
 - [Architecture](https://waftengine.org/architecture)
 
-## Backers 
+## Backers
 
 [Become a backer](https://opencollective.com/waftengine) and show your support to our open source project on [our site](https://waftengine.org).
 

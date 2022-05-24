@@ -8,7 +8,7 @@
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Waft Technology Pvt.Ltd. Nepal",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^6.5.5",

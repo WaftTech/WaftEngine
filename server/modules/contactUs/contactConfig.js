@@ -1,7 +1,7 @@
 module.exports = {
   validate: {
     nameEmp: 'This field is required',
-    nameLen: 'his field should be between 2 to 50',
+    nameLen: 'This field should be between 2 to 50',
     emailEmp: 'This field is required',
     isEmail: 'This field should be of email type',
     msgEmp: 'This field is required',

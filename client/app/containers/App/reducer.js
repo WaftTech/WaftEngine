@@ -12,9 +12,6 @@
 import produce from 'immer';
 
 import * as types from './constants';
-import { LOAD_ALL_SUCCESS as MEDIA_LOAD_ALL_SUCCESS } from '../Admin/Media/constants';
-import * as utils from './utils';
-import { toast } from 'react-toastify';
 
 // The initial state of the App
 export const initialState = {
@@ -32,20 +29,15 @@ export const initialState = {
     cat: {},
     faq: [],
   },
+  showExpired: false,
 };
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable default-case */
 const appReducer = (state = initialState, action = { type: '' }) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     const access = {};
     let isAdmin = false;
     switch (action.type) {
-      case MEDIA_LOAD_ALL_SUCCESS:
-        draft.media = {
-          ...state.media,
-          ...utils.normalizeMedia(action.payload.data),
-        };
-        break;
       case types.SET_USER:
         localStorage.setItem(
           'routes',
@@ -53,11 +45,11 @@ const appReducer = (state = initialState, action = { type: '' }) =>
             ? JSON.stringify(action.payload.routes)
             : localStorage.routes,
         );
-        (action.payload.routes || []).map(each => {
+        (action.payload.routes || []).map((each) => {
           if (each.admin_routes.includes('/admin/dashboard')) {
             isAdmin = true;
           }
-          each.admin_routes.map(route => {
+          each.admin_routes.map((route) => {
             access[route] = [...(access[route] || []), each.access_type];
           });
         });
@@ -103,9 +95,6 @@ const appReducer = (state = initialState, action = { type: '' }) =>
           [action.payload.data._id]: action.payload.data, // eslint-disable-line no-underscore-dangle
         };
         break;
-      // case types.LOAD_AVAILABLE_SUCCESS:
-      //   draft.module = action.payload.data;
-      //   break;
       case types.LOAD_SLIDE_SUCCESS:
         draft.slide = {
           ...draft.slide,
@@ -129,7 +118,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
       case types.REMOVE_SNACKBAR:
         draft.notifications = [
           ...draft.notifications.filter(
-            notification => notification.key !== action.payload,
+            (notification) => notification.key !== action.payload,
           ),
         ];
         break;
@@ -143,6 +132,15 @@ const appReducer = (state = initialState, action = { type: '' }) =>
       case types.LOAD_FAQ_SUCCESS:
         const tempKey = action.payload.data.cat.key;
         draft.faqData = { ...draft.faqData, [tempKey]: action.payload.data };
+        break;
+
+      case types.SESSION_EXPIRED:
+        draft.showExpired = true;
+        break;
+
+      case types.SET_EXPIRED:
+        draft.showExpired = action.payload;
+        break;
     }
   });
 

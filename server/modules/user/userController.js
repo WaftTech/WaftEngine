@@ -144,7 +144,12 @@ userController.GetAllUser = async (req, res, next) => {
       searchQuery = { email: { $regex: req.query.find_email, $options: 'i' }, ...searchQuery };
     }
     const roles = ['5bf7af0a736db01f8fa21a25', '5bf7ae3694db051f5486f845', '5def4c1cb3f6c12264bcf622'];
-
+    if (req.query.find_is_active == 'true' || req.query.find_is_active == 'false') {
+      searchQuery = { is_active: req.query.find_is_active, ...searchQuery };
+    }
+    if (req.query.find_roles) {
+      searchQuery = { roles: { $in: [req.query.find_roles] }, ...searchQuery };
+    }
     if (req.query.filter_author) {
       searchQuery = { roles: { $in: roles }, ...searchQuery };
     }
@@ -227,7 +232,7 @@ userController.validLoginResponse = async (req, user, next) => {
     let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
     let routes = [];
     if (accesses && accesses.length) {
-      const access = accesses.map(a => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
+      const access = accesses.map((a) => a.access_type).reduce((acc, curr) => [...curr, ...acc]);
       const routers = await moduleSch.find({ 'path._id': access }, { 'path.admin_routes': 1, 'path.access_type': 1 });
       for (let i = 0; i < routers.length; i++) {
         for (let j = 0; j < routers[i].path.length; j++) {
@@ -767,33 +772,28 @@ userController.loginGOath = async (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, 'Register Successfully', token);
 };
 
-
 userController.selectMultipleData = async (req, res, next) => {
   try {
     const { user_id, type } = req.body;
     if (type == 'is_active') {
-      const Data = await userSch.updateMany(
-        { _id: { $in: user_id } },
-        [{
+      const Data = await userSch.updateMany({ _id: { $in: user_id } }, [
+        {
           $set: {
-            is_active: { $not: "$is_active" }
+            is_active: { $not: '$is_active' },
           },
-        }],
-      );
+        },
+      ]);
       return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
-    }
-    else if (type == 'email_verified') {
-      const User = await userSch.updateMany(
-        { _id: { $in: user_id } },
-        [{
+    } else if (type == 'email_verified') {
+      const User = await userSch.updateMany({ _id: { $in: user_id } }, [
+        {
           $set: {
-            email_verified: { $not: "$email_verified" }
+            email_verified: { $not: '$email_verified' },
           },
-        }],
-      );
+        },
+      ]);
       return otherHelper.sendResponse(res, httpStatus.OK, true, User, null, 'Status Change Success', null);
-    }
-    else {
+    } else {
       const User = await userSch.updateMany(
         { _id: { $in: user_id } },
         {
@@ -804,7 +804,7 @@ userController.selectMultipleData = async (req, res, next) => {
         },
       );
       return otherHelper.sendResponse(res, httpStatus.OK, true, User, null, 'Multiple Data Delete Success', null);
-    };
+    }
   } catch (err) {
     next(err);
   }

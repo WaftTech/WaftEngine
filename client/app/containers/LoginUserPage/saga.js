@@ -7,8 +7,8 @@ import {
   cancel,
   call,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
-import { LOCATION_CHANGE, push } from 'connected-react-router';
+import Api from '../../utils/Api';
+import { LOCATION_CHANGE, push } from 'redux-first-history';
 import * as types from './constants';
 import * as actions from './actions';
 import {
@@ -19,7 +19,7 @@ import {
 import { setUser, setToken, enqueueSnackbar } from '../App/actions';
 
 // Individual exports for testing
-export const validate = data => {
+export const validate = (data) => {
   const errors = {};
   if (!data.email) errors.email = 'email is required';
   if (!data.password) errors.password = 'password is required';
@@ -51,8 +51,6 @@ export function* loginAction(action) {
     yield fork(
       Api.post('user/login', actions.loginSuccess, actions.loginFailure, data),
     );
-    // yield take([LOCATION_CHANGE, types.LOGIN_FAILURE]);
-    // yield cancel(successWatcher);
   } else {
     yield put(actions.setStoreValue({ key: 'errors', value: errors.errors }));
     yield put(actions.setStoreValue({ key: 'loading', value: false }));

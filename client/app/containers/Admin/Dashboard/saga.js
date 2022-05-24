@@ -1,5 +1,5 @@
 import { takeLatest, call, select } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../../utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -27,21 +27,20 @@ function* loadErrors() {
   );
 }
 function* loadInfo() {
-  const token = yield select(makeSelectToken());
   yield call(
-    Api.get1(
-      'documentation/latestinfo',
+    Api.get(
+      'dashboard/info',
       actions.loadInfoSuccess,
       actions.loadInfoFailure,
-      token,
+      null,
     ),
   );
 }
 function* loadBlog() {
   const token = yield select(makeSelectToken());
   yield call(
-    Api.get1(
-      'documentation/latestblog',
+    Api.get(
+      'dashboard/latestblog',
       actions.loadBlogSuccess,
       actions.loadBlogFailure,
       token,

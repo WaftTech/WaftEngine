@@ -103,7 +103,7 @@ sliderController.DeleteSlider = async (req, res, next) => {
     },
   );
   if (sliderDel && sliderDel._id) {
-    return otherHelper.sendResponse(res, httpStatus.OK, true, menu, null, menuConfig.delete, null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, sliderDel, null, sliderConfig.delete, null);
   } else {
     return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, 'cannot delete', 'cannot delete', null);
   }

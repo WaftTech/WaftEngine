@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE, push } from 'connected-react-router';
+import { LOCATION_CHANGE, push } from 'redux-first-history';
 import {
   call,
   cancel,
@@ -8,7 +8,7 @@ import {
   take,
   takeLatest,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../../utils/Api';
 import { enqueueSnackbar } from '../../App/actions';
 import { makeSelectToken } from '../../App/selectors';
 import * as actions from './actions';
@@ -33,7 +33,7 @@ function* loadAll(action) {
   let sort = '';
 
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });
@@ -78,7 +78,7 @@ function* redirectOnSuccess() {
   yield put(push('/admin/blog-manage'));
 }
 
-export const validate = data => {
+export const validate = (data) => {
   const errors = {};
   if (!data.title) errors.title = 'Title field is required!!';
   if (!data.slug_url) errors.slug_url = 'Slug field is required!!';
@@ -97,7 +97,6 @@ function* addEdit() {
     main_data = { ...main_data, image: data.image._id };
   }
   if (errors.isValid) {
-    // const { image, ...dataObj } = data;
     yield fork(
       Api.post(
         'blog',
