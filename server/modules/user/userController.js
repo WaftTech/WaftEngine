@@ -367,7 +367,7 @@ userController.ResendVerificationCode = async (req, res, next) => {
         return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Verified', null);
       } else {
         const currentDate = new Date();
-        const diff = parseInt((currentDate - user.email_verified_request_date) / (1000 * 1)); //in minute
+        const diff = parseInt((currentDate - user.email_verified_request_date) / (1000 * 60)); //in minute
         if (diff < 10) {
           return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Sent', null);
         }
