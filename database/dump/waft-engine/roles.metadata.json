@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"waft-engine.roles"}],"uuid":"04798dcce00c451f8d6058edac31fb8e"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"61c0d3516636461e9d1544e8327de72e","collectionName":"roles","type":"collection"}

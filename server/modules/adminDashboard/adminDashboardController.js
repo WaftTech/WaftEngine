@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const otherHelper = require('../../helper/others.helper');
+const apiCallHelper = require('../../helper/apicall.helper');
 const userSch = require('./../user/userSchema');
 const bugSch = require('./../bug/bugSchema');
 const roleSch = require('./../role/roleSchema');
@@ -23,6 +24,15 @@ adminDashboardController.getNoOfCustomerByRegistration = async (req, res, next) 
       },
     ]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get User by Day', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+adminDashboardController.getWaftEngineInfo = async (req, res, next) => {
+  try {
+    const d = await apiCallHelper.requestThirdPartyApi(req, 'https://waftengine.org/api/documentation/latestinfo', {}, {}, 'GET', next);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, d.data, null, 'Get User by Day', null);
   } catch (err) {
     next(err);
   }

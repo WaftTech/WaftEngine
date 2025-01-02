@@ -7,7 +7,7 @@ import {
   fork,
   cancel,
 } from 'redux-saga/effects';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
+import { push, LOCATION_CHANGE } from 'redux-first-history';
 import Api from '../../../utils/Api';
 import { makeSelectToken } from '../../App/selectors';
 import * as types from './constants';
@@ -20,7 +20,7 @@ function* loadAll(action) {
   let query = '';
 
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
       return null;
     });
@@ -69,18 +69,6 @@ function* addEdit() {
   yield cancel(successWatcher);
 }
 
-// function* deleteOne(action) {
-//   const token = yield select(makeSelectToken());
-//   yield call(
-//     Api.delete(
-//       `role/module-group/${action.payload}`,
-//       actions.deleteOneSuccess,
-//       actions.deleteOneFailure,
-//       token,
-//     ),
-//   );
-// }
-
 function* deleteSuccessFunc(action) {
   const snackbarData = {
     message: action.payload.msg || 'Area unit delete success',
@@ -127,7 +115,6 @@ export default function* subModulesSaga() {
   yield takeLatest(types.LOAD_ALL_REQUEST, loadAll);
   yield takeLatest(types.LOAD_ONE_REQUEST, loadOne);
   yield takeLatest(types.ADD_EDIT_REQUEST, addEdit);
-  // yield takeLatest(types.DELETE_ONE_REQUEST, deleteOne);
   yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
   yield takeLatest(types.ADD_EDIT_FAILURE, addEditFailureFunc);

@@ -1,8 +1,11 @@
 node_modules/
 .vscode/
 .idea/
+.git-rewrite/
 *lock.json
 yarn.lock
 .expo/
 build
 .env
+client-app/.parcel-cache/data.mdb
+.DS_Store

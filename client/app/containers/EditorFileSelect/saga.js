@@ -1,5 +1,5 @@
 import { takeLatest, call, select, put } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import {
   makeSelectOne,
@@ -22,7 +22,7 @@ function* loadFiles(action) {
   let query = '';
   const searchParams = yield select(makeSelectQuery());
   if (searchParams) {
-    Object.keys(searchParams).map(each => {
+    Object.keys(searchParams).map((each) => {
       query = `${query}&${each}=${searchParams[each]}`;
       return null;
     });

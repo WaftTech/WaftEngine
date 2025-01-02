@@ -3,7 +3,8 @@ const { authentication, authorization } = require('../../middleware/auth.middlew
 const router = express.Router();
 const adminDashboardController = require('./../../modules/adminDashboard/adminDashboardController');
 
-router.get('/error/', authentication, authorization, adminDashboardController.GetErrorsGroupBy);
+router.get('/info', adminDashboardController.getWaftEngineInfo);
+router.get('/error', authentication, authorization, adminDashboardController.GetErrorsGroupBy);
 router.get('/user/days/:day', authentication, authorization, adminDashboardController.getLastXDayUserRegistration);
 router.get('/user/registration', authentication, authorization, adminDashboardController.getNoOfCustomerByRegistration);
 router.get('/user/recent', authentication, authorization, adminDashboardController.getLatestFiveUsers);

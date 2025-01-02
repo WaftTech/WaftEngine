@@ -1,14 +1,13 @@
 import {
   takeLatest,
-  call,
   take,
   fork,
   select,
   put,
   cancel,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
+import Api from '../../utils/Api';
+import { push, LOCATION_CHANGE } from 'redux-first-history';
 import { makeSelectToken } from '../App/selectors';
 import { enqueueSnackbar, setToken, setUser } from '../App/actions';
 import * as types from './constants';

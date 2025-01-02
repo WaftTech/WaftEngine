@@ -41,9 +41,7 @@ function checkStatus(response) {
  */
 export default function request(url, options = {}) {
   // options.credentials = 'same-origin'; // eslint-disable-line no-param-reassign
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON);
+  return fetch(url, options).then(checkStatus).then(parseJSON);
 }
 /**
  * Parses the JSON returned by a network request

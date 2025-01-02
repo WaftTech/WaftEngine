@@ -18,8 +18,8 @@ templateController.getTemplateName = async (req, res, next) => {
 
 templateController.getTemplateDetail = async (req, res, next) => {
   try {
-    const template_key = req.params.key;
-    const template = await templateSch.findOne({ template_key, is_deleted: false }, 'template_name template_key information variables from subject body alternate_text updated_by updated_at');
+    const _id = req.params.key;
+    const template = await templateSch.findOne({ _id, is_deleted: false }, 'template_name template_key information variables from subject body alternate_text updated_by updated_at');
 
     if (template) {
       return otherHelper.sendResponse(res, httpStatus.OK, true, template, null, templateConfig.templateGet, null);

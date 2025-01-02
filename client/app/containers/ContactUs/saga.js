@@ -1,5 +1,5 @@
 import { takeLatest, put, select, call } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';

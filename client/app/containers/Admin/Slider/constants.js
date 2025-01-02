@@ -5,6 +5,8 @@
  */
 
 export const SET_ONE_VALUE = 'app/SliderPage/SET_ONE_VALUE';
+export const SET_ARRAY_VALUE = 'app/SliderPage/SET_ARRAY_VALUE';
+
 export const CLEAR_ONE = 'app/SliderPage/CLEAR_ONE';
 
 export const SET_QUERY_VALUE = 'app/SliderPage/SET_QUERY_REQUEST';
@@ -33,4 +35,3 @@ export const DELETE_ONE_FAILURE = 'app/SliderPage/DELETE_ONE_FAILURE';
 
 export const CLEAR_ERRORS = 'app/SliderPage/CLEAR_ERRORS';
 export const SET_SLIDER_VALUE = 'app/SliderPage/SET_SLIDER_VALUE';
-

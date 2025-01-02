@@ -25,12 +25,10 @@ export const initialState = {
   one: {
     title: '',
     key: '',
-    // order: '',
     is_active: false,
   },
   sub_menu_form: {
     title: '',
-    // order: '',
     is_internal: true,
     url: '',
     parent_menu: '',
@@ -46,10 +44,9 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const menuManageReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case types.SHOW_SUB_MENU:
-        // draft.show_sub_menu = !draft.show_sub_menu;
         draft.show_sub_menu = action.payload;
         break;
       case types.LOAD_MENU_SUCCESS:
@@ -65,9 +62,6 @@ const menuManageReducer = (state = initialState, action) =>
       case types.SET_CHILD_VALUE:
         draft.sub_menu_form[action.payload.key] = action.payload.value;
         break;
-      // case types.ADD_SUB_MENU:
-      //   draft.one.sub_menu.push({ title: '', is_active: false });
-      //   break;
       case types.ADD_EDIT_FAILURE:
         draft.errors = action.payload.errors;
         break;
@@ -134,7 +128,7 @@ const menuManageReducer = (state = initialState, action) =>
         draft.all = {
           ...draft.all,
           data: draft.all.data.filter(
-            each => each._id != action.payload.data._id,
+            (each) => each._id != action.payload.data._id,
           ),
         };
         break;

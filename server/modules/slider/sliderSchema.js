@@ -16,9 +16,9 @@ const sliderSchema = new schema({
   ],
   slider_setting: {
     arrows: { type: Boolean, default: true },
-    arrow_position: { type: String, default: true },
+    // arrow_position: { type: String, default: true },
     dots: { type: Boolean, default: true },
-    dot_position: { type: String, default: true },
+    // dot_position: { type: String, default: true },
     slidesPerRow: { type: Number, default: 1, max: 6, min: 1 },
     slidesToScroll: { type: Number },
     slidesToShow: { type: Number },

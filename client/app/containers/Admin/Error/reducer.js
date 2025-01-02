@@ -18,7 +18,7 @@ export const initialState = {
 };
 
 const reducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case types.SET_QUERY_VALUE:
         draft.query[action.payload.key] = action.payload.value;
@@ -38,7 +38,7 @@ const reducer = (state = initialState, action) =>
         draft.all = {
           ...draft.all,
           data: draft.all.data.filter(
-            each => each._id != action.payload.data._id,
+            (each) => each._id != action.payload.data._id,
           ),
         };
         break;

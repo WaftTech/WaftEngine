@@ -1,8 +1,9 @@
 import { call, put } from 'redux-saga/effects';
-import { API_BASE } from '../containers/App/constants';
 import { sessionExpired, networkError } from '../containers/App/actions';
 import objectToFormData from './objectToFormData';
 import request from './request';
+
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 class Api {
   /**
@@ -10,8 +11,7 @@ class Api {
    */
   static dataLoader(apiUri, onSuccess, onError, data, token, metaData) {
     return function* commonApiSetup() {
-      const baseUrl = API_BASE;
-      const requestURL = `${baseUrl}${apiUri}`;
+      const requestURL = `${API_BASE}${apiUri}`;
       try {
         const options = {
           method: 'GET',
@@ -31,6 +31,9 @@ class Api {
         try {
           const errorPromise = err.response.json();
           error = yield call(() => errorPromise);
+          if (error.msg && error.msg === 'Session Expired') {
+            yield put(sessionExpired(error));
+          }
           if (error.errors && error.errors.name === 'JsonWebTokenError') {
             yield put(sessionExpired(error));
           } else {
@@ -39,41 +42,6 @@ class Api {
         } catch (e) {
           yield put(networkError(e));
           yield put(onError(e));
-        }
-      }
-    };
-  }
-
-  static dataLoader1(apiUri, onSuccess, onError, data, token, metaData) {
-    return function* commonApiSetup() {
-      const baseUrl = 'https://waftengine.org/api/';
-      const requestURL = `${baseUrl}${apiUri}`;
-      try {
-        const options = {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        };
-        if (data !== undefined) {
-          options.method = metaData === 'put' ? 'PUT' : 'POST';
-          options.body = JSON.stringify(data);
-        }
-        const response = yield call(request, requestURL, options);
-        yield put(onSuccess(response));
-      } catch (err) {
-        let error = null;
-        try {
-          error = yield call(() => err.response.json());
-          if (error.errors.name === 'JsonWebTokenError') {
-            yield put(sessionExpired(error));
-          } else {
-            yield put(onError(error));
-          }
-        } catch (e) {
-          yield put(networkError(e));
-          yield put(onError());
         }
       }
     };
@@ -92,9 +60,11 @@ class Api {
       const requestURL = `${API_BASE}${apiUri}`;
       let multipartData = new FormData();
       multipartData = objectToFormData(data, multipartData);
-      Object.keys(document).map(each => {
+      Object.keys(document).map((each) => {
         if (Array.isArray(document[each])) {
-          document[each].map(fileObj => multipartData.append([each], fileObj));
+          document[each].map((fileObj) =>
+            multipartData.append([each], fileObj),
+          );
         } else {
           multipartData.append([each], document[each]);
         }
@@ -131,10 +101,6 @@ class Api {
    */
   static get(apiUri, onSuccess, onError, token) {
     return this.dataLoader(apiUri, onSuccess, onError, undefined, token);
-  }
-
-  static get1(apiUri, onSuccess, onError, token) {
-    return this.dataLoader1(apiUri, onSuccess, onError, undefined, token);
   }
 
   /*
@@ -202,11 +168,6 @@ class Api {
         };
         const response = yield call(request, requestURL, options);
         yield put(onSuccess(response));
-        // if (response.success) {
-        //   yield put(onSuccess(response));
-        // } else {
-        //   yield put(onError(response));
-        // }
       } catch (err) {
         let error = null;
         try {

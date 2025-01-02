@@ -1,5 +1,5 @@
 import { takeLatest, call, select, put } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../utils/Api';
 import { makeSelectToken } from '../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
@@ -73,7 +73,7 @@ function* loadArchives(action) {
 function* loadBlogList(action) {
   let query = '';
   if (action.payload) {
-    Object.keys(action.payload).map(each => {
+    Object.keys(action.payload).map((each) => {
       query = `${query}&${each}=${action.payload[each]}`;
     });
   }
@@ -92,7 +92,7 @@ function* loadBlogByAuthor(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }
@@ -110,7 +110,7 @@ function* loadMoreBlogByAuthor(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }
@@ -128,7 +128,7 @@ function* loadBlogByTag(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }
@@ -146,7 +146,7 @@ function* loadMoreBlogByTag(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }
@@ -164,7 +164,7 @@ function* loadBlogDate(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }
@@ -192,7 +192,7 @@ function* loadBlogOfCat(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }
@@ -210,7 +210,7 @@ function* loadMoreBlogOfCat(action) {
   const token = yield select(makeSelectToken());
   let query = '';
   if (action.payload.value) {
-    Object.keys(action.payload.value).map(each => {
+    Object.keys(action.payload.value).map((each) => {
       query = `${query}&${each}=${action.payload.value[each]}`;
     });
   }

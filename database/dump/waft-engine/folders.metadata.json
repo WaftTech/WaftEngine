@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"waft-engine.folders"}],"uuid":"723c381d014d4d97902b3af2f7fabb60"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"4d0554a356e045f08d63a1f8933dd464","collectionName":"folders","type":"collection"}

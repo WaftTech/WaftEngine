@@ -34,7 +34,7 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const userPersonalInformationPageReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case types.CLEAR_DATA:
         draft[action.payload.name] = initialState[action.payload.name];
@@ -77,20 +77,18 @@ const userPersonalInformationPageReducer = (state = initialState, action) =>
         break;
 
       case types.LOAD_TWO_FACTOR_REQUEST:
-        // draft.loading = true;
         draft.loadingObj.loadTwoFactor = true;
         break;
       case types.LOAD_TWO_FACTOR_SUCCESS:
-        // draft.loading = false;
         draft.loadingObj.loadTwoFactor = false;
         draft.twoFactor = { ...action.payload.data.multi_fa };
         break;
       case types.LOAD_TWO_FACTOR_FAILURE:
-        // draft.loading = false;
         draft.loadingObj.loadTwoFactor = false;
         break;
       case types.ADD_EMAIL_TWO_FACTOR_REQUEST:
         draft.loadingObj.addEmailAuth = true;
+        // console.log('true');
         break;
       case types.ADD_EMAIL_TWO_FACTOR_SUCCESS:
         draft.loadingObj.addEmailAuth = false;

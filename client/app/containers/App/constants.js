@@ -8,6 +8,7 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+export const APP_NAME = 'Waft Engine';
 
 export const FB_APP_ID = '308391736756480';
 export const FB_APP_FIELDS = 'id,email,name';
@@ -15,18 +16,11 @@ export const RECAPTCHA_SITE_KEY = '6LdYQrAUAAAAAAtG3BDxM0YcJU4XbGQGb6QVA49G';
 export const GOOGLE_CLIENT_ID =
   '207794996947-iektn9irtbmkrbpfvlom9rf8nro13v70.apps.googleusercontent.com';
 
-export const API_BASE =
-  process.env.NODE_ENV === 'production'
-    ? '/api/'
-    : 'http://localhost:5050/api/';
-
 export const IMAGE_BASE =
-  process.env.NODE_ENV === 'production'
-    ? '/'
-    : 'http://localhost:5050/';
+  import.meta.env.NODE_ENV === 'production' ? '/' : 'http://localhost:5050/';
 
 export const URL_BASE =
-  process.env.NODE_ENV === 'production'
+  import.meta.env.NODE_ENV === 'production'
     ? 'https://www.waftengine.com/'
     : 'https://www.waftengine.com/';
 
@@ -37,6 +31,8 @@ export const SET_TOKEN = 'app/App/SET_TOKEN';
 export const LOGOUT = 'app/App/LOGOUT';
 
 export const SESSION_EXPIRED = 'app/App/SESSION_EXPIRED';
+export const SET_EXPIRED = 'app/App/SET_EXPIRED';
+
 export const NETWORK_ERROR = 'app/App/NETWORK_ERROR';
 
 export const ENQUEUE_SNACKBAR = 'app/App/ENQUEUE_SNACKBAR';

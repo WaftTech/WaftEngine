@@ -7,10 +7,11 @@ import {
   takeLeading,
   delay,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
+import Api from '../../utils/Api';
 import * as types from './constants';
 import * as actions from './actions';
 import { makeSelectToken } from './selectors';
+import { push } from 'redux-first-history';
 
 function* loadContent(action) {
   yield call(
@@ -21,6 +22,7 @@ function* loadContent(action) {
     ),
   );
 }
+
 function* loadMedia(action) {
   yield call(
     Api.get(
@@ -46,6 +48,10 @@ function* logOut() {
   );
 }
 
+function* logOutSuccessFunc() {
+  yield put(push('/login'));
+}
+
 function* loadLatestBlog(action) {
   const token = yield select(makeSelectToken());
   let query = '';
@@ -64,7 +70,7 @@ function* loadLatestBlog(action) {
 
 function* sessionExpired() {
   // token expired case, logout user and show alert that relogin is required
-  yield put(actions.logoutSuccess());
+  // yield put(actions.logoutSuccess());
 
   const snackbarData = {
     message: 'User Session expired. please login again',
@@ -74,7 +80,6 @@ function* sessionExpired() {
   };
   yield put(actions.enqueueSnackbar(snackbarData));
   yield delay(2000);
-  // alert('User Session expired. please login again');
 }
 
 function* networkError() {
@@ -88,7 +93,6 @@ function* networkError() {
   };
   yield put(actions.enqueueSnackbar(snackbarData));
   yield delay(2000);
-  // alert('User Session expired. please login again');
 }
 
 function* loadMenu(action) {
@@ -118,6 +122,8 @@ export default function* defaultSaga() {
   yield takeEvery(types.LOAD_SLIDE_REQUEST, loadSlide);
   yield takeEvery(types.LOAD_LATEST_BLOGS_REQUEST, loadLatestBlog);
   yield takeLatest(types.LOGOUT_REQUEST, logOut);
+  yield takeLatest(types.LOGOUT_SUCCESS, logOutSuccessFunc);
+
   yield takeLeading(types.SESSION_EXPIRED, sessionExpired);
   yield takeLeading(types.NETWORK_ERROR, networkError);
   yield takeEvery(types.LOAD_FAQ_REQUEST, loadFaq);

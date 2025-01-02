@@ -7,8 +7,8 @@ import {
   cancel,
   fork,
 } from 'redux-saga/effects';
-import Api from 'utils/Api';
-import { push, LOCATION_CHANGE } from 'connected-react-router';
+import Api from '../../utils/Api';
+import { push, LOCATION_CHANGE } from 'redux-first-history';
 import { makeSelectDefaultData } from './selectors';
 import * as types from './constants';
 import * as actions from './actions';
