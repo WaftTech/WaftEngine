@@ -11,7 +11,7 @@
   "author": "Waft Technology Pvt.Ltd. Nepal",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.0.0",
+    "@sendgrid/mail": "^8.1.1",
     "awesome-phonenumber": "^2.31.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
