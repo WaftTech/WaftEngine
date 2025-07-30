@@ -62,7 +62,12 @@ async function MongoDBConnection() {
   console.log(`| MongoDB URL  : ${mongoURI}`);
 
   try {
-    await mongoose.connect(mongoURI); // all options are defaults in Mongoose 6+
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
     console.log('| MongoDB Connected');
     console.log('|--------------------------------------------');
     SettingInitiate();
@@ -72,6 +77,7 @@ async function MongoDBConnection() {
 
   return null;
 }
+
 
 async function SettingInitiate() {
   await initSettings().then(() => {
