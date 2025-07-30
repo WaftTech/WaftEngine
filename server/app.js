@@ -60,18 +60,15 @@ Promise.resolve(app)
 // Database Connection
 async function MongoDBConnection() {
   console.log(`| MongoDB URL  : ${mongoURI}`);
-  await mongoose
-    .connect(mongoURI, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-    })
-    .then(() => {
-      console.log('| MongoDB Connected');
-      console.log('|--------------------------------------------');
-      SettingInitiate();
-    });
+
+  try {
+    await mongoose.connect(mongoURI); // all options are defaults in Mongoose 6+
+    console.log('| MongoDB Connected');
+    console.log('|--------------------------------------------');
+    SettingInitiate();
+  } catch (err) {
+    console.error('| MongoDB Connection Error:', err.message);
+  }
 
   return null;
 }
