@@ -29,7 +29,7 @@
     "moment": "^2.27.0",
     "mongoose": "^8.8.3",
     "morgan": "^1.10.0",
-    "multer": "^2.0.0",
+    "multer": "^2.0.2",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.9",
     "passport": "^0.6.0",
