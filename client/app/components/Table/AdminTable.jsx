@@ -143,8 +143,7 @@ function CustomTable({ ...props }) {
 
 CustomTable.defaultProps = {
   tableHeaderColor: 'gray',
-  handlePagination: () =>
-    console.log('todo: make handlePagination function!!!'),
+  handlePagination: () => {},
 };
 
 CustomTable.propTypes = {
