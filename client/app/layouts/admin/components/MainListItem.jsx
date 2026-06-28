@@ -53,42 +53,29 @@ const MainListItem = ({ location: { pathname }, access }) => {
 
   const [initialLoad, setInitialLoad] = useState(true);
 
+  const togglePathKeys = (splitPath) => {
+    const newOpenSet = { ...openSet };
+    let tempKey = '';
+    for (let i = 0; i < splitPath.length - 1; i++) {
+      tempKey = tempKey ? `${tempKey}.${splitPath[i]}` : splitPath[i];
+      newOpenSet[tempKey] = !openSet[tempKey];
+    }
+    setOpenSet(newOpenSet);
+    setInitialLoad(false);
+  };
+
   const checkOpenRoute = (menu) => {
     let splitPath = [];
     if (initialLoad && searchPath !== '') {
       if (searchPath.includes(menu.link)) {
         splitPath = menu.key.split('.');
-        // TODO make conditions dynamic
-        if (splitPath.length === 2) {
-          setOpenSet({ ...openSet, [splitPath[0]]: !openSet[splitPath[0]] });
-          setInitialLoad(false);
-        } else if (splitPath.length === 3) {
-          setOpenSet({
-            ...openSet,
-            [splitPath[0]]: !openSet[splitPath[0]],
-            [`${splitPath[0]}.${splitPath[1]}`]:
-              !openSet[`${splitPath[0]}.${splitPath[1]}`],
-          });
-          setInitialLoad(false);
-        }
+        togglePathKeys(splitPath);
       }
     }
     if (initialLoad) {
       if (pathname.includes(menu.link)) {
         splitPath = menu.key.split('.');
-        // TODO make conditions dynamic
-        if (splitPath.length === 2) {
-          setOpenSet({ ...openSet, [splitPath[0]]: !openSet[splitPath[0]] });
-          setInitialLoad(false);
-        } else if (splitPath.length === 3) {
-          setOpenSet({
-            ...openSet,
-            [splitPath[0]]: !openSet[splitPath[0]],
-            [`${splitPath[0]}.${splitPath[1]}`]:
-              !openSet[`${splitPath[0]}.${splitPath[1]}`],
-          });
-          setInitialLoad(false);
-        }
+        togglePathKeys(splitPath);
       }
     }
   };
@@ -107,12 +94,7 @@ const MainListItem = ({ location: { pathname }, access }) => {
   const menuFunction = (e) => {
     let showChildren = false;
     if (e.menu) {
-      // TODO: can be optimized to break when if condition is fulfilled
-      e.menu.map((each) => {
-        if (hasAccess(each.link)) {
-          showChildren = true;
-        }
-      });
+      showChildren = e.menu.some((each) => hasAccess(each.link));
     }
     const isVisible = e.menu ? showChildren : hasAccess(e.link);
     if (!isVisible) return null;
