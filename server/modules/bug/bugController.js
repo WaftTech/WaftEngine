@@ -52,7 +52,7 @@ bugController.DeleteError = async (req, res, next) => {
 };
 bugController.DeleteAll = async (req, res, next) => {
   try {
-    const dels = await bugSch.remove({});
+    const dels = await bugSch.deleteMany({});
     return otherHelper.sendResponse(res, httpStatus.OK, true, null, null, 'all errors deleted!', null);
   } catch (err) {
     next(err);
