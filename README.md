@@ -2,7 +2,7 @@
 
 [WaftEngine](https://waftengine.org) is an open source platform for developers to create enterprise level web application in MERN stack. This platform already contains components like user management, roles management, module management, access management, content management with production ready setup which helps developers to develop their application in minimum cost.
 
-[![Gitter](https://badges.gitter.im/waftengine/community.svg)](https://gitter.im/waftengine/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FWaftTech%2FWaftEngine.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FWaftTech%2FWaftEngine?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FWaftTech%2FWaftEngine.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FWaftTech%2FWaftEngine?ref=badge_shield)
 
 
 ## Features
