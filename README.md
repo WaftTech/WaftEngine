@@ -66,7 +66,7 @@ Does your company use WaftEngine? Ask your manager or marketing team if your com
 
 ## Get help & contact the team
 
-- [WaftEngine Gitter Chat](https://gitter.im/waftengine/community)
+- WaftEngine Gitter Chat
 - Report security vulnerabilities to <mailto:hello@wafttech.com>.
 - [Bug Post and Feature Request](https://github.com/WaftTech/WaftEngine/issues)
 
